@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="KT Messengers — simple, secure messaging and calling for everyone. Private by default, delightfully fast, and in sync on every device."
+    />
+    <meta name="theme-color" content="#fcf5eb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b141a" media="(prefers-color-scheme: dark)" />
+    <title>KT Messengers · messaging &amp; calling</title>
+  </head>
+  <body>
+    <script>
+      (function () {
+        try {
+          const stored = localStorage.getItem('theme')
+          if (stored === 'dark') {
+            document.documentElement.classList.add('dark')
+          } else {
+            document.documentElement.classList.remove('dark')
+          }
+        } catch (error) {
+          console.warn('Theme initialization failed', error)
+        }
+      })()
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

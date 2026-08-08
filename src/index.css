@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import 'tailwindcss';
+
+/* Class-based dark mode driven by the theme toggle (html.dark). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ *
+ * Design tokens
+ * Semantic color utilities (bg-cream, text-ink, border-line, bg-brand…)
+ * resolve to CSS variables so they switch automatically between the
+ * light and dark palettes defined in :root / .dark below.
+ *
+ * Brand accent = KT Messengers blue. To match an exact logo hex, change
+ * the --brand* values in both :root and .dark below — nothing else.
+ * ------------------------------------------------------------------ */
+@theme inline {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Surfaces */
+  --color-cream: var(--cream);
+  --color-cream-2: var(--cream-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+
+  /* Text */
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+
+  /* Lines */
+  --color-line: var(--line);
+
+  /* Brand */
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-strong-hover: var(--brand-strong-hover);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-on-brand: var(--on-brand);
+
+  /* Radius scale */
+  --radius-card: 24px;
+  --radius-media: 32px;
+  --radius-block: 44px;
+
+  /* Shadow scale (premium, low-spread, direction-aware) */
+  --shadow-soft: 0 14px 40px -20px rgba(17, 27, 33, 0.22);
+  --shadow-card: 0 28px 60px -30px rgba(17, 27, 33, 0.3);
+  --shadow-float: 0 44px 90px -36px rgba(17, 27, 33, 0.38);
+  --shadow-brand: 0 22px 46px -18px rgba(21, 112, 239, 0.5);
+}
+
+/* Light palette (default) */
+:root {
+  --cream: #fcf5eb;
+  --cream-2: #fffbf4;
+  --surface: #ffffff;
+  --surface-2: #f7efe1;
+
+  --ink: #0e1a13;
+  --body: #47544c;
+  --muted: #7c877e;
+
+  --line: #ece1d1;
+
+  --brand: #2e90fa;
+  --brand-strong: #1570ef;
+  --brand-strong-hover: #175cd3;
+  --brand-ink: #1550b5;
+  --brand-soft: #e8f1ff;
+  --on-brand: #ffffff;
+
+  color-scheme: light;
+}
+
+/* Dark palette */
+.dark {
+  --cream: #0b141a;
+  --cream-2: #0f1b22;
+  --surface: #17232b;
+  --surface-2: #1e2c34;
+
+  --ink: #e9edef;
+  --body: #aebac1;
+  --muted: #8696a0;
+
+  --line: #263640;
+
+  --brand: #2e90fa;
+  --brand-strong: #1570ef;
+  --brand-strong-hover: #2e90fa;
+  --brand-ink: #7db6ff;
+  --brand-soft: #12294d;
+  --on-brand: #ffffff;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background-color: var(--cream);
+  color: var(--body);
+  line-height: 1.5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--brand) 28%, transparent);
+  color: var(--ink);
+}
+
+.dark ::selection {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+/* ------------------------------------------------------------------ *
+ * Feature-page utilities
+ * Shared by the News / Markets / Wallet / Marketplace / Notes pages.
+ * ------------------------------------------------------------------ */
+
+/* Hide the scrollbar on horizontal chip rails while keeping them scrollable. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Slim scrollbar for tall in-card lists (watchlists, cart drawers). */
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px;
+}
+
+/* Infinite ticker tape. The track renders its children twice, so translating
+   by -50% loops seamlessly. */
+@keyframes kt-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.kt-marquee {
+  display: flex;
+  width: max-content;
+  animation: kt-marquee var(--marquee-duration, 40s) linear infinite;
+}
+
+.kt-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Soft radial glow used behind the feature-page heroes. */
+.kt-hero-glow {
+  background-image:
+    radial-gradient(60% 70% at 15% 0%, rgba(46, 144, 250, 0.28), transparent 60%),
+    radial-gradient(50% 60% at 90% 10%, rgba(126, 34, 206, 0.22), transparent 60%);
+}
+
+/* Subtle grid overlay for dark hero panels. */
+.kt-hero-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.09) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .kt-marquee {
+    animation: none;
+  }
+}
