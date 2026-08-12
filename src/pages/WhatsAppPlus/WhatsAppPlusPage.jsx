@@ -127,7 +127,7 @@ export function WhatsAppPlusPage() {
     },
     {
       q: 'Does KT Plus compromise end-to-end encryption?',
-      a: 'Not at all. KT Plus operates on the exact same Signal Protocol encryption engine as the standard KT Messengers app. Your chats remain 100% encrypted and private.'
+      a: 'Not at all. KT Plus operates on the exact same Signal Protocol encryption engine as the standard KT Messenger app. Your chats remain 100% encrypted and private.'
     },
     {
       q: 'Can I use KT Plus across multiple devices?',

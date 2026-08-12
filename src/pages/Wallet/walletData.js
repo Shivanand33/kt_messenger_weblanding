@@ -143,7 +143,7 @@ export const limitsTable = [
 
 export const securityFeatures = [
   { title: 'Passkey approval on every payment', desc: 'Face or fingerprint confirms each transfer. There is no password to phish or reuse.' },
-  { title: 'PCI-DSS Level 1 partner banks', desc: 'Card details are tokenised at the bank. KT Messengers never stores a full card number.' },
+  { title: 'PCI-DSS Level 1 partner banks', desc: 'Card details are tokenised at the bank. KT Messenger never stores a full card number.' },
   { title: 'Instant card freeze', desc: 'Freeze and unfreeze any card from the app in one tap — no call centre, no waiting.' },
   { title: 'Per-card spending caps', desc: 'Set a monthly ceiling for each card. Spend above it is declined, not merely flagged.' },
   { title: 'Encrypted payment notes', desc: 'The note you attach to a transfer is end-to-end encrypted, exactly like a message.' },

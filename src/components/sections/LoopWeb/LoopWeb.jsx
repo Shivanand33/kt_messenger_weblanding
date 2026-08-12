@@ -13,7 +13,7 @@ export function LoopWeb() {
       title="Call right from your browser."
       description="Start or join a video or voice call — solo or with the whole group — straight from a browser tab. Nothing to install, nothing to set up."
       media={<BrowserCallMockup />}
-      cta={<LinkArrow>Try KT Web</LinkArrow>}
+      cta={<LinkArrow href="https://web.ktmessenger.com/auth/qr">Try KT Web</LinkArrow>}
     />
   )
 }

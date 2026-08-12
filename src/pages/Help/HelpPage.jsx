@@ -18,7 +18,7 @@ const D = <MdArticle />
 const helpTree = [
   {
     label: 'Get Started', icon: <MdFlag />, subs: [
-      { label: 'Download and Installation', icon: <MdFileDownload />, articles: ['How to download or uninstall KT Messengers', 'About supported operating systems', 'About supported devices', 'About rooted phones and custom ROMs', 'Ending support for legacy phones'] },
+      { label: 'Download and Installation', icon: <MdFileDownload />, articles: ['How to download or uninstall KT Messenger', 'About supported operating systems', 'About supported devices', 'About rooted phones and custom ROMs', 'Ending support for legacy phones'] },
       { label: 'Registration', icon: <MdHowToReg />, articles: ['Parent-Managed Accounts', 'How to register your phone number', 'About registration and two-step verification', 'How to register with a phone call', 'About automatic phone number verification', "Can't complete registration"] },
       { label: 'Usernames', icon: <MdAlternateEmail />, articles: ['About usernames', 'How to set a username', 'Username privacy'] },
       { label: 'Linked Devices', icon: <MdDevices />, articles: ['About linked devices', 'How to link a device', 'Log out of a linked device'] },
@@ -97,8 +97,8 @@ const helpTree = [
 ]
 
 const topics = [
-  { icon: <FiFlag />, title: 'Get Started', desc: 'Learn how to set up and start using KT Messengers.', to: '/' },
-  { icon: <FiShield />, title: 'Safety and Security', desc: 'Your privacy and security matter. Learn how to stay safe on KT Messengers.', to: '/privacy' },
+  { icon: <FiFlag />, title: 'Get Started', desc: 'Learn how to set up and start using KT Messenger.', to: '/' },
+  { icon: <FiShield />, title: 'Safety and Security', desc: 'Your privacy and security matter. Learn how to stay safe on KT Messenger.', to: '/privacy' },
   { icon: <FiCloud />, title: 'Back Up or Restore Chats', desc: 'Learn how to back up and restore your chat history across devices.', to: null },
   { icon: <FiMessageCircle />, title: 'Chats', desc: 'Send messages, media, and voice notes, and manage every conversation.', to: null },
   { icon: <FiUsers />, title: 'Communities & Channels', desc: 'Create and manage groups, communities, and channels with ease.', to: '#groups' },
@@ -107,7 +107,7 @@ const topics = [
 
 const popularArticles = [
   'How to make a video call',
-  'How to stay safe on KT Messengers',
+  'How to stay safe on KT Messenger',
   'About temporarily restricted accounts',
   'About two-step verification',
   'How to restore your chat history',
@@ -122,17 +122,17 @@ const platformTabs = [
   { label: 'Windows', icon: <FaWindows /> },
 ]
 
-const tabbedArticles = ['How to download or uninstall KT Messengers']
+const tabbedArticles = ['How to download or uninstall KT Messenger']
 
 // Every entry resolves to a route, or to a route plus a section id — nothing
 // is left as a dead anchor. Social links open the Community page's verified
 // channels section, where the official accounts are listed.
 const footerColumns = [
   {
-    title: 'Use KT Messengers',
+    title: 'Use KT Messenger',
     links: [
       { label: 'Features', to: '#features' },
-      { label: 'KT Web', to: '#web' },
+      { label: 'KT Web', to: 'https://web.ktmessenger.com/auth/qr' },
       { label: 'Download', to: '/apps' },
     ],
   },
@@ -157,23 +157,23 @@ const footerColumns = [
 const proseClass = 'space-y-5 text-[15px] leading-7 text-body'
 
 function ArticleBody({ title, tab }) {
-  if (title === 'How to download or uninstall KT Messengers') {
+  if (title === 'How to download or uninstall KT Messenger') {
     const store = { Android: 'Google Play Store', iOS: 'App Store', Mac: 'Mac App Store', Windows: 'Microsoft Store' }[tab]
     const action = tab === 'Android' || tab === 'Windows' ? 'Install' : 'Get'
     return (
       <div className={proseClass}>
-        <h3 className="text-xl font-bold text-ink">Download KT Messengers</h3>
-        <p>Open the {store} on your {tab} device and search for KT Messengers, then tap {action} to begin the download.</p>
+        <h3 className="text-xl font-bold text-ink">Download KT Messenger</h3>
+        <p>Open the {store} on your {tab} device and search for KT Messenger, then tap {action} to begin the download.</p>
         <div className="grid h-44 w-44 place-items-center rounded-2xl border-2 border-dashed border-line bg-surface-2 text-center text-sm font-medium text-muted">
-          Scan to download<br />KT Messengers
+          Scan to download<br />KT Messenger
         </div>
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-          <li>Find KT Messengers in the {store}, then tap {action}.</li>
+          <li>Find KT Messenger in the {store}, then tap {action}.</li>
           <li>Open the app and review the Terms of Service, then tap <strong>Agree and continue</strong>.</li>
           <li>Register your phone number to start chatting.</li>
         </ol>
-        <h3 className="text-xl font-bold text-ink">Uninstall KT Messengers</h3>
-        <p>Press and hold the KT Messengers icon on your {tab} device, then choose <strong>Uninstall</strong> or <strong>Remove</strong>. Back up your chats first if you want to keep them.</p>
+        <h3 className="text-xl font-bold text-ink">Uninstall KT Messenger</h3>
+        <p>Press and hold the KT Messenger icon on your {tab} device, then choose <strong>Uninstall</strong> or <strong>Remove</strong>. Back up your chats first if you want to keep them.</p>
       </div>
     )
   }
@@ -183,10 +183,10 @@ function ArticleBody({ title, tab }) {
         <div className="rounded-2xl bg-surface-2 p-6">
           <p className="text-ink">
             Parent-managed accounts let a parent or guardian help a young person set up and look after their KT
-            Messengers account. This experience is rolling out in stages and may not be available in your region yet.
+            Messenger account. This experience is rolling out in stages and may not be available in your region yet.
           </p>
           <ul className="mt-3 list-disc space-y-2 pl-5">
-            <li>Keep KT Messengers updated to the latest version from your app store.</li>
+            <li>Keep KT Messenger updated to the latest version from your app store.</li>
             <li>Follow our blog and Help Center for updates on when it reaches you.</li>
           </ul>
         </div>
@@ -196,9 +196,9 @@ function ArticleBody({ title, tab }) {
   }
   return (
     <div className={proseClass}>
-      <p>This article explains <strong>{title.charAt(0).toLowerCase() + title.slice(1)}</strong> on KT Messengers. Follow the steps below to get set up.</p>
+      <p>This article explains <strong>{title.charAt(0).toLowerCase() + title.slice(1)}</strong> on KT Messenger. Follow the steps below to get set up.</p>
       <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-        <li>Open KT Messengers and go to <strong>Settings</strong>.</li>
+        <li>Open KT Messenger and go to <strong>Settings</strong>.</li>
         <li>Select the option related to this topic and follow the on-screen instructions.</li>
         <li>Confirm your choice to save any changes.</li>
       </ol>
@@ -259,10 +259,10 @@ function HelpFooter({ onNav }) {
           ))}
         </div>
         <div className="mt-12 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <button type="button" onClick={() => onNav('/')} aria-label="KT Messengers home" className="self-start">
+          <button type="button" onClick={() => onNav('/')} aria-label="KT Messenger home" className="self-start">
             <Logo />
           </button>
-          <p className="text-sm text-muted">© 2026 KT Messengers</p>
+          <p className="text-sm text-muted">© 2026 KT Messenger</p>
         </div>
       </div>
     </footer>
@@ -287,6 +287,12 @@ export function HelpPage() {
 
   const goTo = (target) => {
     if (!target) return
+
+    // External URL (e.g. the KT Web app) — leave the SPA.
+    if (target.startsWith('http')) {
+      window.location.href = target
+      return
+    }
 
     // Bare "#section" — a block on the home page.
     if (target.startsWith('#')) {
@@ -340,7 +346,7 @@ export function HelpPage() {
       <header className="sticky top-0 z-50 border-b border-line bg-cream/90 backdrop-blur-xl">
         <div className="flex h-16 items-center justify-between px-5 lg:px-8">
           <div className="flex items-center gap-2.5">
-            <button onClick={() => navigate('/')} aria-label="KT Messengers home">
+            <button onClick={() => navigate('/')} aria-label="KT Messenger home">
               <Logo showWordmark={false} />
             </button>
             <button onClick={goHelpHome} className="text-lg font-bold text-ink">Help Center</button>

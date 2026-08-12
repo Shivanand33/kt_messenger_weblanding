@@ -14,7 +14,6 @@ import {
   FiPlay,
   FiCheckCircle,
   FiArrowRight,
-  FiLock,
   FiZap,
   FiCheck
 } from 'react-icons/fi'
@@ -55,7 +54,7 @@ export function VideoShowcase() {
       shortTag: 'Send uncompressed photos, 2GB ZIP files, and voice notes with double blue tick delivery confirmations.',
       specs: ['Signal 256-bit E2EE', '2GB Uncompressed Files', '1.5x Speed Voice Notes'],
       badge: 'Instant Delivery • Double Blue Ticks ✔✔',
-      videoComponent: <KtChatScreen />
+      videoComponent: <KtChatScreen showControls={false} showProgress={false} showEncryptionNote={false} />
     },
     call: {
       id: 'call',
@@ -306,16 +305,6 @@ export function VideoShowcase() {
                     ))}
                   </div>
                   <span className="text-[9px] font-mono font-bold text-muted">0:03 / 0:30</span>
-                </motion.div>
-
-                {/* Floating Security Badge (Bottom-Right) */}
-                <motion.div
-                  animate={{ y: [0, 7, 0] }}
-                  transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute bottom-4 right-2 sm:right-6 z-20 hidden sm:flex items-center gap-1 rounded-full bg-surface px-3 py-1.5 shadow-float border border-brand-strong/30"
-                >
-                  <FiLock className="text-brand-strong text-xs" />
-                  <span className="text-[10px] font-bold text-brand-ink">Signal E2EE Protected</span>
                 </motion.div>
 
             </div>

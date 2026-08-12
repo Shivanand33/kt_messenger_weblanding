@@ -131,7 +131,7 @@ export function CallingPage() {
   const faqs = [
     {
       q: 'Are video and voice calls on KT completely free?',
-      a: 'Yes! All 1-on-1 and group voice and video calls on KT Messengers are 100% free with no hidden charges, subscription requirements, or annoying time limits.'
+      a: 'Yes! All 1-on-1 and group voice and video calls on KT Messenger are 100% free with no hidden charges, subscription requirements, or annoying time limits.'
     },
     {
       q: 'Are my calls encrypted and private?',
@@ -195,8 +195,13 @@ export function CallingPage() {
 
             {/* INTERACTIVE CALL MOCKUP */}
             <Reveal from="scale" delay={0.15} className="flex justify-center">
-              <div className="relative w-full max-w-[420px] rounded-[36px] border border-line bg-surface p-4 shadow-float">
-                <div className="relative aspect-[9/14] overflow-hidden rounded-[28px] bg-slate-950 p-4 text-white">
+              <div className="relative w-full max-w-[420px] rounded-[46px] border-[3px] border-slate-800 bg-slate-950 p-2.5 shadow-float">
+                {/* Left Side Buttons (Volume keys mockup) */}
+                <div className="absolute -left-[7px] top-20 h-9 w-[4px] rounded-l-md bg-slate-700" />
+                <div className="absolute -left-[7px] top-32 h-9 w-[4px] rounded-l-md bg-slate-700" />
+                {/* Right Side Button (Power key mockup) */}
+                <div className="absolute -right-[7px] top-24 h-12 w-[4px] rounded-r-md bg-slate-700" />
+                <div className="relative aspect-[9/14] overflow-hidden rounded-[36px] bg-slate-950 p-4 text-white">
                   {/* Call Top Bar */}
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-2 rounded-full bg-slate-800/80 px-3 py-1 text-xs font-semibold backdrop-blur-md">
@@ -416,26 +421,184 @@ export function CallingPage() {
               </div>
             </Reveal>
 
-            <Reveal from="right" className="flex justify-center">
-              <div className="w-full max-w-[420px] rounded-3xl bg-surface p-6 border border-line shadow-float text-center">
-                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-brand-soft text-brand-strong text-3xl mb-4 shadow-inner">
-                  <FiMic />
-                </div>
-                <h3 className="font-bold text-lg text-ink">Live Audio Frequency Monitor</h3>
-                <p className="text-xs text-body mt-1">Real-time spectrum analysis</p>
+            <Reveal from="right" className="flex justify-center py-4">
+              {/* iPhone Mobile Phone Device Frame */}
+              <div className="relative w-full max-w-[340px] sm:max-w-[360px] rounded-[46px] border-[3px] border-slate-800 bg-slate-950 p-2.5 shadow-float flex flex-col select-none text-slate-900 font-sans">
+                {/* Left Side Buttons (Volume keys mockup) */}
+                <div className="absolute -left-[7px] top-20 h-9 w-[4px] rounded-l-md bg-slate-700" />
+                <div className="absolute -left-[7px] top-32 h-9 w-[4px] rounded-l-md bg-slate-700" />
+                {/* Right Side Button (Power key mockup) */}
+                <div className="absolute -right-[7px] top-24 h-12 w-[4px] rounded-r-md bg-slate-700" />
 
-                {/* Animated Equalizer Wave */}
-                <div className="mt-6 flex items-center justify-center gap-1.5 h-16 bg-cream rounded-2xl p-3 border border-line">
-                  {[40, 75, 90, 45, 60, 100, 80, 50, 95, 70, 30, 85, 60, 40].map((h, i) => (
-                    <motion.div
-                      key={i}
-                      animate={{ height: [`${h * 0.3}%`, `${h}%`, `${h * 0.4}%`] }}
-                      transition={{ duration: 1 + (i % 3) * 0.3, repeat: Infinity, repeatType: 'reverse' }}
-                      className="w-1.5 rounded-full bg-brand-strong"
-                    />
-                  ))}
+                {/* Phone Screen Inner Container */}
+                <div className="relative w-full h-full rounded-[36px] bg-gradient-to-b from-[#f7f9fc] to-[#e9eef6] p-3.5 sm:p-4.5 flex flex-col justify-between overflow-hidden min-h-[580px] sm:min-h-[620px]">
+                  
+                  {/* 1. Status Bar */}
+                  <div className="flex items-center justify-between px-2 pt-0.5">
+                    <span className="text-[13px] font-semibold tracking-tight text-slate-900">12:06</span>
+                    
+                    {/* Dynamic Island Notch */}
+                    <div className="relative h-6 w-24 rounded-full bg-black flex items-center justify-end px-2.5 shadow-sm">
+                      <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
+                    </div>
+
+                    {/* Battery & Signal Icons */}
+                    <div className="flex items-center gap-1.5 text-slate-900">
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4z"/>
+                      </svg>
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2 17h3v4H2v-4zm5-5h3v9H7v-9zm5-4h3v13h-3V8zm5-5h3v18h-3V3z"/>
+                      </svg>
+                      <div className="flex items-center">
+                        <div className="w-4.5 h-2.5 rounded-[3px] border border-slate-900 p-[1px] flex items-center">
+                          <div className="h-full w-full rounded-[1px] bg-emerald-500" />
+                        </div>
+                        <div className="w-[1.5px] h-1 bg-slate-900 rounded-r-[1px]" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 2. Top Header Controls */}
+                  <div className="mt-3 flex items-center justify-between px-1">
+                    {/* Minimize Button */}
+                    <button className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm border border-slate-200/70 text-slate-800 hover:bg-slate-50 transition-transform active:scale-95">
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4 14h6v6" />
+                        <path d="M10 14L3 21" />
+                        <path d="M20 10h-6V4" />
+                        <path d="M14 10l7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Name & Timer */}
+                    <div className="text-center">
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-tight">
+                        Tanmay Girkar
+                      </h3>
+                      <p className="text-xs text-slate-400 font-medium mt-0.5">00:06</p>
+                    </div>
+
+                    {/* Add Participant Button */}
+                    <button className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm border border-slate-200/70 text-slate-800 hover:bg-slate-50 transition-transform active:scale-95">
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                        <path d="M16 2v4" />
+                        <path d="M14 4h4" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* 3. Center Avatar & Waveform Dots */}
+                  <div className="my-auto py-5 flex flex-col items-center justify-center">
+                    {/* Avatar Circle with animated call halos */}
+                    <div className="relative flex items-center justify-center">
+                      {/* Pulsing call rings */}
+                      {[0, 1].map((i) => (
+                        <motion.span
+                          key={i}
+                          animate={{ scale: [1, 1.55], opacity: [0.4, 0] }}
+                          transition={{ duration: 2.2, repeat: Infinity, delay: i * 1.1, ease: 'easeOut' }}
+                          className="absolute h-28 w-28 sm:h-32 sm:w-32 rounded-full bg-[#1da1f2]/30"
+                        />
+                      ))}
+                      <div className="relative p-1 rounded-full bg-white/80 ring-1 ring-slate-200 shadow-[0_12px_32px_rgba(33,150,243,0.28)]">
+                        <div className="flex h-28 w-28 sm:h-32 sm:w-32 items-center justify-center rounded-full bg-gradient-to-br from-[#4bb8f8] to-[#1888e0] border-2 border-white shadow-inner">
+                          <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-wider drop-shadow-sm">
+                            TG
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 7 Animated Wave Dots */}
+                    <div className="mt-6 flex items-center justify-center gap-2">
+                      {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+                        <motion.span
+                          key={i}
+                          animate={{ opacity: [0.35, 1, 0.35], scale: [0.85, 1.2, 0.85] }}
+                          transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.18, ease: 'easeInOut' }}
+                          className="h-2 w-2 rounded-full bg-slate-600"
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 4. Bottom Grid Control Card */}
+                  <div className="rounded-[26px] bg-white p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.06)] border border-slate-100/90">
+                    <div className="grid grid-cols-3 gap-y-4 gap-x-2 text-center">
+                      {/* Video */}
+                      <div className="flex flex-col items-center">
+                        <button className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f0f3f7] text-slate-800 hover:bg-slate-200/80 transition-colors active:scale-95">
+                          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
+                          </svg>
+                        </button>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">Video</span>
+                      </div>
+
+                      {/* Phone */}
+                      <div className="flex flex-col items-center">
+                        <button className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f0f3f7] text-slate-800 hover:bg-slate-200/80 transition-colors active:scale-95">
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            <path d="M15 3a5 5 0 0 1 5 5" />
+                          </svg>
+                        </button>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">Phone</span>
+                      </div>
+
+                      {/* Mute */}
+                      <div className="flex flex-col items-center">
+                        <button className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f0f3f7] text-slate-800 hover:bg-slate-200/80 transition-colors active:scale-95">
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            <line x1="12" y1="19" x2="12" y2="22" />
+                          </svg>
+                        </button>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">Mute</span>
+                      </div>
+
+                      {/* More */}
+                      <div className="flex flex-col items-center">
+                        <button className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f0f3f7] text-slate-800 hover:bg-slate-200/80 transition-colors active:scale-95">
+                          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <circle cx="5" cy="12" r="2" />
+                            <circle cx="12" cy="12" r="2" />
+                            <circle cx="19" cy="12" r="2" />
+                          </svg>
+                        </button>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">More</span>
+                      </div>
+
+                      {/* Share */}
+                      <div className="flex flex-col items-center">
+                        <button className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f0f3f7] text-slate-800 hover:bg-slate-200/80 transition-colors active:scale-95">
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="12" rx="2" />
+                            <path d="M10 13l4-4" />
+                            <path d="M10 9h4v4" />
+                          </svg>
+                        </button>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">Share</span>
+                      </div>
+
+                      {/* End */}
+                      <div className="flex flex-col items-center">
+                        <button className="flex h-14 w-14 items-center justify-center rounded-full bg-[#ef4444] text-white shadow-md shadow-red-500/30 hover:bg-red-600 transition-colors active:scale-95">
+                          <svg className="w-6 h-6 transform rotate-[135deg]" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" />
+                          </svg>
+                        </button>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">End</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom iOS Home Indicator Bar */}
+                  <div className="w-32 h-1 bg-slate-900/30 rounded-full mx-auto mt-2.5 mb-0.5" />
                 </div>
-                <p className="mt-3 text-[11px] font-semibold text-brand-ink">AI Background Noise Suppression: ACTIVE</p>
               </div>
             </Reveal>
           </div>
@@ -478,7 +641,7 @@ export function CallingPage() {
               Why KT Calling Outshines the Rest
             </h2>
             <p className="mt-4 text-lg text-body">
-              Compare KT Messengers calling features against traditional telecom and conventional video meeting platforms.
+              Compare KT Messenger calling features against traditional telecom and conventional video meeting platforms.
             </p>
           </Reveal>
 
@@ -487,7 +650,7 @@ export function CallingPage() {
               <thead>
                 <tr className="border-b border-line bg-cream">
                   <th className="p-4 font-bold text-ink">Feature</th>
-                  <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT Messengers</th>
+                  <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT Messenger</th>
                   <th className="p-4 font-bold text-body">Standard Phone Calls</th>
                   <th className="p-4 font-bold text-body">Video Apps</th>
                 </tr>
@@ -560,7 +723,7 @@ export function CallingPage() {
               Ready to Experience Crystal-Clear Calls?
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Download KT Messengers now on mobile, desktop, or tablet and start calling completely free today.
+              Download KT Messenger now on mobile, desktop, or tablet and start calling completely free today.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>

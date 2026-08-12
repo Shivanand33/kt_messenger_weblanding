@@ -194,10 +194,10 @@ export function BusinessPage() {
 
   const whyItems = [
     {
-      q: isHindi ? 'मेरे बिज़नेस को KT Messengers का उपयोग क्यों करना चाहिए?' : 'Why should my business use KT Messengers?',
+      q: isHindi ? 'मेरे बिज़नेस को KT Messenger का उपयोग क्यों करना चाहिए?' : 'Why should my business use KT Messenger?',
       a: isHindi
-        ? 'KT Messengers आपको दुनिया भर के 2 अरब से ज़्यादा यूज़र्स से जोड़ता है जिन्हें वे हर दिन चेक करते हैं।'
-        : 'KT Messengers connects you to over 2 billion global users on a platform they already check daily. With 98% open rates and instant 1-on-1 interaction, it outperforms traditional email and SMS.'
+        ? 'KT Messenger आपको दुनिया भर के 2 अरब से ज़्यादा यूज़र्स से जोड़ता है जिन्हें वे हर दिन चेक करते हैं।'
+        : 'KT Messenger connects you to over 2 billion global users on a platform they already check daily. With 98% open rates and instant 1-on-1 interaction, it outperforms traditional email and SMS.'
     },
     {
       q: isHindi ? 'KT बिज़नेस ऐप और प्लेटफ़ॉर्म API में क्या अंतर है?' : 'What is the difference between the KT Business App and Platform API?',
@@ -850,7 +850,7 @@ export function BusinessPage() {
           </Reveal>
           <Reveal from="right">
             <h2 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              {isHindi ? 'KT Messengers क्यों चुनें?' : 'Why choose KT Messengers?'}
+              {isHindi ? 'KT Messenger क्यों चुनें?' : 'Why choose KT Messenger?'}
             </h2>
             <div className="mt-8 border-t border-line">
               {whyItems.map((item, index) => {
@@ -895,11 +895,11 @@ export function BusinessPage() {
                 <h3 className="text-3xl font-bold tracking-tight text-ink lg:text-4xl">Nova Bank</h3>
                 <p className="mt-4 max-w-md text-lg leading-8 text-body">
                   {isHindi
-                    ? 'KT Messengers पर सुरक्षित वन-टाइम पासकोड भेजकर साइन-अप कन्वर्जन में सुधार करना।'
-                    : 'Improving sign-up conversion by sending secure one-time passcodes over KT Messengers.'}
+                    ? 'KT Messenger पर सुरक्षित वन-टाइम पासकोड भेजकर साइन-अप कन्वर्जन में सुधार करना।'
+                    : 'Improving sign-up conversion by sending secure one-time passcodes over KT Messenger.'}
                 </p>
                 <div className="mt-6">
-                  <LinkArrow>{isHindi ? 'सक्सेस स्टोरी देखें' : 'See success story'}</LinkArrow>
+                  <LinkArrow to="/products/conversation-categories/authentication">{isHindi ? 'सक्सेस स्टोरी देखें' : 'See success story'}</LinkArrow>
                 </div>
               </div>
             </div>

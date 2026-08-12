@@ -13,11 +13,16 @@ import { Container } from '../../common/Container/Container'
 import { Logo } from '../../common/Logo/Logo'
 import { Modal } from '../../feature/Modal'
 import { useModal } from '../../../context/ModalContext'
+import { useLanguage } from '../../../context/LanguageContext'
+
+// External KT Web app — same destination as the navbar Log In button.
+const KT_WEB_URL = 'https://web.ktmessenger.com/auth/qr'
 
 /**
  * Footer link targets:
  *  - `to: '/path'`    → client-side route change
  *  - `to: '#anchor'`  → home page section (navigates home first when needed)
+ *  - `href: 'https://…'` → external URL (e.g. the KT Web app)
  *  - `action: 'download'` → opens the shared download modal
  * Every entry resolves to one of those, so no link is a dead anchor.
  */
@@ -42,12 +47,12 @@ const columns = [
     ],
   },
   {
-    title: 'Get KT Messengers',
+    title: 'Get KT Messenger',
     links: [
       { label: 'Android', action: 'download' },
       { label: 'iPhone', action: 'download' },
       { label: 'Mac & PC', action: 'download' },
-      { label: 'KT Web', to: '#web' },
+      { label: 'KT Web', href: KT_WEB_URL },
     ],
   },
   {
@@ -137,9 +142,10 @@ export function Footer() {
   const navigate = useNavigate()
   const location = useLocation()
   const { openDownloadModal } = useModal()
+  const { lang, setLang, t } = useLanguage()
 
   const [langOpen, setLangOpen] = useState(false)
-  const [language, setLanguage] = useState(languages[0])
+  const language = languages.find((option) => option.code === lang) || languages[0]
   const [sitemapOpen, setSitemapOpen] = useState(false)
   const langRef = useRef(null)
 
@@ -166,6 +172,11 @@ export function Footer() {
   const go = (link) => {
     if (link.action === 'download') {
       openDownloadModal()
+      return
+    }
+
+    if (link.href) {
+      window.location.href = link.href
       return
     }
 
@@ -204,9 +215,8 @@ export function Footer() {
   }
 
   const selectLanguage = (option) => {
-    setLanguage(option)
+    setLang(option.code)
     setLangOpen(false)
-    document.documentElement.lang = option.code
   }
 
   return (
@@ -214,12 +224,12 @@ export function Footer() {
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1.5fr_repeat(4,1fr)]">
           <div className="max-w-xs">
-            <button onClick={() => go({ to: '/' })} aria-label="KT Messengers home" className="block">
+            <button onClick={() => go({ to: '/' })} aria-label="KT Messenger home" className="block">
               <Logo />
             </button>
 
             <p className="mt-5 text-[15px] leading-7 text-body">
-              Simple, secure messaging and calling that keeps everyone you care about in the loop.
+              {t('Simple, secure messaging and calling that keeps everyone you care about in the loop.')}
             </p>
 
             <div className="mt-6 flex items-center gap-2.5">
@@ -240,7 +250,7 @@ export function Footer() {
 
           {columns.map((column) => (
             <nav key={column.title} aria-label={column.title} className="space-y-4">
-              <h4 className="text-[13px] font-bold uppercase tracking-[0.14em] text-ink">{column.title}</h4>
+              <h4 className="text-[13px] font-bold uppercase tracking-[0.14em] text-ink">{t(column.title)}</h4>
               <ul className="space-y-3 text-[15px] text-body">
                 {column.links.map((link) => (
                   <li key={link.label}>
@@ -249,7 +259,7 @@ export function Footer() {
                       onClick={() => go(link)}
                       className="text-left transition-colors hover:text-brand-ink"
                     >
-                      {link.label}
+                      {t(link.label)}
                     </button>
                   </li>
                 ))}
@@ -280,7 +290,7 @@ export function Footer() {
                   className="absolute bottom-full left-0 z-30 mb-2 max-h-64 w-56 overflow-y-auto rounded-2xl border border-line bg-surface p-1.5 shadow-float"
                 >
                   {languages.map((option) => {
-                    const active = option.code === language.code
+                    const active = option.code === lang
                     return (
                       <li key={option.code}>
                         <button
@@ -306,15 +316,15 @@ export function Footer() {
             </div>
 
             <button type="button" onClick={() => go({ to: '/privacy' })} className="transition-colors hover:text-ink">
-              Terms &amp; Privacy Policy
+              {t('Terms & Privacy Policy')}
             </button>
 
             <button type="button" onClick={() => setSitemapOpen(true)} className="transition-colors hover:text-ink">
-              Sitemap
+              {t('Sitemap')}
             </button>
           </div>
 
-          <p className="text-sm text-muted">© 2026 KT Messengers. All rights reserved.</p>
+          <p className="text-sm text-muted">{`© 2026 KT Messenger. ${t('All rights reserved.')}`}</p>
         </div>
       </Container>
 

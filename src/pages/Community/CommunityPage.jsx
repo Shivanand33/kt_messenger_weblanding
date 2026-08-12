@@ -61,12 +61,12 @@ const STATS = [
 
 // The footer's social icons deep-link into this section.
 const CHANNELS = [
-  { name: 'X (Twitter)', handle: '@ktmessengers', icon: <FiTwitter />, desc: 'Release notes, incident updates and the occasional protocol thread.', members: '1.2M followers' },
-  { name: 'Instagram', handle: '@ktmessengers', icon: <FiInstagram />, desc: 'Product walkthroughs, design process and team introductions.', members: '640k followers' },
-  { name: 'YouTube', handle: '/ktmessengers', icon: <FiYoutube />, desc: 'Feature deep-dives, conference talks and security explainers.', members: '310k subscribers' },
-  { name: 'Facebook', handle: '/ktmessengers', icon: <FiFacebook />, desc: 'Regional announcements and community group coordination.', members: '890k followers' },
-  { name: 'LinkedIn', handle: '/company/ktmessengers', icon: <FiLinkedin />, desc: 'Hiring updates, engineering culture and company news.', members: '215k followers' },
-  { name: 'GitHub', handle: '/ktmessengers', icon: <FiGithub />, desc: 'Protocol specs, client SDKs and reproducible build tooling.', members: '48k stars' },
+  { name: 'X (Twitter)', handle: '@ktmessenger', icon: <FiTwitter />, desc: 'Release notes, incident updates and the occasional protocol thread.', members: '1.2M followers' },
+  { name: 'Instagram', handle: '@ktmessenger', icon: <FiInstagram />, desc: 'Product walkthroughs, design process and team introductions.', members: '640k followers' },
+  { name: 'YouTube', handle: '/ktmessenger', icon: <FiYoutube />, desc: 'Feature deep-dives, conference talks and security explainers.', members: '310k subscribers' },
+  { name: 'Facebook', handle: '/ktmessenger', icon: <FiFacebook />, desc: 'Regional announcements and community group coordination.', members: '890k followers' },
+  { name: 'LinkedIn', handle: '/company/ktmessenger', icon: <FiLinkedin />, desc: 'Hiring updates, engineering culture and company news.', members: '215k followers' },
+  { name: 'GitHub', handle: '/ktmessenger', icon: <FiGithub />, desc: 'Protocol specs, client SDKs and reproducible build tooling.', members: '48k stars' },
 ]
 
 const FORUM_CATEGORIES = ['All', 'Getting started', 'Privacy & security', 'Payments', 'Developers', 'Feature requests']
@@ -114,7 +114,7 @@ const GUIDELINES = [
 ]
 
 const FAQS = [
-  { q: 'Is the community run by KT Messengers?', a: 'The forums and official channels are ours and staffed by employees. Local chapters are volunteer-run — we fund and support them but do not control what they discuss.', tag: 'Structure' },
+  { q: 'Is the community run by KT Messenger?', a: 'The forums and official channels are ours and staffed by employees. Local chapters are volunteer-run — we fund and support them but do not control what they discuss.', tag: 'Structure' },
   { q: 'How do I become an ambassador?', a: 'Be helpful in the forums for a few months, then apply in the ambassador thread. We look for consistency and tone, not post count, and every applicant gets a written answer.', tag: 'Ambassadors' },
   { q: 'Are events free?', a: 'Meetups, workshops and AMAs are free. Developer days charge a small deposit to cut no-shows, refunded when you attend.', tag: 'Events' },
   { q: 'Can I start a chapter in my city?', a: 'Yes. Apply through the ambassador programme with a rough plan for the first three meetups and we will cover venue and travel costs.', tag: 'Chapters' },
@@ -551,7 +551,7 @@ export function CommunityPage() {
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More about KT Messengers" />
+        <SectionHead eyebrow="Keep exploring" title="More about KT Messenger" />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 

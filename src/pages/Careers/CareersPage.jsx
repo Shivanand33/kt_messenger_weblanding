@@ -358,7 +358,7 @@ export function CareersPage() {
           </>
         }
         title="Careers at"
-        highlight="KT Messengers"
+        highlight="KT Messenger"
         description="Build private messaging for two billion people, at a company whose business model does not depend on reading any of it."
         actions={
           <>
@@ -575,7 +575,7 @@ export function CareersPage() {
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More about KT Messengers" />
+        <SectionHead eyebrow="Keep exploring" title="More about KT Messenger" />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 

@@ -1248,7 +1248,7 @@ export function MarketsPage() {
               <h3 className="text-base font-extrabold text-ink">Not investment advice</h3>
               <p className="mt-2 text-sm leading-relaxed text-body">
                 KT Markets is an information and tracking tool. Prices on this page are illustrative samples, nothing here
-                is a recommendation to buy or sell, and KT Messengers does not execute orders or custody assets. Markets
+                is a recommendation to buy or sell, and KT Messenger does not execute orders or custody assets. Markets
                 carry risk — speak to a licensed adviser before investing.
               </p>
             </div>
@@ -1278,7 +1278,7 @@ export function MarketsPage() {
         actions={
           <>
             <Button size="lg" variant="white" onClick={openDownloadModal}>
-              Download KT Messengers
+              Download KT Messenger
             </Button>
             <Button
               size="lg"
@@ -1293,7 +1293,7 @@ export function MarketsPage() {
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More of KT Messengers" />
+        <SectionHead eyebrow="Keep exploring" title="More of KT Messenger" />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 

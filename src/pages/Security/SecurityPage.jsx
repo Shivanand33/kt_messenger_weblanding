@@ -124,7 +124,7 @@ export function SecurityPage() {
   const faqs = [
     {
       q: 'What are KT Authentication Messages?',
-      a: 'KT Authentication Messages are secure, 1-tap One-Time Passcodes (OTPs) and account verification codes sent over KT Messengers Cloud API. They feature instant delivery, 1-tap copy buttons, and high conversion at 60% lower cost than SMS.'
+      a: 'KT Authentication Messages are secure, 1-tap One-Time Passcodes (OTPs) and account verification codes sent over KT Messenger Cloud API. They feature instant delivery, 1-tap copy buttons, and high conversion at 60% lower cost than SMS.'
     },
     {
       q: 'How do 1-Tap Autofill Passcodes work?',
@@ -319,7 +319,7 @@ export function SecurityPage() {
               <thead className="border-b border-line bg-surface">
                 <tr>
                   <th className="p-4 font-bold text-ink">Security Feature</th>
-                  <th className="p-4 font-bold text-brand-strong">KT Messengers</th>
+                  <th className="p-4 font-bold text-brand-strong">KT Messenger</th>
                   <th className="p-4 font-bold text-muted">Traditional SMS</th>
                 </tr>
               </thead>

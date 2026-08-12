@@ -12,7 +12,7 @@ export function Calling() {
       title="Never miss a moment."
       description="From a group call with friends to a quick check-in with family, feel like you are in the same room — with crisp, reliable voice and video on every device."
       media={<PhoneCallMockup />}
-      cta={<LinkArrow>Learn more about calls</LinkArrow>}
+      cta={<LinkArrow to="/calling">Learn more about calls</LinkArrow>}
     />
   )
 }

@@ -25,7 +25,7 @@ export function Hero() {
       <div className="relative overflow-hidden rounded-[22px] lg:rounded-[30px]">
         <img
           src={heroImage}
-          alt="Friends staying in touch on KT Messengers"
+          alt="Friends staying in touch on KT Messenger"
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/25 lg:via-black/40 lg:to-transparent" />

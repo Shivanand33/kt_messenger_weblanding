@@ -33,7 +33,7 @@ export function DownloadModal({ isOpen, onClose }) {
     setDownloadingOS(osName)
     // Simulate instant file download action
     const element = document.createElement('a')
-    const file = new Blob([`KT Messengers Installer for ${osName}`], { type: 'text/plain' })
+    const file = new Blob([`KT Messenger Installer for ${osName}`], { type: 'text/plain' })
     element.href = URL.createObjectURL(file)
     element.download = filename
     document.body.appendChild(element)
@@ -77,7 +77,7 @@ export function DownloadModal({ isOpen, onClose }) {
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft text-brand-strong">
               <FiDownload className="text-2xl" />
             </div>
-            <h3 className="text-2xl font-bold text-[#111b21]">Download KT Messengers</h3>
+            <h3 className="text-2xl font-bold text-[#111b21]">Download KT Messenger</h3>
             <p className="mt-1 text-xs text-stone-500">
               Get the official app for Windows, macOS, Android, or iOS
             </p>
@@ -97,7 +97,7 @@ export function DownloadModal({ isOpen, onClose }) {
                 </div>
               </div>
               <button
-                onClick={() => handleDownload('Windows', 'KTMessengers-Setup.exe')}
+                onClick={() => handleDownload('Windows', 'KTMessenger-Setup.exe')}
                 className={CTA_CLASS}
               >
                 {downloadingOS === 'Windows' ? (
@@ -124,7 +124,7 @@ export function DownloadModal({ isOpen, onClose }) {
                 </div>
               </div>
               <button
-                onClick={() => handleDownload('macOS', 'KTMessengers-macOS.dmg')}
+                onClick={() => handleDownload('macOS', 'KTMessenger-macOS.dmg')}
                 className={CTA_CLASS}
               >
                 {downloadingOS === 'macOS' ? (

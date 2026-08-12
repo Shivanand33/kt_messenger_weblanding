@@ -23,14 +23,14 @@ import { Section } from '../../components/common/Section/Section'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Button } from '../../components/common/Button/Button'
 import { KtAiLoopVideo } from '../../components/common/VideoAnimations/KtAiLoopVideo'
-import sunsetImage from '../../assets/images/sunset_landscape.png'
-import beachImage from '../../assets/images/beach_bicycles.png'
-import hdImage from '../../assets/images/hd_landscape.png'
+import astronautUnicornImage from '../../assets/images/astronaut_unicorn_mars.png'
+import cyberpunkCityImage from '../../assets/images/cyberpunk_neon_city.png'
+import crystalParrotImage from '../../assets/images/crystal_tropical_parrot.png'
 
-function SparklesIcon({ className = 'h-4 w-4' }) {
+function SparklesIcon({ className = '' }) {
   return (
-    <svg className={className} fill="currentColor" viewBox="0 0 16 16">
-      <path d="M7.5 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm0 12a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm7.5-6.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 1 .5.5zm-12 0a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 1 .5.5zm10.243-4.243a.5.5 0 0 1 0 .707l-2.122 2.121a.5.5 0 1 1-.707-.707l2.122-2.121a.5.5 0 0 1 .707 0zm-8.486 8.485a.5.5 0 0 1 0 .707l-2.121 2.122a.5.5 0 1 1-.707-.707l2.121-2.122a.5.5 0 0 1 .707 0zm0-8.485a.5.5 0 0 1 .707 0l2.121 2.121a.5.5 0 1 1-.707.707L4.257 3.515a.5.5 0 0 1 0-.707zm8.486 8.485a.5.5 0 0 1 .707 0l2.121 2.122a.5.5 0 1 1-.707.707l-2.121-2.122a.5.5 0 0 1 0-.707z" />
+    <svg className={`h-4 w-4 shrink-0 ${className}`} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0C12 6.627 6.627 12 0 12C6.627 12 12 17.373 12 24C12 17.373 17.373 12 24 12C17.373 12 12 6.627 12 0Z" />
     </svg>
   )
 }
@@ -38,7 +38,7 @@ function SparklesIcon({ className = 'h-4 w-4' }) {
 export function KtAIPage() {
   const navigate = useNavigate()
   const [promptText, setPromptText] = useState('An astronaut riding a unicorn on Mars 🦄')
-  const [currentImg, setCurrentImg] = useState(sunsetImage)
+  const [currentImg, setCurrentImg] = useState(astronautUnicornImage)
   const [isGenerating, setIsGenerating] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
   const [faqOpen, setFaqOpen] = useState(0)
@@ -48,9 +48,9 @@ export function KtAIPage() {
   }, [])
 
   const samplePrompts = [
-    { text: 'An astronaut riding a unicorn on Mars 🦄', img: sunsetImage },
-    { text: 'A futuristic neon city in cyber rain 🌧️', img: beachImage },
-    { text: 'A crystal clear tropical parrot 🦜', img: hdImage }
+    { text: 'An astronaut riding a unicorn on Mars 🦄', img: astronautUnicornImage },
+    { text: 'A futuristic neon city in cyber rain 🌧️', img: cyberpunkCityImage },
+    { text: 'A crystal clear tropical parrot 🦜', img: crystalParrotImage }
   ]
 
   const handlePromptSelect = (prompt, img) => {
@@ -106,17 +106,17 @@ export function KtAIPage() {
     {
       title: 'Creative Art & Visuals',
       desc: 'Generate custom wallpapers, stickers, story graphics, and concepts effortlessly with natural language prompts.',
-      img: sunsetImage
+      img: astronautUnicornImage
     },
     {
-      title: 'Travel & Dining Planning',
-      desc: 'Plan 3-day vacation itineraries, find top-rated local coffee spots, and calculate budget estimates instantly.',
-      img: beachImage
+      title: 'Futuristic Cyberpunk Renders',
+      desc: 'Create ultra-detailed futuristic cityscapes, sci-fi concepts, and neon digital artwork in seconds.',
+      img: cyberpunkCityImage
     },
     {
-      title: 'Business & Email Writing',
-      desc: 'Draft client proposals, rewrite cold emails with persuasive tone, and craft press releases in seconds.',
-      img: hdImage
+      title: 'Photorealistic Macro Artwork',
+      desc: 'Produce crystal clear nature graphics, iridescent wildlife concepts, and 3D glass renders on demand.',
+      img: crystalParrotImage
     }
   ]
 
@@ -131,7 +131,7 @@ export function KtAIPage() {
   const faqs = [
     {
       q: 'What is KT AI?',
-      a: 'KT AI is an intelligent assistant built directly into KT Messengers that helps you answer questions, generate images, write text, and summarize voice notes inside personal and group chats.'
+      a: 'KT AI is an intelligent assistant built directly into KT Messenger that helps you answer questions, generate images, write text, and summarize voice notes inside personal and group chats.'
     },
     {
       q: 'How do I generate an image using KT AI?',
@@ -162,9 +162,27 @@ export function KtAIPage() {
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
-              <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
-                <SparklesIcon className="text-brand-strong" /> Next-Gen Artificial Intelligence
+              <div className="relative inline-flex items-center gap-3 rounded-full border border-sky-400/40 dark:border-sky-400/30 bg-gradient-to-r from-sky-500/10 via-indigo-500/15 to-purple-500/10 px-5 py-2.5 text-xs font-extrabold text-sky-600 dark:text-sky-300 shadow-[0_0_25px_rgba(56,189,248,0.25)] backdrop-blur-xl group overflow-hidden">
+                {/* Animated Shimmer Ray */}
+                <div className="absolute inset-0 -translate-x-full animate-[shimmer_2.5s_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+
+                {/* Futuristic Glowing Animated AI Logo Icon */}
+                <div className="relative flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-tr from-sky-500 via-indigo-600 to-purple-600 text-white shadow-md shadow-sky-500/30 shrink-0">
+                  <span className="absolute -inset-0.5 rounded-xl bg-sky-400/50 blur-sm animate-pulse" />
+                  <SparklesIcon className="relative z-10 h-4 w-4 animate-spin [animation-duration:6s]" />
+                </div>
+
+                <span className="font-extrabold tracking-wide uppercase text-[11px] bg-gradient-to-r from-sky-600 via-indigo-600 to-purple-600 dark:from-sky-300 dark:via-indigo-300 dark:to-purple-300 bg-clip-text text-transparent">
+                  Next-Gen Artificial Intelligence
+                </span>
+
+                {/* Live AI Pulse Ring */}
+                <span className="flex h-2.5 w-2.5 relative shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500" />
+                </span>
               </div>
+
               <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
                 Meet KT AI — Your <br />
                 <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
@@ -197,8 +215,9 @@ export function KtAIPage() {
             <Reveal from="scale" delay={0.15} className="flex justify-center">
               <div className="relative w-full max-w-[420px] rounded-[36px] border border-line bg-surface p-6 shadow-float">
                 <div className="flex items-center gap-3 border-b border-line pb-4 mb-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-strong text-white font-bold text-sm shadow-brand">
-                    AI
+                  <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-tr from-sky-500 via-indigo-600 to-purple-600 text-white font-black text-sm shadow-md shadow-sky-500/30 shrink-0">
+                    <span className="absolute -inset-0.5 rounded-2xl bg-sky-400/40 blur-sm animate-pulse" />
+                    <SparklesIcon className="relative z-10 h-5 w-5" />
                   </div>
                   <div>
                     <h3 className="font-bold text-ink text-base">KT AI Studio</h3>
@@ -542,7 +561,7 @@ export function KtAIPage() {
               Start Using KT AI Today
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Download KT Messengers now and experience next-gen AI image generation, group assistant, and search.
+              Download KT Messenger now and experience next-gen AI image generation, group assistant, and search.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>

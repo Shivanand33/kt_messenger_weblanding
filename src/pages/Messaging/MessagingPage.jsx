@@ -20,7 +20,6 @@ import {
   FiChevronLeft,
   FiArrowRight,
   FiHelpCircle,
-  FiShield,
   FiZap
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
@@ -29,6 +28,7 @@ import { Section } from '../../components/common/Section/Section'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Button } from '../../components/common/Button/Button'
 import { MessagingLoopVideo } from '../../components/common/VideoAnimations/MessagingLoopVideo'
+import { KtChatScreen } from '../../components/common/AppScreens/KtChatScreen'
 import weddingImg from '../../assets/images/wedding_grid.png'
 import hdImg from '../../assets/images/hd_landscape.png'
 import groupImg from '../../assets/images/group.jpg'
@@ -130,7 +130,7 @@ export function MessagingPage() {
   const faqs = [
     {
       q: 'Are personal messages on KT encrypted by default?',
-      a: 'Yes! Every 1-on-1 and group chat on KT Messengers is end-to-end encrypted by default using the industry-gold Signal Protocol. No one outside the chat, not even KT, can read your messages.'
+      a: 'Yes! Every 1-on-1 and group chat on KT Messenger is end-to-end encrypted by default using the industry-gold Signal Protocol. No one outside the chat, not even KT, can read your messages.'
     },
     {
       q: 'What is the maximum file size I can send in a message?',
@@ -192,76 +192,15 @@ export function MessagingPage() {
               </div>
             </Reveal>
 
-            {/* INTERACTIVE CHAT MOCKUP */}
+            {/* INTERACTIVE CHAT MOCKUP MATCHING SCREENSHOT 1 */}
             <Reveal from="scale" delay={0.15} className="flex justify-center">
-              <div className="relative w-full max-w-[420px] rounded-[36px] border border-line bg-surface p-4 shadow-float">
-                <div className="rounded-[28px] bg-cream p-4 border border-line">
-                  {/* Chat Header */}
-                  <div className="flex items-center justify-between border-b border-line pb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="relative">
-                        <img src={avatarFemale} alt="Nadia" className="h-10 w-10 rounded-full object-cover border-2 border-brand-strong" />
-                        <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 border-2 border-white" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-ink text-sm">Nadia Williams</h3>
-                        <p className="text-[11px] text-brand-ink font-semibold">Online • Encrypted Chat</p>
-                      </div>
-                    </div>
-                    <span className="rounded-full bg-brand-soft px-2.5 py-1 text-[10px] font-bold text-brand-ink">
-                      🔒 E2EE
-                    </span>
-                  </div>
-
-                  {/* Messages Stream */}
-                  <div className="mt-4 space-y-3 text-xs">
-                    <div className="max-w-[80%] rounded-2xl bg-surface p-3 text-body border border-line shadow-soft">
-                      Hey! Did you check out the new HD photo and 2GB file sharing feature on KT? 📸
-                      <span className="mt-1 block text-[9px] text-muted text-right">10:14 AM</span>
-                    </div>
-
-                    <div className="ml-auto max-w-[85%] rounded-2xl bg-brand-strong p-3 text-white shadow-brand">
-                      Yes! It is super fast! I just sent over our entire design project bundle in HD quality. 🚀
-                      <div className="mt-1 flex items-center justify-end gap-1 text-[9px] text-white/80">
-                        <span>10:15 AM</span>
-                        <FiCheck className="text-xs" />
-                      </div>
-                    </div>
-
-                    {/* Audio Voice Note Bubble */}
-                    <div className="max-w-[85%] rounded-2xl bg-surface p-3 border border-line shadow-soft">
-                      <div className="flex items-center gap-3">
-                        <button className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-strong text-white">
-                          ▶
-                        </button>
-                        <div className="flex-1 space-y-1">
-                          <div className="h-1.5 w-full rounded-full bg-brand-soft overflow-hidden">
-                            <div className="h-full w-2/3 bg-brand-strong" />
-                          </div>
-                          <div className="flex justify-between text-[9px] text-muted">
-                            <span>0:18</span>
-                            <span>1.5x</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Input Bar */}
-                  <div className="mt-4 flex items-center gap-2 rounded-2xl bg-surface p-2 border border-line">
-                    <span className="text-muted text-base px-1">😊</span>
-                    <input
-                      type="text"
-                      readOnly
-                      value="Messaging feels effortless..."
-                      className="w-full bg-transparent text-xs text-ink outline-none"
-                    />
-                    <button className="grid h-8 w-8 place-items-center rounded-xl bg-brand-strong text-white shrink-0">
-                      ↑
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <KtChatScreen
+                className="w-full max-w-[320px]"
+                showControls={false}
+                showProgress={false}
+                showPhoto={false}
+                showEncryptionNote={false}
+              />
             </Reveal>
           </div>
         </Container>
@@ -384,10 +323,6 @@ export function MessagingPage() {
               <div className="relative z-10">
                 <MessagingLoopVideo />
               </div>
-
-              <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-2 left-2 sm:left-6 z-20 flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 shadow-float border border-brand-strong/30 text-xs font-bold text-brand-ink">
-                <FiShield className="text-brand-strong" /> Signal E2EE Protected
-              </motion.div>
             </Reveal>
           </div>
         </div>
@@ -396,16 +331,16 @@ export function MessagingPage() {
       {/* 4. RICH MEDIA & LARGE ATTACHMENTS CAROUSEL */}
       <section className="bg-brand-soft py-16 lg:py-24">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-            <Reveal from="left" className="flex flex-col justify-between">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+            <Reveal from="left" className="flex min-w-0 flex-col justify-between">
               <div>
                 <div className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
                   <FiPaperclip /> High-Speed Media Engine
                 </div>
-                <h2 className="mt-4 text-3xl font-extrabold leading-tight text-ink sm:text-4xl lg:text-5xl">
+                <h2 className="mt-4 max-w-md text-3xl font-extrabold leading-tight text-ink text-balance sm:text-4xl lg:text-[2.75rem]">
                   Share more than just plain text
                 </h2>
-                <p className="mt-6 text-base leading-relaxed text-body">
+                <p className="mt-6 max-w-md text-base leading-relaxed text-body">
                   Send ultra-high-definition 4K photos, uncompressed videos, and massive files up to 2GB without ever exiting your chat thread.
                 </p>
               </div>
@@ -426,7 +361,7 @@ export function MessagingPage() {
               </div>
             </Reveal>
 
-            <Reveal from="right">
+            <Reveal from="right" className="min-w-0">
               <div ref={carouselRef} className="flex gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {/* Media Card 1 */}
                 <div className="w-[320px] shrink-0 rounded-3xl border border-line bg-surface p-5 shadow-card">
@@ -481,18 +416,23 @@ export function MessagingPage() {
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {expressItems.map((item) => (
             <Reveal key={item.title} from="up">
-              <div className="rounded-3xl border border-line bg-surface p-6 shadow-soft hover:shadow-card transition-all h-full flex flex-col justify-between">
+              <button
+                type="button"
+                onClick={() => navigate('/apps')}
+                className="group h-full w-full text-left rounded-3xl border border-line bg-surface p-6 shadow-soft transition-all hover:-translate-y-1 hover:border-brand-strong/30 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 flex flex-col justify-between"
+              >
                 <div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft text-brand-strong mb-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft text-brand-strong mb-4 transition-transform group-hover:scale-110">
                     {item.icon}
                   </div>
                   <h3 className="text-lg font-bold text-ink">{item.title}</h3>
                   <p className="mt-2 text-xs leading-relaxed text-body">{item.desc}</p>
                 </div>
-                <div className="mt-6 pt-4 border-t border-line">
+                <div className="mt-6 pt-4 border-t border-line flex items-center gap-1.5">
                   <span className="text-[11px] font-semibold text-brand-ink">Included free in KT Chat</span>
+                  <FiArrowRight className="text-[11px] text-brand-ink transition-transform group-hover:translate-x-1" />
                 </div>
-              </div>
+              </button>
             </Reveal>
           ))}
         </div>
@@ -506,7 +446,7 @@ export function MessagingPage() {
               How KT Messaging Compares
             </h2>
             <p className="mt-4 text-lg text-body">
-              See how KT Messengers raises the bar for speed, file handling, and encryption.
+              See how KT Messenger raises the bar for speed, file handling, and encryption.
             </p>
           </Reveal>
 
@@ -515,7 +455,7 @@ export function MessagingPage() {
               <thead>
                 <tr className="border-b border-line bg-cream">
                   <th className="p-4 font-bold text-ink">Feature</th>
-                  <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT Messengers</th>
+                  <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT Messenger</th>
                   <th className="p-4 font-bold text-body">Standard SMS / MMS</th>
                   <th className="p-4 font-bold text-body">Other Chat Apps</th>
                 </tr>
@@ -588,7 +528,7 @@ export function MessagingPage() {
               Start Messaging Freely Today
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Download KT Messengers now across all your devices and experience private, high-speed communication.
+              Download KT Messenger now across all your devices and experience private, high-speed communication.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>

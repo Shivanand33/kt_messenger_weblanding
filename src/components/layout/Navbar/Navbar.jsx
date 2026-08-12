@@ -26,6 +26,7 @@ import { Container } from '../../common/Container/Container'
 import { Button } from '../../common/Button/Button'
 import { Logo } from '../../common/Logo/Logo'
 import { useModal } from '../../../context/ModalContext'
+import { useLanguage } from '../../../context/LanguageContext'
 
 const featureItems = [
   { label: 'Calling', to: '/calling', icon: <FiPhone /> },
@@ -53,11 +54,12 @@ const navLinks = [
 
 const SECTION_IDS = ['hero', 'web', 'devices', 'calls', 'privacy', 'groups', 'expression', 'business', 'features', 'download']
 
-// Logging in hands off to the web client, which owns device linking.
+// Logging in hands off to the KT Web client, which owns device linking.
 const LOGIN_URL = 'https://web.ktmessenger.com/auth/qr'
 
 export function Navbar() {
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
   const [open, setOpen] = useState(false)
   const [featuresOpen, setFeaturesOpen] = useState(false)
   const [mobileFeatures, setMobileFeatures] = useState(false)
@@ -135,7 +137,7 @@ export function Navbar() {
       }`}
     >
       <Container className="flex h-16 items-center justify-between lg:h-[72px]">
-        <button onClick={() => go('#hero')} aria-label="KT Messengers home" className="shrink-0">
+        <button onClick={() => go('#hero')} aria-label="KT Messenger home" className="shrink-0">
           <Logo />
         </button>
 
@@ -152,7 +154,7 @@ export function Navbar() {
               aria-expanded={featuresOpen}
               className="relative inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium text-ink"
             >
-              Features
+              {t('Features')}
               <FiChevronDown className={`text-xs transition-transform duration-200 ${featuresOpen ? 'rotate-180' : ''}`} />
               {featuresActive ? <span className="absolute inset-x-3.5 bottom-0.5 h-0.5 rounded-full bg-brand" /> : null}
             </button>
@@ -175,7 +177,7 @@ export function Navbar() {
                     className="flex items-center gap-3 w-full rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#e9edef] transition-colors hover:bg-[#1a2733] hover:text-[#2e90fa] group"
                   >
                     <span className="text-base text-brand-strong group-hover:scale-110 transition-transform">{item.icon}</span>
-                    <span>{item.label}</span>
+                    <span>{t(item.label)}</span>
                   </button>
                 ))}
               </motion.div>
@@ -190,7 +192,7 @@ export function Navbar() {
                 onClick={() => go(link.to || link.href)}
                 className="relative inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium text-ink transition-colors hover:text-brand-ink"
               >
-                {link.label}
+                {t(link.label)}
                 {link.external ? <FiArrowUpRight className="text-xs" /> : null}
                 {linkActive ? <span className="absolute inset-x-3.5 bottom-0.5 h-0.5 rounded-full bg-brand" /> : null}
               </button>
@@ -200,10 +202,10 @@ export function Navbar() {
 
         <div className="hidden items-center gap-2.5 sm:flex">
           <Button variant="ghost" href={LOGIN_URL}>
-            Log In <FiChevronRight className="text-xs" />
+            {t('Log In')} <FiChevronRight className="text-xs" />
           </Button>
           <Button onClick={openDownloadModal}>
-            Download <FiDownload />
+            {t('Download')} <FiDownload />
           </Button>
         </div>
 
@@ -230,7 +232,7 @@ export function Navbar() {
                   onClick={() => setMobileFeatures((val) => !val)}
                   className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left font-semibold text-ink hover:bg-surface-2"
                 >
-                  <span>Features</span>
+                  <span>{t('Features')}</span>
                   <FiChevronDown className={`transition-transform ${mobileFeatures ? 'rotate-180' : ''}`} />
                 </button>
 
@@ -243,7 +245,7 @@ export function Navbar() {
                         className="flex items-center gap-2 w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-body hover:bg-surface-2"
                       >
                         <span className="text-brand-strong">{item.icon}</span>
-                        <span>{item.label}</span>
+                        <span>{t(item.label)}</span>
                       </button>
                     ))}
                   </div>
@@ -255,7 +257,7 @@ export function Navbar() {
                     onClick={() => go(link.to || link.href)}
                     className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left font-semibold text-ink hover:bg-surface-2"
                   >
-                    <span>{link.label}</span>
+                    <span>{t(link.label)}</span>
                     {link.external ? <FiArrowUpRight className="text-xs" /> : null}
                   </button>
                 ))}
@@ -263,10 +265,10 @@ export function Navbar() {
 
               <div className="flex flex-col gap-2 pt-2 border-t border-line">
                 <Button variant="ghost" href={LOGIN_URL} onClick={() => setOpen(false)} className="w-full justify-center">
-                  Log In
+                  {t('Log In')}
                 </Button>
                 <Button onClick={openDownloadModal} className="w-full justify-center">
-                  Download <FiDownload />
+                  {t('Download')} <FiDownload />
                 </Button>
               </div>
           </Container>

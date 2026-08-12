@@ -293,7 +293,7 @@ export function ContactPage() {
           </>
         }
         title="Contact"
-        highlight="KT Messengers"
+        highlight="KT Messenger"
         description="Pick the team that fits, tell us what is going on, and a person will read it. We publish our response times below and hold ourselves to them."
         actions={
           <>
@@ -903,7 +903,7 @@ export function ContactPage() {
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More about KT Messengers" />
+        <SectionHead eyebrow="Keep exploring" title="More about KT Messenger" />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 

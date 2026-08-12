@@ -1227,7 +1227,7 @@ export function WalletPage() {
         actions={
           <>
             <Button size="lg" variant="white" onClick={openDownloadModal}>
-              Download KT Messengers
+              Download KT Messenger
             </Button>
             <Button size="lg" variant="onDark" onClick={() => document.getElementById('send')?.scrollIntoView({ behavior: 'smooth' })}>
               Try the demo transfer
@@ -1238,7 +1238,7 @@ export function WalletPage() {
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More of KT Messengers" />
+        <SectionHead eyebrow="Keep exploring" title="More of KT Messenger" />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 

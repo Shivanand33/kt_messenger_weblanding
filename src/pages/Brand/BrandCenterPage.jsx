@@ -79,8 +79,8 @@ const DONTS = [
 ]
 
 const ASSETS = [
-  { name: 'Logo lockup — SVG', desc: 'Full mark plus wordmark, scalable and colour-accurate.', file: 'kt-messengers-logo.svg', kind: 'svg' },
-  { name: 'App icon — SVG', desc: 'The tile mark on its own, for avatars and favicons.', file: 'kt-messengers-icon.svg', kind: 'icon' },
+  { name: 'Logo lockup — SVG', desc: 'Full mark plus wordmark, scalable and colour-accurate.', file: 'kt-messenger-logo.svg', kind: 'svg' },
+  { name: 'App icon — SVG', desc: 'The tile mark on its own, for avatars and favicons.', file: 'kt-messenger-icon.svg', kind: 'icon' },
   { name: 'Brand guidelines', desc: 'Clear space, minimum sizes, colour values and misuse examples.', file: 'kt-brand-guidelines.txt', kind: 'doc' },
   { name: 'Colour tokens', desc: 'Every palette value as CSS custom properties, light and dark.', file: 'kt-colour-tokens.css', kind: 'tokens' },
 ]
@@ -97,7 +97,7 @@ const RELATED = [
 // so a partner can never end up with a stale mark.
 const LOGO_SVG = ktLogoRaw
 
-const TOKENS_CSS = `/* KT Messengers — colour tokens */
+const TOKENS_CSS = `/* KT Messenger — colour tokens */
 :root {
   --kt-brand: #2E90FA;
   --kt-brand-strong: #1570EF;
@@ -153,7 +153,7 @@ const GUIDELINES_TXT = `KT MESSENGERS — BRAND GUIDELINES (summary)
    - Place the logo on a busy photo without a backing plate.
    - Rebuild the wordmark in another typeface.
 
-Questions: brand@ktmessengers.example
+Questions: brand@ktmessenger.example
 `
 
 export function BrandCenterPage() {
@@ -473,7 +473,7 @@ export function BrandCenterPage() {
 
       <Section container={false} className="bg-surface">
         <Container>
-          <SectionHead eyebrow="Keep exploring" title="More about KT Messengers" />
+          <SectionHead eyebrow="Keep exploring" title="More about KT Messenger" />
           <RelatedPages className="mt-12" items={RELATED} />
         </Container>
       </Section>

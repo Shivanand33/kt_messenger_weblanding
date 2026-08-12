@@ -1051,7 +1051,7 @@ export function NotesPage() {
         actions={
           <>
             <Button size="lg" variant="white" onClick={openDownloadModal}>
-              Download KT Messengers
+              Download KT Messenger
             </Button>
             <Button size="lg" variant="onDark" onClick={() => openNewNote()}>
               Try the editor
@@ -1062,7 +1062,7 @@ export function NotesPage() {
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More of KT Messengers" />
+        <SectionHead eyebrow="Keep exploring" title="More of KT Messenger" />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 

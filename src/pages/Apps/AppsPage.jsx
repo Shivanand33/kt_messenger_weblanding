@@ -19,7 +19,7 @@ const platforms = [
   {
     type: 'Tablet',
     name: 'iPadOS',
-    desc: 'All the features you love — chats, calls, status, and screen sharing — on a bigger screen with the KT Messengers iPad app.',
+    desc: 'All the features you love — chats, calls, status, and screen sharing — on a bigger screen with the KT Messenger iPad app.',
     req: 'Minimum: iPadOS 15.1 or newer',
     badge: appStore,
     isNew: true,
@@ -27,7 +27,7 @@ const platforms = [
   {
     type: 'Mobile / Tablet',
     name: 'iOS',
-    desc: 'Chat, call, and share on the go with the KT Messengers app for iPhone.',
+    desc: 'Chat, call, and share on the go with the KT Messenger app for iPhone.',
     req: 'Minimum: iOS 12.0 or newer',
     badge: appStore,
   },
@@ -188,17 +188,17 @@ export function AppsPage() {
               <h1 className="text-[3rem] font-bold leading-[0.98] tracking-tight text-ink sm:text-6xl lg:text-7xl">
                 Download
                 <br />
-                KT Messengers
+                KT Messenger
               </h1>
             </Reveal>
             <Reveal from="up" delay={0.06}>
               <p className="mt-6 max-w-md text-lg leading-8 text-body">
-                Start chatting and calling privately with KT Messengers across all your devices.
+                Start chatting and calling privately with KT Messenger across all your devices.
               </p>
             </Reveal>
             <Reveal from="up" delay={0.1}>
               <p className="mt-4 text-sm text-muted">
-                By installing KT Messengers, you agree to our{' '}
+                By installing KT Messenger, you agree to our{' '}
                 <button className="underline transition-colors hover:text-brand-ink" onClick={() => navigate('/privacy')}>
                   Terms
                 </button>{' '}
@@ -290,32 +290,37 @@ export function AppsPage() {
               Already downloaded?
             </h2>
             <p className="mt-6 max-w-sm text-lg leading-8 text-body">
-              Learn more about everything you can do on KT Messengers.
+              Learn more about everything you can do on KT Messenger.
             </p>
             <Arrows onPrev={() => scrollRail(featuresRail, -1)} onNext={() => scrollRail(featuresRail, 1)} />
           </div>
 
-          <div ref={featuresRail} className={railClass}>
-            {features.map((feature) => (
-              <div key={feature.title} className="w-[300px] shrink-0 flex flex-col justify-between rounded-[28px] border border-line bg-cream p-5 shadow-card dark:bg-surface">
-                <div>
-                  <div className="overflow-hidden rounded-[20px]">
-                    <img src={feature.image} alt={feature.title} loading="lazy" className="h-52 w-full object-cover transition-transform duration-300 hover:scale-105" />
+          <div className="relative min-w-0">
+            {/* Edge fades so partial cards dissolve softly instead of hard-cutting mid-scroll */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-surface to-transparent" aria-hidden="true" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-surface to-transparent" aria-hidden="true" />
+            <div ref={featuresRail} className={`${railClass} snap-x snap-proximity`}>
+              {features.map((feature) => (
+                <div key={feature.title} className="w-[300px] shrink-0 snap-start flex flex-col justify-between rounded-[28px] border border-line bg-cream p-5 shadow-card transition-shadow duration-300 hover:shadow-float dark:bg-surface">
+                  <div>
+                    <div className="overflow-hidden rounded-[20px]">
+                      <img src={feature.image} alt={feature.title} loading="lazy" className="h-52 w-full object-cover transition-transform duration-300 hover:scale-105" />
+                    </div>
+                    <h3 className="mt-4 text-xl font-extrabold text-ink">{feature.title}</h3>
+                    <p className="mt-2 text-xs text-body leading-relaxed">{feature.desc}</p>
                   </div>
-                  <h3 className="mt-4 text-xl font-extrabold text-ink">{feature.title}</h3>
-                  <p className="mt-2 text-xs text-body leading-relaxed">{feature.desc}</p>
+                  <div className="mt-5 pt-3 border-t border-line">
+                    <button
+                      onClick={() => goTo(feature.to)}
+                      className="group inline-flex items-center gap-2 text-sm font-bold text-brand-ink transition-colors hover:text-brand-strong"
+                    >
+                      <span>Learn more</span>
+                      <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+                    </button>
+                  </div>
                 </div>
-                <div className="mt-5 pt-3 border-t border-line">
-                  <button
-                    onClick={() => goTo(feature.to)}
-                    className="group inline-flex items-center gap-2 text-sm font-bold text-brand-ink transition-colors hover:text-brand-strong"
-                  >
-                    <span>Learn more</span>
-                    <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </Section>

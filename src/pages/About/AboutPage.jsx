@@ -162,14 +162,14 @@ export function AboutPage() {
           </>
         }
         title="About"
-        highlight="KT Messengers"
+        highlight="KT Messenger"
         description="We build private messaging for two billion people — and we fund it with subscriptions, not with what you say to your family."
         actions={
           <>
             <Button size="lg" variant="white" onClick={() => document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' })}>
               Read our mission <FiChevronRight />
             </Button>
-            <Button size="lg" variant="onDark" onClick={openDownloadModal}>
+            <Button size="lg" variant="secondary" onClick={openDownloadModal}>
               Get the app <FiZap />
             </Button>
           </>
@@ -180,8 +180,8 @@ export function AboutPage() {
           { icon: <FiGlobe />, label: '180 countries' },
         ]}
         aside={
-          <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur-xl sm:p-8">
-            <span className="text-[11px] font-black uppercase tracking-[0.16em] text-sky-300">What we refuse to do</span>
+          <div className="rounded-[28px] border border-line dark:border-white/10 bg-surface dark:bg-white/[0.04] p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+            <span className="text-[11px] font-black uppercase tracking-[0.16em] text-brand-strong dark:text-sky-300">What we refuse to do</span>
             <ul className="mt-5 space-y-4">
               {[
                 'Sell advertising against your conversations.',
@@ -189,13 +189,13 @@ export function AboutPage() {
                 'Add a backdoor for anyone, under any label.',
                 'Charge extra for encryption or safety features.',
               ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-slate-300">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-400" />
+                <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-body dark:text-slate-300">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500 dark:bg-rose-400" />
                   {item}
                 </li>
               ))}
             </ul>
-            <p className="mt-6 border-t border-white/10 pt-5 text-xs leading-relaxed text-slate-400">
+            <p className="mt-6 border-t border-line dark:border-white/10 pt-5 text-xs leading-relaxed text-muted dark:text-slate-400">
               These four lines have been in our charter since 2019 and require a board supermajority to change.
             </p>
           </div>
@@ -359,7 +359,7 @@ export function AboutPage() {
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More about KT Messengers" />
+        <SectionHead eyebrow="Keep exploring" title="More about KT Messenger" />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
     </MainLayout>

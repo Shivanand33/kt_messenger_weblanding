@@ -16,8 +16,8 @@ export function MultiDevice() {
       reverse
       eyebrow="Desktop"
       eyebrowIcon={<FiMonitor />}
-      title="Get KT Messengers on your desktop."
-      description="Chat and call on a larger screen with the KT Messengers desktop app — everything stays perfectly in sync with your phone, even when it is asleep."
+      title="Get KT Messenger on your desktop."
+      description="Chat and call on a larger screen with the KT Messenger desktop app — everything stays perfectly in sync with your phone, even when it is asleep."
       media={<DesktopAppMockup />}
       cta={
         <Button>

@@ -18,7 +18,7 @@ export function Business() {
         { value: '1B+', label: 'Chats every day' },
         { value: '3 min', label: 'Avg. reply time' },
       ]}
-      cta={<LinkArrow>Explore KT Business</LinkArrow>}
+      cta={<LinkArrow to="/business">Explore KT Business</LinkArrow>}
       accent={
         <div className="absolute -bottom-4 left-5 flex items-center gap-2.5 rounded-2xl border border-line bg-surface/95 p-3 pr-5 shadow-card backdrop-blur sm:left-8">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand text-white">

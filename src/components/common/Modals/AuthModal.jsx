@@ -80,7 +80,7 @@ export function AuthModal({ isOpen, onClose }) {
               <div className="rounded-2xl bg-stone-50 p-3 text-left text-xs text-stone-600 space-y-1.5 border border-stone-200/70">
                 <p className="font-semibold text-stone-800">How to connect:</p>
                 <ol className="list-decimal list-inside space-y-1">
-                  <li>Open <strong>KT Messengers</strong> on your phone</li>
+                  <li>Open <strong>KT Messenger</strong> on your phone</li>
                   <li>Tap <strong>Settings</strong> ⚙️ &gt; <strong>Linked Devices</strong></li>
                   <li>Point your camera at this screen</li>
                 </ol>

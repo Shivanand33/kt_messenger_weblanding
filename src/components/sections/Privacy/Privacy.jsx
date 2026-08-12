@@ -1,7 +1,7 @@
 import { FiShield, FiLock, FiClock } from 'react-icons/fi'
 import { FeatureShowcase } from '../FeatureShowcase/FeatureShowcase'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
-import privacyImage from '../../../assets/images/security.jpg'
+import privacyImage from '../../../assets/images/footer.jpg'
 
 export function Privacy() {
   return (
@@ -11,14 +11,14 @@ export function Privacy() {
       eyebrow="Privacy"
       eyebrowIcon={<FiShield />}
       title="Your conversations, locked to you."
-      description="Every message and call is secured with end-to-end encryption by default. Not even KT Messengers can read them — only you and the people you're talking to."
+      description="Every message and call is secured with end-to-end encryption by default. Not even KT Messenger can read them — only you and the people you're talking to."
       image={privacyImage}
-      imageAlt="Someone reading a private message securely"
+      imageAlt="People gathered around a laptop using KT Messenger"
       bullets={[
         { icon: <FiLock />, title: 'End-to-end encryption', text: 'Locked the moment it leaves your device.' },
         { icon: <FiClock />, title: 'Disappearing messages', text: 'Set chats to auto-delete on your own schedule.' },
       ]}
-      cta={<LinkArrow>How privacy works</LinkArrow>}
+      cta={<LinkArrow to="/privacy">How privacy works</LinkArrow>}
       accent={
         <div className="absolute -bottom-4 right-5 flex items-center gap-2.5 rounded-2xl border border-brand/25 bg-brand-soft p-3 pr-5 shadow-card sm:right-8">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand text-white">

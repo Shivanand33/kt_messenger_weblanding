@@ -10,7 +10,7 @@
  * resolve to CSS variables so they switch automatically between the
  * light and dark palettes defined in :root / .dark below.
  *
- * Brand accent = KT Messengers blue. To match an exact logo hex, change
+ * Brand accent = KT Messenger blue. To match an exact logo hex, change
  * the --brand* values in both :root and .dark below — nothing else.
  * ------------------------------------------------------------------ */
 @theme inline {

@@ -62,7 +62,7 @@ export function Statement() {
       <Container className="pointer-events-none relative z-10">
         <Reveal from="up" className="mx-auto max-w-4xl text-center">
           <p className="text-[1.7rem] font-bold leading-[1.3] tracking-tight text-ink sm:text-[2.2rem] lg:text-[2.9rem] lg:leading-[1.28]">
-            Great conversations feel effortless. KT Messengers stays out of the way — so a quick hello, a long
+            Great conversations feel effortless. KT Messenger stays out of the way — so a quick hello, a long
             catch-up, or a late-night call all feel{' '}
             <span className="text-brand-ink">close, natural, and completely your own.</span>
           </p>

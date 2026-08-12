@@ -226,23 +226,7 @@ export function NewsPage() {
 
   return (
     <MainLayout>
-      {/* ---------------------------------------------------------------- */}
-      {/* BREAKING TICKER                                                   */}
-      {/* ---------------------------------------------------------------- */}
-      <div className="flex items-center gap-0 border-b border-line bg-[#0b1626] text-white">
-        <span className="flex shrink-0 items-center gap-2 bg-rose-600 px-4 py-2.5 text-[11px] font-black uppercase tracking-[0.14em]">
-          <span className="h-1.5 w-1.5 animate-ping rounded-full bg-white" />
-          Breaking
-        </span>
-        <Marquee duration={55} className="flex-1">
-          {breakingTicker.map((headline) => (
-            <span key={headline} className="flex items-center gap-3 whitespace-nowrap px-6 py-2.5 text-xs font-semibold text-slate-200">
-              <FiRadio className="text-sky-400" />
-              {headline}
-            </span>
-          ))}
-        </Marquee>
-      </div>
+
 
       {/* ---------------------------------------------------------------- */}
       {/* HERO                                                              */}
@@ -258,10 +242,10 @@ export function NewsPage() {
         description="Real-time global headlines, market moves and science breakthroughs — ranked on your device, delivered inside the chats you already use."
         actions={
           <>
-            <Button size="lg" variant="white" onClick={() => document.getElementById('feed')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button size="lg" variant="primary" onClick={() => document.getElementById('feed')?.scrollIntoView({ behavior: 'smooth' })}>
               Browse the feed <FiChevronRight />
             </Button>
-            <Button size="lg" variant="onDark" onClick={openDownloadModal}>
+            <Button size="lg" variant="secondary" onClick={openDownloadModal}>
               Get the app <FiZap />
             </Button>
           </>
@@ -272,14 +256,14 @@ export function NewsPage() {
           { icon: <FiHeadphones />, label: '3-minute audio brief' },
         ]}
         aside={
-          <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5 shadow-2xl backdrop-blur-xl sm:p-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+          <div className="rounded-[28px] border border-line bg-surface dark:bg-white/[0.04] p-5 shadow-card dark:shadow-2xl backdrop-blur-xl sm:p-6 text-ink dark:text-white">
+            <div className="flex items-center justify-between border-b border-line dark:border-white/10 pb-4">
               <div className="flex items-center gap-2.5">
                 <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-strong text-xs font-black text-white">KT</span>
-                <span className="text-sm font-extrabold text-white">Newsroom stream</span>
+                <span className="text-sm font-extrabold text-ink dark:text-white">Newsroom stream</span>
               </div>
-              <span className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-black uppercase text-emerald-300">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" /> Live
+              <span className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-300">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500 dark:bg-emerald-400" /> Live
               </span>
             </div>
 
@@ -289,12 +273,12 @@ export function NewsPage() {
                   <button
                     type="button"
                     onClick={() => openArticle(item)}
-                    className="flex w-full items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-left transition-colors hover:border-sky-400/40 hover:bg-white/[0.07]"
+                    className="flex w-full items-start gap-3 rounded-2xl border border-line bg-cream dark:bg-white/[0.03] p-3 text-left transition-colors hover:border-brand-strong/40 dark:hover:border-sky-400/40 hover:bg-cream-2 dark:hover:bg-white/[0.07]"
                   >
                     <img src={item.image} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                     <span className="min-w-0">
-                      <span className="line-clamp-2 block text-xs font-bold leading-snug text-white">{item.title}</span>
-                      <span className="mt-1 block text-[10px] font-semibold text-slate-400">
+                      <span className="line-clamp-2 block text-xs font-bold leading-snug text-ink dark:text-white">{item.title}</span>
+                      <span className="mt-1 block text-[10px] font-semibold text-muted dark:text-slate-400">
                         {item.source} · {item.time}
                       </span>
                     </span>
@@ -303,23 +287,23 @@ export function NewsPage() {
               ))}
             </ul>
 
-            <div className="mt-4 grid grid-cols-3 gap-2 border-t border-white/10 pt-4 text-center">
+            <div className="mt-4 grid grid-cols-3 gap-2 border-t border-line dark:border-white/10 pt-4 text-center">
               {[
                 { value: '450+', label: 'Sources' },
                 { value: '4×', label: 'Daily briefs' },
                 { value: '50+', label: 'Languages' },
               ].map((item) => (
                 <div key={item.label}>
-                  <div className="text-base font-black text-white">{item.value}</div>
-                  <div className="text-[10px] font-bold uppercase tracking-wide text-slate-400">{item.label}</div>
+                  <div className="text-base font-black text-ink dark:text-white">{item.value}</div>
+                  <div className="text-[10px] font-bold uppercase tracking-wide text-muted dark:text-slate-400">{item.label}</div>
                 </div>
               ))}
             </div>
           </div>
         }
       >
-        <div className="mt-8 flex items-center gap-3 rounded-2xl border border-white/15 bg-white/[0.06] p-2 shadow-2xl backdrop-blur-xl">
-          <FiSearch className="ml-3 shrink-0 text-xl text-slate-400" />
+        <div className="mt-8 flex items-center gap-3 rounded-2xl border border-line dark:border-white/15 bg-surface dark:bg-white/[0.06] p-2 shadow-soft dark:shadow-2xl backdrop-blur-xl">
+          <FiSearch className="ml-3 shrink-0 text-xl text-muted dark:text-slate-400" />
           <input
             type="text"
             value={searchQuery}
@@ -328,7 +312,7 @@ export function NewsPage() {
               resetPaging()
             }}
             placeholder="Search headlines, sources or tags…"
-            className="w-full bg-transparent text-sm font-semibold text-white outline-none placeholder:text-slate-400"
+            className="w-full bg-transparent text-sm font-semibold text-ink dark:text-white outline-none placeholder:text-muted dark:placeholder:text-slate-400"
           />
           {searchQuery ? (
             <button
@@ -337,14 +321,14 @@ export function NewsPage() {
                 setSearchQuery('')
                 resetPaging()
               }}
-              className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-300 hover:bg-white/10 hover:text-white"
+              className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-muted dark:text-slate-300 hover:bg-cream dark:hover:bg-white/10 hover:text-ink dark:hover:text-white"
             >
               Clear
             </button>
           ) : null}
         </div>
         {searchQuery ? (
-          <p className="mt-3 text-xs font-semibold text-sky-300">
+          <p className="mt-3 text-xs font-semibold text-brand-strong dark:text-sky-300">
             {filtered.length} {filtered.length === 1 ? 'story matches' : 'stories match'} “{searchQuery}”
           </p>
         ) : null}
@@ -1046,7 +1030,7 @@ export function NewsPage() {
         actions={
           <>
             <Button size="lg" variant="white" onClick={openDownloadModal}>
-              Download KT Messengers
+              Download KT Messenger
             </Button>
             <Button size="lg" variant="onDark" onClick={() => document.getElementById('feed')?.scrollIntoView({ behavior: 'smooth' })}>
               Explore the feed
@@ -1057,7 +1041,7 @@ export function NewsPage() {
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More of KT Messengers" />
+        <SectionHead eyebrow="Keep exploring" title="More of KT Messenger" />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 

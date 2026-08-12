@@ -17,6 +17,11 @@ export function AppPhoneFrame({
   statusTone = 'light',
   time = '12:05',
   showHomeIndicator = true,
+  // Playback chrome. Both default on, as every screen rendered before these
+  // knobs existed — turn them off where the phone is purely decorative and the
+  // loop should just run.
+  showControls = true,
+  showProgress = true,
   children,
   className = '',
 }) {
@@ -26,6 +31,7 @@ export function AppPhoneFrame({
   return (
     <div className={`mx-auto w-full max-w-[300px] sm:max-w-[330px] ${className}`}>
       {/* Playback controls above the device */}
+      {showControls ? (
       <div className="mb-2.5 flex items-center justify-between px-2">
         <div className="flex min-w-0 items-center gap-2">
           <span className="flex h-2.5 w-2.5 shrink-0 animate-pulse rounded-full bg-brand-strong" />
@@ -59,6 +65,7 @@ export function AppPhoneFrame({
           </button>
         </div>
       </div>
+      ) : null}
 
       {/* Device chassis */}
       <div className="relative rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float transition-colors dark:border-slate-700 dark:bg-slate-900">
@@ -96,12 +103,14 @@ export function AppPhoneFrame({
       </div>
 
       {/* Loop progress under the device */}
-      <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-line">
-        <div
-          style={{ width: `${progress}%` }}
-          className="h-full rounded-full bg-brand-strong transition-[width] duration-100 ease-linear"
-        />
-      </div>
+      {showProgress ? (
+        <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-line">
+          <div
+            style={{ width: `${progress}%` }}
+            className="h-full rounded-full bg-brand-strong transition-[width] duration-100 ease-linear"
+          />
+        </div>
+      ) : null}
     </div>
   )
 }

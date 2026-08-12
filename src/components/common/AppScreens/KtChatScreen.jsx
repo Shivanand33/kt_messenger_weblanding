@@ -83,7 +83,19 @@ function NoteBubble({ text, time, edited }) {
   )
 }
 
-export function KtChatScreen({ className = '' }) {
+/**
+ * Every toggle defaults on, so any call site that passes nothing renders the
+ * original screen. `showControls` (pause/replay) and `showProgress` are
+ * deliberately independent — the showcase drops the buttons but keeps its
+ * loop bar, while the messaging hero strips both.
+ */
+export function KtChatScreen({
+  className = '',
+  showControls = true,
+  showProgress = true,
+  showPhoto = true,
+  showEncryptionNote = true,
+}) {
   const { progress, isPlaying, togglePlay, restart } = useLoopClock({ durationMs: 15000 })
 
   const ticksBlue = progress >= 78
@@ -95,6 +107,8 @@ export function KtChatScreen({ className = '' }) {
       isPlaying={isPlaying}
       onTogglePlay={togglePlay}
       onRestart={restart}
+      showControls={showControls}
+      showProgress={showProgress}
       statusTone="light"
       time="12:05"
       className={className}
@@ -103,20 +117,22 @@ export function KtChatScreen({ className = '' }) {
         {/* ---------------------------------------------------------- HEADER */}
         <div className="relative z-20 shrink-0 bg-gradient-to-r from-[#0f74ee] via-[#1e8bf2] to-[#43aef7] px-3 pb-2.5 pt-9 text-white shadow-sm">
           <div className="flex items-center gap-2">
-            <FiArrowLeft className="shrink-0 text-base" />
+            <FiArrowLeft className="shrink-0 text-base cursor-pointer" />
 
-            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/25 text-[11px] font-bold">
-              AM
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/25 text-[11px] font-bold text-white shadow-sm">
+              DM
             </span>
 
             <div className="min-w-0 flex-1">
-              <div className="truncate text-[12px] font-bold leading-tight">Aarav Mehta</div>
-              <div className="truncate text-[9px] font-semibold text-white/85">Last seen 25 min ago</div>
+              <div className="truncate text-[12px] font-bold leading-tight">David Miller</div>
+              <div className="truncate text-[9px] font-semibold text-white/85">
+                {showEncryptionNote ? 'online • E2EE Active' : 'online'}
+              </div>
             </div>
 
-            <FiVideo className="shrink-0 text-[13px]" />
-            <FiPhone className="shrink-0 text-[13px]" />
-            <FiMoreVertical className="shrink-0 text-[13px]" />
+            <FiVideo className="shrink-0 text-[13px] cursor-pointer hover:text-white/80" />
+            <FiPhone className="shrink-0 text-[13px] cursor-pointer hover:text-white/80" />
+            <FiMoreVertical className="shrink-0 text-[13px] cursor-pointer hover:text-white/80" />
           </div>
         </div>
 
@@ -133,54 +149,71 @@ export function KtChatScreen({ className = '' }) {
             <span className="absolute left-16 top-80">★</span>
           </div>
 
-          <div className="relative space-y-2">
-            <Cue at={8} progress={progress}>
-              <FileMessage name="KT_17849105829…" time="2:33 pm" showDownload />
-            </Cue>
-
-            {/* Photo message */}
-            <Cue at={24} progress={progress} className="flex items-end gap-1.5">
-              <div className="relative overflow-hidden rounded-2xl rounded-tl-md">
-                <img src={photoMessage} alt="" className="h-[86px] w-[150px] object-cover" />
-                <span className="absolute bottom-1 right-1 rounded bg-black/55 px-1 py-0.5 text-[8px] font-semibold text-white">
-                  2:37 pm
-                </span>
+          <div className="relative space-y-2 text-[11px]">
+            {/* 1. Received friendly text */}
+            <Cue at={8} progress={progress} className="flex justify-start">
+              <div className="rounded-2xl rounded-tl-sm bg-white p-2.5 text-slate-900 max-w-[85%] shadow-sm border border-slate-200">
+                <span className="font-semibold text-[11px]">Hey David! Check out these fresh strawberries we picked today! 🍓✨</span>
+                <div className="text-[8px] text-slate-400 text-right pt-0.5 font-mono">2:33 pm</div>
               </div>
-              <span className="mb-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#e9edf2] text-[10px] text-slate-500">
-                <FiCornerUpRight />
-              </span>
             </Cue>
 
-            <Cue at={40} progress={progress}>
-              <FileMessage name="single-fresh-red-s…" time="2:37 pm" showDownload />
+            {/* 2. Photo attachment message */}
+            {showPhoto ? (
+              <Cue at={24} progress={progress} className="flex justify-start">
+                <div className="relative overflow-hidden rounded-2xl bg-white p-1 max-w-[85%] border border-slate-200 shadow-sm">
+                  <img src={photoMessage} alt="Strawberries Photo" className="h-[96px] w-[160px] object-cover rounded-xl" />
+                  <div className="text-[8px] text-slate-400 text-right pr-2 pt-0.5 font-mono">2:37 pm</div>
+                </div>
+              </Cue>
+            ) : null}
+
+            {/* 3. Received follow-up text */}
+            <Cue at={40} progress={progress} className="flex justify-start">
+              <div className="rounded-2xl bg-white p-2.5 text-slate-900 max-w-[85%] shadow-sm border border-slate-200">
+                <span className="font-semibold text-[11px]">They were so sweet and delicious! We should go back next weekend 🌿☕</span>
+                <div className="text-[8px] text-slate-400 text-right pt-0.5 font-mono">2:38 pm</div>
+              </div>
             </Cue>
 
-            {/* Date divider */}
+            {/* 4. Date divider */}
             <Cue at={52} progress={progress} className="flex justify-center py-0.5">
-              <span className="rounded-md bg-white px-2 py-0.5 text-[8px] font-bold text-slate-500 shadow-sm">
-                6/8/2026
+              <span className="rounded-full bg-white px-3 py-0.5 text-[8px] font-bold text-slate-500 shadow-sm border border-slate-200 font-mono">
+                Today
               </span>
             </Cue>
 
-            <Cue at={58} progress={progress}>
-              <NoteBubble text="Deno" time="11:04 am" />
-            </Cue>
-
-            {/* Outgoing message */}
-            <Cue at={70} progress={progress} className="flex items-center justify-end gap-1.5">
-              <FiVolume2 className="shrink-0 text-[11px] text-slate-500" />
-              <div className="flex items-center gap-1.5 rounded-2xl rounded-br-md bg-[#1e8bf2] px-2.5 py-1.5 shadow-sm">
-                <span className="text-[11px] font-semibold text-white">apple test message</span>
-                <span className="text-[8px] font-semibold text-white/80">4:24 pm</span>
-                <span className={`flex text-[9px] ${ticksBlue ? 'text-[#7fd4ff]' : 'text-white/60'}`}>
-                  <FiCheck />
-                  <FiCheck className="-ml-1" />
-                </span>
+            {/* 5. Received voice note pill */}
+            <Cue at={58} progress={progress} className="flex justify-start">
+              <div className="rounded-2xl bg-white p-2 text-slate-900 max-w-[80%] border border-slate-200 flex items-center gap-2 shadow-sm">
+                <span className="grid h-6 w-6 place-items-center rounded-full bg-[#1e8bf2] text-white text-[10px] shadow shrink-0">▶</span>
+                <div>
+                  <div className="font-extrabold text-[10px]">Voice Note (0:14)</div>
+                  <div className="text-[8px] text-slate-400 font-mono">11:04 am</div>
+                </div>
               </div>
             </Cue>
 
-            <Cue at={84} progress={progress}>
-              <NoteBubble text="hii" time="6:01 pm" />
+            {/* 6. Sent blue bubble message */}
+            <Cue at={70} progress={progress} className="flex justify-end">
+              <div className="rounded-2xl rounded-tr-none bg-gradient-to-r from-sky-500 to-[#1e8bf2] p-2.5 text-white max-w-[85%] shadow-md">
+                <span className="font-semibold text-[11px]">Good morning! That looks amazing! Hope you have a wonderful day ☀️✨</span>
+                <div className="flex items-center justify-end gap-1 text-[8px] text-sky-100 font-mono mt-0.5">
+                  <span>4:24 pm</span>
+                  <span className={`flex text-[9px] ${ticksBlue ? 'text-white' : 'text-white/70'}`}>
+                    <FiCheck />
+                    <FiCheck className="-ml-1" />
+                  </span>
+                </div>
+              </div>
+            </Cue>
+
+            {/* 7. Received closing friendly text */}
+            <Cue at={84} progress={progress} className="flex justify-start">
+              <div className="rounded-2xl bg-white p-2.5 text-slate-900 max-w-[85%] shadow-sm border border-slate-200">
+                <span className="font-semibold text-[11px]">Let's catch up over coffee this Saturday! ☕😊</span>
+                <div className="text-[8px] text-slate-400 text-right pt-0.5 font-mono">6:01 pm</div>
+              </div>
             </Cue>
           </div>
 

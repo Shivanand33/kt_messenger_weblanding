@@ -30,7 +30,7 @@ export function DesktopAppMockup({ className = '' }) {
           </div>
           <div className="ml-2 flex items-center gap-1.5">
             <Logo showWordmark={false} markClassName="h-5 w-5 rounded-[7px]" />
-            <span className="text-xs font-semibold text-ink">KT Messengers</span>
+            <span className="text-xs font-semibold text-ink">KT Messenger</span>
           </div>
         </div>
 

@@ -6,12 +6,23 @@ export function PhoneVideoFrame({
   isPlaying = true,
   onTogglePlay,
   onRestart,
+  // Frame geometry. The defaults are what every loop video used before these
+  // knobs existed — override only when a demo needs a narrower handset or
+  // wants its screen content to run edge-to-edge.
+  width = 'max-w-[320px] sm:max-w-[360px]',
+  screenClassName = 'p-3',
+  // Playback chrome. Both default on, matching every loop video that existed
+  // before these knobs — turn them off where the phone is purely decorative
+  // and the loop should just run uninterrupted.
+  showControls = true,
+  showProgress = true,
   children,
   className = ''
 }) {
   return (
-    <div className={`mx-auto w-full max-w-[320px] sm:max-w-[360px] ${className}`}>
+    <div className={`mx-auto w-full ${width} ${className}`}>
       {/* Outer Video Control Header Bar */}
+      {showControls ? (
       <div className="flex items-center justify-between mb-2.5 px-2">
         <div className="flex items-center gap-2">
           <span className="flex h-2.5 w-2.5 rounded-full bg-brand-strong animate-pulse" />
@@ -33,6 +44,7 @@ export function PhoneVideoFrame({
           </button>
         </div>
       </div>
+      ) : null}
 
       {/* Realistic Mobile Smartphone Chassis Container */}
       <div className="relative rounded-[46px] border-[3px] border-slate-800 bg-slate-950 p-2.5 shadow-float dark:border-slate-700 dark:bg-slate-900 transition-colors">
@@ -62,15 +74,19 @@ export function PhoneVideoFrame({
           </div>
 
           {/* Main Simulated Screen Viewport Content */}
-          <div className="relative flex-1 overflow-hidden flex flex-col justify-between p-3">
+          <div className={`relative flex-1 overflow-hidden flex flex-col justify-between ${screenClassName}`}>
             {children}
           </div>
 
-          {/* Integrated Internal Loop Progress Line inside Phone Home Bar */}
+          {/* Integrated Internal Loop Progress Line inside Phone Home Bar.
+              The wrapper stays even when the bar is hidden — it keeps the screen
+              content clear of the chassis' rounded bottom corners. */}
           <div className="z-30 pb-2 pt-1 flex flex-col items-center gap-1 shrink-0 px-4">
-            <div className="h-1 w-full max-w-[120px] rounded-full bg-white/20 overflow-hidden">
-              <div style={{ width: `${progress}%` }} className="h-full bg-brand-strong transition-all duration-100" />
-            </div>
+            {showProgress ? (
+              <div className="h-1 w-full max-w-[120px] rounded-full bg-white/20 overflow-hidden">
+                <div style={{ width: `${progress}%` }} className="h-full bg-brand-strong transition-all duration-100" />
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

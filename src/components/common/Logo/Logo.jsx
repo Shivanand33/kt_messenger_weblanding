@@ -1,9 +1,9 @@
 import ktLogo from '../../../assets/kt-logo.svg'
 
 /**
- * KT Messengers brand mark — the official logo asset (rounded blue gradient
+ * KT Messenger brand mark — the official logo asset (rounded blue gradient
  * tile holding a chat bubble, handset and typing dots). "KT" is dark,
- * "Messengers" uses the brand blue.
+ * "Messenger" uses the brand blue.
  *
  * Reused in the navbar, footer, Help Center, Brand Center and app mockups.
  * Pass `markClassName` to size the mark; it replaces the default 40px box
@@ -21,7 +21,7 @@ export function Logo({ showWordmark = true, className = '', wordmarkClassName = 
       />
       {showWordmark ? (
         <span className={`text-[19px] font-extrabold tracking-tight ${wordmarkClassName}`}>
-          <span className="text-ink">KT</span> <span className="text-brand-strong">Messengers</span>
+          <span className="text-ink">KT</span> <span className="text-brand-strong">Messenger</span>
         </span>
       ) : null}
     </span>

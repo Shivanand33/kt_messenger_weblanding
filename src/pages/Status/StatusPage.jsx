@@ -303,7 +303,7 @@ export function StatusPage() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
-              <span className="text-xs text-muted font-medium">Included free in KT Messengers</span>
+              <span className="text-xs text-muted font-medium">Included free in KT Messenger</span>
               <Button size="sm" onClick={() => navigate('/apps')}>
                 Share Status Now <FiChevronRight />
               </Button>
@@ -530,7 +530,7 @@ export function StatusPage() {
               Share Your First Status Update Today
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Download KT Messengers now to share 24-hour HD video, photos, and voice status updates.
+              Download KT Messenger now to share 24-hour HD video, photos, and voice status updates.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>

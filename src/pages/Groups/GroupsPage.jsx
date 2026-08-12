@@ -16,7 +16,9 @@ import {
   FiZap,
   FiGlobe,
   FiLock,
-  FiCheck
+  FiCheck,
+  FiArrowLeft,
+  FiMoreVertical
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { Container } from '../../components/common/Container/Container'
@@ -26,6 +28,7 @@ import { Button } from '../../components/common/Button/Button'
 import { GroupsLoopVideo } from '../../components/common/VideoAnimations/GroupsLoopVideo'
 import groupImg from '../../assets/images/group.jpg'
 import familyAvatar from '../../assets/images/private.jpg'
+import privateImg from '../../assets/images/private.jpg'
 import userAvatar from '../../assets/images/business.jpg'
 import avatarMale from '../../assets/images/avatar_male_1.png'
 import avatarFemale from '../../assets/images/avatar_female_1.png'
@@ -191,53 +194,159 @@ export function GroupsPage() {
               </div>
             </Reveal>
 
-            {/* INTERACTIVE GROUP POLL MOCKUP */}
+            {/* MOBILE SMARTPHONE MOCKUP MATCHING USER APP SCREENSHOT EXACTLY */}
             <Reveal from="scale" delay={0.15} className="flex justify-center">
-              <div className="relative w-full max-w-[420px] rounded-[36px] border border-line bg-surface p-6 shadow-float">
-                <div className="flex items-center gap-3 border-b border-line pb-4">
-                  <img src={groupImg} alt="Group" className="h-12 w-12 rounded-full object-cover border-2 border-brand-strong" />
-                  <div>
-                    <h3 className="font-bold text-ink text-base">Weekend Getaway 🌄</h3>
-                    <p className="text-xs text-muted">18 members • 4 online • Encrypted</p>
+              <div className="mx-auto w-full max-w-[320px] aspect-[9/19.5] rounded-[48px] border-[8px] border-slate-900 bg-slate-950 p-2 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)] dark:border-slate-800 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
+                {/* Smartphone Status Bar */}
+                <div className="bg-slate-950 px-3.5 py-1.5 flex items-center justify-between text-[10px] font-bold text-slate-400 shrink-0 border-b border-slate-900 z-20">
+                  <div className="flex items-center gap-1.5">
+                    <div className="h-3 w-14 rounded-full bg-slate-900 border border-slate-800 shrink-0" />
+                    <span>12:19</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-[9px] font-mono">
+                    <span>📶 5G</span>
+                    <span className="text-emerald-400 font-extrabold">34% ⚡</span>
                   </div>
                 </div>
 
-                {/* Interactive Poll Widget */}
-                <div className="mt-4 rounded-2xl bg-brand-soft/70 p-4 border border-brand-strong/20">
-                  <div className="flex items-center gap-2 text-xs font-bold text-brand-ink mb-3">
-                    <FiBarChart2 className="text-sm text-brand-strong" /> Group Poll • Where should we meet?
+                {/* Mobile Group Screen Content */}
+                <div className="relative flex-1 bg-[#0b141a] text-white overflow-hidden flex flex-col justify-between my-0.5 rounded-[36px] border border-slate-800/60 shadow-inner">
+                  {/* Top Bar */}
+                  <div className="flex items-center justify-between px-3 pt-3 pb-2 text-slate-300 z-10 shrink-0 border-b border-slate-800/40">
+                    <FiArrowLeft className="text-base cursor-pointer hover:text-white" />
+                    <FiMoreVertical className="text-base cursor-pointer hover:text-white" />
                   </div>
 
-                  <div className="space-y-2.5">
-                    {pollOptions.map((opt, i) => {
-                      const pct = Math.round((votes[i] / totalVotes) * 100)
-                      const isChosen = selectedOption === i
-                      return (
-                        <div
-                          key={opt}
-                          onClick={() => handleVote(i)}
-                          className={`relative overflow-hidden rounded-xl border p-3 cursor-pointer transition-all ${
-                            isChosen
-                              ? 'border-brand-strong bg-surface font-semibold shadow-soft'
-                              : 'border-line bg-surface/80 hover:bg-surface'
-                          }`}
-                        >
-                          <div
-                            style={{ width: `${pct}%` }}
-                            className="absolute inset-y-0 left-0 bg-brand-soft transition-all duration-500"
-                          />
-                          <div className="relative flex items-center justify-between text-xs text-ink">
-                            <span className="flex items-center gap-2 font-medium">
-                              {isChosen ? <FiCheckCircle className="text-brand-strong text-base" /> : <span className="h-3.5 w-3.5 rounded-full border border-muted" />}
-                              {opt}
-                            </span>
-                            <span className="font-bold text-brand-ink">{pct}% ({votes[i]})</span>
+                  {/* Scrollable Body */}
+                  <div className="flex-1 overflow-y-auto no-scrollbar px-3 space-y-3 pb-3">
+                    {/* Group Profile Card */}
+                    <div className="text-center pt-1 pb-1 space-y-1.5">
+                      <div className="grid h-16 w-16 place-items-center rounded-full bg-[#059669] text-white text-xl font-bold mx-auto shadow-lg border-2 border-emerald-400/30">
+                        KD
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-extrabold text-white tracking-tight">kt messenger discussion</h3>
+                        <p className="text-[10px] text-slate-400 font-medium">Group • 18 members</p>
+                      </div>
+                      <p className="text-[10px] text-slate-300 max-w-[220px] mx-auto leading-tight bg-slate-900/80 p-2 rounded-xl border border-slate-800/80">
+                        Use the application and share the issues over here
+                      </p>
+                    </div>
+
+                    {/* Media, links, and docs Card */}
+                    <div className="rounded-2xl bg-[#111b21] p-2.5 border border-slate-800/80 shadow-md">
+                      <div className="flex items-center justify-between pb-2 text-[11px]">
+                        <span className="font-bold text-slate-200">Media, links, and docs</span>
+                        <span className="text-[10px] text-slate-400 flex items-center gap-0.5 font-semibold">
+                          3 <FiChevronRight />
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+                        <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative">
+                          <img src={privateImg} alt="Media" className="h-full w-full object-cover" />
+                          <span className="absolute bottom-1 left-1 text-[7px] bg-black/70 px-1 py-0.2 rounded font-mono text-white">Voice call</span>
+                        </div>
+                        <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative">
+                          <img src={groupImg} alt="Media" className="h-full w-full object-cover" />
+                          <span className="absolute bottom-1 left-1 text-[7px] bg-sky-600/90 px-1 py-0.2 rounded font-mono text-white">Check notif</span>
+                        </div>
+                        <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative p-1">
+                          <div className="h-full w-full rounded-lg bg-slate-800 p-1 flex flex-col justify-between text-[6px] text-slate-300">
+                            <div className="font-bold text-sky-400">Invite QR</div>
+                            <div className="text-[5px] text-slate-400">Share</div>
                           </div>
                         </div>
-                      )
-                    })}
+                        <div className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                          <FiChevronRight className="text-xs" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Members Header */}
+                    <div className="pt-0.5">
+                      <div className="flex items-center justify-between px-1 pb-1.5">
+                        <span className="text-[9px] font-bold tracking-wider text-slate-400 uppercase">18 MEMBERS</span>
+                        <span className="text-[10px] font-bold text-sky-400 cursor-pointer hover:underline">See all</span>
+                      </div>
+
+                      {/* Member List */}
+                      <div className="rounded-2xl bg-[#111b21] border border-slate-800/80 divide-y divide-slate-800/60 overflow-hidden shadow-md">
+                        {/* Add members */}
+                        <div className="flex items-center justify-between p-2 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                          <div className="flex items-center gap-2.5">
+                            <div className="grid h-8 w-8 place-items-center rounded-full bg-sky-500 text-white shadow shrink-0">
+                              <FiPlus className="text-sm" />
+                            </div>
+                            <div>
+                              <h5 className="font-bold text-[11px] text-white">Add members</h5>
+                              <p className="text-[9px] text-slate-400">Add contacts from your phone</p>
+                            </div>
+                          </div>
+                          <FiChevronRight className="text-slate-500 text-xs" />
+                        </div>
+
+                        {/* You */}
+                        <div className="flex items-center justify-between p-2 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                          <div className="flex items-center gap-2.5">
+                            <img src={avatarMale} alt="You" className="h-8 w-8 rounded-full object-cover border border-slate-700 shrink-0" />
+                            <div>
+                              <h5 className="font-bold text-[11px] text-white">You</h5>
+                              <p className="text-[9px] text-sky-400 font-semibold">Add member tag</p>
+                            </div>
+                          </div>
+                          <FiChevronRight className="text-slate-500 text-xs" />
+                        </div>
+
+                        {/* Farhan Bhai (Admin) */}
+                        <div className="flex items-center justify-between p-2 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                          <div className="flex items-center gap-2.5">
+                            <div className="grid h-8 w-8 place-items-center rounded-full bg-indigo-600 text-white font-extrabold text-[11px] shadow shrink-0">
+                              FB
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-1.5">
+                                <h5 className="font-bold text-[11px] text-white">Farhan Bhai</h5>
+                                <span className="rounded bg-sky-500/20 px-1 py-0.2 text-[8px] font-bold text-sky-400 border border-sky-500/30">Admin</span>
+                              </div>
+                              <p className="text-[9px] text-slate-400">Group admin</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Irfan Bhai (Omre) */}
+                        <div className="flex items-center justify-between p-2 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                          <div className="flex items-center gap-2.5">
+                            <div className="grid h-8 w-8 place-items-center rounded-full bg-emerald-600 text-white font-extrabold text-[11px] shadow shrink-0">
+                              IO
+                            </div>
+                            <div>
+                              <h5 className="font-bold text-[11px] text-white">Irfan Bhai (Omre)</h5>
+                              <p className="text-[9px] text-slate-400">Tap for options</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Saad Bhati */}
+                        <div className="flex items-center justify-between p-2 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                          <div className="flex items-center gap-2.5">
+                            <div className="grid h-8 w-8 place-items-center rounded-full bg-amber-600 text-white font-extrabold text-[11px] shadow shrink-0">
+                              SB
+                            </div>
+                            <div>
+                              <h5 className="font-bold text-[11px] text-white">Saad Bhati</h5>
+                              <p className="text-[9px] text-slate-400">Active recently</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <p className="mt-3 text-[10px] text-muted text-right">Tap an option to cast your live vote</p>
+                </div>
+
+                {/* Gesture Bar */}
+                <div className="bg-slate-950 py-1.5 flex justify-center shrink-0 z-20">
+                  <div className="h-1 w-32 rounded-full bg-slate-700/80" />
                 </div>
               </div>
             </Reveal>
@@ -476,7 +585,7 @@ export function GroupsPage() {
               <thead>
                 <tr className="border-b border-line bg-cream">
                   <th className="p-4 font-bold text-ink">Feature</th>
-                  <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT Messengers</th>
+                  <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT Messenger</th>
                   <th className="p-4 font-bold text-body">MMS Group Chat</th>
                   <th className="p-4 font-bold text-body">Other Platforms</th>
                 </tr>
@@ -549,7 +658,7 @@ export function GroupsPage() {
               Start Your First Group Today
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Download KT Messengers now to host 1,024 members, 32-person video calls, and interactive polls.
+              Download KT Messenger now to host 1,024 members, 32-person video calls, and interactive polls.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>

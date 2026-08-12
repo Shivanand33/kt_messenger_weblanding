@@ -28,7 +28,7 @@ const posts = [
     date: 'June 29, 2026',
     title: 'Reserve your username and keep your number private',
     excerpt:
-      'Meet someone new and want to stay in touch without handing over your phone number? Usernames let you connect on KT Messengers while keeping your number to yourself.',
+      'Meet someone new and want to stay in touch without handing over your phone number? Usernames let you connect on KT Messenger while keeping your number to yourself.',
     image: privateImg,
   },
   {
@@ -42,7 +42,7 @@ const posts = [
     date: 'May 15, 2026',
     title: 'How end-to-end encryption keeps every chat private',
     excerpt:
-      'A plain-English look at what end-to-end encryption really means, and why not even KT Messengers can read the messages you send.',
+      'A plain-English look at what end-to-end encryption really means, and why not even KT Messenger can read the messages you send.',
     image: securityImg,
   },
   {
@@ -97,7 +97,7 @@ export function BlogPage() {
         {/* title */}
         <Reveal from="up">
           <h1 className="text-center text-[2.6rem] font-bold tracking-tight text-ink sm:text-6xl lg:text-7xl">
-            KT Messengers Blog
+            KT Messenger Blog
           </h1>
         </Reveal>
 
@@ -152,7 +152,7 @@ export function BlogPage() {
                 </h3>
                 <p className="mt-4 max-w-2xl text-lg leading-8 text-body">{post.excerpt}</p>
                 <div className="mt-6">
-                  <LinkArrow>Learn more</LinkArrow>
+                  <LinkArrow to="/groups">Learn more</LinkArrow>
                 </div>
               </div>
             </Reveal>

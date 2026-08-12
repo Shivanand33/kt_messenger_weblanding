@@ -147,7 +147,7 @@ export function ChannelsPage() {
     },
     {
       q: 'Can I create my own channel on KT?',
-      a: 'Yes! Anyone can create a channel on KT Messengers for free with no subscriber limits or hosting fees.'
+      a: 'Yes! Anyone can create a channel on KT Messenger for free with no subscriber limits or hosting fees.'
     },
     {
       q: 'How do verified badges work for channels?',
@@ -176,7 +176,7 @@ export function ChannelsPage() {
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                Follow your favorite creators, sports teams, news outlets, and organizations for private updates directly inside KT Messengers.
+                Follow your favorite creators, sports teams, news outlets, and organizations for private updates directly inside KT Messenger.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
@@ -553,7 +553,7 @@ export function ChannelsPage() {
               Explore &amp; Broadcast on Channels Today
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Download KT Messengers now to subscribe to top creators or launch your own broadcast channel.
+              Download KT Messenger now to subscribe to top creators or launch your own broadcast channel.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>

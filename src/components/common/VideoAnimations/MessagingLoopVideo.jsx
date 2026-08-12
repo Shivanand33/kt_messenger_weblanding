@@ -1,128 +1,148 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { FiCheck, FiSmile, FiSend, FiPaperclip, FiMic, FiLock } from 'react-icons/fi'
+import { FiCheck, FiArrowLeft, FiVideo, FiPhone, FiMoreVertical, FiFile, FiPlay } from 'react-icons/fi'
 import { PhoneVideoFrame } from './PhoneVideoFrame'
-import avatarFemale from '../../../assets/images/avatar_female_1.png'
-import weddingImg from '../../../assets/images/wedding_grid.png'
+
+/** Messages land one after another so the loop reads as a live conversation. */
+const STEPS = 4
+
+/** Static bar heights (%) for the voice-note waveform. */
+const WAVE = [35, 60, 100, 55, 80, 45, 95, 65, 40, 75, 50, 85, 30, 70, 45]
 
 export function MessagingLoopVideo({ className = '' }) {
-  const [isPlaying, setIsPlaying] = useState(true)
-  const [phase, setPhase] = useState(0) // 0: Text Send, 1: Media Send, 2: Voice Note
   const [progress, setProgress] = useState(0)
 
+  // No playback controls on this demo — the loop simply runs, forever.
   useEffect(() => {
-    if (!isPlaying) return
-
     const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          setPhase(0)
-          return 0
-        }
-        const next = prev + 1.5
-        if (next > 33 && next <= 66) setPhase(1)
-        else if (next > 66) setPhase(2)
-        return next
-      })
+      setProgress((prev) => (prev >= 100 ? 0 : prev + 1.5))
     }, 100)
 
     return () => clearInterval(interval)
-  }, [isPlaying])
+  }, [])
 
-  const restartVideo = () => {
-    setPhase(0)
-    setProgress(0)
-    setIsPlaying(true)
-  }
+  const shown = Math.min(STEPS, Math.floor(progress / (100 / STEPS)) + 1)
+  const enter = { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.35 } }
 
   return (
     <PhoneVideoFrame
-      title="Instant Messaging &amp; 4K Media"
-      progress={progress}
-      isPlaying={isPlaying}
-      onTogglePlay={() => setIsPlaying(!isPlaying)}
-      onRestart={restartVideo}
+      width="max-w-[300px]"
+      screenClassName="p-0"
+      showControls={false}
+      showProgress={false}
       className={className}
     >
-      {/* Mobile Chat Header */}
-      <div className="flex items-center justify-between border-b border-white/10 pb-2">
+      {/* Chat header — full-bleed under the status bar, like a real handset */}
+      <div className="flex shrink-0 items-center justify-between bg-gradient-to-r from-sky-500 via-sky-600 to-blue-600 px-3 py-2 text-white shadow-md">
         <div className="flex items-center gap-2">
-          <img src={avatarFemale} alt="Sarah" className="h-7 w-7 rounded-full object-cover border border-brand-strong" />
+          <FiArrowLeft className="text-sm" />
+          <div className="grid h-7 w-7 place-items-center rounded-full bg-white/25 text-[10px] font-extrabold text-white shadow">
+            DM
+          </div>
           <div>
-            <p className="text-xs font-bold text-white">Sarah Jenkins</p>
-            <p className="text-[9px] text-emerald-400 font-semibold">Online • Signal E2EE</p>
+            <h4 className="text-xs font-extrabold leading-tight tracking-tight">David Miller</h4>
+            <span className="block text-[8px] font-medium leading-tight text-sky-100">online</span>
           </div>
         </div>
-        <span className="rounded-full bg-brand-strong/30 px-2 py-0.5 text-[8px] font-bold text-brand-ink border border-brand-strong/40">
-          2GB Media
-        </span>
+        <div className="flex items-center gap-2 text-xs text-white/90">
+          <FiVideo />
+          <FiPhone />
+          <FiMoreVertical />
+        </div>
       </div>
 
-      {/* Chat Stream Body */}
-      <div className="my-auto space-y-2 py-1">
-        {phase === 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="ml-auto max-w-[90%] rounded-2xl bg-brand-strong p-2.5 text-white shadow-brand text-xs"
-          >
-            Hey! I just shared our 4K photos &amp; ZIP files over KT Messengers! 🚀
-            <div className="mt-1 flex items-center justify-end gap-1 text-[8px] text-white/80">
-              <span>10:45 AM</span>
-              <FiCheck className="text-xs text-blue-200" />
+      {/* Thread — anchored to the bottom so new messages push the old ones up */}
+      <div className="flex flex-1 flex-col justify-end gap-1 overflow-hidden bg-[#f5f8fa] px-2.5 py-2 text-slate-900">
+        <div className="flex justify-center pb-0.5">
+          <span className="rounded-full bg-white px-2 py-0.5 text-[7px] font-bold uppercase tracking-wider text-slate-400 shadow-sm">
+            Today
+          </span>
+        </div>
+
+        {shown >= 1 && (
+          <motion.div {...enter} className="flex justify-start">
+            <div className="max-w-[82%] rounded-2xl rounded-tl-sm border border-slate-200 bg-white p-2 shadow-sm">
+              <span className="text-[10px] font-semibold leading-snug">
+                Hey David! Check out these fresh strawberries we picked today! 🍓✨
+              </span>
+              <div className="pt-0.5 text-right font-mono text-[7px] text-slate-400">2:33 pm</div>
             </div>
           </motion.div>
         )}
 
-        {phase === 1 && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="ml-auto max-w-[80%] overflow-hidden rounded-2xl bg-slate-950 p-1.5 border border-slate-800 text-xs"
-          >
-            <img src={weddingImg} alt="Media" className="h-24 w-full rounded-xl object-cover" />
-            <div className="mt-1 flex items-center justify-between text-[8px] text-slate-300 px-1">
-              <span>Project_Assets.zip (1.85 GB)</span>
-              <FiCheck className="text-brand-strong text-xs" />
-            </div>
-          </motion.div>
-        )}
-
-        {phase === 2 && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-[90%] rounded-2xl bg-slate-950 p-2.5 border border-slate-800 text-xs"
-          >
-            <div className="flex items-center gap-2.5">
-              <button className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-strong text-white text-[10px]">
-                ▶
-              </button>
-              <div className="flex-1 space-y-1">
-                <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
-                  <div className="h-full w-2/3 bg-brand-strong" />
-                </div>
-                <div className="flex justify-between text-[8px] text-slate-400">
-                  <span>0:18</span>
-                  <span className="text-brand-ink font-bold">1.5x Speed</span>
-                </div>
+        {shown >= 2 && (
+          <motion.div {...enter} className="flex justify-end">
+            <div className="max-w-[82%] rounded-2xl rounded-tr-sm bg-gradient-to-r from-sky-500 to-blue-600 p-2 text-white shadow-md">
+              <span className="text-[10px] font-semibold leading-snug">
+                Good morning! That looks amazing! Hope you have a wonderful day ☀️✨
+              </span>
+              <div className="mt-0.5 flex items-center justify-end gap-1 font-mono text-[7px] text-sky-100">
+                <span>4:24 pm</span>
+                <span className="flex text-[9px] text-white">
+                  <FiCheck />
+                  <FiCheck className="-ml-1" />
+                </span>
               </div>
             </div>
           </motion.div>
         )}
+
+        {shown >= 3 && (
+          <motion.div {...enter} className="flex justify-end">
+            <div className="max-w-[82%] rounded-2xl rounded-tr-sm bg-gradient-to-r from-sky-500 to-blue-600 p-1.5 text-white shadow-md">
+              <div className="flex items-center gap-2 rounded-xl bg-white/15 p-1.5">
+                <div className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/25">
+                  <FiFile className="text-xs" />
+                </div>
+                <div className="min-w-0">
+                  <p className="truncate text-[9px] font-bold leading-tight">Project_Archive.zip</p>
+                  <p className="font-mono text-[7px] leading-tight text-sky-100">1.85 GB • ZIP</p>
+                </div>
+              </div>
+              <div className="mt-0.5 flex items-center justify-end gap-1 pr-0.5 font-mono text-[7px] text-sky-100">
+                <span>4:25 pm</span>
+                <span className="flex text-[9px] text-white">
+                  <FiCheck />
+                  <FiCheck className="-ml-1" />
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {shown >= 4 && (
+          <motion.div {...enter} className="flex justify-start">
+            <div className="flex max-w-[82%] items-center gap-2 rounded-2xl rounded-tl-sm border border-slate-200 bg-white p-2 shadow-sm">
+              <div className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-sky-500 text-white">
+                <FiPlay className="text-[9px]" />
+              </div>
+              <div className="flex h-4 flex-1 items-center gap-[2px]">
+                {WAVE.map((h, i) => (
+                  <span key={i} style={{ height: `${h}%` }} className="w-[2px] shrink-0 rounded-full bg-sky-400" />
+                ))}
+              </div>
+              <span className="shrink-0 rounded-full bg-sky-50 px-1.5 py-0.5 text-[7px] font-bold text-sky-600">
+                1.5×
+              </span>
+            </div>
+          </motion.div>
+        )}
       </div>
 
-      {/* Input Bar */}
-      <div className="flex items-center gap-2 rounded-xl bg-slate-950 p-2 border border-slate-800">
-        <FiSmile className="text-slate-400 text-xs" />
-        <input
-          type="text"
-          readOnly
-          value={phase === 0 ? "Message sent with double ticks ✔✔" : phase === 1 ? "Sending 4K media..." : "Voice note playing at 1.5x..."}
-          className="w-full bg-transparent text-[10px] text-slate-200 outline-none"
-        />
-        <div className="grid h-6 w-6 place-items-center rounded-lg bg-brand-strong text-white text-[10px] shrink-0 shadow-brand">
-          <FiSend />
+      {/* Bottom input pill bar */}
+      <div className="flex shrink-0 items-center gap-1.5 border-t border-slate-200 bg-white px-2 py-1.5">
+        <div className="flex flex-1 items-center justify-between rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-[10px] text-slate-600">
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs">😃</span>
+            <span className="font-medium text-slate-400">Message</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
+            <span>📎</span>
+            <span>📷</span>
+          </div>
+        </div>
+        <div className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-sky-500 text-[10px] text-white shadow-md">
+          🎙️
         </div>
       </div>
     </PhoneVideoFrame>
