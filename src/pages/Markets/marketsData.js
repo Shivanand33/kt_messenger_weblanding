@@ -283,9 +283,9 @@ export const marketAssets = [
     series: makeSeries(167, -0.34),
   },
   {
-    symbol: 'META',
+    symbol: 'NFLX',
     pair: 'NASDAQ',
-    name: 'Meta Platforms',
+    name: 'Netflix',
     category: 'Stocks',
     price: 498.5,
     change: 3.8,

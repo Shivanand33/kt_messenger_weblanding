@@ -42,7 +42,6 @@ function App() {
       <Route path="/groups" element={<GroupsPage />} />
       <Route path="/channels" element={<ChannelsPage />} />
       <Route path="/ai" element={<KtAIPage />} />
-      <Route path="/meta-ai" element={<KtAIPage />} />
       <Route path="/status" element={<StatusPage />} />
       <Route path="/security" element={<SecurityPage />} />
       <Route path="/plus" element={<WhatsAppPlusPage />} />

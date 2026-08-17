@@ -79,7 +79,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
           <div className="px-4 py-1.5">
             <div className="flex items-center gap-2 rounded-full bg-stone-100 px-3.5 py-1.5 text-[11px] text-stone-500">
               <FiSearch className="text-xs text-stone-400" />
-              <span>Ask Meta AI or Search</span>
+              <span>Ask KT AI or Search</span>
             </div>
           </div>
 

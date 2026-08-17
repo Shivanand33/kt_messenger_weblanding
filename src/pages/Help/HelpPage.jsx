@@ -148,8 +148,6 @@ const footerColumns = [
     title: 'Get In Touch',
     links: [
       { label: 'Contact Us', to: '/contact' },
-      { label: 'Facebook', to: '/community#social' },
-      { label: 'X (Twitter)', to: '/community#social' },
     ],
   },
 ]

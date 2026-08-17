@@ -3,11 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import {
   FiCheck,
   FiChevronDown,
-  FiFacebook,
   FiGlobe,
-  FiInstagram,
-  FiTwitter,
-  FiYoutube,
 } from 'react-icons/fi'
 import { Container } from '../../common/Container/Container'
 import { Logo } from '../../common/Logo/Logo'
@@ -64,15 +60,6 @@ const columns = [
       { label: 'Status', to: '/status' },
     ],
   },
-]
-
-// Social icons open the Community page's verified-channels section, which is
-// where every official account is listed.
-const socials = [
-  { icon: <FiTwitter />, label: 'X (Twitter)' },
-  { icon: <FiInstagram />, label: 'Instagram' },
-  { icon: <FiYoutube />, label: 'YouTube' },
-  { icon: <FiFacebook />, label: 'Facebook' },
 ]
 
 const languages = [
@@ -287,21 +274,6 @@ export function Footer() {
             <p className="mt-5 text-[15px] leading-7 text-body">
               {t('Simple, secure messaging and calling that keeps everyone you care about in the loop.')}
             </p>
-
-            <div className="mt-6 flex items-center gap-2.5">
-              {socials.map((social) => (
-                <button
-                  key={social.label}
-                  type="button"
-                  onClick={() => go({ to: '/community#social' })}
-                  aria-label={`${social.label} — see our official channels`}
-                  title={`${social.label} — see our official channels`}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-line bg-surface text-body transition-colors hover:border-brand/40 hover:text-brand-ink"
-                >
-                  {social.icon}
-                </button>
-              ))}
-            </div>
           </div>
 
           {columns.map((column) => (

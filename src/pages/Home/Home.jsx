@@ -10,6 +10,7 @@ import { Groups } from '../../components/sections/Groups/Groups'
 import { Expression } from '../../components/sections/Expression/Expression'
 import { Business } from '../../components/sections/Business/Business'
 import { Features } from '../../components/sections/Features/Features'
+import { Insights } from '../../components/sections/Insights/Insights'
 import { VideoShowcase } from '../../components/sections/VideoShowcase/VideoShowcase'
 import { DownloadCTA } from '../../components/sections/DownloadCTA/DownloadCTA'
 
@@ -28,6 +29,7 @@ export function Home() {
       <Expression />
       <Business />
       <Features />
+      <Insights />
       <DownloadCTA />
     </MainLayout>
   )

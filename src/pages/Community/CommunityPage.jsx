@@ -43,7 +43,6 @@ import { EmptyState } from '../../components/feature/EmptyState'
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', icon: <FiCompass /> },
-  { id: 'social', label: 'Official channels', icon: <FiGlobe /> },
   { id: 'forums', label: 'Forums', icon: <FiMessageCircle /> },
   { id: 'events', label: 'Events', icon: <FiCalendar /> },
   { id: 'ambassadors', label: 'Ambassadors', icon: <FiAward /> },
@@ -57,16 +56,6 @@ const STATS = [
   { value: 62, label: 'Local chapters', icon: <FiMapPin />, hint: 'Volunteer-run meetups in 34 countries.' },
   { value: 340, label: 'Ambassadors', icon: <FiAward />, hint: 'Answering questions in 28 languages.' },
   { value: 26, label: 'Events this year', icon: <FiCalendar />, hint: 'Meetups, AMAs and security workshops.' },
-]
-
-// The footer's social icons deep-link into this section.
-const CHANNELS = [
-  { name: 'X (Twitter)', handle: '@ktmessenger', icon: <FiTwitter />, desc: 'Release notes, incident updates and the occasional protocol thread.', members: '1.2M followers' },
-  { name: 'Instagram', handle: '@ktmessenger', icon: <FiInstagram />, desc: 'Product walkthroughs, design process and team introductions.', members: '640k followers' },
-  { name: 'YouTube', handle: '/ktmessenger', icon: <FiYoutube />, desc: 'Feature deep-dives, conference talks and security explainers.', members: '310k subscribers' },
-  { name: 'Facebook', handle: '/ktmessenger', icon: <FiFacebook />, desc: 'Regional announcements and community group coordination.', members: '890k followers' },
-  { name: 'LinkedIn', handle: '/company/ktmessenger', icon: <FiLinkedin />, desc: 'Hiring updates, engineering culture and company news.', members: '215k followers' },
-  { name: 'GitHub', handle: '/ktmessenger', icon: <FiGithub />, desc: 'Protocol specs, client SDKs and reproducible build tooling.', members: '48k stars' },
 ]
 
 const FORUM_CATEGORIES = ['All', 'Getting started', 'Privacy & security', 'Payments', 'Developers', 'Feature requests']
@@ -144,7 +133,6 @@ export function CommunityPage() {
 
   const [category, setCategory] = useState('All')
   const [query, setQuery] = useState('')
-  const [following, setFollowing] = useState(['X (Twitter)', 'GitHub'])
   const [joinedEvents, setJoinedEvents] = useState([])
   const [toast, setToast] = useState(null)
 
@@ -165,12 +153,6 @@ export function CommunityPage() {
     label,
     count: label === 'All' ? FORUMS.length : FORUMS.filter((thread) => thread.category === label).length,
   }))
-
-  const toggleFollow = (name) => {
-    const isFollowing = following.includes(name)
-    setFollowing(isFollowing ? following.filter((item) => item !== name) : [...following, name])
-    setToast(isFollowing ? `Unfollowed ${name}.` : `Following ${name}.`)
-  }
 
   const toggleEvent = (title) => {
     const joined = joinedEvents.includes(title)
@@ -193,9 +175,6 @@ export function CommunityPage() {
           <>
             <Button size="lg" variant="white" onClick={() => document.getElementById('forums')?.scrollIntoView({ behavior: 'smooth' })}>
               Browse the forums <FiChevronRight />
-            </Button>
-            <Button size="lg" variant="onDark" onClick={() => document.getElementById('social')?.scrollIntoView({ behavior: 'smooth' })}>
-              Official channels <FiGlobe />
             </Button>
           </>
         }
@@ -234,55 +213,6 @@ export function CommunityPage() {
       <StatStrip items={STATS} />
 
       <PageNav items={NAV_ITEMS} />
-
-      {/* OFFICIAL CHANNELS — footer social icons land here */}
-      <Section id="social" className="scroll-mt-36 bg-surface">
-        <SectionHead
-          eyebrow="Official channels"
-          title="Where we actually post"
-          description="These six accounts are the only official ones. Anything else claiming to be us is not, and we would like to know about it."
-        />
-
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {CHANNELS.map((channel, index) => {
-            const isFollowing = following.includes(channel.name)
-            return (
-              <Reveal key={channel.name} from="up" delay={Math.min(index * 0.05, 0.25)} className="h-full">
-                <div className="flex h-full flex-col rounded-[24px] border border-line bg-cream p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-card dark:bg-cream-2">
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-soft text-xl text-brand-ink">
-                      {channel.icon}
-                    </span>
-                    <span className="flex items-center gap-1.5 rounded-full border border-line bg-surface px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-brand-ink">
-                      <FiCheckCircle /> Verified
-                    </span>
-                  </div>
-
-                  <h3 className="mt-4 text-base font-extrabold text-ink">{channel.name}</h3>
-                  <p className="font-mono text-[11px] font-bold text-brand-ink">{channel.handle}</p>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-body">{channel.desc}</p>
-
-                  <div className="mt-5 flex items-center justify-between gap-3 border-t border-line pt-4">
-                    <span className="text-[11px] font-bold text-muted">{channel.members}</span>
-                    <button
-                      type="button"
-                      onClick={() => toggleFollow(channel.name)}
-                      aria-pressed={isFollowing}
-                      className={`rounded-full px-4 py-2 text-[11px] font-bold transition-colors ${
-                        isFollowing
-                          ? 'border border-brand-strong bg-brand-soft text-brand-ink'
-                          : 'bg-brand-strong text-white shadow-brand hover:bg-brand-strong-hover'
-                      }`}
-                    >
-                      {isFollowing ? 'Following' : 'Follow'}
-                    </button>
-                  </div>
-                </div>
-              </Reveal>
-            )
-          })}
-        </div>
-      </Section>
 
       {/* FORUMS */}
       <div id="forums" className="scroll-mt-36">
