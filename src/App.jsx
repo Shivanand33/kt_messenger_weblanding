@@ -17,7 +17,6 @@ import { WhatsAppPlusPage } from './pages/WhatsAppPlus/WhatsAppPlusPage'
 // FOOTER / COMPANY PAGES
 import { AboutPage } from './pages/About/AboutPage'
 import { CareersPage } from './pages/Careers/CareersPage'
-import { BrandCenterPage } from './pages/Brand/BrandCenterPage'
 import { ContactPage } from './pages/Contact/ContactPage'
 import { CommunityPage } from './pages/Community/CommunityPage'
 
@@ -50,7 +49,6 @@ function App() {
       {/* FOOTER / COMPANY ROUTES */}
       <Route path="/about" element={<AboutPage />} />
       <Route path="/careers" element={<CareersPage />} />
-      <Route path="/brand" element={<BrandCenterPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/community" element={<CommunityPage />} />
 

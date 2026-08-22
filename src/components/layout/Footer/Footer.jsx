@@ -38,7 +38,6 @@ const columns = [
     links: [
       { label: 'About', to: '/about' },
       { label: 'Careers', to: '/careers' },
-      { label: 'Brand Center', to: '/brand' },
       { label: 'Blog', to: '/blog' },
     ],
   },
@@ -167,7 +166,6 @@ const sitemap = [
     links: [
       { label: 'About', to: '/about' },
       { label: 'Careers', to: '/careers' },
-      { label: 'Brand Center', to: '/brand' },
       { label: 'Contact Us', to: '/contact' },
       { label: 'Community', to: '/community' },
     ],

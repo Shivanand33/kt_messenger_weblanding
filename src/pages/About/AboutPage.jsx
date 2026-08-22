@@ -135,7 +135,6 @@ const OFFICES = [
 
 const RELATED = [
   { to: '/careers', label: 'Careers', desc: 'Open roles across engineering, design and policy.', icon: <FiUsers /> },
-  { to: '/brand', label: 'Brand Center', desc: 'Logos, colours and usage guidelines.', icon: <FiAward /> },
   { to: '/privacy', label: 'Privacy', desc: 'How encryption works and what we never collect.', icon: <FiLock /> },
   { to: '/blog', label: 'Blog', desc: 'Product updates and engineering write-ups.', icon: <FiMessageSquare /> },
 ]

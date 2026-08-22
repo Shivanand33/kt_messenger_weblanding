@@ -12,7 +12,6 @@ import {
   FiImage,
   FiLock,
   FiMail,
-  FiMapPin,
   FiMessageSquare,
   FiSend,
   FiShield,
@@ -38,7 +37,6 @@ const NAV_ITEMS = [
   { id: 'getintouch', label: 'Get in touch', icon: <FiMail /> },
   { id: 'reasons', label: 'Pick a team', icon: <FiUsers /> },
   { id: 'form', label: 'Send a message', icon: <FiSend /> },
-  { id: 'offices', label: 'Offices', icon: <FiMapPin /> },
   { id: 'response', label: 'Response times', icon: <FiClock /> },
   { id: 'faq', label: 'FAQ', icon: <FiMessageSquare /> },
 ]
@@ -94,14 +92,6 @@ const TOPICS = [
   },
 ]
 
-const OFFICES = [
-  { city: 'Bengaluru', country: 'India', address: 'Prestige Tech Park, Outer Ring Road', hours: 'Mon–Fri · 09:30–18:30 IST', flag: '🇮🇳' },
-  { city: 'Stockholm', country: 'Sweden', address: 'Kungsgatan 12, Norrmalm', hours: 'Mon–Fri · 09:00–17:00 CET', flag: '🇸🇪' },
-  { city: 'Lisbon', country: 'Portugal', address: 'Avenida da Liberdade 110', hours: 'Mon–Fri · 09:00–18:00 WET', flag: '🇵🇹' },
-  { city: 'Singapore', country: 'Singapore', address: 'Marina Bay Financial Centre, Tower 2', hours: 'Mon–Fri · 09:00–18:00 SGT', flag: '🇸🇬' },
-  { city: 'Berlin', country: 'Germany', address: 'Torstraße 140, Mitte', hours: 'Mon–Fri · 09:00–17:30 CET', flag: '🇩🇪' },
-  { city: 'São Paulo', country: 'Brazil', address: 'Avenida Paulista 1374', hours: 'Mon–Fri · 09:00–18:00 BRT', flag: '🇧🇷' },
-]
 
 const RESPONSE = [
   { label: 'Security disclosures', time: '1 business day', detail: 'Triaged by a human, never an auto-responder.', tone: 'fast' },
@@ -158,7 +148,6 @@ const FAQS = [
 const RELATED = [
   { to: '/help', label: 'Help Center', desc: 'Hundreds of articles — usually faster than writing in.', icon: <FiHelpCircle /> },
   { to: '/community', label: 'Community', desc: 'Forums, events and the ambassador programme.', icon: <FiUsers /> },
-  { to: '/brand', label: 'Brand Center', desc: 'Logos, colours and press assets to download.', icon: <FiImage /> },
   { to: '/careers', label: 'Careers', desc: 'Open roles and how the hiring process works.', icon: <FiBriefcase /> },
 ]
 
@@ -792,7 +781,6 @@ export function ContactPage() {
                   {[
                     { label: 'Help Center articles', to: '/help' },
                     { label: 'Community forums', to: '/community' },
-                    { label: 'Brand Center downloads', to: '/brand' },
                     { label: 'Careers and open roles', to: '/careers' },
                   ].map((item) => (
                     <li key={item.to}>
@@ -816,39 +804,6 @@ export function ContactPage() {
         </div>
       </Section>
 
-      {/* OFFICES */}
-      <Section id="offices" className="scroll-mt-36 bg-surface">
-        <SectionHead
-          eyebrow="Offices"
-          title="Six offices you can arrange to visit"
-          description="Not open to walk-ins, but mention a city in your message and we will set up a meeting."
-        />
-
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {OFFICES.map((office, index) => (
-            <Reveal key={office.city} from="up" delay={Math.min(index * 0.05, 0.25)} className="h-full">
-              <div className="flex h-full flex-col rounded-[24px] border border-line bg-cream p-6 shadow-soft dark:bg-cream-2">
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl leading-none">{office.flag}</span>
-                  <div className="min-w-0">
-                    <h3 className="truncate text-base font-extrabold text-ink">{office.city}</h3>
-                    <p className="truncate text-[11px] font-semibold text-muted">{office.country}</p>
-                  </div>
-                </div>
-
-                <p className="mt-4 flex items-start gap-2 text-sm leading-relaxed text-body">
-                  <FiMapPin className="mt-0.5 shrink-0 text-brand-strong" />
-                  {office.address}
-                </p>
-                <p className="mt-2 flex items-center gap-2 text-[11px] font-bold text-muted">
-                  <FiClock className="shrink-0" />
-                  {office.hours}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
 
       {/* RESPONSE TIMES */}
       <Section id="response" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
