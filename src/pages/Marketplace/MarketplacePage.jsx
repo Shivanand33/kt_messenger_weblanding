@@ -273,7 +273,7 @@ export function MarketplacePage() {
             <Button size="lg" variant="white" onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}>
               Start shopping <FiChevronRight />
             </Button>
-            <Button size="lg" variant="onDark" onClick={openDownloadModal}>
+            <Button size="lg" variant="dark" onClick={openDownloadModal}>
               Get the app <FiZap />
             </Button>
           </>
@@ -284,36 +284,36 @@ export function MarketplacePage() {
           { icon: <FiTag />, label: 'No hidden checkout fees' },
         ]}
         aside={
-          <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5 shadow-2xl backdrop-blur-xl sm:p-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <span className="text-sm font-extrabold text-white">Your cart</span>
-              <span className="rounded-full border border-sky-400/40 bg-sky-400/10 px-2.5 py-1 text-[10px] font-black uppercase text-sky-300">
+          <div className="rounded-[28px] border border-line dark:border-white/10 bg-cream-2 dark:bg-white/[0.04] p-5 shadow-card dark:shadow-2xl backdrop-blur-xl sm:p-6">
+            <div className="flex items-center justify-between border-b border-line dark:border-white/10 pb-4">
+              <span className="text-sm font-extrabold text-ink dark:text-white">Your cart</span>
+              <span className="rounded-full border border-brand/30 dark:border-sky-400/40 bg-brand-soft dark:bg-sky-400/10 px-2.5 py-1 text-[10px] font-black uppercase text-brand-strong dark:text-sky-300">
                 {cartCount} {cartCount === 1 ? 'item' : 'items'}
               </span>
             </div>
 
             {cartRows.length === 0 ? (
-              <p className="py-10 text-center text-xs font-semibold text-slate-400">
+              <p className="py-10 text-center text-xs font-semibold text-muted dark:text-slate-400">
                 Nothing here yet. Add a product below and it appears instantly.
               </p>
             ) : (
               <ul className="mt-4 space-y-3">
                 {cartRows.slice(0, 3).map((line) => (
-                  <li key={line.id} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
+                  <li key={line.id} className="flex items-center gap-3 rounded-2xl border border-line dark:border-white/10 bg-cream dark:bg-white/[0.03] p-3">
                     <img src={line.product.image} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                     <span className="min-w-0 flex-1">
-                      <span className="line-clamp-1 block text-xs font-bold text-white">{line.product.name}</span>
-                      <span className="text-[10px] font-semibold text-slate-400">Qty {line.qty}</span>
+                      <span className="line-clamp-1 block text-xs font-bold text-ink dark:text-white">{line.product.name}</span>
+                      <span className="text-[10px] font-semibold text-muted dark:text-slate-400">Qty {line.qty}</span>
                     </span>
-                    <span className="shrink-0 text-xs font-black text-white">{rupees(line.product.price * line.qty)}</span>
+                    <span className="shrink-0 text-xs font-black text-ink dark:text-white">{rupees(line.product.price * line.qty)}</span>
                   </li>
                 ))}
               </ul>
             )}
 
-            <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
-              <span className="text-xs font-bold text-slate-400">Subtotal</span>
-              <span className="text-lg font-black text-white">{rupees(cartSubtotal)}</span>
+            <div className="mt-4 flex items-center justify-between border-t border-line dark:border-white/10 pt-4">
+              <span className="text-xs font-bold text-muted dark:text-slate-400">Subtotal</span>
+              <span className="text-lg font-black text-ink dark:text-white">{rupees(cartSubtotal)}</span>
             </div>
 
             <button
@@ -326,8 +326,8 @@ export function MarketplacePage() {
           </div>
         }
       >
-        <div className="mt-8 flex items-center gap-3 rounded-2xl border border-white/15 bg-white/[0.06] p-2 shadow-2xl backdrop-blur-xl">
-          <FiSearch className="ml-3 shrink-0 text-xl text-slate-400" />
+        <div className="mt-8 flex items-center gap-3 rounded-2xl border border-line dark:border-white/15 bg-cream-2 dark:bg-white/[0.06] p-2 shadow-card dark:shadow-2xl backdrop-blur-xl">
+          <FiSearch className="ml-3 shrink-0 text-xl text-muted dark:text-slate-400" />
           <input
             type="text"
             value={query}
@@ -336,7 +336,7 @@ export function MarketplacePage() {
               resetPaging()
             }}
             placeholder="Search headphones, skincare, coffee, yoga mats…"
-            className="w-full bg-transparent text-sm font-semibold text-white outline-none placeholder:text-slate-400"
+            className="w-full bg-transparent text-sm font-semibold text-ink dark:text-white outline-none placeholder:text-muted dark:placeholder:text-slate-400"
           />
           {query ? (
             <button
@@ -345,14 +345,14 @@ export function MarketplacePage() {
                 setQuery('')
                 resetPaging()
               }}
-              className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-300 hover:bg-white/10 hover:text-white"
+              className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-muted dark:text-slate-300 hover:bg-brand-soft dark:hover:bg-white/10 hover:text-ink dark:hover:text-white"
             >
               Clear
             </button>
           ) : null}
         </div>
         {query ? (
-          <p className="mt-3 text-xs font-semibold text-sky-300">
+          <p className="mt-3 text-xs font-semibold text-brand-strong dark:text-sky-300">
             {filtered.length} {filtered.length === 1 ? 'product matches' : 'products match'} “{query}”
           </p>
         ) : null}

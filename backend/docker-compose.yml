@@ -1,0 +1,22 @@
+# Spin up a local PostgreSQL for development:  docker compose up -d
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: kt_messenger_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: kt
+      POSTGRES_PASSWORD: kt
+      POSTGRES_DB: kt_messenger
+    ports:
+      - "5432:5432"
+    volumes:
+      - kt_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kt -d kt_messenger"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  kt_pgdata:

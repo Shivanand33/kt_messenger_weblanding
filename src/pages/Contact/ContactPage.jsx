@@ -31,6 +31,7 @@ import { CtaBand } from '../../components/feature/CtaBand'
 import { RelatedPages } from '../../components/feature/RelatedPages'
 import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
+import { api } from '../../services/apiClient'
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', icon: <FiCompass /> },
@@ -176,6 +177,11 @@ export function ContactPage() {
   const [hoverRating, setHoverRating] = useState(0)
   const [quickSent, setQuickSent] = useState(null)
 
+  // In-flight flags so a form can't be submitted twice while the request runs.
+  const [sendingMessage, setSendingMessage] = useState(false)
+  const [sendingSupport, setSendingSupport] = useState(false)
+  const [sendingFeedback, setSendingFeedback] = useState(false)
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -191,8 +197,9 @@ export function ContactPage() {
     return next
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
+    if (sendingMessage) return // guard against double submit
     const nextErrors = validate()
     setErrors(nextErrors)
 
@@ -201,19 +208,35 @@ export function ContactPage() {
       return
     }
 
-    setSent({
-      topic: selectedTopic.title,
-      sla: selectedTopic.sla,
-      ref: `KT-${selectedTopic.id.toUpperCase()}-${String(form.subject.trim().length * 7 + form.name.trim().length * 13).padStart(4, '0')}`,
-      email: form.email.trim(),
-    })
-    setForm({ name: '', email: '', subject: '', message: '' })
-    setErrors({})
+    setSendingMessage(true)
+    try {
+      await api.contact({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        subject: `[${selectedTopic.title}] ${form.subject.trim()}`,
+        message: form.message.trim(),
+        sourcePage: '/contact',
+      })
+      // Only show success + reset AFTER the backend confirms the save.
+      setSent({
+        topic: selectedTopic.title,
+        sla: selectedTopic.sla,
+        ref: `KT-${selectedTopic.id.toUpperCase()}-${String(form.subject.trim().length * 7 + form.name.trim().length * 13).padStart(4, '0')}`,
+        email: form.email.trim(),
+      })
+      setForm({ name: '', email: '', subject: '', message: '' })
+      setErrors({})
+    } catch (err) {
+      setToast(err?.message || 'Could not send your message. Please try again.')
+    } finally {
+      setSendingMessage(false)
+    }
   }
 
   // ------------------------------------------------- Get in touch: support
-  const submitSupport = (event) => {
+  const submitSupport = async (event) => {
     event.preventDefault()
+    if (sendingSupport) return // guard against double submit
     const next = {}
     if (!support.name.trim()) next.name = 'Add your name.'
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(support.email.trim())) next.email = 'Enter a valid email address.'
@@ -226,19 +249,34 @@ export function ContactPage() {
       return
     }
 
-    setQuickSent({
-      kind: 'support',
-      email: support.email.trim(),
-      subject: support.subject.trim(),
-      ref: `KT-MSG-${String(support.subject.trim().length * 31 + support.name.trim().length * 17).padStart(4, '0')}`,
-    })
-    setSupport({ name: '', email: '', subject: '', message: '' })
-    setSupportErrors({})
+    setSendingSupport(true)
+    try {
+      await api.contact({
+        name: support.name.trim(),
+        email: support.email.trim(),
+        subject: support.subject.trim(),
+        message: support.message.trim(),
+        sourcePage: '/contact',
+      })
+      setQuickSent({
+        kind: 'support',
+        email: support.email.trim(),
+        subject: support.subject.trim(),
+        ref: `KT-MSG-${String(support.subject.trim().length * 31 + support.name.trim().length * 17).padStart(4, '0')}`,
+      })
+      setSupport({ name: '', email: '', subject: '', message: '' })
+      setSupportErrors({})
+    } catch (err) {
+      setToast(err?.message || 'Could not send your message. Please try again.')
+    } finally {
+      setSendingSupport(false)
+    }
   }
 
   // ------------------------------------------------ Get in touch: feedback
-  const submitFeedback = (event) => {
+  const submitFeedback = async (event) => {
     event.preventDefault()
+    if (sendingFeedback) return // guard against double submit
     const next = {}
     if (!feedback.about.trim()) next.about = 'Tell us what this is about.'
     if (rating === 0) next.rating = 'Pick a rating from one to five stars.'
@@ -249,17 +287,32 @@ export function ContactPage() {
       return
     }
 
-    setQuickSent({
-      kind: 'feedback',
-      about: feedback.about.trim(),
-      category: feedback.category,
-      rating,
-      ref: `KT-FB-${String(feedback.about.trim().length * 23 + rating * 41).padStart(4, '0')}`,
-    })
-    setFeedback({ about: '', category: 'Suggestion', details: '' })
-    setFeedbackErrors({})
-    setRating(0)
-    setHoverRating(0)
+    setSendingFeedback(true)
+    try {
+      const detail = feedback.details.trim()
+      // The backend feedback store is vote-based (UP/DOWN); map the 5-star
+      // rating to a vote and keep the rating, category and topic in the comment.
+      await api.sendFeedback({
+        vote: rating >= 3 ? 'UP' : 'DOWN',
+        pagePath: '/contact',
+        comment: `${feedback.category} · ${feedback.about.trim()}${detail ? ` — ${detail}` : ''} (rating ${rating}/5)`,
+      })
+      setQuickSent({
+        kind: 'feedback',
+        about: feedback.about.trim(),
+        category: feedback.category,
+        rating,
+        ref: `KT-FB-${String(feedback.about.trim().length * 23 + rating * 41).padStart(4, '0')}`,
+      })
+      setFeedback({ about: '', category: 'Suggestion', details: '' })
+      setFeedbackErrors({})
+      setRating(0)
+      setHoverRating(0)
+    } catch (err) {
+      setToast(err?.message || 'Could not send your feedback. Please try again.')
+    } finally {
+      setSendingFeedback(false)
+    }
   }
 
   /** Shared input styling for the two Get-in-touch cards. */
@@ -448,8 +501,8 @@ export function ContactPage() {
                 Encrypted in transit and at rest. We reply to the address you give us and nothing else.
               </p>
 
-              <Button type="submit" size="lg" className="mt-4 w-full justify-center">
-                <FiSend /> Send message
+              <Button type="submit" size="lg" className="mt-4 w-full justify-center" disabled={sendingSupport}>
+                <FiSend /> {sendingSupport ? 'Sending…' : 'Send message'}
               </Button>
             </form>
           </Reveal>
@@ -582,8 +635,8 @@ export function ContactPage() {
                 Feedback is anonymous unless you add contact details. Every item is read by the product team.
               </p>
 
-              <Button type="submit" size="lg" className="mt-4 w-full justify-center">
-                <FiSend /> Send feedback
+              <Button type="submit" size="lg" className="mt-4 w-full justify-center" disabled={sendingFeedback}>
+                <FiSend /> {sendingFeedback ? 'Sending…' : 'Send feedback'}
               </Button>
             </form>
           </Reveal>
@@ -750,8 +803,8 @@ export function ContactPage() {
                 </div>
               </div>
 
-              <Button type="submit" size="lg" className="mt-7 w-full justify-center">
-                Send to {selectedTopic.title} <FiSend />
+              <Button type="submit" size="lg" className="mt-7 w-full justify-center" disabled={sendingMessage}>
+                {sendingMessage ? 'Sending…' : <>Send to {selectedTopic.title} <FiSend /></>}
               </Button>
 
               <p className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-muted">

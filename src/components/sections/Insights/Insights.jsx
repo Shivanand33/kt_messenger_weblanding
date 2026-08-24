@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
   FiZap, FiLayers, FiMessageSquare, FiHeadphones, FiGlobe, FiGrid, FiUsers,
   FiActivity, FiPhone, FiRadio, FiCompass, FiSearch, FiCheck, FiArrowRight, FiShield, FiHeart,
@@ -11,6 +12,7 @@ import { Button } from '../../common/Button/Button'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
 import { useModal } from '../../../context/ModalContext'
 import { useCountUp } from '../../../hooks/useCountUp'
+import { api } from '../../../services/apiClient'
 import aiImg from '../../../assets/images/cyberpunk_neon_city.png'
 import communityImg from '../../../assets/images/footer.jpg'
 import contentImg from '../../../assets/images/private.jpg'
@@ -193,6 +195,21 @@ const articles = [
   },
 ]
 
+// ── "From the KT Blog" cards, sourced live from the SAME blog API as /blog ──
+// The hardcoded `articles` above are used only as an offline fallback.
+// Local covers fill in when a post has no coverUrl, so cards always look complete.
+const FALLBACK_COVERS = [communityImg, updatesImg, aiImg, voiceImg, collabImg, ecosystemImg, privacyImg, contentImg]
+const readMinutes = (text) => Math.max(2, Math.round(String(text || '').trim().split(/\s+/).filter(Boolean).length / 40))
+// Map a published post from GET /api/blog to the existing blog-card shape.
+const toHomeArticle = (p, i) => ({
+  key: p.slug,
+  image: p.coverUrl || FALLBACK_COVERS[i % FALLBACK_COVERS.length],
+  tag: p.category?.name || 'Blog',
+  read: `${readMinutes(p.excerpt)} min read`,
+  title: p.title,
+  excerpt: p.excerpt || '',
+})
+
 const stats = [
   { icon: <FiMessageSquare />, value: 100, suffix: '%', label: 'Smart Communication', hint: 'Encrypted chats, groups & broadcasts' },
   { icon: <FiZap />, value: 24, suffix: '/7', label: 'AI Assistance', hint: 'KT AI ready inside every chat' },
@@ -263,8 +280,22 @@ function StatCard({ item, index }) {
 export function Insights() {
   const { openDownloadModal } = useModal()
 
+  // Home blog cards come from the live blog API — the same PostgreSQL/DB source
+  // as the /blog page. Drafts/deleted posts never appear (the public API returns
+  // only published posts). Refetched on every mount so create/edit/publish/
+  // delete are reflected. Falls back to bundled cards only if the API is down.
+  const [blogArticles, setBlogArticles] = useState(articles)
+  useEffect(() => {
+    let alive = true
+    api
+      .listBlog({ page: 1, pageSize: 6 })
+      .then(({ items }) => { if (alive && items?.length) setBlogArticles(items.map(toHomeArticle)) })
+      .catch(() => {}) // API down → keep the bundled fallback cards
+    return () => { alive = false }
+  }, [])
+
   return (
-    <Section id="insights" className="border-y border-line bg-surface">
+    <Section id="insights" className="border-y border-line bg-cream">
       {/* Hero heading */}
       <SectionHeading
         align="center"
@@ -503,8 +534,8 @@ export function Insights() {
           titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article, index) => (
-            <Reveal key={article.title} from="up" delay={(index % 3) * 0.06} className="h-full">
+          {blogArticles.map((article, index) => (
+            <Reveal key={article.key || article.title} from="up" delay={(index % 3) * 0.06} className="h-full">
               <article className={`${cardBase} h-full`}>
                 <div className="relative overflow-hidden">
                   <img

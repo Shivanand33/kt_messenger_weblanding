@@ -22,3 +22,19 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# ── Secrets / environment files (never commit real credentials) ──
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
+# backup / temp copies of env files (may contain secrets)
+.env.bak*
+.env.*.bak
+**/.env.bak*
+**/.env.*.bak
+# keep the shareable templates tracked
+!.env.example
+!**/.env.example

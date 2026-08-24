@@ -1,0 +1,44 @@
+{
+  "name": "kt-messenger-backend",
+  "version": "1.0.0",
+  "description": "Backend API + CMS for the KT Messenger marketing website",
+  "private": true,
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "db:generate": "prisma generate",
+    "db:validate": "prisma validate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:reset": "prisma migrate reset --force",
+    "db:seed": "node prisma/seed.js",
+    "db:studio": "prisma studio",
+    "mail:test": "node scripts/test-mail.js",
+    "mail:pass": "node scripts/set-smtp-pass.js",
+    "mail:setup": "node scripts/mail-setup.js"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.5",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^9.0.5",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0"
+  }
+}

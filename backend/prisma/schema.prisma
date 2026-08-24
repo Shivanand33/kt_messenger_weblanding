@@ -1,0 +1,461 @@
+// KT Messenger — Website CMS database schema
+// Marketing website only. No chat / calling / messaging runtime data here.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────────────────────
+enum ContentStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum AdminStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  RESOLVED
+  SPAM
+}
+
+enum SubscriberStatus {
+  SUBSCRIBED
+  UNSUBSCRIBED
+}
+
+enum FeedbackVote {
+  UP
+  DOWN
+}
+
+enum Platform {
+  IOS
+  ANDROID
+  MAC
+  WINDOWS
+  WEB
+  IPAD
+}
+
+// ─────────────────────────────────────────────────────────────
+// Auth / RBAC
+// ─────────────────────────────────────────────────────────────
+model Admin {
+  id           String      @id @default(cuid())
+  email        String      @unique
+  name         String
+  passwordHash String
+  status       AdminStatus @default(ACTIVE)
+  lastLoginAt  DateTime?
+  roleId       String
+  role         Role        @relation(fields: [roleId], references: [id])
+  blogPosts    BlogPost[]  @relation("BlogAuthorAdmin")
+  media        Media[]
+  auditLogs    AuditLog[]
+  contactReplies ContactMessage[] @relation("ContactReplyAdmin")
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([roleId])
+  @@map("admins")
+}
+
+model Role {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  description String?
+  isSystem    Boolean      @default(false)
+  admins      Admin[]
+  permissions Permission[] @relation("RolePermissions")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("roles")
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  key         String   @unique // e.g. "blog:write"
+  description String?
+  roles       Role[]   @relation("RolePermissions")
+
+  @@map("permissions")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Blog
+// ─────────────────────────────────────────────────────────────
+model BlogCategory {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?
+  posts       BlogPost[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("blog_categories")
+}
+
+model BlogTag {
+  id        String     @id @default(cuid())
+  name      String
+  slug      String     @unique
+  posts     BlogPost[] @relation("BlogPostTags")
+  createdAt DateTime   @default(now())
+
+  @@map("blog_tags")
+}
+
+model BlogPost {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  title          String
+  excerpt        String?
+  body           String        @default("")
+  coverUrl       String?
+  authorName     String        @default("KT Messenger")
+  status         ContentStatus @default(DRAFT)
+  featured       Boolean       @default(false)
+  publishedAt    DateTime?
+  scheduledAt    DateTime?
+  locale         String        @default("en-US")
+  seoTitle       String?
+  seoDescription String?
+  ogImage        String?
+  categoryId     String?
+  category       BlogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  tags           BlogTag[]     @relation("BlogPostTags")
+  createdById    String?
+  createdBy      Admin?        @relation("BlogAuthorAdmin", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([categoryId])
+  @@index([locale])
+  @@map("blog_posts")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Help Center
+// ─────────────────────────────────────────────────────────────
+model HelpCategory {
+  id            String            @id @default(cuid())
+  slug          String            @unique
+  title         String
+  icon          String?
+  order         Int               @default(0)
+  locale        String            @default("en-US")
+  subcategories HelpSubcategory[]
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@map("help_categories")
+}
+
+model HelpSubcategory {
+  id         String        @id @default(cuid())
+  categoryId String
+  category   HelpCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  slug       String
+  title      String
+  icon       String?
+  order      Int           @default(0)
+  articles   HelpArticle[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  @@unique([categoryId, slug])
+  @@index([categoryId])
+  @@map("help_subcategories")
+}
+
+model HelpArticle {
+  id             String          @id @default(cuid())
+  subcategoryId  String
+  subcategory    HelpSubcategory @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
+  slug           String          @unique
+  title          String
+  body           String          @default("")
+  platforms      String[]        @default([])
+  popular        Boolean         @default(false)
+  status         ContentStatus   @default(PUBLISHED)
+  order          Int             @default(0)
+  locale         String          @default("en-US")
+  seoTitle       String?
+  seoDescription String?
+  feedback       Feedback[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([subcategoryId])
+  @@index([status])
+  @@index([popular])
+  @@map("help_articles")
+}
+
+// ─────────────────────────────────────────────────────────────
+// FAQs
+// ─────────────────────────────────────────────────────────────
+model Faq {
+  id        String        @id @default(cuid())
+  page      String        @default("help") // help | calling | messaging | business | home
+  question  String
+  answer    String
+  order     Int           @default(0)
+  status    ContentStatus @default(PUBLISHED)
+  locale    String        @default("en-US")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([page, status])
+  @@map("faqs")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Success stories (Business page)
+// ─────────────────────────────────────────────────────────────
+model SuccessStory {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  company        String
+  logoUrl        String?
+  imageUrl       String?
+  summary        String
+  body           String        @default("")
+  metrics        Json?
+  status         ContentStatus @default(PUBLISHED)
+  order          Int           @default(0)
+  locale         String        @default("en-US")
+  seoTitle       String?
+  seoDescription String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([status])
+  @@map("success_stories")
+}
+
+// ─────────────────────────────────────────────────────────────
+// App releases / downloads
+// ─────────────────────────────────────────────────────────────
+model AppRelease {
+  id          String   @id @default(cuid())
+  platform    Platform
+  version     String
+  minOs       String?
+  downloadUrl String?
+  storeUrl    String?
+  notes       String?
+  releaseDate DateTime?
+  isCurrent   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([platform, version])
+  @@index([platform, isCurrent])
+  @@map("app_releases")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Editable website content blocks (hero, sections, SEO, etc.)
+// ─────────────────────────────────────────────────────────────
+model WebsiteContent {
+  id        String   @id @default(cuid())
+  key       String   // e.g. "home.hero"
+  page      String   // e.g. "home"
+  label     String?
+  data      Json
+  locale    String   @default("en-US")
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@unique([key, locale])
+  @@index([page])
+  @@map("website_content")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Navigation & footer
+// ─────────────────────────────────────────────────────────────
+model NavigationItem {
+  id       String           @id @default(cuid())
+  label    String
+  href     String
+  location String           @default("header") // header | features_menu | business_nav
+  order    Int              @default(0)
+  visible  Boolean          @default(true)
+  parentId String?
+  parent   NavigationItem?  @relation("NavChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children NavigationItem[] @relation("NavChildren")
+  locale   String           @default("en-US")
+
+  @@index([location, order])
+  @@map("navigation_items")
+}
+
+model FooterSection {
+  id        String       @id @default(cuid())
+  title     String
+  order     Int          @default(0)
+  locale    String       @default("en-US")
+  links     FooterLink[]
+
+  @@map("footer_sections")
+}
+
+model FooterLink {
+  id        String        @id @default(cuid())
+  sectionId String
+  section   FooterSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  label     String
+  href      String
+  order     Int           @default(0)
+
+  @@index([sectionId])
+  @@map("footer_links")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Media library
+// ─────────────────────────────────────────────────────────────
+model Media {
+  id           String   @id @default(cuid())
+  filename     String
+  originalName String
+  url          String
+  mimeType     String
+  size         Int
+  alt          String?
+  folder       String   @default("general")
+  uploadedById String?
+  uploadedBy   Admin?   @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+
+  @@index([folder])
+  @@map("media")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Lead capture / messages
+// ─────────────────────────────────────────────────────────────
+model Subscriber {
+  id         String           @id @default(cuid())
+  email      String           @unique
+  sourcePage String?
+  locale     String           @default("en-US")
+  consent    Boolean          @default(true)
+  status     SubscriberStatus @default(SUBSCRIBED)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  @@map("subscribers")
+}
+
+model ContactMessage {
+  id         String        @id @default(cuid())
+  name       String
+  email      String
+  subject    String?
+  message    String
+  sourcePage String?
+  status     ContactStatus @default(NEW)
+  // Admin reply sent back to the person who submitted the form.
+  replyBody   String?
+  repliedAt   DateTime?
+  repliedById String?
+  repliedBy   Admin?    @relation("ContactReplyAdmin", fields: [repliedById], references: [id], onDelete: SetNull)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  @@index([status])
+  @@map("contact_messages")
+}
+
+model Feedback {
+  id        String       @id @default(cuid())
+  articleId String?
+  article   HelpArticle? @relation(fields: [articleId], references: [id], onDelete: SetNull)
+  pagePath  String?
+  vote      FeedbackVote
+  comment   String?
+  createdAt DateTime     @default(now())
+
+  @@index([articleId])
+  @@map("feedback")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Analytics / tracking
+// ─────────────────────────────────────────────────────────────
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  type      String // page_view | blog_opened | search_performed | download_clicked | ...
+  path      String?
+  meta      Json?
+  sessionId String?
+  createdAt DateTime @default(now())
+
+  @@index([type, createdAt])
+  @@map("analytics_events")
+}
+
+model DownloadEvent {
+  id        String   @id @default(cuid())
+  platform  String
+  page      String?
+  target    String?
+  ipHash    String?
+  sessionId String?
+  createdAt DateTime @default(now())
+
+  @@index([platform, createdAt])
+  @@map("download_events")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Localization
+// ─────────────────────────────────────────────────────────────
+model Locale {
+  code      String   @id // "en-US"
+  label     String // "English (US)"
+  enabled   Boolean  @default(true)
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("locales")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Audit log
+// ─────────────────────────────────────────────────────────────
+model AuditLog {
+  id        String   @id @default(cuid())
+  adminId   String?
+  admin     Admin?   @relation(fields: [adminId], references: [id], onDelete: SetNull)
+  action    String // e.g. "blog.create"
+  entity    String? // e.g. "BlogPost"
+  entityId  String?
+  meta      Json?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([adminId])
+  @@index([entity, entityId])
+  @@map("audit_logs")
+}

@@ -45,7 +45,6 @@ import { Testimonials } from '../../components/feature/Testimonials'
 import { FaqAccordion } from '../../components/feature/FaqAccordion'
 import { CtaBand } from '../../components/feature/CtaBand'
 import { RelatedPages } from '../../components/feature/RelatedPages'
-import { Marquee } from '../../components/feature/Marquee'
 import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
@@ -297,27 +296,6 @@ export function MarketsPage() {
   return (
     <MainLayout>
       {/* ---------------------------------------------------------------- */}
-      {/* PRICE TICKER TAPE                                                 */}
-      {/* ---------------------------------------------------------------- */}
-      <div className="flex items-center border-b border-line bg-[#0b1626] text-white">
-        <span className="flex shrink-0 items-center gap-2 bg-brand-strong px-4 py-2.5 text-[11px] font-black uppercase tracking-[0.14em]">
-          <span className="h-1.5 w-1.5 animate-ping rounded-full bg-white" />
-          Live
-        </span>
-        <Marquee duration={60} className="flex-1">
-          {marketAssets.slice(0, 18).map((asset) => (
-            <span key={asset.symbol} className="flex items-center gap-2 whitespace-nowrap px-5 py-2.5 text-xs font-bold">
-              <span className="text-slate-400">{asset.symbol}</span>
-              <span className="text-white">{formatPrice(asset)}</span>
-              <span className={asset.change >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
-                {formatChange(asset.change)}
-              </span>
-            </span>
-          ))}
-        </Marquee>
-      </div>
-
-      {/* ---------------------------------------------------------------- */}
       {/* HERO                                                              */}
       {/* ---------------------------------------------------------------- */}
       <PageHero
@@ -349,10 +327,10 @@ export function MarketsPage() {
           { icon: <FiBell />, label: 'Alerts delivered in chat' },
         ]}
         aside={
-          <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5 shadow-2xl backdrop-blur-xl sm:p-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <span className="text-sm font-extrabold text-white">Index snapshot</span>
-              <span className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-black uppercase text-emerald-300">
+          <div className="rounded-[28px] border border-line dark:border-white/10 bg-cream-2 dark:bg-white/[0.04] p-5 shadow-card dark:shadow-2xl backdrop-blur-xl sm:p-6">
+            <div className="flex items-center justify-between border-b border-line dark:border-white/10 pb-4">
+              <span className="text-sm font-extrabold text-ink dark:text-white">Index snapshot</span>
+              <span className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-300">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" /> Streaming
               </span>
             </div>
@@ -366,47 +344,47 @@ export function MarketsPage() {
                     key={asset.symbol}
                     type="button"
                     onClick={() => setSelected(asset)}
-                    className="rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-left transition-colors hover:border-sky-400/40 hover:bg-white/[0.07]"
+                    className="rounded-2xl border border-line dark:border-white/10 bg-cream dark:bg-white/[0.03] p-3 text-left transition-colors hover:border-brand/40 dark:hover:border-sky-400/40 hover:bg-brand-soft/50 dark:hover:bg-white/[0.07]"
                   >
                     <div className="flex items-center justify-between text-[11px] font-bold">
-                      <span className="text-slate-400">{asset.symbol}</span>
-                      <span className={asset.change >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+                      <span className="text-muted dark:text-slate-400">{asset.symbol}</span>
+                      <span className={asset.change >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}>
                         {formatChange(asset.change)}
                       </span>
                     </div>
-                    <div className="mt-1 text-base font-black text-white">{formatPrice(asset)}</div>
+                    <div className="mt-1 text-base font-black text-ink dark:text-white">{formatPrice(asset)}</div>
                     <Sparkline data={asset.series} up={asset.change >= 0} width={120} height={28} className="mt-2 w-full" />
                   </button>
                 ))}
             </div>
 
-            <p className="mt-4 border-t border-white/10 pt-4 text-[10px] font-semibold leading-relaxed text-slate-400">
+            <p className="mt-4 border-t border-line dark:border-white/10 pt-4 text-[10px] font-semibold leading-relaxed text-muted dark:text-slate-400">
               Illustrative sample data for this product page. Live quotes inside the app carry a source and timestamp.
             </p>
           </div>
         }
       >
-        <div className="mt-8 flex items-center gap-3 rounded-2xl border border-white/15 bg-white/[0.06] p-2 shadow-2xl backdrop-blur-xl">
-          <FiSearch className="ml-3 shrink-0 text-xl text-slate-400" />
+        <div className="mt-8 flex items-center gap-3 rounded-2xl border border-line dark:border-white/15 bg-cream-2 dark:bg-white/[0.06] p-2 shadow-card dark:shadow-2xl backdrop-blur-xl">
+          <FiSearch className="ml-3 shrink-0 text-xl text-muted dark:text-slate-400" />
           <input
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search Bitcoin, NIFTY, USD/INR, Gold…"
-            className="w-full bg-transparent text-sm font-semibold text-white outline-none placeholder:text-slate-400"
+            className="w-full bg-transparent text-sm font-semibold text-ink dark:text-white outline-none placeholder:text-muted dark:placeholder:text-slate-400"
           />
           {query ? (
             <button
               type="button"
               onClick={() => setQuery('')}
-              className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-300 hover:bg-white/10 hover:text-white"
+              className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-muted dark:text-slate-300 hover:bg-brand-soft dark:hover:bg-white/10 hover:text-ink dark:hover:text-white"
             >
               Clear
             </button>
           ) : null}
         </div>
         {query ? (
-          <p className="mt-3 text-xs font-semibold text-sky-300">
+          <p className="mt-3 text-xs font-semibold text-brand-strong dark:text-sky-300">
             {filtered.length} {filtered.length === 1 ? 'instrument matches' : 'instruments match'} “{query}”
           </p>
         ) : null}
