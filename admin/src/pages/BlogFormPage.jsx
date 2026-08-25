@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import api, { errorMessage } from '../api/client.js'
 import { useToast } from '../components/Toast.jsx'
@@ -23,6 +23,34 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
   const [saving, setSaving] = useState(false)
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }))
+
+  // Direct file upload for image fields — sends the file to the media API
+  // (which stores it locally or on R2) and fills the field with the returned URL.
+  const coverFileRef = useRef(null)
+  const ogFileRef = useRef(null)
+  const [uploadingField, setUploadingField] = useState(null)
+  const apiOrigin = (import.meta.env.VITE_API_URL || 'http://localhost:4000/api').replace(/\/api\/?$/, '')
+  const resolveMediaUrl = (u) =>
+    !u ? '' : /^https?:\/\//i.test(u) ? u : `${apiOrigin}${u.startsWith('/') ? '' : '/'}${u}`
+
+  const uploadImage = async (fieldKey, e) => {
+    const file = e.target.files?.[0]
+    e.target.value = '' // allow re-selecting the same file
+    if (!file) return
+    setUploadingField(fieldKey)
+    try {
+      const fd = new FormData()
+      fd.append('file', file)
+      fd.append('folder', 'blog')
+      const res = await api.post('/admin/media', fd)
+      set(fieldKey, res.data.data.url)
+      toast.success('Image uploaded')
+    } catch (err) {
+      toast.error(errorMessage(err, 'Upload failed'))
+    } finally {
+      setUploadingField(null)
+    }
+  }
 
   useEffect(() => {
     Promise.all([
@@ -81,14 +109,78 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
           <h3 style={{ fontSize: 15, marginBottom: 12 }}>SEO</h3>
           <Input label="SEO title" value={form.seoTitle} onChange={(e) => set('seoTitle', e.target.value)} />
           <Textarea label="SEO description" value={form.seoDescription} onChange={(e) => set('seoDescription', e.target.value)} style={{ minHeight: 60 }} />
-          <Input label="OG image URL" value={form.ogImage} onChange={(e) => set('ogImage', e.target.value)} placeholder="/uploads/..." />
+          <div className="field">
+            <label>OG image</label>
+            <input
+              ref={ogFileRef}
+              type="file"
+              accept="image/*"
+              onChange={(e) => uploadImage('ogImage', e)}
+              style={{ display: 'none' }}
+            />
+            {form.ogImage ? (
+              <div style={{ marginBottom: 8, borderRadius: 10, overflow: 'hidden', border: '1px solid var(--line)' }}>
+                <img
+                  src={resolveMediaUrl(form.ogImage)}
+                  alt="OG preview"
+                  style={{ display: 'block', width: '100%', height: 150, objectFit: 'cover' }}
+                />
+              </div>
+            ) : (
+              <div style={{ marginBottom: 8, height: 90, borderRadius: 10, border: '1px dashed var(--line)', display: 'grid', placeItems: 'center', color: 'var(--muted)', fontSize: 13 }}>
+                No image selected
+              </div>
+            )}
+            <button
+              type="button"
+              className="btn"
+              onClick={() => ogFileRef.current?.click()}
+              disabled={uploadingField === 'ogImage'}
+              style={{ width: '100%' }}
+            >
+              {uploadingField === 'ogImage' ? 'Uploading…' : form.ogImage ? 'Replace image' : '⬆ Upload image from computer'}
+            </button>
+            <div className="hint">Upload an image from your computer.</div>
+          </div>
         </div>
 
         <div className="card card-pad">
           <Select label="Status" value={form.status} onChange={(e) => set('status', e.target.value)} options={[{ value: 'DRAFT', label: 'Draft' }, { value: 'PUBLISHED', label: 'Published' }, { value: 'SCHEDULED', label: 'Scheduled' }, { value: 'ARCHIVED', label: 'Archived' }]} />
           <Checkbox label="Featured article" checked={form.featured} onChange={(e) => set('featured', e.target.checked)} />
           <Input label="Author" value={form.authorName} onChange={(e) => set('authorName', e.target.value)} />
-          <Input label="Cover image URL" value={form.coverUrl} onChange={(e) => set('coverUrl', e.target.value)} placeholder="/uploads/..." />
+          <div className="field">
+            <label>Cover image</label>
+            <input
+              ref={coverFileRef}
+              type="file"
+              accept="image/*"
+              onChange={(e) => uploadImage('coverUrl', e)}
+              style={{ display: 'none' }}
+            />
+            {form.coverUrl ? (
+              <div style={{ marginBottom: 8, borderRadius: 10, overflow: 'hidden', border: '1px solid var(--line)' }}>
+                <img
+                  src={resolveMediaUrl(form.coverUrl)}
+                  alt="Cover preview"
+                  style={{ display: 'block', width: '100%', height: 150, objectFit: 'cover' }}
+                />
+              </div>
+            ) : (
+              <div style={{ marginBottom: 8, height: 90, borderRadius: 10, border: '1px dashed var(--line)', display: 'grid', placeItems: 'center', color: 'var(--muted)', fontSize: 13 }}>
+                No image selected
+              </div>
+            )}
+            <button
+              type="button"
+              className="btn"
+              onClick={() => coverFileRef.current?.click()}
+              disabled={uploadingField === 'coverUrl'}
+              style={{ width: '100%' }}
+            >
+              {uploadingField === 'coverUrl' ? 'Uploading…' : form.coverUrl ? 'Replace image' : '⬆ Upload image from computer'}
+            </button>
+            <div className="hint">Upload an image from your computer.</div>
+          </div>
           <Select label="Category" value={form.categoryId} onChange={(e) => set('categoryId', e.target.value)} options={[{ value: '', label: '— None —' }, ...categories.map((c) => ({ value: c.id, label: c.name }))]} />
           <div className="field">
             <label>Tags</label>

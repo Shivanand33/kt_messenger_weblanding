@@ -23,7 +23,12 @@ export const upload = asyncHandler(async (req, res) => {
   if (!req.file) throw ApiError.badRequest('No file uploaded (field name must be "file")')
   const folder = (req.body.folder || 'general').replace(/[^a-z0-9-_]/gi, '').toLowerCase() || 'general'
   const filename = safeFilename(req.file.originalname)
-  const { url } = await storage.save({ buffer: req.file.buffer, filename, folder })
+  const { url } = await storage.save({
+    buffer: req.file.buffer,
+    filename,
+    folder,
+    contentType: req.file.mimetype,
+  })
 
   const media = await prisma.media.create({
     data: {
