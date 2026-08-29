@@ -1,0 +1,19 @@
+# Rebuilt inside the image — never ship the host's (Windows) engine/node_modules.
+node_modules
+npm-debug.log*
+
+# Secrets & local-only files must not enter the image layers.
+.env
+.env.*
+!.env.example
+
+# Local storage / DB dumps / archives.
+uploads
+*.sql
+*.zip
+
+# VCS / editor noise.
+.git
+.gitignore
+.vscode
+.idea

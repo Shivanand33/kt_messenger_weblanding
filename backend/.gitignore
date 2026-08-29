@@ -6,3 +6,7 @@ dist
 .DS_Store
 .env.bak*
 .env.*.bak
+
+# Database dumps — contain real data (hashed admin passwords, contact submissions).
+*.sql
+*.zip
