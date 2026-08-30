@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiX, FiDownload, FiCheck, FiMonitor, FiExternalLink } from 'react-icons/fi'
+import { FiX, FiDownload, FiExternalLink } from 'react-icons/fi'
 import { FaAndroid } from 'react-icons/fa'
 
 // Mobile builds live on the app stores, so those rows link out rather than
@@ -8,11 +7,10 @@ import { FaAndroid } from 'react-icons/fa'
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.ogoul.kalamtime'
 const APP_STORE_URL = 'https://apps.apple.com/in/app/kt-messenger/id6478195913'
 
-// One class string for all four call-to-actions so they stay identical in
-// height and never wrap. `text-white!` is forced because the global
-// `a { color: inherit }` rule is unlayered, and unlayered CSS outranks
-// Tailwind's layered utilities — without it the two store links render in the
-// body colour instead of white.
+// One class string for all call-to-actions so they stay identical in height and
+// never wrap. `text-white!` is forced because the global `a { color: inherit }`
+// rule is unlayered, and unlayered CSS outranks Tailwind's layered utilities —
+// without it the two store links render in the body colour instead of white.
 const CTA_CLASS =
   'flex h-9 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-brand-strong px-4 text-xs font-semibold text-white! shadow-sm transition-colors hover:bg-brand-strong-hover'
 
@@ -25,25 +23,7 @@ function AppleIcon({ className = 'h-5 w-5' }) {
 }
 
 export function DownloadModal({ isOpen, onClose }) {
-  const [downloadingOS, setDownloadingOS] = useState(null)
-
   if (!isOpen) return null
-
-  const handleDownload = (osName, filename) => {
-    setDownloadingOS(osName)
-    // Simulate instant file download action
-    const element = document.createElement('a')
-    const file = new Blob([`KT Messenger Installer for ${osName}`], { type: 'text/plain' })
-    element.href = URL.createObjectURL(file)
-    element.download = filename
-    document.body.appendChild(element)
-    element.click()
-    document.body.removeChild(element)
-
-    setTimeout(() => {
-      setDownloadingOS(null)
-    }, 2000)
-  }
 
   return (
     <AnimatePresence>
@@ -79,66 +59,12 @@ export function DownloadModal({ isOpen, onClose }) {
             </div>
             <h3 className="text-2xl font-bold text-[#111b21]">Download KT Messenger</h3>
             <p className="mt-1 text-xs text-stone-500">
-              Get the official app for Windows, macOS, Android, or iOS
+              Get the official app for Android or iOS
             </p>
           </div>
 
           {/* Download Options */}
           <div className="mt-6 space-y-3">
-            {/* Windows */}
-            <div className="flex items-center justify-between rounded-2xl border border-stone-200 p-3.5 hover:border-brand-strong transition-all bg-stone-50/50">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
-                  <FiMonitor className="text-xl" />
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-bold text-stone-900">Windows PC</p>
-                  <p className="text-[11px] text-stone-500">Windows 10/11 (64-bit)</p>
-                </div>
-              </div>
-              <button
-                onClick={() => handleDownload('Windows', 'KTMessenger-Setup.exe')}
-                className={CTA_CLASS}
-              >
-                {downloadingOS === 'Windows' ? (
-                  <>
-                    <FiCheck className="text-sm" /> Downloaded
-                  </>
-                ) : (
-                  <>
-                    <FiDownload /> Download .exe
-                  </>
-                )}
-              </button>
-            </div>
-
-            {/* macOS */}
-            <div className="flex items-center justify-between rounded-2xl border border-stone-200 p-3.5 hover:border-brand-strong transition-all bg-stone-50/50">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-stone-200 text-stone-800">
-                  <AppleIcon className="text-xl" />
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-bold text-stone-900">macOS</p>
-                  <p className="text-[11px] text-stone-500">macOS 11.0 or later (Apple Silicon / Intel)</p>
-                </div>
-              </div>
-              <button
-                onClick={() => handleDownload('macOS', 'KTMessenger-macOS.dmg')}
-                className={CTA_CLASS}
-              >
-                {downloadingOS === 'macOS' ? (
-                  <>
-                    <FiCheck className="text-sm" /> Downloaded
-                  </>
-                ) : (
-                  <>
-                    <FiDownload /> Download .dmg
-                  </>
-                )}
-              </button>
-            </div>
-
             {/* Android */}
             <div className="flex items-center justify-between rounded-2xl border border-stone-200 p-3.5 hover:border-brand-strong transition-all bg-stone-50/50">
               <div className="flex items-center gap-3">
