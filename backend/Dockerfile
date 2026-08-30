@@ -24,10 +24,19 @@ RUN npm ci
 # App source.
 COPY . .
 
-# Prisma client is generated during `npm ci` (postinstall). Regenerate once more
-# now that the full schema/source is present — idempotent, cheap, and guarantees
-# the client matches the shipped schema.
-RUN npx prisma generate
+# Regenerate the client from the shipped schema, then HARD-FAIL the build if the
+# Alpine/OpenSSL-3 engine is not present. This guarantees a mis-built image can
+# never silently ship the wrong (OpenSSL 1.1 / plain linux-musl) engine and blow
+# up at runtime with "libssl.so.1.1: No such file or directory".
+RUN npx prisma generate \
+ && echo "== Generated Prisma engines ==" \
+ && ls -1 node_modules/.prisma/client/ | grep -Ei 'engine' \
+ && test -f node_modules/.prisma/client/libquery_engine-linux-musl-openssl-3.0.x.so.node \
+      || (echo "BUILD FAILED: libquery_engine-linux-musl-openssl-3.0.x.so.node was not generated" && exit 1)
+
+# Prove OpenSSL 3 is present in the image (libssl.so.3), so Prisma resolves the
+# right engine at runtime instead of falling back to the OpenSSL 1.1 variant.
+RUN openssl version && (ls -1 /usr/lib/libssl.so.3 /lib/libssl.so.3 2>/dev/null | head -1)
 
 ENV NODE_ENV=production
 EXPOSE 4000

@@ -4,10 +4,10 @@ import { prisma, checkDbConnection } from './config/db.js'
 
 const app = createApp()
 
-const server = app.listen(env.port, async () => {
+const server = app.listen(env.port, env.host, async () => {
   const db = await checkDbConnection()
   // eslint-disable-next-line no-console
-  console.log(`✅ KT Messenger API listening on http://localhost:${env.port}`)
+  console.log(`✅ KT Messenger API listening on http://${env.host}:${env.port}`)
   // eslint-disable-next-line no-console
   console.log(`   Database: ${db ? 'connected' : 'NOT connected (run migrations / start Postgres)'}`)
 })

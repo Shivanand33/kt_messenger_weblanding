@@ -13,6 +13,9 @@ export const env = {
   nodeEnv: process.env.NODE_ENV || 'development',
   isProd: process.env.NODE_ENV === 'production',
   port: Number(process.env.PORT || 4000),
+  // Bind all interfaces by default so the container is reachable via
+  // Kubernetes/Ingress (never bind to localhost inside a pod).
+  host: process.env.HOST || '0.0.0.0',
 
   databaseUrl: process.env.DATABASE_URL,
 
