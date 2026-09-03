@@ -29,6 +29,23 @@ const IMAGE_MAP = {
 // bundled image so a missing cover never renders a broken <img>.
 const imageFor = (post) => post.coverUrl || IMAGE_MAP[post.imageKey] || footerImg
 
+// Bundled posts keyed by slug, so an opened article can render its full body
+// instantly — with no network round-trip, even when the API is unreachable on
+// deploy. This is what fixes "content shows on local but not on deploy".
+const FALLBACK_BY_SLUG = new Map(FALLBACK_POSTS.map((p) => [p.slug, p]))
+
+// Resolve `promise`, but give up after `ms` so a slow / hung request never
+// leaves the blog stuck on a loading spinner.
+const withTimeout = (promise, ms = 7000) => {
+  let timer
+  return Promise.race([
+    promise.finally(() => clearTimeout(timer)),
+    new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error('request-timeout')), ms)
+    }),
+  ])
+}
+
 /* ────────────────────────────────────────────────────────────
  * API → view-model adapters. The DB is the source of truth; these map the
  * public API payload into the exact shape the existing design already renders,
@@ -171,8 +188,10 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
   }, [post.slug, posts])
 
   // Show the intro paragraph above the hero image so readable content appears
-  // immediately; the rest of the article follows below the image.
-  const hasLead = post.blocks[0]?.type === 'p'
+  // immediately; the rest of the article follows below the image. Only lift the
+  // lead out when there is more content after it — otherwise a short (single
+  // paragraph) article would render nothing below the image.
+  const hasLead = post.blocks.length > 1 && post.blocks[0]?.type === 'p'
   const bodyBlocks = hasLead ? post.blocks.slice(1) : post.blocks
 
   const BackButton = (
@@ -275,30 +294,29 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
 }
 
 export function BlogPage() {
-  const [posts, setPosts] = useState([])
-  const [loading, setLoading] = useState(true)
+  // Start with the bundled posts already on screen so the blog renders instantly
+  // — no loading spinner while the network responds.
+  const [posts, setPosts] = useState(FALLBACK_POSTS)
+  const [loading] = useState(false)
   const [activeSlug, setActiveSlug] = useState(null)
   const [activePost, setActivePost] = useState(null)
   const [articleLoading, setArticleLoading] = useState(false)
   const [category, setCategory] = useState('All')
 
-  // Load published posts from the API (DB = source of truth). If the API is
-  // unreachable, fall back to the bundled sample posts so the marketing page is
-  // never blank during an outage.
+  // Revalidate from the API (DB = source of truth) in the background. If it
+  // returns published posts, swap them in; if it's slow / unreachable (deploy
+  // with the DB down), the timeout fires and we simply keep the bundled posts,
+  // so the page is never blank and never hangs on a spinner.
   useEffect(() => {
     let alive = true
-    setLoading(true)
-    api
-      .listBlog({ page: 1, pageSize: 30 })
+    withTimeout(api.listBlog({ page: 1, pageSize: 30 }))
       .then(({ items }) => {
         if (!alive) return
-        setPosts((items || []).map(normalizeCard))
+        const mapped = (items || []).map(normalizeCard)
+        if (mapped.length) setPosts(mapped)
       })
       .catch(() => {
-        if (alive) setPosts(FALLBACK_POSTS)
-      })
-      .finally(() => {
-        if (alive) setLoading(false)
+        /* keep the bundled posts already shown */
       })
     return () => {
       alive = false
@@ -316,21 +334,28 @@ export function BlogPage() {
 
   const openArticle = async (slug) => {
     setActiveSlug(slug)
-    const local = posts.find((p) => p.slug === slug)
-    if (local?.blocks?.length) {
-      setActivePost(local) // fallback data already carries its full body
+    const card = posts.find((p) => p.slug === slug)
+    const bundled = FALLBACK_BY_SLUG.get(slug)
+    // Content we can render with no network: the card's own body (bundled list)
+    // or the bundled copy of this slug. Bundled articles therefore open
+    // instantly and stay fully readable even when the API is down on deploy.
+    const instant = card?.blocks?.length ? card : bundled?.blocks?.length ? bundled : null
+    if (instant) {
+      setActivePost(instant)
       return
     }
+    // A DB-only article with no bundled copy — fetch it, but with a timeout so a
+    // slow API shows a brief spinner instead of hanging forever.
     setActivePost(null)
     setArticleLoading(true)
     try {
-      const full = await api.getBlog(slug)
+      const full = await withTimeout(api.getBlog(slug))
       setActivePost(normalizeDetail(full))
     } catch {
       setActivePost(
-        local
-          ? { ...local, blocks: local.blocks?.length ? local.blocks : [{ type: 'p', text: local.description || '' }] }
-          : null,
+        card
+          ? { ...card, blocks: card.blocks?.length ? card.blocks : [{ type: 'p', text: card.description || '' }] }
+          : bundled || null,
       )
     } finally {
       setArticleLoading(false)

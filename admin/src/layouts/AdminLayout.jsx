@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext.jsx'
 import { Icon } from '../components/Icon.jsx'
@@ -55,6 +55,24 @@ export function AdminLayout() {
   const { admin, logout, can } = useAuth()
   const [open, setOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+
+  // Light / dark theme, persisted per browser. Applied to <html data-theme>.
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem('kt_admin_theme') || 'light'
+    } catch {
+      return 'light'
+    }
+  })
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    try {
+      localStorage.setItem('kt_admin_theme', theme)
+    } catch {
+      /* storage unavailable — theme still applies for this session */
+    }
+  }, [theme])
+  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
 
   const initials = (admin?.name || 'A')
     .split(' ')
@@ -119,6 +137,15 @@ export function AdminLayout() {
           </div>
 
           <div className="right-nav">
+            <button
+              className="icon-btn"
+              onClick={toggleTheme}
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              aria-label="Toggle theme"
+            >
+              <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={18} />
+            </button>
+
             <button className="icon-btn bell-btn" title="Notifications">
               <Icon name="bell" size={18} />
               <span className="bell-dot" />

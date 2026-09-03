@@ -56,6 +56,17 @@
   --cream-2: #fffbf4;
   --surface: #ffffff;
   --surface-2: #f7efe1;
+  /* Same colours at zero alpha — used for seamless carousel edge fades that
+     dissolve into the section colour without darkening. */
+  --surface-0: rgba(255, 255, 255, 0);
+  --surface-2-0: rgba(247, 239, 225, 0);
+
+  /* Apps carousel: horizontal distance from the container's left content edge to
+     where the cards begin (heading column [0.72fr of the 0.72/1.28 grid] + the
+     3rem grid gap). Lets the rail extend left to the container edge so cards
+     slide out toward the outer/left edge (on top of the heading area) rather than
+     stopping at the inner heading edge. 112px = 2×2rem container padding + 3rem gap. */
+  --apps-occlusion: calc(0.36 * (min(100vw, 1200px) - 112px) + 48px);
 
   --ink: #0e1a13;
   --body: #47544c;
@@ -79,6 +90,8 @@
   --cream-2: #0f1b22;
   --surface: #17232b;
   --surface-2: #1e2c34;
+  --surface-0: rgba(23, 35, 43, 0);
+  --surface-2-0: rgba(30, 44, 52, 0);
 
   --ink: #e9edef;
   --body: #aebac1;

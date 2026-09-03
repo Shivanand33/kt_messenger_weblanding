@@ -411,3 +411,90 @@ table.table { width: 100%; border-collapse: collapse; background: var(--surface)
   .login-card { padding: 30px 24px 28px; border-radius: var(--radius); }
   .login-card h1 { font-size: 24px; }
 }
+
+/* ══════════════════════════════════════════════════════
+   THEME  —  smooth transition + dark mode
+   The whole UI is driven by CSS variables, so dark mode is
+   mostly a re-declaration of the tokens; a handful of rules
+   below fix the few places that hard-coded a colour.
+   ══════════════════════════════════════════════════════ */
+
+/* Animate only colour-ish properties when the theme flips. */
+body,
+.sidebar, .topbar, .main, .content,
+.card, .stat-card-v2, .hero-banner,
+.btn, .icon-btn, .badge, .trend-pill,
+.input, .textarea, .select, .search-box,
+.table, .table th, .table td, .table-wrap,
+.pill-selector, .pill-btn, .modal, .modal-head, .modal-foot {
+  transition: background-color .25s ease, border-color .25s ease, color .25s ease, box-shadow .25s ease;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a0f1c;
+  --surface: #121a2b;
+  --surface-2: #1a2436;
+  --surface-hover: #243149;
+  --ink: #f1f5f9;
+  --body: #cbd5e1;
+  --muted: #94a3b8;
+  --muted-light: #64748b;
+  --line: #243149;
+  --line-strong: #334867;
+  --brand: #60a5fa;
+  --brand-strong: #3b82f6;
+  --brand-soft: rgba(96, 165, 250, 0.14);
+  --brand-glow: rgba(96, 165, 250, 0.28);
+  --success: #34d399;
+  --success-soft: rgba(52, 211, 153, 0.14);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.14);
+  --warn: #fbbf24;
+  --warn-soft: rgba(251, 191, 36, 0.14);
+  --purple: #a78bfa;
+  --purple-soft: rgba(167, 139, 250, 0.14);
+
+  --sidebar: #0b1220;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.45);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 12px 20px -6px rgba(0, 0, 0, 0.55), 0 4px 8px -4px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 22px 32px -8px rgba(0, 0, 0, 0.65), 0 8px 12px -6px rgba(0, 0, 0, 0.5);
+  --ring: 0 0 0 3px rgba(96, 165, 250, 0.28);
+
+  color-scheme: dark;
+}
+
+/* Fix the few hard-coded light colours so nothing stays white on dark. */
+:root[data-theme="dark"] .topbar { background: rgba(18, 26, 43, 0.82); }
+:root[data-theme="dark"] .input:focus,
+:root[data-theme="dark"] .textarea:focus,
+:root[data-theme="dark"] .select:focus { background: var(--surface); }
+:root[data-theme="dark"] .table tbody tr:hover td { background: var(--surface-2); }
+:root[data-theme="dark"] .card:hover { border-color: var(--line-strong); }
+:root[data-theme="dark"] .hero-banner { border: 1px solid rgba(255, 255, 255, 0.06); }
+:root[data-theme="dark"] .pill-btn.active { background: var(--surface-hover); color: var(--ink); }
+
+/* Scrollbars */
+:root[data-theme="dark"] * { scrollbar-color: #334867 transparent; }
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #334867; }
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: #475f86; }
+
+/* Avatar reads well on dark */
+:root[data-theme="dark"] .avatar {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.28), rgba(37, 99, 235, 0.22));
+  color: #bfdbfe; box-shadow: inset 0 0 0 1px rgba(96, 165, 250, 0.3);
+}
+
+/* Status badges & trend pills — translucent tints on dark */
+:root[data-theme="dark"] .badge.green { background: rgba(16, 185, 129, 0.16); color: #6ee7b7; }
+:root[data-theme="dark"] .badge.gray  { background: rgba(148, 163, 184, 0.16); color: #cbd5e1; }
+:root[data-theme="dark"] .badge.blue  { background: rgba(59, 130, 246, 0.2);   color: #93c5fd; }
+:root[data-theme="dark"] .badge.amber { background: rgba(245, 158, 11, 0.17);  color: #fcd34d; }
+:root[data-theme="dark"] .badge.red   { background: rgba(239, 68, 68, 0.17);   color: #fca5a5; }
+:root[data-theme="dark"] .trend-pill.positive { color: #6ee7b7; }
+:root[data-theme="dark"] .trend-pill.negative { color: #fca5a5; }
+
+/* Login card: soften the bright border on dark */
+:root[data-theme="dark"] .login-card { border-color: rgba(255, 255, 255, 0.09); }

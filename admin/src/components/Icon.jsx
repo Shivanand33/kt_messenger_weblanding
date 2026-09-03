@@ -38,6 +38,8 @@ import {
   MoreVertical,
   LogOut,
   ExternalLink,
+  Sun,
+  Moon,
 } from 'lucide-react'
 
 const ICON_MAP = {
@@ -82,6 +84,8 @@ const ICON_MAP = {
   more: MoreVertical,
   logout: LogOut,
   external: ExternalLink,
+  sun: Sun,
+  moon: Moon,
 }
 
 export function Icon({ name, size = 18, className = '', color, ...props }) {
