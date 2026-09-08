@@ -431,7 +431,7 @@ export function NewsPage() {
       {/* ---------------------------------------------------------------- */}
       {/* TRENDING RAIL                                                     */}
       {/* ---------------------------------------------------------------- */}
-      <Section id="trending" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
+      <Section id="trending" className="scroll-mt-36 overflow-x-clip border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
           eyebrow="Trending now"
           title="Most-read across every desk"
@@ -439,7 +439,7 @@ export function NewsPage() {
           align="left"
         />
 
-        <div className="no-scrollbar -mx-5 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:mx-0 sm:px-0">
+        <div className="no-scrollbar -mx-5 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:mx-0 sm:px-0 lg:pr-8 lg:scroll-pr-8 lg:mr-[min(-2rem,calc((1200px_-_100vw)_/_2_-_2rem))]">
           {trending.map((item, index) => (
             <article
               key={item.id}

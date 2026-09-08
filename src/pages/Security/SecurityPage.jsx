@@ -169,7 +169,7 @@ export function SecurityPage() {
 
             {/* FULL WIDTH VIDEO & MOCKUP */}
             <Reveal from="scale" delay={0.1}>
-              <div className="w-full rounded-[32px] overflow-hidden border border-line bg-surface shadow-2xl p-4 sm:p-6">
+              <div className="w-full">
                 <SecurityLoopVideo />
               </div>
             </Reveal>
@@ -197,7 +197,7 @@ export function SecurityPage() {
               <div className="flex items-center gap-3">
                 <div className="grid h-10 w-10 place-items-center rounded-2xl bg-brand-strong text-white font-black">KT</div>
                 <div>
-                  <h4 className="font-extrabold text-ink text-base">Nova Bank Security</h4>
+                  <h4 className="font-extrabold text-ink text-base">Orion Bank Security</h4>
                   <p className="text-xs text-brand-ink font-semibold">Official Verified Business Account ✓</p>
                 </div>
               </div>
@@ -213,7 +213,7 @@ export function SecurityPage() {
                   <span>Expires in 10:00</span>
                 </div>
                 <div className="text-2xl font-black text-brand-strong tracking-widest">{otpCode}</div>
-                <p className="text-xs text-body">Use this code to verify your sign-in request for Nova Bank Enterprise.</p>
+                <p className="text-xs text-body">Use this code to verify your sign-in request for Orion Bank Enterprise.</p>
                 <div className="pt-2">
                   <button
                     onClick={copyOtp}

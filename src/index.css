@@ -67,6 +67,14 @@
      slide out toward the outer/left edge (on top of the heading area) rather than
      stopping at the inner heading edge. 112px = 2×2rem container padding + 3rem gap. */
   --apps-occlusion: calc(0.36 * (min(100vw, 1200px) - 112px) + 48px);
+  /* Same idea for the Privacy page carousels (their grid ratios differ):
+     0.7fr/1.3fr → factor 0.35, and 0.65fr/1.35fr → factor 0.325. */
+  --privacy-occ-a: calc(0.35 * (min(100vw, 1200px) - 112px) + 48px);
+  --privacy-occ-b: calc(0.325 * (min(100vw, 1200px) - 112px) + 48px);
+  /* Distance from the left screen edge to the container's left content edge —
+     lets an opaque carousel heading bleed its background off-screen so its left
+     edge (and any sub-pixel seam) is never visible. */
+  --edge-gutter: max(2rem, calc((100vw - 1200px) / 2 + 2rem));
 
   --ink: #0e1a13;
   --body: #47544c;

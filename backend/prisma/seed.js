@@ -149,7 +149,6 @@ async function main() {
 
   console.log('› Seeding success stories...')
   const stories = [
-    { slug: 'nova-bank', company: 'Nova Bank', summary: 'Improving sign-up conversion by sending secure one-time passcodes over KT Messenger.', metrics: { conversion: '+38%' } },
     { slug: 'greenleaf-grocers', company: 'GreenLeaf Grocers', summary: 'Turning catalog browsing into checkout with rich messaging on KT.', metrics: { orders: '+21%' } },
     { slug: 'meridian-travel', company: 'Meridian Travel', summary: 'Handling booking questions instantly with an automated assistant.', metrics: { responseTime: '-70%' } },
   ]

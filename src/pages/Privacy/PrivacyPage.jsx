@@ -1082,10 +1082,13 @@ export function PrivacyPage() {
       </section>
 
       {/* 8. EXPLORE MORE KT PRIVACY CONTROLS CAROUSEL (Screenshot 4 - Set B) */}
-      <section className="py-20 lg:py-28 bg-surface border-b border-line">
+      <section className="py-20 lg:py-28 bg-surface border-b border-line overflow-x-clip">
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-12 items-center">
-            <div>
+            {/* Opaque, full-height heading on top (z-20): cards slide BEHIND it on
+                the left and disappear; the rail breaks out to the right screen edge. */}
+            <div className="relative lg:z-20 lg:self-stretch lg:flex lg:items-center lg:bg-surface lg:ml-[calc(var(--edge-gutter)*-1)] lg:pl-[var(--edge-gutter)]">
+              <div className="w-full">
               <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
                 Complete Control
               </span>
@@ -1109,11 +1112,12 @@ export function PrivacyPage() {
                   <FiChevronRight className="text-xl" />
                 </button>
               </div>
+              </div>
             </div>
 
-            <div ref={carouselRef} className="flex gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
+            <div ref={carouselRef} className="flex gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth min-w-0 lg:pl-[var(--privacy-occ-a)] lg:ml-[calc(var(--privacy-occ-a)*-1)] lg:pr-8 lg:mr-[min(-2rem,calc((1200px_-_100vw)_/_2_-_2rem))]">
               {privacyControlsCards.map((card, idx) => (
-                <div key={idx} className="w-[300px] shrink-0 flex flex-col justify-between rounded-[28px] border border-line bg-cream p-6 shadow-card dark:bg-surface">
+                <div key={idx} className="w-[300px] shrink-0 flex flex-col justify-between rounded-[28px] border border-line bg-cream p-6 dark:bg-surface">
                   <div>
                     <span className="rounded-full bg-brand-soft px-3 py-1 text-[11px] font-bold text-brand-ink">
                       {card.badge}
@@ -1138,10 +1142,12 @@ export function PrivacyPage() {
       </section>
 
       {/* 9. DISCOVER MORE FEATURES CAROUSEL */}
-      <section className="py-20 lg:py-28 bg-cream dark:bg-surface border-b border-line">
+      <section className="py-20 lg:py-28 bg-cream dark:bg-surface border-b border-line overflow-x-clip">
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.65fr_1.35fr] lg:gap-12 items-center">
-            <div>
+            {/* Opaque, full-height heading on top (z-20): cards slide behind it left. */}
+            <div className="relative lg:z-20 lg:self-stretch lg:flex lg:items-center lg:bg-cream lg:dark:bg-surface lg:ml-[calc(var(--edge-gutter)*-1)] lg:pl-[var(--edge-gutter)]">
+              <div className="w-full">
               <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
                 Discover <span className="text-brand-strong">more features</span>
               </h2>
@@ -1162,11 +1168,12 @@ export function PrivacyPage() {
                   <FiChevronRight className="text-xl" />
                 </button>
               </div>
+              </div>
             </div>
 
-            <div ref={discoverRef} className="flex gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
+            <div ref={discoverRef} className="flex gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth min-w-0 lg:pl-[var(--privacy-occ-b)] lg:ml-[calc(var(--privacy-occ-b)*-1)] lg:pr-8 lg:mr-[min(-2rem,calc((1200px_-_100vw)_/_2_-_2rem))]">
               {discoverMoreFeatures.map((item, idx) => (
-                <div key={idx} className="w-[280px] shrink-0 overflow-hidden rounded-[28px] border border-line bg-surface p-4 shadow-card dark:bg-surface-2">
+                <div key={idx} className="w-[280px] shrink-0">
                   <div className="overflow-hidden rounded-[20px]">
                     <img src={item.image} alt={item.title} className="h-44 w-full object-cover transition-transform duration-300 hover:scale-105" />
                   </div>

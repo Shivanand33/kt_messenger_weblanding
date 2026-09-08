@@ -474,7 +474,7 @@ export function CallingPage() {
                     {/* Name & Timer */}
                     <div className="text-center">
                       <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-tight">
-                        Tanmay Girkar
+                        Johan
                       </h3>
                       <p className="text-xs text-slate-400 font-medium mt-0.5">00:06</p>
                     </div>
@@ -505,7 +505,7 @@ export function CallingPage() {
                       <div className="relative p-1 rounded-full bg-white/80 ring-1 ring-slate-200 shadow-[0_12px_32px_rgba(33,150,243,0.28)]">
                         <div className="flex h-28 w-28 sm:h-32 sm:w-32 items-center justify-center rounded-full bg-gradient-to-br from-[#4bb8f8] to-[#1888e0] border-2 border-white shadow-inner">
                           <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-wider drop-shadow-sm">
-                            TG
+                            J
                           </span>
                         </div>
                       </div>

@@ -1,10 +1,18 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiDownload, FiVideo, FiCalendar, FiCheck } from 'react-icons/fi'
 import { Container } from '../../common/Container/Container'
 import { Button } from '../../common/Button/Button'
 import { Reveal } from '../../common/Reveal/Reveal'
 import { useModal } from '../../../context/ModalContext'
+import { api } from '../../../services/apiClient'
 import heroImage from '../../../assets/images/hero.jpg'
+
+// Turn a stored image reference into a usable URL. Uploaded media on R2 come
+// back as absolute https URLs; a locally-served path (starts with "/") is
+// resolved against the backend origin derived from the API base.
+const API_ORIGIN = (import.meta.env.VITE_API_URL || 'http://localhost:4000/api').replace(/\/api\/?$/, '')
+const resolveUrl = (u) => (!u ? '' : /^https?:\/\//i.test(u) ? u : `${API_ORIGIN}${u.startsWith('/') ? '' : '/'}${u}`)
 import nadiaAvatar from '../../../assets/images/nadia_avatar.png'
 import femaleAvatar from '../../../assets/images/avatar_female_1.png'
 import privateAvatar from '../../../assets/images/private.jpg'
@@ -20,11 +28,30 @@ const floatMotion = (offset) => ({
 
 export function Hero() {
   const { openDownloadModal } = useModal()
+  // Background image is admin-editable via the "home.hero" content block. The
+  // bundled image is shown instantly and only replaced if the admin has set one
+  // — so the hero always renders even when the API is unreachable.
+  const [bgUrl, setBgUrl] = useState(heroImage)
+  useEffect(() => {
+    let alive = true
+    api
+      .getContentBlock('home.hero')
+      .then((data) => {
+        const url = resolveUrl(data?.backgroundUrl)
+        if (alive && url) setBgUrl(url)
+      })
+      .catch(() => {
+        /* no block set or API down — keep the bundled image */
+      })
+    return () => {
+      alive = false
+    }
+  }, [])
   return (
     <section id="hero" className="px-3 pt-3 sm:px-4 lg:px-5">
       <div className="relative overflow-hidden rounded-[22px] lg:rounded-[30px]">
         <img
-          src={heroImage}
+          src={bgUrl}
           alt="Friends staying in touch on KT Messenger"
           className="absolute inset-0 h-full w-full object-cover object-center"
         />

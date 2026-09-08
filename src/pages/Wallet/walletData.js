@@ -19,7 +19,7 @@ export const transactionCategories = ['All', 'Sent', 'Received', 'Shopping', 'Bi
 
 export const initialTransactions = [
   { id: 't1', name: 'Anika Sharma', note: 'Dinner split', category: 'Sent', direction: 'out', amount: 500, date: 'Today, 2:45 PM', method: 'UPI', status: 'Completed' },
-  { id: 't2', name: 'Nova Bank', note: 'Failed order refund', category: 'Received', direction: 'in', amount: 1200, date: 'Today, 11:02 AM', method: 'IMPS', status: 'Completed' },
+  { id: 't2', name: 'Orbit Mart', note: 'Failed order refund', category: 'Received', direction: 'in', amount: 1200, date: 'Today, 11:02 AM', method: 'IMPS', status: 'Completed' },
   { id: 't3', name: 'Blue Tokai Coffee', note: 'Cold brew ×2', category: 'Food', direction: 'out', amount: 340, date: 'Today, 9:18 AM', method: 'Scan & pay', status: 'Completed' },
   { id: 't4', name: 'Rohit Verma', note: 'Trip fuel share', category: 'Received', direction: 'in', amount: 450, date: 'Yesterday, 8:30 PM', method: 'UPI', status: 'Completed' },
   { id: 't5', name: 'Amazon India', note: 'Mechanical keyboard', category: 'Shopping', direction: 'out', amount: 1599, date: 'Yesterday, 6:12 PM', method: 'KT Card', status: 'Completed' },

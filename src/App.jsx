@@ -5,6 +5,7 @@ import { BlogPage } from './pages/Blog/BlogPage'
 import { AppsPage } from './pages/Apps/AppsPage'
 import { HelpPage } from './pages/Help/HelpPage'
 import { BusinessPage } from './pages/Business/BusinessPage'
+import { BusinessSubPage } from './pages/Business/BusinessSubPage'
 import { CallingPage } from './pages/Calling/CallingPage'
 import { MessagingPage } from './pages/Messaging/MessagingPage'
 import { GroupsPage } from './pages/Groups/GroupsPage'
@@ -36,6 +37,7 @@ function App() {
       <Route path="/apps" element={<AppsPage />} />
       <Route path="/help" element={<HelpPage />} />
       <Route path="/business" element={<BusinessPage />} />
+      <Route path="/business/:slug" element={<BusinessSubPage />} />
       <Route path="/calling" element={<CallingPage />} />
       <Route path="/messaging" element={<MessagingPage />} />
       <Route path="/groups" element={<GroupsPage />} />

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { FiSearch, FiArrowLeft, FiClock, FiArrowRight } from 'react-icons/fi'
+import { FiSearch, FiArrowLeft, FiClock, FiArrowRight, FiX } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { Container } from '../../components/common/Container/Container'
 import { Reveal } from '../../components/common/Reveal/Reveal'
@@ -129,11 +129,18 @@ function normalizeDetail(p) {
   }
 }
 
-// Render **bold** highlights inside a paragraph or bullet.
+// Render **bold** highlights inside a paragraph or bullet as a soft brand
+// "marker" so key phrases pop. box-decoration-clone keeps the highlight tidy
+// when a phrase wraps across lines.
 function renderText(text) {
   return text.split('**').map((part, i) =>
     i % 2 === 1 ? (
-      <strong key={i} className="font-semibold text-ink">{part}</strong>
+      <strong
+        key={i}
+        className="rounded-[6px] box-decoration-clone bg-brand-soft/70 px-1.5 py-0.5 font-bold text-brand-strong dark:bg-brand-strong/20 dark:text-sky-300"
+      >
+        {part}
+      </strong>
     ) : (
       <span key={i}>{part}</span>
     ),
@@ -141,22 +148,35 @@ function renderText(text) {
 }
 
 function ArticleBody({ blocks }) {
+  const firstPara = blocks.findIndex((b) => b.type === 'p')
   return (
     <div>
       {blocks.map((block, i) => {
         if (block.type === 'h') {
           return (
-            <h2 key={i} className="mt-10 text-2xl font-bold tracking-tight text-ink sm:text-[1.7rem]">
+            <h2
+              key={i}
+              className="mt-12 flex items-center gap-3.5 text-2xl font-extrabold tracking-tight text-ink sm:text-[1.8rem]"
+            >
+              <span
+                aria-hidden
+                className="h-7 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-brand-strong to-sky-400 shadow-[0_4px_12px_-2px_rgba(37,99,235,0.5)]"
+              />
               {block.text}
             </h2>
           )
         }
         if (block.type === 'ul') {
           return (
-            <ul key={i} className="mt-4 space-y-2.5">
+            <ul key={i} className="mt-5 space-y-3">
               {block.items.map((item, j) => (
-                <li key={j} className="flex gap-3 text-[17px] leading-8 text-body">
-                  <span className="mt-[13px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-strong" />
+                <li
+                  key={j}
+                  className="flex gap-3 rounded-2xl border border-transparent px-1 text-[17px] leading-8 text-body transition-colors"
+                >
+                  <span className="mt-[11px] grid h-4 w-4 shrink-0 place-items-center rounded-full bg-brand-soft text-brand-strong">
+                    <span className="h-1.5 w-1.5 rounded-full bg-brand-strong" />
+                  </span>
                   <span>{renderText(item)}</span>
                 </li>
               ))}
@@ -164,7 +184,14 @@ function ArticleBody({ blocks }) {
           )
         }
         return (
-          <p key={i} className="mt-5 text-[17px] leading-8 text-body">
+          <p
+            key={i}
+            className={`mt-5 text-[17px] leading-8 text-body ${
+              i === firstPara
+                ? 'first-letter:float-left first-letter:mr-3 first-letter:mt-1.5 first-letter:text-[3.4rem] first-letter:font-extrabold first-letter:leading-[0.72] first-letter:text-brand-strong'
+                : ''
+            }`}
+          >
             {renderText(block.text)}
           </p>
         )
@@ -198,9 +225,12 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
     <button
       type="button"
       onClick={onBack}
-      className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-bold text-ink transition-colors hover:border-brand/40 hover:text-brand-ink"
+      className="group inline-flex items-center gap-2.5 rounded-full border border-line bg-surface py-2 pl-2 pr-5 text-sm font-bold text-ink shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/40 hover:text-brand-strong hover:shadow-[0_14px_30px_-12px_rgba(37,99,235,0.5)]"
     >
-      <FiArrowLeft /> Back to Blogs
+      <span className="grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand-strong transition-all duration-300 group-hover:bg-brand-strong group-hover:text-white">
+        <FiArrowLeft className="transition-transform duration-300 group-hover:-translate-x-0.5" />
+      </span>
+      Back to Blogs
     </button>
   )
 
@@ -209,7 +239,7 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
       {BackButton}
 
       <Reveal from="up" className="mx-auto mt-8 max-w-3xl">
-        <span className="inline-flex items-center rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold uppercase tracking-[0.12em] text-brand-ink">
+        <span className="inline-flex items-center rounded-full bg-brand-strong px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-white shadow-[0_8px_20px_-8px_rgba(37,99,235,0.7)]">
           {post.category}
         </span>
         <h1 className="mt-5 text-[2.1rem] font-bold leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-[3.2rem]">
@@ -225,20 +255,24 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
       </Reveal>
 
       {hasLead ? (
-        <Reveal from="up" delay={0.04} className="mx-auto mt-6 max-w-3xl">
-          <p className="text-lg font-medium leading-8 text-ink sm:text-xl sm:leading-9">
+        <Reveal from="up" delay={0.03} className="mx-auto mt-7 max-w-3xl">
+          <p className="border-l-4 border-brand-strong/70 pl-5 text-lg font-medium leading-8 text-ink sm:text-xl sm:leading-9">
             {renderText(post.blocks[0].text)}
           </p>
         </Reveal>
       ) : null}
 
-      <Reveal from="up" delay={0.08} className="mx-auto mt-8 max-w-4xl">
-        <div className="overflow-hidden rounded-block border border-line shadow-card">
-          <img src={imageFor(post)} alt={post.title} className="h-60 w-full object-cover sm:h-80 lg:h-[420px]" />
+      <Reveal from="up" delay={0.05} className="mx-auto mt-9 max-w-4xl">
+        <div className="group overflow-hidden rounded-[28px] border border-line shadow-[0_30px_70px_-24px_rgba(37,99,235,0.45)]">
+          <img
+            src={imageFor(post)}
+            alt={post.title}
+            className="h-60 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] sm:h-80 lg:h-[440px]"
+          />
         </div>
       </Reveal>
 
-      <Reveal from="up" delay={0.1} className="mx-auto mt-10 max-w-3xl">
+      <Reveal from="up" delay={0.07} className="mx-auto mt-10 max-w-3xl">
         <ArticleBody blocks={bodyBlocks} />
       </Reveal>
 
@@ -268,7 +302,7 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
                 key={rel.slug}
                 type="button"
                 onClick={() => onOpen(rel.slug)}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-cream-2 text-left shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-card"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-cream-2 text-left shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:border-brand/40 hover:shadow-[0_24px_50px_-20px_rgba(37,99,235,0.45)]"
               >
                 <div className="relative h-32 overflow-hidden">
                   <img
@@ -302,6 +336,7 @@ export function BlogPage() {
   const [activePost, setActivePost] = useState(null)
   const [articleLoading, setArticleLoading] = useState(false)
   const [category, setCategory] = useState('All')
+  const [search, setSearch] = useState('')
 
   // Revalidate from the API (DB = source of truth) in the background. If it
   // returns published posts, swap them in; if it's slow / unreachable (deploy
@@ -394,22 +429,47 @@ export function BlogPage() {
   }
 
   const featuredPost = posts.find((p) => p.featured) || posts[0]
-  const rest = posts.filter((p) => p !== featuredPost)
-  const visible = category === 'All' ? rest : posts.filter((p) => p.category === category)
+  const query = search.trim().toLowerCase()
+  const searching = query.length > 0
+  const matchesQuery = (p) => {
+    if (!query) return true
+    const hay = [p.title, p.description, p.category, ...(Array.isArray(p.tags) ? p.tags : [])]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase()
+    return hay.includes(query)
+  }
+  const inCategory = (p) => category === 'All' || p.category === category
+  // In the default view the featured post is shown separately, so drop it from
+  // the grid; when searching or filtering we want every match to appear.
+  const gridSource = !searching && category === 'All' ? posts.filter((p) => p !== featuredPost) : posts
+  const visible = gridSource.filter((p) => inCategory(p) && matchesQuery(p))
 
   return (
     <MainLayout>
       <Container className="py-14 lg:py-20">
         {/* search */}
-        <div className="mb-10 flex justify-end lg:mb-14">
-          <label className="flex items-center gap-3 border-b-2 border-line pb-2 text-muted transition-colors focus-within:border-brand">
-            <span className="text-sm font-medium">Search blog:</span>
+        <div className="mb-10 flex justify-center lg:mb-14 lg:justify-end">
+          <label className="group flex w-full max-w-md items-center gap-3 rounded-full border border-line bg-surface px-5 py-3 shadow-soft transition-all duration-200 focus-within:border-brand focus-within:shadow-card focus-within:ring-2 focus-within:ring-brand/15">
+            <FiSearch className="shrink-0 text-lg text-muted transition-colors group-focus-within:text-brand-strong" />
             <input
               type="text"
-              className="w-32 bg-transparent text-sm text-ink outline-none placeholder:text-muted sm:w-44"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search the blog…"
+              className="w-full bg-transparent text-sm font-medium text-ink outline-none placeholder:text-muted"
               aria-label="Search blog"
             />
-            <FiSearch />
+            {search ? (
+              <button
+                type="button"
+                onClick={() => setSearch('')}
+                aria-label="Clear search"
+                className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-ink"
+              >
+                <FiX className="text-sm" />
+              </button>
+            ) : null}
           </label>
         </div>
 
@@ -437,8 +497,8 @@ export function BlogPage() {
           </div>
         ) : (
           <>
-            {/* featured (only on the unfiltered view) */}
-            {category === 'All' && featuredPost ? (
+            {/* featured (only on the unfiltered, non-search view) */}
+            {category === 'All' && !searching && featuredPost ? (
               <Reveal from="up" delay={0.06} className="mt-14 lg:mt-20">
                 <button
                   type="button"
@@ -491,6 +551,34 @@ export function BlogPage() {
                 </button>
               ))}
             </div>
+
+            {/* search results count */}
+            {searching ? (
+              <p className="mt-8 text-sm font-semibold text-body">
+                {visible.length} {visible.length === 1 ? 'result' : 'results'} for “{search.trim()}”
+              </p>
+            ) : null}
+
+            {/* no results */}
+            {visible.length === 0 ? (
+              <div className="flex flex-col items-center justify-center gap-2 py-20 text-center">
+                <p className="text-lg font-bold text-ink">No articles found</p>
+                <p className="max-w-md text-sm leading-6 text-body">
+                  {searching
+                    ? `Nothing matched “${search.trim()}”. Try a different keyword${category !== 'All' ? ' or category' : ''}.`
+                    : 'No articles in this category yet.'}
+                </p>
+                {searching ? (
+                  <button
+                    type="button"
+                    onClick={() => setSearch('')}
+                    className="mt-2 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-bold text-ink transition-colors hover:border-brand/40 hover:text-brand-ink"
+                  >
+                    <FiX /> Clear search
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
 
             {/* article cards */}
             <div className="mt-10 grid gap-6 sm:gap-7 sm:grid-cols-2 lg:grid-cols-3">

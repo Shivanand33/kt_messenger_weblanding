@@ -269,7 +269,7 @@ export function NotesPage() {
             <Button size="lg" variant="white" onClick={() => openNewNote()}>
               Create a note <FiPlus />
             </Button>
-            <Button size="lg" variant="onDark" onClick={openDownloadModal}>
+            <Button size="lg" variant="primary" onClick={openDownloadModal}>
               Get the app <FiZap />
             </Button>
           </>
@@ -280,12 +280,12 @@ export function NotesPage() {
           { icon: <FiMic />, label: 'On-device transcription' },
         ]}
         aside={
-          <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5 shadow-2xl backdrop-blur-xl sm:p-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <span className="flex items-center gap-2 text-sm font-extrabold text-white">
-                <FiEdit3 className="text-sky-400" /> Quick capture
+          <div className="rounded-[28px] border border-line dark:border-white/10 bg-cream-2 dark:bg-white/[0.04] p-5 shadow-card dark:shadow-2xl backdrop-blur-xl sm:p-6">
+            <div className="flex items-center justify-between border-b border-line dark:border-white/10 pb-4">
+              <span className="flex items-center gap-2 text-sm font-extrabold text-ink dark:text-white">
+                <FiEdit3 className="text-brand-strong dark:text-sky-400" /> Quick capture
               </span>
-              <span className="rounded-full border border-sky-400/40 bg-sky-400/10 px-2.5 py-1 text-[10px] font-black uppercase text-sky-300">
+              <span className="rounded-full border border-sky-500/40 bg-sky-400/10 px-2.5 py-1 text-[10px] font-black uppercase text-sky-600 dark:text-sky-300">
                 E2E encrypted
               </span>
             </div>
@@ -294,14 +294,14 @@ export function NotesPage() {
               <button
                 type="button"
                 onClick={() => openNewNote()}
-                className="flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-left transition-colors hover:border-sky-400/40 hover:bg-white/[0.07]"
+                className="flex w-full items-center gap-3 rounded-2xl border border-line dark:border-white/10 bg-cream dark:bg-white/[0.03] p-4 text-left transition-colors hover:border-brand/40 dark:hover:border-sky-400/40 hover:bg-brand-soft/50 dark:hover:bg-white/[0.07]"
               >
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-strong text-white">
                   <FiPlus />
                 </span>
                 <span>
-                  <span className="block text-xs font-bold text-white">New blank note</span>
-                  <span className="block text-[10px] font-semibold text-slate-400">Starts empty, saves instantly</span>
+                  <span className="block text-xs font-bold text-ink dark:text-white">New blank note</span>
+                  <span className="block text-[10px] font-semibold text-muted dark:text-slate-400">Starts empty, saves instantly</span>
                 </span>
               </button>
 
@@ -313,32 +313,32 @@ export function NotesPage() {
                     onClick={() =>
                       openNewNote({ title: template.name, content: template.body, category: template.category })
                     }
-                    className="rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-left transition-colors hover:border-sky-400/40 hover:bg-white/[0.07]"
+                    className="rounded-2xl border border-line dark:border-white/10 bg-cream dark:bg-white/[0.03] p-3 text-left transition-colors hover:border-brand/40 dark:hover:border-sky-400/40 hover:bg-brand-soft/50 dark:hover:bg-white/[0.07]"
                   >
                     <span className="text-xl">{template.emoji}</span>
-                    <span className="mt-1.5 block truncate text-[11px] font-bold text-white">{template.name}</span>
+                    <span className="mt-1.5 block truncate text-[11px] font-bold text-ink dark:text-white">{template.name}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-3 gap-2 border-t border-white/10 pt-4 text-center">
+            <div className="mt-4 grid grid-cols-3 gap-2 border-t border-line dark:border-white/10 pt-4 text-center">
               {[
                 { value: notes.length, label: 'Notes' },
                 { value: pinnedCount, label: 'Pinned' },
                 { value: voiceMemos.length, label: 'Memos' },
               ].map((item) => (
                 <div key={item.label}>
-                  <div className="text-base font-black text-white">{item.value}</div>
-                  <div className="text-[10px] font-bold uppercase tracking-wide text-slate-400">{item.label}</div>
+                  <div className="text-base font-black text-ink dark:text-white">{item.value}</div>
+                  <div className="text-[10px] font-bold uppercase tracking-wide text-muted dark:text-slate-400">{item.label}</div>
                 </div>
               ))}
             </div>
           </div>
         }
       >
-        <div className="mt-8 flex items-center gap-3 rounded-2xl border border-white/15 bg-white/[0.06] p-2 shadow-2xl backdrop-blur-xl">
-          <FiSearch className="ml-3 shrink-0 text-xl text-slate-400" />
+        <div className="mt-8 flex items-center gap-3 rounded-2xl border border-line dark:border-white/15 bg-cream-2 dark:bg-white/[0.06] p-2 shadow-card dark:shadow-2xl backdrop-blur-xl">
+          <FiSearch className="ml-3 shrink-0 text-xl text-muted dark:text-slate-400" />
           <input
             type="text"
             value={query}
@@ -347,7 +347,7 @@ export function NotesPage() {
               resetPaging()
             }}
             placeholder="Search titles, content and tags across the vault…"
-            className="w-full bg-transparent text-sm font-semibold text-white outline-none placeholder:text-slate-400"
+            className="w-full bg-transparent text-sm font-semibold text-ink dark:text-white outline-none placeholder:text-muted dark:placeholder:text-slate-400"
           />
           {query ? (
             <button
@@ -356,14 +356,14 @@ export function NotesPage() {
                 setQuery('')
                 resetPaging()
               }}
-              className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-300 hover:bg-white/10 hover:text-white"
+              className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-muted dark:text-slate-300 hover:bg-brand-soft dark:hover:bg-white/10 hover:text-ink dark:hover:text-white"
             >
               Clear
             </button>
           ) : null}
         </div>
         {query ? (
-          <p className="mt-3 text-xs font-semibold text-sky-300">
+          <p className="mt-3 text-xs font-semibold text-brand-strong dark:text-sky-300">
             {filtered.length} {filtered.length === 1 ? 'note matches' : 'notes match'} “{query}”
           </p>
         ) : null}

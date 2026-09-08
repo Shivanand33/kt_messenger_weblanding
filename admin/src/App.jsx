@@ -12,6 +12,7 @@ import { AdminUsersPage } from './pages/AdminUsersPage.jsx'
 import { RolesPage } from './pages/RolesPage.jsx'
 import { ProfilePage } from './pages/ProfilePage.jsx'
 import { EmailSettingsPage } from './pages/EmailSettingsPage.jsx'
+import { HeroSettingsPage } from './pages/HeroSettingsPage.jsx'
 import { ContactMessagesPage } from './pages/ContactMessagesPage.jsx'
 import {
   FaqsPage, BlogCategoriesPage, BlogTagsPage, SuccessStoriesPage, AppReleasesPage,
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="faqs" element={<FaqsPage />} />
         <Route path="success-stories" element={<SuccessStoriesPage />} />
         <Route path="app-releases" element={<AppReleasesPage />} />
+        <Route path="homepage-hero" element={<HeroSettingsPage />} />
         <Route path="website-content" element={<WebsiteContentPage />} />
         <Route path="navigation" element={<NavigationPage />} />
         <Route path="footer" element={<FooterPage />} />

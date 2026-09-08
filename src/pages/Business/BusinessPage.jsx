@@ -34,7 +34,6 @@ import { useModal } from '../../context/ModalContext'
 
 import heroImg from '../../assets/images/business.jpg'
 import whyImg from '../../assets/images/private.jpg'
-import storyImg from '../../assets/images/multidevice.jpg'
 
 const DARK = '#0b162c'
 
@@ -308,17 +307,17 @@ export function BusinessPage() {
                             </div>
                             <div className="space-y-2 text-sm font-semibold">
                               <button onClick={() => go('/business')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.overview}</button>
-                              <button onClick={() => go('/messaging')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.features}</button>
-                              <button onClick={() => go('/plus')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.pricing}</button>
-                              <button onClick={() => go('/ai')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.flows}</button>
+                              <button onClick={() => go('/business/features')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.features}</button>
+                              <button onClick={() => go('/business/pricing')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.pricing}</button>
+                              <button onClick={() => go('/business/flows')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.flows}</button>
 
                               <div className="pt-2">
                                 <p className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">{t.msgCategories}</p>
                                 <div className="pl-2 space-y-1.5 text-xs font-semibold text-slate-600">
-                                  <button onClick={() => go('/messaging')} className="block hover:text-brand-strong transition-colors">{t.marketingMsg}</button>
-                                  <button onClick={() => go('/security')} className="block hover:text-brand-strong transition-colors">{t.authMsg}</button>
-                                  <button onClick={() => go('/status')} className="block hover:text-brand-strong transition-colors">{t.utilityMsg}</button>
-                                  <button onClick={() => go('/calling')} className="block hover:text-brand-strong transition-colors">{t.serviceMsg}</button>
+                                  <button onClick={() => go('/business/msg-marketing')} className="block hover:text-brand-strong transition-colors">{t.marketingMsg}</button>
+                                  <button onClick={() => go('/business/msg-authentication')} className="block hover:text-brand-strong transition-colors">{t.authMsg}</button>
+                                  <button onClick={() => go('/business/msg-utility')} className="block hover:text-brand-strong transition-colors">{t.utilityMsg}</button>
+                                  <button onClick={() => go('/business/msg-service')} className="block hover:text-brand-strong transition-colors">{t.serviceMsg}</button>
                                 </div>
                               </div>
                             </div>
@@ -332,9 +331,9 @@ export function BusinessPage() {
                             </div>
                             <div className="space-y-2 text-sm font-semibold text-slate-700">
                               <button onClick={() => go('/apps')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.overview}</button>
-                              <button onClick={() => go('/groups')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.features}</button>
-                              <button onClick={() => go('/help')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.howToStart}</button>
-                              <button onClick={() => go('/ai')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.bizAgent}</button>
+                              <button onClick={() => go('/business/app-features')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.features}</button>
+                              <button onClick={() => go('/business/get-started')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.howToStart}</button>
+                              <button onClick={() => go('/business/agent')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.bizAgent}</button>
                             </div>
                           </div>
 
@@ -345,9 +344,9 @@ export function BusinessPage() {
                               <span>{t.adsClick}</span>
                             </div>
                             <div className="space-y-2 text-sm font-semibold text-slate-700">
-                              <button onClick={() => go('/channels')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.overview}</button>
-                              <button onClick={() => go('/help')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.howCreateAd}</button>
-                              <button onClick={() => go('/status')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.adsStatusChannels}</button>
+                              <button onClick={() => go('/business/ads')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.overview}</button>
+                              <button onClick={() => go('/business/ads-create')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.howCreateAd}</button>
+                              <button onClick={() => go('/business/ads-status-channels')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.adsStatusChannels}</button>
                             </div>
                           </div>
                         </div>
@@ -450,8 +449,8 @@ export function BusinessPage() {
                               <span>{t.platform}</span>
                             </div>
                             <div className="space-y-2 text-xs font-semibold text-slate-700">
-                              <button onClick={() => go('/help')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.devHub}</button>
-                              <button onClick={() => go('/security')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.howToStart}</button>
+                              <button onClick={() => go('/business/developer-hub')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.devHub}</button>
+                              <button onClick={() => go('/business/developer-quickstart')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.howToStart}</button>
                             </div>
                           </div>
 
@@ -461,9 +460,9 @@ export function BusinessPage() {
                               <span>{t.devLinks}</span>
                             </div>
                             <div className="space-y-2 text-xs font-semibold text-slate-700">
-                              <button onClick={() => go('/groups')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.community}</button>
-                              <button onClick={() => go('/help')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.devSupport}</button>
-                              <button onClick={() => go('/security')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.apiStatus}</button>
+                              <button onClick={() => go('/business/community')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.community}</button>
+                              <button onClick={() => go('/business/developer-support')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.devSupport}</button>
+                              <button onClick={() => go('/business/api-status')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.apiStatus}</button>
                             </div>
                           </div>
                         </div>
@@ -506,7 +505,7 @@ export function BusinessPage() {
                         
                         <div className="space-y-4">
                           <button
-                            onClick={() => go('/business')}
+                            onClick={() => go('/business/become-partner')}
                             className="flex items-center gap-3.5 w-full text-left text-slate-800 hover:text-brand-strong font-bold transition-colors group"
                           >
                             <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-sky-50 text-brand-strong border border-sky-200 group-hover:bg-brand-strong group-hover:text-white transition-colors">
@@ -516,7 +515,7 @@ export function BusinessPage() {
                           </button>
 
                           <button
-                            onClick={() => go('/security')}
+                            onClick={() => go('/business/find-partner')}
                             className="flex items-center gap-3.5 w-full text-left text-slate-800 hover:text-brand-strong font-bold transition-colors group"
                           >
                             <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-sky-50 text-brand-strong border border-sky-200 group-hover:bg-brand-strong group-hover:text-white transition-colors">
@@ -679,7 +678,7 @@ export function BusinessPage() {
                       </div>
 
                       <div>
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">Mobile / WhatsApp Number</label>
+                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">Mobile / KT Number</label>
                         <input
                           type="text"
                           value={bizForm.phone}
@@ -880,28 +879,6 @@ export function BusinessPage() {
                   </div>
                 )
               })}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* SUCCESS STORY */}
-      <section id="biz-success" className="pb-24 pt-4 bg-surface">
-        <div className="mx-auto max-w-[1200px] px-5 lg:px-8">
-          <Reveal from="up">
-            <div className="grid items-center gap-8 rounded-[32px] bg-brand-soft p-6 sm:p-10 lg:grid-cols-2 lg:gap-12 lg:p-12">
-              <img src={storyImg} alt="Nova Bank office" className="h-[300px] w-full rounded-[24px] object-cover lg:h-[380px] shadow-lg" />
-              <div>
-                <h3 className="text-3xl font-bold tracking-tight text-ink lg:text-4xl">Nova Bank</h3>
-                <p className="mt-4 max-w-md text-lg leading-8 text-body">
-                  {isHindi
-                    ? 'KT Messenger पर सुरक्षित वन-टाइम पासकोड भेजकर साइन-अप कन्वर्जन में सुधार करना।'
-                    : 'Improving sign-up conversion by sending secure one-time passcodes over KT Messenger.'}
-                </p>
-                <div className="mt-6">
-                  <LinkArrow to="/products/conversation-categories/authentication">{isHindi ? 'सक्सेस स्टोरी देखें' : 'See success story'}</LinkArrow>
-                </div>
-              </div>
             </div>
           </Reveal>
         </div>

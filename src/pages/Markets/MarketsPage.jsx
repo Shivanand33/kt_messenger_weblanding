@@ -316,7 +316,7 @@ export function MarketsPage() {
             >
               Open the watchlist <FiChevronRight />
             </Button>
-            <Button size="lg" variant="onDark" onClick={openDownloadModal}>
+            <Button size="lg" variant="primary" onClick={openDownloadModal}>
               Get the app <FiZap />
             </Button>
           </>
