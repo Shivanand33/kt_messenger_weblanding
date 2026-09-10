@@ -7,11 +7,74 @@ import { DataTable } from '../components/DataTable.jsx'
 import { Icon } from '../components/Icon.jsx'
 import { AreaChartCard, DonutChartCard } from '../components/Charts.jsx'
 
+// Type guard only — the API always sends real counts, this just keeps a
+// missing/!number field from rendering as blank or NaN. It never invents a value.
+const toNum = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : 0)
+
+// '2026-09-10' -> 'Sep 10'
+const shortDay = (day) => {
+  const d = new Date(`${day}T00:00:00`)
+  return Number.isNaN(d.getTime()) ? day : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
+/**
+ * Merge the two real daily series from /admin/analytics into one traffic curve.
+ * A day present in only one series counts as 0 in the other.
+ */
+function mergeDaily(pageViewsByDay, downloadsByDay) {
+  const byDay = new Map()
+  for (const row of pageViewsByDay || []) {
+    byDay.set(row.day, { day: row.day, PageViews: toNum(row.count), Downloads: 0 })
+  }
+  for (const row of downloadsByDay || []) {
+    const existing = byDay.get(row.day) || { day: row.day, PageViews: 0, Downloads: 0 }
+    existing.Downloads = toNum(row.count)
+    byDay.set(row.day, existing)
+  }
+  return [...byDay.values()]
+    .sort((a, b) => a.day.localeCompare(b.day))
+    .map((r) => ({ date: shortDay(r.day), PageViews: r.PageViews, Downloads: r.Downloads }))
+}
+
+// Chart-shaped placeholder shown while traffic loads, or when there is nothing
+// to plot. Mirrors AreaChartCard's header so the range pills keep working.
+function ChartEmpty({ title, subtitle, message, height = 310, range, onRangeChange }) {
+  return (
+    <div className="card chart-card">
+      <div className="chart-header">
+        <div>
+          <h3 className="chart-title">{title}</h3>
+          {subtitle ? <p className="chart-subtitle">{subtitle}</p> : null}
+        </div>
+        {onRangeChange && (
+          <div className="pill-selector">
+            {[7, 30, 90].map((d) => (
+              <button key={d} className={`pill-btn ${range === d ? 'active' : ''}`} onClick={() => onRangeChange(d)}>
+                {d}D
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+      <div
+        className="empty"
+        style={{ height, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+      >
+        <Icon name="inbox" size={24} color="var(--muted)" />
+        <div style={{ color: 'var(--muted)', fontSize: 13 }}>{message}</div>
+      </div>
+    </div>
+  )
+}
+
 export function DashboardPage() {
   const toast = useToast()
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [chartRange, setChartRange] = useState(30)
+  const [analytics, setAnalytics] = useState(null)
+  const [analyticsLoading, setAnalyticsLoading] = useState(true)
+  const [analyticsError, setAnalyticsError] = useState(null)
 
   useEffect(() => {
     api
@@ -22,27 +85,40 @@ export function DashboardPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // Real traffic series for the area chart. Fires alongside the dashboard call
+  // on mount, then again whenever the 7/30/90 range pill changes. Failures stay
+  // inline (this endpoint needs `analytics:read`, which not every role has).
+  useEffect(() => {
+    setAnalyticsLoading(true)
+    setAnalyticsError(null)
+    api
+      .get('/admin/analytics', { params: { days: chartRange } })
+      .then((res) => setAnalytics(res.data.data))
+      .catch((e) => {
+        setAnalytics(null)
+        setAnalyticsError(errorMessage(e))
+      })
+      .finally(() => setAnalyticsLoading(false))
+  }, [chartRange])
+
   if (loading) return <Loading label="Loading your dashboard analytics..." />
   if (!data) return null
   const s = data.stats || {}
 
-  // Mock traffic history curve for the area chart based on stats
-  const trafficData = [
-    { date: 'Mon', PageViews: 420, Downloads: 85, Messages: 12 },
-    { date: 'Tue', PageViews: 680, Downloads: 120, Messages: 18 },
-    { date: 'Wed', PageViews: 950, Downloads: 190, Messages: 24 },
-    { date: 'Thu', PageViews: 810, Downloads: 145, Messages: 20 },
-    { date: 'Fri', PageViews: 1120, Downloads: 240, Messages: 35 },
-    { date: 'Sat', PageViews: 1450, Downloads: 310, Messages: 42 },
-    { date: 'Sun', PageViews: 1680, Downloads: 380, Messages: 48 },
-  ]
+  // Traffic curve straight from the analytics endpoint's daily series.
+  const trafficData = mergeDaily(analytics?.pageViewsByDay, analytics?.downloadsByDay)
 
+  // Content mix, derived from the real dashboard counts.
   const contentDistribution = [
-    { name: 'Blogs', value: s.blogsTotal || 23, color: '#2563eb' },
-    { name: 'Help Articles', value: s.helpArticles || 20, color: '#3b82f6' },
-    { name: 'Feedback', value: s.feedbackTotal || 4, color: '#10b981' },
-    { name: 'Messages', value: s.contactsNew || 3, color: '#f59e0b' },
+    { name: 'Published Blogs', value: toNum(s.blogsPublished), color: '#1570ef' },
+    { name: 'Draft Blogs', value: toNum(s.blogsDraft), color: '#2e90fa' },
+    { name: 'Help Articles', value: toNum(s.helpArticles), color: '#12b76a' },
+    { name: 'FAQs', value: toNum(s.faqs), color: '#f79009' },
+    { name: 'Success Stories', value: toNum(s.successStories), color: '#7a5af8' },
   ]
+  const contentTotal = contentDistribution.reduce((sum, item) => sum + item.value, 0)
+
+  const trafficSubtitle = 'Page views and download clicks per day over the selected range.'
 
   return (
     <div>
@@ -59,7 +135,7 @@ export function DashboardPage() {
           </Link>
           <Link to="/contact" className="btn ghost" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.2)' }}>
             <Icon name="contact" size={16} />
-            <span>Messages ({s.contactsNew || 0})</span>
+            <span>Messages ({toNum(s.contactsNew)})</span>
           </Link>
         </div>
       </div>
@@ -71,89 +147,63 @@ export function DashboardPage() {
 
       {/* Row 1 Metric Cards */}
       <div className="grid cols-4" style={{ marginBottom: 18 }}>
-        <StatCard
-          iconName="blogs"
-          value={s.blogsTotal || 0}
-          label="Total Blogs"
-          trend="+12%"
-          isPositive={true}
-          sparklineData={[14, 16, 15, 18, 20, 22, s.blogsTotal || 23]}
-        />
-        <StatCard
-          iconName="check"
-          value={s.blogsPublished || 0}
-          label="Published Blogs"
-          trend="+8%"
-          isPositive={true}
-          sparklineData={[12, 14, 15, 18, 20, 22, s.blogsPublished || 23]}
-        />
-        <StatCard
-          iconName="edit"
-          value={s.blogsDraft || 0}
-          label="Draft Blogs"
-          trend="0%"
-          isPositive={true}
-          sparklineData={[2, 3, 2, 1, 3, 1, s.blogsDraft || 0]}
-        />
-        <StatCard
-          iconName="help"
-          value={s.helpArticles || 0}
-          label="Help Articles"
-          trend="+15%"
-          isPositive={true}
-          sparklineData={[10, 12, 14, 16, 17, 19, s.helpArticles || 20]}
-        />
+        <StatCard iconName="blogs" value={toNum(s.blogsTotal)} label="Total Blogs" trend={null} sparklineData={[]} />
+        <StatCard iconName="check" value={toNum(s.blogsPublished)} label="Published Blogs" trend={null} sparklineData={[]} />
+        <StatCard iconName="edit" value={toNum(s.blogsDraft)} label="Draft Blogs" trend={null} sparklineData={[]} />
+        <StatCard iconName="help" value={toNum(s.helpArticles)} label="Help Articles" trend={null} sparklineData={[]} />
       </div>
 
       {/* Row 2 Metric Cards */}
       <div className="grid cols-4" style={{ marginBottom: 26 }}>
-        <StatCard
-          iconName="subscribers"
-          value={s.subscribers || 0}
-          label="Subscribers"
-          trend="+24%"
-          isPositive={true}
-          sparklineData={[0, 2, 4, 8, 12, 16, s.subscribers || 20]}
-        />
-        <StatCard
-          iconName="contact"
-          value={s.contactsNew || 0}
-          label="New Messages"
-          trend="+5%"
-          isPositive={true}
-          sparklineData={[1, 3, 2, 5, 4, 6, s.contactsNew || 3]}
-        />
-        <StatCard
-          iconName="feedback"
-          value={s.feedbackTotal || 0}
-          label="Total Feedback"
-          trend="+18%"
-          isPositive={true}
-          sparklineData={[1, 1, 2, 2, 3, 3, s.feedbackTotal || 4]}
-        />
-        <StatCard
-          iconName="download"
-          value={s.downloads30 || 0}
-          label="Downloads (30d)"
-          trend="+32%"
-          isPositive={true}
-          sparklineData={[20, 45, 80, 130, 210, 310, s.downloads30 || 420]}
-        />
+        <StatCard iconName="subscribers" value={toNum(s.subscribers)} label="Subscribers" trend={null} sparklineData={[]} />
+        <StatCard iconName="contact" value={toNum(s.contactsNew)} label="New Messages" trend={null} sparklineData={[]} />
+        <StatCard iconName="feedback" value={toNum(s.feedbackTotal)} label="Total Feedback" trend={null} sparklineData={[]} />
+        <StatCard iconName="download" value={toNum(s.downloads30)} label="Downloads (30d)" trend={null} sparklineData={[]} />
       </div>
 
       {/* Interactive Charts Split Grid */}
       <div className="grid cols-3" style={{ marginBottom: 26 }}>
         <div style={{ gridColumn: 'span 2' }}>
-          <AreaChartCard
-            title="Traffic & Engagement Over Time"
-            subtitle="Page views, download clicks, and messages over selected range."
-            data={trafficData}
-            range={chartRange}
-            onRangeChange={(r) => setChartRange(r)}
-          />
+          {analyticsLoading && !analytics ? (
+            <ChartEmpty
+              title="Traffic & Engagement Over Time"
+              subtitle={trafficSubtitle}
+              message="Loading traffic data..."
+              range={chartRange}
+              onRangeChange={(r) => setChartRange(r)}
+            />
+          ) : analyticsError ? (
+            <ChartEmpty
+              title="Traffic & Engagement Over Time"
+              subtitle={trafficSubtitle}
+              message={`Traffic data unavailable — ${analyticsError}`}
+              range={chartRange}
+              onRangeChange={(r) => setChartRange(r)}
+            />
+          ) : trafficData.length === 0 ? (
+            <ChartEmpty
+              title="Traffic & Engagement Over Time"
+              subtitle={trafficSubtitle}
+              message="No page views or downloads recorded yet"
+              range={chartRange}
+              onRangeChange={(r) => setChartRange(r)}
+            />
+          ) : (
+            <AreaChartCard
+              title="Traffic & Engagement Over Time"
+              subtitle={trafficSubtitle}
+              data={trafficData}
+              range={chartRange}
+              onRangeChange={(r) => setChartRange(r)}
+            />
+          )}
         </div>
         <div>
-          <DonutChartCard title="Content Distribution" data={contentDistribution} />
+          {contentTotal === 0 ? (
+            <ChartEmpty title="Content Distribution" message="No content published yet" height={260} />
+          ) : (
+            <DonutChartCard title="Content Distribution" data={contentDistribution} />
+          )}
         </div>
       </div>
 

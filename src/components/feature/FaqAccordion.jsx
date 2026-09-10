@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiPlus, FiSearch } from 'react-icons/fi'
+import { useLanguage } from '../../context/LanguageContext'
 
 /**
  * Searchable FAQ list. Multiple answers can stay open at once, and the search
@@ -9,6 +10,7 @@ import { FiPlus, FiSearch } from 'react-icons/fi'
  * `items`: [{ q, a, tag? }]
  */
 export function FaqAccordion({ items, searchable = true, placeholder = 'Search questions…' }) {
+  const { t } = useLanguage()
   const [openIds, setOpenIds] = useState([0])
   const [query, setQuery] = useState('')
 
@@ -38,7 +40,7 @@ export function FaqAccordion({ items, searchable = true, placeholder = 'Search q
               onClick={() => setQuery('')}
               className="shrink-0 text-xs font-bold text-brand-ink hover:text-brand-strong"
             >
-              Clear
+              {t('Clear')}
             </button>
           ) : null}
         </div>
@@ -46,7 +48,7 @@ export function FaqAccordion({ items, searchable = true, placeholder = 'Search q
 
       {visible.length === 0 ? (
         <p className="rounded-2xl border border-dashed border-line bg-surface px-5 py-8 text-center text-sm font-semibold text-muted">
-          No questions match “{query}”. Try a different keyword.
+          {t('No questions match')} “{query}”. {t('Try a different keyword.')}
         </p>
       ) : null}
 
@@ -65,7 +67,7 @@ export function FaqAccordion({ items, searchable = true, placeholder = 'Search q
               aria-expanded={open}
               className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
             >
-              <span className="text-[15px] font-bold leading-snug text-ink">{item.q}</span>
+              <span className="text-[15px] font-bold leading-snug text-ink">{t(item.q)}</span>
               <span
                 className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-all duration-300 ${
                   open ? 'rotate-45 border-brand-strong bg-brand-strong text-white' : 'border-line text-body'
@@ -83,10 +85,10 @@ export function FaqAccordion({ items, searchable = true, placeholder = 'Search q
                 className="overflow-hidden"
               >
                 <div className="border-t border-line px-5 py-4">
-                  <p className="text-sm leading-relaxed text-body">{item.a}</p>
+                  <p className="text-sm leading-relaxed text-body">{t(item.a)}</p>
                   {item.tag ? (
                     <span className="mt-3 inline-block rounded-full bg-brand-soft px-3 py-1 text-[10px] font-extrabold uppercase tracking-wide text-brand-ink">
-                      {item.tag}
+                      {t(item.tag)}
                     </span>
                   ) : null}
                 </div>

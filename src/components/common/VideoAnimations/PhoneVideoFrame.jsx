@@ -1,4 +1,5 @@
 import { FiPlay, FiPause, FiRotateCcw, FiWifi, FiBattery } from 'react-icons/fi'
+import { useLanguage } from '../../../context/LanguageContext'
 
 export function PhoneVideoFrame({
   title = 'Loop Video',
@@ -19,6 +20,8 @@ export function PhoneVideoFrame({
   children,
   className = ''
 }) {
+  const { t } = useLanguage()
+
   return (
     <div className={`mx-auto w-full ${width} ${className}`}>
       {/* Outer Video Control Header Bar */}
@@ -33,12 +36,12 @@ export function PhoneVideoFrame({
             onClick={onTogglePlay}
             className="flex items-center gap-1 rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-bold text-brand-ink hover:bg-brand-strong hover:text-white transition-colors shadow-sm"
           >
-            {isPlaying ? <><FiPause /> Pause</> : <><FiPlay /> Play</>}
+            {isPlaying ? <><FiPause /> {t('Pause')}</> : <><FiPlay /> {t('Play')}</>}
           </button>
           <button
             onClick={onRestart}
             className="grid h-6 w-6 place-items-center rounded-full bg-surface text-ink hover:bg-surface-2 border border-line text-[10px] transition-colors"
-            title="Replay loop"
+            title={t('Replay loop')}
           >
             <FiRotateCcw />
           </button>

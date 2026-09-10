@@ -13,7 +13,7 @@ import { ChannelsPage } from './pages/Channels/ChannelsPage'
 import { KtAIPage } from './pages/KtAI/KtAIPage'
 import { StatusPage } from './pages/Status/StatusPage'
 import { SecurityPage } from './pages/Security/SecurityPage'
-import { WhatsAppPlusPage } from './pages/WhatsAppPlus/WhatsAppPlusPage'
+import { KtPlusPage } from './pages/KtPlus/KtPlusPage'
 
 // FOOTER / COMPANY PAGES
 import { AboutPage } from './pages/About/AboutPage'
@@ -27,13 +27,18 @@ import { MarketsPage } from './pages/Markets/MarketsPage'
 import { WalletPage } from './pages/Wallet/WalletPage'
 import { MarketplacePage } from './pages/Marketplace/MarketplacePage'
 import { NotesPage } from './pages/Notes/NotesPage'
+import { NotFoundPage } from './pages/NotFound/NotFoundPage'
+import { AnalyticsTracker } from './components/common/AnalyticsTracker/AnalyticsTracker'
 
 function App() {
   return (
-    <Routes>
+    <>
+      <AnalyticsTracker />
+      <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="/blog" element={<BlogPage />} />
+      <Route path="/blog/:slug" element={<BlogPage />} />
       <Route path="/apps" element={<AppsPage />} />
       <Route path="/help" element={<HelpPage />} />
       <Route path="/business" element={<BusinessPage />} />
@@ -45,8 +50,7 @@ function App() {
       <Route path="/ai" element={<KtAIPage />} />
       <Route path="/status" element={<StatusPage />} />
       <Route path="/security" element={<SecurityPage />} />
-      <Route path="/plus" element={<WhatsAppPlusPage />} />
-      <Route path="/whatsapp-plus" element={<WhatsAppPlusPage />} />
+      <Route path="/plus" element={<KtPlusPage />} />
 
       {/* FOOTER / COMPANY ROUTES */}
       <Route path="/about" element={<AboutPage />} />
@@ -61,12 +65,16 @@ function App() {
       <Route path="/marketplace" element={<MarketplacePage />} />
       <Route path="/notes" element={<NotesPage />} />
 
-      {/* WHATSAPP BUSINESS CONVERSATION CATEGORIES DIRECT ALIASES */}
+      {/* BUSINESS CONVERSATION CATEGORY DIRECT ALIASES */}
       <Route path="/products/conversation-categories/authentication" element={<SecurityPage />} />
       <Route path="/products/conversation-categories/marketing" element={<MessagingPage />} />
       <Route path="/products/conversation-categories/utility" element={<StatusPage />} />
       <Route path="/products/conversation-categories/service" element={<CallingPage />} />
-    </Routes>
+
+      {/* CUSTOM 404 — must stay last so it only matches unknown routes */}
+      <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   )
 }
 

@@ -2,9 +2,11 @@ import { motion } from 'framer-motion'
 import { FiArrowLeft, FiBookmark, FiHeart, FiMessageCircle, FiMoreVertical, FiSend, FiVolume2 } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
 import { useLoopClock } from './useLoopClock'
+import { useLanguage } from '../../../context/LanguageContext'
 import clipFrame from '../../../assets/images/wedding_grid.png'
 
 export function KtMinisScreen({ className = '' }) {
+  const { t } = useLanguage()
   const { progress, isPlaying, togglePlay, restart } = useLoopClock({ durationMs: 14000 })
 
   // The heart fills part-way through, the way a viewer double-taps mid-clip.
@@ -13,7 +15,7 @@ export function KtMinisScreen({ className = '' }) {
 
   return (
     <AppPhoneFrame
-      title="Minis · short video feed"
+      title={t('Minis · short video feed')}
       progress={progress}
       isPlaying={isPlaying}
       onTogglePlay={togglePlay}
@@ -39,7 +41,7 @@ export function KtMinisScreen({ className = '' }) {
           <span className="grid h-7 w-7 place-items-center rounded-full bg-white/20 text-[12px] text-white backdrop-blur-sm">
             <FiArrowLeft />
           </span>
-          <span className="flex-1 text-[14px] font-bold text-white">Minis</span>
+          <span className="flex-1 text-[14px] font-bold text-white">{t('Minis')}</span>
           <span className="grid h-7 w-7 place-items-center rounded-full bg-white/20 text-[12px] text-white backdrop-blur-sm">
             <FiVolume2 />
           </span>
@@ -52,7 +54,7 @@ export function KtMinisScreen({ className = '' }) {
           transition={{ duration: 0.5 }}
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[15px] font-black italic tracking-tight text-white drop-shadow-lg"
         >
-          MORE <span className="text-[#f5e642]">MUSCLE</span>
+          {t('MORE')} <span className="text-[#f5e642]">{t('MUSCLE')}</span>
         </motion.div>
 
         {/* Right action rail */}
@@ -94,15 +96,15 @@ export function KtMinisScreen({ className = '' }) {
                 following ? 'border-white bg-white text-slate-900' : 'border-white text-white'
               }`}
             >
-              {following ? 'Following' : 'Follow'}
+              {following ? t('Following') : t('Follow')}
             </span>
           </div>
 
           <p className="mt-1.5 text-[9px] font-medium leading-snug text-white/95">
-            5 Ways to Build More Muscle 💪 🤝
+            {t('5 Ways to Build More Muscle 💪 🤝')}
             <br />
             #musclebuilding #gymtips #workouttips #g…{' '}
-            <span className="font-bold text-white/70">more</span>
+            <span className="font-bold text-white/70">{t('more')}</span>
           </p>
 
           {/* Clip scrubber */}

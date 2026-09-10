@@ -3,8 +3,10 @@ import { motion } from 'framer-motion'
 import { FiPlay, FiPause, FiRotateCcw, FiPhone, FiVideo, FiMic, FiMicOff, FiMonitor, FiPhoneOff, FiVolume2 } from 'react-icons/fi'
 import avatarMale from '../../../assets/images/avatar_male_1.png'
 import avatarFemale from '../../../assets/images/avatar_female_1.png'
+import { useLanguage } from '../../../context/LanguageContext'
 
 export function CallAnimationVideo({ className = '' }) {
+  const { t } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(true)
   const [isMuted, setIsMuted] = useState(false)
   const [callState, setCallState] = useState(0) // 0: Ringing, 1: Connected HD, 2: Screen Share Mode
@@ -41,19 +43,19 @@ export function CallAnimationVideo({ className = '' }) {
       <div className="flex items-center justify-between border-b border-line pb-3 mb-3">
         <div className="flex items-center gap-2">
           <span className="flex h-3 w-3 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-xs font-bold text-ink uppercase tracking-wider">Video Clip • HD Voice & Video Calling</span>
+          <span className="text-xs font-bold text-ink uppercase tracking-wider">{t('Video Clip • HD Voice & Video Calling')}</span>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
             className="flex items-center gap-1 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink hover:bg-brand-strong hover:text-white transition-colors"
           >
-            {isPlaying ? <><FiPause /> Pause</> : <><FiPlay /> Play</>}
+            {isPlaying ? <><FiPause /> {t('Pause')}</> : <><FiPlay /> {t('Play')}</>}
           </button>
           <button
             onClick={restartVideo}
             className="grid h-7 w-7 place-items-center rounded-full bg-cream text-ink hover:bg-line text-xs"
-            title="Replay video"
+            title={t('Replay video')}
           >
             <FiRotateCcw />
           </button>
@@ -72,7 +74,7 @@ export function CallAnimationVideo({ className = '' }) {
               <img src={avatarFemale} alt="Emiko" className="h-full w-full rounded-full object-cover" />
             </motion.div>
             <h4 className="font-bold text-sm">Emiko Takahashi</h4>
-            <p className="text-xs text-brand-ink font-medium mt-0.5 animate-pulse">Incoming 1080p HD Video Call...</p>
+            <p className="text-xs text-brand-ink font-medium mt-0.5 animate-pulse">{t('Incoming 1080p HD Video Call...')}</p>
             <div className="mt-4 flex gap-4">
               <span className="rounded-full bg-emerald-500 p-3 text-white shadow-lg animate-bounce">
                 <FiPhone />
@@ -87,7 +89,7 @@ export function CallAnimationVideo({ className = '' }) {
             
             {/* Self PIP */}
             <div className="absolute top-2 right-2 h-20 w-16 overflow-hidden rounded-lg border-2 border-white/40 bg-slate-800 shadow-md">
-              <img src={avatarMale} alt="You" className="h-full w-full object-cover" />
+              <img src={avatarMale} alt={t('You')} className="h-full w-full object-cover" />
             </div>
 
             {/* Audio Spectrum overlay */}
@@ -103,7 +105,7 @@ export function CallAnimationVideo({ className = '' }) {
                   />
                 ))}
               </div>
-              <span className="text-[9px] text-white font-semibold ml-1">Spatial Audio Active</span>
+              <span className="text-[9px] text-white font-semibold ml-1">{t('Spatial Audio Active')}</span>
             </div>
 
             {/* Controls Bar */}
@@ -128,15 +130,15 @@ export function CallAnimationVideo({ className = '' }) {
           <div className="relative h-full w-full overflow-hidden rounded-xl bg-slate-900 p-3 text-white flex flex-col justify-between border border-brand-strong/40">
             <div className="flex items-center justify-between border-b border-slate-800 pb-2">
               <span className="text-xs font-bold flex items-center gap-1.5 text-brand-ink">
-                <FiMonitor className="text-brand-strong" /> Live Desktop Screen Share
+                <FiMonitor className="text-brand-strong" /> {t('Live Desktop Screen Share')}
               </span>
               <span className="rounded-full bg-brand-strong px-2 py-0.5 text-[9px] font-bold text-white">
                 1080p 60FPS
               </span>
             </div>
             <div className="my-auto text-center p-3 rounded-xl bg-slate-950 border border-slate-800">
-              <p className="text-xs font-semibold text-slate-200">Broadcasting &quot;Quarterly_Presentation.pdf&quot; to call participants</p>
-              <p className="text-[10px] text-brand-ink mt-1">Zero latency • E2E Encrypted Screen Pass</p>
+              <p className="text-xs font-semibold text-slate-200">{t('Broadcasting "Quarterly_Presentation.pdf" to call participants')}</p>
+              <p className="text-[10px] text-brand-ink mt-1">{t('Zero latency • E2E Encrypted Screen Pass')}</p>
             </div>
           </div>
         )}

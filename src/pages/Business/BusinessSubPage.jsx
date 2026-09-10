@@ -33,6 +33,7 @@ import { Logo } from '../../components/common/Logo/Logo'
 import { ThemeToggle } from '../../components/common/ThemeToggle/ThemeToggle'
 import { Footer } from '../../components/layout/Footer/Footer'
 import { useModal } from '../../context/ModalContext'
+import { useLanguage } from '../../context/LanguageContext'
 import { businessProducts } from './businessProducts'
 import imgBusiness from '../../assets/images/business.jpg'
 import imgGroup from '../../assets/images/group.jpg'
@@ -102,6 +103,7 @@ export function BusinessSubPage() {
   const { slug } = useParams()
   const navigate = useNavigate()
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
   const data = businessProducts[slug]
 
   useEffect(() => {
@@ -128,7 +130,7 @@ export function BusinessSubPage() {
                   onClick={() => navigate('/business')}
                   className="text-[15px] font-semibold text-white/90 transition-colors hover:text-sky-400"
                 >
-                  {item}
+                  {t(item)}
                 </button>
               ))}
             </nav>
@@ -137,7 +139,7 @@ export function BusinessSubPage() {
             onClick={openDownloadModal}
             className="rounded-full bg-brand-strong px-5 py-2.5 text-sm font-bold text-white shadow-brand transition-transform hover:-translate-y-0.5"
           >
-            Get started
+            {t('Get started')}
           </button>
         </div>
       </header>
@@ -159,7 +161,7 @@ export function BusinessSubPage() {
                   onClick={openDownloadModal}
                   className="group inline-flex items-center gap-2 rounded-full bg-brand-strong px-6 py-3 text-sm font-bold text-white shadow-brand transition-all hover:-translate-y-0.5 hover:bg-brand-strong-hover"
                 >
-                  {data.cta?.button || 'Get started'}
+                  {data.cta?.button || t('Get started')}
                   <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>
@@ -236,7 +238,7 @@ export function BusinessSubPage() {
         <section className="border-t border-line bg-surface py-16 lg:py-24">
           <Container maxW="max-w-3xl">
             <Reveal from="up">
-              <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Step by step</h2>
+              <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{t('Step by step')}</h2>
             </Reveal>
             <ol className="mt-8 space-y-6">
               {data.steps.map((s, i) => (
@@ -278,7 +280,7 @@ export function BusinessSubPage() {
                   onClick={openDownloadModal}
                   className="group mt-7 inline-flex items-center gap-2 rounded-full bg-brand-strong px-7 py-3.5 text-sm font-bold text-white shadow-brand transition-all hover:-translate-y-0.5 hover:bg-brand-strong-hover"
                 >
-                  Get started
+                  {t('Get started')}
                   <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>

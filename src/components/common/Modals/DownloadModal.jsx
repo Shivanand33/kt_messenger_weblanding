@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX, FiDownload, FiExternalLink } from 'react-icons/fi'
 import { FaAndroid } from 'react-icons/fa'
+import { useLanguage } from '../../../context/LanguageContext'
+import { trackDownload } from '../../../services/analytics'
 
 // Mobile builds live on the app stores, so those rows link out rather than
 // serving a file.
@@ -23,6 +25,7 @@ function AppleIcon({ className = 'h-5 w-5' }) {
 }
 
 export function DownloadModal({ isOpen, onClose }) {
+  const { t } = useLanguage()
   if (!isOpen) return null
 
   return (
@@ -47,7 +50,7 @@ export function DownloadModal({ isOpen, onClose }) {
           {/* Close Button */}
           <button
             onClick={onClose}
-            aria-label="Close modal"
+            aria-label={t('Close modal')}
             className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-stone-100 text-stone-600 hover:bg-stone-200 transition-colors"
           >
             <FiX className="text-lg" />
@@ -57,9 +60,9 @@ export function DownloadModal({ isOpen, onClose }) {
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft text-brand-strong">
               <FiDownload className="text-2xl" />
             </div>
-            <h3 className="text-2xl font-bold text-[#111b21]">Download KT Messenger</h3>
+            <h3 className="text-2xl font-bold text-[#111b21]">{t('Download KT Messenger')}</h3>
             <p className="mt-1 text-xs text-stone-500">
-              Get the official app for Android or iOS
+              {t('Get the official app for Android or iOS')}
             </p>
           </div>
 
@@ -80,6 +83,7 @@ export function DownloadModal({ isOpen, onClose }) {
                 href={PLAY_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackDownload('android', PLAY_STORE_URL)}
                 className={CTA_CLASS}
               >
                 <FiExternalLink /> Google Play
@@ -101,6 +105,7 @@ export function DownloadModal({ isOpen, onClose }) {
                 href={APP_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackDownload('ios', APP_STORE_URL)}
                 className={CTA_CLASS}
               >
                 <FiExternalLink /> App Store

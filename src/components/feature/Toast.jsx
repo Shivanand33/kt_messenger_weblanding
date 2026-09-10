@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiAlertCircle, FiCheckCircle, FiInfo, FiX } from 'react-icons/fi'
+import { useLanguage } from '../../context/LanguageContext'
 
 const tones = {
   success: {
@@ -29,6 +30,7 @@ const tones = {
  * click target floating over the page.
  */
 export function Toast({ message, tone = 'success', duration = 4000, onClose }) {
+  const { t } = useLanguage()
   useEffect(() => {
     if (!message) return undefined
     const timer = setTimeout(onClose, duration)
@@ -55,11 +57,11 @@ export function Toast({ message, tone = 'success', duration = 4000, onClose }) {
         <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-soft text-lg text-brand-ink">
           {style.icon}
         </span>
-        <p className="flex-1 text-sm font-bold leading-snug text-ink">{message}</p>
+        <p className="flex-1 text-sm font-bold leading-snug text-ink">{t(message)}</p>
         <button
           type="button"
           onClick={onClose}
-          aria-label="Dismiss notification"
+          aria-label={t('Dismiss notification')}
           className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-ink"
         >
           <FiX />

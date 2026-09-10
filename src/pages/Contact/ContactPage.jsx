@@ -32,6 +32,7 @@ import { RelatedPages } from '../../components/feature/RelatedPages'
 import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
 import { api } from '../../services/apiClient'
+import { useLanguage } from '../../context/LanguageContext'
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', icon: <FiCompass /> },
@@ -48,7 +49,7 @@ const TOPICS = [
     icon: <FiHelpCircle />,
     title: 'Account or app support',
     desc: 'Something is broken, an account is locked, or a payment went wrong.',
-    hint: 'Most answers are already in the Help Center — try there first for the fastest fix.',
+    hint: 'Most answers are already in the Help Center try there first for the fastest fix.',
     sla: 'Within 24 hours',
   },
   {
@@ -95,9 +96,9 @@ const TOPICS = [
 
 
 const RESPONSE = [
-  { label: 'Security disclosures', time: '1 business day', detail: 'Triaged by a human, never an auto-responder.', tone: 'fast' },
+  { label: 'Security disclosures', time: '1 business day', detail: 'Triaged by a human, never an auto responder.', tone: 'fast' },
   { label: 'Press & brand', time: '1 business day', detail: 'Assets usually attached to the first reply.', tone: 'fast' },
-  { label: 'Account support', time: '24 hours', detail: 'Faster in-app, where we can see the account context.', tone: 'normal' },
+  { label: 'Account support', time: '24 hours', detail: 'Faster in app, where we can see the account context.', tone: 'normal' },
   { label: 'Business & partnerships', time: '2 business days', detail: 'Longer if it needs a regional compliance review.', tone: 'normal' },
   { label: 'Careers', time: '5 working days', detail: 'Every application read by a person on the panel.', tone: 'normal' },
   { label: 'Privacy requests', time: 'Up to 30 days', detail: 'Statutory window; identity verification comes first.', tone: 'slow' },
@@ -106,12 +107,12 @@ const RESPONSE = [
 const FAQS = [
   {
     q: 'What is the fastest way to get help with my account?',
-    a: 'Use the Help Center or in-app support. In the app we can see your account context, which removes most of the back-and-forth this form needs.',
+    a: 'Use the Help Center or in app support. In the app we can see your account context, which removes most of the back and forth this form needs.',
     tag: 'Support',
   },
   {
     q: 'Can you read my messages to debug a problem?',
-    a: 'No — and that is not a policy choice we can waive. Messages are end-to-end encrypted, so support genuinely cannot see chat content. We debug from device logs you choose to share.',
+    a: 'No and that is not a policy choice we can waive. Messages are end to end encrypted, so support genuinely cannot see chat content. We debug from device logs you choose to share.',
     tag: 'Privacy',
   },
   {
@@ -126,7 +127,7 @@ const FAQS = [
   },
   {
     q: 'How do I request my data?',
-    a: 'Choose Privacy & data requests. We verify identity first, then export the limited data we hold — which is far less than most people expect, because we do not collect message content.',
+    a: 'Choose Privacy & data requests. We verify identity first, then export the limited data we hold which is far less than most people expect, because we do not collect message content.',
     tag: 'Privacy',
   },
   {
@@ -136,7 +137,7 @@ const FAQS = [
   },
   {
     q: 'Can I visit an office?',
-    a: 'Offices are not open to walk-ins, but we are happy to arrange a meeting. Mention the city in your message and we will set it up.',
+    a: 'Offices are not open to walk ins, but we are happy to arrange a meeting. Mention the city in your message and we will set it up.',
     tag: 'Offices',
   },
   {
@@ -147,7 +148,7 @@ const FAQS = [
 ]
 
 const RELATED = [
-  { to: '/help', label: 'Help Center', desc: 'Hundreds of articles — usually faster than writing in.', icon: <FiHelpCircle /> },
+  { to: '/help', label: 'Help Center', desc: 'Hundreds of articles usually faster than writing in.', icon: <FiHelpCircle /> },
   { to: '/community', label: 'Community', desc: 'Forums, events and the ambassador programme.', icon: <FiUsers /> },
   { to: '/careers', label: 'Careers', desc: 'Open roles and how the hiring process works.', icon: <FiBriefcase /> },
 ]
@@ -160,6 +161,7 @@ const TONE_STYLES = {
 
 export function ContactPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   const [topic, setTopic] = useState('support')
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
@@ -190,10 +192,10 @@ export function ContactPage() {
 
   const validate = () => {
     const next = {}
-    if (!form.name.trim()) next.name = 'Tell us who you are.'
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim())) next.email = 'Enter a valid email address.'
-    if (!form.subject.trim()) next.subject = 'Add a short subject line.'
-    if (form.message.trim().length < 20) next.message = 'Please give us at least 20 characters of detail.'
+    if (!form.name.trim()) next.name = t('Tell us who you are.')
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim())) next.email = t('Enter a valid email address.')
+    if (!form.subject.trim()) next.subject = t('Add a short subject line.')
+    if (form.message.trim().length < 20) next.message = t('Please give us at least 20 characters of detail.')
     return next
   }
 
@@ -204,7 +206,7 @@ export function ContactPage() {
     setErrors(nextErrors)
 
     if (Object.keys(nextErrors).length > 0) {
-      setToast('Please fix the highlighted fields.')
+      setToast(t('Please fix the highlighted fields.'))
       return
     }
 
@@ -227,7 +229,7 @@ export function ContactPage() {
       setForm({ name: '', email: '', subject: '', message: '' })
       setErrors({})
     } catch (err) {
-      setToast(err?.message || 'Could not send your message. Please try again.')
+      setToast(err?.message || t('Could not send your message. Please try again.'))
     } finally {
       setSendingMessage(false)
     }
@@ -238,14 +240,14 @@ export function ContactPage() {
     event.preventDefault()
     if (sendingSupport) return // guard against double submit
     const next = {}
-    if (!support.name.trim()) next.name = 'Add your name.'
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(support.email.trim())) next.email = 'Enter a valid email address.'
-    if (!support.subject.trim()) next.subject = 'Add a subject line.'
-    if (support.message.trim().length < 20) next.message = 'Please give us at least 20 characters.'
+    if (!support.name.trim()) next.name = t('Add your name.')
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(support.email.trim())) next.email = t('Enter a valid email address.')
+    if (!support.subject.trim()) next.subject = t('Add a subject line.')
+    if (support.message.trim().length < 20) next.message = t('Please give us at least 20 characters.')
 
     setSupportErrors(next)
     if (Object.keys(next).length > 0) {
-      setToast('Please fix the highlighted fields.')
+      setToast(t('Please fix the highlighted fields.'))
       return
     }
 
@@ -267,7 +269,7 @@ export function ContactPage() {
       setSupport({ name: '', email: '', subject: '', message: '' })
       setSupportErrors({})
     } catch (err) {
-      setToast(err?.message || 'Could not send your message. Please try again.')
+      setToast(err?.message || t('Could not send your message. Please try again.'))
     } finally {
       setSendingSupport(false)
     }
@@ -278,12 +280,12 @@ export function ContactPage() {
     event.preventDefault()
     if (sendingFeedback) return // guard against double submit
     const next = {}
-    if (!feedback.about.trim()) next.about = 'Tell us what this is about.'
-    if (rating === 0) next.rating = 'Pick a rating from one to five stars.'
+    if (!feedback.about.trim()) next.about = t('Tell us what this is about.')
+    if (rating === 0) next.rating = t('Pick a rating from one to five stars.')
 
     setFeedbackErrors(next)
     if (Object.keys(next).length > 0) {
-      setToast('Please fix the highlighted fields.')
+      setToast(t('Please fix the highlighted fields.'))
       return
     }
 
@@ -309,7 +311,7 @@ export function ContactPage() {
       setRating(0)
       setHoverRating(0)
     } catch (err) {
-      setToast(err?.message || 'Could not send your feedback. Please try again.')
+      setToast(err?.message || t('Could not send your feedback. Please try again.'))
     } finally {
       setSendingFeedback(false)
     }
@@ -331,45 +333,45 @@ export function ContactPage() {
       <PageHero
         badge={
           <>
-            <FiMail /> Six teams · written support only
+            <FiMail /> {t('Six teams · written support only')}
           </>
         }
-        title="Contact"
+        title={t('Contact')}
         highlight="KT Messenger"
-        description="Pick the team that fits, tell us what is going on, and a person will read it. We publish our response times below and hold ourselves to them."
+        description={t('Pick the team that fits, tell us what is going on, and a person will read it. We publish our response times below and hold ourselves to them.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}>
-              Send a message <FiSend />
+              {t('Send a message')} <FiSend />
             </Button>
             <Button size="lg" variant="onDark" onClick={() => { navigate('/help'); window.scrollTo(0, 0) }}>
-              Try the Help Center <FiChevronRight />
+              {t('Try the Help Center')} <FiChevronRight />
             </Button>
           </>
         }
         chips={[
-          { icon: <FiClock />, label: 'Published response times' },
-          { icon: <FiShield />, label: 'Encrypted in transit and at rest' },
-          { icon: <FiGlobe />, label: '6 offices, 5 timezones' },
+          { icon: <FiClock />, label: t('Published response times') },
+          { icon: <FiShield />, label: t('Encrypted in transit and at rest') },
+          { icon: <FiGlobe />, label: t('6 offices, 5 timezones') },
         ]}
         aside={
           <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur-xl sm:p-8">
-            <span className="text-[11px] font-black uppercase tracking-[0.16em] text-sky-300">Before you write</span>
+            <span className="text-[11px] font-black uppercase tracking-[0.16em] text-sky-300">{t('Before you write')}</span>
             <ul className="mt-5 space-y-4">
               {[
                 { icon: <FiHelpCircle />, text: 'Account problems are usually solved faster in the Help Center.' },
-                { icon: <FiLock />, text: 'Support cannot read your messages — encryption is not waivable.' },
+                { icon: <FiLock />, text: 'Support cannot read your messages encryption is not waivable.' },
                 { icon: <FiImage />, text: 'Logos and press assets are already in the Brand Center.' },
                 { icon: <FiBriefcase />, text: 'Job applications go through the Careers page, not this form.' },
               ].map((item) => (
                 <li key={item.text} className="flex items-start gap-3 text-sm leading-relaxed text-slate-300">
                   <span className="mt-0.5 shrink-0 text-sky-400">{item.icon}</span>
-                  {item.text}
+                  {t(item.text)}
                 </li>
               ))}
             </ul>
             <p className="mt-6 border-t border-white/10 pt-5 text-[11px] leading-relaxed text-slate-400">
-              We do not offer phone support. Written support keeps a record both sides can refer back to.
+              {t('We do not offer phone support. Written support keeps a record both sides can refer back to.')}
             </p>
           </div>
         }
@@ -382,9 +384,9 @@ export function ContactPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="getintouch" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Get in touch"
-          title="Get in touch"
-          description="Send us a message or share feedback — no account required."
+          eyebrow={t('Get in touch')}
+          title={t('Get in touch')}
+          description={t('Send us a message or share feedback no account required.')}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
@@ -400,9 +402,9 @@ export function ContactPage() {
                   <FiMail />
                 </span>
                 <div className="min-w-0">
-                  <h3 className="text-xl font-extrabold text-ink">Contact support</h3>
+                  <h3 className="text-xl font-extrabold text-ink">{t('Contact support')}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-body">
-                    No account needed — we usually reply within a day.
+                    {t('No account needed we usually reply within a day.')}
                   </p>
                 </div>
               </div>
@@ -410,14 +412,14 @@ export function ContactPage() {
               <div className="mt-7 grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="gt-name" className="sr-only">
-                    Your name
+                    {t('Your name')}
                   </label>
                   <input
                     id="gt-name"
                     type="text"
                     value={support.name}
                     onChange={(event) => setSupport({ ...support, name: event.target.value })}
-                    placeholder="Your name"
+                    placeholder={t('Your name')}
                     aria-invalid={Boolean(supportErrors.name)}
                     className={`h-12 ${quickField(supportErrors.name)}`}
                   />
@@ -430,14 +432,14 @@ export function ContactPage() {
 
                 <div>
                   <label htmlFor="gt-email" className="sr-only">
-                    Email address
+                    {t('Email address')}
                   </label>
                   <input
                     id="gt-email"
                     type="email"
                     value={support.email}
                     onChange={(event) => setSupport({ ...support, email: event.target.value })}
-                    placeholder="Email address"
+                    placeholder={t('Email address')}
                     aria-invalid={Boolean(supportErrors.email)}
                     className={`h-12 ${quickField(supportErrors.email)}`}
                   />
@@ -451,14 +453,14 @@ export function ContactPage() {
 
               <div className="mt-4">
                 <label htmlFor="gt-subject" className="sr-only">
-                  Subject
+                  {t('Subject')}
                 </label>
                 <input
                   id="gt-subject"
                   type="text"
                   value={support.subject}
                   onChange={(event) => setSupport({ ...support, subject: event.target.value })}
-                  placeholder="Subject"
+                  placeholder={t('Subject')}
                   aria-invalid={Boolean(supportErrors.subject)}
                   className={`h-12 ${quickField(supportErrors.subject)}`}
                 />
@@ -471,14 +473,14 @@ export function ContactPage() {
 
               <div className="mt-4 flex-1">
                 <label htmlFor="gt-message" className="sr-only">
-                  How can we help?
+                  {t('How can we help?')}
                 </label>
                 <textarea
                   id="gt-message"
                   rows={6}
                   value={support.message}
                   onChange={(event) => setSupport({ ...support, message: event.target.value })}
-                  placeholder="How can we help?"
+                  placeholder={t('How can we help?')}
                   aria-invalid={Boolean(supportErrors.message)}
                   className={`resize-none py-4 ${quickField(supportErrors.message)}`}
                 />
@@ -488,7 +490,7 @@ export function ContactPage() {
                       <FiAlertCircle /> {supportErrors.message}
                     </p>
                   ) : (
-                    <span className="text-[11px] font-semibold text-muted">Minimum 20 characters.</span>
+                    <span className="text-[11px] font-semibold text-muted">{t('Minimum 20 characters.')}</span>
                   )}
                   <span className="shrink-0 text-[11px] font-bold text-muted">{support.message.trim().length}</span>
                 </div>
@@ -498,11 +500,11 @@ export function ContactPage() {
                   flush with the card bottom, whatever height the note wraps to. */}
               <p className="mt-5 flex items-start gap-2 text-[11px] leading-relaxed text-muted">
                 <FiLock className="mt-0.5 shrink-0" />
-                Encrypted in transit and at rest. We reply to the address you give us and nothing else.
+                {t('Encrypted in transit and at rest. We reply to the address you give us and nothing else.')}
               </p>
 
               <Button type="submit" size="lg" className="mt-4 w-full justify-center" disabled={sendingSupport}>
-                <FiSend /> {sendingSupport ? 'Sending…' : 'Send message'}
+                <FiSend /> {sendingSupport ? t('Sending…') : t('Send message')}
               </Button>
             </form>
           </Reveal>
@@ -519,23 +521,23 @@ export function ContactPage() {
                   <FiStar />
                 </span>
                 <div className="min-w-0">
-                  <h3 className="text-xl font-extrabold text-ink">Share feedback</h3>
+                  <h3 className="text-xl font-extrabold text-ink">{t('Share feedback')}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-body">
-                    Tell us what you love or what we can improve.
+                    {t('Tell us what you love or what we can improve.')}
                   </p>
                 </div>
               </div>
 
               <div className="mt-7">
                 <label htmlFor="gt-about" className="sr-only">
-                  What is this about?
+                  {t('What is this about?')}
                 </label>
                 <input
                   id="gt-about"
                   type="text"
                   value={feedback.about}
                   onChange={(event) => setFeedback({ ...feedback, about: event.target.value })}
-                  placeholder="What's this about? (e.g. Calls, Themes)"
+                  placeholder={t("What's this about? (e.g. Calls, Themes)")}
                   aria-invalid={Boolean(feedbackErrors.about)}
                   className={`h-12 ${quickField(feedbackErrors.about)}`}
                 />
@@ -550,7 +552,7 @@ export function ContactPage() {
               <div className="mt-5">
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   <span id="gt-rating-label" className="text-sm font-bold text-ink">
-                    Your rating:
+                    {t('Your rating:')}
                   </span>
 
                   <div
@@ -567,7 +569,7 @@ export function ContactPage() {
                           type="button"
                           role="radio"
                           aria-checked={rating === star}
-                          aria-label={`${star} ${star === 1 ? 'star' : 'stars'}`}
+                          aria-label={`${star} ${star === 1 ? t('star') : t('stars')}`}
                           onClick={() => setRating(star)}
                           onMouseEnter={() => setHoverRating(star)}
                           onFocus={() => setHoverRating(star)}
@@ -600,7 +602,7 @@ export function ContactPage() {
 
               <div className="mt-5">
                 <label htmlFor="gt-category" className="sr-only">
-                  Feedback type
+                  {t('Feedback type')}
                 </label>
                 <select
                   id="gt-category"
@@ -610,7 +612,7 @@ export function ContactPage() {
                 >
                   {['Suggestion', 'Bug report', 'Compliment', 'Complaint', 'Feature request'].map((option) => (
                     <option key={option} value={option}>
-                      {option}
+                      {t(option)}
                     </option>
                   ))}
                 </select>
@@ -618,25 +620,25 @@ export function ContactPage() {
 
               <div className="mt-4 flex-1">
                 <label htmlFor="gt-details" className="sr-only">
-                  Tell us more
+                  {t('Tell us more')}
                 </label>
                 <textarea
                   id="gt-details"
                   rows={5}
                   value={feedback.details}
                   onChange={(event) => setFeedback({ ...feedback, details: event.target.value })}
-                  placeholder="Tell us more (optional)"
+                  placeholder={t('Tell us more (optional)')}
                   className={`resize-none py-4 ${quickField(false)}`}
                 />
               </div>
 
               <p className="mt-5 flex items-start gap-2 text-[11px] leading-relaxed text-muted">
                 <FiCheckCircle className="mt-0.5 shrink-0" />
-                Feedback is anonymous unless you add contact details. Every item is read by the product team.
+                {t('Feedback is anonymous unless you add contact details. Every item is read by the product team.')}
               </p>
 
               <Button type="submit" size="lg" className="mt-4 w-full justify-center" disabled={sendingFeedback}>
-                <FiSend /> {sendingFeedback ? 'Sending…' : 'Send feedback'}
+                <FiSend /> {sendingFeedback ? t('Sending…') : t('Send feedback')}
               </Button>
             </form>
           </Reveal>
@@ -646,9 +648,9 @@ export function ContactPage() {
       {/* TOPICS */}
       <Section id="reasons" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Pick a team"
-          title="Routing matters more than wording"
-          description="Choosing the right team is what gets you a specialist instead of a hand-off. Your selection carries into the form below."
+          eyebrow={t('Pick a team')}
+          title={t('Routing matters more than wording')}
+          description={t('Choosing the right team is what gets you a specialist instead of a hand off. Your selection carries into the form below.')}
         />
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -674,11 +676,11 @@ export function ContactPage() {
                     {active ? <FiCheckCircle className="text-lg text-brand-strong" /> : null}
                   </span>
 
-                  <span className="mt-5 text-base font-extrabold text-ink">{item.title}</span>
-                  <span className="mt-2 flex-1 text-sm leading-relaxed text-body">{item.desc}</span>
+                  <span className="mt-5 text-base font-extrabold text-ink">{t(item.title)}</span>
+                  <span className="mt-2 flex-1 text-sm leading-relaxed text-body">{t(item.desc)}</span>
 
                   <span className="mt-5 flex items-center gap-1.5 border-t border-line/70 pt-4 text-[11px] font-black uppercase tracking-wide text-brand-ink">
-                    <FiClock /> {item.sla}
+                    <FiClock /> {t(item.sla)}
                   </span>
                 </button>
               </Reveal>
@@ -690,9 +692,9 @@ export function ContactPage() {
       {/* FORM */}
       <Section id="form" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Send a message"
-          title={`Writing to: ${selectedTopic.title}`}
-          description={selectedTopic.hint}
+          eyebrow={t('Send a message')}
+          title={`${t('Writing to:')} ${t(selectedTopic.title)}`}
+          description={t(selectedTopic.hint)}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
@@ -701,14 +703,14 @@ export function ContactPage() {
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label htmlFor="c-name" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                    Your name
+                    {t('Your name')}
                   </label>
                   <input
                     id="c-name"
                     type="text"
                     value={form.name}
                     onChange={(event) => setForm({ ...form, name: event.target.value })}
-                    placeholder="Jane Doe"
+                    placeholder={t('Jane Doe')}
                     aria-invalid={Boolean(errors.name)}
                     className={`h-12 ${fieldClass('name')}`}
                   />
@@ -721,7 +723,7 @@ export function ContactPage() {
 
                 <div>
                   <label htmlFor="c-email" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                    Email
+                    {t('Email')}
                   </label>
                   <input
                     id="c-email"
@@ -742,7 +744,7 @@ export function ContactPage() {
 
               <div className="mt-5">
                 <label htmlFor="c-topic" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                  Team
+                  {t('Team')}
                 </label>
                 <select
                   id="c-topic"
@@ -752,7 +754,7 @@ export function ContactPage() {
                 >
                   {TOPICS.map((item) => (
                     <option key={item.id} value={item.id}>
-                      {item.title} — {item.sla}
+                      {t(item.title)} {t(item.sla)}
                     </option>
                   ))}
                 </select>
@@ -760,14 +762,14 @@ export function ContactPage() {
 
               <div className="mt-5">
                 <label htmlFor="c-subject" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                  Subject
+                  {t('Subject')}
                 </label>
                 <input
                   id="c-subject"
                   type="text"
                   value={form.subject}
                   onChange={(event) => setForm({ ...form, subject: event.target.value })}
-                  placeholder="One line on what this is about"
+                  placeholder={t('One line on what this is about')}
                   aria-invalid={Boolean(errors.subject)}
                   className={`h-12 ${fieldClass('subject')}`}
                 />
@@ -780,14 +782,14 @@ export function ContactPage() {
 
               <div className="mt-5">
                 <label htmlFor="c-message" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                  Message
+                  {t('Message')}
                 </label>
                 <textarea
                   id="c-message"
                   rows={6}
                   value={form.message}
                   onChange={(event) => setForm({ ...form, message: event.target.value })}
-                  placeholder="Include anything that helps us reproduce or understand the situation."
+                  placeholder={t('Include anything that helps us reproduce or understand the situation.')}
                   aria-invalid={Boolean(errors.message)}
                   className={`resize-none py-4 ${fieldClass('message')}`}
                 />
@@ -797,20 +799,19 @@ export function ContactPage() {
                       <FiAlertCircle /> {errors.message}
                     </p>
                   ) : (
-                    <span className="text-[11px] font-semibold text-muted">Minimum 20 characters.</span>
+                    <span className="text-[11px] font-semibold text-muted">{t('Minimum 20 characters.')}</span>
                   )}
                   <span className="shrink-0 text-[11px] font-bold text-muted">{form.message.trim().length}</span>
                 </div>
               </div>
 
               <Button type="submit" size="lg" className="mt-7 w-full justify-center" disabled={sendingMessage}>
-                {sendingMessage ? 'Sending…' : <>Send to {selectedTopic.title} <FiSend /></>}
+                {sendingMessage ? t('Sending…') : <>{t('Send to')} {t(selectedTopic.title)} <FiSend /></>}
               </Button>
 
               <p className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-muted">
                 <FiLock className="mt-0.5 shrink-0" />
-                Encrypted in transit and at rest, visible only to the team you picked, and deleted after twelve months
-                unless it belongs to an open case.
+                {t('Encrypted in transit and at rest, visible only to the team you picked, and deleted after twelve months unless it belongs to an open case.')}
               </p>
             </form>
           </Reveal>
@@ -821,15 +822,15 @@ export function ContactPage() {
                 <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-xl text-brand-ink">
                   {selectedTopic.icon}
                 </span>
-                <h3 className="mt-4 text-base font-extrabold text-ink">{selectedTopic.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-body">{selectedTopic.hint}</p>
+                <h3 className="mt-4 text-base font-extrabold text-ink">{t(selectedTopic.title)}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-body">{t(selectedTopic.hint)}</p>
                 <span className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-brand/30 bg-brand-soft px-3 py-1.5 text-[11px] font-black uppercase tracking-wide text-brand-ink">
-                  <FiClock /> {selectedTopic.sla}
+                  <FiClock /> {t(selectedTopic.sla)}
                 </span>
               </div>
 
               <div className="flex-1 rounded-[24px] border border-line bg-surface p-6 shadow-soft">
-                <h3 className="text-sm font-extrabold text-ink">Faster alternatives</h3>
+                <h3 className="text-sm font-extrabold text-ink">{t('Faster alternatives')}</h3>
                 <ul className="mt-4 space-y-2.5">
                   {[
                     { label: 'Help Center articles', to: '/help' },
@@ -845,7 +846,7 @@ export function ContactPage() {
                         }}
                         className="flex w-full items-center justify-between gap-3 rounded-xl border border-line px-4 py-3 text-left text-xs font-bold text-body transition-colors hover:border-brand/40 hover:text-ink"
                       >
-                        {item.label}
+                        {t(item.label)}
                         <FiChevronRight className="shrink-0" />
                       </button>
                     </li>
@@ -861,9 +862,9 @@ export function ContactPage() {
       {/* RESPONSE TIMES */}
       <Section id="response" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Response times"
-          title="What we commit to, in writing"
-          description="Measured from when your message arrives, over the last 90 days. If we are going to miss one, you get told rather than left waiting."
+          eyebrow={t('Response times')}
+          title={t('What we commit to, in writing')}
+          description={t('Measured from when your message arrives, over the last 90 days. If we are going to miss one, you get told rather than left waiting.')}
         />
 
         <Reveal from="up" className="mt-12 overflow-hidden rounded-[26px] border border-line bg-surface shadow-card">
@@ -871,11 +872,11 @@ export function ContactPage() {
             {RESPONSE.map((row) => (
               <li key={row.label} className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-6">
                 <div className="min-w-0">
-                  <h3 className="text-sm font-extrabold text-ink">{row.label}</h3>
-                  <p className="mt-0.5 text-xs leading-relaxed text-body">{row.detail}</p>
+                  <h3 className="text-sm font-extrabold text-ink">{t(row.label)}</h3>
+                  <p className="mt-0.5 text-xs leading-relaxed text-body">{t(row.detail)}</p>
                 </div>
                 <span className={`shrink-0 rounded-full border px-3.5 py-1.5 text-[11px] font-black uppercase tracking-wide ${TONE_STYLES[row.tone]}`}>
-                  {row.time}
+                  {t(row.time)}
                 </span>
               </li>
             ))}
@@ -886,32 +887,32 @@ export function ContactPage() {
       {/* FAQ */}
       <Section id="faq" container={false} className="scroll-mt-36 bg-surface">
         <Container maxW="max-w-3xl">
-          <SectionHead eyebrow="FAQ" title="Before you write to us" />
+          <SectionHead eyebrow={t('FAQ')} title={t('Before you write to us')} />
           <div className="mt-12">
-            <FaqAccordion items={FAQS} placeholder="Search the FAQ…" />
+            <FaqAccordion items={FAQS} placeholder={t('Search the FAQ…')} />
           </div>
         </Container>
       </Section>
 
       <CtaBand
-        eyebrow="Still stuck"
-        title="The Help Center answers most of this faster than we can"
-        description="Hundreds of articles covering setup, privacy, payments and account recovery — searchable, and updated with every release."
+        eyebrow={t('Still stuck')}
+        title={t('The Help Center answers most of this faster than we can')}
+        description={t('Hundreds of articles covering setup, privacy, payments and account recovery searchable, and updated with every release.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={() => { navigate('/help'); window.scrollTo(0, 0) }}>
-              Open the Help Center
+              {t('Open the Help Center')}
             </Button>
             <Button size="lg" variant="onDark" onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}>
-              Write to us anyway
+              {t('Write to us anyway')}
             </Button>
           </>
         }
-        points={['Written support only', 'Human triage', 'Published response times', 'No phone queue']}
+        points={[t('Written support only'), t('Human triage'), t('Published response times'), t('No phone queue')]}
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More about KT Messenger" />
+        <SectionHead eyebrow={t('Keep exploring')} title={t('More about KT Messenger')} />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 
@@ -919,10 +920,10 @@ export function ContactPage() {
       <Modal
         open={Boolean(sent)}
         onClose={() => setSent(null)}
-        eyebrow="Message sent"
-        title="We have got it"
+        eyebrow={t('Message sent')}
+        title={t('We have got it')}
         size="sm"
-        footer={<Button className="w-full justify-center" onClick={() => setSent(null)}>Done</Button>}
+        footer={<Button className="w-full justify-center" onClick={() => setSent(null)}>{t('Done')}</Button>}
       >
         {sent ? (
           <div className="text-center">
@@ -930,16 +931,16 @@ export function ContactPage() {
               <FiCheckCircle />
             </span>
 
-            <h3 className="mt-5 text-lg font-extrabold text-ink">Routed to {sent.topic}</h3>
+            <h3 className="mt-5 text-lg font-extrabold text-ink">{t('Routed to')} {t(sent.topic)}</h3>
             <p className="mt-2 text-sm leading-relaxed text-body">
-              A confirmation is on its way to <strong className="text-ink">{sent.email}</strong>. Expect a human reply{' '}
-              <strong className="text-ink">{sent.sla.toLowerCase()}</strong>.
+              {t('A confirmation is on its way to')} <strong className="text-ink">{sent.email}</strong>. {t('Expect a human reply')}{' '}
+              <strong className="text-ink">{t(sent.sla).toLowerCase()}</strong>.
             </p>
 
             <p className="mt-5 rounded-2xl border border-line bg-cream px-4 py-3 font-mono text-xs font-black text-ink dark:bg-cream-2">
               {sent.ref}
             </p>
-            <p className="mt-3 text-[11px] font-semibold text-muted">Quote this reference if you follow up.</p>
+            <p className="mt-3 text-[11px] font-semibold text-muted">{t('Quote this reference if you follow up.')}</p>
           </div>
         ) : null}
       </Modal>
@@ -948,12 +949,12 @@ export function ContactPage() {
       <Modal
         open={Boolean(quickSent)}
         onClose={() => setQuickSent(null)}
-        eyebrow={quickSent?.kind === 'feedback' ? 'Feedback received' : 'Message sent'}
-        title={quickSent?.kind === 'feedback' ? 'Thanks for telling us' : 'We have got it'}
+        eyebrow={quickSent?.kind === 'feedback' ? t('Feedback received') : t('Message sent')}
+        title={quickSent?.kind === 'feedback' ? t('Thanks for telling us') : t('We have got it')}
         size="sm"
         footer={
           <Button className="w-full justify-center" onClick={() => setQuickSent(null)}>
-            Done
+            {t('Done')}
           </Button>
         }
       >
@@ -974,19 +975,17 @@ export function ContactPage() {
                   ))}
                 </div>
 
-                <h3 className="mt-4 text-lg font-extrabold text-ink">{quickSent.category}</h3>
+                <h3 className="mt-4 text-lg font-extrabold text-ink">{t(quickSent.category)}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-body">
-                  Your {quickSent.rating}-star note about{' '}
-                  <strong className="text-ink">{quickSent.about}</strong> is with the product team. We read every item,
-                  even when we cannot reply to each one.
+                  {t('Your')} {quickSent.rating}{t('-star note about')}{' '}
+                  <strong className="text-ink">{quickSent.about}</strong> {t('is with the product team. We read every item, even when we cannot reply to each one.')}
                 </p>
               </>
             ) : (
               <>
                 <h3 className="mt-5 text-lg font-extrabold text-ink">{quickSent.subject}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-body">
-                  A confirmation is on its way to <strong className="text-ink">{quickSent.email}</strong>. Expect a
-                  human reply <strong className="text-ink">within a day</strong>.
+                  {t('A confirmation is on its way to')} <strong className="text-ink">{quickSent.email}</strong>. {t('Expect a human reply')} <strong className="text-ink">{t('within a day')}</strong>.
                 </p>
               </>
             )}
@@ -994,7 +993,7 @@ export function ContactPage() {
             <p className="mt-5 rounded-2xl border border-line bg-cream px-4 py-3 font-mono text-xs font-black text-ink dark:bg-cream-2">
               {quickSent.ref}
             </p>
-            <p className="mt-3 text-[11px] font-semibold text-muted">Quote this reference if you follow up.</p>
+            <p className="mt-3 text-[11px] font-semibold text-muted">{t('Quote this reference if you follow up.')}</p>
           </div>
         ) : null}
       </Modal>

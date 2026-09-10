@@ -48,6 +48,8 @@ import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
 import { useModal } from '../../context/ModalContext'
+import { useLanguage } from '../../context/LanguageContext'
+import { api } from '../../services/apiClient'
 import {
   breakingTicker,
   digestSchedule,
@@ -101,7 +103,7 @@ const RELATED = [
   { to: '/markets', label: 'Markets', desc: 'Live prices, watchlists and FX conversion.', icon: <FiTrendingUp /> },
   { to: '/wallet', label: 'Wallet', desc: 'Send money in chat with zero transfer fees.', icon: <FiZap /> },
   { to: '/marketplace', label: 'Marketplace', desc: 'Shop verified stores without leaving a thread.', icon: <FiStar /> },
-  { to: '/notes', label: 'Notes', desc: 'Encrypted notes, checklists and self-chat.', icon: <FiBookmark /> },
+  { to: '/notes', label: 'Notes', desc: 'Encrypted notes, checklists and self chat.', icon: <FiBookmark /> },
 ]
 
 const DIGEST_SECONDS = 200
@@ -129,6 +131,7 @@ const formatClock = (seconds) => {
 
 export function NewsPage() {
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
 
   const [activeCategory, setActiveCategory] = useState('All News')
   const [searchQuery, setSearchQuery] = useState('')
@@ -136,7 +139,7 @@ export function NewsPage() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const [readingArticle, setReadingArticle] = useState(null)
   const [bookmarkedIds, setBookmarkedIds] = useState([1, 29])
-  const [followed, setFollowed] = useState(['Artificial Intelligence', 'Indian Markets', 'Climate', 'Space'])
+  const [followed, setFollowed] = useState(['Artificial Intelligence', 'Emerging Markets', 'Climate', 'Space'])
   const [playing, setPlaying] = useState(false)
   const [elapsed, setElapsed] = useState(0)
   const [email, setEmail] = useState('')
@@ -199,20 +202,27 @@ export function NewsPage() {
   const toggleBookmark = (id) => {
     const saved = bookmarkedIds.includes(id)
     setBookmarkedIds(saved ? bookmarkedIds.filter((item) => item !== id) : [...bookmarkedIds, id])
-    setToast(saved ? 'Removed from your reading list.' : 'Saved to your encrypted reading list.')
+    setToast(saved ? t('Removed from your reading list.') : t('Saved to your encrypted reading list.'))
   }
 
   const toggleTopic = (topic) =>
     setFollowed((current) => (current.includes(topic) ? current.filter((item) => item !== topic) : [...current, topic]))
 
-  const handleSubscribe = (event) => {
+  const handleSubscribe = async (event) => {
     event.preventDefault()
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) {
-      setToast('Enter a valid email address to subscribe.')
+    const address = email.trim()
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(address)) {
+      setToast(t('Enter a valid email address to subscribe.'))
       return
     }
-    setToast(`Daily brief confirmed for ${email.trim()}.`)
-    setEmail('')
+    // Persist the subscriber so it actually appears in the admin list.
+    try {
+      await api.subscribe({ email: address, sourcePage: '/news' })
+      setToast(`Daily brief confirmed for ${address}.`)
+      setEmail('')
+    } catch {
+      setToast(t('Could not subscribe right now. Please try again.'))
+    }
   }
 
   const openArticle = (article) => {
@@ -234,36 +244,36 @@ export function NewsPage() {
       <PageHero
         badge={
           <>
-            <FiRadio className="animate-pulse text-rose-400" /> Live newsroom · 40+ stories today
+            <FiRadio className="animate-pulse text-rose-400" /> {t('Live newsroom · 40+ stories today')}
           </>
         }
         title="KT"
-        highlight="News & Insights"
-        description="Real-time global headlines, market moves and science breakthroughs — ranked on your device, delivered inside the chats you already use."
+        highlight={t('News & Insights')}
+        description={t('Real time global headlines, market moves and science breakthroughs ranked on your device, delivered inside the chats you already use.')}
         actions={
           <>
             <Button size="lg" variant="primary" onClick={() => document.getElementById('feed')?.scrollIntoView({ behavior: 'smooth' })}>
-              Browse the feed <FiChevronRight />
+              {t('Browse the feed')} <FiChevronRight />
             </Button>
             <Button size="lg" variant="secondary" onClick={openDownloadModal}>
-              Get the app <FiZap />
+              {t('Get the app')} <FiZap />
             </Button>
           </>
         }
         chips={[
-          { icon: <FiShield />, label: 'Signed publisher feeds' },
-          { icon: <FiEye />, label: 'No reading trackers' },
-          { icon: <FiHeadphones />, label: '3-minute audio brief' },
+          { icon: <FiShield />, label: t('Signed publisher feeds') },
+          { icon: <FiEye />, label: t('No reading trackers') },
+          { icon: <FiHeadphones />, label: t('3-minute audio brief') },
         ]}
         aside={
           <div className="rounded-[28px] border border-line bg-surface dark:bg-white/[0.04] p-5 shadow-card dark:shadow-2xl backdrop-blur-xl sm:p-6 text-ink dark:text-white">
             <div className="flex items-center justify-between border-b border-line dark:border-white/10 pb-4">
               <div className="flex items-center gap-2.5">
                 <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-strong text-xs font-black text-white">KT</span>
-                <span className="text-sm font-extrabold text-ink dark:text-white">Newsroom stream</span>
+                <span className="text-sm font-extrabold text-ink dark:text-white">{t('Newsroom stream')}</span>
               </div>
               <span className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-300">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500 dark:bg-emerald-400" /> Live
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500 dark:bg-emerald-400" /> {t('Live')}
               </span>
             </div>
 
@@ -289,9 +299,9 @@ export function NewsPage() {
 
             <div className="mt-4 grid grid-cols-3 gap-2 border-t border-line dark:border-white/10 pt-4 text-center">
               {[
-                { value: '450+', label: 'Sources' },
-                { value: '4×', label: 'Daily briefs' },
-                { value: '50+', label: 'Languages' },
+                { value: '450+', label: t('Sources') },
+                { value: '4×', label: t('Daily briefs') },
+                { value: '50+', label: t('Languages') },
               ].map((item) => (
                 <div key={item.label}>
                   <div className="text-base font-black text-ink dark:text-white">{item.value}</div>
@@ -311,7 +321,7 @@ export function NewsPage() {
               setSearchQuery(event.target.value)
               resetPaging()
             }}
-            placeholder="Search headlines, sources or tags…"
+            placeholder={t('Search headlines, sources or tags…')}
             className="w-full bg-transparent text-sm font-semibold text-ink dark:text-white outline-none placeholder:text-muted dark:placeholder:text-slate-400"
           />
           {searchQuery ? (
@@ -323,7 +333,7 @@ export function NewsPage() {
               }}
               className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-muted dark:text-slate-300 hover:bg-cream dark:hover:bg-white/10 hover:text-ink dark:hover:text-white"
             >
-              Clear
+              {t('Clear')}
             </button>
           ) : null}
         </div>
@@ -343,9 +353,9 @@ export function NewsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="spotlight" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Top story"
-          title="The one everybody is reading right now"
-          description="Our most-opened story of the last hour, with the desk’s other picks alongside it."
+          eyebrow={t('Top story')}
+          title={t('The one everybody is reading right now')}
+          description={t("Our most opened story of the last hour, with the desk’s other picks alongside it.")}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
@@ -359,7 +369,7 @@ export function NewsPage() {
                     className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-80"
                   />
                   <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-rose-600 px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white shadow-lg">
-                    <FiTrendingUp /> Trending #1
+                    <FiTrendingUp /> {t('Trending #1')}
                   </span>
                 </div>
               </button>
@@ -371,7 +381,7 @@ export function NewsPage() {
                   <span className="text-muted">{spotlight.source}</span>
                   <span className="text-muted">·</span>
                   <span className="flex items-center gap-1 text-muted">
-                    <FiClock className="text-[13px]" /> {spotlight.readMins} min read
+                    <FiClock className="text-[13px]" /> {spotlight.readMins} {t('min read')}
                   </span>
                 </div>
 
@@ -380,7 +390,7 @@ export function NewsPage() {
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
                   <Button onClick={() => openArticle(spotlight)}>
-                    Read full story <FiChevronRight />
+                    {t('Read full story')} <FiChevronRight />
                   </Button>
                   <button
                     type="button"
@@ -392,10 +402,10 @@ export function NewsPage() {
                     }`}
                   >
                     <FiBookmark className={bookmarkedIds.includes(spotlight.id) ? 'fill-current' : ''} />
-                    {bookmarkedIds.includes(spotlight.id) ? 'Saved' : 'Save'}
+                    {bookmarkedIds.includes(spotlight.id) ? t('Saved') : t('Save')}
                   </button>
                   <span className="flex items-center gap-1.5 text-xs font-bold text-muted">
-                    <FiEye /> {spotlight.reads} reads
+                    <FiEye /> {spotlight.reads} {t('reads')}
                   </span>
                 </div>
               </div>
@@ -403,7 +413,7 @@ export function NewsPage() {
           </Reveal>
 
           <div className="space-y-4">
-            <h3 className="text-xs font-black uppercase tracking-[0.16em] text-muted">Editor’s picks</h3>
+            <h3 className="text-xs font-black uppercase tracking-[0.16em] text-muted">{t("Editor’s picks")}</h3>
             {editorPicks.map((item, index) => (
               <Reveal key={item.id} from="up" delay={index * 0.06}>
                 <button
@@ -418,7 +428,7 @@ export function NewsPage() {
                       {item.title}
                     </span>
                     <span className="mt-1.5 flex items-center gap-2 text-[11px] font-semibold text-muted">
-                      <FiClock /> {item.readMins} min · {item.reads} reads
+                      <FiClock /> {item.readMins} {t('min')} · {item.reads} {t('reads')}
                     </span>
                   </span>
                 </button>
@@ -433,9 +443,9 @@ export function NewsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="trending" className="scroll-mt-36 overflow-x-clip border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Trending now"
-          title="Most-read across every desk"
-          description="Ranked by opens in the last six hours. Swipe to see the full list."
+          eyebrow={t('Trending now')}
+          title={t('Most read across every desk')}
+          description={t('Ranked by opens in the last six hours. Swipe to see the full list.')}
           align="left"
         />
 
@@ -491,7 +501,7 @@ export function NewsPage() {
             setSearchQuery(value)
             resetPaging()
           }}
-          placeholder="Search this feed…"
+          placeholder={t('Search this feed…')}
           right={
             <div className="flex shrink-0 items-center gap-1 rounded-xl border border-line bg-cream p-1 dark:bg-cream-2">
               {['Latest', 'Most read', 'Quick reads'].map((option) => (
@@ -506,7 +516,7 @@ export function NewsPage() {
                     sortBy === option ? 'bg-brand-strong text-white' : 'text-body hover:text-ink'
                   }`}
                 >
-                  {option}
+                  {t(option)}
                 </button>
               ))}
             </div>
@@ -515,17 +525,17 @@ export function NewsPage() {
 
         <Section className="bg-surface">
           <SectionHead
-            eyebrow={`${filtered.length} stories`}
-            title={activeCategory === 'All News' ? 'The full feed' : activeCategory}
-            description="Tap any card to open the reader — full text, tags and related coverage, with no third-party trackers."
+            eyebrow={`${filtered.length} ${t('stories')}`}
+            title={activeCategory === 'All News' ? t('The full feed') : activeCategory}
+            description={t('Tap any card to open the reader full text, tags and related coverage, with no third party trackers.')}
           />
 
           {visible.length === 0 ? (
             <div className="mt-12">
               <EmptyState
                 icon={<FiSearch />}
-                title="No stories match those filters"
-                description="Try a broader category, or clear the search term to see all 40 stories."
+                title={t('No stories match those filters')}
+                description={t('Try a broader category, or clear the search term to see all 40 stories.')}
                 action={
                   <Button
                     variant="secondary"
@@ -535,7 +545,7 @@ export function NewsPage() {
                       resetPaging()
                     }}
                   >
-                    Reset filters
+                    {t('Reset filters')}
                   </Button>
                 }
               />
@@ -556,11 +566,11 @@ export function NewsPage() {
                         />
                         {article.hot ? (
                           <span className="absolute left-3 top-3 rounded-full bg-rose-600 px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white shadow-lg">
-                            🔥 Trending
+                            🔥 {t('Trending')}
                           </span>
                         ) : null}
                         <span className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-slate-950/70 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur">
-                          <FiClock /> {article.readMins} min
+                          <FiClock /> {article.readMins} {t('min')}
                         </span>
                       </button>
 
@@ -601,14 +611,14 @@ export function NewsPage() {
                             onClick={() => openArticle(article)}
                             className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-ink transition-colors hover:text-brand-strong"
                           >
-                            Read story <FiChevronRight />
+                            {t('Read story')} <FiChevronRight />
                           </button>
 
                           <div className="flex items-center gap-1">
                             <button
                               type="button"
                               onClick={() => toggleBookmark(article.id)}
-                              aria-label={isBookmarked ? 'Remove bookmark' : 'Save article'}
+                              aria-label={isBookmarked ? t('Remove bookmark') : t('Save article')}
                               className={`grid h-9 w-9 place-items-center rounded-full transition-colors hover:bg-surface-2 ${
                                 isBookmarked ? 'text-brand-strong' : 'text-muted'
                               }`}
@@ -618,7 +628,7 @@ export function NewsPage() {
                             <button
                               type="button"
                               onClick={() => setToast(`Preview of “${article.title}” ready to share.`)}
-                              aria-label="Share article"
+                              aria-label={t('Share article')}
                               className="grid h-9 w-9 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-ink"
                             >
                               <FiShare2 />
@@ -636,10 +646,10 @@ export function NewsPage() {
           {visibleCount < filtered.length ? (
             <div className="mt-12 flex flex-col items-center gap-3">
               <Button variant="secondary" size="lg" onClick={() => setVisibleCount((current) => current + PAGE_SIZE)}>
-                Load {Math.min(PAGE_SIZE, filtered.length - visibleCount)} more stories
+                {t('Load')} {Math.min(PAGE_SIZE, filtered.length - visibleCount)} {t('more stories')}
               </Button>
               <span className="text-xs font-semibold text-muted">
-                Showing {visible.length} of {filtered.length}
+                {t('Showing')} {visible.length} {t('of')} {filtered.length}
               </span>
             </div>
           ) : null}
@@ -651,9 +661,9 @@ export function NewsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="digest" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="AI audio brief"
-          title="Catch up in three minutes flat"
-          description="KT AI Co-Pilot writes a script from the day’s verified stories and reads it out. Every segment links back to its source."
+          eyebrow={t('AI audio brief')}
+          title={t('Catch up in three minutes flat')}
+          description={t("KT AI Co Pilot writes a script from the day’s verified stories and reads it out. Every segment links back to its source.")}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1.15fr_1fr]">
@@ -665,10 +675,10 @@ export function NewsPage() {
                 </span>
                 <div className="min-w-0">
                   <span className="rounded-md bg-brand-soft px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-brand-ink">
-                    Today’s edition
+                    {t("Today’s edition")}
                   </span>
-                  <h3 className="mt-1.5 text-lg font-extrabold text-ink">Executive briefing · 7 August</h3>
-                  <p className="mt-1 text-xs text-body">Synthesised from 450+ verified sources in 12 languages.</p>
+                  <h3 className="mt-1.5 text-lg font-extrabold text-ink">{t('Executive briefing')} · 7 August</h3>
+                  <p className="mt-1 text-xs text-body">{t('Synthesised from 450+ verified sources in 12 languages.')}</p>
                 </div>
               </div>
 
@@ -679,7 +689,7 @@ export function NewsPage() {
                   aria-valuenow={Math.round((elapsed / DIGEST_SECONDS) * 100)}
                   aria-valuemin={0}
                   aria-valuemax={100}
-                  aria-label="Audio brief progress"
+                  aria-label={t('Audio brief progress')}
                 >
                   <div
                     className="h-full rounded-full bg-brand-strong transition-[width] duration-300"
@@ -703,7 +713,7 @@ export function NewsPage() {
                   className="inline-flex h-12 items-center gap-2 rounded-full bg-brand-strong px-6 text-sm font-bold text-white shadow-brand transition-all hover:-translate-y-0.5 hover:bg-brand-strong-hover"
                 >
                   {playing ? <FiPause /> : <FiPlay />}
-                  {playing ? 'Pause brief' : elapsed > 0 ? 'Resume brief' : 'Play brief'}
+                  {playing ? t('Pause brief') : elapsed > 0 ? t('Resume brief') : t('Play brief')}
                 </button>
 
                 <button
@@ -714,12 +724,12 @@ export function NewsPage() {
                   }}
                   className="inline-flex h-12 items-center gap-2 rounded-full border border-line px-5 text-sm font-bold text-body transition-colors hover:bg-surface-2 hover:text-ink"
                 >
-                  Restart
+                  {t('Restart')}
                 </button>
 
                 <span className="flex items-center gap-1.5 text-xs font-bold text-muted">
                   <FiActivity className={playing ? 'animate-pulse text-emerald-500' : ''} />
-                  {playing ? 'Now playing' : 'Paused'}
+                  {playing ? t('Now playing') : t('Paused')}
                 </span>
               </div>
 
@@ -770,9 +780,9 @@ export function NewsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="topics" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Personalise"
-          title={`You follow ${followed.length} ${followed.length === 1 ? 'topic' : 'topics'}`}
-          description="Tap to follow or unfollow. Ranking runs on your device, so this list never leaves your phone."
+          eyebrow={t('Personalise')}
+          title={`${t('You follow')} ${followed.length} ${followed.length === 1 ? t('topic') : t('topics')}`}
+          description={t('Tap to follow or unfollow. Ranking runs on your device, so this list never leaves your phone.')}
         />
 
         <Reveal from="up" className="mt-10">
@@ -801,7 +811,7 @@ export function NewsPage() {
           <div className="mx-auto mt-8 max-w-2xl rounded-[24px] border border-line bg-cream p-6 text-center dark:bg-cream-2">
             <p className="text-sm font-semibold text-body">
               {followed.length === 0
-                ? 'No topics followed — your feed will show a broad general mix until you pick a few.'
+                ? t('No topics followed your feed will show a broad general mix until you pick a few.')
                 : `Your feed is currently weighted toward ${followed.slice(0, 3).join(', ')}${
                     followed.length > 3 ? ` and ${followed.length - 3} more` : ''
                   }.`}
@@ -812,7 +822,7 @@ export function NewsPage() {
                 onClick={() => setFollowed([])}
                 className="mt-4 text-xs font-bold text-brand-ink underline-offset-4 hover:underline"
               >
-                Clear all topics
+                {t('Clear all topics')}
               </button>
             ) : null}
           </div>
@@ -824,9 +834,9 @@ export function NewsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="sources" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Verified publishers"
-          title="Every feed is signed at the source"
-          description="If a signature fails validation, the story is dropped before it reaches your device — no exceptions for a scoop."
+          eyebrow={t('Verified publishers')}
+          title={t('Every feed is signed at the source')}
+          description={t('If a signature fails validation, the story is dropped before it reaches your device no exceptions for a scoop.')}
         />
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -842,7 +852,7 @@ export function NewsPage() {
                     {source.verified ? <FiCheckCircle className="shrink-0 text-sm text-brand-strong" /> : null}
                   </div>
                   <p className="truncate text-[11px] font-semibold text-muted">{source.focus}</p>
-                  <p className="mt-0.5 text-[11px] font-bold text-brand-ink">{source.articles} stories this month</p>
+                  <p className="mt-0.5 text-[11px] font-bold text-brand-ink">{source.articles} {t('stories this month')}</p>
                 </div>
               </div>
             </Reveal>
@@ -855,20 +865,20 @@ export function NewsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="saved" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Reading list"
-          title={`${bookmarked.length} ${bookmarked.length === 1 ? 'story' : 'stories'} saved for later`}
-          description="Bookmarks sync encrypted across your devices and stay readable offline, images included."
+          eyebrow={t('Reading list')}
+          title={`${bookmarked.length} ${bookmarked.length === 1 ? t('story') : t('stories')} ${t('saved for later')}`}
+          description={t('Bookmarks sync encrypted across your devices and stay readable offline, images included.')}
         />
 
         <div className="mt-12">
           {bookmarked.length === 0 ? (
             <EmptyState
               icon={<FiBookmark />}
-              title="Your reading list is empty"
-              description="Tap the bookmark icon on any story and it lands here, cached for offline reading."
+              title={t('Your reading list is empty')}
+              description={t('Tap the bookmark icon on any story and it lands here, cached for offline reading.')}
               action={
                 <Button variant="secondary" onClick={() => document.getElementById('feed')?.scrollIntoView({ behavior: 'smooth' })}>
-                  Browse the feed
+                  {t('Browse the feed')}
                 </Button>
               }
             />
@@ -882,7 +892,7 @@ export function NewsPage() {
                       <button
                         type="button"
                         onClick={() => toggleBookmark(item.id)}
-                        aria-label="Remove from reading list"
+                        aria-label={t('Remove from reading list')}
                         className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-brand-strong transition-colors hover:bg-surface-2"
                       >
                         <FiBookmark className="fill-current" />
@@ -894,14 +904,14 @@ export function NewsPage() {
 
                     <div className="mt-4 flex items-center justify-between border-t border-line pt-3">
                       <span className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
-                        <FiClock /> {item.readMins} min · offline ready
+                        <FiClock /> {item.readMins} {t('min · offline ready')}
                       </span>
                       <button
                         type="button"
                         onClick={() => openArticle(item)}
                         className="text-xs font-bold text-brand-ink hover:text-brand-strong"
                       >
-                        Open
+                        {t('Open')}
                       </button>
                     </div>
                   </div>
@@ -917,9 +927,9 @@ export function NewsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="factcheck" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Trust layer"
-          title="Claims get a verdict, not a shrug"
-          description="Widely-forwarded claims are routed to partner fact-checking organisations. The verdict travels with the claim wherever it goes."
+          eyebrow={t('Trust layer')}
+          title={t('Claims get a verdict, not a shrug')}
+          description={t('Widely forwarded claims are routed to partner fact checking organisations. The verdict travels with the claim wherever it goes.')}
         />
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2">
@@ -938,7 +948,7 @@ export function NewsPage() {
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-body">{item.detail}</p>
 
                 <span className="mt-5 flex items-center gap-1.5 border-t border-line pt-4 text-[11px] font-bold text-muted">
-                  <FiShield /> Reviewed by an independent partner desk
+                  <FiShield /> {t('Reviewed by an independent partner desk')}
                 </span>
               </div>
             </Reveal>
@@ -951,9 +961,9 @@ export function NewsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="features" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="What you get"
-          title="A newsroom that respects your attention"
-          description="Nine things KT News does differently from a conventional feed."
+          eyebrow={t('What you get')}
+          title={t('A newsroom that respects your attention')}
+          description={t('Nine things KT News does differently from a conventional feed.')}
         />
 
         <FeatureGrid
@@ -962,7 +972,7 @@ export function NewsPage() {
         />
 
         <div className="mt-20">
-          <SectionHead eyebrow="How it works" title="From topic picks to a personal front page in four steps" />
+          <SectionHead eyebrow={t('How it works')} title={t('From topic picks to a personal front page in four steps')} />
           <Steps className="mt-12" items={newsSteps.map((item, index) => ({ ...item, icon: STEP_ICONS[index] }))} />
         </div>
       </Section>
@@ -971,7 +981,7 @@ export function NewsPage() {
       {/* TESTIMONIALS                                                      */}
       {/* ---------------------------------------------------------------- */}
       <Section className="border-y border-line bg-cream dark:bg-cream-2">
-        <SectionHead eyebrow="Readers" title="What people say after a month" description="Verified reviews from the app stores and in-app surveys." />
+        <SectionHead eyebrow={t('Readers')} title={t('What people say after a month')} description={t('Verified reviews from the app stores and in app surveys.')} />
         <Testimonials className="mt-12" items={newsTestimonials} />
       </Section>
 
@@ -984,9 +994,9 @@ export function NewsPage() {
             <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-brand-strong text-2xl text-white shadow-brand">
               <FiMail />
             </span>
-            <h2 className="mt-5 text-2xl font-extrabold text-ink sm:text-3xl">Get the brief in your inbox too</h2>
+            <h2 className="mt-5 text-2xl font-extrabold text-ink sm:text-3xl">{t('Get the brief in your inbox too')}</h2>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-body">
-              One email each morning with the five stories that matter. No tracking pixels, unsubscribe in one tap.
+              {t('One email each morning with the five stories that matter. No tracking pixels, unsubscribe in one tap.')}
             </p>
 
             <form onSubmit={handleSubscribe} className="mx-auto mt-7 flex max-w-md flex-col gap-3 sm:flex-row">
@@ -995,15 +1005,15 @@ export function NewsPage() {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
-                aria-label="Email address"
+                aria-label={t('Email address')}
                 className="h-12 w-full rounded-full border border-line bg-surface px-5 text-sm font-semibold text-ink outline-none transition-colors focus:border-brand/60 placeholder:font-medium placeholder:text-muted"
               />
               <Button type="submit" className="shrink-0">
-                Subscribe <FiChevronRight />
+                {t('Subscribe')} <FiChevronRight />
               </Button>
             </form>
 
-            <p className="mt-4 text-[11px] font-semibold text-muted">Joined by 2.4 million readers across 120 countries.</p>
+            <p className="mt-4 text-[11px] font-semibold text-muted">{t('Joined by 2.4 million readers across 120 countries.')}</p>
           </Reveal>
         </Container>
       </Section>
@@ -1013,9 +1023,9 @@ export function NewsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="faq" container={false} className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <Container maxW="max-w-3xl">
-          <SectionHead eyebrow="FAQ" title="Questions readers actually ask" description="Ten answers about sourcing, privacy and how the feed is put together." />
+          <SectionHead eyebrow={t('FAQ')} title={t('Questions readers actually ask')} description={t('Ten answers about sourcing, privacy and how the feed is put together.')} />
           <div className="mt-12">
-            <FaqAccordion items={newsFaqs} placeholder="Search the FAQ…" />
+            <FaqAccordion items={newsFaqs} placeholder={t('Search the FAQ…')} />
           </div>
         </Container>
       </Section>
@@ -1024,24 +1034,24 @@ export function NewsPage() {
       {/* CTA + RELATED                                                     */}
       {/* ---------------------------------------------------------------- */}
       <CtaBand
-        eyebrow="Start reading"
-        title="Your front page, rebuilt around what you actually care about"
-        description="Follow a few topics and KT News does the rest — ranked on your device, delivered where you already chat."
+        eyebrow={t('Start reading')}
+        title={t('Your front page, rebuilt around what you actually care about')}
+        description={t('Follow a few topics and KT News does the rest ranked on your device, delivered where you already chat.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={openDownloadModal}>
-              Download KT Messenger
+              {t('Download KT Messenger')}
             </Button>
             <Button size="lg" variant="onDark" onClick={() => document.getElementById('feed')?.scrollIntoView({ behavior: 'smooth' })}>
-              Explore the feed
+              {t('Explore the feed')}
             </Button>
           </>
         }
-        points={['No reading trackers', 'Signed publisher feeds', 'Offline reading vault', 'Free forever']}
+        points={[t('No reading trackers'), t('Signed publisher feeds'), t('Offline reading vault'), t('Free forever')]}
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More of KT Messenger" />
+        <SectionHead eyebrow={t('Keep exploring')} title={t('More of KT Messenger')} />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 
@@ -1067,11 +1077,11 @@ export function NewsPage() {
                 }`}
               >
                 <FiBookmark className={bookmarkedIds.includes(readingArticle.id) ? 'fill-current' : ''} />
-                {bookmarkedIds.includes(readingArticle.id) ? 'Saved to list' : 'Save for later'}
+                {bookmarkedIds.includes(readingArticle.id) ? t('Saved to list') : t('Save for later')}
               </button>
 
               <Button onClick={() => setToast(`“${readingArticle.title}” shared to your chat.`)}>
-                Share to chat <FiShare2 />
+                {t('Share to chat')} <FiShare2 />
               </Button>
             </div>
           ) : null
@@ -1082,16 +1092,16 @@ export function NewsPage() {
             <h2 className="text-2xl font-extrabold leading-tight text-ink">{readingArticle.title}</h2>
 
             <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-line pb-4 text-[11px] font-bold text-muted">
-              <span>By {readingArticle.author}</span>
+              <span>{t('By')} {readingArticle.author}</span>
               <span>·</span>
               <span>{readingArticle.time}</span>
               <span>·</span>
               <span className="flex items-center gap-1">
-                <FiClock /> {readingArticle.readMins} min read
+                <FiClock /> {readingArticle.readMins} {t('min read')}
               </span>
               <span>·</span>
               <span className="flex items-center gap-1">
-                <FiEye /> {readingArticle.reads} reads
+                <FiEye /> {readingArticle.reads} {t('reads')}
               </span>
             </div>
 
@@ -1120,14 +1130,13 @@ export function NewsPage() {
             <div className="mt-6 flex items-start gap-3 rounded-2xl border border-line bg-cream p-4 dark:bg-cream-2">
               <FiShield className="mt-0.5 shrink-0 text-lg text-brand-strong" />
               <p className="text-xs leading-relaxed text-body">
-                Rendered in the sanitised reader: third-party trackers, auto-playing scripts and cross-site cookies are
-                stripped before this page reaches your device.
+                {t('Rendered in the sanitised reader: third party trackers, auto playing scripts and cross site cookies are stripped before this page reaches your device.')}
               </p>
             </div>
 
             {relatedToReading.length > 0 ? (
               <div className="mt-8 border-t border-line pt-6">
-                <h4 className="text-xs font-black uppercase tracking-[0.16em] text-muted">More in {readingArticle.category}</h4>
+                <h4 className="text-xs font-black uppercase tracking-[0.16em] text-muted">{t('More in')} {readingArticle.category}</h4>
                 <ul className="mt-4 space-y-2">
                   {relatedToReading.map((item) => (
                     <li key={item.id}>

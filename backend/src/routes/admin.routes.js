@@ -14,6 +14,7 @@ import * as blog from '../controllers/admin/blog.controller.js'
 import * as help from '../controllers/admin/help.controller.js'
 import * as media from '../controllers/admin/media.controller.js'
 import { overview as analytics } from '../controllers/admin/analytics.controller.js'
+import { search, notifications } from '../controllers/admin/search.controller.js'
 import * as admins from '../controllers/admin/adminUser.controller.js'
 import * as contact from '../controllers/admin/contact.controller.js'
 import * as roles from '../controllers/admin/role.controller.js'
@@ -63,6 +64,8 @@ function mountCrud(base, crud, { resource, createSchema, updateSchema, canPublis
 
 /* ── Blog (custom controller: tags, publish) ──────────── */
 r.get('/blogs', P('blog:read'), blog.list)
+// Must stay above '/blogs/:id' — otherwise ':id' captures "slug-check".
+r.get('/blogs/slug-check', P('blog:read'), blog.slugCheck)
 r.get('/blogs/:id', P('blog:read'), validate(idParam, 'params'), blog.getOne)
 r.post('/blogs', P('blog:write'), validate(blogCreateSchema), blog.create)
 r.put('/blogs/:id', P('blog:write'), validate(idParam, 'params'), validate(blogUpdateSchema), blog.update)
@@ -140,6 +143,12 @@ r.delete('/feedback/:id', P('feedback:delete'), validate(idParam, 'params'), fee
 
 /* ── Analytics ────────────────────────────────────────── */
 r.get('/analytics', P('analytics:read'), analytics)
+
+/* ── Global search + notification feed ────────────────── */
+// No route-level permission: both controllers filter each resource by the
+// caller's own permissions, so a limited admin gets fewer groups, not a 403.
+r.get('/search', search)
+r.get('/notifications', notifications)
 
 /* ── Locales (natural key = code) ─────────────────────── */
 r.get('/locales', P('locale:read'), asyncHandler(async (_req, res) => ok(res, await prisma.locale.findMany({ orderBy: { code: 'asc' } }))))

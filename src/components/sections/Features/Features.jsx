@@ -5,6 +5,7 @@ import { SectionHeading } from '../../common/SectionHeading/SectionHeading'
 import { Card } from '../../common/Card/Card'
 import { IconTile } from '../../common/IconTile/IconTile'
 import { Reveal } from '../../common/Reveal/Reveal'
+import { useLanguage } from '../../../context/LanguageContext'
 
 const features = [
   {
@@ -21,7 +22,7 @@ const features = [
   },
   {
     icon: <FiLock />,
-    title: 'End-to-end encryption',
+    title: 'End to end encryption',
     text: 'Privacy that is on by default, for every chat and every call you make.',
     to: '/security',
   },
@@ -46,14 +47,15 @@ const features = [
 ]
 
 export function Features() {
+  const { t } = useLanguage()
   return (
     <Section id="features">
       <SectionHeading
         align="center"
-        eyebrow="Everything you need"
+        eyebrow={t('Everything you need')}
         eyebrowIcon={<FiStar />}
-        title="One app for every kind of conversation."
-        description="Thoughtfully designed, endlessly reliable, and private from the very first message."
+        title={t('One app for every kind of conversation.')}
+        description={t('Thoughtfully designed, endlessly reliable, and private from the very first message.')}
         className="mx-auto max-w-2xl"
       />
 
@@ -66,8 +68,8 @@ export function Features() {
             >
               <Card hover className="h-full cursor-pointer">
                 <IconTile>{feature.icon}</IconTile>
-                <h3 className="mt-5 text-lg font-semibold text-ink">{feature.title}</h3>
-                <p className="mt-2 text-[15px] leading-7 text-body">{feature.text}</p>
+                <h3 className="mt-5 text-lg font-semibold text-ink">{t(feature.title)}</h3>
+                <p className="mt-2 text-[15px] leading-7 text-body">{t(feature.text)}</p>
               </Card>
             </Link>
           </Reveal>

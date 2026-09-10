@@ -16,6 +16,9 @@ export const SUPPORTED_LANGS = ["en","es","pt","fr","de","it","nl","pl","ru","uk
 // Languages that read right-to-left.
 export const RTL_LANGS = ["ar","he","fa","ur"]
 
+// i18n:translations:start — the object below is managed by `npm run i18n:translate`.
+// It merges in machine translations for any missing strings; existing entries are
+// preserved, so hand-edits are safe. See scripts/i18n-translate.mjs.
 export const translations = {
   "hi": {
     "Features": "फ़ीचर्स",
@@ -26,6 +29,21 @@ export const translations = {
     "For Business": "व्यवसाय के लिए",
     "Log In": "लॉग इन",
     "Download": "डाउनलोड",
+    "Stay close,": "करीब रहें,",
+    "stay private.": "निजी रहें।",
+    "Simple, secure messaging and calling for everyone free, encrypted, and in sync across all your devices.": "सभी के लिए सरल, सुरक्षित मैसेजिंग और कॉलिंग मुफ़्त, एन्क्रिप्टेड, और आपके सभी डिवाइस पर सिंक।",
+    "*Standard data rates may apply.": "*मानक डेटा दरें लागू हो सकती हैं।",
+    "Join": "जॉइन करें",
+    "Design Crew": "डिज़ाइन क्रू",
+    "& 4 others": "और 4 अन्य",
+    "Still on for tonight?": "आज रात के लिए तय है?",
+    "Ready when you are!": "जब आप तैयार हों!",
+    "Get KT Messenger. It's free.": "KT Messenger पाएं। यह मुफ़्त है।",
+    "Download KT Messenger on your phone and desktop, and bring every conversation into one calm, secure place.": "अपने फ़ोन और डेस्कटॉप पर KT Messenger डाउनलोड करें, और हर बातचीत को एक शांत, सुरक्षित जगह पर लाएं।",
+    "Open KT Web": "KT Web खोलें",
+    "No ads": "कोई विज्ञापन नहीं",
+    "No subscription": "कोई सब्सक्रिप्शन नहीं",
+    "Encrypted by default": "डिफ़ॉल्ट रूप से एन्क्रिप्टेड",
     "Calling": "कॉलिंग",
     "Messaging": "मैसेजिंग",
     "Groups": "ग्रुप्स",
@@ -1692,7 +1710,7 @@ export const translations = {
     "Brand Center": "වෙළඳ නාම මධ්‍යස්ථානය",
     "Contact Us": "අප හා සම්බන්ධ වන්න",
     "Community": "ප්‍රජාව",
-    "Simple, secure messaging and calling that keeps everyone you care about in the loop.": "සරල, ආරක්ෂිත පණිවිඩ සහ ඇමතුම් — ඔබ රැකබලා ගන්නා සෑම කෙනෙකුම එකට තබා ගනී.",
+    "Simple, secure messaging and calling that keeps everyone you care about in the loop.": "සරල, ආරක්ෂිත පණිවිඩ සහ ඇමතුම් ඔබ රැකබලා ගන්නා සෑම කෙනෙකුම එකට තබා ගනී.",
     "Terms & Privacy Policy": "කොන්දේසි සහ පෞද්ගලිකත්ව ප්‍රතිපත්තිය",
     "Sitemap": "අඩවි සිතියම",
     "All rights reserved.": "සියලුම හිමිකම් ඇවිරිණි."
@@ -2223,3 +2241,4 @@ export const translations = {
     "All rights reserved.": "መብቱ በህግ የተጠበቀ ነው።"
   }
 }
+// i18n:translations:end

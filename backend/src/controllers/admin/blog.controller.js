@@ -2,7 +2,7 @@ import { prisma } from '../../config/db.js'
 import { asyncHandler } from '../../utils/asyncHandler.js'
 import { ok, created, ApiError } from '../../utils/apiResponse.js'
 import { parsePagination, pageMeta } from '../../utils/pagination.js'
-import { uniqueSlug } from '../../utils/slug.js'
+import { uniqueSlug, resolveAdminSlug, slugify, isSlugAvailable } from '../../utils/slug.js'
 import { writeAudit } from '../../utils/audit.js'
 
 const include = { category: true, tags: true, createdBy: { select: { name: true } } }
@@ -43,7 +43,12 @@ export const create = asyncHandler(async (req, res) => {
       ...rest,
       title,
       status: status || 'DRAFT',
-      slug: await uniqueSlug('blogPost', slug || title),
+      // An admin-supplied slug is honoured exactly, or rejected as a duplicate.
+      // Only a blank slug falls back to auto-generating from the title, and
+      // that happens once, at creation.
+      slug: slug && slug.trim()
+        ? await resolveAdminSlug('blogPost', slug)
+        : await uniqueSlug('blogPost', title),
       publishedAt: derivePublishedAt(status || 'DRAFT', publishedAt),
       createdById: req.admin?.id || null,
       tags: tagIds.length ? { connect: tagIds.map((id) => ({ id })) } : undefined,
@@ -58,7 +63,12 @@ export const create = asyncHandler(async (req, res) => {
 export const update = asyncHandler(async (req, res) => {
   const { tagIds, slug, status, publishedAt, ...rest } = req.body
   const data = { ...rest }
-  if (slug) data.slug = await uniqueSlug('blogPost', slug, { ignoreId: req.params.id })
+  // Only touch the slug when one was actually supplied. A blank/omitted slug
+  // leaves the saved slug alone — renaming the title must never silently
+  // change a URL that is already published and shared.
+  if (slug && slug.trim()) {
+    data.slug = await resolveAdminSlug('blogPost', slug, { ignoreId: req.params.id })
+  }
   if (status) {
     data.status = status
     data.publishedAt = derivePublishedAt(status, publishedAt)
@@ -83,6 +93,33 @@ export const setStatus = asyncHandler(async (req, res) => {
   })
   await writeAudit({ req, action: `blog.${status.toLowerCase()}`, entity: 'BlogPost', entityId: post.id })
   return ok(res, post)
+})
+
+/**
+ * GET /api/admin/blogs/slug-check?slug=calling&id=<postId>
+ *
+ * Lets the editor tell an admin a slug is taken while they are still typing,
+ * instead of failing the save. `id` is the post being edited, so its own slug
+ * does not read as a conflict. Advisory only — create/update re-check on write.
+ */
+export const slugCheck = asyncHandler(async (req, res) => {
+  const requested = String(req.query.slug || '')
+  const normalized = slugify(requested)
+  if (!normalized) {
+    return ok(res, {
+      requested,
+      normalized: '',
+      available: false,
+      reason: 'Slug must contain at least one letter or number',
+    })
+  }
+  const available = await isSlugAvailable('blogPost', normalized, { ignoreId: req.query.id || undefined })
+  return ok(res, {
+    requested,
+    normalized,
+    available,
+    reason: available ? null : 'That slug is already in use',
+  })
 })
 
 // DELETE /api/admin/blogs/:id

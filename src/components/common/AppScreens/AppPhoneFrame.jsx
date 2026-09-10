@@ -1,4 +1,5 @@
 import { FiBattery, FiPause, FiPlay, FiRotateCcw, FiWifi } from 'react-icons/fi'
+import { useLanguage } from '../../../context/LanguageContext'
 
 /**
  * Edge-to-edge phone chassis for the KT app-screen animations.
@@ -25,6 +26,7 @@ export function AppPhoneFrame({
   children,
   className = '',
 }) {
+  const { t } = useLanguage()
   const onLight = statusTone === 'dark'
   const statusColor = onLight ? 'text-slate-900' : 'text-white'
 
@@ -41,24 +43,24 @@ export function AppPhoneFrame({
           <button
             type="button"
             onClick={onTogglePlay}
-            aria-label={isPlaying ? 'Pause animation' : 'Play animation'}
+            aria-label={isPlaying ? t('Pause animation') : t('Play animation')}
             className="flex items-center gap-1 rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-bold text-brand-ink shadow-sm transition-colors hover:bg-brand-strong hover:text-white"
           >
             {isPlaying ? (
               <>
-                <FiPause /> Pause
+                <FiPause /> {t('Pause')}
               </>
             ) : (
               <>
-                <FiPlay /> Play
+                <FiPlay /> {t('Play')}
               </>
             )}
           </button>
           <button
             type="button"
             onClick={onRestart}
-            aria-label="Replay animation"
-            title="Replay loop"
+            aria-label={t('Replay animation')}
+            title={t('Replay loop')}
             className="grid h-6 w-6 place-items-center rounded-full border border-line bg-surface text-[10px] text-ink transition-colors hover:bg-surface-2"
           >
             <FiRotateCcw />

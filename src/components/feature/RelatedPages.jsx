@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { FiArrowUpRight } from 'react-icons/fi'
 import { Reveal } from '../common/Reveal/Reveal'
+import { useLanguage } from '../../context/LanguageContext'
 
 /**
  * Cross-links to the sibling feature pages so a long page always offers a next
@@ -8,6 +9,7 @@ import { Reveal } from '../common/Reveal/Reveal'
  */
 export function RelatedPages({ items, className = '' }) {
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   return (
     <div className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-4 ${className}`}>
@@ -26,11 +28,11 @@ export function RelatedPages({ items, className = '' }) {
             </span>
 
             <span className="mt-4 flex items-center gap-1.5 text-base font-extrabold text-ink">
-              {item.label}
+              {t(item.label)}
               <FiArrowUpRight className="text-sm text-brand-strong transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>
 
-            <span className="mt-1.5 text-xs leading-relaxed text-body">{item.desc}</span>
+            <span className="mt-1.5 text-xs leading-relaxed text-body">{t(item.desc)}</span>
           </button>
         </Reveal>
       ))}

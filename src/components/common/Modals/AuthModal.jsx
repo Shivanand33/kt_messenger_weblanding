@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX, FiSmartphone, FiCheckCircle, FiShield, FiArrowRight } from 'react-icons/fi'
+import { useLanguage } from '../../../context/LanguageContext'
 
 function QrIcon({ className = 'h-6 w-6' }) {
   return (
@@ -14,6 +15,7 @@ export function AuthModal({ isOpen, onClose }) {
   const [usePhone, setUsePhone] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState('')
   const [codeSent, setCodeSent] = useState(false)
+  const { t } = useLanguage()
 
   if (!isOpen) return null
 
@@ -39,7 +41,7 @@ export function AuthModal({ isOpen, onClose }) {
           {/* Close Button */}
           <button
             onClick={onClose}
-            aria-label="Close modal"
+            aria-label={t('Close modal')}
             className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-stone-100 text-stone-600 hover:bg-stone-200 transition-colors"
           >
             <FiX className="text-lg" />
@@ -51,8 +53,8 @@ export function AuthModal({ isOpen, onClose }) {
               <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft text-brand-strong">
                 <QrIcon className="text-2xl" />
               </div>
-              <h3 className="text-2xl font-bold text-[#111b21]">Log in to KT Web</h3>
-              <p className="mt-1 text-xs text-stone-500">Scan this QR code with your phone to log in instantly</p>
+              <h3 className="text-2xl font-bold text-[#111b21]">{t('Log in to KT Web')}</h3>
+              <p className="mt-1 text-xs text-stone-500">{t('Scan this QR code with your phone to log in instantly')}</p>
 
               {/* Animated QR Code Box */}
               <div className="relative mx-auto my-6 flex h-48 w-48 items-center justify-center rounded-2xl bg-stone-900 p-3 shadow-inner">
@@ -78,11 +80,11 @@ export function AuthModal({ isOpen, onClose }) {
 
               {/* Instructions */}
               <div className="rounded-2xl bg-stone-50 p-3 text-left text-xs text-stone-600 space-y-1.5 border border-stone-200/70">
-                <p className="font-semibold text-stone-800">How to connect:</p>
+                <p className="font-semibold text-stone-800">{t('How to connect:')}</p>
                 <ol className="list-decimal list-inside space-y-1">
-                  <li>Open <strong>KT Messenger</strong> on your phone</li>
-                  <li>Tap <strong>Settings</strong> ⚙️ &gt; <strong>Linked Devices</strong></li>
-                  <li>Point your camera at this screen</li>
+                  <li>{t('Open')} <strong>KT Messenger</strong> {t('on your phone')}</li>
+                  <li>{t('Tap')} <strong>{t('Settings')}</strong> ⚙️ &gt; <strong>{t('Linked Devices')}</strong></li>
+                  <li>{t('Point your camera at this screen')}</li>
                 </ol>
               </div>
 
@@ -90,7 +92,7 @@ export function AuthModal({ isOpen, onClose }) {
                 onClick={() => setUsePhone(true)}
                 className="mt-4 text-xs font-semibold text-brand-strong hover:underline"
               >
-                Link with phone number instead →
+                {t('Link with phone number instead')} →
               </button>
             </div>
           ) : (
@@ -99,20 +101,20 @@ export function AuthModal({ isOpen, onClose }) {
               <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft text-brand-strong">
                 <FiSmartphone className="text-2xl" />
               </div>
-              <h3 className="text-center text-2xl font-bold text-[#111b21]">Enter Phone Number</h3>
+              <h3 className="text-center text-2xl font-bold text-[#111b21]">{t('Enter Phone Number')}</h3>
               <p className="mt-1 text-center text-xs text-stone-500">
-                Select country and enter your phone number to receive a pairing code
+                {t('Select country and enter your phone number to receive a pairing code')}
               </p>
 
               {!codeSent ? (
                 <div className="mt-6 space-y-4">
                   <div className="flex rounded-xl border border-stone-300 overflow-hidden focus-within:border-brand-strong">
                     <span className="flex items-center bg-stone-100 px-3 text-xs font-bold text-stone-700">
-                      🇮🇳 +91
+                      + __
                     </span>
                     <input
                       type="tel"
-                      placeholder="Enter mobile number"
+                      placeholder={t('Enter mobile number')}
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
                       className="w-full px-3 py-2.5 text-sm text-stone-900 outline-none"
@@ -124,23 +126,23 @@ export function AuthModal({ isOpen, onClose }) {
                     disabled={!phoneNumber}
                     className="w-full rounded-full bg-brand-strong py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-brand-strong-hover disabled:opacity-50"
                   >
-                    Get Pairing Code
+                    {t('Get Pairing Code')}
                   </button>
                 </div>
               ) : (
                 <div className="mt-6 text-center space-y-4">
                   <div className="rounded-2xl bg-brand-soft p-4 border border-brand-strong/20">
-                    <p className="text-xs text-brand-ink font-semibold">Your pairing code:</p>
+                    <p className="text-xs text-brand-ink font-semibold">{t('Your pairing code:')}</p>
                     <p className="mt-1 font-mono text-3xl font-extrabold tracking-widest text-brand-strong">
                       748 - 920
                     </p>
                   </div>
-                  <p className="text-xs text-stone-500">Enter this code in KT on your phone to link device</p>
+                  <p className="text-xs text-stone-500">{t('Enter this code in KT on your phone to link device')}</p>
                   <button
                     onClick={() => setCodeSent(false)}
                     className="text-xs font-semibold text-stone-600 underline"
                   >
-                    Use a different number
+                    {t('Use a different number')}
                   </button>
                 </div>
               )}
@@ -149,7 +151,7 @@ export function AuthModal({ isOpen, onClose }) {
                 onClick={() => setUsePhone(false)}
                 className="mt-4 block w-full text-center text-xs font-semibold text-stone-600 hover:underline"
               >
-                ← Back to QR Code scan
+                ← {t('Back to QR Code scan')}
               </button>
             </div>
           )}

@@ -11,6 +11,7 @@ import { Reveal } from '../../common/Reveal/Reveal'
 import { Button } from '../../common/Button/Button'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
 import { useModal } from '../../../context/ModalContext'
+import { useLanguage } from '../../../context/LanguageContext'
 import { useCountUp } from '../../../hooks/useCountUp'
 import { api } from '../../../services/apiClient'
 import aiImg from '../../../assets/images/cyberpunk_neon_city.png'
@@ -30,19 +31,19 @@ const features = [
   {
     icon: <FiMessageSquare />,
     title: 'Smart Messaging Experience',
-    desc: 'Modern communication that goes far beyond basic chatting — fast, private and rich.',
-    tags: ['End-to-end encrypted', 'Groups', 'Communities', 'Broadcasts'],
+    desc: 'Modern communication that goes far beyond basic chatting fast, private and rich.',
+    tags: ['End to end encrypted', 'Groups', 'Communities', 'Broadcasts'],
   },
   {
     icon: <FiHeadphones />,
     title: 'Listen To Messages Instead Of Reading',
-    desc: 'Play voice messages hands-free — perfect while driving, travelling or multitasking.',
-    tags: ['Hands-free', 'Accessible', 'On the go'],
+    desc: 'Play voice messages hands free perfect while driving, travelling or multitasking.',
+    tags: ['Hands free', 'Accessible', 'On the go'],
   },
   {
     icon: <FiZap />,
     title: 'KT AI Integrated Inside Messenger',
-    desc: 'Ask KT AI directly in your chats for instant answers — built in, not a separate tool.',
+    desc: 'Ask KT AI directly in your chats for instant answers built in, not a separate tool.',
     tags: ['Ask KT AI', 'Smart search', 'Instant help'],
     accent: true,
   },
@@ -61,7 +62,7 @@ const features = [
   {
     icon: <FiUsers />,
     title: 'Communities & Groups',
-    desc: 'Build interest-based communities and host large-scale conversations with ease.',
+    desc: 'Build interest based communities and host large scale conversations with ease.',
     tags: ['Community building', 'Engagement', 'Organized'],
   },
   {
@@ -73,14 +74,14 @@ const features = [
   {
     icon: <FiPhone />,
     title: 'Calls & Communication',
-    desc: 'Crystal-clear voice calls and connected tools for seamless, real-time interaction.',
+    desc: 'Crystal clear voice calls and connected tools for seamless, real time interaction.',
     tags: ['Voice calls', 'Seamless', 'Connected'],
   },
   {
     icon: <FiLayers />,
     title: 'Everything In One Place',
-    desc: 'Chats, Updates, News, Minis, Calls, AI, Communities and Broadcasts — one platform.',
-    tags: ['One app', 'No switching', 'All-in-one'],
+    desc: 'Chats, Updates, News, Minis, Calls, AI, Communities and Broadcasts one platform.',
+    tags: ['One app', 'No switching', 'All in one'],
     accent: true,
   },
 ]
@@ -96,7 +97,7 @@ const highlights = [
     image: communityImg,
     label: 'Communities',
     title: 'Where audiences grow together',
-    text: 'Interest-based communities and groups that scale to thousands.',
+    text: 'Interest based communities and groups that scale to thousands.',
   },
   {
     image: contentImg,
@@ -136,7 +137,7 @@ const articles = [
   {
     image: communityImg, tag: 'Ecosystem', read: '4 min read',
     title: 'Why KT Messenger Is More Than Messaging',
-    excerpt: 'Messaging, AI, news, updates, communities and calls — how KT brings a full digital ecosystem into one app.',
+    excerpt: 'Messaging, AI, news, updates, communities and calls how KT brings a full digital ecosystem into one app.',
   },
   {
     image: updatesImg, tag: 'Discovery', read: '3 min read',
@@ -146,12 +147,12 @@ const articles = [
   {
     image: aiImg, tag: 'KT AI', read: '4 min read',
     title: 'KT AI: Smarter Conversations',
-    excerpt: 'Ask KT AI right inside your chats for instant answers and smart search — intelligence built into the experience.',
+    excerpt: 'Ask KT AI right inside your chats for instant answers and smart search intelligence built into the experience.',
   },
   {
     image: voiceImg, tag: 'Voice', read: '3 min read',
     title: 'Listen To Messages Anywhere',
-    excerpt: 'Play voice messages hands-free while driving, travelling or multitasking — communication made more accessible.',
+    excerpt: 'Play voice messages hands free while driving, travelling or multitasking communication made more accessible.',
   },
   {
     image: collabImg, tag: 'Communities', read: '5 min read',
@@ -161,27 +162,27 @@ const articles = [
   {
     image: ecosystemImg, tag: 'Ecosystem', read: '4 min read',
     title: 'Everything In One Place',
-    excerpt: 'Chats, AI, news, updates, calls, communities, broadcasts and minis — one seamless platform experience.',
+    excerpt: 'Chats, AI, news, updates, calls, communities, broadcasts and minis one seamless platform experience.',
   },
   {
     image: privacyImg, tag: 'Privacy', read: '3 min read',
     title: 'Privacy By Default: Your Chats Stay Yours',
-    excerpt: 'Private conversations that stay private — security is built into every message, call and community.',
+    excerpt: 'Private conversations that stay private security is built into every message, call and community.',
   },
   {
     image: updatesImg, tag: 'Broadcasts', read: '3 min read',
     title: 'Broadcasts That Reach Everyone',
-    excerpt: 'Send announcements and reach many people at once with fast, efficient one-to-many communication.',
+    excerpt: 'Send announcements and reach many people at once with fast, efficient one to many communication.',
   },
   {
     image: voiceImg, tag: 'Calls', read: '3 min read',
     title: 'Calls That Feel Effortless',
-    excerpt: 'Voice calls and connected conversations that make real-time interaction feel simple and seamless.',
+    excerpt: 'Voice calls and connected conversations that make real time interaction feel simple and seamless.',
   },
   {
     image: contentImg, tag: 'Minis', read: '4 min read',
     title: 'Minis: Quick Tools Inside KT',
-    excerpt: 'Lightweight mini experiences and saved Minis you can reach instantly — a growing in-app ecosystem.',
+    excerpt: 'Lightweight mini experiences and saved Minis you can reach instantly a growing in app ecosystem.',
   },
   {
     image: collabImg, tag: 'Updates', read: '3 min read',
@@ -191,7 +192,7 @@ const articles = [
   {
     image: aiImg, tag: 'KT AI', read: '4 min read',
     title: 'Smart Search Powered By KT AI',
-    excerpt: 'Find people, messages and answers faster with AI-assisted search built right into the app.',
+    excerpt: 'Find people, messages and answers faster with AI assisted search built right into the app.',
   },
 ]
 
@@ -222,8 +223,8 @@ const reasons = [
   { icon: <FiMessageSquare />, title: 'Communication', items: ['Messaging', 'Calls', 'Communities', 'Broadcasts', 'Smart Mentions'] },
   { icon: <FiZap />, title: 'Intelligence', items: ['KT AI', 'Smart Search', 'Instant Assistance'] },
   { icon: <FiCompass />, title: 'Discovery', items: ['News', 'Updates', 'Content Discovery'] },
-  { icon: <FiGrid />, title: 'Ecosystem', items: ['Minis', 'Saved Minis', 'Multi-service platform'] },
-  { icon: <FiHeadphones />, title: 'Accessibility', items: ['Voice Message Listening', 'Hands-free communication', 'Better multitasking experience'] },
+  { icon: <FiGrid />, title: 'Ecosystem', items: ['Minis', 'Saved Minis', 'Multi service platform'] },
+  { icon: <FiHeadphones />, title: 'Accessibility', items: ['Voice Message Listening', 'Hands free communication', 'Better multitasking experience'] },
 ]
 
 const journey = [
@@ -252,12 +253,13 @@ const onePlatform = [
 const trust = [
   { icon: <FiShield />, title: 'Secure messaging', text: 'Private by default and encrypted end to end.' },
   { icon: <FiMessageSquare />, title: 'Modern communication', text: 'Chats, calls and broadcasts that feel effortless.' },
-  { icon: <FiZap />, title: 'AI-powered experience', text: 'KT AI and smart search built right in.' },
+  { icon: <FiZap />, title: 'AI powered experience', text: 'KT AI and smart search built right in.' },
   { icon: <FiLayers />, title: 'Content ecosystem', text: 'News, updates and discovery in one flow.' },
   { icon: <FiUsers />, title: 'Community engagement', text: 'Spaces where audiences grow together.' },
 ]
 
 function StatCard({ item, index }) {
+  const { t } = useLanguage()
   const [ref, value] = useCountUp(item.value, { duration: 1400 + index * 120 })
   return (
     <div
@@ -271,14 +273,15 @@ function StatCard({ item, index }) {
         {Math.round(value).toLocaleString('en-US')}
         {item.suffix}
       </div>
-      <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.1em] text-muted">{item.label}</div>
-      <p className="mt-2 text-xs leading-relaxed text-body">{item.hint}</p>
+      <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.1em] text-muted">{t(item.label)}</div>
+      <p className="mt-2 text-xs leading-relaxed text-body">{t(item.hint)}</p>
     </div>
   )
 }
 
 export function Insights() {
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
 
   // Home blog cards come from the live blog API — the same PostgreSQL/DB source
   // as the /blog page. Drafts/deleted posts never appear (the public API returns
@@ -299,10 +302,10 @@ export function Insights() {
       {/* Hero heading */}
       <SectionHeading
         align="center"
-        eyebrow="KT Ecosystem"
+        eyebrow={t('KT Ecosystem')}
         eyebrowIcon={<FiZap />}
-        title="Why KT Messenger Is More Than Just Messaging"
-        description="KT combines communication, AI, content discovery, communities, news, minis, calls, creator experiences, and digital engagement into one powerful ecosystem."
+        title={t('Why KT Messenger Is More Than Just Messaging')}
+        description={t('KT combines communication, AI, content discovery, communities, news, minis, calls, creator experiences, and digital engagement into one powerful ecosystem.')}
         className="mx-auto max-w-3xl"
       />
 
@@ -314,15 +317,15 @@ export function Insights() {
               className={`${cardBase} h-full p-6 ${f.accent ? 'bg-gradient-to-br from-brand-soft to-cream-2' : ''}`}
             >
               <IconTile>{f.icon}</IconTile>
-              <h3 className="mt-5 text-lg font-bold leading-snug text-ink">{f.title}</h3>
-              <p className="mt-2 flex-1 text-[15px] leading-7 text-body">{f.desc}</p>
+              <h3 className="mt-5 text-lg font-bold leading-snug text-ink">{t(f.title)}</h3>
+              <p className="mt-2 flex-1 text-[15px] leading-7 text-body">{t(f.desc)}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {f.tags.map((tag) => (
                   <span
                     key={tag}
                     className="inline-flex items-center gap-1 rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-semibold text-brand-ink"
                   >
-                    <FiCheck className="text-[10px]" /> {tag}
+                    <FiCheck className="text-[10px]" /> {t(tag)}
                   </span>
                 ))}
               </div>
@@ -334,16 +337,16 @@ export function Insights() {
       {/* Everything in one platform */}
       <Reveal from="up" className="mt-6">
         <div className="overflow-hidden rounded-card border border-line bg-cream-2 p-8 text-center shadow-soft sm:p-10">
-          <h3 className="text-xl font-bold text-ink sm:text-2xl">Everything In One Platform</h3>
+          <h3 className="text-xl font-bold text-ink sm:text-2xl">{t('Everything In One Platform')}</h3>
           <p className="mx-auto mt-2 max-w-xl text-[15px] leading-7 text-body">
-            One seamless experience — no switching between several apps to get things done.
+            {t('One seamless experience no switching between several apps to get things done.')}
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-3">
             {onePlatform.map((node, index) => (
               <div key={node.label} className="flex items-center gap-3">
                 <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 shadow-soft transition-transform duration-300 hover:-translate-y-0.5">
                   <span className="text-brand-strong">{node.icon}</span>
-                  <span className="text-sm font-bold text-ink">{node.label}</span>
+                  <span className="text-sm font-bold text-ink">{t(node.label)}</span>
                 </span>
                 {index < onePlatform.length - 1 ? (
                   <span aria-hidden className="text-lg font-black text-brand-strong/50">+</span>
@@ -361,17 +364,17 @@ export function Insights() {
             <article className={`${cardBase} relative h-full min-h-[300px] justify-end`}>
               <img
                 src={h.image}
-                alt={h.title}
+                alt={t(h.title)}
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/35 to-transparent" />
               <div className="relative p-6 text-white">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/15 px-3 py-1 text-[11px] font-bold backdrop-blur">
-                  {h.label}
+                  {t(h.label)}
                 </span>
-                <h3 className="mt-3 text-xl font-bold leading-tight">{h.title}</h3>
-                <p className="mt-1.5 text-sm leading-6 text-white/85">{h.text}</p>
+                <h3 className="mt-3 text-xl font-bold leading-tight">{t(h.title)}</h3>
+                <p className="mt-1.5 text-sm leading-6 text-white/85">{t(h.text)}</p>
               </div>
             </article>
           </Reveal>
@@ -382,8 +385,8 @@ export function Insights() {
       <div className="mt-16">
         <SectionHeading
           align="center"
-          title="Why Users Choose KT"
-          description="Five reasons KT feels less like a chat app and more like a complete platform."
+          title={t('Why Users Choose KT')}
+          description={t('Five reasons KT feels less like a chat app and more like a complete platform.')}
           className="mx-auto max-w-2xl"
           titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
         />
@@ -392,11 +395,11 @@ export function Insights() {
             <Reveal key={reason.title} from="up" delay={(index % 3) * 0.06} className="h-full">
               <article className={`${cardBase} h-full p-6`}>
                 <IconTile>{reason.icon}</IconTile>
-                <h3 className="mt-5 text-lg font-bold leading-snug text-ink">{reason.title}</h3>
+                <h3 className="mt-5 text-lg font-bold leading-snug text-ink">{t(reason.title)}</h3>
                 <ul className="mt-4 space-y-2">
                   {reason.items.map((item) => (
                     <li key={item} className="flex items-center gap-2 text-sm font-medium text-body">
-                      <FiCheck className="shrink-0 text-brand-strong" /> {item}
+                      <FiCheck className="shrink-0 text-brand-strong" /> {t(item)}
                     </li>
                   ))}
                 </ul>
@@ -410,8 +413,8 @@ export function Insights() {
       <div className="mt-16">
         <SectionHeading
           align="center"
-          title="The KT Ecosystem Journey"
-          description="A day on KT flows naturally from discovery to connection — all in one place."
+          title={t('The KT Ecosystem Journey')}
+          description={t('A day on KT flows naturally from discovery to connection all in one place.')}
           className="mx-auto max-w-2xl"
           titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
         />
@@ -426,7 +429,7 @@ export function Insights() {
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand-ink transition-transform duration-300 group-hover:scale-110">
                     {step.icon}
                   </span>
-                  <span className="text-[14px] font-bold leading-tight text-ink">{step.title}</span>
+                  <span className="text-[14px] font-bold leading-tight text-ink">{t(step.title)}</span>
                 </div>
               </div>
             </Reveal>
@@ -440,14 +443,13 @@ export function Insights() {
           <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
               <h3 className="text-2xl font-bold leading-tight text-ink lg:text-[1.9rem]">
-                One app, every experience
+                {t('One app, every experience')}
               </h3>
               <p className="mt-3 max-w-md text-[15px] leading-7 text-body">
-                Access chats, updates, news, minis, calls, AI and communities from a single platform —
-                no more switching between several apps to get things done.
+                {t('Access chats, updates, news, minis, calls, AI and communities from a single platform no more switching between several apps to get things done.')}
               </p>
               <div className="mt-6">
-                <LinkArrow to="/blog">Read More</LinkArrow>
+                <LinkArrow to="/blog">{t('Read More')}</LinkArrow>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -459,7 +461,7 @@ export function Insights() {
                   <span className="grid h-11 w-11 place-items-center rounded-2xl bg-brand-soft text-lg text-brand-ink">
                     {node.icon}
                   </span>
-                  <span className="text-xs font-bold text-ink">{node.label}</span>
+                  <span className="text-xs font-bold text-ink">{t(node.label)}</span>
                 </div>
               ))}
             </div>
@@ -471,8 +473,8 @@ export function Insights() {
       <div className="mt-16">
         <SectionHeading
           align="center"
-          title="The KT Messenger Ecosystem"
-          description="Everything you get in one place — a complete digital experience, not just a chat box."
+          title={t('The KT Messenger Ecosystem')}
+          description={t('Everything you get in one place a complete digital experience, not just a chat box.')}
           className="mx-auto max-w-2xl"
           titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
         />
@@ -483,7 +485,7 @@ export function Insights() {
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand-ink transition-transform duration-300 group-hover:scale-110">
                   {c.icon}
                 </span>
-                <span className="min-w-0 flex-1 text-[13px] font-bold leading-tight text-ink">{c.label}</span>
+                <span className="min-w-0 flex-1 text-[13px] font-bold leading-tight text-ink">{t(c.label)}</span>
                 <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-500/15 text-emerald-600">
                   <FiCheck className="text-sm" />
                 </span>
@@ -504,8 +506,8 @@ export function Insights() {
       <div className="mt-16">
         <SectionHeading
           align="center"
-          title="Built On Trust"
-          description="Secure, modern and intelligent — the foundations behind every KT experience."
+          title={t('Built On Trust')}
+          description={t('Secure, modern and intelligent the foundations behind every KT experience.')}
           className="mx-auto max-w-2xl"
           titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
         />
@@ -516,8 +518,8 @@ export function Insights() {
                 <span className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-xl text-brand-ink transition-transform duration-300 group-hover:scale-110">
                   {item.icon}
                 </span>
-                <h3 className="text-base font-bold text-ink">{item.title}</h3>
-                <p className="mt-1.5 text-xs leading-6 text-body">{item.text}</p>
+                <h3 className="text-base font-bold text-ink">{t(item.title)}</h3>
+                <p className="mt-1.5 text-xs leading-6 text-body">{t(item.text)}</p>
               </div>
             </Reveal>
           ))}
@@ -528,8 +530,8 @@ export function Insights() {
       <div className="mt-16">
         <SectionHeading
           align="center"
-          title="From the KT Blog"
-          description="Deep dives into the ideas and features that make KT a complete digital ecosystem."
+          title={t('From the KT Blog')}
+          description={t('Deep dives into the ideas and features that make KT a complete digital ecosystem.')}
           className="mx-auto max-w-2xl"
           titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
         />
@@ -557,7 +559,7 @@ export function Insights() {
                   <h3 className="mt-2 text-lg font-bold leading-snug text-ink">{article.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-6 text-body">{article.excerpt}</p>
                   <div className="mt-5 border-t border-line pt-4">
-                    <LinkArrow to="/blog">Read More</LinkArrow>
+                    <LinkArrow to="/blog">{t('Read More')}</LinkArrow>
                   </div>
                 </div>
               </article>
@@ -572,14 +574,13 @@ export function Insights() {
           <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
           <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-10 h-64 w-64 rounded-full bg-black/10 blur-2xl" />
           <div className="relative mx-auto max-w-2xl">
-            <h3 className="text-[1.9rem] font-extrabold tracking-tight sm:text-4xl">Experience More Than Messaging</h3>
+            <h3 className="text-[1.9rem] font-extrabold tracking-tight sm:text-4xl">{t('Experience More Than Messaging')}</h3>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-white/90">
-              KT Messenger brings communication, AI, content discovery, communities, news, minis, calls, and
-              engagement together in one seamless experience.
+              {t('KT Messenger brings communication, AI, content discovery, communities, news, minis, calls, and engagement together in one seamless experience.')}
             </p>
             <div className="mt-8 flex justify-center">
               <Button variant="white" size="lg" onClick={openDownloadModal}>
-                Get Started <FiArrowRight />
+                {t('Get Started')} <FiArrowRight />
               </Button>
             </div>
           </div>

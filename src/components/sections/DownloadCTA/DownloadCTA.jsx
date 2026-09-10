@@ -3,12 +3,14 @@ import { Section } from '../../common/Section/Section'
 import { Button } from '../../common/Button/Button'
 import { Reveal } from '../../common/Reveal/Reveal'
 import { useModal } from '../../../context/ModalContext'
+import { useLanguage } from '../../../context/LanguageContext'
 
 const points = ['No ads', 'No subscription', 'Encrypted by default']
 const LOGIN_URL = 'https://web.ktmessenger.com/auth/qr'
 
 export function DownloadCTA() {
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
 
   return (
     <Section id="download">
@@ -19,25 +21,25 @@ export function DownloadCTA() {
 
           <div className="relative mx-auto max-w-2xl text-center">
             <h2 className="text-[2rem] font-extrabold tracking-tight sm:text-4xl lg:text-[2.9rem]">
-              Get KT Messenger. It&apos;s free.
+              {t("Get KT Messenger. It's free.")}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-white/85">
-              Download KT Messenger on your phone and desktop, and bring every conversation into one calm, secure place.
+              {t('Download KT Messenger on your phone and desktop, and bring every conversation into one calm, secure place.')}
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
               <Button variant="white" size="lg" onClick={openDownloadModal}>
-                <FiDownload /> Download
+                <FiDownload /> {t('Download')}
               </Button>
               <Button variant="onDark" size="lg" href={LOGIN_URL}>
-                Open KT Web <FiArrowUpRight />
+                {t('Open KT Web')} <FiArrowUpRight />
               </Button>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/80">
               {points.map((point) => (
                 <span key={point} className="inline-flex items-center gap-2">
-                  <FiCheck className="text-white" /> {point}
+                  <FiCheck className="text-white" /> {t(point)}
                 </span>
               ))}
             </div>

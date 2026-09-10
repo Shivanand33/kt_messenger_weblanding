@@ -1,5 +1,6 @@
 import { FiSearch, FiVideo, FiPhone, FiMoreVertical, FiPhoneOff, FiCheck, FiPlus } from 'react-icons/fi'
 import { Logo } from '../common/Logo/Logo'
+import { useLanguage } from '../../context/LanguageContext'
 import photoMessage from '../../assets/images/group.jpg'
 import nadiaAvatar from '../../assets/images/nadia_avatar.png'
 import female1Avatar from '../../assets/images/avatar_female_1.png'
@@ -18,6 +19,8 @@ const chats = [
 
 /** A desktop chat app window with a floating incoming call. */
 export function DesktopAppMockup({ className = '' }) {
+  const { t } = useLanguage()
+
   return (
     <div className={`relative ${className}`}>
       <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-float">
@@ -39,7 +42,7 @@ export function DesktopAppMockup({ className = '' }) {
           <div className="flex w-[45%] flex-col border-r border-line bg-surface">
             <div className="p-2.5">
               <div className="flex items-center gap-2 rounded-full bg-cream px-3 py-2 text-[11px] text-muted">
-                <FiSearch className="text-sm" /> Search
+                <FiSearch className="text-sm" /> {t('Search')}
               </div>
             </div>
             <div className="flex-1 overflow-hidden">
@@ -56,9 +59,9 @@ export function DesktopAppMockup({ className = '' }) {
                   <div className="min-w-0 flex-1 border-b border-line/60 pb-1.5">
                     <div className="flex items-center justify-between gap-2">
                       <p className="truncate text-[12px] font-semibold text-ink">{chat.name}</p>
-                      <span className="shrink-0 text-[9px] text-muted">{chat.time}</span>
+                      <span className="shrink-0 text-[9px] text-muted">{t(chat.time)}</span>
                     </div>
-                    <p className="truncate text-[11px] text-muted">{chat.msg}</p>
+                    <p className="truncate text-[11px] text-muted">{t(chat.msg)}</p>
                   </div>
                 </div>
               ))}
@@ -76,7 +79,7 @@ export function DesktopAppMockup({ className = '' }) {
                 />
                 <div>
                   <p className="text-[12px] font-semibold text-ink">Ayesha</p>
-                  <p className="text-[9px] text-brand-ink">online</p>
+                  <p className="text-[9px] text-brand-ink">{t('online')}</p>
                 </div>
               </div>
               <div className="flex gap-3 text-muted">
@@ -88,23 +91,23 @@ export function DesktopAppMockup({ className = '' }) {
 
             <div className="flex flex-1 flex-col gap-2 p-3">
               <div className="max-w-[78%] rounded-2xl rounded-tl-sm bg-surface px-3 py-2 text-[11px] text-ink shadow-soft">
-                Hey, any plans for Saturday?
+                {t('Hey, any plans for Saturday?')}
               </div>
               <div className="max-w-[78%] rounded-2xl rounded-tl-sm bg-surface px-3 py-2 text-[11px] text-ink shadow-soft">
-                We could all get together at the park.
+                {t('We could all get together at the park.')}
               </div>
               <div className="ml-auto max-w-[70%] overflow-hidden rounded-2xl rounded-tr-sm shadow-soft">
                 <img src={photoMessage} alt="" className="h-24 w-full object-cover" />
               </div>
               <div className="ml-auto flex max-w-[78%] items-center gap-1 rounded-2xl rounded-tr-sm bg-[#dbeafe] px-3 py-2 text-[11px] text-ink dark:bg-[#1e3a63] dark:text-white">
-                Sounds amazing!
+                {t('Sounds amazing!')}
                 <FiCheck className="text-[10px] text-brand-ink dark:text-brand" />
               </div>
             </div>
 
             <div className="flex items-center gap-2 border-t border-line p-2">
               <FiPlus className="text-muted" />
-              <div className="flex-1 rounded-full bg-surface px-3 py-2 text-[11px] text-muted">Type a message</div>
+              <div className="flex-1 rounded-full bg-surface px-3 py-2 text-[11px] text-muted">{t('Type a message')}</div>
             </div>
           </div>
         </div>
@@ -116,7 +119,7 @@ export function DesktopAppMockup({ className = '' }) {
           <img src={businessAvatar} alt="Pablo Morales" className="h-7 w-7 rounded-full object-cover border border-white/20" />
           <div className="min-w-0">
             <p className="text-xs font-semibold truncate">Pablo Morales</p>
-            <p className="text-[9px] text-white/60 truncate">KT video call</p>
+            <p className="text-[9px] text-white/60 truncate">{t('KT video call')}</p>
           </div>
         </div>
         <div className="mt-2 flex items-center justify-between">

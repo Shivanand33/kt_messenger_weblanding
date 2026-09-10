@@ -16,10 +16,12 @@ import {
   FiRadio,
   FiShield,
   FiStar,
-  FiGlobe,
-  FiTrendingUp,
-  FiCreditCard,
-  FiShoppingBag,
+  // Icons for the four Features entries commented out below — uncomment
+  // these together with those entries.
+  // FiGlobe,
+  // FiTrendingUp,
+  // FiCreditCard,
+  // FiShoppingBag,
   FiEdit3
 } from 'react-icons/fi'
 import { Container } from '../../common/Container/Container'
@@ -37,10 +39,14 @@ const featureItems = [
   { label: 'Status', to: '/status', icon: <FiRadio /> },
   { label: 'Security', to: '/security', icon: <FiShield /> },
   { label: 'KT Plus', to: '/plus', icon: <FiStar /> },
-  { label: 'News', to: '/news', icon: <FiGlobe /> },
-  { label: 'Markets', to: '/markets', icon: <FiTrendingUp /> },
-  { label: 'Wallet', to: '/wallet', icon: <FiCreditCard /> },
-  { label: 'Marketplace', to: '/marketplace', icon: <FiShoppingBag /> },
+  // Hidden from the Features menu. The pages and their routes are untouched,
+  // so /news, /markets, /wallet and /marketplace still work if visited
+  // directly. To restore, uncomment these four lines and the matching icon
+  // imports at the top of this file.
+  // { label: 'News', to: '/news', icon: <FiGlobe /> },
+  // { label: 'Markets', to: '/markets', icon: <FiTrendingUp /> },
+  // { label: 'Wallet', to: '/wallet', icon: <FiCreditCard /> },
+  // { label: 'Marketplace', to: '/marketplace', icon: <FiShoppingBag /> },
   { label: 'Notes', to: '/notes', icon: <FiEdit3 /> }
 ]
 
@@ -168,13 +174,16 @@ export function Navbar() {
                 initial={{ opacity: 0, y: 8, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.16, ease: 'easeOut' }}
-                className="absolute left-0 top-full z-50 mt-2 w-60 max-h-[460px] overflow-y-auto rounded-2xl border border-[#2a3942] bg-[#111b21] p-2 shadow-2xl [scrollbar-width:thin]"
+                // Theme tokens, not fixed hexes: this panel used to be
+                // hardcoded to the dark palette, so it stayed dark in light
+                // mode. These variables flip with the .dark class.
+                className="absolute left-0 top-full z-50 mt-2 w-60 max-h-[460px] overflow-y-auto rounded-2xl border border-line bg-surface p-2 shadow-float [scrollbar-width:thin]"
               >
                 {featureItems.map((item) => (
                   <button
                     key={item.label}
                     onClick={() => go(item.to || item.href)}
-                    className="flex items-center gap-3 w-full rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-[#e9edef] transition-colors hover:bg-[#1a2733] hover:text-[#2e90fa] group"
+                    className="flex items-center gap-3 w-full rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-ink transition-colors hover:bg-surface-2 hover:text-brand-ink group"
                   >
                     <span className="text-base text-brand-strong group-hover:scale-110 transition-transform">{item.icon}</span>
                     <span>{t(item.label)}</span>

@@ -5,6 +5,7 @@ import { Container } from '../../common/Container/Container'
 import { Button } from '../../common/Button/Button'
 import { Reveal } from '../../common/Reveal/Reveal'
 import { useModal } from '../../../context/ModalContext'
+import { useLanguage } from '../../../context/LanguageContext'
 import { api } from '../../../services/apiClient'
 import heroImage from '../../../assets/images/hero.jpg'
 
@@ -28,6 +29,7 @@ const floatMotion = (offset) => ({
 
 export function Hero() {
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
   // Background image is admin-editable via the "home.hero" content block. The
   // bundled image is shown instantly and only replaced if the admin has set one
   // — so the hero always renders even when the API is unreachable.
@@ -62,23 +64,23 @@ export function Hero() {
           <div className="max-w-xl text-white">
             <Reveal from="up">
               <h1 className="text-[2.7rem] font-extrabold leading-[0.98] tracking-[-0.03em] sm:text-[3.8rem] lg:text-[5rem]">
-                Stay close,
+                {t('Stay close,')}
                 <br />
-                stay private.
+                {t('stay private.')}
               </h1>
             </Reveal>
             <Reveal from="up" delay={0.08}>
               <p className="mt-6 max-w-md text-lg leading-8 text-white/90">
-                Simple, secure messaging and calling for everyone — free, encrypted, and in sync across all your devices.
+                {t('Simple, secure messaging and calling for everyone free, encrypted, and in sync across all your devices.')}
               </p>
             </Reveal>
             <Reveal from="up" delay={0.16}>
               <div className="mt-8">
                 <Button size="lg" onClick={openDownloadModal}>
-                  Download <FiDownload />
+                  {t('Download')} <FiDownload />
                 </Button>
               </div>
-              <p className="mt-4 text-sm text-white/70">*Standard data rates may apply.</p>
+              <p className="mt-4 text-sm text-white/70">{t('*Standard data rates may apply.')}</p>
             </Reveal>
           </div>
 
@@ -88,7 +90,7 @@ export function Hero() {
               {...floatMotion(0.5)}
               className="absolute right-2 top-4 flex items-center gap-2 rounded-full bg-brand-strong px-4 py-2.5 text-white shadow-float"
             >
-              <FiVideo /> <span className="text-sm font-semibold">Join</span>
+              <FiVideo /> <span className="text-sm font-semibold">{t('Join')}</span>
             </motion.div>
 
             <motion.div
@@ -100,14 +102,14 @@ export function Hero() {
                   <FiCalendar />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-[#0e1a13]">Design Crew</p>
+                  <p className="text-sm font-bold text-[#0e1a13]">{t('Design Crew')}</p>
                   <div className="mt-1 flex items-center gap-1.5">
                     <div className="flex -space-x-2">
                       {stackImages.map((img, index) => (
                         <img key={index} src={img} alt="" className="h-5 w-5 rounded-full border-2 border-white object-cover" />
                       ))}
                     </div>
-                    <span className="text-xs text-[#7c877e]">&amp; 4 others</span>
+                    <span className="text-xs text-[#7c877e]">{t('& 4 others')}</span>
                   </div>
                 </div>
               </div>
@@ -118,7 +120,7 @@ export function Hero() {
               className="absolute right-6 top-[13.5rem] rounded-2xl rounded-br-sm bg-[#dbeafe] px-4 py-2.5 shadow-float"
             >
               <p className="text-sm font-medium text-[#0e1a13]">
-                Still on for tonight?
+                {t('Still on for tonight?')}
                 <span className="ml-1.5 whitespace-nowrap text-[11px] text-[#4b5a53]">
                   20:53 <FiCheck className="inline text-brand-strong" />
                 </span>
@@ -131,10 +133,10 @@ export function Hero() {
             >
               <div className="flex items-center gap-2">
                 <img src={nadiaAvatar} alt="Nadia" className="h-8 w-8 rounded-full object-cover shadow-sm border border-stone-200" />
-                <p className="text-sm font-bold text-[#0e1a13]">Nadia</p>
+                <p className="text-sm font-bold text-[#0e1a13]">{t('Nadia')}</p>
               </div>
               <p className="mt-2 text-sm text-[#4b5a53]">
-                Ready when you are! <span className="text-[11px] text-[#7c877e]">20:59</span>
+                {t('Ready when you are!')} <span className="text-[11px] text-[#7c877e]">20:59</span>
               </p>
               <div className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#f4efe6] px-2.5 py-1 text-sm">
                 👍 ❤️ 😎

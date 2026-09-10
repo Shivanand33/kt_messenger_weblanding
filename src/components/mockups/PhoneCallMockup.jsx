@@ -1,9 +1,12 @@
 import { FiVideo, FiMicOff, FiVolume2, FiMoreHorizontal, FiPhoneOff, FiUserPlus, FiMinimize2, FiRefreshCw } from 'react-icons/fi'
+import { useLanguage } from '../../context/LanguageContext'
 import mainFeed from '../../assets/images/group.jpg'
 import selfFeed from '../../assets/images/business.jpg'
 
 /** A phone frame showing an end-to-end encrypted group video call. */
 export function PhoneCallMockup({ className = '' }) {
+  const { t } = useLanguage()
+
   return (
     <div className={`relative mx-auto w-[258px] sm:w-[288px] ${className}`}>
       <div className="rounded-[46px] bg-gradient-to-b from-[#ecd696] to-[#d6ab52] p-2.5 shadow-float">
@@ -16,7 +19,7 @@ export function PhoneCallMockup({ className = '' }) {
               <span className="grid h-8 w-8 place-items-center rounded-full bg-black/35 backdrop-blur">
                 <FiMinimize2 className="text-sm" />
               </span>
-              <span className="text-[11px] font-medium text-white/90">End-to-end encrypted</span>
+              <span className="text-[11px] font-medium text-white/90">{t('End to end encrypted')}</span>
               <span className="grid h-8 w-8 place-items-center rounded-full bg-black/35 backdrop-blur">
                 <FiUserPlus className="text-sm" />
               </span>

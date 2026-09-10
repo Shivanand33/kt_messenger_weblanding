@@ -4,8 +4,10 @@ import { FiMic, FiLock } from 'react-icons/fi'
 import { PhoneVideoFrame } from './PhoneVideoFrame'
 import sunsetImage from '../../../assets/images/sunset_landscape.png'
 import familyAvatar from '../../../assets/images/group.jpg'
+import { useLanguage } from '../../../context/LanguageContext'
 
 export function StatusLoopVideo({ className = '' }) {
+  const { t } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(true)
   const [phase, setPhase] = useState(0) // 0: Photo Story, 1: Voice Status, 2: Privacy Exclusions
   const [progress, setProgress] = useState(0)
@@ -37,7 +39,7 @@ export function StatusLoopVideo({ className = '' }) {
 
   return (
     <PhoneVideoFrame
-      title="24-Hour Stories &amp; Voice Status"
+      title={t('24-Hour Stories & Voice Status')}
       progress={progress}
       isPlaying={isPlaying}
       onTogglePlay={() => setIsPlaying(!isPlaying)}
@@ -47,14 +49,14 @@ export function StatusLoopVideo({ className = '' }) {
       {/* Mobile Status Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-2">
         <div className="flex items-center gap-2">
-          <img src={familyAvatar} alt="Avatar" className="h-7 w-7 rounded-full border border-brand-strong object-cover" />
+          <img src={familyAvatar} alt={t('Avatar')} className="h-7 w-7 rounded-full border border-brand-strong object-cover" />
           <div>
-            <p className="text-xs font-bold text-white">My Status</p>
-            <p className="text-[9px] text-slate-400">24-Hour Disappearing</p>
+            <p className="text-xs font-bold text-white">{t('My Status')}</p>
+            <p className="text-[9px] text-slate-400">{t('24-Hour Disappearing')}</p>
           </div>
         </div>
         <span className="rounded-full bg-brand-strong/30 px-2 py-0.5 text-[8px] font-bold text-brand-ink border border-brand-strong/40">
-          30s Voice
+          {t('30s Voice')}
         </span>
       </div>
 
@@ -62,10 +64,10 @@ export function StatusLoopVideo({ className = '' }) {
       <div className="my-auto relative h-full flex flex-col justify-center py-1">
         {phase === 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative h-full w-full overflow-hidden rounded-xl bg-slate-950 border border-slate-800">
-            <img src={sunsetImage} alt="Story" className="h-full w-full object-cover" />
+            <img src={sunsetImage} alt={t('Story')} className="h-full w-full object-cover" />
             <div className="absolute bottom-2 inset-x-2 text-center">
               <span className="text-[10px] font-semibold text-white bg-black/65 px-2.5 py-1 rounded-full backdrop-blur-md">
-                Evening sunset run vibes! 🌄
+                {t('Evening sunset run vibes! 🌄')}
               </span>
             </div>
           </motion.div>
@@ -76,7 +78,7 @@ export function StatusLoopVideo({ className = '' }) {
             <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-brand-strong text-white text-sm shadow-brand">
               <FiMic />
             </div>
-            <p className="text-[11px] font-bold text-slate-200">&quot;Morning thoughts on our launch! ☕&quot;</p>
+            <p className="text-[11px] font-bold text-slate-200">{t('"Morning thoughts on our launch! ☕"')}</p>
             <div className="flex items-center justify-center gap-1.5 bg-slate-900 p-1.5 rounded-lg border border-slate-800">
               <button className="text-[10px] text-brand-strong">▶</button>
               <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
@@ -90,16 +92,16 @@ export function StatusLoopVideo({ className = '' }) {
         {phase === 2 && (
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="rounded-xl bg-slate-950 p-2.5 border border-slate-800 text-xs space-y-1.5 my-auto">
             <div className="flex items-center justify-between font-bold text-[10px] text-brand-ink">
-              <span className="flex items-center gap-1"><FiLock className="text-brand-strong" /> Status Privacy</span>
-              <span className="text-emerald-400 text-[8px]">Encrypted</span>
+              <span className="flex items-center gap-1"><FiLock className="text-brand-strong" /> {t('Status Privacy')}</span>
+              <span className="text-emerald-400 text-[8px]">{t('Encrypted')}</span>
             </div>
             <div className="rounded-lg bg-slate-900 p-1.5 border border-slate-800 flex justify-between text-[10px]">
-              <span>Contacts Except...</span>
-              <span className="text-brand-strong font-bold">ACTIVE</span>
+              <span>{t('Contacts Except...')}</span>
+              <span className="text-brand-strong font-bold">{t('ACTIVE')}</span>
             </div>
             <div className="rounded-lg bg-slate-900 p-1.5 border border-slate-800 flex justify-between text-[10px]">
-              <span>Quick Emoji Reply</span>
-              <span className="text-brand-strong font-bold">ENABLED</span>
+              <span>{t('Quick Emoji Reply')}</span>
+              <span className="text-brand-strong font-bold">{t('ENABLED')}</span>
             </div>
           </motion.div>
         )}
@@ -107,7 +109,7 @@ export function StatusLoopVideo({ className = '' }) {
 
       {/* Screen Footer */}
       <div className="rounded-xl bg-slate-950 p-1.5 text-center text-[9px] font-bold text-brand-ink border border-slate-800">
-        Status updates automatically vanish after 24 hours
+        {t('Status updates automatically vanish after 24 hours')}
       </div>
     </PhoneVideoFrame>
   )

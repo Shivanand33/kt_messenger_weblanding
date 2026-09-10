@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { FiArrowLeft, FiBell, FiPause, FiX } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
 import { useLoopClock } from './useLoopClock'
+import { useLanguage } from '../../../context/LanguageContext'
 import ktLogo from '../../../assets/kt-logo.svg'
 import storyBackdrop from '../../../assets/images/sunset_landscape.png'
 import tile1 from '../../../assets/images/avatar_female_1.png'
@@ -12,11 +13,12 @@ import tile4 from '../../../assets/images/beach_bicycles.png'
 const TILES = [tile1, tile2, tile3, tile4]
 
 export function KtStatusScreen({ className = '' }) {
+  const { t } = useLanguage()
   const { progress, isPlaying, togglePlay, restart } = useLoopClock({ durationMs: 13000 })
 
   return (
     <AppPhoneFrame
-      title="Updates · 24-hour stories"
+      title={t('Updates · 24-hour stories')}
       progress={progress}
       isPlaying={isPlaying}
       onTogglePlay={togglePlay}
@@ -62,11 +64,11 @@ export function KtStatusScreen({ className = '' }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-[10px] font-semibold text-white/80">Stay in the Loop</p>
+              <p className="text-[10px] font-semibold text-white/80">{t('Stay in the Loop')}</p>
               <h4 className="mt-1 text-[19px] font-extrabold leading-[1.15] text-white">
-                Never Miss
+                {t('Never Miss')}
                 <br />
-                What Matters
+                {t('What Matters')}
               </h4>
             </motion.div>
 
@@ -96,8 +98,8 @@ export function KtStatusScreen({ className = '' }) {
                 <FiBell />
               </span>
               <p className="text-[9.5px] font-medium leading-snug text-slate-700">
-                Enable <span className="font-bold text-[#1e8bf2]">@all</span> notifications and make sure every update
-                reaches everyone. One mention is all it takes.
+                {t('Enable')} <span className="font-bold text-[#1e8bf2]">@all</span>{' '}
+                {t('notifications and make sure every update reaches everyone. One mention is all it takes.')}
               </p>
             </motion.div>
           </div>

@@ -1,6 +1,7 @@
 import { FiUsers, FiBarChart2 } from 'react-icons/fi'
 import { FeatureShowcase } from '../FeatureShowcase/FeatureShowcase'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
+import { useLanguage } from '../../../context/LanguageContext'
 import groupsImage from '../../../assets/images/group.jpg'
 import nadiaAvatar from '../../../assets/images/nadia_avatar.png'
 import femaleAvatar from '../../../assets/images/avatar_female_1.png'
@@ -12,20 +13,21 @@ import maleAvatar from '../../../assets/images/avatar_male_1.png'
 const memberAvatars = [nadiaAvatar, maleAvatar, femaleAvatar]
 
 export function Groups() {
+  const { t } = useLanguage()
   return (
     <FeatureShowcase
       id="groups"
-      eyebrow="Communities"
+      eyebrow={t('Communities')}
       eyebrowIcon={<FiUsers />}
-      title="Bring your whole circle together."
-      description="From close friends to big communities, keep everyone in sync with shared chats, events, and updates that never feel noisy."
+      title={t('Bring your whole circle together.')}
+      description={t('From close friends to big communities, keep everyone in sync with shared chats, events, and updates that never feel noisy.')}
       image={groupsImage}
-      imageAlt="A group of friends laughing together"
+      imageAlt={t('A group of friends laughing together')}
       bullets={[
-        { icon: <FiUsers />, title: 'Groups & Communities', text: 'Organize people into calm, focused spaces.' },
-        { icon: <FiBarChart2 />, title: 'Polls & events', text: 'Decide together and plan it all in a single tap.' },
+        { icon: <FiUsers />, title: t('Groups & Communities'), text: t('Organize people into calm, focused spaces.') },
+        { icon: <FiBarChart2 />, title: t('Polls & events'), text: t('Decide together and plan it all in a single tap.') },
       ]}
-      cta={<LinkArrow to="/groups">Discover Communities</LinkArrow>}
+      cta={<LinkArrow to="/groups">{t('Discover Communities')}</LinkArrow>}
       accent={
         <div className="absolute -bottom-4 -left-3 flex items-center gap-3 rounded-2xl border border-line bg-surface/95 p-3 pr-5 shadow-card backdrop-blur sm:-left-6">
           <div className="flex -space-x-2.5">
@@ -42,8 +44,8 @@ export function Groups() {
             </span>
           </div>
           <div>
-            <p className="text-sm font-semibold text-ink">Weekend Trip</p>
-            <p className="text-xs text-muted">12 online now</p>
+            <p className="text-sm font-semibold text-ink">{t('Weekend Trip')}</p>
+            <p className="text-xs text-muted">{t('12 online now')}</p>
           </div>
         </div>
       }

@@ -1,10 +1,12 @@
 import { Reveal } from '../common/Reveal/Reveal'
+import { useLanguage } from '../../context/LanguageContext'
 
 /**
  * Icon + copy card grid used for the "what you get" blocks.
  * `items`: [{ icon, title, desc, badge? }]
  */
 export function FeatureGrid({ items, cols = 'sm:grid-cols-2 lg:grid-cols-3', className = '' }) {
+  const { t } = useLanguage()
   return (
     <div className={`grid gap-5 ${cols} ${className}`}>
       {items.map((item, index) => (
@@ -16,13 +18,13 @@ export function FeatureGrid({ items, cols = 'sm:grid-cols-2 lg:grid-cols-3', cla
               </span>
               {item.badge ? (
                 <span className="rounded-full border border-line bg-cream px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-muted dark:bg-cream-2">
-                  {item.badge}
+                  {t(item.badge)}
                 </span>
               ) : null}
             </div>
 
-            <h3 className="mt-5 text-lg font-extrabold leading-snug text-ink">{item.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-body">{item.desc}</p>
+            <h3 className="mt-5 text-lg font-extrabold leading-snug text-ink">{t(item.title)}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-body">{t(item.desc)}</p>
           </article>
         </Reveal>
       ))}

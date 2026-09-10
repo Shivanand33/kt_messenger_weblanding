@@ -4,8 +4,10 @@ import { FiPlay, FiPause, FiRotateCcw, FiCheck, FiImage, FiSmile, FiMic, FiSend 
 import avatarFemale from '../../../assets/images/avatar_female_1.png'
 import avatarMale from '../../../assets/images/avatar_male_1.png'
 import weddingImg from '../../../assets/images/wedding_grid.png'
+import { useLanguage } from '../../../context/LanguageContext'
 
 export function ChatAnimationVideo({ className = '' }) {
+  const { t } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(true)
   const [step, setStep] = useState(0)
   const [progress, setProgress] = useState(0)
@@ -43,19 +45,19 @@ export function ChatAnimationVideo({ className = '' }) {
       <div className="flex items-center justify-between border-b border-line pb-3 mb-3">
         <div className="flex items-center gap-2">
           <span className="flex h-3 w-3 rounded-full bg-red-500 animate-ping" />
-          <span className="text-xs font-bold text-ink uppercase tracking-wider">Video Clip • How Chatting Works</span>
+          <span className="text-xs font-bold text-ink uppercase tracking-wider">{t('Video Clip • How Chatting Works')}</span>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
             className="flex items-center gap-1 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink hover:bg-brand-strong hover:text-white transition-colors"
           >
-            {isPlaying ? <><FiPause /> Pause</> : <><FiPlay /> Play</>}
+            {isPlaying ? <><FiPause /> {t('Pause')}</> : <><FiPlay /> {t('Play')}</>}
           </button>
           <button
             onClick={restartVideo}
             className="grid h-7 w-7 place-items-center rounded-full bg-cream text-ink hover:bg-line text-xs"
-            title="Replay video"
+            title={t('Replay video')}
           >
             <FiRotateCcw />
           </button>
@@ -72,11 +74,11 @@ export function ChatAnimationVideo({ className = '' }) {
               <img src={avatarFemale} alt="Sarah" className="h-8 w-8 rounded-full object-cover border border-brand-strong" />
               <div>
                 <p className="text-xs font-bold text-white">Sarah Jenkins</p>
-                <p className="text-[10px] text-emerald-400 font-semibold">Online • Signal E2EE</p>
+                <p className="text-[10px] text-emerald-400 font-semibold">{t('Online • KT E2EE')}</p>
               </div>
             </div>
             <span className="rounded-full bg-brand-strong/30 px-2 py-0.5 text-[9px] font-bold text-brand-ink border border-brand-strong/40">
-              1080p Media
+              {t('1080p Media')}
             </span>
           </div>
 
@@ -88,7 +90,7 @@ export function ChatAnimationVideo({ className = '' }) {
                 animate={{ opacity: 1, y: 0 }}
                 className="max-w-[75%] rounded-2xl bg-slate-900 p-2.5 text-slate-200 border border-slate-800"
               >
-                Hey! Are we still sending the project files over KT? 📁
+                {t('Hey! Are we still sending the project files over KT? 📁')}
                 <span className="mt-1 block text-[8px] text-slate-400 text-right">10:42 AM</span>
               </motion.div>
             )}
@@ -99,7 +101,7 @@ export function ChatAnimationVideo({ className = '' }) {
                 animate={{ opacity: 1, scale: 1 }}
                 className="ml-auto max-w-[80%] rounded-2xl bg-brand-strong p-2.5 text-white shadow-brand"
               >
-                Yes! Just attaching the 4K photos & 2GB ZIP project archive. Watch this! 🚀
+                {t('Yes! Just attaching the 4K photos & 2GB ZIP project archive. Watch this! 🚀')}
                 <div className="mt-1 flex items-center justify-end gap-1 text-[8px] text-white/80">
                   <span>10:43 AM</span>
                   <FiCheck className="text-xs text-blue-200" />
@@ -113,7 +115,7 @@ export function ChatAnimationVideo({ className = '' }) {
                 animate={{ opacity: 1, y: 0 }}
                 className="ml-auto max-w-[70%] overflow-hidden rounded-2xl bg-slate-900 p-1.5 border border-slate-800"
               >
-                <img src={weddingImg} alt="Attachment" className="h-28 w-full rounded-xl object-cover" />
+                <img src={weddingImg} alt={t('Attachment')} className="h-28 w-full rounded-xl object-cover" />
                 <div className="mt-1 flex items-center justify-between px-1 text-[9px] text-slate-300">
                   <span>Project_Design.zip (1.8 GB)</span>
                   <FiCheck className="text-brand-strong text-xs" />
@@ -127,7 +129,7 @@ export function ChatAnimationVideo({ className = '' }) {
                 animate={{ opacity: 1 }}
                 className="flex items-center gap-1 text-[10px] text-slate-400 italic"
               >
-                <span>Sarah is typing...</span>
+                <span>{t('Sarah is typing...')}</span>
                 <motion.span animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1 }}>•</motion.span>
                 <motion.span animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}>•</motion.span>
               </motion.div>
@@ -140,7 +142,7 @@ export function ChatAnimationVideo({ className = '' }) {
             <input
               type="text"
               readOnly
-              value={step === 0 ? "Typing message..." : step === 1 ? "Sending HD image asset..." : "Message delivered via E2EE ✔"}
+              value={step === 0 ? t('Typing message...') : step === 1 ? t('Sending HD image asset...') : t('Message delivered via E2EE ✔')}
               className="w-full bg-transparent text-[11px] text-slate-200 outline-none"
             />
             <div className="grid h-7 w-7 place-items-center rounded-lg bg-brand-strong text-white text-xs shrink-0 shadow-brand">

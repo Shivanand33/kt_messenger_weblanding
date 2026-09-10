@@ -31,6 +31,7 @@ import { Logo } from '../../components/common/Logo/Logo'
 import { ThemeToggle } from '../../components/common/ThemeToggle/ThemeToggle'
 import { Footer } from '../../components/layout/Footer/Footer'
 import { useModal } from '../../context/ModalContext'
+import { useLanguage } from '../../context/LanguageContext'
 
 import heroImg from '../../assets/images/business.jpg'
 import whyImg from '../../assets/images/private.jpg'
@@ -59,6 +60,7 @@ function LinkArrow({ children, href = '#' }) {
 export function BusinessPage() {
   const navigate = useNavigate()
   const { openDownloadModal } = useModal()
+  const { t: tr } = useLanguage()
   const [lang, setLang] = useState('en') // 'en' or 'hi'
   const [topBannerClosed, setTopBannerClosed] = useState(false)
   const [activeMenu, setActiveMenu] = useState(null) // 'products' | 'resources' | 'developers' | 'partners' | null
@@ -67,11 +69,11 @@ export function BusinessPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [openWhy, setOpenWhy] = useState(0)
 
-  // GET STARTED ONBOARDING WIZARD MODAL STATE (WHATSAPP BUSINESS WORKFLOW)
+  // GET STARTED ONBOARDING WIZARD MODAL STATE (BUSINESS WORKFLOW)
   const [getStartedOpen, setGetStartedOpen] = useState(false)
   const [wizardStep, setWizardStep] = useState(1)
   const [selectedSolution, setSelectedSolution] = useState('app') // 'app' or 'api'
-  const [bizForm, setBizForm] = useState({ name: '', category: 'Retail', phone: '', country: 'India' })
+  const [bizForm, setBizForm] = useState({ name: '', category: 'Retail', phone: '', country: 'Global' })
 
   const menuRef = useRef(null)
   const closeTimer = useRef(null)
@@ -112,7 +114,7 @@ export function BusinessPage() {
   // Translation Dictionary
   const t = {
     topBannerText: isHindi ? 'क्या हमने सही देश/क्षेत्र चुना?' : 'Did we select the right country/region?',
-    countryName: isHindi ? 'भारत 🇮🇳' : 'India 🇮🇳',
+    countryName: isHindi ? 'ग्लोबल' : 'Global',
     announcementText: isHindi
       ? 'हर KT बातचीत में बड़े पैमाने पर पर्सनलाइजेशन. Meet KT Business Agent.'
       : 'Personalization at scale, in every KT conversation. Meet KT Business Agent.',
@@ -128,7 +130,7 @@ export function BusinessPage() {
     heroTitle: isHindi ? 'बेहतर परिणाम पाने के लिए बातचीत का फ़ायदा उठाएं' : 'Turn conversations into customers',
     heroDesc: isHindi
       ? 'दुनिया भर में 2 बिलियन से ज़्यादा यूज़र के साथ प्लेटफ़ॉर्म पर AI की सुविधा वाला कस्टमर एंगेजमेंट बढ़ाएं।'
-      : 'Reach and engage more than 2 billion people with AI-powered messaging built for business.',
+      : 'Reach and engage more than 2 billion people with AI powered messaging built for business.',
     bubble1: isHindi ? 'मुझे एक छोटा पौधा चाहिए! 🌱' : 'I need a small plant! 🌱',
     bubble2: isHindi ? 'आपको हमारा मिनी पोथॉस पसंद आएगा 🪴' : "You'll love our Mini Pothos 🪴",
     bubble3: isHindi ? 'ऑर्डर #KT4821 कन्फर्म हो गया ✓' : 'Order #KT4821 confirmed ✓',
@@ -185,7 +187,7 @@ export function BusinessPage() {
       title: isHindi ? 'KT बिज़नेस प्लेटफ़ॉर्म (API)' : 'KT Business Platform (API)',
       desc: isHindi
         ? 'मध्यम और बड़े बिज़नेस के लिए जो AI टूल और CRM इंटीग्रेशन के साथ बातचीत बढ़ाना चाहते हैं।'
-        : 'For medium & large businesses looking to scale customer engagement via enterprise-grade messaging APIs, AI tools, and CRM integrations.',
+        : 'For medium & large businesses looking to scale customer engagement via enterprise grade messaging APIs, AI tools, and CRM integrations.',
       cta: isHindi ? 'प्लेटफ़ॉर्म API एक्सप्लोर करें' : 'Explore Platform API',
       to: '/security'
     }
@@ -202,18 +204,18 @@ export function BusinessPage() {
       q: isHindi ? 'KT बिज़नेस ऐप और प्लेटफ़ॉर्म API में क्या अंतर है?' : 'What is the difference between the KT Business App and Platform API?',
       a: isHindi
         ? 'बिज़नेस ऐप फ्री है और छोटे बिज़नेस के लिए है। प्लेटफ़ॉर्म API बड़ी टीमों के लिए मल्टी-एजेंट इनबॉक्स प्रदान करता है।'
-        : 'The Business App is free and designed for small businesses using a single mobile device. The Platform API is built for larger teams requiring multi-agent inboxes, automated AI workflows, and custom CRM integrations.'
+        : 'The Business App is free and designed for small businesses using a single mobile device. The Platform API is built for larger teams requiring multi agent inboxes, automated AI workflows, and custom CRM integrations.'
     },
     {
       q: isHindi ? 'क्या KT बिज़नेस पर कस्टमर डेटा सुरक्षित है?' : 'Is customer data secure on KT Business?',
       a: isHindi
-        ? 'हाँ। सभी मैसेज डिफ़ॉल्ट रूप से Signal Protocol एंड-टू-एंड एन्क्रिप्शन से सुरक्षित रहते हैं।'
-        : 'Yes. All messages benefit from Signal Protocol end-to-end encryption by default. Your business and customer communications remain private and protected.'
+        ? 'हाँ। सभी मैसेज डिफ़ॉल्ट रूप से KT Encryption Protocol एंड-टू-एंड एन्क्रिप्शन से सुरक्षित रहते हैं।'
+        : 'Yes. All messages benefit from KT Encryption Protocol end to end encryption by default. Your business and customer communications remain private and protected.'
     }
   ]
 
   const sampleSearchData = [
-    { title: t.bizPlatform, desc: 'Enterprise Signal messaging API.', path: '/business' },
+    { title: t.bizPlatform, desc: 'Enterprise KT messaging API.', path: '/business' },
     { title: t.bizApp, desc: 'Mobile app for small business owners.', path: '/apps' },
     { title: t.flows, desc: 'Interactive form flows inside chat.', path: '/ai' },
     { title: t.resourceLib, desc: 'Guides, tutorials, and eBooks.', path: '/help' },
@@ -576,7 +578,7 @@ export function BusinessPage() {
         </div>
       </div>
 
-      {/* 5. WHATSAPP BUSINESS "GET STARTED" ONBOARDING WIZARD MODAL (100% WORKING!) */}
+      {/* 5. BUSINESS "GET STARTED" ONBOARDING WIZARD MODAL (100% WORKING!) */}
       <AnimatePresence>
         {getStartedOpen && (
           <motion.div
@@ -595,7 +597,7 @@ export function BusinessPage() {
               <div className="flex items-center justify-between bg-slate-900 px-6 py-4 text-white">
                 <div className="flex items-center gap-2 font-bold text-lg">
                   <span className="grid h-7 w-7 place-items-center rounded-xl bg-brand-strong text-white font-black text-xs">KT</span>
-                  <span>KT Business Setup • Step {wizardStep} of 3</span>
+                  <span>KT Business {tr('Setup')} • {tr('Step')} {wizardStep} {tr('of 3')}</span>
                 </div>
                 <button onClick={() => setGetStartedOpen(false)} className="rounded-full p-1 hover:bg-white/20 transition-colors">
                   <FiX className="text-xl" />
@@ -608,8 +610,8 @@ export function BusinessPage() {
                 {/* STEP 1: SELECT SOLUTION */}
                 {wizardStep === 1 && (
                   <div className="space-y-5">
-                    <h3 className="text-xl font-extrabold text-slate-900">Choose your Business Solution</h3>
-                    <p className="text-sm text-slate-600">Select how you want to connect with your customers on KT Business.</p>
+                    <h3 className="text-xl font-extrabold text-slate-900">{tr('Choose your Business Solution')}</h3>
+                    <p className="text-sm text-slate-600">{tr('Select how you want to connect with your customers on KT Business.')}</p>
 
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div
@@ -620,7 +622,7 @@ export function BusinessPage() {
                       >
                         <FiSmartphone className="text-3xl text-brand-strong mb-3" />
                         <h4 className="font-extrabold text-slate-900 text-base">KT Business App</h4>
-                        <p className="text-xs text-slate-600 mt-1">Best for small shops, freelancers, & local store owners.</p>
+                        <p className="text-xs text-slate-600 mt-1">{tr('Best for small shops, freelancers, & local store owners.')}</p>
                       </div>
 
                       <div
@@ -631,7 +633,7 @@ export function BusinessPage() {
                       >
                         <FiZap className="text-3xl text-brand-strong mb-3" />
                         <h4 className="font-extrabold text-slate-900 text-base">Platform API & AI</h4>
-                        <p className="text-xs text-slate-600 mt-1">Best for enterprise brands, multi-agent teams, & AI bots.</p>
+                        <p className="text-xs text-slate-600 mt-1">{tr('Best for enterprise brands, multi agent teams, & AI bots.')}</p>
                       </div>
                     </div>
 
@@ -639,7 +641,7 @@ export function BusinessPage() {
                       onClick={() => setWizardStep(2)}
                       className="w-full rounded-2xl bg-brand-strong hover:bg-brand-strong-hover py-3.5 text-base font-bold text-white shadow-brand transition-all flex items-center justify-center gap-2"
                     >
-                      <span>Continue to Profile Setup</span>
+                      <span>{tr('Continue to Profile Setup')}</span>
                       <FiArrowRight />
                     </button>
                   </div>
@@ -648,42 +650,42 @@ export function BusinessPage() {
                 {/* STEP 2: BUSINESS DETAILS FORM */}
                 {wizardStep === 2 && (
                   <div className="space-y-4">
-                    <h3 className="text-xl font-extrabold text-slate-900">Enter Business Details</h3>
+                    <h3 className="text-xl font-extrabold text-slate-900">{tr('Enter Business Details')}</h3>
 
                     <div className="space-y-3">
                       <div>
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">Business Name</label>
+                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">{tr('Business Name')}</label>
                         <input
                           type="text"
                           value={bizForm.name}
                           onChange={(e) => setBizForm({ ...bizForm, name: e.target.value })}
-                          placeholder="e.g. Acme Organic Store"
+                          placeholder={tr('e.g. Acme Organic Store')}
                           className="w-full rounded-xl border border-slate-300 p-3 text-sm font-semibold outline-none focus:border-brand-strong focus:ring-2 focus:ring-sky-200"
                         />
                       </div>
 
                       <div>
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">Business Category</label>
+                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">{tr('Business Category')}</label>
                         <select
                           value={bizForm.category}
                           onChange={(e) => setBizForm({ ...bizForm, category: e.target.value })}
                           className="w-full rounded-xl border border-slate-300 p-3 text-sm font-semibold outline-none focus:border-brand-strong focus:ring-2 focus:ring-sky-200"
                         >
-                          <option>Retail & E-commerce</option>
-                          <option>Services & Consulting</option>
-                          <option>Healthcare & Pharma</option>
-                          <option>Financial & Banking</option>
-                          <option>Education & Training</option>
+                          <option>{tr('Retail & E commerce')}</option>
+                          <option>{tr('Services & Consulting')}</option>
+                          <option>{tr('Healthcare & Pharma')}</option>
+                          <option>{tr('Financial & Banking')}</option>
+                          <option>{tr('Education & Training')}</option>
                         </select>
                       </div>
 
                       <div>
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">Mobile / KT Number</label>
+                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">{tr('Mobile / KT Number')}</label>
                         <input
                           type="text"
                           value={bizForm.phone}
                           onChange={(e) => setBizForm({ ...bizForm, phone: e.target.value })}
-                          placeholder="+91 98765 43210"
+                          placeholder="000 000 0000"
                           className="w-full rounded-xl border border-slate-300 p-3 text-sm font-semibold outline-none focus:border-brand-strong focus:ring-2 focus:ring-sky-200"
                         />
                       </div>
@@ -694,13 +696,13 @@ export function BusinessPage() {
                         onClick={() => setWizardStep(1)}
                         className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-bold text-slate-700 hover:bg-slate-100"
                       >
-                        Back
+                        {tr('Back')}
                       </button>
                       <button
                         onClick={() => setWizardStep(3)}
                         className="flex-1 rounded-2xl bg-brand-strong hover:bg-brand-strong-hover py-3 text-sm font-bold text-white shadow-brand transition-all flex items-center justify-center gap-2"
                       >
-                        <span>Activate Business Account</span>
+                        <span>{tr('Activate Business Account')}</span>
                         <FiCheckCircle />
                       </button>
                     </div>
@@ -714,9 +716,9 @@ export function BusinessPage() {
                       <FiCheck />
                     </div>
 
-                    <h3 className="text-2xl font-extrabold text-slate-900">Account Activated Successfully!</h3>
+                    <h3 className="text-2xl font-extrabold text-slate-900">{tr('Account Activated Successfully!')}</h3>
                     <p className="text-sm text-slate-600 max-w-sm mx-auto">
-                      Welcome <strong>{bizForm.name || 'Your Business'}</strong>! Your KT Business profile is live with AI Chatbot support.
+                      {tr('Welcome')} <strong>{bizForm.name || tr('Your Business')}</strong>! {tr('Your KT Business profile is live with AI Chatbot support.')}
                     </p>
 
                     <div className="pt-4 flex flex-col gap-3">
@@ -724,13 +726,13 @@ export function BusinessPage() {
                         onClick={() => { setGetStartedOpen(false); navigate('/apps') }}
                         className="w-full rounded-2xl bg-brand-strong hover:bg-brand-strong-hover py-3.5 text-base font-bold text-white shadow-brand transition-all"
                       >
-                        Launch KT Business Dashboard
+                        {tr('Launch KT Business Dashboard')}
                       </button>
                       <button
                         onClick={() => setGetStartedOpen(false)}
                         className="text-xs font-bold text-slate-500 hover:text-slate-800"
                       >
-                        Close Wizard
+                        {tr('Close Wizard')}
                       </button>
                     </div>
                   </div>
@@ -770,7 +772,7 @@ export function BusinessPage() {
 
           <Reveal from="scale" delay={0.1} className="relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
-              <img src={heroImg} alt="A small business owner helping a customer" className="h-[420px] w-full rounded-[28px] object-cover sm:h-[520px] shadow-2xl border border-slate-700" />
+              <img src={heroImg} alt={tr('A small business owner helping a customer')} className="h-[420px] w-full rounded-[28px] object-cover sm:h-[520px] shadow-2xl border border-slate-700" />
 
               <Sparkle className="absolute -right-2 -top-5 h-14 w-14 text-sky-400" />
               <Sparkle className="absolute right-10 top-6 h-7 w-7 text-sky-400/70" />
@@ -812,7 +814,7 @@ export function BusinessPage() {
           <Reveal from="up" className="text-center">
             <p className="text-sm font-bold text-brand-strong uppercase tracking-wider">{isHindi ? 'हर कंपनी आकार के लिए KT बिज़नेस' : 'KT business for any company size'}</p>
             <h2 className="mx-auto mt-4 max-w-4xl text-[1.9rem] font-bold leading-[1.15] tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              {isHindi ? 'KT बिज़नेस प्रोडक्ट हर आकार की कंपनियों का समर्थन करते हैं' : 'KT Business products support companies of every size — find the one that fits you best.'}
+              {isHindi ? 'KT बिज़नेस प्रोडक्ट हर आकार की कंपनियों का समर्थन करते हैं' : 'KT Business products support companies of every size find the one that fits you best.'}
             </h2>
           </Reveal>
 
@@ -845,7 +847,7 @@ export function BusinessPage() {
       <section className="bg-cream py-20 lg:py-28 dark:bg-surface">
         <div className="mx-auto grid max-w-[1200px] items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
           <Reveal from="left">
-            <img src={whyImg} alt="A business owner working on a laptop" className="h-[360px] w-full rounded-[28px] object-cover lg:h-[460px] shadow-card" />
+            <img src={whyImg} alt={tr('A business owner working on a laptop')} className="h-[360px] w-full rounded-[28px] object-cover lg:h-[460px] shadow-card" />
           </Reveal>
           <Reveal from="right">
             <h2 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">

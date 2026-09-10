@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
 import { useLoopClock } from './useLoopClock'
+import { useLanguage } from '../../../context/LanguageContext'
 import trend1 from '../../../assets/images/business.jpg'
 import trend2 from '../../../assets/images/private.jpg'
 import story1 from '../../../assets/images/security.jpg'
@@ -20,15 +21,15 @@ import story2 from '../../../assets/images/multidevice.jpg'
 const CHIPS = ['All', 'Finance', 'Video News', 'World News', 'P…']
 
 const TRENDING = [
-  { image: trend1, title: 'She Is Russia’s Richest Woman. Her Business Empi…', length: '04:01', shares: 0 },
-  { image: trend2, title: 'Senate eyes the exit after GOP-Trump deal', length: '03:53', shares: 0 },
+  { image: trend1, title: 'Meet the founder scaling a green energy empire', length: '04:01', shares: 0 },
+  { image: trend2, title: 'Budget committee reaches a cross party agreement', length: '03:53', shares: 0 },
 ]
 
 const RECENT = [
-  { image: trend1, title: 'She Is Russia’s Richest Woman. Her Business Empire Is Going Up in Fla…', source: 'The New York Times', when: '2h ago' },
-  { image: trend2, title: 'Senate eyes the exit after GOP-Trump deal', source: 'Politico', when: '2h ago' },
-  { image: story1, title: 'Thune, Trump, Senate conservatives reach deal to set aside budget, SA…', source: 'The Hill', when: '3h ago' },
-  { image: story2, title: 'Markets steady as central banks hold rates for a third meeting', source: 'Reuters', when: '4h ago' },
+  { image: trend1, title: 'Meet the founder scaling a green energy empire across three markets', source: 'KT Global', when: '2h ago' },
+  { image: trend2, title: 'Budget committee reaches a cross party agreement', source: 'KT Politics Desk', when: '2h ago' },
+  { image: story1, title: 'Policy group agrees to set aside the budget review for now', source: 'KT Policy', when: '3h ago' },
+  { image: story2, title: 'Markets steady as central banks hold rates for a third meeting', source: 'KT Wire', when: '4h ago' },
 ]
 
 const NAV = [
@@ -41,6 +42,7 @@ const NAV = [
 ]
 
 export function KtNewsScreen({ className = '' }) {
+  const { t } = useLanguage()
   const { progress, isPlaying, togglePlay, restart } = useLoopClock({ durationMs: 15000 })
 
   // The feed scrolls slowly, then resets — like a thumb flick through stories.
@@ -49,7 +51,7 @@ export function KtNewsScreen({ className = '' }) {
 
   return (
     <AppPhoneFrame
-      title="News · trending &amp; live channels"
+      title={t('News · trending & live channels')}
       progress={progress}
       isPlaying={isPlaying}
       onTogglePlay={togglePlay}
@@ -62,13 +64,13 @@ export function KtNewsScreen({ className = '' }) {
         {/* Header */}
         <div className="shrink-0 bg-gradient-to-r from-[#0f74ee] via-[#1e8bf2] to-[#43aef7] px-3 pb-3 pt-9">
           <div className="flex items-center justify-between">
-            <span className="text-[16px] font-bold text-white">News</span>
+            <span className="text-[16px] font-bold text-white">{t('News')}</span>
             <FiBookmark className="text-[15px] text-white" />
           </div>
 
           <div className="mt-2.5 flex h-8 items-center gap-2 rounded-full bg-white px-3 shadow-sm">
             <FiSearch className="shrink-0 text-[12px] text-slate-400" />
-            <span className="text-[10px] font-medium text-slate-400">Search news…</span>
+            <span className="text-[10px] font-medium text-slate-400">{t('Search news…')}</span>
           </div>
         </div>
 
@@ -85,7 +87,7 @@ export function KtNewsScreen({ className = '' }) {
                 }`}
               >
                 {chip === 'Video News' ? <FiPlayCircle className="text-[9px]" /> : null}
-                {chip}
+                {t(chip)}
               </span>
             ))}
           </div>
@@ -95,18 +97,18 @@ export function KtNewsScreen({ className = '' }) {
         <div className="relative flex-1 overflow-hidden">
           <motion.div animate={{ y: -scroll }} transition={{ duration: 0.4, ease: 'linear' }} className="px-3">
             <div className="flex items-baseline justify-between">
-              <span className="text-[11px] font-bold text-slate-900">Good Afternoon</span>
+              <span className="text-[11px] font-bold text-slate-900">{t('Good Afternoon')}</span>
               <span className="text-[8px] font-medium text-slate-500">Aug 8, 2026 · 12:09 PM</span>
             </div>
 
             <div className="mt-2">
-              <div className="text-[10px] font-bold text-slate-900">Live channels</div>
-              <div className="mt-0.5 text-[9px] font-medium text-slate-500">No live channels right now</div>
+              <div className="text-[10px] font-bold text-slate-900">{t('Live channels')}</div>
+              <div className="mt-0.5 text-[9px] font-medium text-slate-500">{t('No live channels right now')}</div>
             </div>
 
             <div className="mt-3 flex items-center justify-between">
-              <span className="text-[10px] font-bold text-slate-900">Trending</span>
-              <span className="text-[9px] font-bold text-[#1e8bf2]">View All</span>
+              <span className="text-[10px] font-bold text-slate-900">{t('Trending')}</span>
+              <span className="text-[9px] font-bold text-[#1e8bf2]">{t('View All')}</span>
             </div>
 
             <div className="mt-1.5 flex gap-2 overflow-hidden">
@@ -114,7 +116,7 @@ export function KtNewsScreen({ className = '' }) {
                 <div key={item.title} className="w-[112px] shrink-0 overflow-hidden rounded-xl bg-white shadow-sm">
                   <img src={item.image} alt="" className="h-[62px] w-full object-cover" />
                   <div className="p-1.5">
-                    <p className="line-clamp-2 text-[9px] font-bold leading-tight text-slate-900">{item.title}</p>
+                    <p className="line-clamp-2 text-[9px] font-bold leading-tight text-slate-900">{t(item.title)}</p>
                     <div className="mt-1 flex items-center gap-1.5 text-[8px] font-semibold text-slate-500">
                       <span>{item.length}</span>
                       <span>·</span>
@@ -126,13 +128,13 @@ export function KtNewsScreen({ className = '' }) {
               ))}
             </div>
 
-            <div className="mt-3 text-[10px] font-bold text-slate-900">Recent Stories</div>
+            <div className="mt-3 text-[10px] font-bold text-slate-900">{t('Recent Stories')}</div>
             <div className="mt-1 divide-y divide-slate-200">
               {RECENT.map((item) => (
                 <div key={item.title} className="flex items-center gap-2 py-2">
                   <img src={item.image} alt="" className="h-9 w-9 shrink-0 rounded-md object-cover" />
                   <div className="min-w-0 flex-1">
-                    <p className="line-clamp-2 text-[9.5px] font-bold leading-tight text-slate-900">{item.title}</p>
+                    <p className="line-clamp-2 text-[9.5px] font-bold leading-tight text-slate-900">{t(item.title)}</p>
                     <p className="mt-0.5 text-[8px] font-medium text-slate-500">
                       {item.source} · {item.when}
                     </p>
@@ -159,7 +161,7 @@ export function KtNewsScreen({ className = '' }) {
                 ) : null}
               </span>
               <span className={`text-[7px] font-semibold ${item.active ? 'text-[#1e8bf2]' : 'text-slate-400'}`}>
-                {item.label}
+                {t(item.label)}
               </span>
               {item.active ? <span className="mt-0.5 h-[2px] w-5 rounded-full bg-[#1e8bf2]" /> : null}
             </div>

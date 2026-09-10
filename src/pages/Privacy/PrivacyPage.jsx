@@ -34,6 +34,7 @@ import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Button } from '../../components/common/Button/Button'
 import { DownloadCTA } from '../../components/sections/DownloadCTA/DownloadCTA'
 import { useModal } from '../../context/ModalContext'
+import { useLanguage } from '../../context/LanguageContext'
 
 import nadiaAvatar from '../../assets/images/nadia_avatar.png'
 import maleAvatar from '../../assets/images/avatar_male_1.png'
@@ -47,7 +48,7 @@ import businessImg from '../../assets/images/business.jpg'
 const privacyControlsCards = [
   {
     title: 'Privacy checkup',
-    desc: 'Personalize your KT Messenger privacy settings with easy step-by-step guidance to keep your account safe and private.',
+    desc: 'Personalize your KT Messenger privacy settings with easy step by step guidance to keep your account safe and private.',
     badge: 'Checkup Guide 🛡️',
     to: '/security'
   },
@@ -58,14 +59,14 @@ const privacyControlsCards = [
     to: '/messaging'
   },
   {
-    title: 'Two-step verification',
+    title: 'Two step verification',
     desc: 'Add an extra layer of protection to your phone registration with a custom 6-digit PIN and Passkey biometrics.',
     badge: 'PIN Security 🔐',
     to: '/security'
   },
   {
     title: 'Group privacy controls',
-    desc: 'Decide who can add you to group chats — choose between Everyone, My Contacts, or My Contacts Except.',
+    desc: 'Decide who can add you to group chats choose between Everyone, My Contacts, or My Contacts Except.',
     badge: 'Group Safety 👥',
     to: '/groups'
   }
@@ -103,7 +104,7 @@ const discoverMoreFeatures = [
     to: '/business'
   },
   {
-    title: 'WhatsApp Plus',
+    title: 'KT Plus',
     image: groupImg,
     to: '/plus'
   }
@@ -112,6 +113,7 @@ const discoverMoreFeatures = [
 export function PrivacyPage() {
   const navigate = useNavigate()
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
   const [activeFaq, setActiveFaq] = useState(1)
   const [activePrivacyModal, setActivePrivacyModal] = useState('lastSeen')
   const [selectedLastSeen, setSelectedLastSeen] = useState('Everyone')
@@ -138,16 +140,16 @@ export function PrivacyPage() {
 
   const faqs = [
     {
-      q: 'What is end-to-end encryption?',
-      a: 'End-to-end encryption ensures that only you and the recipient hold the cryptographic keys to read your messages. Not even KT Messenger servers can decrypt your content.'
+      q: 'What is end to end encryption?',
+      a: 'End to end encryption ensures that only you and the recipient hold the cryptographic keys to read your messages. Not even KT Messenger servers can decrypt your content.'
     },
     {
-      q: 'What is two-step verification?',
-      a: 'Two-step verification adds a required 6-digit PIN whenever your phone number is re-registered on KT Messenger, protecting you against SIM-swap attacks.'
+      q: 'What is two step verification?',
+      a: 'Two step verification adds a required 6-digit PIN whenever your phone number is re registered on KT Messenger, protecting you against SIM swap attacks.'
     },
     {
       q: 'Is KT Messenger private and secure?',
-      a: 'Yes. All messages, calls, photos, videos, and cloud backups are protected by default Signal Protocol 256-bit encryption.'
+      a: 'Yes. All messages, calls, photos, videos, and cloud backups are protected by default KT Encryption Protocol 256-bit encryption.'
     },
     {
       q: 'How do I block and report spam contacts?',
@@ -168,26 +170,26 @@ export function PrivacyPage() {
             <div>
               <Reveal from="up">
                 <span className="inline-flex items-center gap-2 rounded-full border border-brand-strong/20 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
-                  <FiShield className="text-brand-strong" /> Default End-to-End Encryption
+                  <FiShield className="text-brand-strong" /> {t('Default End to End Encryption')}
                 </span>
                 <h1 className="mt-6 text-[3rem] font-extrabold leading-[1.02] tracking-tight text-ink sm:text-6xl lg:text-[4.8rem]">
-                  Message <span className="text-brand-strong">privately</span>
+                  {t('Message')} <span className="text-brand-strong">{t('privately')}</span>
                 </h1>
               </Reveal>
 
               <Reveal from="up" delay={0.06}>
                 <p className="mt-6 max-w-lg text-lg leading-relaxed text-body">
-                  Your privacy is our priority. With end-to-end encryption on KT Messenger, your personal messages, photos, calls and more stay between you and the people you choose, meaning not even KT Messenger can see them.
+                  {t('Your privacy is our priority. With end to end encryption on KT Messenger, your personal messages, photos, calls and more stay between you and the people you choose, meaning not even KT Messenger can see them.')}
                 </p>
               </Reveal>
 
               <Reveal from="up" delay={0.12}>
                 <div className="mt-8 flex flex-wrap gap-4">
                   <Button size="lg" onClick={openDownloadModal}>
-                    Download App <FiDownload />
+                    {t('Download App')} <FiDownload />
                   </Button>
                   <Button variant="secondary" size="lg" onClick={() => navigate('/security')}>
-                    Security Architecture <FiChevronRight />
+                    {t('Security Architecture')} <FiChevronRight />
                   </Button>
                 </div>
               </Reveal>
@@ -229,7 +231,7 @@ export function PrivacyPage() {
                   <div className="p-3 space-y-2.5 text-[11px] flex-1 overflow-y-auto no-scrollbar relative bg-[#f5f8fa] dark:bg-[#0b141a] bg-[radial-gradient(#d1d5db_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:14px_14px]">
                     {/* E2EE Protocol Pill */}
                     <div className="mx-auto w-fit rounded-full bg-white/90 dark:bg-slate-800/90 px-3 py-1 text-[9px] font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm text-center">
-                      🔒 End-to-end encrypted with Signal Protocol
+                      🔒 End to end encrypted with KT Encryption Protocol
                     </div>
 
                     {/* Received Message */}
@@ -366,20 +368,20 @@ export function PrivacyPage() {
 
             <Reveal from="right">
               <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-                Biometric Protection
+                {t('Biometric Protection')}
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                Chat <span className="text-brand-strong">lock</span>
+                {t('Chat')} <span className="text-brand-strong">{t('lock')}</span>
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-body">
-                Password protect your most personal chats so you can help keep them private and secure. Locked chats will be hidden from your chats list in the Locked Chats folder, so you can prevent anyone else using your phone from seeing them.
+                {t('Password protect your most personal chats so you can help keep them private and secure. Locked chats will be hidden from your chats list in the Locked Chats folder, so you can prevent anyone else using your phone from seeing them.')}
               </p>
               <div className="mt-8">
                 <button
                   onClick={() => navigate('/security')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
-                  <span>Learn more</span>
+                  <span>{t('Learn more')}</span>
                   <FiArrowUpRight className="text-lg transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
               </div>
@@ -394,20 +396,20 @@ export function PrivacyPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
               <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-                Ephemeral Privacy
+                {t('Ephemeral Privacy')}
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                <span className="text-brand-strong">Disappearing</span> messages
+                <span className="text-brand-strong">{t('Disappearing')}</span> {t('messages')}
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-body">
-                With disappearing messages, you can control which messages stick around and for how long, by setting them up to disappear after you&apos;ve sent them.
+                {t("With disappearing messages, you can control which messages stick around and for how long, by setting them up to disappear after you've sent them.")}
               </p>
               <div className="mt-8">
                 <button
                   onClick={() => navigate('/messaging')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
-                  <span>Learn more</span>
+                  <span>{t('Learn more')}</span>
                   <FiArrowUpRight className="text-lg transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
               </div>
@@ -658,20 +660,20 @@ export function PrivacyPage() {
 
             <Reveal from="right">
               <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-                Anti-Spam Filter
+                {t('Anti Spam Filter')}
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                <span className="text-brand-strong">Silence</span> unknown callers
+                <span className="text-brand-strong">{t('Silence')}</span> {t('unknown callers')}
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-body">
-                Screen out spam and unknown contacts from calling you, so you can focus on conversations that really matter to you.
+                {t('Screen out spam and unknown contacts from calling you, so you can focus on conversations that really matter to you.')}
               </p>
               <div className="mt-8">
                 <button
                   onClick={() => navigate('/calling')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
-                  <span>Learn more</span>
+                  <span>{t('Learn more')}</span>
                   <FiArrowUpRight className="text-lg transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
               </div>
@@ -832,20 +834,20 @@ export function PrivacyPage() {
 
             <Reveal from="right">
               <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-                Presence Control
+                {t('Presence Control')}
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                <span className="text-brand-strong">Last seen</span> and online
+                <span className="text-brand-strong">{t('Last seen')}</span> {t('and online')}
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-body">
-                Choose to be seen by only those you want. You can customize your privacy settings to choose who can see when you&apos;re online, and when you last used KT Messenger.
+                {t("Choose to be seen by only those you want. You can customize your privacy settings to choose who can see when you're online, and when you last used KT Messenger.")}
               </p>
               <div className="mt-8">
                 <button
                   onClick={() => navigate('/help')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
-                  <span>Learn more</span>
+                  <span>{t('Learn more')}</span>
                   <FiArrowUpRight className="text-lg transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
               </div>
@@ -860,20 +862,20 @@ export function PrivacyPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
               <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-                Cloud Vault Security
+                {t('Cloud Vault Security')}
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                <span className="text-brand-strong">End-to-End Encrypted</span> backups
+                <span className="text-brand-strong">{t('End to End Encrypted')}</span> {t('backups')}
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-body">
-                Keep your online backups private. Turn on encrypted backups to extend the security of KT Messenger end-to-end encryption to your messages saved in iCloud or Google Drive.
+                {t('Keep your online backups private. Turn on encrypted backups to extend the security of KT Messenger end to end encryption to your messages saved in iCloud or Google Drive.')}
               </p>
               <div className="mt-8">
                 <button
                   onClick={() => navigate('/security')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
-                  <span>Learn more</span>
+                  <span>{t('Learn more')}</span>
                   <FiArrowUpRight className="text-lg transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
               </div>
@@ -939,7 +941,7 @@ export function PrivacyPage() {
                         <div className="flex items-center gap-2.5">
                           <span className="text-sky-500 text-sm">📶</span>
                           <div>
-                            <div className="font-bold text-xs text-slate-900 dark:text-white">Back up over Wi-Fi only</div>
+                            <div className="font-bold text-xs text-slate-900 dark:text-white">Back up over Wi Fi only</div>
                             <div className="text-[10px] text-slate-500 dark:text-slate-400">Automatic backups skip mobile data.</div>
                           </div>
                         </div>
@@ -970,7 +972,7 @@ export function PrivacyPage() {
                   </div>
 
                   <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight px-1 text-center">
-                    Backups are end-to-end encrypted and stored privately in your Google Drive.{' '}
+                    Backups are end to end encrypted and stored privately in your Google Drive.{' '}
                     <button
                       type="button"
                       onClick={() => navigate('/help')}
@@ -1022,7 +1024,7 @@ export function PrivacyPage() {
                     </div>
                     <h4 className="mt-2 text-sm font-extrabold text-slate-900 dark:text-white">Your chats and calls are private</h4>
                     <p className="mt-1 text-[10px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-[260px] mx-auto">
-                      End-to-end encryption keeps your personal messages and calls between you and the people you choose. No one outside of the chat, not even KT Messenger, can read, listen to, or share them.
+                      End to end encryption keeps your personal messages and calls between you and the people you choose. No one outside of the chat, not even KT Messenger, can read, listen to, or share them.
                     </p>
                   </div>
 
@@ -1059,20 +1061,20 @@ export function PrivacyPage() {
 
             <Reveal from="right">
               <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-                Scam &amp; Threat Shield
+                {t('Scam & Threat Shield')}
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                <span className="text-brand-strong">Security</span> and safety
+                <span className="text-brand-strong">{t('Security')}</span> {t('and safety')}
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-body">
-                Protect your account from hackers and scammers and stop unwanted chats.
+                {t('Protect your account from hackers and scammers and stop unwanted chats.')}
               </p>
               <div className="mt-8">
                 <button
                   onClick={() => navigate('/security')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
-                  <span>Learn more</span>
+                  <span>{t('Learn more')}</span>
                   <FiArrowUpRight className="text-lg transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
               </div>
@@ -1090,13 +1092,13 @@ export function PrivacyPage() {
             <div className="relative lg:z-20 lg:self-stretch lg:flex lg:items-center lg:bg-surface lg:ml-[calc(var(--edge-gutter)*-1)] lg:pl-[var(--edge-gutter)]">
               <div className="w-full">
               <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-                Complete Control
+                {t('Complete Control')}
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                Explore more <span className="text-brand-strong">KT privacy controls</span>
+                {t('Explore more')} <span className="text-brand-strong">{t('KT privacy controls')}</span>
               </h2>
               <p className="mt-6 text-base leading-relaxed text-body">
-                Take control of your conversations with KT Messenger privacy settings. KT offers privacy features designed to keep your messaging experience safe, secure and private.
+                {t('Take control of your conversations with KT Messenger privacy settings. KT offers privacy features designed to keep your messaging experience safe, secure and private.')}
               </p>
               <div className="mt-8 flex gap-3">
                 <button
@@ -1120,17 +1122,17 @@ export function PrivacyPage() {
                 <div key={idx} className="w-[300px] shrink-0 flex flex-col justify-between rounded-[28px] border border-line bg-cream p-6 dark:bg-surface">
                   <div>
                     <span className="rounded-full bg-brand-soft px-3 py-1 text-[11px] font-bold text-brand-ink">
-                      {card.badge}
+                      {t(card.badge)}
                     </span>
-                    <h3 className="mt-5 text-xl font-extrabold text-ink">{card.title}</h3>
-                    <p className="mt-3 text-xs text-body leading-relaxed">{card.desc}</p>
+                    <h3 className="mt-5 text-xl font-extrabold text-ink">{t(card.title)}</h3>
+                    <p className="mt-3 text-xs text-body leading-relaxed">{t(card.desc)}</p>
                   </div>
                   <div className="mt-6 pt-4 border-t border-line">
                     <button
                       onClick={() => navigate(card.to)}
                       className="group inline-flex items-center gap-1.5 text-sm font-bold text-brand-ink hover:text-brand-strong transition-colors"
                     >
-                      <span>Learn more</span>
+                      <span>{t('Learn more')}</span>
                       <FiArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </button>
                   </div>
@@ -1149,10 +1151,10 @@ export function PrivacyPage() {
             <div className="relative lg:z-20 lg:self-stretch lg:flex lg:items-center lg:bg-cream lg:dark:bg-surface lg:ml-[calc(var(--edge-gutter)*-1)] lg:pl-[var(--edge-gutter)]">
               <div className="w-full">
               <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                Discover <span className="text-brand-strong">more features</span>
+                {t('Discover')} <span className="text-brand-strong">{t('more features')}</span>
               </h2>
               <p className="mt-4 text-base text-body">
-                Learn more about what you can do on KT Messenger.
+                {t('Learn more about what you can do on KT Messenger.')}
               </p>
               <div className="mt-8 flex gap-3">
                 <button
@@ -1175,14 +1177,14 @@ export function PrivacyPage() {
               {discoverMoreFeatures.map((item, idx) => (
                 <div key={idx} className="w-[280px] shrink-0">
                   <div className="overflow-hidden rounded-[20px]">
-                    <img src={item.image} alt={item.title} className="h-44 w-full object-cover transition-transform duration-300 hover:scale-105" />
+                    <img src={item.image} alt={t(item.title)} className="h-44 w-full object-cover transition-transform duration-300 hover:scale-105" />
                   </div>
-                  <h3 className="mt-4 text-xl font-extrabold text-ink">{item.title}</h3>
+                  <h3 className="mt-4 text-xl font-extrabold text-ink">{t(item.title)}</h3>
                   <button
                     onClick={() => navigate(item.to)}
                     className="group mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-brand-ink hover:text-brand-strong transition-colors"
                   >
-                    <span>Learn more</span>
+                    <span>{t('Learn more')}</span>
                     <FiChevronRight className="text-base transition-transform group-hover:translate-x-1" />
                   </button>
                 </div>
@@ -1196,9 +1198,9 @@ export function PrivacyPage() {
       <section className="py-20 bg-surface dark:bg-cream-2 border-b border-line">
         <Container maxW="max-w-3xl">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-extrabold text-ink sm:text-4xl">Need more help?</h2>
+            <h2 className="text-3xl font-extrabold text-ink sm:text-4xl">{t('Need more help?')}</h2>
             <button onClick={() => navigate('/help')} className="inline-flex items-center gap-1 text-sm font-bold text-brand-ink hover:text-brand-strong">
-              <span>See all FAQs</span>
+              <span>{t('See all FAQs')}</span>
               <FiArrowUpRight />
             </button>
           </div>
@@ -1216,7 +1218,7 @@ export function PrivacyPage() {
                       : 'bg-surface text-ink border-line hover:border-brand-strong/40'
                   }`}
                 >
-                  <span className="font-bold text-base">{f.q}</span>
+                  <span className="font-bold text-base">{t(f.q)}</span>
                   <span className={`grid h-8 w-8 place-items-center rounded-full transition-transform ${open ? 'bg-white/20 text-white rotate-45' : 'bg-brand-soft text-brand-ink'}`}>
                     <FiArrowUpRight className="text-lg" />
                   </span>

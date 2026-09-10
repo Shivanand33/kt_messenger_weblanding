@@ -13,7 +13,7 @@ export const initialNotes = [
     id: 1,
     title: 'Q4 product roadmap',
     content:
-      'Ship KT AI Co-Pilot in 12 languages.\nFinalise end-to-end encrypted backup key generation.\nMove the payments SDK to the new escrow flow before the festive peak.',
+      'Ship KT AI Co Pilot in 12 languages.\nFinalise end to end encrypted backup key generation.\nMove the payments SDK to the new escrow flow before the festive peak.',
     category: 'Work',
     pinned: true,
     color: 'sky',
@@ -24,7 +24,7 @@ export const initialNotes = [
     id: 2,
     title: 'Q3 revenue & conversion notes',
     content:
-      'In-chat checkout conversion grew 340% after one-tap UPI landed.\nBiggest lift came from orders under ₹5,000 — high-consideration categories barely moved.',
+      'In chat checkout conversion grew 340% after one tap KT Instant Transfer landed.\nBiggest lift came from orders under ₹5,000 high consideration categories barely moved.',
     category: 'Work',
     pinned: false,
     color: 'default',
@@ -44,7 +44,7 @@ export const initialNotes = [
   },
   {
     id: 4,
-    title: 'Architecture decisions — messaging',
+    title: 'Architecture decisions messaging',
     content:
       'Migrate the media service to Kubernetes with regional routing.\nKeep the WebRTC gateway on bare metal for latency.\nRevisit in six months once the traffic mix settles.',
     category: 'Work',
@@ -57,7 +57,7 @@ export const initialNotes = [
     id: 5,
     title: 'Board meeting summary',
     content:
-      'Approved a $15M expansion budget for LEO satellite connectivity testing across Asia-Pacific.\nNext review scheduled for the January board.',
+      'Approved a $15M expansion budget for LEO satellite connectivity testing across three regions.\nNext review scheduled for the January board.',
     category: 'Work',
     pinned: false,
     color: 'amber',
@@ -68,7 +68,7 @@ export const initialNotes = [
     id: 6,
     title: 'Design system guidelines',
     content:
-      'Keep the dark-mode tokens in HSL.\n16px base scale, 1.25 type ratio.\nSpring physics on entrances only — never on exits.',
+      'Keep the dark mode tokens in HSL.\n16px base scale, 1.25 type ratio.\nSpring physics on entrances only never on exits.',
     category: 'Work',
     pinned: false,
     color: 'violet',
@@ -102,7 +102,7 @@ export const initialNotes = [
     id: 9,
     title: 'Training split',
     content:
-      'Mon — chest & triceps\nWed — back & biceps\nFri — legs & core\nSat — easy 5k\nProtein within 45 minutes after lifting.',
+      'Mon chest & triceps\nWed back & biceps\nFri legs & core\nSat easy 5k\nProtein within 45 minutes after lifting.',
     category: 'Personal',
     pinned: false,
     color: 'rose',
@@ -112,7 +112,7 @@ export const initialNotes = [
   {
     id: 10,
     title: 'Espresso ratios that worked',
-    content: '18g in → 36g out in 28 seconds at 9 bar.\nGrind two clicks finer for the Ethiopian.\nWater at 93°C, not 96°C.',
+    content: '18g in → 36g out in 28 seconds at 9 bar.\nGrind two clicks finer for the lighter roast.\nWater at 93°C, not 96°C.',
     category: 'Personal',
     pinned: false,
     color: 'default',
@@ -122,7 +122,7 @@ export const initialNotes = [
   {
     id: 11,
     title: 'Plant watering schedule',
-    content: 'Monstera — twice weekly.\nSnake plant — once every 14 days.\nTerrarium — mist monthly, no more.',
+    content: 'Monstera twice weekly.\nSnake plant once every 14 days.\nTerrarium mist monthly, no more.',
     category: 'Personal',
     pinned: false,
     color: 'emerald',
@@ -132,7 +132,7 @@ export const initialNotes = [
   {
     id: 12,
     title: 'Gift ideas',
-    content: 'Mum — noise-cancelling headphones.\nDad — leather watch strap.\nSister — Kindle, the one with the warm light.',
+    content: 'Mum noise cancelling headphones.\nDad leather watch strap.\nSister e reader, the one with the warm light.',
     category: 'Personal',
     pinned: false,
     color: 'violet',
@@ -145,7 +145,7 @@ export const initialNotes = [
     id: 13,
     title: 'Recovery share locations',
     content:
-      'Share 1 — home safe.\nShare 2 — sealed envelope with sibling.\nShare 3 — bank locker.\nAny two reconstruct the key. Never store two in one place.',
+      'Share 1 home safe.\nShare 2 sealed envelope with sibling.\nShare 3 bank locker.\nAny two reconstruct the key. Never store two in one place.',
     category: 'Security',
     pinned: true,
     color: 'rose',
@@ -156,7 +156,7 @@ export const initialNotes = [
     id: 14,
     title: 'Passkey inventory',
     content:
-      'Phone — primary passkey.\nHardware key — travel backup.\nLaptop — platform passkey.\nAudit quarterly and revoke anything unrecognised.',
+      'Phone primary passkey.\nHardware key travel backup.\nLaptop platform passkey.\nAudit quarterly and revoke anything unrecognised.',
     category: 'Security',
     pinned: true,
     color: 'default',
@@ -189,7 +189,7 @@ export const initialNotes = [
     id: 17,
     title: 'Travel device checklist',
     content:
-      'Full-disk encryption on.\nBiometrics off at borders, PIN only.\nBackup taken and verified before leaving.\nBurner-mode profile ready.',
+      'Full disk encryption on.\nBiometrics off at borders, PIN only.\nBackup taken and verified before leaving.\nBurner mode profile ready.',
     category: 'Security',
     pinned: false,
     color: 'default',
@@ -223,7 +223,7 @@ export const initialNotes = [
   {
     id: 20,
     title: 'Bill calendar',
-    content: 'HDFC card — 15th.\nSBI card autopay — 22nd.\nRent — 1st.\nKeep utilisation under 15% before the statement date.',
+    content: 'KT Card 15th.\nPartner bank autopay 22nd.\nRent 1st.\nKeep utilisation under 15% before the statement date.',
     category: 'Finance',
     pinned: false,
     color: 'default',
@@ -233,7 +233,7 @@ export const initialNotes = [
   {
     id: 21,
     title: 'Home loan tracking',
-    content: 'Fixed at 8.35% p.a.\nNext prepayment in Q4 — target ₹2,00,000.\nCheck whether the reset clause applies after 36 months.',
+    content: 'Fixed at 8.35% p.a.\nNext prepayment in Q4 target ₹2,00,000.\nCheck whether the reset clause applies after 36 months.',
     category: 'Finance',
     pinned: false,
     color: 'sky',
@@ -243,7 +243,7 @@ export const initialNotes = [
   {
     id: 22,
     title: 'Tax documents to collect',
-    content: '80C proofs done.\nMedical insurance premium receipt — pending.\nRent receipts for Q1 and Q2 — pending.\nCapital gains statement in March.',
+    content: 'Tax saving proofs done.\nMedical insurance premium receipt pending.\nRent receipts for Q1 and Q2 pending.\nCapital gains statement in March.',
     category: 'Finance',
     pinned: false,
     color: 'amber',
@@ -253,7 +253,7 @@ export const initialNotes = [
   {
     id: 23,
     title: 'SIP schedule',
-    content: '₹25,000 monthly — Nifty 50 index ₹15,000, smallcap ₹6,000, international ₹4,000.\nStep up 10% each April.',
+    content: '₹25,000 monthly KT Index 50 fund ₹15,000, smallcap ₹6,000, international ₹4,000.\nStep up 10% each April.',
     category: 'Finance',
     pinned: false,
     color: 'emerald',
@@ -263,7 +263,7 @@ export const initialNotes = [
   {
     id: 24,
     title: 'Travel budget 2026',
-    content: 'Japan — ₹1,50,000 set aside.\nFlights booked.\nRemaining: accommodation ₹60,000, food and rail ₹45,000.',
+    content: 'Overseas trip ₹1,50,000 set aside.\nFlights booked.\nRemaining: accommodation ₹60,000, food and rail ₹45,000.',
     category: 'Finance',
     pinned: false,
     color: 'violet',
@@ -274,19 +274,19 @@ export const initialNotes = [
   // ------------------------------------------------------------------ TRAVEL
   {
     id: 25,
-    title: 'Japan itinerary',
+    title: 'Overseas itinerary',
     content:
-      'Days 1–4 — Tokyo, Shibuya base.\nDays 5–8 — Kyoto, traditional ryokan.\nDays 9–10 — Osaka, street food.\nJR Pass activates on day 5.',
+      'Days 1–4 capital city, central base.\nDays 5–8 old town, traditional inn.\nDays 9–10 port city, street food.\nRail pass activates on day 5.',
     category: 'Travel',
     pinned: true,
     color: 'sky',
     updated: 'Today, 12:40',
-    tags: ['japan', 'itinerary'],
+    tags: ['overseas', 'itinerary'],
   },
   {
     id: 26,
     title: 'Flight confirmation',
-    content: 'JL-748 departing 12:40, Terminal 3.\nPassport valid until 2031.\nSeat 32A, aisle side on the return.',
+    content: 'KT-748 departing 12:40, Terminal 3.\nPassport valid until 2031.\nSeat 32A, aisle side on the return.',
     category: 'Travel',
     pinned: false,
     color: 'default',
@@ -305,8 +305,8 @@ export const initialNotes = [
   },
   {
     id: 28,
-    title: 'Paris booking reference',
-    content: 'Le Marais boutique hotel, reservation #84920.\nCheck-in 15:00, late arrival noted.\nBreakfast not included.',
+    title: 'City break booking reference',
+    content: 'Old quarter boutique hotel, reservation #84920.\nCheck in 15:00, late arrival noted.\nBreakfast not included.',
     category: 'Travel',
     pinned: false,
     color: 'rose',
@@ -316,7 +316,7 @@ export const initialNotes = [
   {
     id: 29,
     title: 'Road trip playlist',
-    content: 'Classic rock for the highway.\nAcoustic indie for the hills.\nSynthwave for night driving.\nDownload all three — patchy signal past hour two.',
+    content: 'Classic rock for the highway.\nAcoustic indie for the hills.\nSynthwave for night driving.\nDownload all three patchy signal past hour two.',
     category: 'Travel',
     pinned: false,
     color: 'violet',
@@ -326,7 +326,7 @@ export const initialNotes = [
   {
     id: 30,
     title: 'Offline maps saved',
-    content: 'Tokyo, Kyoto and Osaka transit downloaded.\nSuica added to the phone wallet.\nSave the ryokan address in Japanese too.',
+    content: 'City, old town and port transit downloaded.\nTransit card added to the phone wallet.\nSave the inn address in the local script too.',
     category: 'Travel',
     pinned: false,
     color: 'default',
@@ -337,9 +337,9 @@ export const initialNotes = [
   // ------------------------------------------------------------------- IDEAS
   {
     id: 31,
-    title: 'App idea — receipt parser',
+    title: 'App idea receipt parser',
     content:
-      'Photograph a receipt in chat, get a structured expense entry back.\nHard part is the long tail of thermal-printer fonts, not the parsing.',
+      'Photograph a receipt in chat, get a structured expense entry back.\nHard part is the long tail of thermal printer fonts, not the parsing.',
     category: 'Ideas',
     pinned: false,
     color: 'amber',
@@ -348,9 +348,9 @@ export const initialNotes = [
   },
   {
     id: 32,
-    title: 'Essay outline — attention',
+    title: 'Essay outline attention',
     content:
-      'Thesis: feeds optimise for the next second, not the next hour.\nEvidence: session-length data versus recall studies.\nCounterpoint: people do choose this.',
+      'Thesis: feeds optimise for the next second, not the next hour.\nEvidence: session length data versus recall studies.\nCounterpoint: people do choose this.',
     category: 'Ideas',
     pinned: false,
     color: 'default',
@@ -361,7 +361,7 @@ export const initialNotes = [
     id: 33,
     title: 'Side project shortlist',
     content:
-      'A CLI that diffs two JSON schemas readably.\nA plant-watering reminder that reads the weather.\nPick one. Finish it. Then pick the next.',
+      'A CLI that diffs two JSON schemas readably.\nA plant watering reminder that reads the weather.\nPick one. Finish it. Then pick the next.',
     category: 'Ideas',
     pinned: false,
     color: 'emerald',
@@ -370,7 +370,7 @@ export const initialNotes = [
   },
   {
     id: 34,
-    title: 'Talk proposal — encryption',
+    title: 'Talk proposal encryption',
     content:
       'Working title: "Why your metadata is the message."\n25 minutes, no slides after the first five.\nEnd on what a reader can change this week.',
     category: 'Ideas',
@@ -383,7 +383,7 @@ export const initialNotes = [
     id: 35,
     title: 'Home automation wish list',
     content:
-      'Lights that dim on the last calendar event of the day.\nDoor sensor that pings the family group, not a cloud service.\nEverything local-first.',
+      'Lights that dim on the last calendar event of the day.\nDoor sensor that pings the family group, not a cloud service.\nEverything local first.',
     category: 'Ideas',
     pinned: false,
     color: 'violet',
@@ -456,7 +456,7 @@ export const noteTemplates = [
 
 export const initialChecklist = [
   { id: 'c1', text: 'Renew passport before December', done: true },
-  { id: 'c2', text: 'Book the Kyoto ryokan', done: true },
+  { id: 'c2', text: 'Book the old town inn', done: true },
   { id: 'c3', text: 'Verify recovery share with sibling', done: false },
   { id: 'c4', text: 'Submit medical insurance receipt', done: false },
   { id: 'c5', text: 'Step up SIP by 10%', done: false },
@@ -464,9 +464,9 @@ export const initialChecklist = [
 ]
 
 export const voiceMemos = [
-  { title: 'Standup recap — payments', duration: '1:24', when: 'Today, 10:05', size: '412 KB' },
+  { title: 'Standup recap payments', duration: '1:24', when: 'Today, 10:05', size: '412 KB' },
   { title: 'Idea while walking', duration: '0:38', when: 'Today, 07:42', size: '186 KB' },
-  { title: 'Call notes — vendor quote', duration: '3:12', when: 'Yesterday, 16:20', size: '902 KB' },
+  { title: 'Call notes vendor quote', duration: '3:12', when: 'Yesterday, 16:20', size: '902 KB' },
   { title: 'Grocery list, spoken', duration: '0:22', when: 'Yesterday, 08:15', size: '104 KB' },
   { title: 'Book passage worth keeping', duration: '1:51', when: '05 Aug 2026', size: '540 KB' },
   { title: 'Interview question drafts', duration: '2:47', when: '03 Aug 2026', size: '798 KB' },
@@ -474,9 +474,9 @@ export const voiceMemos = [
 
 export const reminders = [
   { title: 'Verify recovery share', when: 'Tomorrow, 18:00', repeat: 'Every 6 months', tone: 'security' },
-  { title: 'Pay the HDFC card', when: '15 Aug, 10:00', repeat: 'Monthly', tone: 'finance' },
+  { title: 'Pay the KT Card', when: '15 Aug, 10:00', repeat: 'Monthly', tone: 'finance' },
   { title: 'Water the monstera', when: 'Thursday, 08:00', repeat: 'Twice weekly', tone: 'personal' },
-  { title: 'Japan visa appointment', when: '22 Aug, 11:30', repeat: 'One-off', tone: 'travel' },
+  { title: 'Travel permit appointment', when: '22 Aug, 11:30', repeat: 'One-off', tone: 'travel' },
   { title: 'Quarterly passkey audit', when: '01 Sep, 09:00', repeat: 'Quarterly', tone: 'security' },
   { title: 'Submit tax proofs', when: '10 Sep, 17:00', repeat: 'Yearly', tone: 'finance' },
 ]
@@ -486,8 +486,8 @@ export const syncDevices = [
   { name: 'MacBook Pro', kind: 'Desktop app', status: 'Synced 4 minutes ago', icon: '💻' },
   { name: 'iPad Air', kind: 'Tablet', status: 'Synced 2 hours ago', icon: '📓' },
   { name: 'Windows desktop', kind: 'Office machine', status: 'Synced yesterday', icon: '🖥️' },
-  { name: 'Web (Chrome)', kind: 'Browser session', status: 'Active now', icon: '🌐' },
-  { name: 'Pixel Watch', kind: 'Voice capture only', status: 'Synced 1 hour ago', icon: '⌚' },
+  { name: 'Web (browser)', kind: 'Browser session', status: 'Active now', icon: '🌐' },
+  { name: 'Smart watch', kind: 'Voice capture only', status: 'Synced 1 hour ago', icon: '⌚' },
 ]
 
 export const shortcuts = [
@@ -506,7 +506,7 @@ export const shortcuts = [
 export const notesTips = [
   {
     title: 'Message yourself first',
-    desc: 'Your self-chat is the fastest capture surface there is. Sort it into notes later, when you have a minute.',
+    desc: 'Your self chat is the fastest capture surface there is. Sort it into notes later, when you have a minute.',
   },
   {
     title: 'Pin no more than five',
@@ -518,7 +518,7 @@ export const notesTips = [
   },
   {
     title: 'Write the next action, not the summary',
-    desc: 'A note that ends in a verb is a note you can act on six weeks later without re-reading the whole thing.',
+    desc: 'A note that ends in a verb is a note you can act on six weeks later without re reading the whole thing.',
   },
   {
     title: 'Voice for capture, text for thinking',
@@ -531,27 +531,27 @@ export const notesTips = [
 ]
 
 export const notesFeatures = [
-  { title: 'End-to-end encrypted', desc: 'Notes are sealed on your device before they sync. The server stores ciphertext it cannot read.' },
-  { title: 'Message yourself', desc: 'Your personal thread doubles as a scratchpad for links, photos and half-formed thoughts.' },
+  { title: 'End to end encrypted', desc: 'Notes are sealed on your device before they sync. The server stores ciphertext it cannot read.' },
+  { title: 'Message yourself', desc: 'Your personal thread doubles as a scratchpad for links, photos and half formed thoughts.' },
   { title: 'Checklists that count', desc: 'Tick items off and watch the progress bar move. Completed items collapse out of the way.' },
-  { title: 'Voice memos', desc: 'Record a thought while walking. Transcription runs on-device, so the audio never leaves your phone.' },
+  { title: 'Voice memos', desc: 'Record a thought while walking. Transcription runs on device, so the audio never leaves your phone.' },
   { title: 'Templates', desc: 'Eight starting points for the notes you write repeatedly, so you never face a blank page.' },
   { title: 'Reminders', desc: 'Attach a time to any note and it comes back to you as a message when it matters.' },
   { title: 'Colour and pin', desc: 'Six colours and a pin for the handful of notes you actually open every day.' },
-  { title: 'Cross-device sync', desc: 'Phone, tablet, desktop and web stay in step, with sync state visible per device.' },
+  { title: 'Cross device sync', desc: 'Phone, tablet, desktop and web stay in step, with sync state visible per device.' },
   { title: 'Offline first', desc: 'Everything works with no signal. Changes reconcile the moment you reconnect.' },
 ]
 
 export const notesSteps = [
-  { title: 'Capture it fast', desc: 'Type, dictate or forward something into your self-chat. Do not sort it yet.' },
+  { title: 'Capture it fast', desc: 'Type, dictate or forward something into your self chat. Do not sort it yet.' },
   { title: 'Give it a home', desc: 'Drop it into a category, add a colour if it needs attention this week.' },
-  { title: 'Add the next action', desc: 'End every note with a verb, so future-you knows what to do with it.' },
+  { title: 'Add the next action', desc: 'End every note with a verb, so future you knows what to do with it.' },
   { title: 'Let it find you', desc: 'Attach a reminder and the note comes back as a message at the right moment.' },
 ]
 
 export const notesFaqs = [
   {
-    q: 'Are my notes end-to-end encrypted?',
+    q: 'Are my notes end to end encrypted?',
     a: 'Yes. Every note, voice memo and checklist is encrypted on your device before it syncs. The server holds ciphertext and has no key to read it.',
     tag: 'Encryption',
   },
@@ -567,7 +567,7 @@ export const notesFaqs = [
   },
   {
     q: 'What happens if I lose my phone?',
-    a: 'Sign in on another device with your recovery shares and the vault restores from encrypted backup. Without enough shares nobody — including us — can decrypt it.',
+    a: 'Sign in on another device with your recovery shares and the vault restores from encrypted backup. Without enough shares nobody including us can decrypt it.',
     tag: 'Recovery',
   },
   {
@@ -577,12 +577,12 @@ export const notesFaqs = [
   },
   {
     q: 'Is voice transcription sent to a server?',
-    a: 'No. Transcription runs on-device using the local model. The audio and the transcript both stay inside your encrypted vault.',
+    a: 'No. Transcription runs on device using the local model. The audio and the transcript both stay inside your encrypted vault.',
     tag: 'Voice',
   },
   {
     q: 'Can I share a note with someone?',
-    a: 'Yes, into a chat. The note is re-encrypted for that recipient, and you can revoke access later — which removes it from their vault too.',
+    a: 'Yes, into a chat. The note is re encrypted for that recipient, and you can revoke access later which removes it from their vault too.',
     tag: 'Sharing',
   },
   {
@@ -604,33 +604,33 @@ export const notesFaqs = [
 
 export const notesTestimonials = [
   {
-    quote: 'Self-chat became my inbox for everything. I stopped emailing links to myself years ago and never looked back.',
+    quote: 'Self chat became my inbox for everything. I stopped emailing links to myself years ago and never looked back.',
     name: 'Riya Malhotra',
-    role: 'Journalist, Delhi',
+    role: 'Journalist',
   },
   {
-    quote: 'On-device voice transcription is the reason I trust it with call notes. The audio genuinely never leaves.',
+    quote: 'On device voice transcription is the reason I trust it with call notes. The audio genuinely never leaves.',
     name: 'Peter Nilsson',
-    role: 'Lawyer, Stockholm',
+    role: 'Lawyer',
   },
   {
     quote: 'The checklist collapse for finished items is a tiny thing that made me actually use checklists.',
     name: 'Ananya Desai',
-    role: 'PhD student, Ahmedabad',
+    role: 'PhD student',
   },
   {
-    quote: 'I keep my recovery instructions here, with a six-monthly reminder. That combination is the whole system.',
+    quote: 'I keep my recovery instructions here, with a six monthly reminder. That combination is the whole system.',
     name: 'Jonas Meyer',
-    role: 'Security engineer, Zurich',
+    role: 'Security engineer',
   },
   {
     quote: 'Offline editing on a plane, reconciled by the time I landed. No conflict, no lost paragraph.',
     name: 'Grace Oyelaran',
-    role: 'Consultant, Accra',
+    role: 'Consultant',
   },
   {
-    quote: 'Templates removed the blank-page problem from my standup notes. Two minutes, done.',
+    quote: 'Templates removed the blank page problem from my standup notes. Two minutes, done.',
     name: 'Tomás Herrera',
-    role: 'Engineering manager, Bogotá',
+    role: 'Engineering manager',
   },
 ]

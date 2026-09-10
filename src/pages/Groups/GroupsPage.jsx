@@ -32,9 +32,11 @@ import privateImg from '../../assets/images/private.jpg'
 import userAvatar from '../../assets/images/business.jpg'
 import avatarMale from '../../assets/images/avatar_male_1.png'
 import avatarFemale from '../../assets/images/avatar_female_1.png'
+import { useLanguage } from '../../context/LanguageContext'
 
 export function GroupsPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [selectedOption, setSelectedOption] = useState(0)
   const [votes, setVotes] = useState([14, 7, 3])
   const [activeTab, setActiveTab] = useState(0)
@@ -59,100 +61,100 @@ export function GroupsPage() {
 
   const groupTabs = [
     {
-      title: 'Interactive Group Polls',
+      title: t('Interactive Group Polls'),
       icon: <FiBarChart2 className="text-xl" />,
-      desc: 'Gather instant opinions with single or multi-choice polls. Live percentage progress bars update in real time for everyone in the chat.',
-      highlights: ['Real-time live vote counts', 'Single & multiple selection mode', 'Anonymous or named poll options']
+      desc: t('Gather instant opinions with single or multi choice polls. Live percentage progress bars update in real time for everyone in the chat.'),
+      highlights: [t('Real time live vote counts'), t('Single & multiple selection mode'), t('Anonymous or named poll options')]
     },
     {
-      title: 'Events & RSVP Tracking',
+      title: t('Events & RSVP Tracking'),
       icon: <FiCalendar className="text-xl" />,
-      desc: 'Schedule group get-togethers with dates, times, pin locations, and automatic calendar reminders so no one misses out.',
-      highlights: ['One-tap RSVP responses', 'Calendar sync (Google/Apple)', 'Automatic event reminders']
+      desc: t('Schedule group get togethers with dates, times, pin locations, and automatic calendar reminders so no one misses out.'),
+      highlights: [t('One tap RSVP responses'), t('Calendar sync'), t('Automatic event reminders')]
     },
     {
-      title: 'Granular Admin Controls',
+      title: t('Granular Admin Controls'),
       icon: <FiShield className="text-xl" />,
-      desc: 'Manage member approvals, restrict messaging rights, edit group info, and assign co-admins with flexible permissions.',
-      highlights: ['New member request approvals', 'Only-Admins message mode', 'Custom invite link management']
+      desc: t('Manage member approvals, restrict messaging rights, edit group info, and assign co admins with flexible permissions.'),
+      highlights: [t('New member request approvals'), t('Only Admins message mode'), t('Custom invite link management')]
     },
     {
-      title: 'Communities Engine',
+      title: t('Communities Engine'),
       icon: <FiGlobe className="text-xl" />,
-      desc: 'Organize related group chats under one master Community (e.g. Neighborhoods, Schools, Sports Clubs) with centralized Announcement channels.',
-      highlights: ['Nest up to 50 sub-groups', 'Central Announcement broadcast', 'Admin overview dashboard']
+      desc: t('Organize related group chats under one master Community (e.g. Neighborhoods, Schools, Sports Clubs) with centralized Announcement channels.'),
+      highlights: [t('Nest up to 50 sub groups'), t('Central Announcement broadcast'), t('Admin overview dashboard')]
     },
     {
-      title: '@Mentions & Direct Replies',
+      title: t('@Mentions & Direct Replies'),
       icon: <FiUsers className="text-xl" />,
-      desc: 'Keep conversation threads organized with inline direct replies and notify specific members with @mentions.',
-      highlights: ['Threaded conversation view', '@mention notification bypass', 'In-chat media search']
+      desc: t('Keep conversation threads organized with inline direct replies and notify specific members with @mentions.'),
+      highlights: [t('Threaded conversation view'), t('@mention notification bypass'), t('In chat media search')]
     }
   ]
 
   const metrics = [
-    { value: '1,024', label: 'Max Group Members' },
-    { value: '32', label: 'Live Voice & Video Callers' },
-    { value: '50', label: 'Sub-Groups per Community' },
-    { value: '100%', label: 'Signal E2E Encrypted' }
+    { value: '1,024', label: t('Max Group Members') },
+    { value: '32', label: t('Live Voice & Video Callers') },
+    { value: '50', label: t('Sub Groups per Community') },
+    { value: '100%', label: t('KT E2E Encrypted') }
   ]
 
   const useCases = [
     {
-      title: 'Workplace & Project Teams',
-      desc: 'Coordinate sprints, share documents, run quick voice huddles, and keep projects moving efficiently.',
+      title: t('Workplace & Project Teams'),
+      desc: t('Coordinate sprints, share documents, run quick voice huddles, and keep projects moving efficiently.'),
       img: userAvatar
     },
     {
-      title: 'Neighborhood Communities',
-      desc: 'Keep residents informed with central announcements, security alerts, and local event planning.',
+      title: t('Neighborhood Communities'),
+      desc: t('Keep residents informed with central announcements, security alerts, and local event planning.'),
       img: groupImg
     },
     {
-      title: 'University & Study Groups',
-      desc: 'Collaborate on course assignments, create subject sub-groups, and vote on study times with polls.',
+      title: t('University & Study Groups'),
+      desc: t('Collaborate on course assignments, create subject sub groups, and vote on study times with polls.'),
       img: familyAvatar
     },
     {
-      title: 'Family & Friend Squads',
-      desc: 'Share daily photos, plan weekend getaways, and stay connected across generations in privacy.',
+      title: t('Family & Friend Squads'),
+      desc: t('Share daily photos, plan weekend getaways, and stay connected across generations in privacy.'),
       img: avatarFemale
     }
   ]
 
   const comparisonTable = [
-    { feature: 'Member Capacity', kt: '1,024 Members', sms: '10 - 20 (MMS)', apps: '256 - 500' },
-    { feature: 'End-to-End Encryption', kt: 'Default (100%)', sms: 'None', apps: 'Optional' },
-    { feature: 'Communities Sub-Groups', kt: 'Up to 50 Groups', sms: 'Not Supported', apps: 'Paid Feature' },
-    { feature: 'Interactive Group Polls', kt: 'Included Free', sms: 'Not Supported', apps: 'Third-party bot' },
-    { feature: 'Event Scheduling & RSVPs', kt: 'Built-in Native', sms: 'Not Supported', apps: 'Basic Text' },
-    { feature: 'Admin Approval Queue', kt: 'Granular Control', sms: 'None', apps: 'Basic Admin' }
+    { feature: t('Member Capacity'), kt: t('1,024 Members'), sms: '10 - 20 (MMS)', apps: '256 - 500' },
+    { feature: t('End to End Encryption'), kt: t('Default (100%)'), sms: t('None'), apps: t('Optional') },
+    { feature: t('Communities Sub Groups'), kt: t('Up to 50 Groups'), sms: t('Not Supported'), apps: t('Paid Feature') },
+    { feature: t('Interactive Group Polls'), kt: t('Included Free'), sms: t('Not Supported'), apps: t('Third party bot') },
+    { feature: t('Event Scheduling & RSVPs'), kt: t('Built in Native'), sms: t('Not Supported'), apps: t('Basic Text') },
+    { feature: t('Admin Approval Queue'), kt: t('Granular Control'), sms: t('None'), apps: t('Basic Admin') }
   ]
 
   const faqs = [
     {
-      q: 'How many members can join a single KT group?',
-      a: 'A single KT group chat can host up to 1,024 participants with full administrative controls and end-to-end encryption.'
+      q: t('How many members can join a single KT group?'),
+      a: t('A single KT group chat can host up to 1,024 participants with full administrative controls and end to end encryption.')
     },
     {
-      q: 'Are group chats on KT encrypted?',
-      a: 'Yes! All group text messages, shared photos, documents, and voice calls are fully end-to-end encrypted so only group members can access them.'
+      q: t('Are group chats on KT encrypted?'),
+      a: t('Yes! All group text messages, shared photos, documents, and voice calls are fully end to end encrypted so only group members can access them.')
     },
     {
-      q: 'How do Communities differ from regular groups?',
-      a: 'Communities allow you to nest up to 50 individual sub-groups under one roof with a master Announcement channel managed by Community admins.'
+      q: t('How do Communities differ from regular groups?'),
+      a: t('Communities allow you to nest up to 50 individual sub groups under one roof with a master Announcement channel managed by Community admins.')
     },
     {
-      q: 'Can admins control who sends messages in a group?',
-      a: 'Yes. Admins can restrict message sending to "Admins Only" (ideal for announcement groups) or toggle member approval requirements before new people join.'
+      q: t('Can admins control who sends messages in a group?'),
+      a: t('Yes. Admins can restrict message sending to "Admins Only" (ideal for announcement groups) or toggle member approval requirements before new people join.')
     },
     {
-      q: 'How do group polls work?',
-      a: 'Any member can tap the attachments icon, select "Poll", type a question, and add options. Votes update live for everyone as members tap their choice.'
+      q: t('How do group polls work?'),
+      a: t('Any member can tap the attachments icon, select "Poll", type a question, and add options. Votes update live for everyone as members tap their choice.')
     },
     {
-      q: 'Can I start a voice or video call inside a group?',
-      a: 'Yes! Tap the call button inside any group to launch a group voice or video call with up to 32 participants simultaneously.'
+      q: t('Can I start a voice or video call inside a group?'),
+      a: t('Yes! Tap the call button inside any group to launch a group voice or video call with up to 32 participants simultaneously.')
     }
   ]
 
@@ -164,32 +166,32 @@ export function GroupsPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
-                <FiUsers className="text-brand-strong" /> Community & Group Collaboration
+                <FiUsers className="text-brand-strong" /> {t('Community & Group Collaboration')}
               </div>
               <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                Connect and get more <br />
+                {t('Connect and get more')} <br />
                 <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  done together with groups
+                  {t('done together with groups')}
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                From daily family catchups to workplace teams, KT group messaging keeps all your conversations private, organized, and interactive.
+                {t('From daily family catchups to workplace teams, KT group messaging keeps all your conversations private, organized, and interactive.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
-                  Create a Group Free <FiDownload className="text-lg" />
+                  {t('Create a Group Free')} <FiDownload className="text-lg" />
                 </Button>
                 <Button variant="secondary" size="lg" onClick={() => navigate('/apps')}>
-                  Explore Features <FiChevronRight />
+                  {t('Explore Features')} <FiChevronRight />
                 </Button>
               </div>
 
               <div className="mt-8 flex items-center gap-6 border-t border-line pt-6 text-sm text-body">
                 <span className="flex items-center gap-2">
-                  <FiCheckCircle className="text-brand-strong" /> Up to 1,024 Members
+                  <FiCheckCircle className="text-brand-strong" /> {t('Up to 1,024 Members')}
                 </span>
                 <span className="flex items-center gap-2">
-                  <FiCheckCircle className="text-brand-strong" /> 32-Person Voice & Video
+                  <FiCheckCircle className="text-brand-strong" /> {t('32-Person Voice & Video')}
                 </span>
               </div>
             </Reveal>
@@ -225,18 +227,18 @@ export function GroupsPage() {
                         KD
                       </div>
                       <div>
-                        <h3 className="text-sm font-extrabold text-white tracking-tight">kt messenger discussion</h3>
-                        <p className="text-[10px] text-slate-400 font-medium">Group • 18 members</p>
+                        <h3 className="text-sm font-extrabold text-white tracking-tight">{t('kt messenger discussion')}</h3>
+                        <p className="text-[10px] text-slate-400 font-medium">{t('Group • 18 members')}</p>
                       </div>
                       <p className="text-[10px] text-slate-300 max-w-[220px] mx-auto leading-tight bg-slate-900/80 p-2 rounded-xl border border-slate-800/80">
-                        Use the application and share the issues over here
+                        {t('Use the application and share the issues over here')}
                       </p>
                     </div>
 
                     {/* Media, links, and docs Card */}
                     <div className="rounded-2xl bg-[#111b21] p-2.5 border border-slate-800/80 shadow-md">
                       <div className="flex items-center justify-between pb-2 text-[11px]">
-                        <span className="font-bold text-slate-200">Media, links, and docs</span>
+                        <span className="font-bold text-slate-200">{t('Media, links, and docs')}</span>
                         <span className="text-[10px] text-slate-400 flex items-center gap-0.5 font-semibold">
                           3 <FiChevronRight />
                         </span>
@@ -244,17 +246,17 @@ export function GroupsPage() {
 
                       <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
                         <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative">
-                          <img src={privateImg} alt="Media" className="h-full w-full object-cover" />
-                          <span className="absolute bottom-1 left-1 text-[7px] bg-black/70 px-1 py-0.2 rounded font-mono text-white">Voice call</span>
+                          <img src={privateImg} alt={t('Media')} className="h-full w-full object-cover" />
+                          <span className="absolute bottom-1 left-1 text-[7px] bg-black/70 px-1 py-0.2 rounded font-mono text-white">{t('Voice call')}</span>
                         </div>
                         <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative">
-                          <img src={groupImg} alt="Media" className="h-full w-full object-cover" />
-                          <span className="absolute bottom-1 left-1 text-[7px] bg-sky-600/90 px-1 py-0.2 rounded font-mono text-white">Check notif</span>
+                          <img src={groupImg} alt={t('Media')} className="h-full w-full object-cover" />
+                          <span className="absolute bottom-1 left-1 text-[7px] bg-sky-600/90 px-1 py-0.2 rounded font-mono text-white">{t('Check notif')}</span>
                         </div>
                         <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative p-1">
                           <div className="h-full w-full rounded-lg bg-slate-800 p-1 flex flex-col justify-between text-[6px] text-slate-300">
-                            <div className="font-bold text-sky-400">Invite QR</div>
-                            <div className="text-[5px] text-slate-400">Share</div>
+                            <div className="font-bold text-sky-400">{t('Invite QR')}</div>
+                            <div className="text-[5px] text-slate-400">{t('Share')}</div>
                           </div>
                         </div>
                         <div className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-slate-800 text-slate-300 border border-slate-700">
@@ -266,8 +268,8 @@ export function GroupsPage() {
                     {/* Members Header */}
                     <div className="pt-0.5">
                       <div className="flex items-center justify-between px-1 pb-1.5">
-                        <span className="text-[9px] font-bold tracking-wider text-slate-400 uppercase">18 MEMBERS</span>
-                        <span className="text-[10px] font-bold text-sky-400 cursor-pointer hover:underline">See all</span>
+                        <span className="text-[9px] font-bold tracking-wider text-slate-400 uppercase">{t('18 MEMBERS')}</span>
+                        <span className="text-[10px] font-bold text-sky-400 cursor-pointer hover:underline">{t('See all')}</span>
                       </div>
 
                       {/* Member List */}
@@ -279,8 +281,8 @@ export function GroupsPage() {
                               <FiPlus className="text-sm" />
                             </div>
                             <div>
-                              <h5 className="font-bold text-[11px] text-white">Add members</h5>
-                              <p className="text-[9px] text-slate-400">Add contacts from your phone</p>
+                              <h5 className="font-bold text-[11px] text-white">{t('Add members')}</h5>
+                              <p className="text-[9px] text-slate-400">{t('Add contacts from your phone')}</p>
                             </div>
                           </div>
                           <FiChevronRight className="text-slate-500 text-xs" />
@@ -291,8 +293,8 @@ export function GroupsPage() {
                           <div className="flex items-center gap-2.5">
                             <img src={avatarMale} alt="You" className="h-8 w-8 rounded-full object-cover border border-slate-700 shrink-0" />
                             <div>
-                              <h5 className="font-bold text-[11px] text-white">You</h5>
-                              <p className="text-[9px] text-sky-400 font-semibold">Add member tag</p>
+                              <h5 className="font-bold text-[11px] text-white">{t('You')}</h5>
+                              <p className="text-[9px] text-sky-400 font-semibold">{t('Add member tag')}</p>
                             </div>
                           </div>
                           <FiChevronRight className="text-slate-500 text-xs" />
@@ -307,9 +309,9 @@ export function GroupsPage() {
                             <div>
                               <div className="flex items-center gap-1.5">
                                 <h5 className="font-bold text-[11px] text-white">Farhan Bhai</h5>
-                                <span className="rounded bg-sky-500/20 px-1 py-0.2 text-[8px] font-bold text-sky-400 border border-sky-500/30">Admin</span>
+                                <span className="rounded bg-sky-500/20 px-1 py-0.2 text-[8px] font-bold text-sky-400 border border-sky-500/30">{t('Admin')}</span>
                               </div>
-                              <p className="text-[9px] text-slate-400">Group admin</p>
+                              <p className="text-[9px] text-slate-400">{t('Group admin')}</p>
                             </div>
                           </div>
                         </div>
@@ -322,7 +324,7 @@ export function GroupsPage() {
                             </div>
                             <div>
                               <h5 className="font-bold text-[11px] text-white">Irfan Bhai (Omre)</h5>
-                              <p className="text-[9px] text-slate-400">Tap for options</p>
+                              <p className="text-[9px] text-slate-400">{t('Tap for options')}</p>
                             </div>
                           </div>
                         </div>
@@ -335,7 +337,7 @@ export function GroupsPage() {
                             </div>
                             <div>
                               <h5 className="font-bold text-[11px] text-white">Saad Bhati</h5>
-                              <p className="text-[9px] text-slate-400">Active recently</p>
+                              <p className="text-[9px] text-slate-400">{t('Active recently')}</p>
                             </div>
                           </div>
                         </div>
@@ -372,10 +374,10 @@ export function GroupsPage() {
       <Section className="bg-cream">
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            Built for Seamless Group Collaboration
+            {t('Built for Seamless Group Collaboration')}
           </h2>
           <p className="mt-4 text-lg text-body">
-            Everything you need to lead discussions, make group decisions, and coordinate events effortlessly.
+            {t('Everything you need to lead discussions, make group decisions, and coordinate events effortlessly.')}
           </p>
         </Reveal>
 
@@ -405,7 +407,7 @@ export function GroupsPage() {
           <div className="rounded-3xl border border-line bg-surface p-8 shadow-card flex flex-col justify-between">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
-                Group Power Feature
+                {t('Group Power Feature')}
               </div>
               <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {groupTabs[activeTab].title}
@@ -425,9 +427,9 @@ export function GroupsPage() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
-              <span className="text-xs text-muted font-medium">Free for up to 1,024 members</span>
+              <span className="text-xs text-muted font-medium">{t('Free for up to 1,024 members')}</span>
               <Button size="sm" onClick={() => navigate('/apps')}>
-                Start Group Now <FiChevronRight />
+                {t('Start Group Now')} <FiChevronRight />
               </Button>
             </div>
           </div>
@@ -440,23 +442,23 @@ export function GroupsPage() {
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
             <Reveal from="left" className="lg:col-span-5 space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                🎬 Interactive Groups Demo
+                {t('🎬 Interactive Groups Demo')}
               </div>
               <h2 className="text-3xl font-extrabold text-ink sm:text-4xl lg:text-[2.5rem] tracking-tight leading-tight">
-                1,024 Member Groups &amp; Live Polls
+                {t('1,024 Member Groups & Live Polls')}
               </h2>
               <p className="text-base sm:text-lg leading-relaxed text-body">
-                Bring up to 1,024 members together with real-time poll voting, event RSVP calendar tracking, and community sub-groups.
+                {t('Bring up to 1,024 members together with real time poll voting, event RSVP calendar tracking, and community sub groups.')}
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> 1,024 Member Capacity
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('1,024 Member Capacity')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> Real-Time Poll Voting
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('Real Time Poll Voting')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> Event RSVP Tracking
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('Event RSVP Tracking')}
                 </span>
               </div>
             </Reveal>
@@ -473,7 +475,7 @@ export function GroupsPage() {
               </div>
 
               <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-2 left-2 sm:left-6 z-20 flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 shadow-float border border-brand-strong/30 text-xs font-bold text-brand-ink">
-                <FiShield className="text-brand-strong" /> 1,024 Member Live Polls
+                <FiShield className="text-brand-strong" /> {t('1,024 Member Live Polls')}
               </motion.div>
             </Reveal>
           </div>
@@ -486,27 +488,27 @@ export function GroupsPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
               <div className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                <FiCalendar className="text-brand-strong" /> Event & RSVP Suite
+                <FiCalendar className="text-brand-strong" /> {t('Event & RSVP Suite')}
               </div>
               <h2 className="mt-4 text-3xl font-extrabold leading-tight text-ink sm:text-4xl lg:text-5xl">
-                Plan events and keep guest RSVPs organized
+                {t('Plan events and keep guest RSVPs organized')}
               </h2>
               <p className="mt-6 text-base leading-relaxed text-body">
-                Schedule group meetings, sports games, or birthday parties with exact dates, locations, and integrated calendar notifications right in the chat thread.
+                {t('Schedule group meetings, sports games, or birthday parties with exact dates, locations, and integrated calendar notifications right in the chat thread.')}
               </p>
 
               <div className="mt-6 space-y-3 text-sm font-semibold text-ink">
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>Automatic calendar sync with Google & Apple Calendar</span>
+                  <span>{t('Automatic sync with your calendar app')}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>Live attendee counter for RSVP & Maybe responses</span>
+                  <span>{t('Live attendee counter for RSVP & Maybe responses')}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>In-chat event reminders 1 hour before start</span>
+                  <span>{t('In chat event reminders 1 hour before start')}</span>
                 </div>
               </div>
             </Reveal>
@@ -515,14 +517,14 @@ export function GroupsPage() {
               <div className="w-full max-w-[380px] rounded-3xl bg-surface p-6 shadow-float border border-line">
                 <div className="flex items-center justify-between border-b border-line pb-3 mb-4">
                   <span className="text-xs font-bold text-brand-ink flex items-center gap-1.5">
-                    <FiCalendar /> Group Event
+                    <FiCalendar /> {t('Group Event')}
                   </span>
                   <span className="rounded-full bg-brand-soft px-2.5 py-0.5 text-[10px] font-bold text-brand-strong">
-                    Upcoming
+                    {t('Upcoming')}
                   </span>
                 </div>
-                <h4 className="text-xl font-bold text-ink">Annual Team Picnic 🏖️</h4>
-                <p className="mt-1 text-xs text-body">Saturday, Aug 12 • 2:00 PM • Sunset Beach Park</p>
+                <h4 className="text-xl font-bold text-ink">{t('Annual Team Picnic 🏖️')}</h4>
+                <p className="mt-1 text-xs text-body">{t('Saturday, Aug 12 • 2:00 PM • Sunset Beach Park')}</p>
 
                 <div className="mt-6 flex items-center justify-between rounded-2xl bg-cream p-3 border border-line">
                   <div className="flex -space-x-2">
@@ -532,7 +534,7 @@ export function GroupsPage() {
                       +16
                     </div>
                   </div>
-                  <Button size="sm">RSVP Going ✓</Button>
+                  <Button size="sm">{t('RSVP Going ✓')}</Button>
                 </div>
               </div>
             </Reveal>
@@ -544,10 +546,10 @@ export function GroupsPage() {
       <Section className="bg-cream">
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            Groups Tailored for Every Need
+            {t('Groups Tailored for Every Need')}
           </h2>
           <p className="mt-4 text-lg text-body">
-            Discover how communities and organizations use KT Groups to stay connected.
+            {t('Discover how communities and organizations use KT Groups to stay connected.')}
           </p>
         </Reveal>
 
@@ -573,10 +575,10 @@ export function GroupsPage() {
         <Container>
           <Reveal from="up" className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Group Messaging Comparison
+              {t('Group Messaging Comparison')}
             </h2>
             <p className="mt-4 text-lg text-body">
-              Compare KT Groups against traditional SMS group chats and competitor messaging platforms.
+              {t('Compare KT Groups against traditional SMS group chats and competitor messaging platforms.')}
             </p>
           </Reveal>
 
@@ -584,10 +586,10 @@ export function GroupsPage() {
             <table className="w-full min-w-[600px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-line bg-cream">
-                  <th className="p-4 font-bold text-ink">Feature</th>
+                  <th className="p-4 font-bold text-ink">{t('Feature')}</th>
                   <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT Messenger</th>
-                  <th className="p-4 font-bold text-body">MMS Group Chat</th>
-                  <th className="p-4 font-bold text-body">Other Platforms</th>
+                  <th className="p-4 font-bold text-body">{t('MMS Group Chat')}</th>
+                  <th className="p-4 font-bold text-body">{t('Other Platforms')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line text-sm">
@@ -610,10 +612,10 @@ export function GroupsPage() {
         <Container className="max-w-4xl">
           <Reveal from="up" className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-              <FiHelpCircle /> Group FAQs
+              <FiHelpCircle /> {t('Group FAQs')}
             </div>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Frequently Asked Questions
+              {t('Frequently Asked Questions')}
             </h2>
           </Reveal>
 
@@ -655,17 +657,17 @@ export function GroupsPage() {
         <Container className="text-center">
           <Reveal from="up">
             <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
-              Start Your First Group Today
+              {t('Start Your First Group Today')}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Download KT Messenger now to host 1,024 members, 32-person video calls, and interactive polls.
+              {t('Download KT Messenger now to host 1,024 members, 32-person video calls, and interactive polls.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
-                Download Free App <FiDownload />
+                {t('Download Free App')} <FiDownload />
               </Button>
               <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
-                Launch Web App <FiChevronRight />
+                {t('Launch Web App')} <FiChevronRight />
               </Button>
             </div>
           </Reveal>

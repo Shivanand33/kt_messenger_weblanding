@@ -1,5 +1,6 @@
 import { Container } from '../../common/Container/Container'
 import { Reveal } from '../../common/Reveal/Reveal'
+import { useLanguage } from '../../../context/LanguageContext'
 
 const stats = [
   { value: '2B+', label: 'People connected' },
@@ -9,6 +10,7 @@ const stats = [
 ]
 
 export function TrustBar() {
+  const { t } = useLanguage()
   return (
     <section className="border-y border-line bg-cream-2/60">
       <Container className="py-9 lg:py-11">
@@ -21,7 +23,7 @@ export function TrustBar() {
               className="text-center sm:border-l sm:border-line sm:first:border-l-0"
             >
               <p className="text-3xl font-extrabold tracking-tight text-ink lg:text-4xl">{stat.value}</p>
-              <p className="mt-1.5 text-sm text-muted">{stat.label}</p>
+              <p className="mt-1.5 text-sm text-muted">{t(stat.label)}</p>
             </Reveal>
           ))}
         </div>

@@ -22,6 +22,7 @@ import { Section } from '../../components/common/Section/Section'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Button } from '../../components/common/Button/Button'
 import { PlusLoopVideo } from '../../components/common/VideoAnimations/PlusLoopVideo'
+import { useLanguage } from '../../context/LanguageContext'
 
 function CrownIcon({ className = 'h-4 w-4' }) {
   return (
@@ -31,8 +32,9 @@ function CrownIcon({ className = 'h-4 w-4' }) {
   )
 }
 
-export function WhatsAppPlusPage() {
+export function KtPlusPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [selectedTheme, setSelectedTheme] = useState('Midnight Sapphire')
   const [activeTab, setActiveTab] = useState(0)
   const [faqOpen, setFaqOpen] = useState(0)
@@ -50,100 +52,100 @@ export function WhatsAppPlusPage() {
 
   const plusTabs = [
     {
-      title: 'Theme Engine & Custom UI Styling',
+      title: t('Theme Engine & Custom UI Styling'),
       icon: <FiLayers className="text-xl" />,
-      desc: 'Personalize bubble shapes, font families, wallpaper gradients, and chat header accents with 50+ pro theme presets.',
-      highlights: ['Custom color theme creator', 'Exclusive font typography pack', 'Dark mode OLED true black']
+      desc: t('Personalize bubble shapes, font families, wallpaper gradients, and chat header accents with 50+ pro theme presets.'),
+      highlights: [t('Custom color theme creator'), t('Exclusive font typography pack'), t('Dark mode OLED true black')]
     },
     {
-      title: '10GB Uncompressed File Transfers',
+      title: t('10GB Uncompressed File Transfers'),
       icon: <FiUploadCloud className="text-xl" />,
-      desc: 'Send massive video projects, RAW camera footage, zip archives, and databases up to 10GB per attachment without quality compression.',
-      highlights: ['10GB single file limit', 'High-speed cloud transfer relay', 'Zero compression loss']
+      desc: t('Send massive video projects, RAW camera footage, zip archives, and databases up to 10GB per attachment without quality compression.'),
+      highlights: [t('10GB single file limit'), t('High speed cloud transfer relay'), t('Zero compression loss')]
     },
     {
-      title: 'Multi-Account Dual Space (5 Accounts)',
+      title: t('Multi Account Dual Space (5 Accounts)'),
       icon: <FiUserCheck className="text-xl" />,
-      desc: 'Switch seamlessly between up to 5 KT accounts (Work, Personal, Business, Private) on the exact same device.',
-      highlights: ['Run 5 active profiles concurrently', 'Separate notification badges', 'Individual encryption keys']
+      desc: t('Switch seamlessly between up to 5 KT accounts (Work, Personal, Business, Private) on the exact same device.'),
+      highlights: [t('Run 5 active profiles concurrently'), t('Separate notification badges'), t('Individual encryption keys')]
     },
     {
-      title: 'Stealth Privacy Control Suite',
+      title: t('Stealth Privacy Control Suite'),
       icon: <FiShield className="text-xl" />,
-      desc: 'Freeze last seen timestamp, hide online status indicators, read messages without triggering blue ticks, and view anti-deleted messages.',
-      highlights: ['Freeze last seen status', 'Hide typing & recording indicator', 'Anti-delete message retrieval']
+      desc: t('Freeze last seen timestamp, hide online status indicators, read messages without triggering blue ticks, and view anti deleted messages.'),
+      highlights: [t('Freeze last seen status'), t('Hide typing & recording indicator'), t('Anti delete message retrieval')]
     },
     {
-      title: 'Priority Pro AI Assistant',
+      title: t('Priority Pro AI Assistant'),
       icon: <FiZap className="text-xl" />,
-      desc: 'Get unlimited AI text generations, 4K image outputs, and faster processing speeds powered by premium LLM models.',
-      highlights: ['Unlimited AI image generations', 'Priority GPU rendering queue', 'Advanced GPT-4 class reasoning']
+      desc: t('Get unlimited AI text generations, 4K image outputs, and faster processing speeds powered by premium LLM models.'),
+      highlights: [t('Unlimited AI image generations'), t('Priority GPU rendering queue'), t('Advanced GPT-4 class reasoning')]
     }
   ]
 
   const metrics = [
-    { value: '10 GB', label: 'Max File Attachment Limit' },
-    { value: '5', label: 'Concurrent Accounts' },
-    { value: '50+', label: 'Exclusive UI Themes' },
-    { value: 'VIP 24/7', label: 'Priority Customer Support' }
+    { value: '10 GB', label: t('Max File Attachment Limit') },
+    { value: '5', label: t('Concurrent Accounts') },
+    { value: '50+', label: t('Exclusive UI Themes') },
+    { value: 'VIP 24/7', label: t('Priority Customer Support') }
   ]
 
   const plusPerks = [
     {
-      title: 'Custom App Launcher Icons',
-      desc: 'Choose from 20+ custom app icons (Gold, Sapphire, Stealth Black, Neon) to customize your phone home screen.',
+      title: t('Custom App Launcher Icons'),
+      desc: t('Choose from 20+ custom app icons (Gold, Sapphire, Stealth Black, Neon) to customize your phone home screen.'),
       icon: <CrownIcon className="text-2xl" />
     },
     {
-      title: 'Animated Profile Badges',
-      desc: 'Show off your KT Plus status with a verified golden crown badge on your profile and group member list.',
+      title: t('Animated Profile Badges'),
+      desc: t('Show off your KT Plus status with a verified golden crown badge on your profile and group member list.'),
       icon: <FiStar className="text-2xl" />
     },
     {
-      title: '10,000 Member Mass Broadcasts',
-      desc: 'Send broadcast messages to up to 10,000 recipients at once for marketing campaigns and business updates.',
+      title: t('10,000 Member Mass Broadcasts'),
+      desc: t('Send broadcast messages to up to 10,000 recipients at once for marketing campaigns and business updates.'),
       icon: <FiUploadCloud className="text-2xl" />
     },
     {
-      title: 'VIP 24/7 Priority Support',
-      desc: 'Get direct priority assistance from dedicated KT customer engineering specialists anytime.',
+      title: t('VIP 24/7 Priority Support'),
+      desc: t('Get direct priority assistance from dedicated KT customer engineering specialists anytime.'),
       icon: <FiShield className="text-2xl" />
     }
   ]
 
   const comparisonTable = [
-    { feature: 'File Attachment Limit', free: '2 GB', plus: '10 GB (Raw Quality)' },
-    { feature: 'Concurrent Accounts', free: '1 Account', plus: 'Up to 5 Accounts' },
-    { feature: 'Custom Theme Engine', free: 'Basic Light/Dark', plus: '50+ Pro Custom Themes' },
-    { feature: 'Stealth Privacy Suite', free: 'Standard Privacy', plus: 'Freeze Last Seen + Blue Tick Control' },
-    { feature: 'KT AI Quota', free: 'Standard Quota', plus: 'Unlimited Priority AI' },
-    { feature: 'Group Member Capacity', free: '1,024 Members', plus: 'Up to 10,000 Members' }
+    { feature: t('File Attachment Limit'), free: '2 GB', plus: t('10 GB (Raw Quality)') },
+    { feature: t('Concurrent Accounts'), free: t('1 Account'), plus: t('Up to 5 Accounts') },
+    { feature: t('Custom Theme Engine'), free: t('Basic Light/Dark'), plus: t('50+ Pro Custom Themes') },
+    { feature: t('Stealth Privacy Suite'), free: t('Standard Privacy'), plus: t('Freeze Last Seen + Blue Tick Control') },
+    { feature: t('KT AI Quota'), free: t('Standard Quota'), plus: t('Unlimited Priority AI') },
+    { feature: t('Group Member Capacity'), free: t('1,024 Members'), plus: t('Up to 10,000 Members') }
   ]
 
   const faqs = [
     {
-      q: 'What is KT Plus?',
-      a: 'KT Plus is our premium power-user subscription that unlocks advanced theme customization, 10GB file transfers, 5-account switching, stealth privacy settings, and priority AI.'
+      q: t('What is KT Plus?'),
+      a: t('KT Plus is our premium power user subscription that unlocks advanced theme customization, 10GB file transfers, 5-account switching, stealth privacy settings, and priority AI.')
     },
     {
-      q: 'Does KT Plus compromise end-to-end encryption?',
-      a: 'Not at all. KT Plus operates on the exact same Signal Protocol encryption engine as the standard KT Messenger app. Your chats remain 100% encrypted and private.'
+      q: t('Does KT Plus compromise end to end encryption?'),
+      a: t('Not at all. KT Plus operates on the exact same KT Encryption Protocol engine as the standard KT Messenger app. Your chats remain 100% encrypted and private.')
     },
     {
-      q: 'Can I use KT Plus across multiple devices?',
-      a: 'Yes! One KT Plus subscription activates premium features across all your connected devices including iOS, Android, Mac, Windows, and Web.'
+      q: t('Can I use KT Plus across multiple devices?'),
+      a: t('Yes! One KT Plus subscription activates premium features across all your connected devices including iOS, Android, Mac, Windows, and Web.')
     },
     {
-      q: 'How does the Multi-Account Switcher work?',
-      a: 'You can add up to 5 phone numbers or profiles inside the app settings and switch between them instantly with a single tap without logging out.'
+      q: t('How does the Multi Account Switcher work?'),
+      a: t('You can add up to 5 phone numbers or profiles inside the app settings and switch between them instantly with a single tap without logging out.')
     },
     {
-      q: 'What is Stealth Privacy?',
-      a: 'Stealth Privacy allows you to hide your online status, freeze your last seen timestamp, read incoming messages without triggering blue receipts, and view messages edited or deleted by senders.'
+      q: t('What is Stealth Privacy?'),
+      a: t('Stealth Privacy allows you to hide your online status, freeze your last seen timestamp, read incoming messages without triggering blue receipts, and view messages edited or deleted by senders.')
     },
     {
-      q: 'Can I cancel my subscription anytime?',
-      a: 'Yes, you can cancel your subscription at any time with one click from app settings. You retain Plus features until the end of your billing period.'
+      q: t('Can I cancel my subscription anytime?'),
+      a: t('Yes, you can cancel your subscription at any time with one click from app settings. You retain Plus features until the end of your billing period.')
     }
   ]
 
@@ -155,32 +157,32 @@ export function WhatsAppPlusPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
-                <CrownIcon className="text-brand-strong" /> KT Plus Premium Suite
+                <CrownIcon className="text-brand-strong" /> {t('KT Plus Premium Suite')}
               </div>
               <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                Unlock Ultimate Power with <br />
+                {t('Unlock Ultimate Power with')} <br />
                 <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  KT Plus Subscription
+                  {t('KT Plus Subscription')}
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                Elevate your daily messaging experience with custom themes, 10GB file transfers, stealth privacy controls, and priority Pro AI access.
+                {t('Elevate your daily messaging experience with custom themes, 10GB file transfers, stealth privacy controls, and priority Pro AI access.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
-                  Upgrade to KT Plus <CrownIcon className="text-lg ml-1" />
+                  {t('Upgrade to KT Plus')} <CrownIcon className="text-lg ml-1" />
                 </Button>
                 <Button variant="secondary" size="lg" onClick={() => navigate('/apps')}>
-                  Compare Plans <FiChevronRight />
+                  {t('Compare Plans')} <FiChevronRight />
                 </Button>
               </div>
 
               <div className="mt-8 flex items-center gap-6 border-t border-line pt-6 text-sm text-body">
                 <span className="flex items-center gap-2">
-                  <FiCheckCircle className="text-brand-strong" /> 10GB File Sharing
+                  <FiCheckCircle className="text-brand-strong" /> {t('10GB File Sharing')}
                 </span>
                 <span className="flex items-center gap-2">
-                  <FiCheckCircle className="text-brand-strong" /> Stealth Privacy Suite
+                  <FiCheckCircle className="text-brand-strong" /> {t('Stealth Privacy Suite')}
                 </span>
               </div>
             </Reveal>
@@ -191,14 +193,14 @@ export function WhatsAppPlusPage() {
                 <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
                   <div className="flex items-center gap-2">
                     <CrownIcon className="text-brand-strong text-2xl" />
-                    <h3 className="font-bold text-ink text-base">Theme Customizer Engine</h3>
+                    <h3 className="font-bold text-ink text-base">{t('Theme Customizer Engine')}</h3>
                   </div>
                   <span className="rounded-full bg-brand-soft px-3 py-1 text-[10px] font-bold text-brand-ink">
-                    PRO UNLOCKED
+                    {t('PRO UNLOCKED')}
                   </span>
                 </div>
 
-                <p className="text-xs text-muted mb-3 font-medium">Select your active theme preset:</p>
+                <p className="text-xs text-muted mb-3 font-medium">{t('Select your active theme preset:')}</p>
                 <div className="grid grid-cols-2 gap-2 mb-4">
                   {themes.map((t) => (
                     <button
@@ -217,11 +219,11 @@ export function WhatsAppPlusPage() {
 
                 <div className="rounded-2xl bg-slate-950 p-4 text-white text-xs space-y-2 border border-slate-800 shadow-card">
                   <div className="flex justify-between text-[11px] text-brand-ink font-semibold">
-                    <span>Active Theme: {selectedTheme}</span>
-                    <span>10GB Max File Limit</span>
+                    <span>{t('Active Theme:')} {selectedTheme}</span>
+                    <span>{t('10GB Max File Limit')}</span>
                   </div>
                   <div className="rounded-xl bg-slate-900 p-2.5 text-slate-300 border border-slate-800">
-                    🚀 Exclusive Pro Badge & 4K Uncompressed Media Engine enabled!
+                    🚀 {t('Exclusive Pro Badge & 4K Uncompressed Media Engine enabled!')}
                   </div>
                 </div>
               </div>
@@ -248,10 +250,10 @@ export function WhatsAppPlusPage() {
       <Section className="bg-cream">
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            Exclusive Premium Perks
+            {t('Exclusive Premium Perks')}
           </h2>
           <p className="mt-4 text-lg text-body">
-            Designed for power users, creators, and professionals who demand the absolute best messaging experience.
+            {t('Designed for power users, creators, and professionals who demand the absolute best messaging experience.')}
           </p>
         </Reveal>
 
@@ -281,7 +283,7 @@ export function WhatsAppPlusPage() {
           <div className="rounded-3xl border border-line bg-surface p-8 shadow-card flex flex-col justify-between">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
-                KT Plus Pillar Deep Dive
+                {t('KT Plus Pillar Deep Dive')}
               </div>
               <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {plusTabs[activeTab].title}
@@ -301,9 +303,9 @@ export function WhatsAppPlusPage() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
-              <span className="text-xs text-muted font-medium">Unlocked with KT Plus Subscription</span>
+              <span className="text-xs text-muted font-medium">{t('Unlocked with KT Plus Subscription')}</span>
               <Button size="sm" onClick={() => navigate('/apps')}>
-                Get KT Plus <FiChevronRight />
+                {t('Get KT Plus')} <FiChevronRight />
               </Button>
             </div>
           </div>
@@ -316,23 +318,23 @@ export function WhatsAppPlusPage() {
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
             <Reveal from="left" className="lg:col-span-5 space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                🎬 Interactive KT Plus Demo
+                🎬 {t('Interactive KT Plus Demo')}
               </div>
               <h2 className="text-3xl font-extrabold text-ink sm:text-4xl lg:text-[2.5rem] tracking-tight leading-tight">
-                KT Plus Theme Engine &amp; Pro Suite
+                {t('KT Plus Theme Engine & Pro Suite')}
               </h2>
               <p className="text-base sm:text-lg leading-relaxed text-body">
-                Custom UI themes (Midnight Sapphire, Royal Gold), 10GB file transfers, 5 dual space accounts, and stealth privacy.
+                {t('Custom UI themes (Midnight Sapphire, Royal Gold), 10GB file transfers, 5 dual space accounts, and stealth privacy.')}
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> Custom UI Theme Engine
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('Custom UI Theme Engine')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> 10GB RAW File Engine
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('10GB RAW File Engine')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> 5 Dual Space Accounts
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('5 Dual Space Accounts')}
                 </span>
               </div>
             </Reveal>
@@ -349,7 +351,7 @@ export function WhatsAppPlusPage() {
               </div>
 
               <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-2 left-2 sm:left-6 z-20 flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 shadow-float border border-brand-strong/30 text-xs font-bold text-brand-ink">
-                <FiShield className="text-brand-strong" /> KT Plus Pro Suite Active
+                <FiShield className="text-brand-strong" /> {t('KT Plus Pro Suite Active')}
               </motion.div>
             </Reveal>
           </div>
@@ -362,27 +364,27 @@ export function WhatsAppPlusPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
               <div className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                <FiShield className="text-brand-strong" /> Stealth Privacy Engine
+                <FiShield className="text-brand-strong" /> {t('Stealth Privacy Engine')}
               </div>
               <h2 className="mt-4 text-3xl font-extrabold leading-tight text-ink sm:text-4xl lg:text-5xl">
-                Take complete control over your online footprint
+                {t('Take complete control over your online footprint')}
               </h2>
               <p className="mt-6 text-base leading-relaxed text-body">
-                KT Plus gives you full stealth capability. Freeze your last seen status, read messages without triggering blue receipts, and view messages even if deleted by the sender.
+                {t('KT Plus gives you full stealth capability. Freeze your last seen status, read messages without triggering blue receipts, and view messages even if deleted by the sender.')}
               </p>
 
               <div className="mt-6 space-y-3 text-sm font-semibold text-ink">
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>Freeze last seen timestamp to a custom historical date</span>
+                  <span>{t('Freeze last seen timestamp to a custom historical date')}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>Send blue ticks only after you reply to a message</span>
+                  <span>{t('Send blue ticks only after you reply to a message')}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>Anti-delete message recovery indicator</span>
+                  <span>{t('Anti delete message recovery indicator')}</span>
                 </div>
               </div>
             </Reveal>
@@ -392,21 +394,21 @@ export function WhatsAppPlusPage() {
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-strong text-white text-2xl mb-4 shadow-brand">
                   <CrownIcon className="text-2xl" />
                 </div>
-                <h3 className="font-bold text-lg text-ink">Stealth Controls Active</h3>
-                <p className="text-xs text-body mt-1">Full control over read receipts and online visibility</p>
+                <h3 className="font-bold text-lg text-ink">{t('Stealth Controls Active')}</h3>
+                <p className="text-xs text-body mt-1">{t('Full control over read receipts and online visibility')}</p>
 
                 <div className="mt-4 rounded-2xl bg-cream p-4 border border-line space-y-2 text-xs">
                   <div className="flex justify-between text-ink font-semibold">
-                    <span>Freeze Last Seen:</span>
-                    <span className="text-brand-strong font-bold">ACTIVE</span>
+                    <span>{t('Freeze Last Seen:')}</span>
+                    <span className="text-brand-strong font-bold">{t('ACTIVE')}</span>
                   </div>
                   <div className="flex justify-between text-ink font-semibold">
-                    <span>Blue Tick on Reply Only:</span>
-                    <span className="text-brand-strong font-bold">ENABLED</span>
+                    <span>{t('Blue Tick on Reply Only:')}</span>
+                    <span className="text-brand-strong font-bold">{t('ENABLED')}</span>
                   </div>
                   <div className="flex justify-between text-ink font-semibold">
-                    <span>Anti-Delete Protection:</span>
-                    <span className="text-brand-strong font-bold">ENABLED</span>
+                    <span>{t('Anti Delete Protection:')}</span>
+                    <span className="text-brand-strong font-bold">{t('ENABLED')}</span>
                   </div>
                 </div>
               </div>
@@ -419,10 +421,10 @@ export function WhatsAppPlusPage() {
       <Section className="bg-cream">
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            VIP Perks Included with Plus
+            {t('VIP Perks Included with Plus')}
           </h2>
           <p className="mt-4 text-lg text-body">
-            Additional privileges included with every active KT Plus subscription.
+            {t('Additional privileges included with every active KT Plus subscription.')}
           </p>
         </Reveal>
 
@@ -438,7 +440,7 @@ export function WhatsAppPlusPage() {
                   <p className="mt-2 text-xs leading-relaxed text-body">{card.desc}</p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-line">
-                  <span className="text-[11px] font-semibold text-brand-ink">Pro Perk</span>
+                  <span className="text-[11px] font-semibold text-brand-ink">{t('Pro Perk')}</span>
                 </div>
               </div>
             </Reveal>
@@ -451,10 +453,10 @@ export function WhatsAppPlusPage() {
         <Container>
           <Reveal from="up" className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Free vs KT Plus Comparison
+              {t('Free vs KT Plus Comparison')}
             </h2>
             <p className="mt-4 text-lg text-body">
-              Compare features included in the standard free version vs KT Plus subscription.
+              {t('Compare features included in the standard free version vs KT Plus subscription.')}
             </p>
           </Reveal>
 
@@ -462,9 +464,9 @@ export function WhatsAppPlusPage() {
             <table className="w-full min-w-[600px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-line bg-cream">
-                  <th className="p-4 font-bold text-ink">Feature</th>
-                  <th className="p-4 font-bold text-body">Standard Free KT</th>
-                  <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT Plus (Premium)</th>
+                  <th className="p-4 font-bold text-ink">{t('Feature')}</th>
+                  <th className="p-4 font-bold text-body">{t('Standard Free KT')}</th>
+                  <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">{t('KT Plus (Premium)')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line text-sm">
@@ -486,10 +488,10 @@ export function WhatsAppPlusPage() {
         <Container className="max-w-4xl">
           <Reveal from="up" className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-              <FiHelpCircle /> Plus FAQs
+              <FiHelpCircle /> {t('Plus FAQs')}
             </div>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Frequently Asked Questions
+              {t('Frequently Asked Questions')}
             </h2>
           </Reveal>
 
@@ -531,17 +533,17 @@ export function WhatsAppPlusPage() {
         <Container className="text-center">
           <Reveal from="up">
             <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
-              Upgrade to KT Plus Today
+              {t('Upgrade to KT Plus Today')}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Unlock 10GB file transfers, 5-account dual space, custom themes, and stealth privacy.
+              {t('Unlock 10GB file transfers, 5-account dual space, custom themes, and stealth privacy.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
-                Get KT Plus Now <CrownIcon className="text-lg ml-1" />
+                {t('Get KT Plus Now')} <CrownIcon className="text-lg ml-1" />
               </Button>
               <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
-                Launch Web App <FiChevronRight />
+                {t('Launch Web App')} <FiChevronRight />
               </Button>
             </div>
           </Reveal>

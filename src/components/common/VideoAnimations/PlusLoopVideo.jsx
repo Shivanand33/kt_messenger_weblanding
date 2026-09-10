@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiUploadCloud, FiUserCheck } from 'react-icons/fi'
 import { PhoneVideoFrame } from './PhoneVideoFrame'
+import { useLanguage } from '../../../context/LanguageContext'
 
 function CrownIcon({ className = 'h-4 w-4' }) {
   return (
@@ -12,6 +13,7 @@ function CrownIcon({ className = 'h-4 w-4' }) {
 }
 
 export function PlusLoopVideo({ className = '' }) {
+  const { t } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(true)
   const [phase, setPhase] = useState(0) // 0: Theme, 1: 10GB Transfer, 2: Multi-Account
   const [activeTheme, setActiveTheme] = useState('Midnight Sapphire')
@@ -54,7 +56,7 @@ export function PlusLoopVideo({ className = '' }) {
 
   return (
     <PhoneVideoFrame
-      title="KT Plus Theme Engine &amp; Pro Perks"
+      title={t('KT Plus Theme Engine & Pro Perks')}
       progress={progress}
       isPlaying={isPlaying}
       onTogglePlay={() => setIsPlaying(!isPlaying)}
@@ -65,10 +67,10 @@ export function PlusLoopVideo({ className = '' }) {
       <div className="flex items-center justify-between border-b border-white/10 pb-2">
         <div className="flex items-center gap-1.5">
           <CrownIcon className="text-amber-400 text-sm" />
-          <span className="text-xs font-bold text-white">KT Plus Engine</span>
+          <span className="text-xs font-bold text-white">{t('KT Plus Engine')}</span>
         </div>
         <span className="rounded-full bg-brand-strong px-2 py-0.5 text-[8px] font-bold text-white shadow-brand">
-          PRO UNLOCKED
+          {t('PRO UNLOCKED')}
         </span>
       </div>
 
@@ -77,20 +79,20 @@ export function PlusLoopVideo({ className = '' }) {
         {phase === 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-1.5 text-xs my-auto">
             <div className="flex justify-between items-center text-slate-300 text-[10px]">
-              <span>Preset Theme:</span>
-              <span className="text-brand-ink font-bold">{activeTheme}</span>
+              <span>{t('Preset Theme:')}</span>
+              <span className="text-brand-ink font-bold">{t(activeTheme)}</span>
             </div>
             <div className="grid grid-cols-2 gap-1.5">
-              {themes.map((t) => (
+              {themes.map((theme) => (
                 <div
-                  key={t}
+                  key={theme}
                   className={`rounded-lg p-1.5 text-center text-[9px] font-bold border transition-all ${
-                    activeTheme === t
+                    activeTheme === theme
                       ? 'border-brand-strong bg-brand-strong text-white shadow-brand'
                       : 'border-slate-800 bg-slate-900 text-slate-400'
                   }`}
                 >
-                  {t}
+                  {t(theme)}
                 </div>
               ))}
             </div>
@@ -100,29 +102,29 @@ export function PlusLoopVideo({ className = '' }) {
         {phase === 1 && (
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="rounded-xl bg-slate-950 p-2.5 border border-slate-800 space-y-1.5 text-xs my-auto">
             <div className="flex justify-between items-center font-bold text-brand-ink text-[10px]">
-              <span className="flex items-center gap-1"><FiUploadCloud className="text-brand-strong" /> 10GB File Transfer</span>
+              <span className="flex items-center gap-1"><FiUploadCloud className="text-brand-strong" /> {t('10GB File Transfer')}</span>
               <span>8.4 GB / 10 GB</span>
             </div>
             <div className="h-1.5 rounded-full bg-slate-900 overflow-hidden border border-slate-800">
               <div className="h-full w-4/5 bg-brand-strong" />
             </div>
-            <p className="text-[8px] text-slate-400 text-right">RAW Cinema 4K • Zero Compression</p>
+            <p className="text-[8px] text-slate-400 text-right">{t('RAW Cinema 4K • Zero Compression')}</p>
           </motion.div>
         )}
 
         {phase === 2 && (
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="rounded-xl bg-slate-950 p-2.5 border border-slate-800 space-y-1.5 text-xs my-auto">
             <div className="flex justify-between items-center font-bold text-brand-ink text-[10px]">
-              <span className="flex items-center gap-1"><FiUserCheck className="text-brand-strong" /> 5 Dual Accounts</span>
-              <span className="text-emerald-400 text-[8px]">Active</span>
+              <span className="flex items-center gap-1"><FiUserCheck className="text-brand-strong" /> {t('5 Dual Accounts')}</span>
+              <span className="text-emerald-400 text-[8px]">{t('Active')}</span>
             </div>
             <div className="rounded-lg bg-slate-900 p-1.5 border border-slate-800 flex justify-between items-center text-[9px]">
-              <span>Personal Account (+91 98765...)</span>
-              <span className="rounded-full bg-brand-strong px-2 py-0.5 text-[8px] font-bold text-white">Active</span>
+              <span>{t('Personal Account (000 000 0000)')}</span>
+              <span className="rounded-full bg-brand-strong px-2 py-0.5 text-[8px] font-bold text-white">{t('Active')}</span>
             </div>
             <div className="rounded-lg bg-slate-900 p-1.5 border border-slate-800 flex justify-between items-center text-[9px]">
-              <span>Work / Business Account</span>
-              <span className="text-[8px] text-slate-400">Switch ⚡</span>
+              <span>{t('Work / Business Account')}</span>
+              <span className="text-[8px] text-slate-400">{t('Switch ⚡')}</span>
             </div>
           </motion.div>
         )}
@@ -130,7 +132,7 @@ export function PlusLoopVideo({ className = '' }) {
 
       {/* Screen Footer */}
       <div className="rounded-xl bg-slate-950 p-1.5 text-center text-[9px] font-bold text-brand-ink border border-slate-800">
-        Custom themes, 10GB transfers, &amp; 5-account space
+        {t('Custom themes, 10GB transfers, & 5-account space')}
       </div>
     </PhoneVideoFrame>
   )

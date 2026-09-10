@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { FiPlay, FiSmile, FiCheck, FiHeart } from 'react-icons/fi'
+import { useLanguage } from '../../context/LanguageContext'
 import sunsetImage from '../../assets/images/sunset_landscape.png'
 import lillyAvatar from '../../assets/images/private.jpg'
 
 export function ExpressMockup({ activeTab = 1, className = '' }) {
+  const { t } = useLanguage()
   const [reactions, setReactions] = useState({
     '😮': 3,
     '❤️': 4,
@@ -52,7 +54,7 @@ export function ExpressMockup({ activeTab = 1, className = '' }) {
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-stone-900">
               <img
                 src={sunsetImage}
-                alt="Sunset landscape"
+                alt={t('Sunset landscape')}
                 className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
               />
 
@@ -106,13 +108,13 @@ export function ExpressMockup({ activeTab = 1, className = '' }) {
         <div className="rounded-3xl bg-white p-4 shadow-xl border border-stone-200">
           <div className="flex items-center gap-2 mb-3">
             <img src={lillyAvatar} alt="Lilly" className="h-6 w-6 rounded-full object-cover" />
-            <span className="text-xs font-semibold text-stone-800">Lilly (Video Note)</span>
+            <span className="text-xs font-semibold text-stone-800">{t('Lilly (Video Note)')}</span>
           </div>
 
           {/* Circular Video Note Frame */}
           <div className="mx-auto relative flex h-40 w-40 items-center justify-center rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 p-1 shadow-lg">
             <div className="h-full w-full overflow-hidden rounded-full bg-stone-900 relative">
-              <img src={sunsetImage} alt="Video preview" className="h-full w-full object-cover" />
+              <img src={sunsetImage} alt={t('Video preview')} className="h-full w-full object-cover" />
               <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-emerald-600 shadow-md">
                   <FiPlay className="ml-0.5 text-xl" />

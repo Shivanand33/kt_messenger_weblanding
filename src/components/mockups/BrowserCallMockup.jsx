@@ -1,4 +1,5 @@
 import { FiVideo, FiMic, FiMonitor, FiPhoneOff, FiLock } from 'react-icons/fi'
+import { useLanguage } from '../../context/LanguageContext'
 import feed1 from '../../assets/images/hero.jpg'
 import feed2 from '../../assets/images/group.jpg'
 import feed3 from '../../assets/images/business.jpg'
@@ -17,6 +18,8 @@ const tiles = [
 
 /** Two stacked browser windows — the front one on a group video call. */
 export function BrowserCallMockup({ className = '' }) {
+  const { t } = useLanguage()
+
   return (
     <div className={`relative ${className}`}>
       {/* back window peeking out */}
@@ -41,7 +44,7 @@ export function BrowserCallMockup({ className = '' }) {
             <div key={tile.name} className="relative aspect-[4/3] overflow-hidden rounded-md">
               <img src={tile.src} alt="" className="h-full w-full object-cover" />
               <span className="absolute bottom-1 left-1 rounded bg-black/55 px-1.5 py-0.5 text-[9px] font-medium text-white">
-                {tile.name}
+                {t(tile.name)}
               </span>
             </div>
           ))}

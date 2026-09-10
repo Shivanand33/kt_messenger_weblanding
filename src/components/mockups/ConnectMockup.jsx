@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { FiPlay, FiPause, FiCheck } from 'react-icons/fi'
+import { useLanguage } from '../../context/LanguageContext'
 import beachImage from '../../assets/images/beach_bicycles.png'
 import emikoAvatar from '../../assets/images/private.jpg'
 import userAvatar from '../../assets/images/business.jpg'
 
 export function ConnectMockup({ className = '' }) {
+  const { t } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(false)
   const [selectedEmoji, setSelectedEmoji] = useState(null)
 
@@ -20,7 +22,7 @@ export function ConnectMockup({ className = '' }) {
           </svg>
         </div>
         <p className="text-sm font-medium text-stone-800">
-          Trevor&apos;s recital is on Sunday, 1pm!
+          {t("Trevor's recital is on Sunday, 1pm!")}
         </p>
       </div>
 
@@ -53,7 +55,7 @@ export function ConnectMockup({ className = '' }) {
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-stone-900">
             <img
               src={beachImage}
-              alt="Beach bicycles"
+              alt={t('Beach bicycles')}
               className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
             />
             {/* Video overlay badge */}
@@ -77,7 +79,7 @@ export function ConnectMockup({ className = '' }) {
       <div className="relative z-20 ml-auto max-w-[310px] rounded-2xl rounded-tr-xs bg-[#d9fdd3] p-3 shadow-[0_8px_25px_rgba(0,0,0,0.06)] border border-emerald-200/60">
         <div className="flex items-center gap-3">
           <div className="relative shrink-0">
-            <img src={userAvatar} alt="Sender" className="h-10 w-10 rounded-full object-cover" />
+            <img src={userAvatar} alt={t('Sender')} className="h-10 w-10 rounded-full object-cover" />
             <div className="absolute -bottom-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-white text-[9px]">
               🎤
             </div>
@@ -85,7 +87,7 @@ export function ConnectMockup({ className = '' }) {
 
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            aria-label={isPlaying ? 'Pause voice note' : 'Play voice note'}
+            aria-label={isPlaying ? t('Pause voice note') : t('Play voice note')}
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white shadow-md transition-transform hover:scale-105 active:scale-95"
           >
             {isPlaying ? <FiPause className="text-lg" /> : <FiPlay className="ml-0.5 text-lg" />}

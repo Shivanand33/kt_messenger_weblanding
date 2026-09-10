@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiPlay, FiPause, FiRotateCcw, FiLock, FiShield, FiKey, FiEyeOff, FiCheckCircle, FiSmartphone } from 'react-icons/fi'
+import { useLanguage } from '../../../context/LanguageContext'
 
 export function PrivacyAnimationVideo({ className = '' }) {
+  const { t } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(true)
   const [step, setStep] = useState(0) // 0: E2EE Seal, 1: Biometric Lock, 2: Privacy Checkup Status
   const [progress, setProgress] = useState(0)
@@ -38,19 +40,19 @@ export function PrivacyAnimationVideo({ className = '' }) {
       <div className="flex items-center justify-between border-b border-line pb-3 mb-3">
         <div className="flex items-center gap-2">
           <span className="flex h-3 w-3 rounded-full bg-brand-strong animate-pulse" />
-          <span className="text-xs font-bold text-ink uppercase tracking-wider">Video Clip • How Privacy Protection Works</span>
+          <span className="text-xs font-bold text-ink uppercase tracking-wider">{t('Video Clip • How Privacy Protection Works')}</span>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
             className="flex items-center gap-1 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink hover:bg-brand-strong hover:text-white transition-colors"
           >
-            {isPlaying ? <><FiPause /> Pause</> : <><FiPlay /> Play</>}
+            {isPlaying ? <><FiPause /> {t('Pause')}</> : <><FiPlay /> {t('Play')}</>}
           </button>
           <button
             onClick={restartVideo}
             className="grid h-7 w-7 place-items-center rounded-full bg-cream text-ink hover:bg-line text-xs"
-            title="Replay video"
+            title={t('Replay video')}
           >
             <FiRotateCcw />
           </button>
@@ -68,8 +70,8 @@ export function PrivacyAnimationVideo({ className = '' }) {
             >
               <FiLock />
             </motion.div>
-            <h4 className="font-bold text-sm">Signal E2E Encryption Handshake</h4>
-            <p className="text-xs text-brand-ink mt-1 font-medium">Scrambling plain text into 256-bit cipher keys...</p>
+            <h4 className="font-bold text-sm">{t('KT E2E Encryption Handshake')}</h4>
+            <p className="text-xs text-brand-ink mt-1 font-medium">{t('Scrambling plain text into 256-bit cipher keys...')}</p>
             <div className="mt-3 rounded-lg bg-slate-900 px-3 py-1.5 font-mono text-[10px] text-slate-300 border border-slate-800">
               0x9F42A7...71B4 [Key Match Verified ✔]
             </div>
@@ -85,8 +87,8 @@ export function PrivacyAnimationVideo({ className = '' }) {
             >
               <FiEyeOff />
             </motion.div>
-            <h4 className="font-bold text-sm">Biometric Chat Lock Unlocked</h4>
-            <p className="text-xs text-slate-300 mt-1">FaceID / Secret Passcode verified for private folder.</p>
+            <h4 className="font-bold text-sm">{t('Biometric Chat Lock Unlocked')}</h4>
+            <p className="text-xs text-slate-300 mt-1">{t('FaceID / Secret Passcode verified for private folder.')}</p>
           </div>
         )}
 
@@ -94,17 +96,17 @@ export function PrivacyAnimationVideo({ className = '' }) {
           <div className="flex flex-col justify-between h-full">
             <div className="flex items-center justify-between border-b border-slate-800 pb-2">
               <span className="text-xs font-bold text-brand-ink flex items-center gap-1.5">
-                <FiShield /> Privacy Shield 100% Active
+                <FiShield /> {t('Privacy Shield 100% Active')}
               </span>
-              <span className="text-[10px] text-emerald-400 font-semibold">Zero Logs</span>
+              <span className="text-[10px] text-emerald-400 font-semibold">{t('Zero Logs')}</span>
             </div>
             <div className="space-y-2 text-xs">
               <div className="flex items-center justify-between rounded-xl bg-slate-900 p-2 border border-slate-800">
-                <span>Silence Unknown Callers</span>
+                <span>{t('Silence Unknown Callers')}</span>
                 <FiCheckCircle className="text-brand-strong" />
               </div>
               <div className="flex items-center justify-between rounded-xl bg-slate-900 p-2 border border-slate-800">
-                <span>Encrypted 64-bit Cloud Backup</span>
+                <span>{t('Encrypted 64-bit Cloud Backup')}</span>
                 <FiCheckCircle className="text-brand-strong" />
               </div>
             </div>

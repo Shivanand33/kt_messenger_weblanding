@@ -49,6 +49,7 @@ import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
 import { useModal } from '../../context/ModalContext'
+import { useLanguage } from '../../context/LanguageContext'
 import {
   marketplaceFaqs,
   marketplaceFeatures,
@@ -117,7 +118,7 @@ const STEP_ICONS = [<FiSearch key="a" />, <FiShoppingCart key="b" />, <FiCreditC
 
 const RELATED = [
   { to: '/wallet', label: 'Wallet', desc: 'Pay in one tap and split orders with friends.', icon: <FiCreditCard /> },
-  { to: '/markets', label: 'Markets', desc: 'Live prices and zero-spread currency conversion.', icon: <FiTrendingUp /> },
+  { to: '/markets', label: 'Markets', desc: 'Live prices and zero spread currency conversion.', icon: <FiTrendingUp /> },
   { to: '/news', label: 'News', desc: 'Business headlines and a daily audio brief.', icon: <FiActivity /> },
   { to: '/notes', label: 'Notes', desc: 'Keep receipts and wish lists in an encrypted vault.', icon: <FiFileText /> },
 ]
@@ -148,6 +149,7 @@ function Stars({ rating }) {
 
 export function MarketplacePage() {
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
 
   const [activeCategory, setActiveCategory] = useState('All')
   const [query, setQuery] = useState('')
@@ -234,12 +236,12 @@ export function MarketplacePage() {
   const toggleWishlist = (id) => {
     const saved = wishlist.includes(id)
     setWishlist(saved ? wishlist.filter((item) => item !== id) : [...wishlist, id])
-    setToast(saved ? 'Removed from your wishlist.' : 'Saved to your wishlist.')
+    setToast(saved ? t('Removed from your wishlist.') : t('Saved to your wishlist.'))
   }
 
   const checkout = () => {
     if (cartRows.length === 0) {
-      setToast('Your cart is empty — add something first.')
+      setToast(t('Your cart is empty add something first.'))
       return
     }
     setOrder({
@@ -262,39 +264,39 @@ export function MarketplacePage() {
       <PageHero
         badge={
           <>
-            <FiShoppingBag /> In-chat commerce · escrow on every order
+            <FiShoppingBag /> {t('In chat commerce · escrow on every order')}
           </>
         }
         title="KT"
         highlight="Marketplace"
-        description="Browse verified stores, check out in one tap and track the parcel — all inside the conversation, with your money held in escrow until it arrives."
+        description={t('Browse verified stores, check out in one tap and track the parcel all inside the conversation, with your money held in escrow until it arrives.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}>
-              Start shopping <FiChevronRight />
+              {t('Start shopping')} <FiChevronRight />
             </Button>
             <Button size="lg" variant="dark" onClick={openDownloadModal}>
-              Get the app <FiZap />
+              {t('Get the app')} <FiZap />
             </Button>
           </>
         }
         chips={[
-          { icon: <FiLock />, label: 'Escrow until delivery' },
-          { icon: <FiRotateCcw />, label: '7-day easy returns' },
-          { icon: <FiTag />, label: 'No hidden checkout fees' },
+          { icon: <FiLock />, label: t('Escrow until delivery') },
+          { icon: <FiRotateCcw />, label: t('7-day easy returns') },
+          { icon: <FiTag />, label: t('No hidden checkout fees') },
         ]}
         aside={
           <div className="rounded-[28px] border border-line dark:border-white/10 bg-cream-2 dark:bg-white/[0.04] p-5 shadow-card dark:shadow-2xl backdrop-blur-xl sm:p-6">
             <div className="flex items-center justify-between border-b border-line dark:border-white/10 pb-4">
-              <span className="text-sm font-extrabold text-ink dark:text-white">Your cart</span>
+              <span className="text-sm font-extrabold text-ink dark:text-white">{t('Your cart')}</span>
               <span className="rounded-full border border-brand/30 dark:border-sky-400/40 bg-brand-soft dark:bg-sky-400/10 px-2.5 py-1 text-[10px] font-black uppercase text-brand-strong dark:text-sky-300">
-                {cartCount} {cartCount === 1 ? 'item' : 'items'}
+                {cartCount} {cartCount === 1 ? t('item') : t('items')}
               </span>
             </div>
 
             {cartRows.length === 0 ? (
               <p className="py-10 text-center text-xs font-semibold text-muted dark:text-slate-400">
-                Nothing here yet. Add a product below and it appears instantly.
+                {t('Nothing here yet. Add a product below and it appears instantly.')}
               </p>
             ) : (
               <ul className="mt-4 space-y-3">
@@ -303,7 +305,7 @@ export function MarketplacePage() {
                     <img src={line.product.image} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                     <span className="min-w-0 flex-1">
                       <span className="line-clamp-1 block text-xs font-bold text-ink dark:text-white">{line.product.name}</span>
-                      <span className="text-[10px] font-semibold text-muted dark:text-slate-400">Qty {line.qty}</span>
+                      <span className="text-[10px] font-semibold text-muted dark:text-slate-400">{t('Qty')} {line.qty}</span>
                     </span>
                     <span className="shrink-0 text-xs font-black text-ink dark:text-white">{rupees(line.product.price * line.qty)}</span>
                   </li>
@@ -312,7 +314,7 @@ export function MarketplacePage() {
             )}
 
             <div className="mt-4 flex items-center justify-between border-t border-line dark:border-white/10 pt-4">
-              <span className="text-xs font-bold text-muted dark:text-slate-400">Subtotal</span>
+              <span className="text-xs font-bold text-muted dark:text-slate-400">{t('Subtotal')}</span>
               <span className="text-lg font-black text-ink dark:text-white">{rupees(cartSubtotal)}</span>
             </div>
 
@@ -321,7 +323,7 @@ export function MarketplacePage() {
               onClick={() => setCartOpen(true)}
               className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-brand-strong text-sm font-bold text-white shadow-brand transition-colors hover:bg-brand-strong-hover"
             >
-              <FiShoppingCart /> Open cart
+              <FiShoppingCart /> {t('Open cart')}
             </button>
           </div>
         }
@@ -335,7 +337,7 @@ export function MarketplacePage() {
               setQuery(event.target.value)
               resetPaging()
             }}
-            placeholder="Search headphones, skincare, coffee, yoga mats…"
+            placeholder={t('Search headphones, skincare, coffee, yoga mats…')}
             className="w-full bg-transparent text-sm font-semibold text-ink dark:text-white outline-none placeholder:text-muted dark:placeholder:text-slate-400"
           />
           {query ? (
@@ -347,7 +349,7 @@ export function MarketplacePage() {
               }}
               className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-muted dark:text-slate-300 hover:bg-brand-soft dark:hover:bg-white/10 hover:text-ink dark:hover:text-white"
             >
-              Clear
+              {t('Clear')}
             </button>
           ) : null}
         </div>
@@ -369,17 +371,17 @@ export function MarketplacePage() {
         <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
           <SectionHead
             align="left"
-            eyebrow="Flash deals"
-            title="Today’s biggest discounts"
-            description="Deal pricing holds until the timer runs out. No countdown tricks — the clock is the real window."
+            eyebrow={t('Flash deals')}
+            title={t("Today’s biggest discounts")}
+            description={t('Deal pricing holds until the timer runs out. No countdown tricks the clock is the real window.')}
           />
 
           <Reveal from="up" delay={0.1}>
             <div className="flex items-center gap-2">
               {[
-                { value: hrs, label: 'hrs' },
-                { value: mins, label: 'min' },
-                { value: secs, label: 'sec' },
+                { value: hrs, label: t('hrs') },
+                { value: mins, label: t('min') },
+                { value: secs, label: t('sec') },
               ].map((unit) => (
                 <div key={unit.label} className="w-16 rounded-2xl border border-line bg-cream p-3 text-center shadow-soft dark:bg-cream-2">
                   <div className="text-xl font-black tabular-nums text-ink">{unit.value}</div>
@@ -422,7 +424,7 @@ export function MarketplacePage() {
                     onClick={() => addToCart(product)}
                     className="shrink-0 rounded-xl bg-brand-strong px-3.5 py-2 text-[11px] font-bold text-white shadow-brand transition-colors hover:bg-brand-strong-hover"
                   >
-                    Add
+                    {t('Add')}
                   </button>
                 </div>
               </div>
@@ -436,9 +438,9 @@ export function MarketplacePage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="categories" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Browse"
-          title="Eight categories, no filler"
-          description="Pick a shelf and the catalogue below filters instantly."
+          eyebrow={t('Browse')}
+          title={t('Eight categories, no filler')}
+          description={t('Pick a shelf and the catalogue below filters instantly.')}
         />
 
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -456,10 +458,10 @@ export function MarketplacePage() {
                 }`}
               >
                 <span className="text-3xl transition-transform duration-300 group-hover:scale-110">{tile.emoji}</span>
-                <span className="mt-3 text-base font-extrabold text-ink">{tile.name}</span>
-                <span className="mt-1 text-[11px] font-semibold leading-relaxed text-muted">{tile.blurb}</span>
+                <span className="mt-3 text-base font-extrabold text-ink">{t(tile.name)}</span>
+                <span className="mt-1 text-[11px] font-semibold leading-relaxed text-muted">{t(tile.blurb)}</span>
                 <span className="mt-3 text-[11px] font-black text-brand-ink">
-                  {tile.name === 'All' ? products.length : products.filter((p) => p.category === tile.name).length} items
+                  {tile.name === 'All' ? products.length : products.filter((p) => p.category === tile.name).length} {t('items')}
                 </span>
               </button>
             </Reveal>
@@ -483,7 +485,7 @@ export function MarketplacePage() {
             setQuery(value)
             resetPaging()
           }}
-          placeholder="Search the catalogue…"
+          placeholder={t('Search the catalogue…')}
           right={
             <div className="flex shrink-0 items-center gap-2">
               <select
@@ -492,12 +494,12 @@ export function MarketplacePage() {
                   setSortBy(event.target.value)
                   resetPaging()
                 }}
-                aria-label="Sort products"
+                aria-label={t('Sort products')}
                 className="h-10 rounded-xl border border-line bg-cream px-2.5 text-[11px] font-bold text-ink outline-none focus:border-brand/60 dark:bg-cream-2"
               >
                 {SORT_OPTIONS.map((option) => (
                   <option key={option} value={option}>
-                    {option}
+                    {t(option)}
                   </option>
                 ))}
               </select>
@@ -507,7 +509,7 @@ export function MarketplacePage() {
                 onClick={() => setCartOpen(true)}
                 className="relative inline-flex h-10 shrink-0 items-center gap-1.5 rounded-xl bg-brand-strong px-3.5 text-[11px] font-bold text-white shadow-brand transition-colors hover:bg-brand-strong-hover"
               >
-                <FiShoppingCart /> Cart
+                <FiShoppingCart /> {t('Cart')}
                 {cartCount > 0 ? (
                   <span className="ml-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-white px-1 text-[10px] font-black text-brand-strong">
                     {cartCount}
@@ -520,17 +522,17 @@ export function MarketplacePage() {
 
         <Section className="bg-surface">
           <SectionHead
-            eyebrow={`${filtered.length} products`}
-            title={activeCategory === 'All' ? 'The full catalogue' : activeCategory}
-            description="Tap a card for the full description, specs and seller rating."
+            eyebrow={`${filtered.length} ${t('products')}`}
+            title={activeCategory === 'All' ? t('The full catalogue') : activeCategory}
+            description={t('Tap a card for the full description, specs and seller rating.')}
           />
 
           {visible.length === 0 ? (
             <div className="mt-12">
               <EmptyState
                 icon={<FiSearch />}
-                title="No products match those filters"
-                description="Try another category, or clear the search box to see all 40 products."
+                title={t('No products match those filters')}
+                description={t('Try another category, or clear the search box to see all 40 products.')}
                 action={
                   <Button
                     variant="secondary"
@@ -540,7 +542,7 @@ export function MarketplacePage() {
                       resetPaging()
                     }}
                   >
-                    Reset filters
+                    {t('Reset filters')}
                   </Button>
                 }
               />
@@ -570,7 +572,7 @@ export function MarketplacePage() {
                         <button
                           type="button"
                           onClick={() => toggleWishlist(product.id)}
-                          aria-label={saved ? 'Remove from wishlist' : 'Save to wishlist'}
+                          aria-label={saved ? t('Remove from wishlist') : t('Save to wishlist')}
                           className={`absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full backdrop-blur transition-colors ${
                             saved ? 'bg-rose-600 text-white' : 'bg-slate-950/45 text-white hover:bg-slate-950/70'
                           }`}
@@ -628,11 +630,11 @@ export function MarketplacePage() {
                           >
                             {inCart ? (
                               <>
-                                <FiCheckCircle /> In cart ({inCart.qty})
+                                <FiCheckCircle /> {t('In cart')} ({inCart.qty})
                               </>
                             ) : (
                               <>
-                                <FiShoppingCart /> Add to cart
+                                <FiShoppingCart /> {t('Add to cart')}
                               </>
                             )}
                           </button>
@@ -648,10 +650,10 @@ export function MarketplacePage() {
           {visibleCount < filtered.length ? (
             <div className="mt-12 flex flex-col items-center gap-3">
               <Button variant="secondary" size="lg" onClick={() => setVisibleCount((current) => current + PAGE_SIZE)}>
-                Load {Math.min(PAGE_SIZE, filtered.length - visibleCount)} more products
+                {t('Load')} {Math.min(PAGE_SIZE, filtered.length - visibleCount)} {t('more products')}
               </Button>
               <span className="text-xs font-semibold text-muted">
-                Showing {visible.length} of {filtered.length}
+                {t('Showing')} {visible.length} {t('of')} {filtered.length}
               </span>
             </div>
           ) : null}
@@ -663,20 +665,20 @@ export function MarketplacePage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="wishlist" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Wishlist"
-          title={`${wishlisted.length} ${wishlisted.length === 1 ? 'item' : 'items'} saved`}
-          description="Your wishlist syncs across devices, and nudges you only when a price genuinely drops."
+          eyebrow={t('Wishlist')}
+          title={`${wishlisted.length} ${wishlisted.length === 1 ? t('item') : t('items')} ${t('saved')}`}
+          description={t('Your wishlist syncs across devices, and nudges you only when a price genuinely drops.')}
         />
 
         <div className="mt-12">
           {wishlisted.length === 0 ? (
             <EmptyState
               icon={<FiHeart />}
-              title="Nothing saved yet"
-              description="Tap the heart on any product and it lands here, price-tracked across devices."
+              title={t('Nothing saved yet')}
+              description={t('Tap the heart on any product and it lands here, price tracked across devices.')}
               action={
                 <Button variant="secondary" onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}>
-                  Browse the catalogue
+                  {t('Browse the catalogue')}
                 </Button>
               }
             />
@@ -696,12 +698,12 @@ export function MarketplacePage() {
                           onClick={() => addToCart(product)}
                           className="rounded-lg bg-brand-strong px-3 py-1.5 text-[11px] font-bold text-white transition-colors hover:bg-brand-strong-hover"
                         >
-                          Add to cart
+                          {t('Add to cart')}
                         </button>
                         <button
                           type="button"
                           onClick={() => toggleWishlist(product.id)}
-                          aria-label="Remove from wishlist"
+                          aria-label={t('Remove from wishlist')}
                           className="grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:bg-rose-500/10 hover:text-rose-600"
                         >
                           <FiTrash2 />
@@ -721,9 +723,9 @@ export function MarketplacePage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="sellers" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Verified stores"
-          title="Merchants who cleared the checks"
-          description="GST verification, identity confirmation and a review audit before a badge is issued — and re-audits after."
+          eyebrow={t('Verified stores')}
+          title={t('Merchants who cleared the checks')}
+          description={t('GST verification, identity confirmation and a review audit before a badge is issued and re audits after.')}
         />
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -754,9 +756,9 @@ export function MarketplacePage() {
 
                 <dl className="mt-4 grid grid-cols-3 gap-2 border-t border-line pt-4 text-center">
                   {[
-                    { label: 'Rating', value: seller.rating.toFixed(1) },
-                    { label: 'Orders', value: seller.orders },
-                    { label: 'Since', value: seller.since },
+                    { label: t('Rating'), value: seller.rating.toFixed(1) },
+                    { label: t('Orders'), value: seller.orders },
+                    { label: t('Since'), value: seller.since },
                   ].map((item) => (
                     <div key={item.label}>
                       <dt className="text-[9px] font-black uppercase tracking-wide text-muted">{item.label}</dt>
@@ -775,9 +777,9 @@ export function MarketplacePage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="tracking" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Order tracking"
-          title="Every update lands as a message"
-          description="No tracking page to bookmark and no email you will never open — the parcel reports into the thread."
+          eyebrow={t('Order tracking')}
+          title={t('Every update lands as a message')}
+          description={t('No tracking page to bookmark and no email you will never open the parcel reports into the thread.')}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.85fr]">
@@ -811,8 +813,8 @@ export function MarketplacePage() {
 
           <Reveal from="up" delay={0.08}>
             <div className="flex h-full flex-col rounded-[28px] border border-line bg-surface p-6 shadow-soft sm:p-8">
-              <h3 className="text-base font-extrabold text-ink">Order card preview</h3>
-              <p className="mt-1.5 text-xs leading-relaxed text-body">How the live order looks inside your chat thread.</p>
+              <h3 className="text-base font-extrabold text-ink">{t('Order card preview')}</h3>
+              <p className="mt-1.5 text-xs leading-relaxed text-body">{t('How the live order looks inside your chat thread.')}</p>
 
               <div className="mt-6 rounded-[22px] border border-line bg-cream p-4 dark:bg-cream-2">
                 <div className="flex items-center gap-3">
@@ -821,15 +823,15 @@ export function MarketplacePage() {
                   </span>
                   <div className="min-w-0">
                     <div className="text-sm font-extrabold text-ink">Order #KT-84920</div>
-                    <div className="text-[11px] font-semibold text-muted">Acme Electronics · 2 items</div>
+                    <div className="text-[11px] font-semibold text-muted">KT Verified Store · 2 items</div>
                   </div>
                 </div>
 
                 <div className="mt-4 space-y-2 border-t border-line pt-4 text-[11px] font-semibold">
                   {[
-                    { icon: <FiTruck />, text: 'Shipped · arriving Friday' },
-                    { icon: <FiMapPin />, text: 'Currently at Bengaluru hub' },
-                    { icon: <FiLock />, text: '₹6,498 held in escrow' },
+                    { icon: <FiTruck />, text: t('Shipped · arriving Friday') },
+                    { icon: <FiMapPin />, text: t('Currently at the regional hub') },
+                    { icon: <FiLock />, text: t('₹6,498 held in escrow') },
                   ].map((row) => (
                     <div key={row.text} className="flex items-center gap-2 text-body">
                       <span className="text-brand-strong">{row.icon}</span>
@@ -841,24 +843,24 @@ export function MarketplacePage() {
                 <div className="mt-4 grid grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={() => setToast('Live tracking opened in the order thread.')}
+                    onClick={() => setToast(t('Live tracking opened in the order thread.'))}
                     className="h-10 rounded-xl bg-brand-strong text-[11px] font-bold text-white transition-colors hover:bg-brand-strong-hover"
                   >
-                    Track live
+                    {t('Track live')}
                   </button>
                   <button
                     type="button"
-                    onClick={() => setToast('Return started — pickup scheduled for tomorrow.')}
+                    onClick={() => setToast(t('Return started pickup scheduled for tomorrow.'))}
                     className="h-10 rounded-xl border border-line text-[11px] font-bold text-body transition-colors hover:bg-surface-2 hover:text-ink"
                   >
-                    Start a return
+                    {t('Start a return')}
                   </button>
                 </div>
               </div>
 
               <p className="mt-6 flex items-start gap-2 border-t border-line pt-5 text-[11px] leading-relaxed text-muted">
                 <FiRefreshCw className="mt-0.5 shrink-0" />
-                Status changes push into the thread as they happen. Nothing is buried in a separate app.
+                {t('Status changes push into the thread as they happen. Nothing is buried in a separate app.')}
               </p>
             </div>
           </Reveal>
@@ -870,9 +872,9 @@ export function MarketplacePage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="protection" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Buyer protection"
-          title="Six guarantees, written plainly"
-          description="What actually protects you when an order goes wrong — no asterisks."
+          eyebrow={t('Buyer protection')}
+          title={t('Six guarantees, written plainly')}
+          description={t('What actually protects you when an order goes wrong no asterisks.')}
         />
 
         <FeatureGrid
@@ -885,14 +887,14 @@ export function MarketplacePage() {
       {/* FEATURES + STEPS                                                  */}
       {/* ---------------------------------------------------------------- */}
       <Section className="border-y border-line bg-cream dark:bg-cream-2">
-        <SectionHead eyebrow="What you get" title="Shopping that fits in a conversation" />
+        <SectionHead eyebrow={t('What you get')} title={t('Shopping that fits in a conversation')} />
         <FeatureGrid
           className="mt-12"
           items={marketplaceFeatures.map((item, index) => ({ ...item, icon: FEATURE_ICONS[index] }))}
         />
 
         <div className="mt-20">
-          <SectionHead eyebrow="How it works" title="Browse, pay, track, return" />
+          <SectionHead eyebrow={t('How it works')} title={t('Browse, pay, track, return')} />
           <Steps className="mt-12" items={marketplaceSteps.map((item, index) => ({ ...item, icon: STEP_ICONS[index] }))} />
         </div>
       </Section>
@@ -904,16 +906,16 @@ export function MarketplacePage() {
         <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
           <SectionHead
             align="left"
-            eyebrow="For sellers"
-            title="Open a store without building a website"
-            description="Upload a catalogue, verify your business and start taking orders in the chats you already answer. Flat 2% on settled orders, nothing else."
+            eyebrow={t('For sellers')}
+            title={t('Open a store without building a website')}
+            description={t('Upload a catalogue, verify your business and start taking orders in the chats you already answer. Flat 2% on settled orders, nothing else.')}
           >
             <div className="mt-8 flex flex-wrap gap-3">
               <Button size="lg" onClick={openDownloadModal}>
-                Start selling <FiChevronRight />
+                {t('Start selling')} <FiChevronRight />
               </Button>
-              <Button size="lg" variant="secondary" onClick={() => setToast('Seller guide sent to your chat.')}>
-                Read the seller guide
+              <Button size="lg" variant="secondary" onClick={() => setToast(t('Seller guide sent to your chat.'))}>
+                {t('Read the seller guide')}
               </Button>
             </div>
           </SectionHead>
@@ -921,10 +923,10 @@ export function MarketplacePage() {
           <Reveal from="up" delay={0.08}>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                { value: '2%', label: 'Flat commission', desc: 'No listing fees, no ad auction, no paid ranking.' },
-                { value: '48h', label: 'Time to go live', desc: 'Most stores clear verification within two days.' },
-                { value: 'T+1', label: 'Settlement', desc: 'Money lands the next business day after delivery.' },
-                { value: '0', label: 'Website needed', desc: 'Your catalogue lives in your business profile.' },
+                { value: '2%', label: t('Flat commission'), desc: t('No listing fees, no ad auction, no paid ranking.') },
+                { value: '48h', label: t('Time to go live'), desc: t('Most stores clear verification within two days.') },
+                { value: 'T+1', label: t('Settlement'), desc: t('Money lands the next business day after delivery.') },
+                { value: '0', label: t('Website needed'), desc: t('Your catalogue lives in your business profile.') },
               ].map((item) => (
                 <div key={item.label} className="rounded-[24px] border border-line bg-cream p-5 shadow-soft dark:bg-cream-2">
                   <div className="text-3xl font-black tracking-tight text-brand-strong">{item.value}</div>
@@ -941,7 +943,7 @@ export function MarketplacePage() {
       {/* REVIEWS                                                           */}
       {/* ---------------------------------------------------------------- */}
       <Section className="border-y border-line bg-cream dark:bg-cream-2">
-        <SectionHead eyebrow="Buyers & sellers" title="What both sides say" />
+        <SectionHead eyebrow={t('Buyers & sellers')} title={t('What both sides say')} />
         <Testimonials className="mt-12" items={marketplaceReviews} />
       </Section>
 
@@ -950,9 +952,9 @@ export function MarketplacePage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="faq" container={false} className="scroll-mt-36 bg-surface">
         <Container maxW="max-w-3xl">
-          <SectionHead eyebrow="FAQ" title="Buying, selling and everything in between" />
+          <SectionHead eyebrow={t('FAQ')} title={t('Buying, selling and everything in between')} />
           <div className="mt-12">
-            <FaqAccordion items={marketplaceFaqs} placeholder="Search the FAQ…" />
+            <FaqAccordion items={marketplaceFaqs} placeholder={t('Search the FAQ…')} />
           </div>
         </Container>
       </Section>
@@ -961,24 +963,24 @@ export function MarketplacePage() {
       {/* CTA + RELATED                                                     */}
       {/* ---------------------------------------------------------------- */}
       <CtaBand
-        eyebrow="Start shopping"
-        title="A storefront that lives inside your conversations"
-        description="Verified sellers, escrow on every order and returns that take two taps — with no hidden fee at checkout."
+        eyebrow={t('Start shopping')}
+        title={t('A storefront that lives inside your conversations')}
+        description={t('Verified sellers, escrow on every order and returns that take two taps with no hidden fee at checkout.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={openDownloadModal}>
-              Download KT Messenger
+              {t('Download KT Messenger')}
             </Button>
             <Button size="lg" variant="onDark" onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}>
-              Browse the catalogue
+              {t('Browse the catalogue')}
             </Button>
           </>
         }
-        points={['Escrow until delivery', '7-day returns', 'Verified sellers only', 'No checkout surprises']}
+        points={[t('Escrow until delivery'), t('7-day returns'), t('Verified sellers only'), t('No checkout surprises')]}
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More of KT Messenger" />
+        <SectionHead eyebrow={t('Keep exploring')} title={t('More of KT Messenger')} />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 
@@ -1006,7 +1008,7 @@ export function MarketplacePage() {
                 <button
                   type="button"
                   onClick={() => toggleWishlist(quickView.id)}
-                  aria-label="Toggle wishlist"
+                  aria-label={t('Toggle wishlist')}
                   className={`grid h-11 w-11 place-items-center rounded-full border transition-colors ${
                     wishlist.includes(quickView.id)
                       ? 'border-rose-500 bg-rose-500 text-white'
@@ -1021,7 +1023,7 @@ export function MarketplacePage() {
                     setQuickView(null)
                   }}
                 >
-                  Add to cart <FiShoppingCart />
+                  {t('Add to cart')} <FiShoppingCart />
                 </Button>
               </div>
             </div>
@@ -1034,7 +1036,7 @@ export function MarketplacePage() {
 
             <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
               <Stars rating={quickView.rating} />
-              <span className="text-[11px] font-semibold text-muted">{quickView.reviews.toLocaleString('en-IN')} reviews</span>
+              <span className="text-[11px] font-semibold text-muted">{quickView.reviews.toLocaleString('en-IN')} {t('reviews')}</span>
               <span className="flex items-center gap-1.5 text-[11px] font-semibold text-muted">
                 <FiTruck /> {quickView.delivery}
               </span>
@@ -1045,13 +1047,13 @@ export function MarketplacePage() {
                     : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/12 dark:text-emerald-300'
                 }`}
               >
-                {quickView.stock} in stock
+                {quickView.stock} {t('in stock')}
               </span>
             </div>
 
             <p className="mt-4 text-sm leading-relaxed text-body">{quickView.desc}</p>
 
-            <h4 className="mt-6 text-xs font-black uppercase tracking-[0.16em] text-muted">Highlights</h4>
+            <h4 className="mt-6 text-xs font-black uppercase tracking-[0.16em] text-muted">{t('Highlights')}</h4>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
               {quickView.features.map((feature) => (
                 <li key={feature} className="flex items-center gap-2 rounded-xl border border-line bg-cream px-3 py-2.5 text-xs font-bold text-ink dark:bg-cream-2">
@@ -1065,7 +1067,7 @@ export function MarketplacePage() {
               <FiLock className="mt-0.5 shrink-0 text-lg text-brand-strong" />
               <p className="text-xs leading-relaxed text-body">
                 Your payment is held in escrow until this order is marked delivered, and your address is shared
-                end-to-end encrypted with {quickView.seller} alone.
+                end to end encrypted with {quickView.seller} alone.
               </p>
             </div>
           </div>
@@ -1078,36 +1080,36 @@ export function MarketplacePage() {
       <Modal
         open={cartOpen}
         onClose={() => setCartOpen(false)}
-        eyebrow={`${cartCount} ${cartCount === 1 ? 'item' : 'items'}`}
-        title="Your cart"
+        eyebrow={`${cartCount} ${cartCount === 1 ? t('item') : t('items')}`}
+        title={t('Your cart')}
         size="md"
         footer={
           <div className="space-y-3">
             <div className="space-y-1.5 text-xs font-bold">
               <div className="flex items-center justify-between text-body">
-                <span>Subtotal</span>
+                <span>{t('Subtotal')}</span>
                 <span className="text-ink">{rupees(cartSubtotal)}</span>
               </div>
               <div className="flex items-center justify-between text-body">
-                <span>Delivery</span>
+                <span>{t('Delivery')}</span>
                 <span className={deliveryFee === 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-ink'}>
-                  {deliveryFee === 0 ? 'Free' : rupees(deliveryFee)}
+                  {deliveryFee === 0 ? t('Free') : rupees(deliveryFee)}
                 </span>
               </div>
               {cartSaved > 0 ? (
                 <div className="flex items-center justify-between text-emerald-600 dark:text-emerald-400">
-                  <span>You save</span>
+                  <span>{t('You save')}</span>
                   <span>{rupees(cartSaved)}</span>
                 </div>
               ) : null}
               <div className="flex items-center justify-between border-t border-line pt-2 text-base font-black text-ink">
-                <span>Total</span>
+                <span>{t('Total')}</span>
                 <span>{rupees(cartTotal)}</span>
               </div>
             </div>
 
             <Button size="lg" className="w-full justify-center" onClick={checkout}>
-              Pay {rupees(cartTotal)} in chat <FiLock />
+              {t('Pay')} {rupees(cartTotal)} {t('in chat')} <FiLock />
             </Button>
           </div>
         }
@@ -1115,8 +1117,8 @@ export function MarketplacePage() {
         {cartRows.length === 0 ? (
           <EmptyState
             icon={<FiShoppingCart />}
-            title="Your cart is empty"
-            description="Add a product from the catalogue and it shows up here."
+            title={t('Your cart is empty')}
+            description={t('Add a product from the catalogue and it shows up here.')}
             action={
               <Button
                 variant="secondary"
@@ -1125,7 +1127,7 @@ export function MarketplacePage() {
                   document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
-                Browse products
+                {t('Browse products')}
               </Button>
             }
           />
@@ -1144,7 +1146,7 @@ export function MarketplacePage() {
                       <button
                         type="button"
                         onClick={() => changeQty(line.id, -1)}
-                        aria-label="Decrease quantity"
+                        aria-label={t('Decrease quantity')}
                         className="grid h-8 w-8 place-items-center rounded-full text-body transition-colors hover:bg-surface-2 hover:text-ink"
                       >
                         <FiMinus />
@@ -1153,7 +1155,7 @@ export function MarketplacePage() {
                       <button
                         type="button"
                         onClick={() => changeQty(line.id, 1)}
-                        aria-label="Increase quantity"
+                        aria-label={t('Increase quantity')}
                         className="grid h-8 w-8 place-items-center rounded-full text-body transition-colors hover:bg-surface-2 hover:text-ink"
                       >
                         <FiPlus />
@@ -1163,7 +1165,7 @@ export function MarketplacePage() {
                     <button
                       type="button"
                       onClick={() => setCart((current) => current.filter((item) => item.id !== line.id))}
-                      aria-label="Remove item"
+                      aria-label={t('Remove item')}
                       className="grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:bg-rose-500/10 hover:text-rose-600"
                     >
                       <FiTrash2 />
@@ -1184,8 +1186,8 @@ export function MarketplacePage() {
       <Modal
         open={Boolean(order)}
         onClose={() => setOrder(null)}
-        eyebrow="Order placed"
-        title="Confirmation"
+        eyebrow={t('Order placed')}
+        title={t('Confirmation')}
         size="sm"
         footer={
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1197,9 +1199,9 @@ export function MarketplacePage() {
               }}
               className="inline-flex h-11 items-center gap-2 rounded-full border border-line px-5 text-xs font-bold text-body transition-colors hover:bg-surface-2 hover:text-ink"
             >
-              <FiTruck /> Track order
+              <FiTruck /> {t('Track order')}
             </button>
-            <Button onClick={() => setOrder(null)}>Done</Button>
+            <Button onClick={() => setOrder(null)}>{t('Done')}</Button>
           </div>
         }
       >
@@ -1209,18 +1211,18 @@ export function MarketplacePage() {
               <FiCheckCircle />
             </span>
 
-            <h3 className="mt-5 text-xl font-extrabold text-ink">Order confirmed</h3>
+            <h3 className="mt-5 text-xl font-extrabold text-ink">{t('Order confirmed')}</h3>
             <p className="mt-2 text-sm leading-relaxed text-body">
-              The invoice card is now in your chat. Delivery updates will arrive in the same thread.
+              {t('The invoice card is now in your chat. Delivery updates will arrive in the same thread.')}
             </p>
 
             <dl className="mt-6 divide-y divide-line rounded-2xl border border-line bg-cream text-left dark:bg-cream-2">
               {[
-                { label: 'Order ID', value: order.id },
-                { label: 'Items', value: `${order.items} products · ${order.units} units` },
-                { label: 'Total paid', value: rupees(order.total) },
-                { label: 'Escrow', value: 'Released on delivery' },
-                { label: 'Returns', value: '7 days from delivery' },
+                { label: t('Order ID'), value: order.id },
+                { label: t('Items'), value: `${order.items} ${t('products')} · ${order.units} ${t('units')}` },
+                { label: t('Total paid'), value: rupees(order.total) },
+                { label: t('Escrow'), value: t('Released on delivery') },
+                { label: t('Returns'), value: t('7 days from delivery') },
               ].map((row) => (
                 <div key={row.label} className="flex items-center justify-between gap-4 px-4 py-3">
                   <dt className="text-[11px] font-black uppercase tracking-wide text-muted">{row.label}</dt>

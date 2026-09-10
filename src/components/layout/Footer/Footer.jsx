@@ -152,7 +152,7 @@ const sitemap = [
     ],
   },
   {
-    group: 'In-chat surfaces',
+    group: 'In chat surfaces',
     links: [
       { label: 'News', to: '/news' },
       { label: 'Markets', to: '/markets' },

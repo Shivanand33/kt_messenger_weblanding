@@ -4,14 +4,14 @@ export const blogPosts = [
     "slug": "kt-messenger-one-app-conversations-content-payments-business-ai",
     "category": "Product",
     "title": "KT Messenger: One App for Conversations, Content, Payments, Business & AI",
-    "description": "Meet the all-in-one super-app that unites messaging, social content, calls, payments, business tools and AI in one place.",
+    "description": "Meet the all in one super app that unites messaging, social content, calls, payments, business tools and AI in one place.",
     "readMins": 8,
     "date": "August 15, 2026",
     "imageKey": "footer",
     "blocks": [
       {
         "type": "p",
-        "text": "Most of us juggle a small pile of apps every day — one for chatting, another for sharing moments, a third for calls, more for payments and shopping. **KT Messenger** was built to end that juggling act. It brings your conversations, content, calls, payments, business tools and a built-in AI assistant together in **one connected app**, so the things you do most live side by side instead of scattered across your home screen."
+        "text": "Most of us juggle a small pile of apps every day one for chatting, another for sharing moments, a third for calls, more for payments and shopping. **KT Messenger** was built to end that juggling act. It brings your conversations, content, calls, payments, business tools and a built in AI assistant together in **one connected app**, so the things you do most live side by side instead of scattered across your home screen."
       },
       {
         "type": "h",
@@ -19,7 +19,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "At its heart, KT is a fast, friendly messenger. You can start a **one-to-one chat** with a friend or spin up a **group** for your family, your team or your football club — and share whatever the moment calls for. Text, photos, videos, voice messages and documents all flow through the same conversation."
+        "text": "At its heart, KT is a fast, friendly messenger. You can start a **one to one chat** with a friend or spin up a **group** for your family, your team or your football club and share whatever the moment calls for. Text, photos, videos, voice messages and documents all flow through the same conversation."
       },
       {
         "type": "p",
@@ -51,7 +51,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Picture a neighbourhood community on KT: a channel posts weekend event updates, a member shares a short video from last year, and the discussion carries on in the group — all without leaving the app."
+        "text": "Picture a neighbourhood community on KT: a channel posts weekend event updates, a member shares a short video from last year, and the discussion carries on in the group all without leaving the app."
       },
       {
         "type": "h",
@@ -59,7 +59,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Sometimes typing is not enough, and a quick call says it all. KT offers **voice and video calls**, one-to-one or with a **group**, right from the chat you are already in. There is no need to hop into a separate calling app or share a link — the person or group is a tap away."
+        "text": "Sometimes typing is not enough, and a quick call says it all. KT offers **voice and video calls**, one to one or with a **group**, right from the chat you are already in. There is no need to hop into a separate calling app or share a link the person or group is a tap away."
       },
       {
         "type": "p",
@@ -71,7 +71,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "KT includes a built-in **Wallet** and its in-app value, **KT Coins**. It is designed to keep the simple, everyday exchanges you have with people right inside your conversations, so a favour repaid or a shared cost does not need a detour to another app."
+        "text": "KT includes a built in **Wallet** and its in app value, **KT Coins**. It is designed to keep the simple, everyday exchanges you have with people right inside your conversations, so a favour repaid or a shared cost does not need a detour to another app."
       },
       {
         "type": "p",
@@ -91,7 +91,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**KT AI** is your helper, woven directly into the experience rather than bolted on as a separate tool. You can **ask it questions**, **find information** quickly, **summarise** something long, or get a hand **creating content** like a caption or a first draft — without leaving your chats."
+        "text": "**KT AI** is your helper, woven directly into the experience rather than bolted on as a separate tool. You can **ask it questions**, **find information** quickly, **summarise** something long, or get a hand **creating content** like a caption or a first draft without leaving your chats."
       },
       {
         "type": "p",
@@ -127,7 +127,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Selling a bike you have outgrown becomes straightforward: list it, answer questions in chat, and arrange the handover — all without bouncing between separate apps and inboxes."
+        "text": "Selling a bike you have outgrown becomes straightforward: list it, answer questions in chat, and arrange the handover all without bouncing between separate apps and inboxes."
       },
       {
         "type": "h",
@@ -135,15 +135,15 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "The magic of KT is not any single feature — it is that they **share one home**. Switching between many apps means repeating yourself, losing context and copying details from one place to another. When messaging, content, calls, payments, business and AI live together, everything you start in one corner is easy to finish in another."
+        "text": "The magic of KT is not any single feature it is that they **share one home**. Switching between many apps means repeating yourself, losing context and copying details from one place to another. When messaging, content, calls, payments, business and AI live together, everything you start in one corner is easy to finish in another."
       },
       {
         "type": "p",
-        "text": "A plan made in a group chat can become a call, then a shared cost settled in the Wallet, then a photo posted to Status — one smooth flow instead of five disconnected steps."
+        "text": "A plan made in a group chat can become a call, then a shared cost settled in the Wallet, then a photo posted to Status one smooth flow instead of five disconnected steps."
       },
       {
         "type": "p",
-        "text": "That is the promise of KT Messenger: **fewer apps, less friction, and more of your day in one connected place**. Conversations, content, payments, business and AI stop being separate errands and start working together — which is exactly how a super-app should feel."
+        "text": "That is the promise of KT Messenger: **fewer apps, less friction, and more of your day in one connected place**. Conversations, content, payments, business and AI stop being separate errands and start working together which is exactly how a super app should feel."
       }
     ]
   },
@@ -151,14 +151,14 @@ export const blogPosts = [
     "slug": "everything-you-can-do-with-kt-messenger",
     "category": "Features",
     "title": "Everything You Can Do with KT Messenger",
-    "description": "A friendly tour of every core KT feature — from Chats and Status to KT AI, Wallet, Marketplace and business tools.",
+    "description": "A friendly tour of every core KT feature from Chats and Status to KT AI, Wallet, Marketplace and business tools.",
     "readMins": 9,
     "date": "August 12, 2026",
     "imageKey": "multidevice",
     "blocks": [
       {
         "type": "p",
-        "text": "KT Messenger packs a surprising amount into one app, and it is easy to miss just how much is at your fingertips. This is a **plain-English tour** of the features you will use most — what each one is, how it works, why people love it and a real example of it in action. Think of it as a map to everything KT can do."
+        "text": "KT Messenger packs a surprising amount into one app, and it is easy to miss just how much is at your fingertips. This is a **plain English tour** of the features you will use most what each one is, how it works, why people love it and a real example of it in action. Think of it as a map to everything KT can do."
       },
       {
         "type": "h",
@@ -166,7 +166,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Chats** are the beating heart of KT — private one-to-one and group conversations where you send text, photos, videos, voice messages and documents. They are quick to start and easy to follow, with replies and forwarding built in. A family group, for instance, can plan a weekend, share the recipe and confirm who is bringing dessert, all in one thread. The benefit is simple: **all your conversations, neatly in one place**."
+        "text": "**Chats** are the beating heart of KT private one to one and group conversations where you send text, photos, videos, voice messages and documents. They are quick to start and easy to follow, with replies and forwarding built in. A family group, for instance, can plan a weekend, share the recipe and confirm who is bringing dessert, all in one thread. The benefit is simple: **all your conversations, neatly in one place**."
       },
       {
         "type": "h",
@@ -174,7 +174,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Status** lets you share little moments — a photo, a line of text or a short clip — that the people you choose can see. It is a low-pressure way to show what you are up to without posting to the whole world. A traveller might put up a sunset from the road so friends can follow along. The benefit is **staying connected in the background**, no full conversation required."
+        "text": "**Status** lets you share little moments a photo, a line of text or a short clip that the people you choose can see. It is a low pressure way to show what you are up to without posting to the whole world. A traveller might put up a sunset from the road so friends can follow along. The benefit is **staying connected in the background**, no full conversation required."
       },
       {
         "type": "h",
@@ -190,7 +190,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Minis** are lightweight experiences you can reach without leaving KT, and you can bookmark favourites as **Saved Minis** to return to later. They keep quick, handy tools a tap away instead of buried across your phone. You might open a mini to do something small, then save it for next time. The benefit is **convenience** — useful bits and pieces, always close by."
+        "text": "**Minis** are lightweight experiences you can reach without leaving KT, and you can bookmark favourites as **Saved Minis** to return to later. They keep quick, handy tools a tap away instead of buried across your phone. You might open a mini to do something small, then save it for next time. The benefit is **convenience** useful bits and pieces, always close by."
       },
       {
         "type": "h",
@@ -198,7 +198,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Calls** cover voice and video, one-to-one or in a group, launched right from the chat you are in. A clear call history helps you see who you spoke to and ring back after a missed call. Grandparents can jump on a quick video call with the grandkids without setting anything up. The benefit is **face-to-face and voice connection**, woven right into your messaging."
+        "text": "**Calls** cover voice and video, one to one or in a group, launched right from the chat you are in. A clear call history helps you see who you spoke to and ring back after a missed call. Grandparents can jump on a quick video call with the grandkids without setting anything up. The benefit is **face to face and voice connection**, woven right into your messaging."
       },
       {
         "type": "h",
@@ -206,7 +206,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Settings** is where you shape KT around the way you actually use it — from privacy and notifications to themes and the tools you keep close. It puts you in control of what reaches you and how the app feels. You might mute a noisy group, set a chat wallpaper and fine-tune alerts in a minute. The benefit is a KT that is **truly yours**."
+        "text": "**Settings** is where you shape KT around the way you actually use it from privacy and notifications to themes and the tools you keep close. It puts you in control of what reaches you and how the app feels. You might mute a noisy group, set a chat wallpaper and fine tune alerts in a minute. The benefit is a KT that is **truly yours**."
       },
       {
         "type": "h",
@@ -214,7 +214,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**KT AI** is an assistant built right into the app. You can ask it questions, find information, summarise long messages or get help drafting content — all without leaving your conversations. Planning a party, you might ask it for a quick checklist and drop the answer into the group. The benefit is **smart help exactly where you need it**, not in a separate tool."
+        "text": "**KT AI** is an assistant built right into the app. You can ask it questions, find information, summarise long messages or get help drafting content all without leaving your conversations. Planning a party, you might ask it for a quick checklist and drop the answer into the group. The benefit is **smart help exactly where you need it**, not in a separate tool."
       },
       {
         "type": "h",
@@ -250,11 +250,11 @@ export const blogPosts = [
       },
       {
         "type": "h",
-        "text": "Text-to-Speech"
+        "text": "Text to Speech"
       },
       {
         "type": "p",
-        "text": "**Text-to-Speech** reads messages aloud, so you can catch up with your hands and eyes busy elsewhere. It is a gift for multitasking and for anyone who simply prefers to listen. A commuter can hear their messages while walking to the station instead of staring at the screen. The benefit is **hands-free, more accessible** messaging."
+        "text": "**Text to Speech** reads messages aloud, so you can catch up with your hands and eyes busy elsewhere. It is a gift for multitasking and for anyone who simply prefers to listen. A commuter can hear their messages while walking to the station instead of staring at the screen. The benefit is **hands free, more accessible** messaging."
       },
       {
         "type": "h",
@@ -262,7 +262,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Channels** let voices you follow — creators, brands or organisations — broadcast updates to everyone who subscribes. You get their posts without the back-and-forth of a group chat. A local sports club might run a channel for match results and news. The benefit is **following what matters** in a calm, one-way feed."
+        "text": "**Channels** let voices you follow creators, brands or organisations broadcast updates to everyone who subscribes. You get their posts without the back and forth of a group chat. A local sports club might run a channel for match results and news. The benefit is **following what matters** in a calm, one way feed."
       },
       {
         "type": "h",
@@ -270,7 +270,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Broadcasts** send a single message out to many people at once, each receiving it in their own chat. It is the fastest way to share the same update widely without creating a giant group. A tuition teacher can send exam reminders to every student in one go. The benefit is **efficient one-to-many communication**."
+        "text": "**Broadcasts** send a single message out to many people at once, each receiving it in their own chat. It is the fastest way to share the same update widely without creating a giant group. A tuition teacher can send exam reminders to every student in one go. The benefit is **efficient one to many communication**."
       },
       {
         "type": "h",
@@ -278,7 +278,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Communities** bring related groups together under one roof, so a larger circle can stay organised around a shared interest. Announcements reach everyone while smaller groups handle the details. A school could run a community with separate groups for each class. The benefit is **big-group coordination that stays tidy** and welcoming."
+        "text": "**Communities** bring related groups together under one roof, so a larger circle can stay organised around a shared interest. Announcements reach everyone while smaller groups handle the details. A school could run a community with separate groups for each class. The benefit is **big group coordination that stays tidy** and welcoming."
       },
       {
         "type": "h",
@@ -294,7 +294,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Polls** turn a group decision into a quick vote, with results you can watch update live. They save you from scrolling through a dozen replies to find the answer. A group of friends can settle on a restaurant in seconds instead of endless back-and-forth. The benefit is **faster decisions everyone can see**."
+        "text": "**Polls** turn a group decision into a quick vote, with results you can watch update live. They save you from scrolling through a dozen replies to find the answer. A group of friends can settle on a restaurant in seconds instead of endless back and forth. The benefit is **faster decisions everyone can see**."
       },
       {
         "type": "h",
@@ -302,7 +302,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Events** help you plan a get-together inside a chat, so the who, what and when live right next to the conversation. Everyone can see the plan and know what to expect. A book club can set up its monthly meet-up without a separate calendar app. The benefit is **organised plans** that stay attached to the group."
+        "text": "**Events** help you plan a get together inside a chat, so the who, what and when live right next to the conversation. Everyone can see the plan and know what to expect. A book club can set up its monthly meet up without a separate calendar app. The benefit is **organised plans** that stay attached to the group."
       },
       {
         "type": "h",
@@ -310,7 +310,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Business Tools** turn KT into a counter for small businesses — with Quick Replies for common answers, Labels to organise chats, and a Catalog to show what you sell. Customers can browse and buy without leaving the conversation. A home baker can share a catalog, label an order and reply with pickup details in seconds. The benefit is **serving customers where they already message you**."
+        "text": "**Business Tools** turn KT into a counter for small businesses with Quick Replies for common answers, Labels to organise chats, and a Catalog to show what you sell. Customers can browse and buy without leaving the conversation. A home baker can share a catalog, label an order and reply with pickup details in seconds. The benefit is **serving customers where they already message you**."
       },
       {
         "type": "ul",
@@ -322,7 +322,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Put it all together and KT stops feeling like a chat app and starts feeling like a **complete toolkit for your day** — talking, sharing, calling, paying, discovering and doing business, all under one roof. The best way to appreciate it is to explore: open a feature you have not tried yet and see how naturally it fits alongside the rest."
+        "text": "Put it all together and KT stops feeling like a chat app and starts feeling like a **complete toolkit for your day** talking, sharing, calling, paying, discovering and doing business, all under one roof. The best way to appreciate it is to explore: open a feature you have not tried yet and see how naturally it fits alongside the rest."
       }
     ]
   },
@@ -330,26 +330,26 @@ export const blogPosts = [
     "slug": "more-than-messaging-complete-guide-to-kt-chats",
     "category": "Messaging",
     "title": "More Than Messaging: A Complete Guide to KT Chats",
-    "description": "How KT Chats go beyond simple texting — private and group conversations, rich media, replies, receipts and built-in AI.",
+    "description": "How KT Chats go beyond simple texting private and group conversations, rich media, replies, receipts and built in AI.",
     "readMins": 6,
     "date": "August 9, 2026",
     "imageKey": "private",
     "blocks": [
       {
         "type": "p",
-        "text": "A chat is where most of your day-to-day connection happens, and on KT it is built to do far more than shuttle plain text back and forth. **KT Chats** blend private conversations, rich media, thoughtful little tools and even a built-in assistant into one smooth experience. Here is a complete guide to what makes them feel less like texting and more like **being together**."
+        "text": "A chat is where most of your day to day connection happens, and on KT it is built to do far more than shuttle plain text back and forth. **KT Chats** blend private conversations, rich media, thoughtful little tools and even a built in assistant into one smooth experience. Here is a complete guide to what makes them feel less like texting and more like **being together**."
       },
       {
         "type": "h",
-        "text": "One-to-one conversations"
+        "text": "One to one conversations"
       },
       {
         "type": "p",
-        "text": "The simplest chat is a **private one-to-one** — just you and one other person, whether that is your best friend, a colleague or a customer. It is the space for the personal back-and-forth that fills a day, from a quick good morning to a long heart-to-heart."
+        "text": "The simplest chat is a **private one to one** just you and one other person, whether that is your best friend, a colleague or a customer. It is the space for the personal back and forth that fills a day, from a quick good morning to a long heart to heart."
       },
       {
         "type": "p",
-        "text": "Because it is **private communication**, it feels like a room of your own. You might check in on a friend having a hard week, sort out plans with a partner, or answer a customer's question — each conversation kept to just the two of you."
+        "text": "Because it is **private communication**, it feels like a room of your own. You might check in on a friend having a hard week, sort out plans with a partner, or answer a customer's question each conversation kept to just the two of you."
       },
       {
         "type": "h",
@@ -357,11 +357,11 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Group chats** gather the people who belong together in one thread — **friends, family, teams, communities and projects** all get their own space. Instead of relaying the same message five times, you say it once and everyone is on the same page."
+        "text": "**Group chats** gather the people who belong together in one thread **friends, family, teams, communities and projects** all get their own space. Instead of relaying the same message five times, you say it once and everyone is on the same page."
       },
       {
         "type": "p",
-        "text": "Groups shine when there is something to coordinate. A family plans a reunion, a work **team** tracks a project, and a group of friends organises a weekend away — with everyone able to chime in, share and keep up together."
+        "text": "Groups shine when there is something to coordinate. A family plans a reunion, a work **team** tracks a project, and a group of friends organises a weekend away with everyone able to chime in, share and keep up together."
       },
       {
         "type": "ul",
@@ -381,7 +381,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "That range lets a chat match real life. A parent shares a photo from sports day, a friend sends a voice note while walking the dog, and a colleague drops in a document to review — no separate apps, no fuss, just the right format for the moment."
+        "text": "That range lets a chat match real life. A parent shares a photo from sports day, a friend sends a voice note while walking the dog, and a colleague drops in a document to review no separate apps, no fuss, just the right format for the moment."
       },
       {
         "type": "ul",
@@ -402,7 +402,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**Forward** saves you from retyping or copying. Spot something useful and pass it to another chat in a tap — a great restaurant recommendation shared from one group to another, or an important note sent on to the person who needs it. Together, reply and forward keep conversations **organised and effortless**."
+        "text": "**Forward** saves you from retyping or copying. Spot something useful and pass it to another chat in a tap a great restaurant recommendation shared from one group to another, or an important note sent on to the person who needs it. Together, reply and forward keep conversations **organised and effortless**."
       },
       {
         "type": "h",
@@ -410,7 +410,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Small signals make a chat feel alive. A **typing indicator** shows when the other person is writing back, turning a wait into a real-time moment — you can see a reply is on its way. **Read receipts** let you know when your message has been seen."
+        "text": "Small signals make a chat feel alive. A **typing indicator** shows when the other person is writing back, turning a wait into a real time moment you can see a reply is on its way. **Read receipts** let you know when your message has been seen."
       },
       {
         "type": "p",
@@ -426,11 +426,11 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "And when you want more than a lookup, **KT AI** is a tap away — ask a question, summarise a long thread or get help drafting a reply, all without switching apps. Mid-conversation, you might have KT AI condense a lengthy group discussion into a few clear points and carry on. Intelligence and search live **inside the chat**, exactly where you need them."
+        "text": "And when you want more than a lookup, **KT AI** is a tap away ask a question, summarise a long thread or get help drafting a reply, all without switching apps. Mid conversation, you might have KT AI condense a lengthy group discussion into a few clear points and carry on. Intelligence and search live **inside the chat**, exactly where you need them."
       },
       {
         "type": "p",
-        "text": "Taken together, these pieces are what make **KT Chats more than messaging**. Private and group conversations, rich media, replies and receipts, and built-in AI turn a plain thread into something genuinely **useful, expressive and connected** — a place where staying in touch feels as rich as being there in person."
+        "text": "Taken together, these pieces are what make **KT Chats more than messaging**. Private and group conversations, rich media, replies and receipts, and built in AI turn a plain thread into something genuinely **useful, expressive and connected** a place where staying in touch feels as rich as being there in person."
       }
     ]
   },
@@ -445,7 +445,7 @@ export const blogPosts = [
     "blocks": [
       {
         "type": "p",
-        "text": "Some moments are too small for a message but too good to keep to yourself. **KT Status** gives you a relaxed, low-pressure way to share what you are up to with the people who matter. Post a photo, a short video, or a few words, and let them disappear on their own after a day."
+        "text": "Some moments are too small for a message but too good to keep to yourself. **KT Status** gives you a relaxed, low pressure way to share what you are up to with the people who matter. Post a photo, a short video, or a few words, and let them disappear on their own after a day."
       },
       {
         "type": "h",
@@ -461,7 +461,7 @@ export const blogPosts = [
       },
       {
         "type": "h",
-        "text": "Photo, Video, or Text — However You Feel"
+        "text": "Photo, Video, or Text However You Feel"
       },
       {
         "type": "p",
@@ -485,16 +485,16 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Status shines for the in-between moments that do not need a full conversation. Here are a few everyday ways people use it:"
+        "text": "Status shines for the in between moments that do not need a full conversation. Here are a few everyday ways people use it:"
       },
       {
         "type": "ul",
         "items": [
-          "**A travel moment** — the view from a hilltop or a street you stumbled upon on holiday",
-          "**A birthday update** — a thank-you to everyone who sent wishes, shared in one go",
-          "**A daily activity** — your morning run, a home-cooked meal, or a good cup of coffee",
-          "**A business announcement** — a new product, a limited offer, or the week's opening hours",
-          "**A personal update** — a fresh haircut, a small win, or simply how your day is going"
+          "**A travel moment** the view from a hilltop or a street you stumbled upon on holiday",
+          "**A birthday update** a thank you to everyone who sent wishes, shared in one go",
+          "**A daily activity** your morning run, a home cooked meal, or a good cup of coffee",
+          "**A business announcement** a new product, a limited offer, or the week's opening hours",
+          "**A personal update** a fresh haircut, a small win, or simply how your day is going"
         ]
       },
       {
@@ -527,11 +527,11 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "After you post, you can open your own Status to see the list of contacts who have viewed it. It is a quiet, private count meant only for you — a nice way to know your moment landed with the people you had in mind."
+        "text": "After you post, you can open your own Status to see the list of contacts who have viewed it. It is a quiet, private count meant only for you a nice way to know your moment landed with the people you had in mind."
       },
       {
         "type": "p",
-        "text": "Viewers can also react or reply, and their response simply arrives as a private message in your one-to-one chat. That keeps casual sharing and personal conversation neatly separated."
+        "text": "Viewers can also react or reply, and their response simply arrives as a private message in your one to one chat. That keeps casual sharing and personal conversation neatly separated."
       },
       {
         "type": "h",
@@ -543,7 +543,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "It turns staying in touch into something calm and ambient — the digital equivalent of a friendly wave as you pass by."
+        "text": "It turns staying in touch into something calm and ambient the digital equivalent of a friendly wave as you pass by."
       },
       {
         "type": "h",
@@ -551,7 +551,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**KT Status** is sharing at its most relaxed: expressive, private, and gone within a day. Choose your moment, choose your audience, and let the people you care about peek into your day — no long messages, no permanent record, just life as it happens."
+        "text": "**KT Status** is sharing at its most relaxed: expressive, private, and gone within a day. Choose your moment, choose your audience, and let the people you care about peek into your day no long messages, no permanent record, just life as it happens."
       }
     ]
   },
@@ -559,14 +559,14 @@ export const blogPosts = [
     "slug": "kt-minis-discover-short-videos",
     "category": "Minis",
     "title": "KT Minis: Discover a World of Short Videos",
-    "description": "Dive into an endless stream of short vertical videos inside KT — discover, like, save, and share the clips you love.",
+    "description": "Dive into an endless stream of short vertical videos inside KT discover, like, save, and share the clips you love.",
     "readMins": 6,
     "date": "August 3, 2026",
     "imageKey": "hero",
     "blocks": [
       {
         "type": "p",
-        "text": "Some of the best moments online are the shortest ones — a clever tip, a burst of comedy, a recipe you can follow in seconds. **KT Minis** brings that quick, playful energy right inside KT Messenger, with a never-ending stream of short videos to enjoy whenever you have a spare minute."
+        "text": "Some of the best moments online are the shortest ones a clever tip, a burst of comedy, a recipe you can follow in seconds. **KT Minis** brings that quick, playful energy right inside KT Messenger, with a never ending stream of short videos to enjoy whenever you have a spare minute."
       },
       {
         "type": "h",
@@ -574,7 +574,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Minis is the short-video corner of KT, built around **vertical videos** that play full-screen and get straight to the point. You watch one, flick upward, and the next is already playing. There are no long intros to sit through and nothing complicated to learn."
+        "text": "Minis is the short video corner of KT, built around **vertical videos** that play full screen and get straight to the point. You watch one, flick upward, and the next is already playing. There are no long intros to sit through and nothing complicated to learn."
       },
       {
         "type": "p",
@@ -586,14 +586,14 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Short-form video has become one of the most enjoyable ways to spend a few free minutes, and the reason is simple. Each clip is **bite-sized**, so you get a complete little story, laugh, or lesson without any commitment."
+        "text": "Short form video has become one of the most enjoyable ways to spend a few free minutes, and the reason is simple. Each clip is **bite sized**, so you get a complete little story, laugh, or lesson without any commitment."
       },
       {
         "type": "ul",
         "items": [
-          "**Easy to start, easy to stop** — watch one clip or twenty, then get on with your day",
-          "**Endless variety** — comedy, cooking, travel, and learning in a single stream",
-          "**Effortless to follow** — vertical, full-screen, and made for the way you hold your phone"
+          "**Easy to start, easy to stop** watch one clip or twenty, then get on with your day",
+          "**Endless variety** comedy, cooking, travel, and learning in a single stream",
+          "**Effortless to follow** vertical, full screen, and made for the way you hold your phone"
         ]
       },
       {
@@ -610,7 +610,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "It turns idle moments — a commute, a coffee break, a wait in a queue — into a chance to discover something new, funny, or genuinely useful."
+        "text": "It turns idle moments a commute, a coffee break, a wait in a queue into a chance to discover something new, funny, or genuinely useful."
       },
       {
         "type": "h",
@@ -637,7 +637,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Every Mini comes from someone with something to share — a home cook, a comedian, a traveller, a teacher. **Creator content** is what keeps the stream lively, personal, and always changing."
+        "text": "Every Mini comes from someone with something to share a home cook, a comedian, a traveller, a teacher. **Creator content** is what keeps the stream lively, personal, and always changing."
       },
       {
         "type": "p",
@@ -661,7 +661,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**KT Minis** makes short-video discovery effortless and social all at once. Open it for a quick break, follow your curiosity with every swipe, save the clips that stick with you, and share the best ones without ever leaving the app you already call home."
+        "text": "**KT Minis** makes short video discovery effortless and social all at once. Open it for a quick break, follow your curiosity with every swipe, save the clips that stick with you, and share the best ones without ever leaving the app you already call home."
       }
     ]
   },
@@ -669,14 +669,14 @@ export const blogPosts = [
     "slug": "kt-voice-and-video-calls",
     "category": "Calls",
     "title": "Stay Closer with KT Voice & Video Calls",
-    "description": "Turn any chat into a voice or video call in one tap, from quick one-to-ones to group calls that gather everyone.",
+    "description": "Turn any chat into a voice or video call in one tap, from quick one to ones to group calls that gather everyone.",
     "readMins": 7,
     "date": "July 30, 2026",
     "imageKey": "business",
     "blocks": [
       {
         "type": "p",
-        "text": "A message can say a lot, but sometimes you just need to hear a familiar voice or see a smiling face. **KT Voice and Video Calls** close the distance in an instant, turning any conversation into a real, face-to-face moment — wherever the other person happens to be."
+        "text": "A message can say a lot, but sometimes you just need to hear a familiar voice or see a smiling face. **KT Voice and Video Calls** close the distance in an instant, turning any conversation into a real, face to face moment wherever the other person happens to be."
       },
       {
         "type": "h",
@@ -720,13 +720,13 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Not every call is one-to-one. **Group calls** gather friends, family, or colleagues into a single conversation, so nobody is left out of the plan, the celebration, or the decision."
+        "text": "Not every call is one to one. **Group calls** gather friends, family, or colleagues into a single conversation, so nobody is left out of the plan, the celebration, or the decision."
       },
       {
         "type": "ul",
         "items": [
-          "**One-to-one calls** for private, personal catch-ups",
-          "**Group calls** for family gatherings, friend circles, and team check-ins",
+          "**One to one calls** for private, personal catch ups",
+          "**Group calls** for family gatherings, friend circles, and team check ins",
           "A simple way to add people so the right voices are all in the room"
         ]
       },
@@ -745,10 +745,10 @@ export const blogPosts = [
       {
         "type": "ul",
         "items": [
-          "**Family conversations** — a weekend video call that keeps everyone in the loop",
-          "**Catching up with friends** — a spontaneous voice call just to hear how things are going",
-          "**Remote teams** — a quick group call to align without a long thread of messages",
-          "**Business discussions** — a clear, personal conversation with a client or partner"
+          "**Family conversations** a weekend video call that keeps everyone in the loop",
+          "**Catching up with friends** a spontaneous voice call just to hear how things are going",
+          "**Remote teams** a quick group call to align without a long thread of messages",
+          "**Business discussions** a clear, personal conversation with a client or partner"
         ]
       },
       {
@@ -780,7 +780,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "The real strength of KT is how naturally messaging and calling work together. A conversation can begin as a few typed lines and become a call the moment words are not enough — all without leaving the thread."
+        "text": "The real strength of KT is how naturally messaging and calling work together. A conversation can begin as a few typed lines and become a call the moment words are not enough all without leaving the thread."
       },
       {
         "type": "p",
@@ -792,7 +792,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**KT Voice and Video Calls** make staying close feel effortless. Whether it is a quiet one-to-one, a lively group catch-up, or a quick call back after a missed one, connection is always just a tap away — right inside the conversations you are already having."
+        "text": "**KT Voice and Video Calls** make staying close feel effortless. Whether it is a quiet one to one, a lively group catch up, or a quick call back after a missed one, connection is always just a tap away right inside the conversations you are already having."
       }
     ]
   },
@@ -819,11 +819,11 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "KT AI is designed to feel like a natural part of KT rather than an add-on. It understands plain, everyday language, so there is no special syntax to learn and no manual to read. You talk to it the same way you would ask a knowledgeable friend for a hand."
+        "text": "KT AI is designed to feel like a natural part of KT rather than an add on. It understands plain, everyday language, so there is no special syntax to learn and no manual to read. You talk to it the same way you would ask a knowledgeable friend for a hand."
       },
       {
         "type": "p",
-        "text": "Because it lives inside the app, KT AI is ready the moment a question pops up mid-conversation. That closeness is the whole point: **help that comes to you**, instead of sending you somewhere else."
+        "text": "Because it lives inside the app, KT AI is ready the moment a question pops up mid conversation. That closeness is the whole point: **help that comes to you**, instead of sending you somewhere else."
       },
       {
         "type": "h",
@@ -990,18 +990,18 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "KT Wallet is your home for digital value inside the app. It gives you a clear, organized place to see what you have and to manage your in-app transactions without hunting through menus."
+        "text": "KT Wallet is your home for digital value inside the app. It gives you a clear, organized place to see what you have and to manage your in app transactions without hunting through menus."
       },
       {
         "type": "p",
-        "text": "Think of it as a tidy starting point for anything payment-related in KT. From here, everyday actions like sending and receiving are only a tap away."
+        "text": "Think of it as a tidy starting point for anything payment related in KT. From here, everyday actions like sending and receiving are only a tap away."
       },
       {
         "type": "ul",
         "items": [
           "A single place to view your digital value inside KT",
           "Easy access to sending and receiving",
-          "A simple way to keep your in-app transactions organized"
+          "A simple way to keep your in app transactions organized"
         ]
       },
       {
@@ -1010,11 +1010,11 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "**KT Coins** are digital value you can send and receive within the app. They make in-app transfers straightforward, so passing value to a contact feels as light as sharing a photo or a note."
+        "text": "**KT Coins** are digital value you can send and receive within the app. They make in app transfers straightforward, so passing value to a contact feels as light as sharing a photo or a note."
       },
       {
         "type": "p",
-        "text": "Because KT Coins live inside KT, they are designed around convenience. The focus is on making everyday, in-app exchanges simple and quick."
+        "text": "Because KT Coins live inside KT, they are designed around convenience. The focus is on making everyday, in app exchanges simple and quick."
       },
       {
         "type": "h",
@@ -1042,11 +1042,11 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Beyond person-to-person sending, KT Wallet can be used to pay within supported experiences inside the app. That means the moments where value changes hands stay in the same place as everything else you do on KT."
+        "text": "Beyond person to person sending, KT Wallet can be used to pay within supported experiences inside the app. That means the moments where value changes hands stay in the same place as everything else you do on KT."
       },
       {
         "type": "p",
-        "text": "Keeping these transfers in one experience removes the usual back-and-forth. There is no jumping out to a different app just to complete a simple action."
+        "text": "Keeping these transfers in one experience removes the usual back and forth. There is no jumping out to a different app just to complete a simple action."
       },
       {
         "type": "h",
@@ -1054,7 +1054,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Staying organized matters, and KT Wallet is built to keep things clear. You can manage your digital value inside the app, so your in-app activity is easy to find and easy to follow."
+        "text": "Staying organized matters, and KT Wallet is built to keep things clear. You can manage your digital value inside the app, so your in app activity is easy to find and easy to follow."
       },
       {
         "type": "p",
@@ -1072,13 +1072,13 @@ export const blogPosts = [
         "type": "ul",
         "items": [
           "Fewer apps to open for a simple transfer",
-          "A familiar, message-like flow for sending and receiving",
-          "One organized place to manage your in-app value"
+          "A familiar, message like flow for sending and receiving",
+          "One organized place to manage your in app value"
         ]
       },
       {
         "type": "p",
-        "text": "That is what KT Wallet and KT Coins are really about: making in-app value transfer feel like a natural part of staying in touch. By bringing payments into your communication experience, KT turns something that once meant switching apps into something that fits right into the conversation, **simple, convenient, and always close at hand**."
+        "text": "That is what KT Wallet and KT Coins are really about: making in app value transfer feel like a natural part of staying in touch. By bringing payments into your communication experience, KT turns something that once meant switching apps into something that fits right into the conversation, **simple, convenient, and always close at hand**."
       }
     ]
   },
@@ -1086,7 +1086,7 @@ export const blogPosts = [
     "slug": "break-language-barriers-with-kt",
     "category": "Accessibility",
     "title": "Break Language Barriers with KT",
-    "description": "See how instant translation and text-to-speech help you communicate across languages and listen to messages instead of reading them.",
+    "description": "See how instant translation and text to speech help you communicate across languages and listen to messages instead of reading them.",
     "readMins": 6,
     "date": "July 21, 2026",
     "imageKey": "private",
@@ -1097,7 +1097,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "With **instant translation** and **text-to-speech**, KT makes conversations easier to understand and easier to keep up with. The result is communication that feels open to more people, in more situations."
+        "text": "With **instant translation** and **text to speech**, KT makes conversations easier to understand and easier to keep up with. The result is communication that feels open to more people, in more situations."
       },
       {
         "type": "h",
@@ -1142,15 +1142,15 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "That ease is what turns a once-difficult exchange into an ordinary, pleasant conversation."
+        "text": "That ease is what turns a once difficult exchange into an ordinary, pleasant conversation."
       },
       {
         "type": "h",
-        "text": "Listen Instead of Read: Text-to-Speech"
+        "text": "Listen Instead of Read: Text to Speech"
       },
       {
         "type": "p",
-        "text": "Reading is not always the easiest option. With **text-to-speech**, KT lets you listen to supported messages instead of reading them, so you can take in a conversation with your ears rather than your eyes."
+        "text": "Reading is not always the easiest option. With **text to speech**, KT lets you listen to supported messages instead of reading them, so you can take in a conversation with your ears rather than your eyes."
       },
       {
         "type": "p",
@@ -1168,18 +1168,18 @@ export const blogPosts = [
         "type": "ul",
         "items": [
           "Accessibility, for anyone who finds listening easier than reading",
-          "Hands-free listening while cooking, commuting, or moving around",
+          "Hands free listening while cooking, commuting, or moving around",
           "Convenience, when you would rather not stare at a screen",
           "Long messages that are easier to follow when read aloud"
         ]
       },
       {
         "type": "p",
-        "text": "In each case, text-to-speech gives you another way to stay connected on your own terms."
+        "text": "In each case, text to speech gives you another way to stay connected on your own terms."
       },
       {
         "type": "p",
-        "text": "Together, translation and text-to-speech are about more than features; they are about **inclusivity and convenience**. By helping people understand one another across languages and offering a comfortable way to listen instead of read, KT makes communication feel welcoming to more people, in more moments. When barriers fall away, staying connected becomes something everyone can do with ease."
+        "text": "Together, translation and text to speech are about more than features; they are about **inclusivity and convenience**. By helping people understand one another across languages and offering a comfortable way to listen instead of read, KT makes communication feel welcoming to more people, in more moments. When barriers fall away, staying connected becomes something everyone can do with ease."
       }
     ]
   },
@@ -1202,13 +1202,13 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Private Chats are the heart of KT, built for **one-to-one or small, personal conversations** with the people closest to you. They are direct and quiet, with no wider audience looking on. This is where everyday life happens, from a quick hello to a long catch-up."
+        "text": "Private Chats are the heart of KT, built for **one to one or small, personal conversations** with the people closest to you. They are direct and quiet, with no wider audience looking on. This is where everyday life happens, from a quick hello to a long catch up."
       },
       {
         "type": "ul",
         "items": [
           "A message to a friend or family member",
-          "A quiet check-in with a colleague",
+          "A quiet check in with a colleague",
           "Sharing photos or plans with your partner"
         ]
       },
@@ -1218,7 +1218,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "When a conversation involves several people, a Group keeps everyone in the same thread. Groups are made for **interactive, back-and-forth conversation between members**, where anyone can post, reply and react. Think of it as a room where the whole circle can speak, not just listen."
+        "text": "When a conversation involves several people, a Group keeps everyone in the same thread. Groups are made for **interactive, back and forth conversation between members**, where anyone can post, reply and react. Think of it as a room where the whole circle can speak, not just listen."
       },
       {
         "type": "ul",
@@ -1287,7 +1287,7 @@ export const blogPosts = [
       {
         "type": "ul",
         "items": [
-          "Schools: Private Chats for parent-teacher notes, Groups per class, and a Community to tie it all together",
+          "Schools: Private Chats for parent teacher notes, Groups per class, and a Community to tie it all together",
           "Clubs: a Group for the core team, a Channel for announcements, and Broadcasts for quick reminders",
           "Creators: a Channel to reach your audience, with Groups for your most engaged members",
           "Businesses: Private Chats for customer questions, a Channel for product news, and Broadcasts for offers",
@@ -1311,7 +1311,7 @@ export const blogPosts = [
     "blocks": [
       {
         "type": "p",
-        "text": "Buying and selling has always started with a conversation, a question, a little back-and-forth, a chance to be sure before you commit. **KT Marketplace brings that conversation into the app you already use**, turning discovery and messaging into one smooth experience."
+        "text": "Buying and selling has always started with a conversation, a question, a little back and forth, a chance to be sure before you commit. **KT Marketplace brings that conversation into the app you already use**, turning discovery and messaging into one smooth experience."
       },
       {
         "type": "h",
@@ -1375,7 +1375,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "For sellers, the marketplace is a way to **put products in front of interested people and talk with them directly**. Listing an item makes it discoverable, and built-in messaging means you can answer questions and build trust through real conversations."
+        "text": "For sellers, the marketplace is a way to **put products in front of interested people and talk with them directly**. Listing an item makes it discoverable, and built in messaging means you can answer questions and build trust through real conversations."
       },
       {
         "type": "ul",
@@ -1413,14 +1413,14 @@ export const blogPosts = [
     "slug": "make-group-decisions-easier-with-polls-and-events",
     "category": "Productivity",
     "title": "Make Group Decisions Easier with Polls & Events",
-    "description": "How Polls and Events turn scattered group chats into quick decisions and well-organized plans everyone can rally around.",
+    "description": "How Polls and Events turn scattered group chats into quick decisions and well organized plans everyone can rally around.",
     "readMins": 6,
     "date": "July 12, 2026",
     "imageKey": "group",
     "blocks": [
       {
         "type": "p",
-        "text": "Every group chat eventually hits the same wall: a simple question that somehow takes fifty messages to answer. **Polls and Events are built to fix exactly that**, turning noisy back-and-forth into clear decisions and well-organized plans."
+        "text": "Every group chat eventually hits the same wall: a simple question that somehow takes fifty messages to answer. **Polls and Events are built to fix exactly that**, turning noisy back and forth into clear decisions and well organized plans."
       },
       {
         "type": "h",
@@ -1486,7 +1486,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Beyond the details, Events help you **organize the people taking part** and keep the discussion in one focused place. Questions, updates and last-minute changes all live alongside the event itself, so the conversation never drifts away from the plan."
+        "text": "Beyond the details, Events help you **organize the people taking part** and keep the discussion in one focused place. Questions, updates and last minute changes all live alongside the event itself, so the conversation never drifts away from the plan."
       },
       {
         "type": "ul",
@@ -1502,7 +1502,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "On their own, Polls and Events are small features, but together they change what a group chat can do. **A poll settles the decision, and an event organizes the follow-through**, turning a stream of messages into real coordination."
+        "text": "On their own, Polls and Events are small features, but together they change what a group chat can do. **A poll settles the decision, and an event organizes the follow through**, turning a stream of messages into real coordination."
       },
       {
         "type": "p",
@@ -1525,7 +1525,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "You do not need a website, a call centre or a stack of software to look professional. With a business profile, saved replies, a product catalog and a few smart organizing tools, a one-person shop can feel as polished as a large brand. Here is how each piece works, and how real businesses put it to use."
+        "text": "You do not need a website, a call centre or a stack of software to look professional. With a business profile, saved replies, a product catalog and a few smart organizing tools, a one person shop can feel as polished as a large brand. Here is how each piece works, and how real businesses put it to use."
       },
       {
         "type": "h",
@@ -1564,7 +1564,7 @@ export const blogPosts = [
         "items": [
           "Save polished answers to your most frequent questions",
           "Send a full reply in a tap instead of typing it out",
-          "Keep your wording consistent, friendly and on-brand"
+          "Keep your wording consistent, friendly and on brand"
         ]
       },
       {
@@ -1577,7 +1577,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "As conversations pile up, it gets hard to remember who ordered what and who is still waiting. **Labels** let you tag and colour-code chats so your whole customer list stays organized at a glance."
+        "text": "As conversations pile up, it gets hard to remember who ordered what and who is still waiting. **Labels** let you tag and colour code chats so your whole customer list stays organized at a glance."
       },
       {
         "type": "ul",
@@ -1661,7 +1661,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Put the pieces together and your chat becomes a full **customer-service and sales channel**. Customers ask, you answer, they buy, and you follow up, all in one continuous thread that both sides can look back on."
+        "text": "Put the pieces together and your chat becomes a full **customer service and sales channel**. Customers ask, you answer, they buy, and you follow up, all in one continuous thread that both sides can look back on."
       },
       {
         "type": "p",
@@ -1670,8 +1670,8 @@ export const blogPosts = [
       {
         "type": "ul",
         "items": [
-          "Answer pre-sale questions and close the sale in the same chat",
-          "Handle support, returns and follow-ups without switching tools",
+          "Answer pre sale questions and close the sale in the same chat",
+          "Handle support, returns and follow ups without switching tools",
           "Build loyalty by remembering each customer's history and preferences"
         ]
       },
@@ -1689,7 +1689,7 @@ export const blogPosts = [
     "slug": "your-conversations-your-privacy-understanding-kt-security",
     "category": "Privacy",
     "title": "Your Conversations, Your Privacy: Understanding KT Security",
-    "description": "A plain-language guide to how KT protects your conversations, from phone-and-code sign-in to end-to-end encrypted private chats.",
+    "description": "A plain language guide to how KT protects your conversations, from phone and code sign in to end to end encrypted private chats.",
     "readMins": 6,
     "date": "July 6, 2026",
     "imageKey": "security",
@@ -1704,11 +1704,11 @@ export const blogPosts = [
       },
       {
         "type": "h",
-        "text": "Signing in with your phone number and a one-time code"
+        "text": "Signing in with your phone number and a one time code"
       },
       {
         "type": "p",
-        "text": "You sign in to KT with your **phone number** and a **one-time password (OTP)**, which is a short code sent to that number. Because the code arrives on your phone, it helps confirm that the person signing in is really you."
+        "text": "You sign in to KT with your **phone number** and a **one time password (OTP)**, which is a short code sent to that number. Because the code arrives on your phone, it helps confirm that the person signing in is really you."
       },
       {
         "type": "p",
@@ -1718,21 +1718,21 @@ export const blogPosts = [
         "type": "ul",
         "items": [
           "Enter your phone number to begin",
-          "Receive a one-time code and type it in to verify it is you",
+          "Receive a one time code and type it in to verify it is you",
           "Keep that code private and treat it like a key to your account"
         ]
       },
       {
         "type": "p",
-        "text": "One simple habit matters most: **never share your one-time code with anyone**. A genuine support team will not ask you to read it out, and keeping it to yourself keeps your account in your hands."
+        "text": "One simple habit matters most: **never share your one time code with anyone**. A genuine support team will not ask you to read it out, and keeping it to yourself keeps your account in your hands."
       },
       {
         "type": "h",
-        "text": "What end-to-end encryption really means"
+        "text": "What end to end encryption really means"
       },
       {
         "type": "p",
-        "text": "You may have seen the phrase **end-to-end encryption** and wondered what it actually does. Here is the simplest way to picture it: your message is protected so that **only you and the person you are messaging can read what it says**."
+        "text": "You may have seen the phrase **end to end encryption** and wondered what it actually does. Here is the simplest way to picture it: your message is protected so that **only you and the person you are messaging can read what it says**."
       },
       {
         "type": "p",
@@ -1762,7 +1762,7 @@ export const blogPosts = [
         "type": "ul",
         "items": [
           "Keep your phone locked with a passcode, fingerprint or face unlock",
-          "Never share your one-time login code, even if someone asks",
+          "Never share your one time login code, even if someone asks",
           "Be cautious with links or requests that pressure you to act quickly",
           "Review where you are signed in and sign out of devices you no longer use"
         ]
@@ -1802,11 +1802,11 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "That is why the most powerful privacy tool is a well-informed you. Understanding how sign-in and encryption work, and staying mindful of the basics, is what keeps everything else effective."
+        "text": "That is why the most powerful privacy tool is a well informed you. Understanding how sign in and encryption work, and staying mindful of the basics, is what keeps everything else effective."
       },
       {
         "type": "p",
-        "text": "Your conversations should belong to you, and that belief runs through how KT is built. With a simple phone-and-code sign-in, private chats protected so only you and your recipient can read them, and clear controls in your hands, **KT Messenger** aims to make privacy something you can actually understand and trust. Not a promise of perfection, but a genuine effort to keep what you share between the right people."
+        "text": "Your conversations should belong to you, and that belief runs through how KT is built. With a simple phone and code sign in, private chats protected so only you and your recipient can read them, and clear controls in your hands, **KT Messenger** aims to make privacy something you can actually understand and trust. Not a promise of perfection, but a genuine effort to keep what you share between the right people."
       }
     ]
   },
@@ -1848,7 +1848,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Individually, none of this feels like a problem. Added up across a day, it becomes a steady tax of copying, pasting, switching, and re-explaining in one app what you just did in another."
+        "text": "Individually, none of this feels like a problem. Added up across a day, it becomes a steady tax of copying, pasting, switching, and re explaining in one app what you just did in another."
       },
       {
         "type": "h",
@@ -1899,14 +1899,14 @@ export const blogPosts = [
         "type": "ul",
         "items": [
           "Read the News, then share an article straight into a group to start a conversation",
-          "Plan a trip in chat, hop on a call, and settle the costs with in-chat payments",
+          "Plan a trip in chat, hop on a call, and settle the costs with in chat payments",
           "Discover a shop in the marketplace and message the business directly to ask a question",
           "Ask KT AI for a quick summary without opening a separate assistant"
         ]
       },
       {
         "type": "p",
-        "text": "None of this asks you to leave and come back. The thread is the through-line, and everything else gathers around it."
+        "text": "None of this asks you to leave and come back. The thread is the through line, and everything else gathers around it."
       },
       {
         "type": "h",
@@ -1914,7 +1914,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "Reducing app-switching is not about saving a few taps for their own sake. It is about keeping your attention on what you actually meant to do, instead of on the tools you needed to do it."
+        "text": "Reducing app switching is not about saving a few taps for their own sake. It is about keeping your attention on what you actually meant to do, instead of on the tools you needed to do it."
       },
       {
         "type": "p",
@@ -1926,7 +1926,7 @@ export const blogPosts = [
       },
       {
         "type": "p",
-        "text": "An all-in-one vision only matters if each part is genuinely useful and easy to trust. Bringing things together is not a promise that life becomes effortless; it is a promise to remove the needless steps between the things you already do."
+        "text": "An all in one vision only matters if each part is genuinely useful and easy to trust. Bringing things together is not a promise that life becomes effortless; it is a promise to remove the needless steps between the things you already do."
       },
       {
         "type": "p",

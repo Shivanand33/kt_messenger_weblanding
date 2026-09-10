@@ -51,6 +51,7 @@ import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
 import { useModal } from '../../context/ModalContext'
+import { useLanguage } from '../../context/LanguageContext'
 import {
   initialChecklist,
   initialNotes,
@@ -75,7 +76,7 @@ const NAV_ITEMS = [
   { id: 'voice', label: 'Voice memos', icon: <FiMic /> },
   { id: 'templates', label: 'Templates', icon: <FiLayers /> },
   { id: 'reminders', label: 'Reminders', icon: <FiBell /> },
-  { id: 'selfchat', label: 'Self-chat', icon: <FiMessageSquare /> },
+  { id: 'selfchat', label: 'Self chat', icon: <FiMessageSquare /> },
   { id: 'sync', label: 'Sync', icon: <FiRefreshCw /> },
   { id: 'encryption', label: 'Encryption', icon: <FiShield /> },
   { id: 'shortcuts', label: 'Shortcuts', icon: <FiCommand /> },
@@ -84,7 +85,7 @@ const NAV_ITEMS = [
 
 const STATS = [
   { value: 36, label: 'Notes in this vault', icon: <FiFileText />, hint: 'Across six categories, all encrypted.' },
-  { value: 256, label: 'Bit AES encryption', icon: <FiLock />, hint: 'Sealed on-device before anything syncs.' },
+  { value: 256, label: 'Bit AES encryption', icon: <FiLock />, hint: 'Sealed on device before anything syncs.' },
   { value: 6, label: 'Devices in sync', icon: <FiSmartphone />, hint: 'Phone, tablet, desktop, web and watch.' },
   { value: 100, suffix: '%', label: 'Works offline', icon: <FiWifiOff />, hint: 'Edits reconcile when you reconnect.' },
 ]
@@ -141,6 +142,7 @@ const emptyDraft = { id: null, title: '', content: '', category: 'Work', color: 
 
 export function NotesPage() {
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
 
   const [notes, setNotes] = useState(initialNotes)
   const [activeCategory, setActiveCategory] = useState('All')
@@ -188,7 +190,7 @@ export function NotesPage() {
   const saveDraft = (event) => {
     event.preventDefault()
     if (!draft.title.trim()) {
-      setToast('Give the note a title before saving.')
+      setToast(t('Give the note a title before saving.'))
       return
     }
 
@@ -204,10 +206,10 @@ export function NotesPage() {
 
     if (draft.id) {
       setNotes((current) => current.map((note) => (note.id === draft.id ? { ...note, ...payload } : note)))
-      setToast('Note updated and re-encrypted.')
+      setToast(t('Note updated and re encrypted.'))
     } else {
       setNotes((current) => [{ id: Date.now(), ...payload }, ...current])
-      setToast('Note saved to your encrypted vault.')
+      setToast(t('Note saved to your encrypted vault.'))
     }
 
     setDraft(null)
@@ -216,7 +218,7 @@ export function NotesPage() {
   const deleteNote = (id) => {
     setNotes((current) => current.filter((note) => note.id !== id))
     setDraft(null)
-    setToast('Moved to trash — purged from every device in 30 days.')
+    setToast(t('Moved to trash purged from every device in 30 days.'))
   }
 
   const togglePin = (id) => {
@@ -228,12 +230,12 @@ export function NotesPage() {
         return { ...note, pinned: !note.pinned }
       }),
     )
-    setToast(nowPinned ? 'Pinned to the top of your vault.' : 'Unpinned.')
+    setToast(nowPinned ? t('Pinned to the top of your vault.') : t('Unpinned.'))
   }
 
   const duplicateNote = (note) => {
     setNotes((current) => [{ ...note, id: Date.now(), title: `${note.title} (copy)`, pinned: false, updated: 'Just now' }, ...current])
-    setToast('Duplicate created.')
+    setToast(t('Duplicate created.'))
   }
 
   // -------------------------------------------------------------- Checklist
@@ -258,35 +260,35 @@ export function NotesPage() {
       <PageHero
         badge={
           <>
-            <FiLock /> Encrypted vault · 36 notes synced
+            <FiLock /> {t('Encrypted vault · 36 notes synced')}
           </>
         }
         title="KT"
-        highlight="Notes & Self-Chat"
-        description="Message yourself, pin what matters, record a thought while walking — and keep every word sealed on your device before it ever syncs."
+        highlight={t('Notes & Self Chat')}
+        description={t('Message yourself, pin what matters, record a thought while walking and keep every word sealed on your device before it ever syncs.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={() => openNewNote()}>
-              Create a note <FiPlus />
+              {t('Create a note')} <FiPlus />
             </Button>
             <Button size="lg" variant="primary" onClick={openDownloadModal}>
-              Get the app <FiZap />
+              {t('Get the app')} <FiZap />
             </Button>
           </>
         }
         chips={[
-          { icon: <FiShield />, label: 'Sealed before sync' },
-          { icon: <FiWifiOff />, label: 'Fully offline capable' },
-          { icon: <FiMic />, label: 'On-device transcription' },
+          { icon: <FiShield />, label: t('Sealed before sync') },
+          { icon: <FiWifiOff />, label: t('Fully offline capable') },
+          { icon: <FiMic />, label: t('On device transcription') },
         ]}
         aside={
           <div className="rounded-[28px] border border-line dark:border-white/10 bg-cream-2 dark:bg-white/[0.04] p-5 shadow-card dark:shadow-2xl backdrop-blur-xl sm:p-6">
             <div className="flex items-center justify-between border-b border-line dark:border-white/10 pb-4">
               <span className="flex items-center gap-2 text-sm font-extrabold text-ink dark:text-white">
-                <FiEdit3 className="text-brand-strong dark:text-sky-400" /> Quick capture
+                <FiEdit3 className="text-brand-strong dark:text-sky-400" /> {t('Quick capture')}
               </span>
               <span className="rounded-full border border-sky-500/40 bg-sky-400/10 px-2.5 py-1 text-[10px] font-black uppercase text-sky-600 dark:text-sky-300">
-                E2E encrypted
+                {t('E2E encrypted')}
               </span>
             </div>
 
@@ -300,8 +302,8 @@ export function NotesPage() {
                   <FiPlus />
                 </span>
                 <span>
-                  <span className="block text-xs font-bold text-ink dark:text-white">New blank note</span>
-                  <span className="block text-[10px] font-semibold text-muted dark:text-slate-400">Starts empty, saves instantly</span>
+                  <span className="block text-xs font-bold text-ink dark:text-white">{t('New blank note')}</span>
+                  <span className="block text-[10px] font-semibold text-muted dark:text-slate-400">{t('Starts empty, saves instantly')}</span>
                 </span>
               </button>
 
@@ -324,9 +326,9 @@ export function NotesPage() {
 
             <div className="mt-4 grid grid-cols-3 gap-2 border-t border-line dark:border-white/10 pt-4 text-center">
               {[
-                { value: notes.length, label: 'Notes' },
-                { value: pinnedCount, label: 'Pinned' },
-                { value: voiceMemos.length, label: 'Memos' },
+                { value: notes.length, label: t('Notes') },
+                { value: pinnedCount, label: t('Pinned') },
+                { value: voiceMemos.length, label: t('Memos') },
               ].map((item) => (
                 <div key={item.label}>
                   <div className="text-base font-black text-ink dark:text-white">{item.value}</div>
@@ -346,7 +348,7 @@ export function NotesPage() {
               setQuery(event.target.value)
               resetPaging()
             }}
-            placeholder="Search titles, content and tags across the vault…"
+            placeholder={t('Search titles, content and tags across the vault…')}
             className="w-full bg-transparent text-sm font-semibold text-ink dark:text-white outline-none placeholder:text-muted dark:placeholder:text-slate-400"
           />
           {query ? (
@@ -358,7 +360,7 @@ export function NotesPage() {
               }}
               className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-muted dark:text-slate-300 hover:bg-brand-soft dark:hover:bg-white/10 hover:text-ink dark:hover:text-white"
             >
-              Clear
+              {t('Clear')}
             </button>
           ) : null}
         </div>
@@ -389,31 +391,31 @@ export function NotesPage() {
             setQuery(value)
             resetPaging()
           }}
-          placeholder="Search the vault…"
+          placeholder={t('Search the vault…')}
           right={
             <button
               type="button"
               onClick={() => openNewNote()}
               className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-xl bg-brand-strong px-3.5 text-[11px] font-bold text-white shadow-brand transition-colors hover:bg-brand-strong-hover"
             >
-              <FiPlus /> New note
+              <FiPlus /> {t('New note')}
             </button>
           }
         />
 
         <Section className="bg-surface">
           <SectionHead
-            eyebrow={`${filtered.length} notes`}
-            title={activeCategory === 'All' ? 'Your encrypted vault' : activeCategory}
-            description="Pinned notes float to the top. Tap any card to edit — changes are re-encrypted the moment you save."
+            eyebrow={`${filtered.length} ${t('notes')}`}
+            title={activeCategory === 'All' ? t('Your encrypted vault') : activeCategory}
+            description={t('Pinned notes float to the top. Tap any card to edit changes are re encrypted the moment you save.')}
           />
 
           {visible.length === 0 ? (
             <div className="mt-12">
               <EmptyState
                 icon={<FiSearch />}
-                title="No notes match"
-                description="Try another category, clear the search, or start a new note from scratch."
+                title={t('No notes match')}
+                description={t('Try another category, clear the search, or start a new note from scratch.')}
                 action={
                   <div className="flex flex-wrap justify-center gap-3">
                     <Button
@@ -424,10 +426,10 @@ export function NotesPage() {
                         resetPaging()
                       }}
                     >
-                      Reset filters
+                      {t('Reset filters')}
                     </Button>
                     <Button onClick={() => openNewNote()}>
-                      New note <FiPlus />
+                      {t('New note')} <FiPlus />
                     </Button>
                   </div>
                 }
@@ -451,7 +453,7 @@ export function NotesPage() {
                         <button
                           type="button"
                           onClick={() => togglePin(note.id)}
-                          aria-label={note.pinned ? 'Unpin note' : 'Pin note'}
+                          aria-label={note.pinned ? t('Unpin note') : t('Pin note')}
                           className={`grid h-8 w-8 place-items-center rounded-full transition-colors hover:bg-surface/70 ${
                             note.pinned ? 'text-brand-strong' : 'text-muted'
                           }`}
@@ -461,7 +463,7 @@ export function NotesPage() {
                         <button
                           type="button"
                           onClick={() => setDraft({ ...note })}
-                          aria-label="Edit note"
+                          aria-label={t('Edit note')}
                           className="grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:bg-surface/70 hover:text-ink"
                         >
                           <FiEdit3 />
@@ -504,7 +506,7 @@ export function NotesPage() {
                         <button
                           type="button"
                           onClick={() => duplicateNote(note)}
-                          aria-label="Duplicate note"
+                          aria-label={t('Duplicate note')}
                           className="grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:bg-surface/70 hover:text-ink"
                         >
                           <FiCopy />
@@ -512,7 +514,7 @@ export function NotesPage() {
                         <button
                           type="button"
                           onClick={() => deleteNote(note.id)}
-                          aria-label="Delete note"
+                          aria-label={t('Delete note')}
                           className="grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:bg-rose-500/10 hover:text-rose-600"
                         >
                           <FiTrash2 />
@@ -528,10 +530,10 @@ export function NotesPage() {
           {visibleCount < filtered.length ? (
             <div className="mt-12 flex flex-col items-center gap-3">
               <Button variant="secondary" size="lg" onClick={() => setVisibleCount((current) => current + PAGE_SIZE)}>
-                Load {Math.min(PAGE_SIZE, filtered.length - visibleCount)} more notes
+                {t('Load')} {Math.min(PAGE_SIZE, filtered.length - visibleCount)} {t('more notes')}
               </Button>
               <span className="text-xs font-semibold text-muted">
-                Showing {visible.length} of {filtered.length}
+                {t('Showing')} {visible.length} {t('of')} {filtered.length}
               </span>
             </div>
           ) : null}
@@ -543,18 +545,18 @@ export function NotesPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="checklist" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Checklists"
-          title="Tick things off and watch the bar move"
-          description="Add an item, mark it done, clear the finished ones. Everything below is live — try it."
+          eyebrow={t('Checklists')}
+          title={t('Tick things off and watch the bar move')}
+          description={t('Add an item, mark it done, clear the finished ones. Everything below is live try it.')}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.8fr]">
           <Reveal from="up">
             <div className="rounded-[28px] border border-line bg-surface p-6 shadow-card sm:p-8">
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-extrabold text-ink">Things to do</h3>
+                <h3 className="text-base font-extrabold text-ink">{t('Things to do')}</h3>
                 <span className="rounded-full bg-brand-soft px-3 py-1 text-[11px] font-black text-brand-ink">
-                  {doneCount}/{checklist.length} done
+                  {doneCount}/{checklist.length} {t('done')}
                 </span>
               </div>
 
@@ -570,18 +572,18 @@ export function NotesPage() {
                   type="text"
                   value={newTask}
                   onChange={(event) => setNewTask(event.target.value)}
-                  placeholder="Add an item…"
-                  aria-label="New checklist item"
+                  placeholder={t('Add an item…')}
+                  aria-label={t('New checklist item')}
                   className="h-12 w-full rounded-2xl border border-line bg-cream px-4 text-sm font-semibold text-ink outline-none focus:border-brand/60 placeholder:font-medium placeholder:text-muted dark:bg-cream-2"
                 />
-                <Button type="submit" className="shrink-0" aria-label="Add item">
+                <Button type="submit" className="shrink-0" aria-label={t('Add item')}>
                   <FiPlus />
                 </Button>
               </form>
 
               {checklist.length === 0 ? (
                 <p className="py-10 text-center text-sm font-semibold text-muted">
-                  Nothing on the list. Add the first item above.
+                  {t('Nothing on the list. Add the first item above.')}
                 </p>
               ) : (
                 <ul className="mt-5 space-y-2">
@@ -596,7 +598,7 @@ export function NotesPage() {
                           type="button"
                           onClick={() => toggleTask(item.id)}
                           aria-pressed={item.done}
-                          aria-label={item.done ? 'Mark as not done' : 'Mark as done'}
+                          aria-label={item.done ? t('Mark as not done') : t('Mark as done')}
                           className={`grid h-6 w-6 shrink-0 place-items-center rounded-md border-2 transition-colors ${
                             item.done ? 'border-brand-strong bg-brand-strong text-white' : 'border-line text-transparent hover:border-brand/50'
                           }`}
@@ -613,7 +615,7 @@ export function NotesPage() {
                         <button
                           type="button"
                           onClick={() => setChecklist((current) => current.filter((task) => task.id !== item.id))}
-                          aria-label="Remove item"
+                          aria-label={t('Remove item')}
                           className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-rose-500/10 hover:text-rose-600"
                         >
                           <FiTrash2 />
@@ -633,7 +635,7 @@ export function NotesPage() {
                   }}
                   className="mt-5 text-xs font-bold text-brand-ink underline-offset-4 hover:underline"
                 >
-                  Clear {doneCount} completed
+                  {t('Clear')} {doneCount} {t('completed')}
                 </button>
               ) : null}
             </div>
@@ -644,23 +646,23 @@ export function NotesPage() {
               {[
                 {
                   icon: <FiCheckCircle />,
-                  title: 'Completed items fade back',
-                  desc: 'Finished tasks dim rather than vanish, so you can still see what you got through today.',
+                  title: t('Completed items fade back'),
+                  desc: t('Finished tasks dim rather than vanish, so you can still see what you got through today.'),
                 },
                 {
                   icon: <FiRefreshCw />,
-                  title: 'Shared lists stay in step',
-                  desc: 'Send a checklist into a group and everyone ticks the same boxes, updated live.',
+                  title: t('Shared lists stay in step'),
+                  desc: t('Send a checklist into a group and everyone ticks the same boxes, updated live.'),
                 },
                 {
                   icon: <FiBell />,
-                  title: 'Attach a reminder',
-                  desc: 'Give any list a time and it comes back as a message when it is due, not before.',
+                  title: t('Attach a reminder'),
+                  desc: t('Give any list a time and it comes back as a message when it is due, not before.'),
                 },
                 {
                   icon: <FiLock />,
-                  title: 'Encrypted like everything else',
-                  desc: 'Checklists are sealed on your device. The sync server only ever sees ciphertext.',
+                  title: t('Encrypted like everything else'),
+                  desc: t('Checklists are sealed on your device. The sync server only ever sees ciphertext.'),
                 },
               ].map((item) => (
                 <div key={item.title} className="flex flex-1 items-start gap-4 rounded-[24px] border border-line bg-surface p-5 shadow-soft">
@@ -683,9 +685,9 @@ export function NotesPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="voice" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Voice memos"
-          title="Speak it now, edit it later"
-          description="Transcription runs on-device using the local model, so neither the audio nor the transcript leaves your phone."
+          eyebrow={t('Voice memos')}
+          title={t('Speak it now, edit it later')}
+          description={t('Transcription runs on device using the local model, so neither the audio nor the transcript leaves your phone.')}
         />
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -746,9 +748,9 @@ export function NotesPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="templates" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Templates"
-          title="Never start from a blank page"
-          description="Eight starting points for the notes you write over and over. Tap one and it opens pre-filled."
+          eyebrow={t('Templates')}
+          title={t('Never start from a blank page')}
+          description={t('Eight starting points for the notes you write over and over. Tap one and it opens pre filled.')}
         />
 
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -765,7 +767,7 @@ export function NotesPage() {
                   {template.category}
                 </span>
                 <span className="mt-3 inline-flex items-center gap-1 text-[11px] font-bold text-brand-ink">
-                  Use template <FiChevronRight className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                  {t('Use template')} <FiChevronRight className="transition-transform duration-300 group-hover:translate-x-0.5" />
                 </span>
               </button>
             </Reveal>
@@ -778,9 +780,9 @@ export function NotesPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="reminders" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Reminders"
-          title="Notes that come back at the right moment"
-          description="Attach a time to any note and it arrives as an ordinary message — no separate reminders app to check."
+          eyebrow={t('Reminders')}
+          title={t('Notes that come back at the right moment')}
+          description={t('Attach a time to any note and it arrives as an ordinary message no separate reminders app to check.')}
         />
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -813,16 +815,16 @@ export function NotesPage() {
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <SectionHead
             align="left"
-            eyebrow="Message yourself"
-            title="The fastest capture surface you already have"
-            description="Your own chat thread is an inbox for links, photos, voice notes and half-formed thoughts. File them into notes whenever you get a minute — or never."
+            eyebrow={t('Message yourself')}
+            title={t('The fastest capture surface you already have')}
+            description={t('Your own chat thread is an inbox for links, photos, voice notes and half formed thoughts. File them into notes whenever you get a minute or never.')}
           >
             <ul className="mt-8 space-y-3">
               {[
-                'Forward anything from any chat into your own thread in two taps.',
-                'Search it later exactly like any other conversation.',
-                'Convert a message into a full note without retyping it.',
-                'Everything stays end-to-end encrypted, including to yourself.',
+                t('Forward anything from any chat into your own thread in two taps.'),
+                t('Search it later exactly like any other conversation.'),
+                t('Convert a message into a full note without retyping it.'),
+                t('Everything stays end to end encrypted, including to yourself.'),
               ].map((point) => (
                 <li key={point} className="flex items-start gap-3 text-sm leading-relaxed text-body">
                   <FiCheckCircle className="mt-0.5 shrink-0 text-brand-strong" />
@@ -836,19 +838,19 @@ export function NotesPage() {
             <div className="mx-auto w-full max-w-sm rounded-[32px] border border-line bg-surface p-4 shadow-float">
               <div className="flex items-center gap-3 border-b border-line pb-3">
                 <span className="grid h-10 w-10 place-items-center rounded-full bg-brand-strong text-sm font-black text-white">
-                  You
+                  {t('You')}
                 </span>
                 <div className="min-w-0">
-                  <div className="text-sm font-extrabold text-ink">Message yourself</div>
+                  <div className="text-sm font-extrabold text-ink">{t('Message yourself')}</div>
                   <div className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
-                    End-to-end encrypted
+                    {t('End to end encrypted')}
                   </div>
                 </div>
               </div>
 
               <div className="space-y-2.5 py-4">
                 {[
-                  { text: 'Flight JL-748 · 12:40 · Terminal 3', time: '09:12' },
+                  { text: 'Flight KT-748 · 12:40 · Terminal 3', time: '09:12' },
                   { text: 'Idea: receipt parser inside chat 💡', time: '09:40' },
                   { text: '🎙️ Voice memo · 0:38', time: '10:05', voice: true },
                   { text: 'Ryokan booking ref #84920', time: '11:22' },
@@ -868,7 +870,7 @@ export function NotesPage() {
 
               <div className="flex items-center gap-2 border-t border-line pt-3">
                 <div className="flex h-10 flex-1 items-center rounded-full border border-line bg-cream px-4 text-xs font-medium text-muted dark:bg-cream-2">
-                  Type a note to yourself…
+                  {t('Type a note to yourself…')}
                 </div>
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-strong text-white">
                   <FiMic />
@@ -884,9 +886,9 @@ export function NotesPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="sync" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Sync"
-          title="Six devices, one vault"
-          description="Every device shows when it last synced, and you can revoke any of them without touching the others."
+          eyebrow={t('Sync')}
+          title={t('Six devices, one vault')}
+          description={t('Every device shows when it last synced, and you can revoke any of them without touching the others.')}
         />
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -911,7 +913,7 @@ export function NotesPage() {
                   onClick={() => setToast(`${device.name} signed out of your vault.`)}
                   className="shrink-0 rounded-lg border border-line px-2.5 py-1.5 text-[10px] font-bold text-muted transition-colors hover:border-rose-400 hover:text-rose-600"
                 >
-                  Revoke
+                  {t('Revoke')}
                 </button>
               </div>
             </Reveal>
@@ -924,32 +926,32 @@ export function NotesPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="encryption" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Encryption"
-          title="What “encrypted” actually means here"
-          description="Four honest specifics, including the tradeoff most products leave out."
+          eyebrow={t('Encryption')}
+          title={t('What “encrypted” actually means here')}
+          description={t('Four honest specifics, including the tradeoff most products leave out.')}
         />
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2">
           {[
             {
               icon: <FiLock />,
-              title: 'Sealed before it leaves',
-              desc: 'Notes are encrypted with a key derived on your device. Sync only ever transports ciphertext.',
+              title: t('Sealed before it leaves'),
+              desc: t('Notes are encrypted with a key derived on your device. Sync only ever transports ciphertext.'),
             },
             {
               icon: <FiRefreshCw />,
-              title: 'Keys rotate on schedule',
-              desc: 'Session keys rotate automatically, so a compromised key exposes a narrow window rather than your history.',
+              title: t('Keys rotate on schedule'),
+              desc: t('Session keys rotate automatically, so a compromised key exposes a narrow window rather than your history.'),
             },
             {
               icon: <FiShield />,
-              title: 'Attachments included',
-              desc: 'Images, PDFs and voice memos are encrypted with the same key material as the note text.',
+              title: t('Attachments included'),
+              desc: t('Images, PDFs and voice memos are encrypted with the same key material as the note text.'),
             },
             {
               icon: <FiDownload />,
-              title: 'Recovery is your responsibility',
-              desc: 'Because we hold no key, losing every recovery share means the vault is unrecoverable. Store shares apart.',
+              title: t('Recovery is your responsibility'),
+              desc: t('Because we hold no key, losing every recovery share means the vault is unrecoverable. Store shares apart.'),
             },
           ].map((item, index) => (
             <Reveal key={item.title} from="up" delay={index * 0.06} className="h-full">
@@ -972,9 +974,9 @@ export function NotesPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="shortcuts" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Keyboard shortcuts"
-          title="Ten keys worth learning"
-          description="The desktop and web clients share the same bindings."
+          eyebrow={t('Keyboard shortcuts')}
+          title={t('Ten keys worth learning')}
+          description={t('The desktop and web clients share the same bindings.')}
         />
 
         <Reveal from="up" className="mt-12 overflow-hidden rounded-[26px] border border-line bg-cream shadow-card dark:bg-cream-2">
@@ -991,7 +993,7 @@ export function NotesPage() {
         </Reveal>
 
         <div className="mt-20">
-          <SectionHead eyebrow="Tips" title="Six habits that make a vault useful" />
+          <SectionHead eyebrow={t('Tips')} title={t('Six habits that make a vault useful')} />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {notesTips.map((tip, index) => (
               <Reveal key={tip.title} from="up" delay={Math.min(index * 0.05, 0.25)} className="h-full">
@@ -1012,11 +1014,11 @@ export function NotesPage() {
       {/* FEATURES + STEPS                                                  */}
       {/* ---------------------------------------------------------------- */}
       <Section className="border-y border-line bg-cream dark:bg-cream-2">
-        <SectionHead eyebrow="What you get" title="Nine things the vault does well" />
+        <SectionHead eyebrow={t('What you get')} title={t('Nine things the vault does well')} />
         <FeatureGrid className="mt-12" items={notesFeatures.map((item, index) => ({ ...item, icon: FEATURE_ICONS[index] }))} />
 
         <div className="mt-20">
-          <SectionHead eyebrow="How it works" title="Capture, file, act" />
+          <SectionHead eyebrow={t('How it works')} title={t('Capture, file, act')} />
           <Steps className="mt-12" items={notesSteps.map((item, index) => ({ ...item, icon: STEP_ICONS[index] }))} />
         </div>
       </Section>
@@ -1025,7 +1027,7 @@ export function NotesPage() {
       {/* TESTIMONIALS                                                      */}
       {/* ---------------------------------------------------------------- */}
       <Section className="bg-surface">
-        <SectionHead eyebrow="People who keep notes here" title="What actually changed for them" />
+        <SectionHead eyebrow={t('People who keep notes here')} title={t('What actually changed for them')} />
         <Testimonials className="mt-12" items={notesTestimonials} />
       </Section>
 
@@ -1034,9 +1036,9 @@ export function NotesPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="faq" container={false} className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <Container maxW="max-w-3xl">
-          <SectionHead eyebrow="FAQ" title="Encryption, sync and recovery" />
+          <SectionHead eyebrow={t('FAQ')} title={t('Encryption, sync and recovery')} />
           <div className="mt-12">
-            <FaqAccordion items={notesFaqs} placeholder="Search the FAQ…" />
+            <FaqAccordion items={notesFaqs} placeholder={t('Search the FAQ…')} />
           </div>
         </Container>
       </Section>
@@ -1045,24 +1047,24 @@ export function NotesPage() {
       {/* CTA + RELATED                                                     */}
       {/* ---------------------------------------------------------------- */}
       <CtaBand
-        eyebrow="Start writing"
-        title="A vault that only you can open"
-        description="Notes, checklists and voice memos sealed on your device, synced across everything you own, and readable with no signal at all."
+        eyebrow={t('Start writing')}
+        title={t('A vault that only you can open')}
+        description={t('Notes, checklists and voice memos sealed on your device, synced across everything you own, and readable with no signal at all.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={openDownloadModal}>
-              Download KT Messenger
+              {t('Download KT Messenger')}
             </Button>
             <Button size="lg" variant="onDark" onClick={() => openNewNote()}>
-              Try the editor
+              {t('Try the editor')}
             </Button>
           </>
         }
-        points={['End-to-end encrypted', 'Works fully offline', 'On-device transcription', 'Export any time']}
+        points={[t('End to end encrypted'), t('Works fully offline'), t('On device transcription'), t('Export any time')]}
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More of KT Messenger" />
+        <SectionHead eyebrow={t('Keep exploring')} title={t('More of KT Messenger')} />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 
@@ -1072,8 +1074,8 @@ export function NotesPage() {
       <Modal
         open={Boolean(draft)}
         onClose={() => setDraft(null)}
-        eyebrow={draft?.id ? 'Editing note' : 'New note'}
-        title={draft?.id ? draft.title : 'Create a note'}
+        eyebrow={draft?.id ? t('Editing note') : t('New note')}
+        title={draft?.id ? draft.title : t('Create a note')}
         size="md"
         footer={
           draft ? (
@@ -1084,16 +1086,16 @@ export function NotesPage() {
                   onClick={() => deleteNote(draft.id)}
                   className="inline-flex h-11 items-center gap-2 rounded-full border border-line px-5 text-xs font-bold text-body transition-colors hover:border-rose-400 hover:text-rose-600"
                 >
-                  <FiTrash2 /> Delete
+                  <FiTrash2 /> {t('Delete')}
                 </button>
               ) : (
                 <span className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
-                  <FiLock /> Encrypted before it syncs
+                  <FiLock /> {t('Encrypted before it syncs')}
                 </span>
               )}
 
               <Button type="submit" form="note-editor">
-                {draft.id ? 'Save changes' : 'Save to vault'} <FiCheck />
+                {draft.id ? t('Save changes') : t('Save to vault')} <FiCheck />
               </Button>
             </div>
           ) : null
@@ -1102,31 +1104,31 @@ export function NotesPage() {
         {draft ? (
           <form id="note-editor" onSubmit={saveDraft}>
             <label htmlFor="note-title" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-              Title
+              {t('Title')}
             </label>
             <input
               id="note-title"
               type="text"
               value={draft.title}
               onChange={(event) => setDraft({ ...draft, title: event.target.value })}
-              placeholder="Flight booking confirmation"
+              placeholder={t('Flight booking confirmation')}
               className="h-12 w-full rounded-2xl border border-line bg-cream px-4 text-sm font-bold text-ink outline-none focus:border-brand/60 placeholder:font-medium placeholder:text-muted dark:bg-cream-2"
             />
 
             <label htmlFor="note-body" className="mb-1.5 mt-5 block text-[11px] font-black uppercase tracking-wide text-muted">
-              Content
+              {t('Content')}
             </label>
             <textarea
               id="note-body"
               value={draft.content}
               onChange={(event) => setDraft({ ...draft, content: event.target.value })}
               rows={7}
-              placeholder="Write the details, or paste a link…"
+              placeholder={t('Write the details, or paste a link…')}
               className="w-full resize-none rounded-2xl border border-line bg-cream p-4 text-sm font-semibold leading-relaxed text-ink outline-none focus:border-brand/60 placeholder:font-medium placeholder:text-muted dark:bg-cream-2"
             />
 
             <label htmlFor="note-category" className="mb-1.5 mt-5 block text-[11px] font-black uppercase tracking-wide text-muted">
-              Category
+              {t('Category')}
             </label>
             <select
               id="note-category"
@@ -1143,7 +1145,7 @@ export function NotesPage() {
                 ))}
             </select>
 
-            <span className="mb-2 mt-5 block text-[11px] font-black uppercase tracking-wide text-muted">Colour</span>
+            <span className="mb-2 mt-5 block text-[11px] font-black uppercase tracking-wide text-muted">{t('Colour')}</span>
             <div className="flex flex-wrap gap-2">
               {noteColors.map((color) => (
                 <button
@@ -1170,7 +1172,7 @@ export function NotesPage() {
               }`}
             >
               <FiBookmark className={draft.pinned ? 'fill-current' : ''} />
-              {draft.pinned ? 'Pinned to top' : 'Pin to top'}
+              {draft.pinned ? t('Pinned to top') : t('Pin to top')}
             </button>
           </form>
         ) : null}

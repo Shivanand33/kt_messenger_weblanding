@@ -26,9 +26,11 @@ import { Section } from '../../components/common/Section/Section'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Button } from '../../components/common/Button/Button'
 import { SecurityLoopVideo } from '../../components/common/VideoAnimations/SecurityLoopVideo'
+import { useLanguage } from '../../context/LanguageContext'
 
 export function SecurityPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState(0)
   const [faqOpen, setFaqOpen] = useState(0)
   const [otpCode, setOtpCode] = useState('849-204')
@@ -52,91 +54,91 @@ export function SecurityPage() {
 
   const securityTabs = [
     {
-      title: 'Authentication & OTP Verification',
+      title: t('Authentication & OTP Verification'),
       icon: <FiKey className="text-xl" />,
-      desc: 'Deliver 1-time passcodes (OTP), 2FA login verification codes, and security alerts to over 2.5B users with 99.9% delivery rate and zero SMS roaming fees.',
-      highlights: ['1-Tap Autofill Passcode Buttons', 'Signal 256-bit encrypted delivery', '60% cheaper than traditional SMS']
+      desc: t('Deliver 1-time passcodes (OTP), 2FA login verification codes, and security alerts to over 2.5B users with 99.9% delivery rate and zero SMS roaming fees.'),
+      highlights: [t('1-Tap Autofill Passcode Buttons'), t('KT 256-bit encrypted delivery'), t('60% cheaper than traditional SMS')]
     },
     {
-      title: 'Default Signal E2E Encryption',
+      title: t('Default KT E2E Encryption'),
       icon: <FiLock className="text-xl" />,
-      desc: 'All messages, voice calls, video calls, photos, and files are automatically encrypted before leaving your device. Only you and the recipient hold the keys.',
-      highlights: ['Open-source Signal Protocol', 'Zero plain-text server logs', 'Automatic key rotation']
+      desc: t('All messages, voice calls, video calls, photos, and files are automatically encrypted before leaving your device. Only you and the recipient hold the keys.'),
+      highlights: [t('Open source KT Encryption Protocol'), t('Zero plain text server logs'), t('Automatic key rotation')]
     },
     {
-      title: 'Chat Lock & Secret Codes',
+      title: t('Chat Lock & Secret Codes'),
       icon: <FiEyeOff className="text-xl" />,
-      desc: 'Move sensitive chats into a hidden folder protected by FaceID, Fingerprint, or a custom secret passcode that hides the chat from the main list.',
-      highlights: ['Biometric FaceID / Fingerprint lock', 'Custom secret entry passcodes', 'Notification content masking']
+      desc: t('Move sensitive chats into a hidden folder protected by FaceID, Fingerprint, or a custom secret passcode that hides the chat from the main list.'),
+      highlights: [t('Biometric FaceID / Fingerprint lock'), t('Custom secret entry passcodes'), t('Notification content masking')]
     },
     {
-      title: 'Silence Unknown Callers',
+      title: t('Silence Unknown Callers'),
       icon: <FiPhoneOff className="text-xl" />,
-      desc: 'Automatically filter out spam calls, unknown numbers, and robo-dialers. Silenced calls appear in your call log without ringing your phone.',
-      highlights: ['Automatic spam pattern blocking', 'Silent call log recording', 'Custom contact whitelist']
+      desc: t('Automatically filter out spam calls, unknown numbers, and robo dialers. Silenced calls appear in your call log without ringing your phone.'),
+      highlights: [t('Automatic spam pattern blocking'), t('Silent call log recording'), t('Custom contact whitelist')]
     },
     {
-      title: 'Encrypted Cloud Backups',
+      title: t('Encrypted Cloud Backups'),
       icon: <FiUploadCloud className="text-xl" />,
-      desc: 'Secure your Google Drive or iCloud chat archives with a custom password or 64-digit encryption key so cloud providers cannot access your chats.',
-      highlights: ['64-digit custom encryption key', 'Password-protected cloud archives', 'Zero-knowledge cloud restore']
+      desc: t('Secure your cloud chat archives with a custom password or 64-digit encryption key so cloud providers cannot access your chats.'),
+      highlights: [t('64-digit custom encryption key'), t('Password protected cloud archives'), t('Zero knowledge cloud restore')]
     }
   ]
 
   const metrics = [
-    { value: '99.9%', label: 'OTP Instant Delivery Rate' },
-    { value: '< 2 sec', label: 'Global OTP Speed' },
-    { value: '-60%', label: 'SMS Authentication Cost' },
-    { value: '256-bit', label: 'Signal Encryption' }
+    { value: '99.9%', label: t('OTP Instant Delivery Rate') },
+    { value: '< 2 sec', label: t('Global OTP Speed') },
+    { value: '-60%', label: t('SMS Authentication Cost') },
+    { value: '256-bit', label: t('KT Encryption') }
   ]
 
   const securityPillars = [
     {
-      title: '1-Tap Passcode Autofill',
-      desc: 'Users verify sign-ins automatically with a single tap on the "Copy Code" button in KT chat notifications.',
+      title: t('1-Tap Passcode Autofill'),
+      desc: t('Users verify sign ins automatically with a single tap on the "Copy Code" button in KT chat notifications.'),
       icon: <FiZap className="text-2xl" />
     },
     {
-      title: 'Zero SMS Interception Risk',
-      desc: 'Unlike traditional SMS which is vulnerable to SIM-swap attacks, KT Authentication messages travel over Signal E2E encrypted channels.',
+      title: t('Zero SMS Interception Risk'),
+      desc: t('Unlike traditional SMS which is vulnerable to SIM swap attacks, KT Authentication messages travel over KT E2E encrypted channels.'),
       icon: <FiShield className="text-2xl" />
     },
     {
-      title: 'Real-time Security Webhooks',
-      desc: 'Get instant callback webhooks when passcodes are delivered, read, or consumed by the user application.',
+      title: t('Real time Security Webhooks'),
+      desc: t('Get instant callback webhooks when passcodes are delivered, read, or consumed by the user application.'),
       icon: <FiKey className="text-2xl" />
     },
     {
-      title: 'SOC2 Type II & ISO 27001 Certified',
-      desc: 'Enterprise security infrastructure meeting global banking compliance standards.',
+      title: t('Enterprise Grade Compliance Certified'),
+      desc: t('Enterprise security infrastructure meeting global banking compliance standards.'),
       icon: <FiLock className="text-2xl" />
     }
   ]
 
   const comparisonTable = [
-    { feature: 'End-to-End Encryption', kt: 'Default (100%)', sms: 'None (Plain Text)', apps: 'Opt-in / Partial' },
-    { feature: 'OTP Passcode Autofill', kt: 'Native 1-Tap Copy', sms: 'Manual Typing Required', apps: 'Complex Integration' },
-    { feature: 'Zero SIM-Swap Vulnerability', kt: 'Protected (Signal Protocol)', sms: 'Vulnerable', apps: 'Vulnerable' },
-    { feature: 'Encrypted Cloud Backups', kt: 'Supported (64-bit key)', sms: 'Not Supported', apps: 'Unencrypted Cloud' },
-    { feature: 'Passkey & PIN Protection', kt: 'Included Free', sms: 'Carrier Lock Only', apps: 'Paid Feature' }
+    { feature: t('End to End Encryption'), kt: t('Default (100%)'), sms: t('None (Plain Text)'), apps: t('Opt in / Partial') },
+    { feature: t('OTP Passcode Autofill'), kt: t('Native 1-Tap Copy'), sms: t('Manual Typing Required'), apps: t('Complex Integration') },
+    { feature: t('Zero SIM Swap Vulnerability'), kt: t('Protected (KT Encryption Protocol)'), sms: t('Vulnerable'), apps: t('Vulnerable') },
+    { feature: t('Encrypted Cloud Backups'), kt: t('Supported (64-bit key)'), sms: t('Not Supported'), apps: t('Unencrypted Cloud') },
+    { feature: t('Passkey & PIN Protection'), kt: t('Included Free'), sms: t('Carrier Lock Only'), apps: t('Paid Feature') }
   ]
 
   const faqs = [
     {
-      q: 'What are KT Authentication Messages?',
-      a: 'KT Authentication Messages are secure, 1-tap One-Time Passcodes (OTPs) and account verification codes sent over KT Messenger Cloud API. They feature instant delivery, 1-tap copy buttons, and high conversion at 60% lower cost than SMS.'
+      q: t('What are KT Authentication Messages?'),
+      a: t('KT Authentication Messages are secure, 1-tap One Time Passcodes (OTPs) and account verification codes sent over KT Messenger Cloud API. They feature instant delivery, 1-tap copy buttons, and high conversion at 60% lower cost than SMS.')
     },
     {
-      q: 'How do 1-Tap Autofill Passcodes work?',
-      a: 'When an authentication OTP arrives in a user chat, a prominent "Copy Code" button allows the user to copy the passcode or automatically fill it into your app without leaving their screen.'
+      q: t('How do 1-Tap Autofill Passcodes work?'),
+      a: t('When an authentication OTP arrives in a user chat, a prominent "Copy Code" button allows the user to copy the passcode or automatically fill it into your app without leaving their screen.')
     },
     {
-      q: 'Is end-to-end encryption active on Authentication Messages?',
-      a: 'Yes. All authentication passcodes and security alerts are protected by default 256-bit Signal Protocol encryption.'
+      q: t('Is end to end encryption active on Authentication Messages?'),
+      a: t('Yes. All authentication passcodes and security alerts are protected by the default 256-bit KT Encryption Protocol.')
     },
     {
-      q: 'How does KT compare to SMS OTP delivery costs?',
-      a: 'KT Authentication messages eliminate international SMS roaming surcharges, saving enterprises up to 60% while increasing delivery speed to under 2 seconds worldwide.'
+      q: t('How does KT compare to SMS OTP delivery costs?'),
+      a: t('KT Authentication messages eliminate international SMS roaming surcharges, saving enterprises up to 60% while increasing delivery speed to under 2 seconds worldwide.')
     }
   ]
 
@@ -148,21 +150,21 @@ export function SecurityPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink border border-brand-strong/20 mb-4">
-                <FiShield className="text-brand-strong" /> Security &amp; Authentication API
+                <FiShield className="text-brand-strong" /> {t('Security & Authentication API')}
               </div>
               <h1 className="text-4xl font-extrabold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-                Secure Authentication &amp; E2E Encryption
+                {t('Secure Authentication & E2E Encryption')}
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-body max-w-xl">
-                Deliver 1-tap OTP verification passcodes, account login alerts, and Signal 256-bit encrypted security messages at scale.
+                {t('Deliver 1-tap OTP verification passcodes, account login alerts, and KT 256-bit encrypted security messages at scale.')}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
-                  Get Started Free <FiChevronRight />
+                  {t('Get Started Free')} <FiChevronRight />
                 </Button>
                 <Button variant="secondary" size="lg" onClick={() => navigate('/help')}>
-                  View API Docs
+                  {t('View API Docs')}
                 </Button>
               </div>
             </Reveal>
@@ -182,13 +184,13 @@ export function SecurityPage() {
         <Container>
           <Reveal from="up" className="text-center max-w-3xl mx-auto mb-12">
             <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-              Interactive Live Demo
+              {t('Interactive Live Demo')}
             </span>
             <h2 className="mt-3 text-3xl font-extrabold text-ink sm:text-4xl">
-              Experience 1-Tap KT Authentication Passcodes
+              {t('Experience 1-Tap KT Authentication Passcodes')}
             </h2>
             <p className="mt-2 text-base text-body">
-              Click the button below to trigger a live 2FA OTP verification passcode simulation.
+              {t('Click the button below to trigger a live 2FA OTP verification passcode simulation.')}
             </p>
           </Reveal>
 
@@ -197,30 +199,30 @@ export function SecurityPage() {
               <div className="flex items-center gap-3">
                 <div className="grid h-10 w-10 place-items-center rounded-2xl bg-brand-strong text-white font-black">KT</div>
                 <div>
-                  <h4 className="font-extrabold text-ink text-base">Orion Bank Security</h4>
-                  <p className="text-xs text-brand-ink font-semibold">Official Verified Business Account ✓</p>
+                  <h4 className="font-extrabold text-ink text-base">KT Verified Business Security</h4>
+                  <p className="text-xs text-brand-ink font-semibold">{t('Official Verified Business Account')} ✓</p>
                 </div>
               </div>
               <button onClick={generateNewOtp} className="rounded-xl bg-brand-soft px-3.5 py-1.5 text-xs font-bold text-brand-ink hover:bg-brand-strong hover:text-white transition-all">
-                Generate New OTP
+                {t('Generate New OTP')}
               </button>
             </div>
 
             <div className="space-y-4">
               <div className="rounded-2xl bg-surface p-4 border border-line shadow-sm space-y-2">
                 <div className="flex items-center justify-between text-xs text-muted font-semibold">
-                  <span>Authentication Code</span>
-                  <span>Expires in 10:00</span>
+                  <span>{t('Authentication Code')}</span>
+                  <span>{t('Expires in')} 10:00</span>
                 </div>
                 <div className="text-2xl font-black text-brand-strong tracking-widest">{otpCode}</div>
-                <p className="text-xs text-body">Use this code to verify your sign-in request for Orion Bank Enterprise.</p>
+                <p className="text-xs text-body">{t('Use this code to verify your sign in request for KT Verified Business Enterprise.')}</p>
                 <div className="pt-2">
                   <button
                     onClick={copyOtp}
                     className="w-full rounded-xl bg-brand-strong hover:bg-brand-strong-hover text-white py-2.5 font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
                   >
                     <FiCopy />
-                    <span>{copied ? 'Passcode Copied to Clipboard! ✓' : 'Copy Code (1-Tap Autofill)'}</span>
+                    <span>{copied ? t('Passcode Copied to Clipboard! ✓') : t('Copy Code (1-Tap Autofill)')}</span>
                   </button>
                 </div>
               </div>
@@ -249,7 +251,7 @@ export function SecurityPage() {
       <section className="py-20 bg-surface">
         <Container>
           <Reveal from="up" className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl font-extrabold text-ink sm:text-4xl">Comprehensive Security Architecture</h2>
+            <h2 className="text-3xl font-extrabold text-ink sm:text-4xl">{t('Comprehensive Security Architecture')}</h2>
           </Reveal>
 
           <div className="grid gap-8 lg:grid-cols-3">
@@ -290,7 +292,7 @@ export function SecurityPage() {
       <section className="py-20 bg-cream dark:bg-surface border-t border-line">
         <Container>
           <Reveal from="up" className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl font-extrabold text-ink sm:text-4xl">Enterprise Security Pillars</h2>
+            <h2 className="text-3xl font-extrabold text-ink sm:text-4xl">{t('Enterprise Security Pillars')}</h2>
           </Reveal>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -311,16 +313,16 @@ export function SecurityPage() {
       <section className="py-20 bg-surface border-t border-line">
         <Container maxW="max-w-4xl">
           <Reveal from="up" className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-ink">How KT Security Compares</h2>
+            <h2 className="text-3xl font-extrabold text-ink">{t('How KT Security Compares')}</h2>
           </Reveal>
 
           <div className="overflow-x-auto rounded-3xl border border-line bg-cream shadow-card dark:bg-surface">
             <table className="w-full text-left text-sm">
               <thead className="border-b border-line bg-surface">
                 <tr>
-                  <th className="p-4 font-bold text-ink">Security Feature</th>
+                  <th className="p-4 font-bold text-ink">{t('Security Feature')}</th>
                   <th className="p-4 font-bold text-brand-strong">KT Messenger</th>
-                  <th className="p-4 font-bold text-muted">Traditional SMS</th>
+                  <th className="p-4 font-bold text-muted">{t('Traditional SMS')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
@@ -341,7 +343,7 @@ export function SecurityPage() {
       <section className="py-20 bg-cream dark:bg-surface border-t border-line">
         <Container maxW="max-w-3xl">
           <Reveal from="up" className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-ink">Frequently Asked Security Questions</h2>
+            <h2 className="text-3xl font-extrabold text-ink">{t('Frequently Asked Security Questions')}</h2>
           </Reveal>
 
           <div className="space-y-4">

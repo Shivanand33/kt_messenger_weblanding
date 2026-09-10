@@ -3,8 +3,10 @@ import { motion } from 'framer-motion'
 import { FiCheckCircle, FiLock } from 'react-icons/fi'
 import { PhoneVideoFrame } from './PhoneVideoFrame'
 import techImg from '../../../assets/images/hd_landscape.png'
+import { useLanguage } from '../../../context/LanguageContext'
 
 export function ChannelsLoopVideo({ className = '' }) {
+  const { t } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(true)
   const [subscribers, setSubscribers] = useState(148500)
   const [reactions, setReactions] = useState({ '❤️': 1420, '🔥': 980, '👏': 650 })
@@ -41,7 +43,7 @@ export function ChannelsLoopVideo({ className = '' }) {
 
   return (
     <PhoneVideoFrame
-      title="Broadcast Channels &amp; Privacy"
+      title={t('Broadcast Channels & Privacy')}
       progress={progress}
       isPlaying={isPlaying}
       onTogglePlay={() => setIsPlaying(!isPlaying)}
@@ -51,26 +53,26 @@ export function ChannelsLoopVideo({ className = '' }) {
       {/* Mobile Channel Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-2">
         <div className="flex items-center gap-2">
-          <img src={techImg} alt="Channel" className="h-7 w-7 rounded-full object-cover border border-brand-strong" />
+          <img src={techImg} alt={t('Channel')} className="h-7 w-7 rounded-full object-cover border border-brand-strong" />
           <div>
             <p className="flex items-center gap-1 font-bold text-xs text-white">
               KT Tech Pulse <FiCheckCircle className="text-brand-strong text-xs" />
             </p>
-            <p className="text-[9px] text-brand-ink font-semibold">{subscribers.toLocaleString()} subscribers</p>
+            <p className="text-[9px] text-brand-ink font-semibold">{subscribers.toLocaleString()} {t('subscribers')}</p>
           </div>
         </div>
         <span className="rounded-full bg-brand-strong px-2.5 py-0.5 text-[8px] font-bold text-white shadow-brand">
-          Following ✓
+          {t('Following ✓')}
         </span>
       </div>
 
       {/* Broadcast Post */}
       <div className="my-auto rounded-xl bg-slate-950 p-2.5 border border-slate-800 space-y-2 text-xs">
         <p className="text-[11px] text-slate-200 leading-relaxed">
-          🚀 <strong>Broadcast Update:</strong> Next-gen features are live! Enjoy HD video notes, theme engine, and AI search.
+          🚀 <strong>{t('Broadcast Update:')}</strong> {t('Next gen features are live! Enjoy HD video notes, theme engine, and AI search.')}
         </p>
         <div className="flex items-center justify-between text-[8px] text-slate-400 border-t border-slate-800 pt-1.5">
-          <span className="flex items-center gap-1"><FiLock className="text-brand-strong" /> Privacy Shield Active</span>
+          <span className="flex items-center gap-1"><FiLock className="text-brand-strong" /> {t('Privacy Shield Active')}</span>
           <span>12:30 PM</span>
         </div>
         <div className="flex items-center gap-1.5 pt-0.5">
@@ -90,7 +92,7 @@ export function ChannelsLoopVideo({ className = '' }) {
 
       {/* Screen Footer */}
       <div className="rounded-xl bg-slate-950 p-1.5 text-center text-[9px] font-bold text-brand-ink border border-slate-800">
-        Subscribers react privately without sharing phone numbers
+        {t('Subscribers react privately without sharing phone numbers')}
       </div>
     </PhoneVideoFrame>
   )

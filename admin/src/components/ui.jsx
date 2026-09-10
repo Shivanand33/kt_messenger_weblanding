@@ -18,9 +18,9 @@ export function StatCard({
   iconName = 'dashboard',
   value,
   label,
-  trend = '+12%',
+  trend = null,
   isPositive = true,
-  sparklineData = [10, 15, 12, 18, 22, 19, 26],
+  sparklineData = [],
 }) {
   return (
     <div className="stat-card-v2">

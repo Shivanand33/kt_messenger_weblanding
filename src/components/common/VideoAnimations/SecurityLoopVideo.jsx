@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiShield, FiLock, FiKey, FiEyeOff, FiPhoneOff, FiCheckCircle } from 'react-icons/fi'
 import { PhoneVideoFrame } from './PhoneVideoFrame'
+import { useLanguage } from '../../../context/LanguageContext'
 
 export function SecurityLoopVideo({ className = '' }) {
+  const { t } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(true)
   const [phase, setPhase] = useState(0) // 0: Key, 1: Chat Lock, 2: Caller Filter
   const [progress, setProgress] = useState(0)
@@ -35,7 +37,7 @@ export function SecurityLoopVideo({ className = '' }) {
 
   return (
     <PhoneVideoFrame
-      title="Signal E2EE &amp; Security Shield"
+      title={t('KT E2EE & Security Shield')}
       progress={progress}
       isPlaying={isPlaying}
       onTogglePlay={() => setIsPlaying(!isPlaying)}
@@ -45,9 +47,9 @@ export function SecurityLoopVideo({ className = '' }) {
       {/* Mobile Security Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-2">
         <span className="text-xs font-bold text-brand-ink flex items-center gap-1">
-          <FiShield className="text-brand-strong" /> Security Firewall
+          <FiShield className="text-brand-strong" /> {t('Security Firewall')}
         </span>
-        <span className="text-[9px] text-emerald-400 font-semibold">100% Protected</span>
+        <span className="text-[9px] text-emerald-400 font-semibold">{t('100% Protected')}</span>
       </div>
 
       {/* Stream Content */}
@@ -57,9 +59,9 @@ export function SecurityLoopVideo({ className = '' }) {
             <motion.div animate={{ scale: [0.95, 1.1, 0.95] }} transition={{ repeat: Infinity, duration: 1.5 }} className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-strong text-white text-xl shadow-brand">
               <FiLock />
             </motion.div>
-            <h4 className="font-bold text-xs text-white">Signal 256-bit Key Handshake</h4>
+            <h4 className="font-bold text-xs text-white">{t('KT 256-bit Key Handshake')}</h4>
             <p className="font-mono text-[9px] text-brand-ink bg-slate-950 p-2 rounded-lg border border-slate-800">
-              Keys generated on-device • Zero cloud tracking
+              {t('Keys generated on device • Zero cloud tracking')}
             </p>
           </motion.div>
         )}
@@ -69,19 +71,19 @@ export function SecurityLoopVideo({ className = '' }) {
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-soft text-brand-strong text-xl border border-brand-strong/30">
               <FiEyeOff />
             </div>
-            <h4 className="font-bold text-xs text-white">Biometric Chat Lock &amp; Passcode</h4>
-            <p className="text-[10px] text-slate-300">FaceID / Fingerprint verified for secret chats.</p>
+            <h4 className="font-bold text-xs text-white">{t('Biometric Chat Lock & Passcode')}</h4>
+            <p className="text-[10px] text-slate-300">{t('FaceID / Fingerprint verified for secret chats.')}</p>
           </motion.div>
         )}
 
         {phase === 2 && (
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-1.5 text-xs my-auto">
             <div className="flex items-center justify-between rounded-xl bg-slate-950 p-2 border border-slate-800 text-[10px]">
-              <span className="flex items-center gap-1.5"><FiPhoneOff className="text-brand-strong" /> Silence Unknown Callers</span>
+              <span className="flex items-center gap-1.5"><FiPhoneOff className="text-brand-strong" /> {t('Silence Unknown Callers')}</span>
               <FiCheckCircle className="text-brand-strong text-sm" />
             </div>
             <div className="flex items-center justify-between rounded-xl bg-slate-950 p-2 border border-slate-800 text-[10px]">
-              <span className="flex items-center gap-1.5"><FiKey className="text-brand-strong" /> 2-Step Verification PIN</span>
+              <span className="flex items-center gap-1.5"><FiKey className="text-brand-strong" /> {t('2-Step Verification PIN')}</span>
               <FiCheckCircle className="text-brand-strong text-sm" />
             </div>
           </motion.div>
@@ -90,7 +92,7 @@ export function SecurityLoopVideo({ className = '' }) {
 
       {/* Screen Footer */}
       <div className="rounded-xl bg-slate-950 p-1.5 text-center text-[9px] font-bold text-brand-ink border border-slate-800">
-        Chats, voice calls &amp; backups encrypted by default
+        {t('Chats, voice calls & backups encrypted by default')}
       </div>
     </PhoneVideoFrame>
   )

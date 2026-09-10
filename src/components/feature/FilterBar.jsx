@@ -1,5 +1,6 @@
 import { FiSearch, FiX } from 'react-icons/fi'
 import { Container } from '../common/Container/Container'
+import { useLanguage } from '../../context/LanguageContext'
 
 /**
  * Sticky toolbar that sits under the page nav: category chips with live
@@ -18,6 +19,8 @@ export function FilterBar({
   right,
   className = '',
 }) {
+  const { t } = useLanguage()
+
   return (
     <div
       className={`sticky top-[108px] z-30 border-b border-line bg-surface/95 backdrop-blur-xl lg:top-[116px] ${className}`}
@@ -40,7 +43,7 @@ export function FilterBar({
                         : 'border-line bg-cream text-ink hover:border-brand/40 hover:bg-surface-2 dark:bg-cream-2'
                     }`}
                   >
-                    {chip.label}
+                    {t(chip.label)}
                     <span className={`ml-1.5 ${isActive ? 'text-white/75' : 'text-muted'}`}>{chip.count}</span>
                   </button>
                 )
@@ -63,7 +66,7 @@ export function FilterBar({
                   <button
                     type="button"
                     onClick={() => onQuery('')}
-                    aria-label="Clear search"
+                    aria-label={t('Clear search')}
                     className="shrink-0 text-muted transition-colors hover:text-ink"
                   >
                     <FiX />

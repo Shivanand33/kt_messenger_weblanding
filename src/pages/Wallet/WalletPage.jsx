@@ -46,6 +46,7 @@ import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
 import { useModal } from '../../context/ModalContext'
+import { useLanguage } from '../../context/LanguageContext'
 import {
   billCategories,
   cards,
@@ -80,10 +81,10 @@ const NAV_ITEMS = [
 ]
 
 const STATS = [
-  { value: 0, label: 'Fee on P2P transfers', prefix: '₹', icon: <FiSend />, hint: 'UPI and bank transfers are free, always.' },
-  { value: 8, label: 'Payment methods', icon: <FiCreditCard />, hint: 'UPI, cards, net banking, wallets and crypto.' },
+  { value: 0, label: 'Fee on P2P transfers', prefix: '₹', icon: <FiSend />, hint: 'KT transfers and bank transfers are free, always.' },
+  { value: 8, label: 'Payment methods', icon: <FiCreditCard />, hint: 'KT transfer, cards, net banking, wallets and crypto.' },
   { value: 12, label: 'Bill categories', icon: <FiFileText />, hint: 'Autopay with a confirmation before every debit.' },
-  { value: 3, suffix: 's', label: 'Typical settlement', icon: <FiZap />, hint: 'Peer-to-peer UPI clears in about three seconds.' },
+  { value: 3, suffix: 's', label: 'Typical settlement', icon: <FiZap />, hint: 'Peer to peer transfers clear in about three seconds.' },
 ]
 
 const FEATURE_ICONS = [
@@ -110,7 +111,7 @@ const SECURITY_ICONS = [
 ]
 
 const RELATED = [
-  { to: '/markets', label: 'Markets', desc: 'Track prices and convert currencies at mid-market.', icon: <FiTrendingUp /> },
+  { to: '/markets', label: 'Markets', desc: 'Track prices and convert currencies at mid market.', icon: <FiTrendingUp /> },
   { to: '/marketplace', label: 'Marketplace', desc: 'Buy from verified stores and pay in one tap.', icon: <FiGrid /> },
   { to: '/news', label: 'News', desc: 'Business headlines and a daily audio brief.', icon: <FiActivity /> },
   { to: '/notes', label: 'Notes', desc: 'Keep receipts and budgets in an encrypted vault.', icon: <FiFileText /> },
@@ -123,6 +124,7 @@ const rupees = (value, decimals = 2) =>
 
 export function WalletPage() {
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
 
   const [balance, setBalance] = useState(148500)
   const [transactions, setTransactions] = useState(initialTransactions)
@@ -163,12 +165,12 @@ export function WalletPage() {
     const value = parseFloat(amount)
 
     if (!Number.isFinite(value) || value <= 0) {
-      setToast('Enter an amount greater than zero.')
+      setToast(t('Enter an amount greater than zero.'))
       return
     }
 
     if (mode === 'send' && value > balance) {
-      setToast(`Not enough balance — you have ${rupees(balance)} available.`)
+      setToast(`Not enough balance you have ${rupees(balance)} available.`)
       return
     }
 
@@ -180,7 +182,7 @@ export function WalletPage() {
       direction: mode === 'send' ? 'out' : 'in',
       amount: value,
       date: 'Just now',
-      method: 'UPI',
+      method: 'KT Instant Transfer',
       status: mode === 'send' ? 'Completed' : 'Pending',
     }
 
@@ -227,7 +229,7 @@ export function WalletPage() {
   const toggleFreeze = (id) => {
     const isFrozen = frozen.includes(id)
     setFrozen(isFrozen ? frozen.filter((item) => item !== id) : [...frozen, id])
-    setToast(isFrozen ? 'Card unfrozen — payments will go through again.' : 'Card frozen. New payments are declined instantly.')
+    setToast(isFrozen ? t('Card unfrozen payments will go through again.') : t('Card frozen. New payments are declined instantly.'))
   }
 
   const toggleReveal = (id) => setRevealed((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]))
@@ -235,7 +237,7 @@ export function WalletPage() {
   // -------------------------------------------------------------------- Goals
   const addToGoal = (id, value) => {
     if (value > balance) {
-      setToast(`Not enough balance — you have ${rupees(balance)} available.`)
+      setToast(`Not enough balance you have ${rupees(balance)} available.`)
       return
     }
     let goalName = ''
@@ -269,26 +271,26 @@ export function WalletPage() {
       <PageHero
         badge={
           <>
-            <FiShield /> Bank-grade security · zero-fee transfers
+            <FiShield /> {t('Bank grade security · zero fee transfers')}
           </>
         }
         title="KT"
-        highlight="Wallet & Pay"
-        description="Send money, split a bill, pay a merchant and hold crypto — all from inside the conversation you are already having."
+        highlight={t('Wallet & Pay')}
+        description={t('Send money, split a bill, pay a merchant and hold crypto all from inside the conversation you are already having.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={() => document.getElementById('send')?.scrollIntoView({ behavior: 'smooth' })}>
-              Try a live transfer <FiSend />
+              {t('Try a live transfer')} <FiSend />
             </Button>
             <Button size="lg" variant="onDark" onClick={openDownloadModal}>
-              Get the app <FiZap />
+              {t('Get the app')} <FiZap />
             </Button>
           </>
         }
         chips={[
-          { icon: <FiLock />, label: 'Passkey on every payment' },
-          { icon: <FiZap />, label: '~3 second settlement' },
-          { icon: <FiShield />, label: 'PCI-DSS Level 1 partners' },
+          { icon: <FiLock />, label: t('Passkey on every payment') },
+          { icon: <FiZap />, label: t('~3 second settlement') },
+          { icon: <FiShield />, label: t('PCI DSS Level 1 partners') },
         ]}
         aside={
           <div className="space-y-4">
@@ -298,13 +300,13 @@ export function WalletPage() {
               <div className="relative flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <span className="grid h-9 w-9 place-items-center rounded-2xl bg-white text-sm font-black text-brand-strong">KT</span>
-                  <span className="text-sm font-extrabold">KT Pay Virtual Card</span>
+                  <span className="text-sm font-extrabold">{t('KT Pay Virtual Card')}</span>
                 </div>
                 <FiGrid className="text-2xl opacity-70" />
               </div>
 
               <div className="relative mt-7">
-                <span className="text-xs font-semibold text-blue-200">Available balance</span>
+                <span className="text-xs font-semibold text-blue-200">{t('Available balance')}</span>
                 <div className="mt-1 text-3xl font-black tracking-tight sm:text-4xl">{rupees(balance)}</div>
               </div>
 
@@ -316,9 +318,9 @@ export function WalletPage() {
 
             <div className="grid grid-cols-3 gap-3">
               {[
-                { label: 'In this month', value: rupees(monthIn, 0), tone: 'text-emerald-400' },
-                { label: 'Out this month', value: rupees(monthOut, 0), tone: 'text-rose-400' },
-                { label: 'Crypto vault', value: rupees(cryptoTotal, 0), tone: 'text-sky-400' },
+                { label: t('In this month'), value: rupees(monthIn, 0), tone: 'text-emerald-400' },
+                { label: t('Out this month'), value: rupees(monthOut, 0), tone: 'text-rose-400' },
+                { label: t('Crypto vault'), value: rupees(cryptoTotal, 0), tone: 'text-sky-400' },
               ].map((item) => (
                 <div key={item.label} className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-center backdrop-blur">
                   <div className={`truncate text-sm font-black ${item.tone}`}>{item.value}</div>
@@ -339,9 +341,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="send" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Send & request"
-          title="Move money without leaving the chat"
-          description="Pick a contact, enter an amount, approve with a passkey. This demo updates the balance and activity below in real time."
+          eyebrow={t('Send & request')}
+          title={t('Move money without leaving the chat')}
+          description={t('Pick a contact, enter an amount, approve with a passkey. This demo updates the balance and activity below in real time.')}
         />
 
         {/* [&>*]:min-w-0 lets the grid tracks shrink below the contact rail's
@@ -352,8 +354,8 @@ export function WalletPage() {
             <form onSubmit={handleSubmit} className="rounded-[28px] border border-line bg-cream p-6 shadow-card sm:p-8 dark:bg-cream-2">
               <div className="grid grid-cols-2 gap-2 rounded-2xl border border-line bg-surface p-1">
                 {[
-                  { key: 'send', label: 'Send money', icon: <FiArrowUpRight /> },
-                  { key: 'request', label: 'Request money', icon: <FiArrowDownLeft /> },
+                  { key: 'send', label: t('Send money'), icon: <FiArrowUpRight /> },
+                  { key: 'request', label: t('Request money'), icon: <FiArrowDownLeft /> },
                 ].map((tab) => (
                   <button
                     key={tab.key}
@@ -370,7 +372,7 @@ export function WalletPage() {
               </div>
 
               <div className="mt-6">
-                <span className="mb-2.5 block text-[11px] font-black uppercase tracking-wide text-muted">Choose a contact</span>
+                <span className="mb-2.5 block text-[11px] font-black uppercase tracking-wide text-muted">{t('Choose a contact')}</span>
                 <div className="no-scrollbar -mx-1 flex gap-2.5 overflow-x-auto px-1 pb-1">
                   {contacts.map((contact) => {
                     const active = contact.name === recipient
@@ -402,13 +404,13 @@ export function WalletPage() {
                   })}
                 </div>
                 <p className="mt-2 text-[11px] font-semibold text-muted">
-                  Paying <span className="font-black text-ink">{selectedContact.name}</span> · {selectedContact.upi}
+                  {t('Paying')} <span className="font-black text-ink">{selectedContact.name}</span> · {selectedContact.payId}
                 </p>
               </div>
 
               <div className="mt-6">
                 <label htmlFor="pay-amount" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                  Amount
+                  {t('Amount')}
                 </label>
                 <div className="flex items-center gap-2 rounded-2xl border border-line bg-surface px-4 focus-within:border-brand/60">
                   <span className="text-2xl font-black text-muted">₹</span>
@@ -440,7 +442,7 @@ export function WalletPage() {
 
               <div className="mt-5">
                 <label htmlFor="pay-note" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                  Note (end-to-end encrypted)
+                  {t('Note (end to end encrypted)')}
                 </label>
                 <input
                   id="pay-note"
@@ -448,20 +450,19 @@ export function WalletPage() {
                   value={note}
                   onChange={(event) => setNote(event.target.value)}
                   maxLength={60}
-                  placeholder="Dinner, rent share, tickets…"
+                  placeholder={t('Dinner, rent share, tickets…')}
                   className="h-12 w-full rounded-2xl border border-line bg-surface px-4 text-sm font-semibold text-ink outline-none focus:border-brand/60 placeholder:font-medium placeholder:text-muted"
                 />
               </div>
 
               <Button type="submit" size="lg" className="mt-6 w-full justify-center">
-                {mode === 'send' ? 'Send money now' : 'Send the request'}
+                {mode === 'send' ? t('Send money now') : t('Send the request')}
                 {mode === 'send' ? <FiSend /> : <FiArrowDownLeft />}
               </Button>
 
               <p className="mt-4 flex items-start gap-2 text-[11px] leading-relaxed text-muted">
                 <FiLock className="mt-0.5 shrink-0" />
-                In the app a passkey confirms this step. Peer-to-peer transfers carry no fee, and the note travels
-                end-to-end encrypted.
+                {t('In the app a passkey confirms this step. Peer to peer transfers carry no fee, and the note travels end to end encrypted.')}
               </p>
             </form>
           </Reveal>
@@ -469,22 +470,22 @@ export function WalletPage() {
           <Reveal from="up" delay={0.08}>
             <div className="flex h-full flex-col gap-4">
               <div className="rounded-[28px] border border-line bg-cream p-6 shadow-soft dark:bg-cream-2">
-                <span className="text-[11px] font-black uppercase tracking-wide text-muted">Available balance</span>
+                <span className="text-[11px] font-black uppercase tracking-wide text-muted">{t('Available balance')}</span>
                 <div className="mt-1 text-3xl font-black tracking-tight text-ink">{rupees(balance)}</div>
                 <div className="mt-4 grid grid-cols-2 gap-3">
                   <div className="rounded-2xl border border-line bg-surface p-3">
-                    <div className="text-[10px] font-black uppercase tracking-wide text-muted">Received</div>
+                    <div className="text-[10px] font-black uppercase tracking-wide text-muted">{t('Received')}</div>
                     <div className="mt-0.5 text-sm font-black text-emerald-600 dark:text-emerald-400">{rupees(monthIn, 0)}</div>
                   </div>
                   <div className="rounded-2xl border border-line bg-surface p-3">
-                    <div className="text-[10px] font-black uppercase tracking-wide text-muted">Spent</div>
+                    <div className="text-[10px] font-black uppercase tracking-wide text-muted">{t('Spent')}</div>
                     <div className="mt-0.5 text-sm font-black text-rose-600 dark:text-rose-400">{rupees(monthOut, 0)}</div>
                   </div>
                 </div>
               </div>
 
               <div className="flex-1 rounded-[28px] border border-line bg-cream p-6 shadow-soft dark:bg-cream-2">
-                <h3 className="text-sm font-extrabold text-ink">Latest activity</h3>
+                <h3 className="text-sm font-extrabold text-ink">{t('Latest activity')}</h3>
                 <ul className="mt-3 divide-y divide-line">
                   {transactions.slice(0, 5).map((item) => (
                     <li key={item.id} className="flex items-center gap-3 py-3">
@@ -517,7 +518,7 @@ export function WalletPage() {
                   onClick={() => document.getElementById('activity')?.scrollIntoView({ behavior: 'smooth' })}
                   className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-brand-ink hover:text-brand-strong"
                 >
-                  See all {transactions.length} entries <FiChevronRight />
+                  {t('See all')} {transactions.length} {t('entries')} <FiChevronRight />
                 </button>
               </div>
             </div>
@@ -530,9 +531,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="split" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Split a bill"
-          title="Everyone pays their share without the maths"
-          description="Add the total, the headcount and a tip. One tap sends the request to every person in the group."
+          eyebrow={t('Split a bill')}
+          title={t('Everyone pays their share without the maths')}
+          description={t('Add the total, the headcount and a tip. One tap sends the request to every person in the group.')}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.9fr]">
@@ -541,7 +542,7 @@ export function WalletPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="bill-total" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                    Total bill (₹)
+                    {t('Total bill (₹)')}
                   </label>
                   <input
                     id="bill-total"
@@ -556,7 +557,7 @@ export function WalletPage() {
 
                 <div>
                   <label htmlFor="bill-people" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                    Number of people
+                    {t('Number of people')}
                   </label>
                   <input
                     id="bill-people"
@@ -571,7 +572,7 @@ export function WalletPage() {
               </div>
 
               <div className="mt-5">
-                <span className="mb-2 block text-[11px] font-black uppercase tracking-wide text-muted">Tip</span>
+                <span className="mb-2 block text-[11px] font-black uppercase tracking-wide text-muted">{t('Tip')}</span>
                 <div className="flex flex-wrap gap-2">
                   {[0, 5, 10, 15, 20].map((value) => (
                     <button
@@ -593,15 +594,15 @@ export function WalletPage() {
 
               {!split.valid ? (
                 <p className="mt-5 flex items-center gap-2 text-xs font-bold text-rose-600 dark:text-rose-400">
-                  <FiAlertCircle /> Enter a positive bill amount and at least one person.
+                  <FiAlertCircle /> {t('Enter a positive bill amount and at least one person.')}
                 </p>
               ) : (
                 <>
                   <dl className="mt-6 grid grid-cols-3 gap-3">
                     {[
-                      { label: 'Bill', value: rupees(parseFloat(billTotal), 0) },
-                      { label: `Tip ${tip}%`, value: rupees(split.tipValue, 0) },
-                      { label: 'Total', value: rupees(split.withTip, 0) },
+                      { label: t('Bill'), value: rupees(parseFloat(billTotal), 0) },
+                      { label: `${t('Tip')} ${tip}%`, value: rupees(split.tipValue, 0) },
+                      { label: t('Total'), value: rupees(split.withTip, 0) },
                     ].map((item) => (
                       <div key={item.label} className="rounded-2xl border border-line bg-cream p-4 text-center dark:bg-cream-2">
                         <dt className="text-[10px] font-black uppercase tracking-wide text-muted">{item.label}</dt>
@@ -611,10 +612,10 @@ export function WalletPage() {
                   </dl>
 
                   <div className="mt-4 rounded-2xl border border-brand/25 bg-brand-soft p-6 text-center">
-                    <span className="block text-[11px] font-black uppercase tracking-wide text-brand-ink">Each person pays</span>
+                    <span className="block text-[11px] font-black uppercase tracking-wide text-brand-ink">{t('Each person pays')}</span>
                     <span className="mt-2 block text-4xl font-black tracking-tight text-brand-ink">{rupees(split.each)}</span>
                     <span className="mt-1.5 block text-xs font-bold text-brand-ink/80">
-                      across {split.heads} {split.heads === 1 ? 'person' : 'people'}
+                      {t('across')} {split.heads} {split.heads === 1 ? t('person') : t('people')}
                     </span>
                   </div>
 
@@ -622,7 +623,7 @@ export function WalletPage() {
                     className="mt-5 w-full justify-center"
                     onClick={() => setToast(`Request for ${rupees(split.each)} sent to ${split.heads - 1 > 0 ? split.heads - 1 : split.heads} friends.`)}
                   >
-                    Send requests to the group <FiUsers />
+                    {t('Send requests to the group')} <FiUsers />
                   </Button>
                 </>
               )}
@@ -631,9 +632,9 @@ export function WalletPage() {
 
           <Reveal from="up" delay={0.08}>
             <div className="h-full rounded-[28px] border border-line bg-surface p-6 shadow-soft sm:p-8">
-              <h3 className="text-base font-extrabold text-ink">Who owes what</h3>
+              <h3 className="text-base font-extrabold text-ink">{t('Who owes what')}</h3>
               <p className="mt-1.5 text-xs leading-relaxed text-body">
-                A preview of the request card each person receives in their chat.
+                {t('A preview of the request card each person receives in their chat.')}
               </p>
 
               <ul className="mt-6 space-y-3">
@@ -647,7 +648,7 @@ export function WalletPage() {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-extrabold text-ink">{contact.name}</span>
-                      <span className="block truncate text-[11px] font-semibold text-muted">{contact.upi}</span>
+                      <span className="block truncate text-[11px] font-semibold text-muted">{contact.payId}</span>
                     </span>
                     <span className="shrink-0 text-right">
                       <span className="block text-sm font-black text-ink">{split.valid ? rupees(split.each) : '—'}</span>
@@ -656,7 +657,7 @@ export function WalletPage() {
                           index === 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'
                         }`}
                       >
-                        {index === 0 ? 'Paid' : 'Pending'}
+                        {index === 0 ? t('Paid') : t('Pending')}
                       </span>
                     </span>
                   </li>
@@ -665,7 +666,7 @@ export function WalletPage() {
 
               <p className="mt-6 flex items-start gap-2 border-t border-line pt-5 text-[11px] leading-relaxed text-muted">
                 <FiClock className="mt-0.5 shrink-0" />
-                One polite reminder goes out automatically after 48 hours. Nobody gets nagged more than that.
+                {t('One polite reminder goes out automatically after 48 hours. Nobody gets nagged more than that.')}
               </p>
             </div>
           </Reveal>
@@ -677,9 +678,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="activity" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Activity"
-          title={`${transactions.length} transactions on record`}
-          description="Filter by type, search a merchant or note, and export any range for accounting."
+          eyebrow={t('Activity')}
+          title={`${transactions.length} ${t('transactions on record')}`}
+          description={t('Filter by type, search a merchant or note, and export any range for accounting.')}
         />
 
         <Reveal from="up" className="mt-12 overflow-hidden rounded-[28px] border border-line bg-cream shadow-card dark:bg-cream-2">
@@ -713,16 +714,16 @@ export function WalletPage() {
                 type="text"
                 value={activityQuery}
                 onChange={(event) => setActivityQuery(event.target.value)}
-                placeholder="Search name or note…"
-                aria-label="Search transactions"
+                placeholder={t('Search name or note…')}
+                aria-label={t('Search transactions')}
                 className="h-10 w-full rounded-xl border border-line bg-surface px-3 text-xs font-semibold text-ink outline-none focus:border-brand/60 lg:w-52 placeholder:font-medium placeholder:text-muted"
               />
               <button
                 type="button"
-                onClick={() => setToast('Statement export queued — you will get the CSV in chat.')}
+                onClick={() => setToast(t('Statement export queued you will get the CSV in chat.'))}
                 className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-xl border border-line bg-surface px-3 text-xs font-bold text-body transition-colors hover:text-ink"
               >
-                <FiDownload /> Export
+                <FiDownload /> {t('Export')}
               </button>
             </div>
           </div>
@@ -731,8 +732,8 @@ export function WalletPage() {
             <div className="p-6">
               <EmptyState
                 icon={<FiActivity />}
-                title="No transactions match"
-                description="Try a different category, or clear the search box to see everything."
+                title={t('No transactions match')}
+                description={t('Try a different category, or clear the search box to see everything.')}
                 action={
                   <Button
                     variant="secondary"
@@ -741,7 +742,7 @@ export function WalletPage() {
                       setActivityQuery('')
                     }}
                   >
-                    Reset filters
+                    {t('Reset filters')}
                   </Button>
                 }
               />
@@ -768,7 +769,7 @@ export function WalletPage() {
                       </span>
                       {item.status === 'Pending' ? (
                         <span className="rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-[10px] font-black uppercase text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300">
-                          Pending
+                          {t('Pending')}
                         </span>
                       ) : null}
                     </div>
@@ -797,9 +798,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="cards" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Your cards"
-          title="Three cards, independent controls"
-          description="Freeze any card in one tap, reveal its details when you need them, and cap what it can spend each month."
+          eyebrow={t('Your cards')}
+          title={t('Three cards, independent controls')}
+          description={t('Freeze any card in one tap, reveal its details when you need them, and cap what it can spend each month.')}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
@@ -825,7 +826,7 @@ export function WalletPage() {
                       </div>
                       {isFrozen ? (
                         <span className="rounded-full bg-white/20 px-2.5 py-1 text-[10px] font-black uppercase backdrop-blur">
-                          Frozen
+                          {t('Frozen')}
                         </span>
                       ) : (
                         <FiCreditCard className="text-xl opacity-70" />
@@ -844,7 +845,7 @@ export function WalletPage() {
 
                   <div className="mt-5 flex-1">
                     <div className="flex items-center justify-between text-[11px] font-bold text-muted">
-                      <span>Monthly spend</span>
+                      <span>{t('Monthly spend')}</span>
                       <span className="text-ink">
                         {rupees(card.spent, 0)} / {rupees(card.monthlyLimit, 0)}
                       </span>
@@ -864,7 +865,7 @@ export function WalletPage() {
                       className="inline-flex h-11 items-center justify-center gap-1.5 rounded-xl border border-line text-xs font-bold text-body transition-colors hover:bg-surface-2 hover:text-ink"
                     >
                       {isRevealed ? <FiEyeOff /> : <FiEye />}
-                      {isRevealed ? 'Hide' : 'Reveal'}
+                      {isRevealed ? t('Hide') : t('Reveal')}
                     </button>
                     <button
                       type="button"
@@ -875,7 +876,7 @@ export function WalletPage() {
                           : 'bg-brand-strong text-white shadow-brand hover:bg-brand-strong-hover'
                       }`}
                     >
-                      <FiLock /> {isFrozen ? 'Unfreeze' : 'Freeze'}
+                      <FiLock /> {isFrozen ? t('Unfreeze') : t('Freeze')}
                     </button>
                   </div>
                 </div>
@@ -885,7 +886,7 @@ export function WalletPage() {
         </div>
 
         <div className="mt-14">
-          <SectionHead eyebrow="Payment methods" title="Every way you might want to pay" />
+          <SectionHead eyebrow={t('Payment methods')} title={t('Every way you might want to pay')} />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {paymentMethods.map((method, index) => (
               <Reveal key={method.name} from="up" delay={Math.min(index * 0.04, 0.2)} className="h-full">
@@ -905,9 +906,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="bills" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Bills & recharges"
-          title="Twelve categories, one reminder each"
-          description="Set autopay where it makes sense and get a confirmation before every debit — never a surprise."
+          eyebrow={t('Bills & recharges')}
+          title={t('Twelve categories, one reminder each')}
+          description={t('Set autopay where it makes sense and get a confirmation before every debit never a surprise.')}
         />
 
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
@@ -932,9 +933,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="goals" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Savings goals"
-          title="Ring-fence money for the thing you are saving for"
-          description="Allocated money is kept out of your spending balance — and you can pull it back whenever you like."
+          eyebrow={t('Savings goals')}
+          title={t('Ring fence money for the thing you are saving for')}
+          description={t('Allocated money is kept out of your spending balance and you can pull it back whenever you like.')}
         />
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2">
@@ -956,7 +957,7 @@ export function WalletPage() {
                     </div>
                     {complete ? (
                       <span className="shrink-0 rounded-full bg-emerald-500/12 px-3 py-1 text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-400">
-                        Reached
+                        {t('Reached')}
                       </span>
                     ) : null}
                   </div>
@@ -969,8 +970,8 @@ export function WalletPage() {
                       />
                     </div>
                     <div className="mt-2 flex items-center justify-between text-[11px] font-black text-muted">
-                      <span>{progress.toFixed(0)}% funded</span>
-                      <span>{complete ? 'Goal met' : `${rupees(goal.target - goal.saved, 0)} to go`}</span>
+                      <span>{progress.toFixed(0)}% {t('funded')}</span>
+                      <span>{complete ? t('Goal met') : `${rupees(goal.target - goal.saved, 0)} ${t('to go')}`}</span>
                     </div>
                   </div>
 
@@ -983,7 +984,7 @@ export function WalletPage() {
                         onClick={() => addToGoal(goal.id, value)}
                         className="rounded-full border border-line px-4 py-2 text-xs font-bold text-body transition-colors hover:border-brand/40 hover:text-ink disabled:cursor-not-allowed disabled:opacity-45"
                       >
-                        Add {rupees(value, 0)}
+                        {t('Add')} {rupees(value, 0)}
                       </button>
                     ))}
                   </div>
@@ -999,9 +1000,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="rewards" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Rewards"
-          title="Cashback with the caps written on the front"
-          description="Plain offers, visible limits, real expiry dates. No points system to decode."
+          eyebrow={t('Rewards')}
+          title={t('Cashback with the caps written on the front')}
+          description={t('Plain offers, visible limits, real expiry dates. No points system to decode.')}
         />
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -1013,7 +1014,7 @@ export function WalletPage() {
                     <FiGift />
                   </span>
                   <span className="rounded-full border border-line bg-surface px-2.5 py-1 text-[10px] font-black uppercase text-muted">
-                    Ends {reward.expires}
+                    {t('Ends')} {reward.expires}
                   </span>
                 </div>
 
@@ -1027,7 +1028,7 @@ export function WalletPage() {
                 >
                   <span className="font-mono text-sm font-black tracking-wider text-brand-ink">{reward.code}</span>
                   <span className="flex shrink-0 items-center gap-1.5 text-[11px] font-bold text-brand-ink">
-                    <FiCopy /> Copy
+                    <FiCopy /> {t('Copy')}
                   </span>
                 </button>
               </div>
@@ -1041,9 +1042,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="crypto" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Crypto vault"
-          title="Non-custodial, behind your device passkey"
-          description="Signing keys live in the secure element on your phone. Nobody else can move these assets — including us."
+          eyebrow={t('Crypto vault')}
+          title={t('Non custodial, behind your device passkey')}
+          description={t('Signing keys live in the secure element on your phone. Nobody else can move these assets including us.')}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.8fr]">
@@ -1051,11 +1052,11 @@ export function WalletPage() {
             <div className="rounded-[28px] border border-line bg-surface p-6 shadow-card sm:p-8">
               <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
                 <div>
-                  <span className="text-[11px] font-black uppercase tracking-wide text-muted">Vault value</span>
+                  <span className="text-[11px] font-black uppercase tracking-wide text-muted">{t('Vault value')}</span>
                   <div className="mt-1 text-3xl font-black tracking-tight text-ink sm:text-4xl">{rupees(cryptoTotal, 0)}</div>
                 </div>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/12 px-3 py-1.5 text-xs font-black text-emerald-600 dark:text-emerald-400">
-                  <FiTrendingUp /> +3.42% today
+                  <FiTrendingUp /> +3.42% {t('today')}
                 </span>
               </div>
 
@@ -1093,18 +1094,18 @@ export function WalletPage() {
               {[
                 {
                   icon: <FiLock />,
-                  title: 'Keys never leave your device',
-                  desc: 'Signing happens inside the secure element. No server ever sees a private key.',
+                  title: t('Keys never leave your device'),
+                  desc: t('Signing happens inside the secure element. No server ever sees a private key.'),
                 },
                 {
                   icon: <FiShield />,
-                  title: 'Passkey approval per transfer',
-                  desc: 'Face or fingerprint authorises each transaction, with the destination shown in full.',
+                  title: t('Passkey approval per transfer'),
+                  desc: t('Face or fingerprint authorises each transaction, with the destination shown in full.'),
                 },
                 {
                   icon: <FiAlertCircle />,
-                  title: 'Recovery is on you',
-                  desc: 'Non-custodial means we cannot restore access if every recovery share is lost. Store them apart.',
+                  title: t('Recovery is on you'),
+                  desc: t('Non custodial means we cannot restore access if every recovery share is lost. Store them apart.'),
                 },
               ].map((item) => (
                 <div key={item.title} className="flex flex-1 items-start gap-4 rounded-[24px] border border-line bg-surface p-6 shadow-soft">
@@ -1127,9 +1128,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="limits" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Limits & fees"
-          title="Published in full, not buried in a PDF"
-          description="Every limit and every charge that can apply to your account, on one page."
+          eyebrow={t('Limits & fees')}
+          title={t('Published in full, not buried in a PDF')}
+          description={t('Every limit and every charge that can apply to your account, on one page.')}
         />
 
         <Reveal from="up" className="mt-12 overflow-hidden rounded-[26px] border border-line bg-cream shadow-card dark:bg-cream-2">
@@ -1137,10 +1138,10 @@ export function WalletPage() {
             <table className="w-full min-w-[680px] text-left text-sm">
               <thead className="border-b border-line bg-surface text-[11px] font-black uppercase tracking-wide text-muted">
                 <tr>
-                  <th scope="col" className="px-5 py-4">Action</th>
-                  <th scope="col" className="py-4">Limit</th>
-                  <th scope="col" className="py-4">Fee</th>
-                  <th scope="col" className="py-4 pr-5">Notes</th>
+                  <th scope="col" className="px-5 py-4">{t('Action')}</th>
+                  <th scope="col" className="py-4">{t('Limit')}</th>
+                  <th scope="col" className="py-4">{t('Fee')}</th>
+                  <th scope="col" className="py-4 pr-5">{t('Notes')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
@@ -1173,9 +1174,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="security" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Security"
-          title="Six controls doing the real work"
-          description="Not badges on a page — switches and defaults that change what an attacker can actually do."
+          eyebrow={t('Security')}
+          title={t('Six controls doing the real work')}
+          description={t('Not badges on a page switches and defaults that change what an attacker can actually do.')}
         />
 
         <FeatureGrid
@@ -1188,11 +1189,11 @@ export function WalletPage() {
       {/* FEATURES + STEPS                                                  */}
       {/* ---------------------------------------------------------------- */}
       <Section className="bg-surface">
-        <SectionHead eyebrow="What you get" title="A wallet that fits inside a conversation" />
+        <SectionHead eyebrow={t('What you get')} title={t('A wallet that fits inside a conversation')} />
         <FeatureGrid className="mt-12" items={walletFeatures.map((item, index) => ({ ...item, icon: FEATURE_ICONS[index] }))} />
 
         <div className="mt-20">
-          <SectionHead eyebrow="How a payment works" title="Four steps, about three seconds" />
+          <SectionHead eyebrow={t('How a payment works')} title={t('Four steps, about three seconds')} />
           <Steps className="mt-12" items={walletSteps.map((item, index) => ({ ...item, icon: STEP_ICONS[index] }))} />
         </div>
       </Section>
@@ -1201,7 +1202,7 @@ export function WalletPage() {
       {/* TESTIMONIALS                                                      */}
       {/* ---------------------------------------------------------------- */}
       <Section className="border-y border-line bg-cream dark:bg-cream-2">
-        <SectionHead eyebrow="Customers" title="What changed after switching" />
+        <SectionHead eyebrow={t('Customers')} title={t('What changed after switching')} />
         <Testimonials className="mt-12" items={walletTestimonials} />
       </Section>
 
@@ -1210,9 +1211,9 @@ export function WalletPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="faq" container={false} className="scroll-mt-36 bg-surface">
         <Container maxW="max-w-3xl">
-          <SectionHead eyebrow="FAQ" title="Money questions, answered plainly" />
+          <SectionHead eyebrow={t('FAQ')} title={t('Money questions, answered plainly')} />
           <div className="mt-12">
-            <FaqAccordion items={walletFaqs} placeholder="Search the FAQ…" />
+            <FaqAccordion items={walletFaqs} placeholder={t('Search the FAQ…')} />
           </div>
         </Container>
       </Section>
@@ -1221,24 +1222,24 @@ export function WalletPage() {
       {/* CTA + RELATED                                                     */}
       {/* ---------------------------------------------------------------- */}
       <CtaBand
-        eyebrow="Get started"
-        title="Payments that live where your conversations already do"
-        description="Zero-fee transfers, passkey approval and encrypted notes — set up in under two minutes."
+        eyebrow={t('Get started')}
+        title={t('Payments that live where your conversations already do')}
+        description={t('Zero fee transfers, passkey approval and encrypted notes set up in under two minutes.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={openDownloadModal}>
-              Download KT Messenger
+              {t('Download KT Messenger')}
             </Button>
             <Button size="lg" variant="onDark" onClick={() => document.getElementById('send')?.scrollIntoView({ behavior: 'smooth' })}>
-              Try the demo transfer
+              {t('Try the demo transfer')}
             </Button>
           </>
         }
-        points={['₹0 on P2P transfers', 'Passkey on every payment', 'Instant card freeze', 'Exportable statements']}
+        points={[t('₹0 on P2P transfers'), t('Passkey on every payment'), t('Instant card freeze'), t('Exportable statements')]}
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More of KT Messenger" />
+        <SectionHead eyebrow={t('Keep exploring')} title={t('More of KT Messenger')} />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 
@@ -1248,19 +1249,19 @@ export function WalletPage() {
       <Modal
         open={Boolean(receipt)}
         onClose={() => setReceipt(null)}
-        eyebrow="Payment successful"
-        title="Receipt"
+        eyebrow={t('Payment successful')}
+        title={t('Receipt')}
         size="sm"
         footer={
           <div className="flex flex-wrap items-center justify-between gap-3">
             <button
               type="button"
-              onClick={() => setToast('Receipt saved to your encrypted notes.')}
+              onClick={() => setToast(t('Receipt saved to your encrypted notes.'))}
               className="inline-flex h-11 items-center gap-2 rounded-full border border-line px-5 text-xs font-bold text-body transition-colors hover:bg-surface-2 hover:text-ink"
             >
-              <FiDownload /> Save receipt
+              <FiDownload /> {t('Save receipt')}
             </button>
-            <Button onClick={() => setReceipt(null)}>Done</Button>
+            <Button onClick={() => setReceipt(null)}>{t('Done')}</Button>
           </div>
         }
       >
@@ -1272,16 +1273,16 @@ export function WalletPage() {
 
             <div className="mt-5 text-3xl font-black tracking-tight text-ink">{rupees(receipt.amount)}</div>
             <p className="mt-1.5 text-sm font-semibold text-body">
-              sent to <span className="font-extrabold text-ink">{receipt.name}</span>
+              {t('sent to')} <span className="font-extrabold text-ink">{receipt.name}</span>
             </p>
 
             <dl className="mt-7 divide-y divide-line rounded-2xl border border-line bg-cream text-left dark:bg-cream-2">
               {[
-                { label: 'To', value: receipt.contact?.upi ?? receipt.name },
-                { label: 'Note', value: receipt.note },
-                { label: 'Method', value: `${receipt.method} · zero fee` },
-                { label: 'Reference', value: receipt.id.toUpperCase() },
-                { label: 'Status', value: 'Completed' },
+                { label: t('To'), value: receipt.contact?.payId ?? receipt.name },
+                { label: t('Note'), value: receipt.note },
+                { label: t('Method'), value: `${receipt.method} · ${t('zero fee')}` },
+                { label: t('Reference'), value: receipt.id.toUpperCase() },
+                { label: t('Status'), value: t('Completed') },
               ].map((row) => (
                 <div key={row.label} className="flex items-center justify-between gap-4 px-4 py-3">
                   <dt className="text-[11px] font-black uppercase tracking-wide text-muted">{row.label}</dt>
@@ -1292,7 +1293,7 @@ export function WalletPage() {
 
             <p className="mt-5 flex items-start gap-2 text-left text-[11px] leading-relaxed text-muted">
               <FiLock className="mt-0.5 shrink-0" />
-              A signed copy of this receipt is delivered into the chat thread. The note stays end-to-end encrypted.
+              {t('A signed copy of this receipt is delivered into the chat thread. The note stays end to end encrypted.')}
             </p>
           </div>
         ) : null}

@@ -1,10 +1,13 @@
 import { FiStar } from 'react-icons/fi'
 import { Reveal } from '../common/Reveal/Reveal'
+import { useLanguage } from '../../context/LanguageContext'
 
 /**
  * Review cards. `items`: [{ quote, name, role, rating? }]
+ * Person names are left untranslated; the quote and role are localised.
  */
 export function Testimonials({ items, className = '' }) {
+  const { t } = useLanguage()
   return (
     <div className={`grid gap-5 sm:grid-cols-2 lg:grid-cols-3 ${className}`}>
       {items.map((item, index) => (
@@ -16,7 +19,7 @@ export function Testimonials({ items, className = '' }) {
               ))}
             </div>
 
-            <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-body">“{item.quote}”</blockquote>
+            <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-body">“{t(item.quote)}”</blockquote>
 
             <figcaption className="mt-5 flex items-center gap-3 border-t border-line pt-4">
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-strong text-sm font-black text-white">
@@ -24,7 +27,7 @@ export function Testimonials({ items, className = '' }) {
               </span>
               <span className="min-w-0">
                 <span className="block truncate text-sm font-extrabold text-ink">{item.name}</span>
-                <span className="block truncate text-xs font-semibold text-muted">{item.role}</span>
+                <span className="block truncate text-xs font-semibold text-muted">{t(item.role)}</span>
               </span>
             </figcaption>
           </figure>

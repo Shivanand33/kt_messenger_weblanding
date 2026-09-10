@@ -50,6 +50,7 @@ import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
 import { Sparkline } from '../../components/feature/Sparkline'
 import { useModal } from '../../context/ModalContext'
+import { useLanguage } from '../../context/LanguageContext'
 import {
   economicCalendar,
   fxRates,
@@ -78,9 +79,9 @@ const NAV_ITEMS = [
 
 const STATS = [
   { value: 44, label: 'Instruments tracked', icon: <FiLayers />, hint: 'Crypto, equities, indices, FX and commodities.' },
-  { value: 10, label: 'Currencies in converter', icon: <FiRepeat />, hint: 'Mid-market rates with no spread added.' },
+  { value: 10, label: 'Currencies in converter', icon: <FiRepeat />, hint: 'Mid market rates with no spread added.' },
   { value: 100, label: 'Watchlist slots', icon: <FiStar />, hint: 'Synced encrypted across all your devices.' },
-  { value: 24, suffix: '/7', label: 'Alert coverage', icon: <FiBell />, hint: 'Crypto never sleeps — neither do alerts.' },
+  { value: 24, suffix: '/7', label: 'Alert coverage', icon: <FiBell />, hint: 'Crypto never sleeps neither do alerts.' },
 ]
 
 const TOOL_ICONS = [
@@ -99,7 +100,7 @@ const STEP_ICONS = [<FiSearch key="a" />, <FiStar key="b" />, <FiBell key="c" />
 
 const RELATED = [
   { to: '/wallet', label: 'Wallet', desc: 'Send money and hold crypto with passkey security.', icon: <FiZap /> },
-  { to: '/news', label: 'News', desc: 'Market headlines and a three-minute audio brief.', icon: <FiActivity /> },
+  { to: '/news', label: 'News', desc: 'Market headlines and a three minute audio brief.', icon: <FiActivity /> },
   { to: '/marketplace', label: 'Marketplace', desc: 'Buy from verified stores inside a chat.', icon: <FiGrid /> },
   { to: '/notes', label: 'Notes', desc: 'Keep trade journals in an encrypted vault.', icon: <FiBookOpen /> },
 ]
@@ -153,12 +154,13 @@ function ChangeBadge({ change, className = '' }) {
 
 export function MarketsPage() {
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
 
   const [activeCategory, setActiveCategory] = useState('All')
   const [query, setQuery] = useState('')
   const [sortKey, setSortKey] = useState('change')
   const [sortDir, setSortDir] = useState('desc')
-  const [watchlist, setWatchlist] = useState(['BTC', 'NIFTY 50', 'NVDA', 'GOLD'])
+  const [watchlist, setWatchlist] = useState(['KTC', 'KT50', 'KTSI', 'GOLD'])
   const [selected, setSelected] = useState(null)
   const [toast, setToast] = useState(null)
 
@@ -167,18 +169,18 @@ export function MarketsPage() {
   const [fxTo, setFxTo] = useState('INR')
 
   const [holdings, setHoldings] = useState([
-    { symbol: 'BTC', qty: 0.35 },
-    { symbol: 'NVDA', qty: 40 },
-    { symbol: 'RELIANCE', qty: 25 },
+    { symbol: 'KTC', qty: 0.35 },
+    { symbol: 'KTSI', qty: 40 },
+    { symbol: 'KTIN', qty: 25 },
   ])
-  const [holdingSymbol, setHoldingSymbol] = useState('ETH')
+  const [holdingSymbol, setHoldingSymbol] = useState('KTT')
   const [holdingQty, setHoldingQty] = useState('1')
 
   const [alerts, setAlerts] = useState([
-    { id: 1, symbol: 'BTC', direction: 'above', target: 70000 },
-    { id: 2, symbol: 'NIFTY 50', direction: 'below', target: 24000 },
+    { id: 1, symbol: 'KTC', direction: 'above', target: 70000 },
+    { id: 2, symbol: 'KT50', direction: 'below', target: 24000 },
   ])
-  const [alertSymbol, setAlertSymbol] = useState('ETH')
+  const [alertSymbol, setAlertSymbol] = useState('KTT')
   const [alertDirection, setAlertDirection] = useState('above')
   const [alertTarget, setAlertTarget] = useState('4000')
 
@@ -232,7 +234,7 @@ export function MarketsPage() {
   const toggleWatch = (symbol) => {
     const watched = watchlist.includes(symbol)
     setWatchlist(watched ? watchlist.filter((item) => item !== symbol) : [...watchlist, symbol])
-    setToast(watched ? `${symbol} removed from your watchlist.` : `${symbol} added to your watchlist.`)
+    setToast(watched ? `${symbol} ${t('removed from your watchlist.')}` : `${symbol} ${t('added to your watchlist.')}`)
   }
 
   // ---------------------------------------------------------------- FX maths
@@ -267,7 +269,7 @@ export function MarketsPage() {
     event.preventDefault()
     const qty = parseFloat(holdingQty)
     if (!Number.isFinite(qty) || qty <= 0) {
-      setToast('Enter a quantity greater than zero.')
+      setToast(t('Enter a quantity greater than zero.'))
       return
     }
     setHoldings((current) => {
@@ -277,7 +279,7 @@ export function MarketsPage() {
       }
       return [...current, { symbol: holdingSymbol, qty }]
     })
-    setToast(`${qty} ${holdingSymbol} added to the portfolio view.`)
+    setToast(`${qty} ${holdingSymbol} ${t('added to the portfolio view.')}`)
     setHoldingQty('1')
   }
 
@@ -286,11 +288,11 @@ export function MarketsPage() {
     event.preventDefault()
     const target = parseFloat(alertTarget)
     if (!Number.isFinite(target) || target <= 0) {
-      setToast('Enter a target price greater than zero.')
+      setToast(t('Enter a target price greater than zero.'))
       return
     }
     setAlerts((current) => [...current, { id: Date.now(), symbol: alertSymbol, direction: alertDirection, target }])
-    setToast(`Alert set: ${alertSymbol} ${alertDirection} ${target}.`)
+    setToast(`${t('Alert set:')} ${alertSymbol} ${alertDirection} ${target}.`)
   }
 
   return (
@@ -301,12 +303,12 @@ export function MarketsPage() {
       <PageHero
         badge={
           <>
-            <FiTrendingUp className="text-emerald-400" /> 44 instruments · 5 asset classes
+            <FiTrendingUp className="text-emerald-400" /> {t('44 instruments · 5 asset classes')}
           </>
         }
         title="KT"
         highlight="Markets"
-        description="Track equities, crypto, indices, currencies and commodities from the same app you chat in — with alerts that arrive as messages, not another push notification."
+        description={t('Track equities, crypto, indices, currencies and commodities from the same app you chat in with alerts that arrive as messages, not another push notification.')}
         actions={
           <>
             <Button
@@ -314,24 +316,24 @@ export function MarketsPage() {
               variant="white"
               onClick={() => document.getElementById('watchlist')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Open the watchlist <FiChevronRight />
+              {t('Open the watchlist')} <FiChevronRight />
             </Button>
             <Button size="lg" variant="primary" onClick={openDownloadModal}>
-              Get the app <FiZap />
+              {t('Get the app')} <FiZap />
             </Button>
           </>
         }
         chips={[
-          { icon: <FiShield />, label: 'Encrypted watchlists' },
-          { icon: <FiRepeat />, label: 'Mid-market FX, zero spread' },
-          { icon: <FiBell />, label: 'Alerts delivered in chat' },
+          { icon: <FiShield />, label: t('Encrypted watchlists') },
+          { icon: <FiRepeat />, label: t('Mid market FX, zero spread') },
+          { icon: <FiBell />, label: t('Alerts delivered in chat') },
         ]}
         aside={
           <div className="rounded-[28px] border border-line dark:border-white/10 bg-cream-2 dark:bg-white/[0.04] p-5 shadow-card dark:shadow-2xl backdrop-blur-xl sm:p-6">
             <div className="flex items-center justify-between border-b border-line dark:border-white/10 pb-4">
-              <span className="text-sm font-extrabold text-ink dark:text-white">Index snapshot</span>
+              <span className="text-sm font-extrabold text-ink dark:text-white">{t('Index snapshot')}</span>
               <span className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-300">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" /> Streaming
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" /> {t('Streaming')}
               </span>
             </div>
 
@@ -359,7 +361,7 @@ export function MarketsPage() {
             </div>
 
             <p className="mt-4 border-t border-line dark:border-white/10 pt-4 text-[10px] font-semibold leading-relaxed text-muted dark:text-slate-400">
-              Illustrative sample data for this product page. Live quotes inside the app carry a source and timestamp.
+              {t('Illustrative sample data for this product page. Live quotes inside the app carry a source and timestamp.')}
             </p>
           </div>
         }
@@ -370,7 +372,7 @@ export function MarketsPage() {
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search Bitcoin, NIFTY, USD/INR, Gold…"
+            placeholder={t('Search KT Coin, KT50, USD/INR, Gold…')}
             className="w-full bg-transparent text-sm font-semibold text-ink dark:text-white outline-none placeholder:text-muted dark:placeholder:text-slate-400"
           />
           {query ? (
@@ -379,36 +381,36 @@ export function MarketsPage() {
               onClick={() => setQuery('')}
               className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-muted dark:text-slate-300 hover:bg-brand-soft dark:hover:bg-white/10 hover:text-ink dark:hover:text-white"
             >
-              Clear
+              {t('Clear')}
             </button>
           ) : null}
         </div>
         {query ? (
           <p className="mt-3 text-xs font-semibold text-brand-strong dark:text-sky-300">
-            {filtered.length} {filtered.length === 1 ? 'instrument matches' : 'instruments match'} “{query}”
+            {filtered.length} {filtered.length === 1 ? t('instrument matches') : t('instruments match')} “{query}”
           </p>
         ) : null}
       </PageHero>
 
-      <StatStrip items={STATS} />
+      <StatStrip items={STATS.map((item) => ({ ...item, label: t(item.label), hint: t(item.hint) }))} />
 
-      <PageNav items={NAV_ITEMS} />
+      <PageNav items={NAV_ITEMS.map((item) => ({ ...item, label: t(item.label) }))} />
 
       {/* ---------------------------------------------------------------- */}
       {/* MOVERS                                                            */}
       {/* ---------------------------------------------------------------- */}
       <Section id="movers" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Today’s movers"
-          title="What is actually moving right now"
-          description="The strongest and weakest instruments of the session, plus the widest intraday ranges."
+          eyebrow={t('Today’s movers')}
+          title={t('What is actually moving right now')}
+          description={t('The strongest and weakest instruments of the session, plus the widest intraday ranges.')}
         />
 
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {[
-            { title: 'Top gainers', icon: <FiTrendingUp />, rows: gainers, tone: 'up' },
-            { title: 'Top losers', icon: <FiTrendingDown />, rows: losers, tone: 'down' },
-            { title: 'Widest ranges', icon: <FiActivity />, rows: widestRange, tone: 'neutral' },
+            { title: t('Top gainers'), icon: <FiTrendingUp />, rows: gainers, tone: 'up' },
+            { title: t('Top losers'), icon: <FiTrendingDown />, rows: losers, tone: 'down' },
+            { title: t('Widest ranges'), icon: <FiActivity />, rows: widestRange, tone: 'neutral' },
           ].map((group, groupIndex) => (
             <Reveal key={group.title} from="up" delay={groupIndex * 0.08} className="h-full">
               <div className="flex h-full flex-col rounded-[26px] border border-line bg-cream p-5 shadow-soft dark:bg-cream-2">
@@ -448,7 +450,7 @@ export function MarketsPage() {
                             }`}
                           >
                             {group.tone === 'neutral'
-                              ? `${(((asset.high - asset.low) / asset.low) * 100).toFixed(2)}% range`
+                              ? `${(((asset.high - asset.low) / asset.low) * 100).toFixed(2)}% ${t('range')}`
                               : formatChange(asset.change)}
                           </span>
                         </span>
@@ -472,28 +474,28 @@ export function MarketsPage() {
           onChange={setActiveCategory}
           query={query}
           onQuery={setQuery}
-          placeholder="Filter instruments…"
+          placeholder={t('Filter instruments…')}
           right={
             <span className="hidden shrink-0 items-center gap-1.5 rounded-xl border border-line bg-cream px-3 py-2 text-[11px] font-bold text-muted sm:flex dark:bg-cream-2">
               <FiStar className="text-brand-strong" />
-              {watchlist.length} watched
+              {watchlist.length} {t('watched')}
             </span>
           }
         />
 
         <Section className="bg-surface">
           <SectionHead
-            eyebrow={`${filtered.length} instruments`}
-            title="Your market watchlist"
-            description="Sort by any column, star what you follow, and tap a row for the full instrument card."
+            eyebrow={`${filtered.length} ${t('instruments')}`}
+            title={t('Your market watchlist')}
+            description={t('Sort by any column, star what you follow, and tap a row for the full instrument card.')}
           />
 
           {filtered.length === 0 ? (
             <div className="mt-12">
               <EmptyState
                 icon={<FiSearch />}
-                title="Nothing matches those filters"
-                description="Try another category, or clear the search box to see all 44 instruments."
+                title={t('Nothing matches those filters')}
+                description={t('Try another category, or clear the search box to see all 44 instruments.')}
                 action={
                   <Button
                     variant="secondary"
@@ -502,7 +504,7 @@ export function MarketsPage() {
                       setActiveCategory('All')
                     }}
                   >
-                    Reset filters
+                    {t('Reset filters')}
                   </Button>
                 }
               />
@@ -521,19 +523,19 @@ export function MarketsPage() {
                           onClick={() => toggleSort('name')}
                           className="flex items-center gap-1 font-black uppercase hover:text-ink"
                         >
-                          Instrument
+                          {t('Instrument')}
                           {sortKey === 'name' ? sortDir === 'asc' ? <FiArrowUp /> : <FiArrowDown /> : null}
                         </button>
                       </th>
-                      <th scope="col" className="py-4 font-black">Class</th>
-                      <th scope="col" className="py-4">Trend</th>
+                      <th scope="col" className="py-4 font-black">{t('Class')}</th>
+                      <th scope="col" className="py-4">{t('Trend')}</th>
                       <th scope="col" className="py-4">
                         <button
                           type="button"
                           onClick={() => toggleSort('price')}
                           className="flex items-center gap-1 font-black uppercase hover:text-ink"
                         >
-                          Price
+                          {t('Price')}
                           {sortKey === 'price' ? sortDir === 'asc' ? <FiArrowUp /> : <FiArrowDown /> : null}
                         </button>
                       </th>
@@ -547,7 +549,7 @@ export function MarketsPage() {
                           {sortKey === 'change' ? sortDir === 'asc' ? <FiArrowUp /> : <FiArrowDown /> : null}
                         </button>
                       </th>
-                      <th scope="col" className="py-4 pr-5 text-right font-black">Details</th>
+                      <th scope="col" className="py-4 pr-5 text-right font-black">{t('Details')}</th>
                     </tr>
                   </thead>
 
@@ -590,7 +592,7 @@ export function MarketsPage() {
                               onClick={() => setSelected(asset)}
                               className="inline-flex items-center gap-1 rounded-xl bg-brand-strong px-3.5 py-2 text-[11px] font-bold text-white shadow-brand transition-colors hover:bg-brand-strong-hover"
                             >
-                              View <FiChevronRight />
+                              {t('View')} <FiChevronRight />
                             </button>
                           </td>
                         </tr>
@@ -614,7 +616,7 @@ export function MarketsPage() {
                         <button
                           type="button"
                           onClick={() => toggleWatch(asset.symbol)}
-                          aria-label={watched ? 'Remove from watchlist' : 'Add to watchlist'}
+                          aria-label={watched ? t('Remove from watchlist') : t('Add to watchlist')}
                           className={`grid h-9 w-9 shrink-0 place-items-center rounded-full ${
                             watched ? 'text-amber-500' : 'text-muted'
                           }`}
@@ -644,9 +646,9 @@ export function MarketsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="heatmap" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Session heatmap"
-          title="One glance tells you what kind of day it is"
-          description="Colour intensity tracks the size of the move. Tap any tile to open the instrument card."
+          eyebrow={t('Session heatmap')}
+          title={t('One glance tells you what kind of day it is')}
+          description={t('Colour intensity tracks the size of the move. Tap any tile to open the instrument card.')}
         />
 
         <Reveal from="up" className="mt-12">
@@ -666,11 +668,11 @@ export function MarketsPage() {
           </div>
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-[11px] font-bold text-muted">
-            <span>Weakest</span>
+            <span>{t('Weakest')}</span>
             {[-4, -2, -0.5, 0, 0.5, 2, 4].map((step) => (
               <span key={step} className={`h-4 w-8 rounded ${heatClass(step)}`} />
             ))}
-            <span>Strongest</span>
+            <span>{t('Strongest')}</span>
           </div>
         </Reveal>
       </Section>
@@ -680,23 +682,23 @@ export function MarketsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="converter" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Currency converter"
-          title="Mid-market rates, nothing added on top"
-          description="The rate you see is the rate used in the calculation. Ten currencies, no spread, no hidden margin."
+          eyebrow={t('Currency converter')}
+          title={t('Mid market rates, nothing added on top')}
+          description={t('The rate you see is the rate used in the calculation. Ten currencies, no spread, no hidden margin.')}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.85fr]">
           <Reveal from="up">
             <div className="rounded-[28px] border border-line bg-cream p-6 shadow-card sm:p-8 dark:bg-cream-2">
               <div className="flex items-center justify-between border-b border-line pb-4">
-                <h3 className="text-lg font-extrabold text-ink">Convert an amount</h3>
+                <h3 className="text-lg font-extrabold text-ink">{t('Convert an amount')}</h3>
                 <FiRefreshCw className="text-lg text-brand-strong" />
               </div>
 
               <div className="mt-6 space-y-4">
                 <div>
                   <label htmlFor="fx-amount" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                    Amount
+                    {t('Amount')}
                   </label>
                   <input
                     id="fx-amount"
@@ -709,7 +711,7 @@ export function MarketsPage() {
                   />
                   {!amountValid ? (
                     <p className="mt-1.5 flex items-center gap-1.5 text-[11px] font-bold text-rose-600 dark:text-rose-400">
-                      <FiAlertCircle /> Enter a positive number to convert.
+                      <FiAlertCircle /> {t('Enter a positive number to convert.')}
                     </p>
                   ) : null}
                 </div>
@@ -717,7 +719,7 @@ export function MarketsPage() {
                 <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-3">
                   <div>
                     <label htmlFor="fx-from" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                      From
+                      {t('From')}
                     </label>
                     <select
                       id="fx-from"
@@ -727,7 +729,7 @@ export function MarketsPage() {
                     >
                       {CURRENCY_CODES.map((code) => (
                         <option key={code} value={code}>
-                          {code} — {fxRates[code].label}
+                          {code} {fxRates[code].label}
                         </option>
                       ))}
                     </select>
@@ -736,7 +738,7 @@ export function MarketsPage() {
                   <button
                     type="button"
                     onClick={swapCurrencies}
-                    aria-label="Swap currencies"
+                    aria-label={t('Swap currencies')}
                     className="mb-0.5 grid h-12 w-12 place-items-center rounded-2xl border border-line bg-surface text-lg text-brand-strong transition-colors hover:bg-surface-2"
                   >
                     <FiRepeat />
@@ -744,7 +746,7 @@ export function MarketsPage() {
 
                   <div>
                     <label htmlFor="fx-to" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                      To
+                      {t('To')}
                     </label>
                     <select
                       id="fx-to"
@@ -754,7 +756,7 @@ export function MarketsPage() {
                     >
                       {CURRENCY_CODES.map((code) => (
                         <option key={code} value={code}>
-                          {code} — {fxRates[code].label}
+                          {code} {fxRates[code].label}
                         </option>
                       ))}
                     </select>
@@ -762,7 +764,7 @@ export function MarketsPage() {
                 </div>
 
                 <div className="rounded-2xl border border-brand/25 bg-brand-soft p-6 text-center">
-                  <span className="block text-[11px] font-black uppercase tracking-wide text-brand-ink">Converted amount</span>
+                  <span className="block text-[11px] font-black uppercase tracking-wide text-brand-ink">{t('Converted amount')}</span>
                   <span className="mt-2 block text-3xl font-black tracking-tight text-brand-ink sm:text-4xl">
                     {fxRates[fxTo].symbol}
                     {converted.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -776,11 +778,11 @@ export function MarketsPage() {
                   className="w-full justify-center"
                   onClick={() =>
                     setToast(
-                      `${fxRates[fxFrom].symbol}${amountValid ? parsedAmount.toLocaleString('en-US') : 0} → ${fxRates[fxTo].symbol}${converted.toFixed(2)} shared to chat.`,
+                      `${fxRates[fxFrom].symbol}${amountValid ? parsedAmount.toLocaleString('en-US') : 0} → ${fxRates[fxTo].symbol}${converted.toFixed(2)} ${t('shared to chat.')}`,
                     )
                   }
                 >
-                  Share this rate to a chat <FiShare2 />
+                  {t('Share this rate to a chat')} <FiShare2 />
                 </Button>
               </div>
             </div>
@@ -788,7 +790,7 @@ export function MarketsPage() {
 
           <Reveal from="up" delay={0.08}>
             <div className="h-full rounded-[28px] border border-line bg-cream p-6 shadow-soft sm:p-8 dark:bg-cream-2">
-              <h3 className="text-base font-extrabold text-ink">Rate table · 1 {fxFrom} buys</h3>
+              <h3 className="text-base font-extrabold text-ink">{t('Rate table')} · 1 {fxFrom} {t('buys')}</h3>
               <ul className="mt-5 divide-y divide-line">
                 {CURRENCY_CODES.filter((code) => code !== fxFrom).map((code) => (
                   <li key={code} className="flex items-center justify-between gap-3 py-3">
@@ -805,8 +807,7 @@ export function MarketsPage() {
 
               <p className="mt-5 flex items-start gap-2 border-t border-line pt-5 text-[11px] leading-relaxed text-muted">
                 <FiInfo className="mt-0.5 shrink-0" />
-                Sample mid-market rates for illustration. Live rates inside the app update continuously and are stamped
-                with the time they were quoted.
+                {t('Sample mid market rates for illustration. Live rates inside the app update continuously and are stamped with the time they were quoted.')}
               </p>
             </div>
           </Reveal>
@@ -818,9 +819,9 @@ export function MarketsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="portfolio" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Portfolio view"
-          title="Track holdings without linking a broker"
-          description="Enter quantities by hand. Nothing connects to an exchange, and nothing leaves your device."
+          eyebrow={t('Portfolio view')}
+          title={t('Track holdings without linking a broker')}
+          description={t('Enter quantities by hand. Nothing connects to an exchange, and nothing leaves your device.')}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_0.8fr]">
@@ -828,13 +829,13 @@ export function MarketsPage() {
             <div className="rounded-[28px] border border-line bg-surface p-6 shadow-card sm:p-8">
               <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
                 <div>
-                  <span className="text-[11px] font-black uppercase tracking-wide text-muted">Portfolio value</span>
+                  <span className="text-[11px] font-black uppercase tracking-wide text-muted">{t('Portfolio value')}</span>
                   <div className="mt-1 text-3xl font-black tracking-tight text-ink sm:text-4xl">
                     ${portfolio.total.toLocaleString('en-US', { maximumFractionDigits: 0 })}
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-[11px] font-black uppercase tracking-wide text-muted">Day P/L</span>
+                  <span className="text-[11px] font-black uppercase tracking-wide text-muted">{t('Day P/L')}</span>
                   <div
                     className={`mt-1 text-xl font-black ${
                       portfolio.dayPL >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
@@ -848,7 +849,7 @@ export function MarketsPage() {
 
               {portfolio.rows.length === 0 ? (
                 <p className="py-10 text-center text-sm font-semibold text-muted">
-                  No holdings yet — add one below to see the breakdown.
+                  {t('No holdings yet add one below to see the breakdown.')}
                 </p>
               ) : (
                 <ul className="mt-2 divide-y divide-line">
@@ -911,15 +912,15 @@ export function MarketsPage() {
               onSubmit={addHolding}
               className="h-full rounded-[28px] border border-line bg-surface p-6 shadow-soft sm:p-8"
             >
-              <h3 className="text-base font-extrabold text-ink">Add a holding</h3>
+              <h3 className="text-base font-extrabold text-ink">{t('Add a holding')}</h3>
               <p className="mt-1.5 text-xs leading-relaxed text-body">
-                Pick an instrument and a quantity. Adding a symbol you already hold increases that position.
+                {t('Pick an instrument and a quantity. Adding a symbol you already hold increases that position.')}
               </p>
 
               <div className="mt-6 space-y-4">
                 <div>
                   <label htmlFor="holding-symbol" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                    Instrument
+                    {t('Instrument')}
                   </label>
                   <select
                     id="holding-symbol"
@@ -929,7 +930,7 @@ export function MarketsPage() {
                   >
                     {marketAssets.map((asset) => (
                       <option key={asset.symbol} value={asset.symbol}>
-                        {asset.symbol} — {asset.name}
+                        {asset.symbol} {asset.name}
                       </option>
                     ))}
                   </select>
@@ -937,7 +938,7 @@ export function MarketsPage() {
 
                 <div>
                   <label htmlFor="holding-qty" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                    Quantity
+                    {t('Quantity')}
                   </label>
                   <input
                     id="holding-qty"
@@ -951,12 +952,12 @@ export function MarketsPage() {
                 </div>
 
                 <Button type="submit" className="w-full justify-center">
-                  Add to portfolio <FiPlus />
+                  {t('Add to portfolio')} <FiPlus />
                 </Button>
 
                 <p className="flex items-start gap-2 border-t border-line pt-4 text-[11px] leading-relaxed text-muted">
                   <FiShield className="mt-0.5 shrink-0" />
-                  Nothing here is a recommendation. This view is informational only and holds no assets on your behalf.
+                  {t('Nothing here is a recommendation. This view is informational only and holds no assets on your behalf.')}
                 </p>
               </div>
             </form>
@@ -969,20 +970,20 @@ export function MarketsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="alerts" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Price alerts"
-          title="Alerts that arrive as a message"
-          description="Set a level once. When it prints, KT AI sends it to your chat — no separate app to install or mute."
+          eyebrow={t('Price alerts')}
+          title={t('Alerts that arrive as a message')}
+          description={t('Set a level once. When it prints, KT AI sends it to your chat no separate app to install or mute.')}
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[0.85fr_1fr]">
           <Reveal from="up">
             <form onSubmit={addAlert} className="rounded-[28px] border border-line bg-cream p-6 shadow-card sm:p-8 dark:bg-cream-2">
-              <h3 className="text-base font-extrabold text-ink">Create an alert</h3>
+              <h3 className="text-base font-extrabold text-ink">{t('Create an alert')}</h3>
 
               <div className="mt-6 space-y-4">
                 <div>
                   <label htmlFor="alert-symbol" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                    Instrument
+                    {t('Instrument')}
                   </label>
                   <select
                     id="alert-symbol"
@@ -992,14 +993,14 @@ export function MarketsPage() {
                   >
                     {marketAssets.map((asset) => (
                       <option key={asset.symbol} value={asset.symbol}>
-                        {asset.symbol} — {formatPrice(asset)}
+                        {asset.symbol} {formatPrice(asset)}
                       </option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <span className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">Condition</span>
+                  <span className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">{t('Condition')}</span>
                   <div className="grid grid-cols-2 gap-2">
                     {['above', 'below'].map((direction) => (
                       <button
@@ -1014,7 +1015,7 @@ export function MarketsPage() {
                         }`}
                       >
                         {direction === 'above' ? <FiArrowUp className="mr-1 inline" /> : <FiArrowDown className="mr-1 inline" />}
-                        Goes {direction}
+                        {t('Goes')} {direction}
                       </button>
                     ))}
                   </div>
@@ -1022,7 +1023,7 @@ export function MarketsPage() {
 
                 <div>
                   <label htmlFor="alert-target" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-                    Target price
+                    {t('Target price')}
                   </label>
                   <input
                     id="alert-target"
@@ -1036,7 +1037,7 @@ export function MarketsPage() {
                 </div>
 
                 <Button type="submit" className="w-full justify-center">
-                  Set alert <FiBell />
+                  {t('Set alert')} <FiBell />
                 </Button>
               </div>
             </form>
@@ -1045,15 +1046,15 @@ export function MarketsPage() {
           <Reveal from="up" delay={0.08}>
             <div className="h-full rounded-[28px] border border-line bg-cream p-6 shadow-soft sm:p-8 dark:bg-cream-2">
               <div className="flex items-center justify-between border-b border-line pb-4">
-                <h3 className="text-base font-extrabold text-ink">Active alerts</h3>
+                <h3 className="text-base font-extrabold text-ink">{t('Active alerts')}</h3>
                 <span className="rounded-full bg-brand-soft px-3 py-1 text-[11px] font-black text-brand-ink">
-                  {alerts.length} live
+                  {alerts.length} {t('live')}
                 </span>
               </div>
 
               {alerts.length === 0 ? (
                 <p className="py-12 text-center text-sm font-semibold text-muted">
-                  No alerts yet. Create one on the left and it appears here instantly.
+                  {t('No alerts yet. Create one on the left and it appears here instantly.')}
                 </p>
               ) : (
                 <ul className="mt-2 divide-y divide-line">
@@ -1085,15 +1086,15 @@ export function MarketsPage() {
                           </div>
                           <div className="truncate text-[11px] font-semibold text-muted">
                             {triggered
-                              ? 'Condition already met — you would have been messaged.'
-                              : `${Math.abs(distance).toFixed(2)}% ${distance > 0 ? 'above' : 'below'} the current price`}
+                              ? t('Condition already met you would have been messaged.')
+                              : `${Math.abs(distance).toFixed(2)}% ${distance > 0 ? t('above') : t('below')} ${t('the current price')}`}
                           </div>
                         </div>
 
                         <button
                           type="button"
                           onClick={() => setAlerts((current) => current.filter((item) => item.id !== alert.id))}
-                          aria-label="Delete alert"
+                          aria-label={t('Delete alert')}
                           className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-rose-500/10 hover:text-rose-600"
                         >
                           <FiTrash2 />
@@ -1113,9 +1114,9 @@ export function MarketsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="calendar" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Economic calendar"
-          title="Know what is scheduled before it moves the tape"
-          description="Every release that reliably moves prices, with the forecast and prior value side by side."
+          eyebrow={t('Economic calendar')}
+          title={t('Know what is scheduled before it moves the tape')}
+          description={t('Every release that reliably moves prices, with the forecast and prior value side by side.')}
         />
 
         <Reveal from="up" className="mt-12 overflow-hidden rounded-[26px] border border-line bg-surface shadow-card">
@@ -1123,12 +1124,12 @@ export function MarketsPage() {
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead className="border-b border-line bg-cream text-[11px] font-black uppercase tracking-wide text-muted dark:bg-cream-2">
                 <tr>
-                  <th scope="col" className="px-5 py-4">Time</th>
-                  <th scope="col" className="py-4">Region</th>
-                  <th scope="col" className="py-4">Event</th>
-                  <th scope="col" className="py-4">Impact</th>
-                  <th scope="col" className="py-4">Forecast</th>
-                  <th scope="col" className="py-4 pr-5">Previous</th>
+                  <th scope="col" className="px-5 py-4">{t('Time')}</th>
+                  <th scope="col" className="py-4">{t('Region')}</th>
+                  <th scope="col" className="py-4">{t('Event')}</th>
+                  <th scope="col" className="py-4">{t('Impact')}</th>
+                  <th scope="col" className="py-4">{t('Forecast')}</th>
+                  <th scope="col" className="py-4 pr-5">{t('Previous')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
@@ -1161,15 +1162,15 @@ export function MarketsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="tools" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Toolkit"
-          title="Everything you need to follow a market"
-          description="Nine tools that live inside the chat app you already have open."
+          eyebrow={t('Toolkit')}
+          title={t('Everything you need to follow a market')}
+          description={t('Nine tools that live inside the chat app you already have open.')}
         />
 
         <FeatureGrid className="mt-12" items={marketTools.map((tool, index) => ({ ...tool, icon: TOOL_ICONS[index] }))} />
 
         <div className="mt-20">
-          <SectionHead eyebrow="How it works" title="From search to alert in four steps" />
+          <SectionHead eyebrow={t('How it works')} title={t('From search to alert in four steps')} />
           <Steps className="mt-12" items={marketSteps.map((step, index) => ({ ...step, icon: STEP_ICONS[index] }))} />
         </div>
       </Section>
@@ -1179,9 +1180,9 @@ export function MarketsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="learn" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Learn"
-          title="Short reads that make the numbers make sense"
-          description="Plain-language explainers written by the markets desk — no jargon for its own sake."
+          eyebrow={t('Learn')}
+          title={t('Short reads that make the numbers make sense')}
+          description={t('Plain language explainers written by the markets desk no jargon for its own sake.')}
         />
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -1192,14 +1193,14 @@ export function MarketsPage() {
                   <span className="rounded-full bg-brand-soft px-3 py-1 text-[10px] font-black uppercase tracking-wide text-brand-ink">
                     {item.level}
                   </span>
-                  <span className="text-[11px] font-bold text-muted">{item.minutes} min</span>
+                  <span className="text-[11px] font-bold text-muted">{item.minutes} {t('min')}</span>
                 </div>
 
                 <h3 className="mt-4 text-base font-extrabold leading-snug text-ink">{item.title}</h3>
                 <p className="mt-2 flex-1 text-sm leading-relaxed text-body">{item.desc}</p>
 
                 <span className="mt-5 inline-flex items-center gap-1.5 border-t border-line pt-4 text-xs font-bold text-brand-ink">
-                  Read explainer <FiChevronRight className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                  {t('Read explainer')} <FiChevronRight className="transition-transform duration-300 group-hover:translate-x-0.5" />
                 </span>
               </article>
             </Reveal>
@@ -1211,7 +1212,7 @@ export function MarketsPage() {
       {/* TESTIMONIALS                                                      */}
       {/* ---------------------------------------------------------------- */}
       <Section className="bg-surface">
-        <SectionHead eyebrow="Traders & investors" title="Why people keep it open all day" />
+        <SectionHead eyebrow={t('Traders & investors')} title={t('Why people keep it open all day')} />
         <Testimonials className="mt-12" items={marketTestimonials} />
       </Section>
 
@@ -1223,11 +1224,9 @@ export function MarketsPage() {
           <Reveal from="up" className="flex items-start gap-4 rounded-[24px] border border-amber-300 bg-amber-50 p-6 dark:border-amber-500/30 dark:bg-amber-500/10">
             <FiAlertCircle className="mt-0.5 shrink-0 text-2xl text-amber-600 dark:text-amber-400" />
             <div>
-              <h3 className="text-base font-extrabold text-ink">Not investment advice</h3>
+              <h3 className="text-base font-extrabold text-ink">{t('Not investment advice')}</h3>
               <p className="mt-2 text-sm leading-relaxed text-body">
-                KT Markets is an information and tracking tool. Prices on this page are illustrative samples, nothing here
-                is a recommendation to buy or sell, and KT Messenger does not execute orders or custody assets. Markets
-                carry risk — speak to a licensed adviser before investing.
+                {t('KT Markets is an information and tracking tool. Prices on this page are illustrative samples, nothing here is a recommendation to buy or sell, and KT Messenger does not execute orders or custody assets. Markets carry risk speak to a licensed adviser before investing.')}
               </p>
             </div>
           </Reveal>
@@ -1239,9 +1238,9 @@ export function MarketsPage() {
       {/* ---------------------------------------------------------------- */}
       <Section id="faq" container={false} className="scroll-mt-36 bg-surface">
         <Container maxW="max-w-3xl">
-          <SectionHead eyebrow="FAQ" title="Questions about data, privacy and scope" />
+          <SectionHead eyebrow={t('FAQ')} title={t('Questions about data, privacy and scope')} />
           <div className="mt-12">
-            <FaqAccordion items={marketFaqs} placeholder="Search the FAQ…" />
+            <FaqAccordion items={marketFaqs} placeholder={t('Search the FAQ…')} />
           </div>
         </Container>
       </Section>
@@ -1250,29 +1249,36 @@ export function MarketsPage() {
       {/* CTA + RELATED                                                     */}
       {/* ---------------------------------------------------------------- */}
       <CtaBand
-        eyebrow="Start tracking"
-        title="Your markets, in the app you already have open"
-        description="Star a few instruments, set one alert, and let the moves come to you as ordinary encrypted messages."
+        eyebrow={t('Start tracking')}
+        title={t('Your markets, in the app you already have open')}
+        description={t('Star a few instruments, set one alert, and let the moves come to you as ordinary encrypted messages.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={openDownloadModal}>
-              Download KT Messenger
+              {t('Download KT Messenger')}
             </Button>
             <Button
               size="lg"
               variant="onDark"
               onClick={() => document.getElementById('watchlist')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Explore instruments
+              {t('Explore instruments')}
             </Button>
           </>
         }
-        points={['Encrypted watchlists', 'Zero-spread FX', 'No brokerage link required', 'Free forever']}
+        points={[t('Encrypted watchlists'), t('Zero spread FX'), t('No brokerage link required'), t('Free forever')]}
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More of KT Messenger" />
-        <RelatedPages className="mt-12" items={RELATED} />
+        <SectionHead eyebrow={t('Keep exploring')} title={t('More of KT Messenger')} />
+        <RelatedPages
+          className="mt-12"
+          items={RELATED.map((item) => ({
+            ...item,
+            label: item.label === 'Marketplace' ? item.label : t(item.label),
+            desc: t(item.desc),
+          }))}
+        />
       </Section>
 
       {/* ---------------------------------------------------------------- */}
@@ -1297,7 +1303,7 @@ export function MarketsPage() {
                 }`}
               >
                 <FiStar className={watchlist.includes(selected.symbol) ? 'fill-current' : ''} />
-                {watchlist.includes(selected.symbol) ? 'On your watchlist' : 'Add to watchlist'}
+                {watchlist.includes(selected.symbol) ? t('On your watchlist') : t('Add to watchlist')}
               </button>
 
               <Button
@@ -1308,7 +1314,7 @@ export function MarketsPage() {
                   document.getElementById('alerts')?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
-                Set an alert <FiBell />
+                {t('Set an alert')} <FiBell />
               </Button>
             </div>
           ) : null
@@ -1318,7 +1324,7 @@ export function MarketsPage() {
           <div>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
-                <span className="text-[11px] font-black uppercase tracking-wide text-muted">Last price</span>
+                <span className="text-[11px] font-black uppercase tracking-wide text-muted">{t('Last price')}</span>
                 <div className="text-3xl font-black tracking-tight text-ink">{formatPrice(selected)}</div>
               </div>
               <ChangeBadge change={selected.change} className="text-sm" />
@@ -1326,15 +1332,15 @@ export function MarketsPage() {
 
             <div className="mt-5 rounded-2xl border border-line bg-cream p-4 dark:bg-cream-2">
               <Sparkline data={selected.series} up={selected.change >= 0} width={600} height={120} className="w-full" />
-              <p className="mt-2 text-center text-[11px] font-bold text-muted">Last 24 intervals</p>
+              <p className="mt-2 text-center text-[11px] font-bold text-muted">{t('Last 24 intervals')}</p>
             </div>
 
             <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
-                { label: '24h high', value: `${selected.prefix ?? ''}${selected.high.toLocaleString('en-US')}` },
-                { label: '24h low', value: `${selected.prefix ?? ''}${selected.low.toLocaleString('en-US')}` },
-                { label: 'Market cap', value: selected.marketCap },
-                { label: 'Volume', value: selected.volume },
+                { label: t('24h high'), value: `${selected.prefix ?? ''}${selected.high.toLocaleString('en-US')}` },
+                { label: t('24h low'), value: `${selected.prefix ?? ''}${selected.low.toLocaleString('en-US')}` },
+                { label: t('Market cap'), value: selected.marketCap },
+                { label: t('Volume'), value: selected.volume },
               ].map((item) => (
                 <div key={item.label} className="rounded-2xl border border-line bg-cream p-4 text-center dark:bg-cream-2">
                   <dt className="text-[10px] font-black uppercase tracking-wide text-muted">{item.label}</dt>
@@ -1343,14 +1349,13 @@ export function MarketsPage() {
               ))}
             </dl>
 
-            <h4 className="mt-7 text-xs font-black uppercase tracking-[0.16em] text-muted">About</h4>
+            <h4 className="mt-7 text-xs font-black uppercase tracking-[0.16em] text-muted">{t('About')}</h4>
             <p className="mt-2 text-sm leading-relaxed text-body">{selected.about}</p>
 
             <div className="mt-6 flex items-start gap-3 rounded-2xl border border-line bg-cream p-4 dark:bg-cream-2">
               <FiInfo className="mt-0.5 shrink-0 text-lg text-brand-strong" />
               <p className="text-xs leading-relaxed text-body">
-                Sample data shown for this product page. Nothing here is a recommendation — KT Markets tracks prices, it
-                does not execute trades or hold assets.
+                {t('Sample data shown for this product page. Nothing here is a recommendation KT Markets tracks prices, it does not execute trades or hold assets.')}
               </p>
             </div>
           </div>

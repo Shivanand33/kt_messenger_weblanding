@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { FiX } from 'react-icons/fi'
+import { useLanguage } from '../../context/LanguageContext'
 
 const sizes = {
   sm: 'max-w-md',
@@ -20,6 +21,7 @@ const sizes = {
  * page underneath. Entry is still animated; closing is immediate.
  */
 export function Modal({ open, onClose, title, eyebrow, size = 'lg', children, footer }) {
+  const { t } = useLanguage()
   const panelRef = useRef(null)
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export function Modal({ open, onClose, title, eyebrow, size = 'lg', children, fo
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label={title}
+        aria-label={t(title)}
         tabIndex={-1}
         initial={{ opacity: 0, y: 24, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -66,14 +68,14 @@ export function Modal({ open, onClose, title, eyebrow, size = 'lg', children, fo
         <div className="flex shrink-0 items-start justify-between gap-4 border-b border-line px-5 py-4 sm:px-7">
           <div className="min-w-0">
             {eyebrow ? (
-              <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-brand-ink">{eyebrow}</span>
+              <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-brand-ink">{t(eyebrow)}</span>
             ) : null}
-            {title ? <h3 className="truncate text-lg font-extrabold text-ink">{title}</h3> : null}
+            {title ? <h3 className="truncate text-lg font-extrabold text-ink">{t(title)}</h3> : null}
           </div>
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close dialog"
+            aria-label={t('Close dialog')}
             className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-body transition-colors hover:bg-surface-2 hover:text-ink"
           >
             <FiX className="text-lg" />

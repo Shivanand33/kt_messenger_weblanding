@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
 import { useLoopClock } from './useLoopClock'
+import { useLanguage } from '../../../context/LanguageContext'
 import photoMessage from '../../../assets/images/beach_bicycles.png'
 
 const HIDDEN = { opacity: 0, y: 10, scale: 0.97 }
@@ -71,11 +72,12 @@ function FileMessage({ name, time, showDownload }) {
 
 /** Small pill used for the received voice/text notes near the bottom. */
 function NoteBubble({ text, time, edited }) {
+  const { t } = useLanguage()
   return (
     <div className="flex items-center gap-1.5">
       <div className="flex items-center gap-1.5 rounded-2xl rounded-tl-md bg-white px-2.5 py-1.5 shadow-sm">
         <span className="text-[11px] font-semibold text-slate-900">{text}</span>
-        {edited ? <span className="text-[8px] font-medium text-slate-400">Edited</span> : null}
+        {edited ? <span className="text-[8px] font-medium text-slate-400">{t('Edited')}</span> : null}
         <span className="text-[8px] font-semibold text-slate-400">{time}</span>
       </div>
       <FiVolume2 className="shrink-0 text-[11px] text-slate-500" />
@@ -96,13 +98,14 @@ export function KtChatScreen({
   showPhoto = true,
   showEncryptionNote = true,
 }) {
+  const { t } = useLanguage()
   const { progress, isPlaying, togglePlay, restart } = useLoopClock({ durationMs: 15000 })
 
   const ticksBlue = progress >= 78
 
   return (
     <AppPhoneFrame
-      title="Chat · files, photos &amp; voice"
+      title={t('Chat · files, photos & voice')}
       progress={progress}
       isPlaying={isPlaying}
       onTogglePlay={togglePlay}
@@ -126,7 +129,7 @@ export function KtChatScreen({
             <div className="min-w-0 flex-1">
               <div className="truncate text-[12px] font-bold leading-tight">David Miller</div>
               <div className="truncate text-[9px] font-semibold text-white/85">
-                {showEncryptionNote ? 'online • E2EE Active' : 'online'}
+                {showEncryptionNote ? t('online • E2EE Active') : t('online')}
               </div>
             </div>
 
@@ -153,7 +156,7 @@ export function KtChatScreen({
             {/* 1. Received friendly text */}
             <Cue at={8} progress={progress} className="flex justify-start">
               <div className="rounded-2xl rounded-tl-sm bg-white p-2.5 text-slate-900 max-w-[85%] shadow-sm border border-slate-200">
-                <span className="font-semibold text-[11px]">Hey David! Check out these fresh strawberries we picked today! 🍓✨</span>
+                <span className="font-semibold text-[11px]">{t('Hey David! Check out these fresh strawberries we picked today! 🍓✨')}</span>
                 <div className="text-[8px] text-slate-400 text-right pt-0.5 font-mono">2:33 pm</div>
               </div>
             </Cue>
@@ -162,7 +165,7 @@ export function KtChatScreen({
             {showPhoto ? (
               <Cue at={24} progress={progress} className="flex justify-start">
                 <div className="relative overflow-hidden rounded-2xl bg-white p-1 max-w-[85%] border border-slate-200 shadow-sm">
-                  <img src={photoMessage} alt="Strawberries Photo" className="h-[96px] w-[160px] object-cover rounded-xl" />
+                  <img src={photoMessage} alt={t('Strawberries Photo')} className="h-[96px] w-[160px] object-cover rounded-xl" />
                   <div className="text-[8px] text-slate-400 text-right pr-2 pt-0.5 font-mono">2:37 pm</div>
                 </div>
               </Cue>
@@ -171,7 +174,7 @@ export function KtChatScreen({
             {/* 3. Received follow-up text */}
             <Cue at={40} progress={progress} className="flex justify-start">
               <div className="rounded-2xl bg-white p-2.5 text-slate-900 max-w-[85%] shadow-sm border border-slate-200">
-                <span className="font-semibold text-[11px]">They were so sweet and delicious! We should go back next weekend 🌿☕</span>
+                <span className="font-semibold text-[11px]">{t('They were so sweet and delicious! We should go back next weekend 🌿☕')}</span>
                 <div className="text-[8px] text-slate-400 text-right pt-0.5 font-mono">2:38 pm</div>
               </div>
             </Cue>
@@ -179,7 +182,7 @@ export function KtChatScreen({
             {/* 4. Date divider */}
             <Cue at={52} progress={progress} className="flex justify-center py-0.5">
               <span className="rounded-full bg-white px-3 py-0.5 text-[8px] font-bold text-slate-500 shadow-sm border border-slate-200 font-mono">
-                Today
+                {t('Today')}
               </span>
             </Cue>
 
@@ -188,7 +191,7 @@ export function KtChatScreen({
               <div className="rounded-2xl bg-white p-2 text-slate-900 max-w-[80%] border border-slate-200 flex items-center gap-2 shadow-sm">
                 <span className="grid h-6 w-6 place-items-center rounded-full bg-[#1e8bf2] text-white text-[10px] shadow shrink-0">▶</span>
                 <div>
-                  <div className="font-extrabold text-[10px]">Voice Note (0:14)</div>
+                  <div className="font-extrabold text-[10px]">{t('Voice Note')} (0:14)</div>
                   <div className="text-[8px] text-slate-400 font-mono">11:04 am</div>
                 </div>
               </div>
@@ -197,7 +200,7 @@ export function KtChatScreen({
             {/* 6. Sent blue bubble message */}
             <Cue at={70} progress={progress} className="flex justify-end">
               <div className="rounded-2xl rounded-tr-none bg-gradient-to-r from-sky-500 to-[#1e8bf2] p-2.5 text-white max-w-[85%] shadow-md">
-                <span className="font-semibold text-[11px]">Good morning! That looks amazing! Hope you have a wonderful day ☀️✨</span>
+                <span className="font-semibold text-[11px]">{t('Good morning! That looks amazing! Hope you have a wonderful day ☀️✨')}</span>
                 <div className="flex items-center justify-end gap-1 text-[8px] text-sky-100 font-mono mt-0.5">
                   <span>4:24 pm</span>
                   <span className={`flex text-[9px] ${ticksBlue ? 'text-white' : 'text-white/70'}`}>
@@ -211,7 +214,7 @@ export function KtChatScreen({
             {/* 7. Received closing friendly text */}
             <Cue at={84} progress={progress} className="flex justify-start">
               <div className="rounded-2xl bg-white p-2.5 text-slate-900 max-w-[85%] shadow-sm border border-slate-200">
-                <span className="font-semibold text-[11px]">Let's catch up over coffee this Saturday! ☕😊</span>
+                <span className="font-semibold text-[11px]">{t("Let's catch up over coffee this Saturday! ☕😊")}</span>
                 <div className="text-[8px] text-slate-400 text-right pt-0.5 font-mono">6:01 pm</div>
               </div>
             </Cue>
@@ -232,7 +235,7 @@ export function KtChatScreen({
         <div className="relative z-20 flex shrink-0 items-center gap-1.5 px-2 pb-5 pt-1.5">
           <div className="flex h-9 flex-1 items-center gap-2 rounded-full bg-white px-3 shadow-sm">
             <FiSmile className="shrink-0 text-[13px] text-slate-400" />
-            <span className="flex-1 text-[11px] font-medium text-slate-400">Message</span>
+            <span className="flex-1 text-[11px] font-medium text-slate-400">{t('Message')}</span>
             <FiPaperclip className="shrink-0 text-[12px] text-slate-500" />
             <FiCamera className="shrink-0 text-[12px] text-slate-500" />
           </div>

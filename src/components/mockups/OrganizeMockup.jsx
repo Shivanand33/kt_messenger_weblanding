@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { FiSearch, FiMoreVertical, FiFilter, FiGlobe, FiCheck } from 'react-icons/fi'
+import { useLanguage } from '../../context/LanguageContext'
 import familyAvatar from '../../assets/images/group.jpg'
 import mumAvatar from '../../assets/images/private.jpg'
 import mosheAvatar from '../../assets/images/business.jpg'
@@ -13,12 +14,13 @@ function PinIcon({ className = 'h-3 w-3 text-emerald-600' }) {
 }
 
 export function OrganizeMockup({ activeTab = 0, className = '' }) {
+  const { t } = useLanguage()
   const [activeFilter, setActiveFilter] = useState('All')
 
   const chats = [
     {
       name: 'The best family 👪',
-      msg: 'Moshe: 📷 Good morning!',
+      msg: t('Moshe: 📷 Good morning!'),
       time: '12:01',
       unread: 3,
       avatar: familyAvatar,
@@ -27,7 +29,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
     },
     {
       name: 'Mum ❤️',
-      msg: 'See you soon!',
+      msg: t('See you soon!'),
       time: '11:05',
       unread: 0,
       avatar: mumAvatar,
@@ -36,7 +38,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
     },
     {
       name: 'Moshe',
-      msg: 'Where are you?',
+      msg: t('Where are you?'),
       time: '1:59',
       unread: 1,
       avatar: mosheAvatar,
@@ -67,7 +69,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
 
           {/* Header Bar */}
           <div className="flex items-center justify-between px-4 py-2">
-            <h2 className="text-xl font-bold tracking-tight text-emerald-600">WhatsApp</h2>
+            <h2 className="text-xl font-bold tracking-tight text-emerald-600">KT Messenger</h2>
             <div className="flex items-center gap-3 text-stone-700 text-base">
               <FiSearch className="cursor-pointer hover:text-emerald-600" />
               <FiMoreVertical className="cursor-pointer hover:text-emerald-600" />
@@ -79,7 +81,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
           <div className="px-4 py-1.5">
             <div className="flex items-center gap-2 rounded-full bg-stone-100 px-3.5 py-1.5 text-[11px] text-stone-500">
               <FiSearch className="text-xs text-stone-400" />
-              <span>Ask KT AI or Search</span>
+              <span>{t('Ask KT AI or Search')}</span>
             </div>
           </div>
 
@@ -104,7 +106,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
                           : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
                       }`}
                     >
-                      {filter}
+                      {t(filter)}
                     </button>
                   )
                 })}
@@ -150,7 +152,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
           {activeTab === 1 && (
             <div className="flex-1 overflow-y-auto p-3 space-y-2">
               <div className="flex items-center gap-1 text-[11px] font-bold text-stone-500 uppercase tracking-wider px-1">
-                <PinIcon className="h-3 w-3 text-emerald-600" /> Pinned Chats
+                <PinIcon className="h-3 w-3 text-emerald-600" /> {t('Pinned Chats')}
               </div>
               {chats.map((chat) => (
                 <div
@@ -176,16 +178,16 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
           {activeTab === 2 && (
             <div className="flex-1 overflow-y-auto p-3 space-y-2.5 bg-stone-50">
               <div className="rounded-xl bg-white p-2.5 shadow-sm text-[11px] text-stone-800">
-                <span className="font-bold text-emerald-700">Bold:</span> *Make text bold*
+                <span className="font-bold text-emerald-700">{t('Bold:')}</span> {t('*Make text bold*')}
               </div>
               <div className="rounded-xl bg-white p-2.5 shadow-sm text-[11px] text-stone-800">
-                <span className="italic text-emerald-700">Italics:</span> _Add smooth italic style_
+                <span className="italic text-emerald-700">{t('Italics:')}</span> {t('_Add smooth italic style_')}
               </div>
               <div className="rounded-xl bg-white p-2.5 shadow-sm text-[11px] text-stone-800">
-                <span className="line-through text-stone-400">Strikethrough:</span> ~Cross out text~
+                <span className="line-through text-stone-400">{t('Strikethrough:')}</span> {t('~Cross out text~')}
               </div>
               <div className="rounded-xl bg-[#0d1418] p-2.5 text-[10.5px] font-mono text-emerald-400">
-                ```Mono-space code```
+                {t('```Mono space code```')}
               </div>
             </div>
           )}
@@ -197,7 +199,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
                 <p className="text-[11.5px] text-stone-800">Bonjour! Comment allez-vous aujourd&apos;hui?</p>
                 <div className="mt-2 flex items-center gap-1.5 rounded-lg bg-emerald-50 p-1.5 text-[10.5px] text-emerald-800 border border-emerald-100">
                   <FiGlobe className="text-emerald-600 text-xs shrink-0" />
-                  <span>Translated from French: Hello! How are you today?</span>
+                  <span>{t('Translated from French: Hello! How are you today?')}</span>
                 </div>
                 <div className="mt-1 flex justify-end text-[9px] text-stone-400">11:05</div>
               </div>

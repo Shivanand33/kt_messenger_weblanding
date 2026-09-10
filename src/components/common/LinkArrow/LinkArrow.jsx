@@ -1,5 +1,6 @@
 import { FiArrowRight } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
+import { useLanguage } from '../../../context/LanguageContext'
 
 const BASE =
   'group inline-flex items-center gap-1.5 text-[15px] font-semibold text-brand-ink transition-colors hover:text-brand-strong'
@@ -12,10 +13,11 @@ const BASE =
  * Callers should always give one — without a destination the link renders as
  * plain text rather than a control that looks clickable but goes nowhere.
  */
-export function LinkArrow({ children = 'Learn more', to, href, onClick, className = '' }) {
+export function LinkArrow({ children, to, href, onClick, className = '' }) {
+  const { t } = useLanguage()
   const content = (
     <>
-      {children}
+      {children ?? t('Learn more')}
       <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
     </>
   )

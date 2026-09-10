@@ -1,7 +1,9 @@
 import { Container } from '../common/Container/Container'
 import { useCountUp } from '../../hooks/useCountUp'
+import { useLanguage } from '../../context/LanguageContext'
 
 function Stat({ item, index }) {
+  const { t } = useLanguage()
   const [ref, value] = useCountUp(item.value, { decimals: item.decimals ?? 0, duration: 1400 + index * 120 })
   const shown = item.decimals ? value.toFixed(item.decimals) : Math.round(value).toLocaleString('en-IN')
 
@@ -20,8 +22,8 @@ function Stat({ item, index }) {
         {shown}
         {item.suffix}
       </div>
-      <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.1em] text-muted">{item.label}</div>
-      {item.hint ? <p className="mt-2 text-xs leading-relaxed text-body">{item.hint}</p> : null}
+      <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.1em] text-muted">{t(item.label)}</div>
+      {item.hint ? <p className="mt-2 text-xs leading-relaxed text-body">{t(item.hint)}</p> : null}
     </div>
   )
 }

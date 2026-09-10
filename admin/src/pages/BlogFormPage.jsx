@@ -7,6 +7,21 @@ import { Input, Textarea, Select, Checkbox } from '../components/Field.jsx'
 
 const EMPTY = { title: '', slug: '', excerpt: '', body: '', coverUrl: '', authorName: 'KT Messenger Team', categoryId: '', status: 'DRAFT', featured: false, seoTitle: '', seoDescription: '', ogImage: '' }
 
+// Where the public blog lives, for the URL preview. Set VITE_SITE_URL per
+// environment; the default matches production.
+const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://ktmessenger.com').replace(/\/+$/, '')
+
+// Mirrors slugify() in backend/src/utils/slug.js so the preview shows exactly
+// what will be stored.
+const slugify = (input = '') =>
+  String(input)
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80)
+
 // `basePath` / `returnTo` let this same form be reached from /blogs (Admin →
 // Blogs) and from /help/blogs/:id (Help Center → Blogs) — one form, one API.
 export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
@@ -23,6 +38,33 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
   const [saving, setSaving] = useState(false)
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }))
+
+  // Live slug availability. Advisory only — create/update re-check on write,
+  // so a slug taken between this probe and the save is still caught server side.
+  const [slugState, setSlugState] = useState({ status: 'idle', reason: null })
+
+  // The slug that will actually be stored: what the admin typed, or (only for
+  // a brand new post with the field left blank) one derived from the title.
+  const typedSlug = slugify(form.slug)
+  const effectiveSlug = typedSlug || (isNew ? slugify(form.title) : '')
+  const usingFallback = !typedSlug && isNew && !!effectiveSlug
+
+  useEffect(() => {
+    if (!typedSlug) { setSlugState({ status: 'idle', reason: null }); return undefined }
+    setSlugState({ status: 'checking', reason: null })
+    let cancelled = false
+    const timer = setTimeout(() => {
+      api
+        .get('/admin/blogs/slug-check', { params: { slug: typedSlug, id: isNew ? undefined : id } })
+        .then((res) => {
+          if (cancelled) return
+          const d = res.data.data
+          setSlugState({ status: d.available ? 'available' : 'taken', reason: d.reason })
+        })
+        .catch(() => { if (!cancelled) setSlugState({ status: 'idle', reason: null }) })
+    }, 350)
+    return () => { cancelled = true; clearTimeout(timer) }
+  }, [typedSlug, id, isNew])
 
   // Direct file upload for image fields — sends the file to the media API
   // (which stores it locally or on R2) and fills the field with the returned URL.
@@ -69,10 +111,18 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
   }, [id])
 
   const save = async (publishNow) => {
+    // Stop an obvious duplicate before the round trip. The server re-checks,
+    // so this is convenience, not the guarantee.
+    if (slugState.status === 'taken') {
+      toast.error(slugState.reason || 'That slug is already in use. Choose a different one.')
+      return
+    }
     setSaving(true)
     try {
       const payload = {
         ...form,
+        // Send the normalised form so what is saved matches the preview.
+        slug: slugify(form.slug),
         categoryId: form.categoryId || null,
         tagIds,
         status: publishNow ? 'PUBLISHED' : form.status,
@@ -102,7 +152,48 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
       <div className="grid" style={{ gridTemplateColumns: '1fr 320px', alignItems: 'start' }}>
         <div className="card card-pad">
           <Input label="Title" value={form.title} onChange={(e) => set('title', e.target.value)} placeholder="Post title" />
-          <Input label="Slug" hint="Leave blank to auto-generate from the title." value={form.slug} onChange={(e) => set('slug', e.target.value)} placeholder="my-post-slug" />
+          <Input
+            label="Slug"
+            hint={
+              isNew
+                ? 'This is the blog URL. Leave blank to generate one from the title.'
+                : 'This is the blog URL. Changing it changes the published link.'
+            }
+            value={form.slug}
+            onChange={(e) => set('slug', e.target.value)}
+            onBlur={() => form.slug && set('slug', slugify(form.slug))}
+            placeholder="my-post-slug"
+          />
+
+          {/* URL preview — exactly what the post will be reachable at. */}
+          <div style={{ margin: '-6px 0 16px', fontSize: 12.5, lineHeight: 1.6 }}>
+            <div style={{ color: 'var(--muted)' }}>
+              URL preview:{' '}
+              {effectiveSlug ? (
+                <code style={{ color: 'var(--ink)', fontWeight: 600, wordBreak: 'break-all' }}>
+                  {SITE_URL}/blog/{effectiveSlug}
+                </code>
+              ) : (
+                <span style={{ fontStyle: 'italic' }}>enter a slug or a title</span>
+              )}
+            </div>
+
+            {usingFallback && (
+              <div style={{ color: 'var(--muted)' }}>
+                Auto-generated from the title. It is saved once on create and never changes on its own afterwards.
+              </div>
+            )}
+            {typedSlug && typedSlug !== form.slug && (
+              <div style={{ color: 'var(--warn)' }}>
+                Will be saved as <strong>{typedSlug}</strong>
+              </div>
+            )}
+            {slugState.status === 'checking' && <div style={{ color: 'var(--muted)' }}>Checking availability…</div>}
+            {slugState.status === 'available' && <div style={{ color: 'var(--success)' }}>✓ Slug is available</div>}
+            {slugState.status === 'taken' && (
+              <div style={{ color: 'var(--danger)', fontWeight: 600 }}>✕ {slugState.reason || 'That slug is already in use'}</div>
+            )}
+          </div>
           <Textarea label="Excerpt" value={form.excerpt} onChange={(e) => set('excerpt', e.target.value)} placeholder="Short summary shown in the blog list" style={{ minHeight: 70 }} />
           <Textarea label="Body (HTML/Markdown)" value={form.body} onChange={(e) => set('body', e.target.value)} placeholder="Full article content" style={{ minHeight: 260 }} />
           <hr style={{ border: 'none', borderTop: '1px solid var(--line)', margin: '10px 0 18px' }} />

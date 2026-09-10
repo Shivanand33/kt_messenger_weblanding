@@ -28,9 +28,11 @@ import channelImg from '../../assets/images/business.jpg'
 import sportsImg from '../../assets/images/beach_bicycles.png'
 import techImg from '../../assets/images/hd_landscape.png'
 import newsImg from '../../assets/images/multidevice.jpg'
+import { useLanguage } from '../../context/LanguageContext'
 
 export function ChannelsPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [followerCount, setFollowerCount] = useState(148500)
   const [isFollowing, setIsFollowing] = useState(false)
   const [reactions, setReactions] = useState({ '❤️': 1420, '🔥': 980, '👏': 650, '🚀': 420 })
@@ -55,107 +57,107 @@ export function ChannelsPage() {
 
   const channelTabs = [
     {
-      title: 'One-Way Broadcast Engine',
+      title: t('One Way Broadcast Engine'),
       icon: <FiRadio className="text-xl" />,
-      desc: 'Deliver announcements, photos, videos, and links to unlimited subscribers without thread clutter or noise.',
-      highlights: ['Unlimited subscriber capacity', 'Rich text & video attachments', 'Instant push notifications']
+      desc: t('Deliver announcements, photos, videos, and links to unlimited subscribers without thread clutter or noise.'),
+      highlights: [t('Unlimited subscriber capacity'), t('Rich text & video attachments'), t('Instant push notifications')]
     },
     {
-      title: 'Complete Identity Shield',
+      title: t('Complete Identity Shield'),
       icon: <FiLock className="text-xl" />,
-      desc: 'Your phone number, profile photo, and personal identity remain 100% hidden from admins and fellow subscribers.',
-      highlights: ['Admins cannot see subscriber numbers', 'Subscribers list is completely private', 'Encrypted channel data']
+      desc: t('Your phone number, profile photo, and personal identity remain 100% hidden from admins and fellow subscribers.'),
+      highlights: [t('Admins cannot see subscriber numbers'), t('Subscribers list is completely private'), t('Encrypted channel data')]
     },
     {
-      title: 'Emoji Reactions & Polls',
+      title: t('Emoji Reactions & Polls'),
       icon: <FiHeart className="text-xl" />,
-      desc: 'Gather community feedback with real-time emoji reactions and channel broadcast polls without exposing user info.',
-      highlights: ['Private emoji feedback', 'Broadcast poll creation', 'Live reaction metrics']
+      desc: t('Gather community feedback with real time emoji reactions and channel broadcast polls without exposing user info.'),
+      highlights: [t('Private emoji feedback'), t('Broadcast poll creation'), t('Live reaction metrics')]
     },
     {
-      title: 'Directory & Verified Badges',
+      title: t('Directory & Verified Badges'),
       icon: <FiSearch className="text-xl" />,
-      desc: 'Browse searchable channel categories (News, Tech, Sports, Entertainment) and identify official creators with verified ticks.',
-      highlights: ['Searchable public directory', 'Verified blue checkmarks', 'Trending channel rankings']
+      desc: t('Browse searchable channel categories (News, Tech, Sports, Entertainment) and identify official creators with verified ticks.'),
+      highlights: [t('Searchable public directory'), t('Verified blue checkmarks'), t('Trending channel rankings')]
     },
     {
-      title: 'Multi-Admin Suite',
+      title: t('Multi Admin Suite'),
       icon: <FiShield className="text-xl" />,
-      desc: 'Assign co-admins with granular posting permissions, post scheduling, and detailed reach analytics.',
-      highlights: ['Multiple posting admins', 'Post view counter analytics', 'Automated link previews']
+      desc: t('Assign co admins with granular posting permissions, post scheduling, and detailed reach analytics.'),
+      highlights: [t('Multiple posting admins'), t('Post view counter analytics'), t('Automated link previews')]
     }
   ]
 
   const metrics = [
-    { value: 'Unlimited', label: 'Subscriber Capacity' },
-    { value: '100%', label: 'Subscriber Privacy Shield' },
-    { value: '50+', label: 'Channel Categories' },
-    { value: '< 1s', label: 'Broadcast Push Speed' }
+    { value: t('Unlimited'), label: t('Subscriber Capacity') },
+    { value: '100%', label: t('Subscriber Privacy Shield') },
+    { value: '50+', label: t('Channel Categories') },
+    { value: '< 1s', label: t('Broadcast Push Speed') }
   ]
 
   const featuredChannels = [
     {
-      name: 'KT Tech Pulse',
-      category: 'Technology & AI',
+      name: t('KT Tech Pulse'),
+      category: t('Technology & AI'),
       followers: '148.5K',
-      desc: 'Daily breakdown of breakthrough tech, gadgets, and next-gen AI software updates.',
+      desc: t('Daily breakdown of breakthrough tech, gadgets, and next gen AI software updates.'),
       img: techImg
     },
     {
-      name: 'Global Sports Daily',
-      category: 'Sports & Football',
+      name: t('Global Sports Daily'),
+      category: t('Sports & Football'),
       followers: '320.2K',
-      desc: 'Live scores, transfer news, match highlights, and exclusive athlete commentary.',
+      desc: t('Live scores, transfer news, match highlights, and exclusive athlete commentary.'),
       img: sportsImg
     },
     {
-      name: 'World News Hub',
-      category: 'News & Headlines',
+      name: t('World News Hub'),
+      category: t('News & Headlines'),
       followers: '850.1K',
-      desc: 'Breaking news alerts, geopolitics, economic trends, and verified report summaries.',
+      desc: t('Breaking news alerts, geopolitics, economic trends, and verified report summaries.'),
       img: newsImg
     },
     {
-      name: 'Creative Studio Brief',
-      category: 'Design & Culture',
+      name: t('Creative Studio Brief'),
+      category: t('Design & Culture'),
       followers: '92.4K',
-      desc: 'UI/UX inspiration, digital artwork showcases, and creative industry insights.',
+      desc: t('UI/UX inspiration, digital artwork showcases, and creative industry insights.'),
       img: channelImg
     }
   ]
 
   const comparisonTable = [
-    { feature: 'Subscriber Privacy', kt: '100% Invisible', social: 'Public Profiles', email: 'Admins see email' },
-    { feature: 'Broadcast Noise', kt: 'Zero Clutter', social: 'Comments Clutter', email: 'Spam Filters' },
-    { feature: 'Push Delivery Speed', kt: 'Instant Push', social: 'Algorithm Dependant', email: 'Slow / Delay' },
-    { feature: 'Verified Authenticity', kt: 'Verified Ticks', social: 'Paid Badges', email: 'No Verification' },
-    { feature: 'Subscriber Capacity', kt: 'Unlimited Free', social: 'Algorithm Caps', email: 'Tiered Pricing' }
+    { feature: t('Subscriber Privacy'), kt: t('100% Invisible'), social: t('Public Profiles'), email: t('Admins see email') },
+    { feature: t('Broadcast Noise'), kt: t('Zero Clutter'), social: t('Comments Clutter'), email: t('Spam Filters') },
+    { feature: t('Push Delivery Speed'), kt: t('Instant Push'), social: t('Algorithm Dependant'), email: t('Slow / Delay') },
+    { feature: t('Verified Authenticity'), kt: t('Verified Ticks'), social: t('Paid Badges'), email: t('No Verification') },
+    { feature: t('Subscriber Capacity'), kt: t('Unlimited Free'), social: t('Algorithm Caps'), email: t('Tiered Pricing') }
   ]
 
   const faqs = [
     {
-      q: 'What are KT Channels?',
-      a: 'Channels are a one-way broadcast tool for admins to send text updates, photos, videos, stickers, and polls to an unlimited audience of subscribers.'
+      q: t('What are KT Channels?'),
+      a: t('Channels are a one way broadcast tool for admins to send text updates, photos, videos, stickers, and polls to an unlimited audience of subscribers.')
     },
     {
-      q: 'Can channel admins or other followers see my phone number?',
-      a: 'No. Channels are built with total privacy. Admins cannot view your phone number, profile photo, or name, and subscribers cannot see who else follows the channel.'
+      q: t('Can channel admins or other followers see my phone number?'),
+      a: t('No. Channels are built with total privacy. Admins cannot view your phone number, profile photo, or name, and subscribers cannot see who else follows the channel.')
     },
     {
-      q: 'How do I find and follow channels on KT?',
-      a: 'You can discover channels via the "Updates" tab inside KT, search by topic or keyword in the directory, or tap an invite link shared on websites or social media.'
+      q: t('How do I find and follow channels on KT?'),
+      a: t('You can discover channels via the "Updates" tab inside KT, search by topic or keyword in the directory, or tap an invite link shared on websites or social media.')
     },
     {
-      q: 'Can I create my own channel on KT?',
-      a: 'Yes! Anyone can create a channel on KT Messenger for free with no subscriber limits or hosting fees.'
+      q: t('Can I create my own channel on KT?'),
+      a: t('Yes! Anyone can create a channel on KT Messenger for free with no subscriber limits or hosting fees.')
     },
     {
-      q: 'How do verified badges work for channels?',
-      a: 'Official figures, organizations, and news outlets can apply for a verified badge to signal authenticity to followers.'
+      q: t('How do verified badges work for channels?'),
+      a: t('Official figures, organizations, and news outlets can apply for a verified badge to signal authenticity to followers.')
     },
     {
-      q: 'Are channel broadcasts end-to-end encrypted?',
-      a: 'Because channels are public broadcast tools intended for large audiences, channel updates are stored securely and encrypted in transit, while personal chats remain Signal E2EE.'
+      q: t('Are channel broadcasts end to end encrypted?'),
+      a: t('Because channels are public broadcast tools intended for large audiences, channel updates are stored securely and encrypted in transit, while personal chats remain KT E2EE.')
     }
   ]
 
@@ -167,32 +169,32 @@ export function ChannelsPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
-                <FiRadio className="text-brand-strong" /> Private Broadcast Channels
+                <FiRadio className="text-brand-strong" /> {t('Private Broadcast Channels')}
               </div>
               <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                Stay updated on <br />
+                {t('Stay updated on')} <br />
                 <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  what matters most to you
+                  {t('what matters most to you')}
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                Follow your favorite creators, sports teams, news outlets, and organizations for private updates directly inside KT Messenger.
+                {t('Follow your favorite creators, sports teams, news outlets, and organizations for private updates directly inside KT Messenger.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
-                  Explore Directory <FiDownload className="text-lg" />
+                  {t('Explore Directory')} <FiDownload className="text-lg" />
                 </Button>
                 <Button variant="secondary" size="lg" onClick={() => navigate('/apps')}>
-                  Create Channel <FiChevronRight />
+                  {t('Create Channel')} <FiChevronRight />
                 </Button>
               </div>
 
               <div className="mt-8 flex items-center gap-6 border-t border-line pt-6 text-sm text-body">
                 <span className="flex items-center gap-2">
-                  <FiCheckCircle className="text-brand-strong" /> Unlimited Audience
+                  <FiCheckCircle className="text-brand-strong" /> {t('Unlimited Audience')}
                 </span>
                 <span className="flex items-center gap-2">
-                  <FiCheckCircle className="text-brand-strong" /> 100% Subscriber Privacy
+                  <FiCheckCircle className="text-brand-strong" /> {t('100% Subscriber Privacy')}
                 </span>
               </div>
             </Reveal>
@@ -202,12 +204,12 @@ export function ChannelsPage() {
               <div className="relative w-full max-w-[420px] rounded-[36px] border border-line bg-surface p-6 shadow-float">
                 <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
                   <div className="flex items-center gap-3">
-                    <img src={techImg} alt="Channel" className="h-12 w-12 rounded-full object-cover border-2 border-brand-strong" />
+                    <img src={techImg} alt={t('Channel')} className="h-12 w-12 rounded-full object-cover border-2 border-brand-strong" />
                     <div>
                       <h3 className="flex items-center gap-1.5 font-bold text-ink text-base">
-                        KT Tech Pulse <FiCheckCircle className="text-brand-strong text-sm" />
+                        {t('KT Tech Pulse')} <FiCheckCircle className="text-brand-strong text-sm" />
                       </h3>
-                      <p className="text-xs text-muted">{followerCount.toLocaleString()} subscribers</p>
+                      <p className="text-xs text-muted">{followerCount.toLocaleString()} {t('subscribers')}</p>
                     </div>
                   </div>
                   <button
@@ -218,14 +220,14 @@ export function ChannelsPage() {
                         : 'bg-brand-strong text-white hover:bg-brand-strong-hover shadow-brand'
                     }`}
                   >
-                    {isFollowing ? 'Following ✓' : 'Follow +'}
+                    {isFollowing ? t('Following ✓') : t('Follow +')}
                   </button>
                 </div>
 
                 {/* Broadcast Post */}
                 <div className="rounded-2xl bg-cream p-4 border border-line">
                   <p className="text-xs leading-relaxed text-body">
-                    🚀 <strong>Major Platform Update:</strong> Next-gen features are now live! Enjoy HD video notes, custom theme engines, and real-time AI assistant integration across all devices.
+                    🚀 <strong>{t('Major Platform Update:')}</strong> {t('Next gen features are now live! Enjoy HD video notes, custom theme engines, and real time AI assistant integration across all devices.')}
                   </p>
 
                   <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-3">
@@ -265,10 +267,10 @@ export function ChannelsPage() {
       <Section className="bg-cream">
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            Powerful Publishing for Creators & Brands
+            {t('Powerful Publishing for Creators & Brands')}
           </h2>
           <p className="mt-4 text-lg text-body">
-            Reach your audience directly without algorithmic suppression, privacy risks, or noisy comment sections.
+            {t('Reach your audience directly without algorithmic suppression, privacy risks, or noisy comment sections.')}
           </p>
         </Reveal>
 
@@ -298,7 +300,7 @@ export function ChannelsPage() {
           <div className="rounded-3xl border border-line bg-surface p-8 shadow-card flex flex-col justify-between">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
-                Broadcast Power Pillar
+                {t('Broadcast Power Pillar')}
               </div>
               <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {channelTabs[activeTab].title}
@@ -318,9 +320,9 @@ export function ChannelsPage() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
-              <span className="text-xs text-muted font-medium">Free for all creators & channels</span>
+              <span className="text-xs text-muted font-medium">{t('Free for all creators & channels')}</span>
               <Button size="sm" onClick={() => navigate('/apps')}>
-                Create Channel <FiChevronRight />
+                {t('Create Channel')} <FiChevronRight />
               </Button>
             </div>
           </div>
@@ -333,23 +335,23 @@ export function ChannelsPage() {
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
             <Reveal from="left" className="lg:col-span-5 space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                🎬 Interactive Channels Demo
+                {t('🎬 Interactive Channels Demo')}
               </div>
               <h2 className="text-3xl font-extrabold text-ink sm:text-4xl lg:text-[2.5rem] tracking-tight leading-tight">
-                1-to-Many Broadcast Channels
+                {t('1-to Many Broadcast Channels')}
               </h2>
               <p className="text-base sm:text-lg leading-relaxed text-body">
-                Broadcast to unlimited subscribers while keeping phone numbers &amp; admin identity 100% private.
+                {t('Broadcast to unlimited subscribers while keeping phone numbers & admin identity 100% private.')}
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> Unlimited Subscribers
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('Unlimited Subscribers')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> Identity Shield Active
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('Identity Shield Active')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> Private Emoji Reactions
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('Private Emoji Reactions')}
                 </span>
               </div>
             </Reveal>
@@ -366,7 +368,7 @@ export function ChannelsPage() {
               </div>
 
               <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-2 left-2 sm:left-6 z-20 flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 shadow-float border border-brand-strong/30 text-xs font-bold text-brand-ink">
-                <FiShield className="text-brand-strong" /> Subscriber Identity Shielded
+                <FiShield className="text-brand-strong" /> {t('Subscriber Identity Shielded')}
               </motion.div>
             </Reveal>
           </div>
@@ -379,27 +381,27 @@ export function ChannelsPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
               <div className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                <FiLock className="text-brand-strong" /> Subscriber Identity Shield
+                <FiLock className="text-brand-strong" /> {t('Subscriber Identity Shield')}
               </div>
               <h2 className="mt-4 text-3xl font-extrabold leading-tight text-ink sm:text-4xl lg:text-5xl">
-                Follow channels in complete personal privacy
+                {t('Follow channels in complete personal privacy')}
               </h2>
               <p className="mt-6 text-base leading-relaxed text-body">
-                Unlike public social networks where following a page exposes your profile, phone number, and activity to strangers, KT Channels guarantee absolute anonymity.
+                {t('Unlike public social networks where following a page exposes your profile, phone number, and activity to strangers, KT Channels guarantee absolute anonymity.')}
               </p>
 
               <div className="mt-6 space-y-3 text-sm font-semibold text-ink">
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>Channel admins cannot see your phone number or profile name</span>
+                  <span>{t('Channel admins cannot see your phone number or profile name')}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>Subscribers list is completely invisible to other followers</span>
+                  <span>{t('Subscribers list is completely invisible to other followers')}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>30-day automatic broadcast message clearing option</span>
+                  <span>{t('30-day automatic broadcast message clearing option')}</span>
                 </div>
               </div>
             </Reveal>
@@ -407,19 +409,19 @@ export function ChannelsPage() {
             <Reveal from="right" className="flex justify-center">
               <div className="w-full max-w-[380px] rounded-3xl bg-surface p-6 shadow-float border border-line">
                 <div className="flex items-center gap-3 text-brand-ink font-bold text-sm mb-3">
-                  <FiLock className="text-brand-strong text-lg" /> Privacy Firewall Active
+                  <FiLock className="text-brand-strong text-lg" /> {t('Privacy Firewall Active')}
                 </div>
                 <p className="text-xs text-body leading-relaxed">
-                  Your identity is protected at all times. Explore sports, news, and entertainment updates with peace of mind.
+                  {t('Your identity is protected at all times. Explore sports, news, and entertainment updates with peace of mind.')}
                 </p>
                 <div className="mt-4 rounded-2xl bg-cream p-4 border border-line space-y-2 text-xs">
                   <div className="flex justify-between text-ink font-semibold">
-                    <span>Phone Number:</span>
-                    <span className="text-brand-strong">•••••••• Hidden</span>
+                    <span>{t('Phone Number:')}</span>
+                    <span className="text-brand-strong">{t('•••••••• Hidden')}</span>
                   </div>
                   <div className="flex justify-between text-ink font-semibold">
-                    <span>Profile Photo:</span>
-                    <span className="text-brand-strong">Protected</span>
+                    <span>{t('Profile Photo:')}</span>
+                    <span className="text-brand-strong">{t('Protected')}</span>
                   </div>
                 </div>
               </div>
@@ -432,10 +434,10 @@ export function ChannelsPage() {
       <Section className="bg-cream">
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            Popular Channels on KT
+            {t('Popular Channels on KT')}
           </h2>
           <p className="mt-4 text-lg text-body">
-            Explore top verified channels across technology, sports, news, and creative arts.
+            {t('Explore top verified channels across technology, sports, news, and creative arts.')}
           </p>
         </Reveal>
 
@@ -453,8 +455,8 @@ export function ChannelsPage() {
                   </h3>
                   <p className="mt-2 text-xs leading-relaxed text-body line-clamp-2">{card.desc}</p>
                   <div className="mt-4 pt-4 border-t border-line flex items-center justify-between">
-                    <span className="text-xs text-muted font-medium">{card.followers} followers</span>
-                    <span className="text-xs font-bold text-brand-strong group-hover:underline">Follow →</span>
+                    <span className="text-xs text-muted font-medium">{card.followers} {t('followers')}</span>
+                    <span className="text-xs font-bold text-brand-strong group-hover:underline">{t('Follow →')}</span>
                   </div>
                 </div>
               </div>
@@ -468,10 +470,10 @@ export function ChannelsPage() {
         <Container>
           <Reveal from="up" className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Channels vs Traditional Social Feeds
+              {t('Channels vs Traditional Social Feeds')}
             </h2>
             <p className="mt-4 text-lg text-body">
-              Why creators and readers prefer KT Channels over algorithm-driven feeds and email blasts.
+              {t('Why creators and readers prefer KT Channels over algorithm driven feeds and email blasts.')}
             </p>
           </Reveal>
 
@@ -479,10 +481,10 @@ export function ChannelsPage() {
             <table className="w-full min-w-[600px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-line bg-cream">
-                  <th className="p-4 font-bold text-ink">Feature</th>
-                  <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT Channels</th>
-                  <th className="p-4 font-bold text-body">Social Feeds</th>
-                  <th className="p-4 font-bold text-body">Email Newsletters</th>
+                  <th className="p-4 font-bold text-ink">{t('Feature')}</th>
+                  <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">{t('KT Channels')}</th>
+                  <th className="p-4 font-bold text-body">{t('Social Feeds')}</th>
+                  <th className="p-4 font-bold text-body">{t('Email Newsletters')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line text-sm">
@@ -505,10 +507,10 @@ export function ChannelsPage() {
         <Container className="max-w-4xl">
           <Reveal from="up" className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-              <FiHelpCircle /> Channel FAQs
+              <FiHelpCircle /> {t('Channel FAQs')}
             </div>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Frequently Asked Questions
+              {t('Frequently Asked Questions')}
             </h2>
           </Reveal>
 
@@ -550,17 +552,17 @@ export function ChannelsPage() {
         <Container className="text-center">
           <Reveal from="up">
             <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
-              Explore &amp; Broadcast on Channels Today
+              {t('Explore & Broadcast on Channels Today')}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Download KT Messenger now to subscribe to top creators or launch your own broadcast channel.
+              {t('Download KT Messenger now to subscribe to top creators or launch your own broadcast channel.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
-                Explore Directory <FiDownload />
+                {t('Explore Directory')} <FiDownload />
               </Button>
               <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
-                Launch Web App <FiChevronRight />
+                {t('Launch Web App')} <FiChevronRight />
               </Button>
             </div>
           </Reveal>

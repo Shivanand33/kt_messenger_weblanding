@@ -30,6 +30,8 @@ import { KtAiLoopVideo } from '../../common/VideoAnimations/KtAiLoopVideo'
 import { SecurityLoopVideo } from '../../common/VideoAnimations/SecurityLoopVideo'
 import { PlusLoopVideo } from '../../common/VideoAnimations/PlusLoopVideo'
 
+import { useLanguage } from '../../../context/LanguageContext'
+
 import avatarFemale from '../../../assets/images/avatar_female_1.png'
 
 function CrownIcon({ className = 'h-4 w-4' }) {
@@ -42,105 +44,106 @@ function CrownIcon({ className = 'h-4 w-4' }) {
 
 export function VideoShowcase() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState('chat')
 
   const featuresData = {
     chat: {
       id: 'chat',
       route: '/messaging',
-      label: 'Messaging',
+      label: t('Messaging'),
       icon: <FiMessageSquare />,
-      headline: 'Instant 4K Media & 2GB Files',
-      shortTag: 'Send uncompressed photos, 2GB ZIP files, and voice notes with double blue tick delivery confirmations.',
-      specs: ['Signal 256-bit E2EE', '2GB Uncompressed Files', '1.5x Speed Voice Notes'],
-      badge: 'Instant Delivery • Double Blue Ticks ✔✔',
+      headline: t('Instant 4K Media & 2GB Files'),
+      shortTag: t('Send uncompressed photos, 2GB ZIP files, and voice notes with double blue tick delivery confirmations.'),
+      specs: [t('KT 256-bit E2EE'), t('2GB Uncompressed Files'), t('1.5x Speed Voice Notes')],
+      badge: t('Instant Delivery • Double Blue Ticks ✔✔'),
       videoComponent: <KtChatScreen showControls={false} showProgress={false} showEncryptionNote={false} />
     },
     call: {
       id: 'call',
       route: '/calling',
-      label: 'Calling',
+      label: t('Calling'),
       icon: <FiPhone />,
-      headline: 'Studio 1080p HD Calling & Screen Share',
-      shortTag: 'Crystal-clear Opus 48kHz spatial audio with 32 participants and 1-tap live desktop screen sharing.',
-      specs: ['32-Person Group Calls', '1080p 60FPS Screen Share', 'Spatial Audio Equalizer'],
-      badge: 'Studio Audio • 60FPS Screen Share',
+      headline: t('Studio 1080p HD Calling & Screen Share'),
+      shortTag: t('Crystal clear Opus 48kHz spatial audio with 32 participants and 1-tap live desktop screen sharing.'),
+      specs: [t('32-Person Group Calls'), t('1080p 60FPS Screen Share'), t('Spatial Audio Equalizer')],
+      badge: t('Studio Audio • 60FPS Screen Share'),
       videoComponent: <KtCallScreen />
     },
     groups: {
       id: 'groups',
       route: '/groups',
-      label: 'Groups',
+      label: t('Groups'),
       icon: <FiUsers />,
-      headline: '1,024 Member Groups & Live Polls',
-      shortTag: 'Real-time poll percentage votes, automated event RSVP tracking, and community sub-group hubs.',
-      specs: ['1,024 Member Capacity', 'Real-Time Poll Voting', 'Event RSVP Calendar'],
-      badge: '1,024 Capacity • Live Poll Engine',
+      headline: t('1,024 Member Groups & Live Polls'),
+      shortTag: t('Real time poll percentage votes, automated event RSVP tracking, and community sub group hubs.'),
+      specs: [t('1,024 Member Capacity'), t('Real Time Poll Voting'), t('Event RSVP Calendar')],
+      badge: t('1,024 Capacity • Live Poll Engine'),
       videoComponent: <GroupsLoopVideo />
     },
     channels: {
       id: 'channels',
       route: '/channels',
-      label: 'Channels',
+      label: t('Channels'),
       icon: <FiRadio />,
-      headline: '1-to-Many Broadcast Channels',
-      shortTag: 'Broadcast to unlimited subscribers while keeping phone numbers & admin identity 100% private.',
-      specs: ['Unlimited Subscribers', 'Identity Privacy Shield', 'Private Emoji Reactions'],
-      badge: 'Unlimited Reach • Identity Shield',
+      headline: t('1-to Many Broadcast Channels'),
+      shortTag: t('Broadcast to unlimited subscribers while keeping phone numbers & admin identity 100% private.'),
+      specs: [t('Unlimited Subscribers'), t('Identity Privacy Shield'), t('Private Emoji Reactions')],
+      badge: t('Unlimited Reach • Identity Shield'),
       videoComponent: <ChannelsLoopVideo />
     },
     ai: {
       id: 'ai',
       route: '/ai',
       label: 'KT AI',
-      headline: 'Neural AI Multimodal Assistant',
-      shortTag: 'Type `/imagine` prompts for 4K artwork or mention `@KTAI` in groups for instant intelligent answers.',
-      specs: ['/imagine 4K Artwork', 'Group Chat Co-Pilot', 'Voice Audio Transcriber'],
-      badge: 'Multi-Modal AI • Sub-Second GPU Render',
+      headline: t('Neural AI Multimodal Assistant'),
+      shortTag: t('Type `/imagine` prompts for 4K artwork or mention `@KTAI` in groups for instant intelligent answers.'),
+      specs: [t('/imagine 4K Artwork'), t('Group Chat Co Pilot'), t('Voice Audio Transcriber')],
+      badge: t('Multi Modal AI • Sub Second GPU Render'),
       videoComponent: <KtAiLoopVideo />
     },
     status: {
       id: 'status',
       route: '/status',
-      label: 'Status',
+      label: t('Status'),
       icon: <FiClock />,
-      headline: 'Disappearing 24-Hour Stories',
-      shortTag: 'Share photos, text, and 30-second audio voice notes that automatically vanish after 24 hours.',
-      specs: ['24-Hour Auto-Vanish', '30s Voice Status Clips', 'Granular Privacy Rules'],
-      badge: '24-Hour Vanish • Voice Status',
+      headline: t('Disappearing 24-Hour Stories'),
+      shortTag: t('Share photos, text, and 30-second audio voice notes that automatically vanish after 24 hours.'),
+      specs: [t('24-Hour Auto Vanish'), t('30s Voice Status Clips'), t('Granular Privacy Rules')],
+      badge: t('24-Hour Vanish • Voice Status'),
       videoComponent: <KtStatusScreen />
     },
     news: {
       id: 'news',
       route: '/news',
-      label: 'News',
+      label: t('News'),
       icon: <FiGrid />,
-      headline: 'Live News Feed Inside Your Chats',
-      shortTag: 'Trending stories, live channels, and a searchable feed — read the day’s headlines without leaving the app.',
-      specs: ['Trending & Live Channels', 'Category Filters', 'Save & Share in One Tap'],
-      badge: 'Fresh Headlines • Zero Ad Tracking',
+      headline: t('Live News Feed Inside Your Chats'),
+      shortTag: t('Trending stories, live channels, and a searchable feed read the day’s headlines without leaving the app.'),
+      specs: [t('Trending & Live Channels'), t('Category Filters'), t('Save & Share in One Tap')],
+      badge: t('Fresh Headlines • Zero Ad Tracking'),
       videoComponent: <KtNewsScreen />
     },
     minis: {
       id: 'minis',
       route: '/news',
-      label: 'Minis',
+      label: t('Minis'),
       icon: <FiPlayCircle />,
-      headline: 'Minis — Short Video, Full Screen',
-      shortTag: 'A vertical clip feed with likes, comments and shares, built right beside your chats and calls.',
-      specs: ['Full-Screen Vertical Feed', 'Like, Comment & Share', 'Follow Your Creators'],
-      badge: 'Short Video • In-App Feed',
+      headline: t('Minis Short Video, Full Screen'),
+      shortTag: t('A vertical clip feed with likes, comments and shares, built right beside your chats and calls.'),
+      specs: [t('Full Screen Vertical Feed'), t('Like, Comment & Share'), t('Follow Your Creators')],
+      badge: t('Short Video • In App Feed'),
       videoComponent: <KtMinisScreen />
     },
     security: {
       id: 'security',
       route: '/security',
-      label: 'Security',
+      label: t('Security'),
       icon: <FiShield />,
-      headline: 'Signal Protocol 256-bit Encryption',
-      shortTag: 'Every chat, voice call, and cloud backup is sealed with unique cryptographic keys stored on your device.',
-      specs: ['Signal 256-bit E2EE', 'Biometric Chat Lock', 'Silence Unknown Callers'],
-      badge: '100% Encrypted • Zero Logs',
+      headline: t('KT Encryption Protocol 256-bit'),
+      shortTag: t('Every chat, voice call, and cloud backup is sealed with unique cryptographic keys stored on your device.'),
+      specs: [t('KT 256-bit E2EE'), t('Biometric Chat Lock'), t('Silence Unknown Callers')],
+      badge: t('100% Encrypted • Zero Logs'),
       videoComponent: <SecurityLoopVideo />
     },
     plus: {
@@ -148,10 +151,10 @@ export function VideoShowcase() {
       route: '/plus',
       label: 'KT Plus',
       icon: <CrownIcon />,
-      headline: 'KT Plus Theme Engine & Pro Suite',
-      shortTag: 'Custom UI themes (Midnight Sapphire, Electric Cyan, Royal Gold), 10GB file engine, and 5 dual accounts.',
-      specs: ['Custom UI Theme Engine', '10GB RAW File Transfer', '5 Dual Space Accounts'],
-      badge: 'Pro Suite • 10GB File Engine',
+      headline: t('KT Plus Theme Engine & Pro Suite'),
+      shortTag: t('Custom UI themes (Midnight Sapphire, Electric Cyan, Royal Gold), 10GB file engine, and 5 dual accounts.'),
+      specs: [t('Custom UI Theme Engine'), t('10GB RAW File Transfer'), t('5 Dual Space Accounts')],
+      badge: t('Pro Suite • 10GB File Engine'),
       videoComponent: <PlusLoopVideo />
     }
   }
@@ -166,13 +169,13 @@ export function VideoShowcase() {
         {/* Header Section */}
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
-            <FiPlay className="text-brand-strong" /> Interactive Product Video Demonstrator
+            <FiPlay className="text-brand-strong" /> {t('Interactive Product Video Demonstrator')}
           </div>
           <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            See How Every Feature Works in Action
+            {t('See How Every Feature Works in Action')}
           </h2>
           <p className="mt-3 text-base text-body">
-            Tap a feature tab below to watch real-time simulated mobile video animations.
+            {t('Tap a feature tab below to watch real time simulated mobile video animations.')}
           </p>
 
           {/* Sleek Horizontal Feature Tab Switcher */}
@@ -213,7 +216,7 @@ export function VideoShowcase() {
               {/* LEFT COLUMN (5 Columns): Short Punchy Information */}
               <div className="lg:col-span-5 space-y-5">
                 <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                  {current.label} Experience
+                  {current.label} {t('Experience')}
                 </div>
 
                 <h3 className="text-3xl font-extrabold text-ink sm:text-4xl lg:text-[2.6rem] tracking-tight leading-tight">
@@ -240,7 +243,7 @@ export function VideoShowcase() {
                     onClick={() => navigate(current.route)}
                     className="inline-flex items-center gap-2 rounded-full bg-brand-strong px-6 py-3 text-sm font-bold text-white shadow-brand transition-all hover:bg-brand-strong-hover hover:-translate-y-0.5"
                   >
-                    <span>Explore {current.label}</span>
+                    <span>{t('Explore')} {current.label}</span>
                     <FiArrowRight />
                   </button>
                   <span className="text-xs font-bold text-brand-ink bg-brand-soft px-3 py-2 rounded-full border border-brand-strong/30">
@@ -276,7 +279,7 @@ export function VideoShowcase() {
                   className="absolute top-8 left-2 sm:left-4 z-20 hidden sm:flex items-center gap-1.5 rounded-2xl bg-surface px-3 py-1.5 shadow-float border border-line"
                 >
                   <span className="text-lg">☕</span>
-                  <span className="text-xs font-bold text-ink">Private &amp; Instant</span>
+                  <span className="text-xs font-bold text-ink">{t('Private & Instant')}</span>
                 </motion.div>
 
                 {/* Mobile Phone Mockup Device Container */}
@@ -290,7 +293,7 @@ export function VideoShowcase() {
                   transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
                   className="absolute bottom-2 left-2 sm:left-6 z-20 flex items-center gap-2.5 rounded-full bg-surface px-3.5 py-2 shadow-float border border-line"
                 >
-                  <img src={avatarFemale} alt="Avatar" className="h-6 w-6 rounded-full object-cover border border-brand-strong" />
+                  <img src={avatarFemale} alt={t('Avatar')} className="h-6 w-6 rounded-full object-cover border border-brand-strong" />
                   <div className="grid h-5 w-5 place-items-center rounded-full bg-emerald-500 text-white text-[9px]">
                     ▶
                   </div>

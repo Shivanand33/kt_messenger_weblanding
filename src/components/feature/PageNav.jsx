@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Container } from '../common/Container/Container'
+import { useLanguage } from '../../context/LanguageContext'
 
 const SCROLL_OFFSET = 128
 
@@ -11,6 +12,7 @@ const SCROLL_OFFSET = 128
  * `items`: [{ id, label, icon? }] — each `id` must match a section's id.
  */
 export function PageNav({ items, className = '' }) {
+  const { t } = useLanguage()
   const [active, setActive] = useState(items[0]?.id)
   const railRef = useRef(null)
 
@@ -53,7 +55,7 @@ export function PageNav({ items, className = '' }) {
 
   return (
     <nav
-      aria-label="Page sections"
+      aria-label={t('Page sections')}
       className={`sticky top-16 z-40 border-b border-line bg-cream/90 backdrop-blur-xl lg:top-[72px] ${className}`}
     >
       <Container>
@@ -74,7 +76,7 @@ export function PageNav({ items, className = '' }) {
                 }`}
               >
                 {item.icon ? <span className="text-sm">{item.icon}</span> : null}
-                {item.label}
+                {t(item.label)}
               </button>
             )
           })}

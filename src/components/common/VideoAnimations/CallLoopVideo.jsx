@@ -4,8 +4,10 @@ import { FiPhone, FiVideo, FiMic, FiMicOff, FiMonitor, FiPhoneOff, FiVolume2, Fi
 import { PhoneVideoFrame } from './PhoneVideoFrame'
 import avatarFemale from '../../../assets/images/avatar_female_1.png'
 import avatarMale from '../../../assets/images/avatar_male_1.png'
+import { useLanguage } from '../../../context/LanguageContext'
 
 export function CallLoopVideo({ className = '' }) {
+  const { t } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(true)
   const [phase, setPhase] = useState(0) // 0: Ringing, 1: HD Call, 2: Screen Share
   const [progress, setProgress] = useState(0)
@@ -37,7 +39,7 @@ export function CallLoopVideo({ className = '' }) {
 
   return (
     <PhoneVideoFrame
-      title="1080p Calling &amp; Screen Share"
+      title={t('1080p Calling & Screen Share')}
       progress={progress}
       isPlaying={isPlaying}
       onTogglePlay={() => setIsPlaying(!isPlaying)}
@@ -50,11 +52,11 @@ export function CallLoopVideo({ className = '' }) {
           <img src={avatarFemale} alt="Emiko" className="h-7 w-7 rounded-full object-cover border border-brand-strong" />
           <div>
             <p className="text-xs font-bold text-white">Emiko Takahashi</p>
-            <p className="text-[9px] text-emerald-400 font-semibold">1080p HD • Signal Encrypted</p>
+            <p className="text-[9px] text-emerald-400 font-semibold">{t('1080p HD • KT Encrypted')}</p>
           </div>
         </div>
         <span className="rounded-full bg-brand-strong/30 px-2 py-0.5 text-[8px] font-bold text-brand-ink border border-brand-strong/40">
-          HD Audio
+          {t('HD Audio')}
         </span>
       </div>
 
@@ -67,11 +69,11 @@ export function CallLoopVideo({ className = '' }) {
               transition={{ repeat: Infinity, duration: 1.2 }}
               className="mx-auto h-20 w-20 rounded-full border-4 border-brand-strong p-1 shadow-brand"
             >
-              <img src={avatarFemale} alt="Calling" className="h-full w-full rounded-full object-cover" />
+              <img src={avatarFemale} alt={t('Calling')} className="h-full w-full rounded-full object-cover" />
             </motion.div>
             <div>
               <h4 className="font-bold text-sm text-white">Emiko Takahashi</h4>
-              <p className="text-xs text-brand-ink font-semibold animate-pulse mt-0.5">Incoming 1080p Video Call...</p>
+              <p className="text-xs text-brand-ink font-semibold animate-pulse mt-0.5">{t('Incoming 1080p Video Call...')}</p>
             </div>
             <div className="flex justify-center gap-6 pt-2">
               <span className="grid h-12 w-12 place-items-center rounded-full bg-red-600 text-white text-base shadow-lg">
@@ -86,11 +88,11 @@ export function CallLoopVideo({ className = '' }) {
 
         {phase === 1 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative h-full w-full overflow-hidden rounded-xl bg-slate-950 border border-slate-800">
-            <img src={avatarFemale} alt="Video Stream" className="h-full w-full object-cover" />
+            <img src={avatarFemale} alt={t('Video Stream')} className="h-full w-full object-cover" />
             
             {/* Self PIP */}
             <div className="absolute top-2 right-2 h-16 w-12 overflow-hidden rounded-lg border-2 border-white/40 bg-slate-900 shadow-md">
-              <img src={avatarMale} alt="You" className="h-full w-full object-cover" />
+              <img src={avatarMale} alt={t('You')} className="h-full w-full object-cover" />
             </div>
 
             {/* Spatial Audio Spectrum */}
@@ -106,7 +108,7 @@ export function CallLoopVideo({ className = '' }) {
                   />
                 ))}
               </div>
-              <span className="text-[8px] font-bold text-white">Spatial Audio</span>
+              <span className="text-[8px] font-bold text-white">{t('Spatial Audio')}</span>
             </div>
 
             {/* Call Action Controls Bar */}
@@ -122,18 +124,18 @@ export function CallLoopVideo({ className = '' }) {
         {phase === 2 && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="my-auto rounded-xl bg-slate-950 p-3 border border-brand-strong/40 text-center space-y-2">
             <div className="flex items-center justify-between border-b border-slate-800 pb-1.5 text-[10px]">
-              <span className="font-bold text-brand-ink flex items-center gap-1"><FiMonitor className="text-brand-strong" /> Screen Broadcast</span>
+              <span className="font-bold text-brand-ink flex items-center gap-1"><FiMonitor className="text-brand-strong" /> {t('Screen Broadcast')}</span>
               <span className="bg-brand-strong text-white px-1.5 py-0.5 rounded font-bold text-[8px]">1080p 60FPS</span>
             </div>
-            <p className="text-xs font-semibold text-white">Sharing &quot;Quarterly_Strategy.pdf&quot;</p>
-            <p className="text-[9px] text-brand-ink">Live stream delivered with E2EE protection</p>
+            <p className="text-xs font-semibold text-white">{t('Sharing "Quarterly_Strategy.pdf"')}</p>
+            <p className="text-[9px] text-brand-ink">{t('Live stream delivered with E2EE protection')}</p>
           </motion.div>
         )}
       </div>
 
       {/* Screen Footer */}
       <div className="rounded-xl bg-slate-950 p-1.5 text-center text-[9px] font-bold text-brand-ink border border-slate-800">
-        1080p HD voice &amp; screen sharing on iOS, Android &amp; Desktop
+        {t('1080p HD voice & screen sharing on iOS, Android & Desktop')}
       </div>
     </PhoneVideoFrame>
   )

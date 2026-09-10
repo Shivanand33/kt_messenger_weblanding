@@ -1,10 +1,17 @@
-import { useEffect, useMemo, useState } from 'react'
-import { FiSearch, FiArrowLeft, FiClock, FiArrowRight, FiX } from 'react-icons/fi'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import {
+  FiSearch, FiArrowLeft, FiClock, FiArrowRight, FiX,
+  FiCpu, FiRadio, FiPhone, FiMessageCircle, FiUsers, FiCamera, FiShield, FiBriefcase, FiCreditCard, FiShoppingBag,
+} from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { Container } from '../../components/common/Container/Container'
 import { Reveal } from '../../components/common/Reveal/Reveal'
+import { useLanguage } from '../../context/LanguageContext'
 import { blogPosts as FALLBACK_POSTS } from './blogData'
 import { api } from '../../services/apiClient'
+import { trackBlogView } from '../../services/analytics'
+import { useSeo } from '../../hooks/useSeo'
 import footerImg from '../../assets/images/footer.jpg'
 import multideviceImg from '../../assets/images/multidevice.jpg'
 import privateImg from '../../assets/images/private.jpg'
@@ -73,6 +80,9 @@ function parseBody(body) {
       .replace(/<\s*(h[1-6])[^>]*>([\s\S]*?)<\s*\/\s*\1\s*>/gi, (_m, _tag, inner) => `\n## ${inner}\n`)
       .replace(/<\s*li[^>]*>([\s\S]*?)<\s*\/\s*li\s*>/gi, (_m, inner) => `\n- ${inner}\n`)
       .replace(/<\s*br\s*\/?\s*>/gi, '\n')
+      // Keep links: turn <a href="x">y</a> into markdown [y](x) before the
+      // generic tag strip below removes it, so renderText can make it clickable.
+      .replace(/<a\s[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\s*\/\s*a\s*>/gi, (_m, href, inner) => `[${inner.replace(/<[^>]+>/g, '').trim()}](${href.trim()})`)
       .replace(/<\s*\/\s*(p|div|section|article|ul|ol|h[1-6])\s*>/gi, '\n\n')
       .replace(/<[^>]+>/g, '')
       .replace(/&nbsp;/gi, ' ')
@@ -126,25 +136,69 @@ function normalizeDetail(p) {
     ...normalizeCard(p),
     readMins: readingTime(p.body || p.excerpt),
     blocks,
+    // Carried through for the canonical/social tags — normalizeCard covers
+    // only what the list view renders.
+    seoTitle: p.seoTitle || null,
+    seoDescription: p.seoDescription || null,
+    ogImage: p.ogImage || null,
   }
 }
 
-// Render **bold** highlights inside a paragraph or bullet as a soft brand
-// "marker" so key phrases pop. box-decoration-clone keeps the highlight tidy
-// when a phrase wraps across lines.
+// The `!` important flags override the global `a { color: inherit;
+// text-decoration: none }` reset in index.css (an unlayered rule that would
+// otherwise beat these Tailwind utilities), so blog links reliably show blue
+// with an underline. Scoped to blog links only — other links are untouched.
+const LINK_CLASS =
+  'font-semibold !text-brand-strong !underline decoration-brand-strong/50 underline-offset-2 transition-colors hover:!text-brand-ink dark:!text-sky-300 dark:hover:!text-sky-200'
+
+// A link written in a blog body — [text](/calling) or [text](https://…).
+// Internal paths and same-site URLs use client-side routing (no full reload);
+// external links open in a new tab. mailto:/tel:/#anchors render as plain <a>.
+function BlogLink({ href, children }) {
+  const url = String(href || '').trim()
+  if (url.startsWith('/')) return <Link to={url} className={LINK_CLASS}>{children}</Link>
+  if (/^https?:\/\//i.test(url)) {
+    try {
+      const u = new URL(url)
+      if (typeof window !== 'undefined' && u.origin === window.location.origin) {
+        return <Link to={u.pathname + u.search + u.hash} className={LINK_CLASS}>{children}</Link>
+      }
+    } catch {
+      /* malformed URL — fall through to a plain external link */
+    }
+    return <a href={url} target="_blank" rel="noopener noreferrer" className={LINK_CLASS}>{children}</a>
+  }
+  return <a href={url} className={LINK_CLASS}>{children}</a>
+}
+
+// Render inline **bold** highlights and [text](url) links inside a paragraph or
+// bullet. Bold is a soft brand "marker"; links are clickable and route in-app
+// for internal pages. box-decoration-clone keeps a highlight tidy across lines.
 function renderText(text) {
-  return text.split('**').map((part, i) =>
-    i % 2 === 1 ? (
-      <strong
-        key={i}
-        className="rounded-[6px] box-decoration-clone bg-brand-soft/70 px-1.5 py-0.5 font-bold text-brand-strong dark:bg-brand-strong/20 dark:text-sky-300"
-      >
-        {part}
-      </strong>
-    ) : (
-      <span key={i}>{part}</span>
-    ),
-  )
+  const nodes = []
+  // Match either a markdown link [label](href) or a **bold** span.
+  const re = /\[([^\]]+)\]\(([^)\s]+)\)|\*\*([^*]+)\*\*/g
+  let last = 0
+  let key = 0
+  let m
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) nodes.push(<span key={key++}>{text.slice(last, m.index)}</span>)
+    if (m[1] !== undefined) {
+      nodes.push(<BlogLink key={key++} href={m[2]}>{m[1]}</BlogLink>)
+    } else {
+      nodes.push(
+        <strong
+          key={key++}
+          className="rounded-[6px] box-decoration-clone bg-brand-soft/70 px-1.5 py-0.5 font-bold text-brand-strong dark:bg-brand-strong/20 dark:text-sky-300"
+        >
+          {m[3]}
+        </strong>,
+      )
+    }
+    last = re.lastIndex
+  }
+  if (last < text.length) nodes.push(<span key={key++}>{text.slice(last)}</span>)
+  return nodes
 }
 
 function ArticleBody({ blocks }) {
@@ -200,7 +254,44 @@ function ArticleBody({ blocks }) {
   )
 }
 
+// Internal destinations a blog article can point readers to. Each entry lists
+// keywords used to pick the most relevant pages for a given post, so the links
+// are contextual and useful (and improve internal linking / discoverability).
+const EXPLORE_PAGES = [
+  { href: '/ai', label: 'KT AI', blurb: 'Your intelligent assistant, built right into every chat.', Icon: FiCpu, kw: ['ai', 'assistant', 'intelligent', 'smart', 'automation', 'bot', 'summar'] },
+  { href: '/channels', label: 'Channels', blurb: 'Follow updates from the people and organizations you care about.', Icon: FiRadio, kw: ['channel', 'broadcast', 'follow', 'updates', 'creator', 'news', 'announcement'] },
+  { href: '/calling', label: 'Voice & Video Calls', blurb: 'Crystal clear calls that live right inside your conversations.', Icon: FiPhone, kw: ['call', 'calling', 'voice', 'video', 'audio'] },
+  { href: '/messaging', label: 'Messaging', blurb: 'Fast, private messaging for everything you want to share.', Icon: FiMessageCircle, kw: ['message', 'messaging', 'chat', 'text', 'conversation'] },
+  { href: '/groups', label: 'Groups & Communities', blurb: 'Bring people together at any scale from close friends to communities.', Icon: FiUsers, kw: ['group', 'community', 'communities', 'team', 'event', 'poll'] },
+  { href: '/status', label: 'Status', blurb: 'Share moments with photos, videos and text that disappear in 24 hours.', Icon: FiCamera, kw: ['status', 'story', 'stories', 'moment'] },
+  { href: '/security', label: 'Security & Privacy', blurb: 'End to end encryption, on by default, for every conversation.', Icon: FiShield, kw: ['security', 'privacy', 'private', 'encryption', 'encrypted', 'safe', 'secure', 'authentication'] },
+  { href: '/business', label: 'KT for Business', blurb: 'Turn conversations into lasting customer relationships.', Icon: FiBriefcase, kw: ['business', 'customer', 'marketing', 'commerce', 'sell', 'brand'] },
+  { href: '/wallet', label: 'Wallet & Payments', blurb: 'Send and receive payments securely inside your chats.', Icon: FiCreditCard, kw: ['wallet', 'payment', 'pay', 'coin', 'money', 'transfer'] },
+  { href: '/marketplace', label: 'Marketplace', blurb: 'Discover, buy and sell right where you already chat.', Icon: FiShoppingBag, kw: ['marketplace', 'buy', 'sell', 'shop', 'store', 'catalog'] },
+]
+const DEFAULT_EXPLORE = ['/ai', '/channels', '/calling']
+
+// Pick up to 3 internal pages most relevant to a post (by category, tags, title
+// and description), falling back to core pages so the section is always useful.
+function relatedPages(post) {
+  const hay = [post?.category, post?.title, post?.description, ...(post?.tags || []).map((t) => t?.name || t)]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase()
+  const picks = EXPLORE_PAGES.map((p) => ({ p, score: p.kw.reduce((n, k) => n + (hay.includes(k) ? 1 : 0), 0) }))
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map((s) => s.p)
+  for (const href of DEFAULT_EXPLORE) {
+    if (picks.length >= 3) break
+    const d = EXPLORE_PAGES.find((p) => p.href === href)
+    if (d && !picks.includes(d)) picks.push(d)
+  }
+  return picks.slice(0, 3)
+}
+
 function ArticleReader({ post, posts, onBack, onOpen }) {
+  const { t } = useLanguage()
   const related = useMemo(() => {
     if (!posts.length) return []
     const start = posts.findIndex((p) => p.slug === post.slug)
@@ -221,6 +312,9 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
   const hasLead = post.blocks.length > 1 && post.blocks[0]?.type === 'p'
   const bodyBlocks = hasLead ? post.blocks.slice(1) : post.blocks
 
+  // Contextual internal links from this article to the most relevant KT pages.
+  const explore = useMemo(() => relatedPages(post), [post])
+
   const BackButton = (
     <button
       type="button"
@@ -230,7 +324,7 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
       <span className="grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand-strong transition-all duration-300 group-hover:bg-brand-strong group-hover:text-white">
         <FiArrowLeft className="transition-transform duration-300 group-hover:-translate-x-0.5" />
       </span>
-      Back to Blogs
+      {t('Back to Blogs')}
     </button>
   )
 
@@ -249,7 +343,7 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
           <span>{post.date}</span>
           <span className="h-1 w-1 rounded-full bg-muted/50" />
           <span className="inline-flex items-center gap-1.5">
-            <FiClock /> {post.readMins} min read
+            <FiClock /> {post.readMins} {t('min read')}
           </span>
         </div>
       </Reveal>
@@ -264,15 +358,22 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
 
       <Reveal from="up" delay={0.05} className="mx-auto mt-9 max-w-4xl">
         <div className="group overflow-hidden rounded-[28px] border border-line shadow-[0_30px_70px_-24px_rgba(37,99,235,0.45)]">
+          {/* No fixed height: the hero takes its natural aspect ratio, so the
+              whole cover shows instead of being cropped to a band. max-h with
+              object-contain only kicks in for very tall images, which would
+              otherwise push the article off the screen. */}
           <img
             src={imageFor(post)}
             alt={post.title}
-            className="h-60 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] sm:h-80 lg:h-[440px]"
+            className="max-h-[760px] w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
           />
         </div>
       </Reveal>
 
-      <Reveal from="up" delay={0.07} className="mx-auto mt-10 max-w-3xl">
+      {/* amount="some" so long articles reveal as soon as any part scrolls into
+          view — a tall body can never show 30% of itself at once, which would
+          otherwise leave it stuck hidden (opacity 0). */}
+      <Reveal from="up" delay={0.07} amount="some" className="mx-auto mt-10 max-w-3xl">
         <ArticleBody blocks={bodyBlocks} />
       </Reveal>
 
@@ -295,7 +396,7 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
       {/* related */}
       {related.length ? (
         <div className="mx-auto mt-16 max-w-4xl border-t border-line pt-12">
-          <h3 className="text-xl font-bold text-ink sm:text-2xl">Related articles</h3>
+          <h3 className="text-xl font-bold text-ink sm:text-2xl">{t('Related articles')}</h3>
           <div className="mt-6 grid gap-6 sm:grid-cols-3">
             {related.map((rel) => (
               <button
@@ -309,7 +410,7 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
                     src={imageFor(rel)}
                     alt={rel.title}
                     loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-4">
@@ -317,6 +418,32 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
                   <h4 className="mt-1.5 line-clamp-2 text-sm font-bold leading-snug text-ink">{rel.title}</h4>
                 </div>
               </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {/* Explore on KT — contextual internal links to related feature pages */}
+      {explore.length ? (
+        <div className="mx-auto mt-14 max-w-4xl border-t border-line pt-12">
+          <h3 className="text-xl font-bold text-ink sm:text-2xl">{t('Explore on KT Messenger')}</h3>
+          <p className="mt-1.5 text-sm leading-6 text-body">{t('Go deeper into the features this article touches on.')}</p>
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            {explore.map(({ href, label, blurb, Icon }) => (
+              <Link
+                key={href}
+                to={href}
+                className="group flex flex-col rounded-2xl border border-line bg-cream-2 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_20px_44px_-22px_rgba(37,99,235,0.5)]"
+              >
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand-strong">
+                  <Icon className="text-lg" />
+                </span>
+                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-ink transition-colors group-hover:text-brand-ink">
+                  {t(label)}
+                  <FiArrowRight className="text-xs transition-transform duration-300 group-hover:translate-x-0.5" />
+                </span>
+                <span className="mt-1 text-xs leading-5 text-body">{t(blurb)}</span>
+              </Link>
             ))}
           </div>
         </div>
@@ -330,9 +457,14 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
 export function BlogPage() {
   // Start with the bundled posts already on screen so the blog renders instantly
   // — no loading spinner while the network responds.
+  // The open article is driven by the URL (/blog/:slug) so it has a real,
+  // shareable address and the browser Back button returns to the exact article
+  // the reader came from (e.g. after tapping an in-article link to /ai).
+  const navigate = useNavigate()
+  const { t } = useLanguage()
+  const { slug: activeSlug = null } = useParams()
   const [posts, setPosts] = useState(FALLBACK_POSTS)
   const [loading] = useState(false)
-  const [activeSlug, setActiveSlug] = useState(null)
   const [activePost, setActivePost] = useState(null)
   const [articleLoading, setArticleLoading] = useState(false)
   const [category, setCategory] = useState('All')
@@ -367,40 +499,87 @@ export function BlogPage() {
     window.scrollTo(0, 0)
   }, [activeSlug])
 
-  const openArticle = async (slug) => {
-    setActiveSlug(slug)
+  // Guards against a slow background fetch (for a slug the reader has since
+  // navigated away from) overwriting the article now on screen.
+  const openSlugRef = useRef(null)
+
+  // Load whenever the URL slug changes — on open, on a direct visit, and when
+  // the Back button lands on /blog/:slug. Bundled/known articles show instantly,
+  // then a background API fetch swaps in the latest DB version so admin edits
+  // (including in-article links) appear.
+  useEffect(() => {
+    if (!activeSlug) {
+      setActivePost(null)
+      setArticleLoading(false)
+      return
+    }
+    const slug = activeSlug
+    openSlugRef.current = slug
+    let cancelled = false
+    const isCurrent = () => !cancelled && openSlugRef.current === slug
     const card = posts.find((p) => p.slug === slug)
+    // Record the article read (once per slug — the guard above de-dupes).
+    trackBlogView(slug, card?.title)
     const bundled = FALLBACK_BY_SLUG.get(slug)
-    // Content we can render with no network: the card's own body (bundled list)
-    // or the bundled copy of this slug. Bundled articles therefore open
-    // instantly and stay fully readable even when the API is down on deploy.
     const instant = card?.blocks?.length ? card : bundled?.blocks?.length ? bundled : null
     if (instant) {
       setActivePost(instant)
-      return
-    }
-    // A DB-only article with no bundled copy — fetch it, but with a timeout so a
-    // slow API shows a brief spinner instead of hanging forever.
-    setActivePost(null)
-    setArticleLoading(true)
-    try {
-      const full = await withTimeout(api.getBlog(slug))
-      setActivePost(normalizeDetail(full))
-    } catch {
-      setActivePost(
-        card
-          ? { ...card, blocks: card.blocks?.length ? card.blocks : [{ type: 'p', text: card.description || '' }] }
-          : bundled || null,
-      )
-    } finally {
       setArticleLoading(false)
+      ;(async () => {
+        try {
+          const full = await withTimeout(api.getBlog(slug))
+          if (isCurrent()) setActivePost(normalizeDetail(full))
+        } catch {
+          /* keep the instant copy */
+        }
+      })()
+    } else {
+      setActivePost(null)
+      setArticleLoading(true)
+      ;(async () => {
+        try {
+          const full = await withTimeout(api.getBlog(slug))
+          if (isCurrent()) setActivePost(normalizeDetail(full))
+        } catch {
+          if (isCurrent())
+            setActivePost(
+              card
+                ? { ...card, blocks: card.blocks?.length ? card.blocks : [{ type: 'p', text: card.description || '' }] }
+                : bundled || null,
+            )
+        } finally {
+          if (!cancelled) setArticleLoading(false)
+        }
+      })()
     }
-  }
+    return () => {
+      cancelled = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeSlug])
 
-  const closeArticle = () => {
-    setActiveSlug(null)
-    setActivePost(null)
-  }
+  const openArticle = (slug) => navigate(`/blog/${slug}`)
+  const closeArticle = () => navigate('/blog')
+
+  // Canonical + social tags. The path is built from `activeSlug` — the slug in
+  // the URL, which is the admin-defined slug stored in the database — so the
+  // canonical link, the shared link and the stored slug are always one string.
+  useSeo({
+    enabled: !!activeSlug,
+    path: activeSlug ? `/blog/${activeSlug}` : '/blog',
+    type: 'article',
+    title: activePost ? `${activePost.seoTitle || activePost.title} · KT Messenger Blog` : undefined,
+    description: activePost?.seoDescription || activePost?.description || undefined,
+    image: activePost?.ogImage || activePost?.coverUrl || undefined,
+  })
+
+  // Index page tags, so /blog itself is also canonical.
+  useSeo({
+    enabled: !activeSlug,
+    path: '/blog',
+    title: 'KT Messenger Blog',
+    description: 'Everything KT can do, explained simply from messaging and calls to AI, payments, communities and business.',
+  })
 
   if (activeSlug) {
     return (
@@ -411,14 +590,14 @@ export function BlogPage() {
           <Container className="py-24">
             <div className="flex flex-col items-center justify-center gap-3 text-muted">
               <span className="h-8 w-8 animate-spin rounded-full border-2 border-line border-t-brand-strong" />
-              <p className="text-sm font-medium">{articleLoading ? 'Loading article…' : 'Article not found.'}</p>
+              <p className="text-sm font-medium">{articleLoading ? t('Loading article…') : t('Article not found.')}</p>
               {!articleLoading ? (
                 <button
                   type="button"
                   onClick={closeArticle}
                   className="mt-2 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-bold text-ink transition-colors hover:border-brand/40 hover:text-brand-ink"
                 >
-                  <FiArrowLeft /> Back to Blogs
+                  <FiArrowLeft /> {t('Back to Blogs')}
                 </button>
               ) : null}
             </div>
@@ -456,15 +635,15 @@ export function BlogPage() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search the blog…"
+              placeholder={t('Search the blog…')}
               className="w-full bg-transparent text-sm font-medium text-ink outline-none placeholder:text-muted"
-              aria-label="Search blog"
+              aria-label={t('Search blog')}
             />
             {search ? (
               <button
                 type="button"
                 onClick={() => setSearch('')}
-                aria-label="Clear search"
+                aria-label={t('Clear search')}
                 className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-ink"
               >
                 <FiX className="text-sm" />
@@ -476,23 +655,23 @@ export function BlogPage() {
         {/* title */}
         <Reveal from="up">
           <h1 className="text-center text-[2.6rem] font-bold tracking-tight text-ink sm:text-6xl lg:text-7xl">
-            KT Messenger Blog
+            {t('KT Messenger Blog')}
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-center text-lg leading-8 text-body">
-            Everything KT can do, explained simply — from messaging and calls to AI, payments, communities and business.
+            {t('Everything KT can do, explained simply from messaging and calls to AI, payments, communities and business.')}
           </p>
         </Reveal>
 
         {loading ? (
           <div className="flex flex-col items-center justify-center gap-3 py-24 text-muted">
             <span className="h-8 w-8 animate-spin rounded-full border-2 border-line border-t-brand-strong" />
-            <p className="text-sm font-medium">Loading articles…</p>
+            <p className="text-sm font-medium">{t('Loading articles…')}</p>
           </div>
         ) : posts.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-2 py-24 text-center">
-            <p className="text-lg font-bold text-ink">No articles published yet</p>
+            <p className="text-lg font-bold text-ink">{t('No articles published yet')}</p>
             <p className="max-w-md text-sm leading-6 text-body">
-              New stories from the KT Messenger team will appear here as soon as they go live.
+              {t('New stories from the KT Messenger team will appear here as soon as they go live.')}
             </p>
           </div>
         ) : (
@@ -509,11 +688,10 @@ export function BlogPage() {
                     <img
                       src={imageFor(featuredPost)}
                       alt={featuredPost.title}
-                      className="h-full w-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-105"
+                      className="h-full w-full object-contain transition-transform duration-[600ms] ease-out group-hover:scale-105"
                     />
-                    <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/35 to-transparent" />
                     <span className="absolute left-5 top-5 inline-flex items-center gap-1.5 rounded-full bg-brand-strong px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-brand">
-                      Featured
+                      {t('Featured')}
                     </span>
                   </div>
                   <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12">
@@ -521,13 +699,13 @@ export function BlogPage() {
                       <span>{featuredPost.category}</span>
                       <span className="h-1 w-1 rounded-full bg-muted/50" />
                       <span className="inline-flex items-center gap-1 text-muted">
-                        <FiClock /> {featuredPost.readMins} min read
+                        <FiClock /> {featuredPost.readMins} {t('min read')}
                       </span>
                     </div>
                     <h2 className="mt-3.5 text-[1.7rem] font-bold leading-[1.15] text-ink lg:text-[2.1rem]">{featuredPost.title}</h2>
                     <p className="mt-4 text-[15px] leading-7 text-body">{featuredPost.description}</p>
                     <span className="mt-7 inline-flex w-fit items-center gap-2 rounded-full bg-brand-strong px-5 py-2.5 text-sm font-bold text-white shadow-brand transition-all duration-300 group-hover:-translate-y-0.5 group-hover:bg-brand-strong-hover">
-                      Read More <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+                      {t('Read More')} <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
                     </span>
                   </div>
                 </button>
@@ -555,18 +733,18 @@ export function BlogPage() {
             {/* search results count */}
             {searching ? (
               <p className="mt-8 text-sm font-semibold text-body">
-                {visible.length} {visible.length === 1 ? 'result' : 'results'} for “{search.trim()}”
+                {visible.length} {visible.length === 1 ? t('result') : t('results')} {t('for')} “{search.trim()}”
               </p>
             ) : null}
 
             {/* no results */}
             {visible.length === 0 ? (
               <div className="flex flex-col items-center justify-center gap-2 py-20 text-center">
-                <p className="text-lg font-bold text-ink">No articles found</p>
+                <p className="text-lg font-bold text-ink">{t('No articles found')}</p>
                 <p className="max-w-md text-sm leading-6 text-body">
                   {searching
                     ? `Nothing matched “${search.trim()}”. Try a different keyword${category !== 'All' ? ' or category' : ''}.`
-                    : 'No articles in this category yet.'}
+                    : t('No articles in this category yet.')}
                 </p>
                 {searching ? (
                   <button
@@ -574,7 +752,7 @@ export function BlogPage() {
                     onClick={() => setSearch('')}
                     className="mt-2 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-bold text-ink transition-colors hover:border-brand/40 hover:text-brand-ink"
                   >
-                    <FiX /> Clear search
+                    <FiX /> {t('Clear search')}
                   </button>
                 ) : null}
               </div>
@@ -594,14 +772,13 @@ export function BlogPage() {
                         src={imageFor(post)}
                         alt={post.title}
                         loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-110"
+                        className="h-full w-full object-contain transition-transform duration-[600ms] ease-out group-hover:scale-110"
                       />
-                      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-slate-950/5 to-transparent" />
                       <span className="absolute left-4 top-4 rounded-full border border-line bg-surface/90 px-3 py-1 text-[11px] font-bold text-brand-ink shadow-sm backdrop-blur">
                         {post.category}
                       </span>
                       <span className="absolute bottom-4 right-4 inline-flex items-center gap-1 rounded-full bg-slate-950/55 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur">
-                        <FiClock className="text-[11px]" /> {post.readMins} min
+                        <FiClock className="text-[11px]" /> {post.readMins} {t('min')}
                       </span>
                     </div>
                     <div className="flex flex-1 flex-col p-6">
@@ -611,7 +788,7 @@ export function BlogPage() {
                       </h3>
                       <p className="mt-2 flex-1 text-sm leading-6 text-body line-clamp-3">{post.description}</p>
                       <div className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-brand-ink">
-                        Read More <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1.5" />
+                        {t('Read More')} <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1.5" />
                       </div>
                     </div>
                   </button>

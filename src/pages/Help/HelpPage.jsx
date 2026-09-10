@@ -12,6 +12,7 @@ import { Logo } from '../../components/common/Logo/Logo'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { PhoneChatMockup } from '../../components/mockups/PhoneChatMockup'
 import { useSwipeTheme } from '../../hooks/useSwipeTheme'
+import { useLanguage } from '../../context/LanguageContext'
 
 const D = <MdArticle />
 
@@ -19,7 +20,7 @@ const helpTree = [
   {
     label: 'Get Started', icon: <MdFlag />, subs: [
       { label: 'Download and Installation', icon: <MdFileDownload />, articles: ['How to download or uninstall KT Messenger', 'About supported operating systems', 'About supported devices', 'About rooted phones and custom ROMs', 'Ending support for legacy phones'] },
-      { label: 'Registration', icon: <MdHowToReg />, articles: ['Parent-Managed Accounts', 'How to register your phone number', 'About registration and two-step verification', 'How to register with a phone call', 'About automatic phone number verification', "Can't complete registration"] },
+      { label: 'Registration', icon: <MdHowToReg />, articles: ['Parent Managed Accounts', 'How to register your phone number', 'About registration and two step verification', 'How to register with a phone call', 'About automatic phone number verification', "Can't complete registration"] },
       { label: 'Usernames', icon: <MdAlternateEmail />, articles: ['About usernames', 'How to set a username', 'Username privacy'] },
       { label: 'Linked Devices', icon: <MdDevices />, articles: ['About linked devices', 'How to link a device', 'Log out of a linked device'] },
       { label: 'Troubleshooting', icon: <MdHelpOutline />, articles: ['App keeps crashing', 'Notifications are not working', "Can't send messages"] },
@@ -69,7 +70,7 @@ const helpTree = [
     label: 'Privacy, Safety, and Security', icon: <MdLock />, subs: [
       { label: 'Privacy Settings', icon: D, articles: ['Managing your privacy', 'Last seen and online'] },
       { label: 'Blocking Contacts', icon: D, articles: ['How to block a contact', 'How to unblock a contact'] },
-      { label: 'Two-Step Verification', icon: D, articles: ['About two-step verification', 'Turning it on'] },
+      { label: 'Two Step Verification', icon: D, articles: ['About two step verification', 'Turning it on'] },
       { label: 'Staying Safe', icon: D, articles: ['Avoiding scams', 'Reporting a problem'] },
     ],
   },
@@ -109,7 +110,7 @@ const popularArticles = [
   'How to make a video call',
   'How to stay safe on KT Messenger',
   'About temporarily restricted accounts',
-  'About two-step verification',
+  'About two step verification',
   'How to restore your chat history',
   'Received a verification code you did not request',
   'Managing your notifications and privacy',
@@ -155,91 +156,93 @@ const footerColumns = [
 const proseClass = 'space-y-5 text-[15px] leading-7 text-body'
 
 function ArticleBody({ title, tab }) {
+  const { t } = useLanguage()
   if (title === 'How to download or uninstall KT Messenger') {
     const store = { Android: 'Google Play Store', iOS: 'App Store', Mac: 'Mac App Store', Windows: 'Microsoft Store' }[tab]
     const action = tab === 'Android' || tab === 'Windows' ? 'Install' : 'Get'
     return (
       <div className={proseClass}>
-        <h3 className="text-xl font-bold text-ink">Download KT Messenger</h3>
+        <h3 className="text-xl font-bold text-ink">{t('Download KT Messenger')}</h3>
         <p>Open the {store} on your {tab} device and search for KT Messenger, then tap {action} to begin the download.</p>
         <div className="grid h-44 w-44 place-items-center rounded-2xl border-2 border-dashed border-line bg-surface-2 text-center text-sm font-medium text-muted">
-          Scan to download<br />KT Messenger
+          {t('Scan to download')}<br />KT Messenger
         </div>
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
           <li>Find KT Messenger in the {store}, then tap {action}.</li>
-          <li>Open the app and review the Terms of Service, then tap <strong>Agree and continue</strong>.</li>
-          <li>Register your phone number to start chatting.</li>
+          <li>Open the app and review the Terms of Service, then tap <strong>{t('Agree and continue')}</strong>.</li>
+          <li>{t('Register your phone number to start chatting.')}</li>
         </ol>
-        <h3 className="text-xl font-bold text-ink">Uninstall KT Messenger</h3>
-        <p>Press and hold the KT Messenger icon on your {tab} device, then choose <strong>Uninstall</strong> or <strong>Remove</strong>. Back up your chats first if you want to keep them.</p>
+        <h3 className="text-xl font-bold text-ink">{t('Uninstall KT Messenger')}</h3>
+        <p>Press and hold the KT Messenger icon on your {tab} device, then choose <strong>{t('Uninstall')}</strong> or <strong>{t('Remove')}</strong>. Back up your chats first if you want to keep them.</p>
       </div>
     )
   }
-  if (title === 'Parent-Managed Accounts') {
+  if (title === 'Parent Managed Accounts') {
     return (
       <div className={proseClass}>
         <div className="rounded-2xl bg-surface-2 p-6">
           <p className="text-ink">
-            Parent-managed accounts let a parent or guardian help a young person set up and look after their KT
-            Messenger account. This experience is rolling out in stages and may not be available in your region yet.
+            {t('Parent managed accounts let a parent or guardian help a young person set up and look after their KT Messenger account. This experience is rolling out in stages and may not be available in your region yet.')}
           </p>
           <ul className="mt-3 list-disc space-y-2 pl-5">
-            <li>Keep KT Messenger updated to the latest version from your app store.</li>
-            <li>Follow our blog and Help Center for updates on when it reaches you.</li>
+            <li>{t('Keep KT Messenger updated to the latest version from your app store.')}</li>
+            <li>{t('Follow our blog and Help Center for updates on when it reaches you.')}</li>
           </ul>
         </div>
-        <p>When it becomes available, you can turn it on during registration or from <strong>Settings → Account</strong>.</p>
+        <p>{t('When it becomes available, you can turn it on during registration or from')} <strong>Settings → Account</strong>.</p>
       </div>
     )
   }
   return (
     <div className={proseClass}>
-      <p>This article explains <strong>{title.charAt(0).toLowerCase() + title.slice(1)}</strong> on KT Messenger. Follow the steps below to get set up.</p>
+      <p>{t('This article explains')} <strong>{title.charAt(0).toLowerCase() + title.slice(1)}</strong> {t('on KT Messenger. Follow the steps below to get set up.')}</p>
       <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-        <li>Open KT Messenger and go to <strong>Settings</strong>.</li>
-        <li>Select the option related to this topic and follow the on-screen instructions.</li>
-        <li>Confirm your choice to save any changes.</li>
+        <li>{t('Open KT Messenger and go to')} <strong>{t('Settings')}</strong>.</li>
+        <li>{t('Select the option related to this topic and follow the on screen instructions.')}</li>
+        <li>{t('Confirm your choice to save any changes.')}</li>
       </ol>
-      <p>Still need help? Contact our support team from the Help Center and we will be happy to assist.</p>
+      <p>{t('Still need help? Contact our support team from the Help Center and we will be happy to assist.')}</p>
     </div>
   )
 }
 
 function FeedbackWidget() {
+  const { t } = useLanguage()
   const [state, setState] = useState('ask')
   if (state === 'hidden') return null
   return (
     <div className="fixed bottom-24 right-4 z-40 w-[calc(100%-2rem)] rounded-2xl border border-line bg-surface p-4 shadow-float sm:right-6 sm:w-[340px]">
-      <button onClick={() => setState('hidden')} aria-label="Dismiss" className="absolute right-3 top-3 text-muted transition-colors hover:text-ink">
+      <button onClick={() => setState('hidden')} aria-label={t('Dismiss')} className="absolute right-3 top-3 text-muted transition-colors hover:text-ink">
         <FiX />
       </button>
       {state === 'ask' ? (
         <>
-          <p className="pr-6 font-bold text-ink">Does this answer your question?</p>
+          <p className="pr-6 font-bold text-ink">{t('Does this answer your question?')}</p>
           <div className="mt-3 flex gap-3">
             <button onClick={() => setState('done')} className="flex-1 rounded-lg bg-surface-2 py-2 text-sm font-semibold text-ink transition-colors hover:bg-brand-soft hover:text-brand-ink">
-              🙂 Yes
+              🙂 {t('Yes')}
             </button>
             <button onClick={() => setState('done')} className="flex-1 rounded-lg bg-surface-2 py-2 text-sm font-semibold text-ink transition-colors hover:bg-brand-soft hover:text-brand-ink">
-              🙁 No
+              🙁 {t('No')}
             </button>
           </div>
         </>
       ) : (
-        <p className="pr-6 font-semibold text-ink">Thanks for your feedback! 💙</p>
+        <p className="pr-6 font-semibold text-ink">{t('Thanks for your feedback!')} 💙</p>
       )}
     </div>
   )
 }
 
 function HelpFooter({ onNav }) {
+  const { t } = useLanguage()
   return (
     <footer className="border-t border-line bg-surface-2">
       <div className="px-5 py-14 lg:px-12">
         <div className="grid gap-10 sm:grid-cols-3">
           {footerColumns.map((column) => (
             <div key={column.title}>
-              <p className="text-sm font-semibold text-muted">{column.title}</p>
+              <p className="text-sm font-semibold text-muted">{t(column.title)}</p>
               <ul className="mt-5 space-y-3.5">
                 {column.links.map((link) => (
                   <li key={link.label}>
@@ -248,7 +251,7 @@ function HelpFooter({ onNav }) {
                       onClick={() => onNav(link.to)}
                       className="text-left text-[15px] text-ink transition-colors hover:text-brand-ink"
                     >
-                      {link.label}
+                      {link.label === 'KT Web' ? link.label : t(link.label)}
                     </button>
                   </li>
                 ))}
@@ -257,7 +260,7 @@ function HelpFooter({ onNav }) {
           ))}
         </div>
         <div className="mt-12 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <button type="button" onClick={() => onNav('/')} aria-label="KT Messenger home" className="self-start">
+          <button type="button" onClick={() => onNav('/')} aria-label={t('KT Messenger home')} className="self-start">
             <Logo />
           </button>
           <p className="text-sm text-muted">© 2026 KT Messenger</p>
@@ -270,6 +273,7 @@ function HelpFooter({ onNav }) {
 export function HelpPage() {
   const navigate = useNavigate()
   const { handlers } = useSwipeTheme()
+  const { t } = useLanguage()
   // Sidebar starts fully collapsed — no category or sub-category is opened
   // for the reader. Opening an article still expands its branch via
   // selectArticle() below.
@@ -344,10 +348,10 @@ export function HelpPage() {
       <header className="sticky top-0 z-50 border-b border-line bg-cream/90 backdrop-blur-xl">
         <div className="flex h-16 items-center justify-between px-5 lg:px-8">
           <div className="flex items-center gap-2.5">
-            <button onClick={() => navigate('/')} aria-label="KT Messenger home">
+            <button onClick={() => navigate('/')} aria-label={t('KT Messenger home')}>
               <Logo showWordmark={false} />
             </button>
-            <button onClick={goHelpHome} className="text-lg font-bold text-ink">Help Center</button>
+            <button onClick={goHelpHome} className="text-lg font-bold text-ink">{t('Help Center')}</button>
           </div>
           <div className="flex items-center gap-3">
             {activeArticle ? (
@@ -355,14 +359,14 @@ export function HelpPage() {
                 <FiSearch className="text-muted" />
                 <input
                   type="text"
-                  placeholder="Search help articles..."
-                  aria-label="Search help articles"
+                  placeholder={t('Search help articles...')}
+                  aria-label={t('Search help articles')}
                   className="w-44 bg-transparent text-sm text-ink outline-none placeholder:text-muted"
                 />
               </label>
             ) : null}
             <button className="rounded-lg border border-line px-3 py-2 text-sm font-medium text-body transition-colors hover:text-ink">
-              English (US)
+              {t('English (US)')}
             </button>
           </div>
         </div>
@@ -382,7 +386,7 @@ export function HelpPage() {
                     className={`flex w-full items-center gap-3.5 rounded-xl px-3 py-3 text-left transition-colors ${catOpen ? 'bg-surface-2' : 'hover:bg-surface-2'}`}
                   >
                     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-[20px] text-cream">{category.icon}</span>
-                    <span className="flex-1 text-[15px] font-bold text-ink">{category.label}</span>
+                    <span className="flex-1 text-[15px] font-bold text-ink">{t(category.label)}</span>
                     <FiChevronDown className={`shrink-0 text-base text-muted transition-transform duration-200 ${catOpen ? 'rotate-180' : ''}`} />
                   </button>
 
@@ -405,7 +409,7 @@ export function HelpPage() {
                                 className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-surface-2"
                               >
                                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-surface-2 text-base text-ink">{sub.icon}</span>
-                                <span className="flex-1 text-[14px] font-semibold text-ink">{sub.label}</span>
+                                <span className="flex-1 text-[14px] font-semibold text-ink">{t(sub.label)}</span>
                                 <FiChevronDown className={`shrink-0 text-xs text-muted transition-transform duration-200 ${subOpen ? 'rotate-180' : ''}`} />
                               </button>
 
@@ -426,7 +430,7 @@ export function HelpPage() {
                                             onClick={() => selectArticle(category.label, sub.label, title)}
                                             className={`block w-full rounded-lg py-2 pl-[3.25rem] pr-3 text-left text-sm transition-colors ${active ? 'bg-brand-soft font-semibold text-brand-ink' : 'text-body hover:text-brand-ink'}`}
                                           >
-                                            {title}
+                                            {t(title)}
                                           </button>
                                         </li>
                                       )
@@ -452,12 +456,12 @@ export function HelpPage() {
             {activeArticle ? (
               <Reveal from="up" key={activeArticle.title}>
                 <div className="flex flex-wrap items-start justify-between gap-4">
-                  <h1 className="max-w-2xl text-3xl font-bold tracking-tight text-ink lg:text-4xl">{activeArticle.title}</h1>
+                  <h1 className="max-w-2xl text-3xl font-bold tracking-tight text-ink lg:text-4xl">{t(activeArticle.title)}</h1>
                   <button
                     onClick={copyLink}
                     className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-line px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
                   >
-                    <FiLink /> {copied ? 'Copied!' : 'Copy link'}
+                    <FiLink /> {copied ? t('Copied!') : t('Copy link')}
                   </button>
                 </div>
 
@@ -482,19 +486,19 @@ export function HelpPage() {
             ) : (
               <>
                 <Reveal from="up">
-                  <h1 className="text-[1.9rem] font-bold tracking-tight text-ink sm:text-3xl">How can we help you?</h1>
+                  <h1 className="text-[1.9rem] font-bold tracking-tight text-ink sm:text-3xl">{t('How can we help you?')}</h1>
                   <label className="mt-6 flex items-center gap-3 rounded-2xl bg-surface-2 px-5 py-4 transition-colors focus-within:ring-2 focus-within:ring-brand/40">
                     <FiSearch className="text-xl text-muted" />
                     <input
                       type="text"
-                      placeholder="Search help articles..."
-                      aria-label="Search help articles"
+                      placeholder={t('Search help articles...')}
+                      aria-label={t('Search help articles')}
                       className="flex-1 bg-transparent text-ink outline-none placeholder:text-muted"
                     />
                   </label>
                 </Reveal>
 
-                <h2 className="mt-12 text-2xl font-bold text-ink">Popular Topics</h2>
+                <h2 className="mt-12 text-2xl font-bold text-ink">{t('Popular Topics')}</h2>
                 <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                   {topics.map((topic, index) => (
                     <Reveal key={topic.title} from="up" delay={index * 0.04} className="h-full">
@@ -503,8 +507,8 @@ export function HelpPage() {
                         className="flex h-full w-full flex-col rounded-2xl border border-transparent bg-surface-2 p-6 text-left transition duration-300 hover:-translate-y-0.5 hover:border-brand/20 hover:shadow-card"
                       >
                         <span className="grid h-14 w-14 place-items-center rounded-2xl bg-brand-soft text-2xl text-brand-ink">{topic.icon}</span>
-                        <h3 className="mt-5 text-lg font-bold text-ink">{topic.title}</h3>
-                        <p className="mt-2 text-sm leading-6 text-body">{topic.desc}</p>
+                        <h3 className="mt-5 text-lg font-bold text-ink">{t(topic.title)}</h3>
+                        <p className="mt-2 text-sm leading-6 text-body">{t(topic.desc)}</p>
                       </button>
                     </Reveal>
                   ))}
@@ -512,7 +516,7 @@ export function HelpPage() {
 
                 <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-start lg:gap-14">
                   <div className="min-w-0">
-                    <h2 className="text-2xl font-bold text-ink">Popular Articles</h2>
+                    <h2 className="text-2xl font-bold text-ink">{t('Popular Articles')}</h2>
                     <ul className="mt-6 space-y-4">
                       {popularArticles.map((article) => (
                         <li key={article}>
@@ -520,7 +524,7 @@ export function HelpPage() {
                             onClick={() => selectArticle(null, null, article)}
                             className="text-left text-[15px] font-semibold text-brand-ink transition-colors hover:text-brand-strong hover:underline"
                           >
-                            {article}
+                            {t(article)}
                           </button>
                         </li>
                       ))}

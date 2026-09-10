@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Container } from '../../common/Container/Container'
 import { Reveal } from '../../common/Reveal/Reveal'
+import { useLanguage } from '../../../context/LanguageContext'
 import nadiaAvatar from '../../../assets/images/nadia_avatar.png'
 import female1Avatar from '../../../assets/images/avatar_female_1.png'
 import male1Avatar from '../../../assets/images/avatar_male_1.png'
@@ -22,6 +23,7 @@ const chips = [
 
 export function Statement() {
   const boundsRef = useRef(null)
+  const { t } = useLanguage()
 
   return (
     <section ref={boundsRef} className="relative overflow-hidden py-20 sm:py-28 lg:py-36">
@@ -62,9 +64,8 @@ export function Statement() {
       <Container className="pointer-events-none relative z-10">
         <Reveal from="up" className="mx-auto max-w-4xl text-center">
           <p className="text-[1.7rem] font-bold leading-[1.3] tracking-tight text-ink sm:text-[2.2rem] lg:text-[2.9rem] lg:leading-[1.28]">
-            Great conversations feel effortless. KT Messenger stays out of the way — so a quick hello, a long
-            catch-up, or a late-night call all feel{' '}
-            <span className="text-brand-ink">close, natural, and completely your own.</span>
+            {t('Great conversations feel effortless. KT Messenger stays out of the way so a quick hello, a long catch up, or a late night call all feel')}{' '}
+            <span className="text-brand-ink">{t('close, natural, and completely your own.')}</span>
           </p>
         </Reveal>
       </Container>

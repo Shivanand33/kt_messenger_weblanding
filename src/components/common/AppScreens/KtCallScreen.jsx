@@ -18,6 +18,7 @@ import {
 } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
 import { useLoopClock } from './useLoopClock'
+import { useLanguage } from '../../../context/LanguageContext'
 import callerAvatar from '../../../assets/images/avatar_male_1.png'
 import selfAvatar from '../../../assets/images/avatar_female_1.png'
 import videoFeed from '../../../assets/images/hd_landscape.png'
@@ -42,6 +43,7 @@ function CallButton({ icon, label, tone = 'muted', dark = false }) {
 }
 
 export function KtCallScreen({ className = '' }) {
+  const { t } = useLanguage()
   const { progress, phase, isPlaying, togglePlay, restart } = useLoopClock({
     durationMs: 16000,
     phaseStops: PHASE_STOPS,
@@ -53,7 +55,7 @@ export function KtCallScreen({ className = '' }) {
 
   return (
     <AppPhoneFrame
-      title="Calling · incoming, voice &amp; video"
+      title={t('Calling · incoming, voice & video')}
       progress={progress}
       isPlaying={isPlaying}
       onTogglePlay={togglePlay}
@@ -70,7 +72,7 @@ export function KtCallScreen({ className = '' }) {
           className="flex h-full flex-col items-center bg-[#eff3f8] px-4 pb-6 pt-10"
         >
           <span className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-[9px] font-semibold text-slate-700 shadow-sm">
-            <FiLock className="text-[9px]" /> End-to-end encrypted
+            <FiLock className="text-[9px]" /> {t('End to end encrypted')}
           </span>
 
           <motion.img
@@ -82,20 +84,20 @@ export function KtCallScreen({ className = '' }) {
           />
 
           <h4 className="mt-5 text-center text-[17px] font-semibold leading-tight text-slate-900">Priya Nair</h4>
-          <p className="mt-1 text-[11px] font-medium text-slate-600">Incoming voice call</p>
+          <p className="mt-1 text-[11px] font-medium text-slate-600">{t('Incoming voice call')}</p>
 
           <div className="mt-auto flex w-full flex-col items-center gap-4">
             <span className="flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[11px] font-bold text-slate-800 shadow-sm">
-              <FiCornerUpLeft className="text-[11px]" /> Reply
+              <FiCornerUpLeft className="text-[11px]" /> {t('Reply')}
             </span>
 
             {/* Swipe-to-answer bar */}
             <div className="relative flex w-full items-center justify-between overflow-hidden rounded-full bg-gradient-to-r from-[#fdeaee] via-white to-[#e6f2fd] px-3 py-2">
               <span className="flex items-center gap-1 text-[9px] font-bold text-[#e5566f]">
-                <FiChevronLeft /> Swipe left to decline
+                <FiChevronLeft /> {t('Swipe left to decline')}
               </span>
               <span className="flex items-center gap-1 text-[9px] font-bold text-[#1e8bf2]">
-                Swipe right to answer <FiChevronRight />
+                {t('Swipe right to answer')} <FiChevronRight />
               </span>
 
               <motion.span
@@ -153,12 +155,12 @@ export function KtCallScreen({ className = '' }) {
           </div>
 
           <div className="grid grid-cols-3 gap-y-4 rounded-3xl bg-white px-3 py-4 shadow-sm">
-            <CallButton icon={<FiVideo />} label="Video" />
-            <CallButton icon={<FiPhone />} label="Phone" />
-            <CallButton icon={<FiMic />} label="Mute" />
-            <CallButton icon={<FiMoreHorizontal />} label="More" />
-            <CallButton icon={<FiMonitor />} label="Share" />
-            <CallButton icon={<FiPhoneOff />} label="End" tone="end" />
+            <CallButton icon={<FiVideo />} label={t('Video')} />
+            <CallButton icon={<FiPhone />} label={t('Phone')} />
+            <CallButton icon={<FiMic />} label={t('Mute')} />
+            <CallButton icon={<FiMoreHorizontal />} label={t('More')} />
+            <CallButton icon={<FiMonitor />} label={t('Share')} />
+            <CallButton icon={<FiPhoneOff />} label={t('End')} tone="end" />
           </div>
         </motion.div>
       ) : null}
@@ -201,12 +203,12 @@ export function KtCallScreen({ className = '' }) {
           </div>
 
           <div className="absolute inset-x-3 bottom-6 grid grid-cols-3 gap-y-4 rounded-3xl bg-black/65 px-3 py-4 backdrop-blur-md">
-            <CallButton icon={<FiVideo />} label="Video" tone="active" dark />
-            <CallButton icon={<FiVolume2 />} label="Speaker" tone="active" dark />
-            <CallButton icon={<FiMic />} label="Mute" dark />
-            <CallButton icon={<FiMoreHorizontal />} label="More" dark />
-            <CallButton icon={<FiMonitor />} label="Share" dark />
-            <CallButton icon={<FiPhoneOff />} label="End" tone="end" dark />
+            <CallButton icon={<FiVideo />} label={t('Video')} tone="active" dark />
+            <CallButton icon={<FiVolume2 />} label={t('Speaker')} tone="active" dark />
+            <CallButton icon={<FiMic />} label={t('Mute')} dark />
+            <CallButton icon={<FiMoreHorizontal />} label={t('More')} dark />
+            <CallButton icon={<FiMonitor />} label={t('Share')} dark />
+            <CallButton icon={<FiPhoneOff />} label={t('End')} tone="end" dark />
           </div>
         </motion.div>
       ) : null}

@@ -12,6 +12,8 @@ import securityImg from '../../assets/images/security.jpg'
 import privateImg from '../../assets/images/private.jpg'
 import groupImg from '../../assets/images/group.jpg'
 import businessImg from '../../assets/images/business.jpg'
+import { useLanguage } from '../../context/LanguageContext'
+import { trackDownload } from '../../services/analytics'
 
 const appStore = { icon: <FaApple />, top: 'Download on the', bottom: 'App Store' }
 
@@ -19,7 +21,7 @@ const platforms = [
   {
     type: 'Tablet',
     name: 'iPadOS',
-    desc: 'All the features you love — chats, calls, status, and screen sharing — on a bigger screen with the KT Messenger iPad app.',
+    desc: 'All the features you love chats, calls, status, and screen sharing on a bigger screen with the KT Messenger iPad app.',
     req: 'Minimum: iPadOS 15.1 or newer',
     badge: appStore,
     isNew: true,
@@ -56,7 +58,7 @@ const features = [
   },
   {
     title: 'Voice & Video Calling',
-    desc: 'Crystal-clear encrypted 1-on-1 and group voice/video calls with low latency screen sharing.',
+    desc: 'Crystal clear encrypted 1-on-1 and group voice/video calls with low latency screen sharing.',
     image: privateImg,
     to: '/calling'
   },
@@ -68,7 +70,7 @@ const features = [
   },
   {
     title: 'Channels & Broadcasts',
-    desc: 'Follow official channels, creators, and brands for one-way updates and announcements.',
+    desc: 'Follow official channels, creators, and brands for one way updates and announcements.',
     image: businessImg,
     to: '/channels'
   },
@@ -85,14 +87,14 @@ const features = [
     to: '/status'
   },
   {
-    title: 'Signal Encryption',
-    desc: 'End-to-end Signal Protocol encryption keeps your personal messages confidential.',
+    title: 'KT Encryption',
+    desc: 'End to end KT Encryption Protocol keeps your personal messages confidential.',
     image: securityImg,
     to: '/security'
   },
   {
     title: 'KT Plus Customization',
-    desc: 'Unlock ultra themes, custom fonts, auto-reply, and ghost mode privacy controls.',
+    desc: 'Unlock ultra themes, custom fonts, auto reply, and ghost mode privacy controls.',
     image: groupImg,
     to: '/plus'
   },
@@ -104,15 +106,26 @@ const features = [
   }
 ]
 
+// Which analytics bucket a store badge belongs to. Desktop covers both the
+// Mac and Windows stores.
+const STORE_PLATFORM = {
+  'Google Play': 'android',
+  'App Store': 'ios',
+  'Mac App Store': 'desktop',
+  'Microsoft Store': 'desktop',
+}
+
 function StoreBadge({ icon, top, bottom }) {
+  const { t } = useLanguage()
   return (
     <a
       href="#apps-hero"
+      onClick={() => trackDownload(STORE_PLATFORM[bottom] || 'desktop', bottom)}
       className="inline-flex w-fit items-center gap-2.5 rounded-xl bg-[#111827] px-4 py-2.5 text-white transition-transform hover:-translate-y-0.5"
     >
       <span className="text-2xl">{icon}</span>
       <span className="text-left leading-tight">
-        <span className="block text-[10px] opacity-90">{top}</span>
+        <span className="block text-[10px] opacity-90">{t(top)}</span>
         <span className="block text-[15px] font-semibold">{bottom}</span>
       </span>
     </a>
@@ -120,18 +133,19 @@ function StoreBadge({ icon, top, bottom }) {
 }
 
 function Arrows({ onPrev, onNext }) {
+  const { t } = useLanguage()
   return (
     <div className="mt-8 flex gap-3">
       <button
         onClick={onPrev}
-        aria-label="Previous"
+        aria-label={t('Previous')}
         className="grid h-12 w-12 place-items-center rounded-full border border-line text-ink transition-colors hover:border-brand hover:bg-surface-2"
       >
         <FiChevronLeft className="text-xl" />
       </button>
       <button
         onClick={onNext}
-        aria-label="Next"
+        aria-label={t('Next')}
         className="grid h-12 w-12 place-items-center rounded-full border border-line text-ink transition-colors hover:border-brand hover:bg-surface-2"
       >
         <FiChevronRight className="text-xl" />
@@ -145,6 +159,7 @@ const railClass =
 
 export function AppsPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const optionsRail = useRef(null)
   const featuresRail = useRef(null)
 
@@ -186,25 +201,25 @@ export function AppsPage() {
           <div>
             <Reveal from="up">
               <h1 className="text-[3rem] font-bold leading-[0.98] tracking-tight text-ink sm:text-6xl lg:text-7xl">
-                Download
+                {t('Download')}
                 <br />
                 KT Messenger
               </h1>
             </Reveal>
             <Reveal from="up" delay={0.06}>
               <p className="mt-6 max-w-md text-lg leading-8 text-body">
-                Start chatting and calling privately with KT Messenger across all your devices.
+                {t('Start chatting and calling privately with KT Messenger across all your devices.')}
               </p>
             </Reveal>
             <Reveal from="up" delay={0.1}>
               <p className="mt-4 text-sm text-muted">
-                By installing KT Messenger, you agree to our{' '}
+                {t('By installing KT Messenger, you agree to our')}{' '}
                 <button className="underline transition-colors hover:text-brand-ink" onClick={() => navigate('/privacy')}>
-                  Terms
+                  {t('Terms')}
                 </button>{' '}
                 &amp;{' '}
                 <button className="underline transition-colors hover:text-brand-ink" onClick={() => navigate('/privacy')}>
-                  Privacy Policy
+                  {t('Privacy Policy')}
                 </button>
                 .
               </p>
@@ -212,10 +227,10 @@ export function AppsPage() {
 
             <Reveal from="up" delay={0.16}>
               <div className="mt-8 max-w-md rounded-[28px] border border-line bg-surface p-7 shadow-card">
-                <p className="text-sm text-muted">Desktop</p>
+                <p className="text-sm text-muted">{t('Desktop')}</p>
                 <h3 className="mt-1 text-2xl font-bold text-ink">Windows</h3>
                 <p className="mt-3 text-[15px] leading-7 text-body">
-                  Get calling, screen sharing, and a faster experience with the Windows app. Requires Windows 10 or newer.
+                  {t('Get calling, screen sharing, and a faster experience with the Windows app. Requires Windows 10 or newer.')}
                 </p>
                 <div className="mt-5">
                   <StoreBadge icon={<FaWindows />} top="Get it from" bottom="Microsoft Store" />
@@ -253,10 +268,10 @@ export function AppsPage() {
               dissolve into the background, and the arrows stay clickable. */}
           <div className="relative lg:z-20 lg:bg-surface-2">
             <h2 className="text-[2.4rem] font-bold leading-[1.05] tracking-tight text-ink sm:text-5xl">
-              Other download options
+              {t('Other download options')}
             </h2>
             <p className="mt-6 max-w-sm text-lg leading-8 text-body">
-              Stay connected with friends and family across all your devices.
+              {t('Stay connected with friends and family across all your devices.')}
             </p>
             <Arrows onPrev={() => scrollRail(optionsRail, -1)} onNext={() => scrollRail(optionsRail, 1)} />
           </div>
@@ -275,13 +290,13 @@ export function AppsPage() {
                 >
                   {platform.isNew ? (
                     <span className="mb-3 w-fit rounded-md bg-brand-soft px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-brand-ink">
-                      New
+                      {t('New')}
                     </span>
                   ) : null}
-                  <p className="text-sm text-muted">{platform.type}</p>
+                  <p className="text-sm text-muted">{t(platform.type)}</p>
                   <h3 className="mt-1 text-2xl font-bold text-ink">{platform.name}</h3>
-                  <p className="mt-3 flex-1 text-[15px] leading-7 text-body">{platform.desc}</p>
-                  <p className="mt-4 text-xs text-muted">{platform.req}</p>
+                  <p className="mt-3 flex-1 text-[15px] leading-7 text-body">{t(platform.desc)}</p>
+                  <p className="mt-4 text-xs text-muted">{t(platform.req)}</p>
                   <div className="mt-4">
                     <StoreBadge {...platform.badge} />
                   </div>
@@ -299,10 +314,10 @@ export function AppsPage() {
               by the heading as they exit left. */}
           <div className="relative lg:z-20 lg:bg-surface">
             <h2 className="text-[2.4rem] font-bold leading-[1.05] tracking-tight text-ink sm:text-5xl">
-              Already downloaded?
+              {t('Already downloaded?')}
             </h2>
             <p className="mt-6 max-w-sm text-lg leading-8 text-body">
-              Learn more about everything you can do on KT Messenger.
+              {t('Learn more about everything you can do on KT Messenger.')}
             </p>
             <Arrows onPrev={() => scrollRail(featuresRail, -1)} onNext={() => scrollRail(featuresRail, 1)} />
           </div>
@@ -313,23 +328,23 @@ export function AppsPage() {
               ref={featuresRail}
               className={`${railClass} snap-x snap-proximity lg:ml-[calc(var(--apps-occlusion)*-1)] lg:pl-[var(--apps-occlusion)] lg:scroll-pl-[var(--apps-occlusion)] lg:pr-8 lg:mr-[min(-2rem,calc((1200px_-_100vw)_/_2_-_2rem))]`}
             >
-              {/* No card panel (matches WhatsApp): the image sits directly on the
+              {/* No card panel: the image sits directly on the
                   section background with the title + Learn more below, so a card
                   sliding off the left is just an image dissolving into the page. */}
               {features.map((feature) => (
                 <div key={feature.title} className="w-[300px] shrink-0 snap-start flex flex-col justify-between">
                   <div>
                     <div className="overflow-hidden rounded-[20px]">
-                      <img src={feature.image} alt={feature.title} loading="lazy" className="h-52 w-full object-cover transition-transform duration-300 hover:scale-105" />
+                      <img src={feature.image} alt={t(feature.title)} loading="lazy" className="h-52 w-full object-cover transition-transform duration-300 hover:scale-105" />
                     </div>
-                    <h3 className="mt-4 text-xl font-extrabold text-ink">{feature.title}</h3>
-                    <p className="mt-2 text-sm text-body leading-relaxed">{feature.desc}</p>
+                    <h3 className="mt-4 text-xl font-extrabold text-ink">{t(feature.title)}</h3>
+                    <p className="mt-2 text-sm text-body leading-relaxed">{t(feature.desc)}</p>
                   </div>
                   <button
                     onClick={() => goTo(feature.to)}
                     className="group mt-4 inline-flex w-fit items-center gap-2 text-sm font-bold text-brand-ink transition-colors hover:text-brand-strong"
                   >
-                    <span>Learn more</span>
+                    <span>{t('Learn more')}</span>
                     <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
                   </button>
                 </div>

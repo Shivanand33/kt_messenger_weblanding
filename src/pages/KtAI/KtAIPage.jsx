@@ -26,6 +26,7 @@ import { KtAiLoopVideo } from '../../components/common/VideoAnimations/KtAiLoopV
 import astronautUnicornImage from '../../assets/images/astronaut_unicorn_mars.png'
 import cyberpunkCityImage from '../../assets/images/cyberpunk_neon_city.png'
 import crystalParrotImage from '../../assets/images/crystal_tropical_parrot.png'
+import { useLanguage } from '../../context/LanguageContext'
 
 function SparklesIcon({ className = '' }) {
   return (
@@ -37,7 +38,8 @@ function SparklesIcon({ className = '' }) {
 
 export function KtAIPage() {
   const navigate = useNavigate()
-  const [promptText, setPromptText] = useState('An astronaut riding a unicorn on Mars 🦄')
+  const { t } = useLanguage()
+  const [promptText, setPromptText] = useState(t('An astronaut riding a unicorn on Mars 🦄'))
   const [currentImg, setCurrentImg] = useState(astronautUnicornImage)
   const [isGenerating, setIsGenerating] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
@@ -48,9 +50,9 @@ export function KtAIPage() {
   }, [])
 
   const samplePrompts = [
-    { text: 'An astronaut riding a unicorn on Mars 🦄', img: astronautUnicornImage },
-    { text: 'A futuristic neon city in cyber rain 🌧️', img: cyberpunkCityImage },
-    { text: 'A crystal clear tropical parrot 🦜', img: crystalParrotImage }
+    { text: t('An astronaut riding a unicorn on Mars 🦄'), img: astronautUnicornImage },
+    { text: t('A futuristic neon city in cyber rain 🌧️'), img: cyberpunkCityImage },
+    { text: t('A crystal clear tropical parrot 🦜'), img: crystalParrotImage }
   ]
 
   const handlePromptSelect = (prompt, img) => {
@@ -64,94 +66,94 @@ export function KtAIPage() {
 
   const aiTabs = [
     {
-      title: 'Text-to-Image Studio',
+      title: t('Text to Image Studio'),
       icon: <FiImage className="text-xl" />,
-      desc: 'Turn imagination into high-definition digital artwork directly inside any chat thread using simple `/imagine` prompts.',
-      highlights: ['Instant 4K image generation', 'Multiple artistic styles (Photorealistic, Anime)', 'Save & share in 1 tap']
+      desc: t('Turn imagination into high definition digital artwork directly inside any chat thread using simple `/imagine` prompts.'),
+      highlights: [t('Instant 4K image generation'), t('Multiple artistic styles (Photorealistic, Anime)'), t('Save & share in 1 tap')]
     },
     {
-      title: 'Smart Q&A & Research Helper',
+      title: t('Smart Q&A & Research Helper'),
       icon: <SparklesIcon className="h-5 w-5" />,
-      desc: 'Ask complex questions, summarize long articles, draft professional emails, or translate foreign languages in seconds.',
-      highlights: ['Web-connected real-time data', 'Instant multi-language translation', 'Bullet-point document summaries']
+      desc: t('Ask complex questions, summarize long articles, draft professional emails, or translate foreign languages in seconds.'),
+      highlights: [t('Web connected real time data'), t('Instant multi language translation'), t('Bullet point document summaries')]
     },
     {
-      title: 'Group Chat Co-Pilot (@KTAI)',
+      title: t('Group Chat Co Pilot (@KTAI)'),
       icon: <FiZap className="text-xl" />,
-      desc: 'Mention `@KTAI` in any group chat to settle debates, get restaurant recommendations, plan travel itineraries, or run quick trivia.',
-      highlights: ['Seamless @mention activation', 'Shared group answers', 'Context-aware suggestions']
+      desc: t('Mention `@KTAI` in any group chat to settle debates, get restaurant recommendations, plan travel itineraries, or run quick trivia.'),
+      highlights: [t('Seamless @mention activation'), t('Shared group answers'), t('Context aware suggestions')]
     },
     {
-      title: 'Voice Note Audio Transcriber',
+      title: t('Voice Note Audio Transcriber'),
       icon: <FiCpu className="text-xl" />,
-      desc: 'Convert long voice notes into clean written transcripts and bullet-point summaries automatically.',
-      highlights: ['99.2% speech recognition accuracy', 'Summarizes 5-minute audio in 1 second', 'Supports 40+ spoken accents']
+      desc: t('Convert long voice notes into clean written transcripts and bullet point summaries automatically.'),
+      highlights: [t('99.2% speech recognition accuracy'), t('Summarizes 5-minute audio in 1 second'), t('Supports 40+ spoken accents')]
     },
     {
-      title: 'Code & Writing Copilot',
+      title: t('Code & Writing Copilot'),
       icon: <FiCode className="text-xl" />,
-      desc: 'Generate code snippets, debug syntax errors, rewrite essays, and format structured tables on demand.',
-      highlights: ['Multi-language code support', 'Grammar & tone enhancement', 'CSV & JSON data formatting']
+      desc: t('Generate code snippets, debug syntax errors, rewrite essays, and format structured tables on demand.'),
+      highlights: [t('Multi language code support'), t('Grammar & tone enhancement'), t('CSV & JSON data formatting')]
     }
   ]
 
   const metrics = [
-    { value: '< 1s', label: 'Response Latency' },
-    { value: '100+', label: 'Languages Supported' },
-    { value: '4K', label: 'Image Output Resolution' },
-    { value: '100%', label: 'Private & Secure' }
+    { value: '< 1s', label: t('Response Latency') },
+    { value: '100+', label: t('Languages Supported') },
+    { value: '4K', label: t('Image Output Resolution') },
+    { value: '100%', label: t('Private & Secure') }
   ]
 
   const aiUseCases = [
     {
-      title: 'Creative Art & Visuals',
-      desc: 'Generate custom wallpapers, stickers, story graphics, and concepts effortlessly with natural language prompts.',
+      title: t('Creative Art & Visuals'),
+      desc: t('Generate custom wallpapers, stickers, story graphics, and concepts effortlessly with natural language prompts.'),
       img: astronautUnicornImage
     },
     {
-      title: 'Futuristic Cyberpunk Renders',
-      desc: 'Create ultra-detailed futuristic cityscapes, sci-fi concepts, and neon digital artwork in seconds.',
+      title: t('Futuristic Cyberpunk Renders'),
+      desc: t('Create ultra detailed futuristic cityscapes, sci fi concepts, and neon digital artwork in seconds.'),
       img: cyberpunkCityImage
     },
     {
-      title: 'Photorealistic Macro Artwork',
-      desc: 'Produce crystal clear nature graphics, iridescent wildlife concepts, and 3D glass renders on demand.',
+      title: t('Photorealistic Macro Artwork'),
+      desc: t('Produce crystal clear nature graphics, iridescent wildlife concepts, and 3D glass renders on demand.'),
       img: crystalParrotImage
     }
   ]
 
   const comparisonTable = [
-    { feature: 'In-Chat Access', kt: 'Built-in Native', standalone: 'Browser App Only', traditional: 'Not Available' },
-    { feature: 'Image Generation', kt: 'Included Free', standalone: 'Paid Upgrade', traditional: 'Not Supported' },
-    { feature: 'Group Chat Co-Pilot', kt: 'Included (@KTAI)', standalone: 'Not Supported', traditional: 'Not Supported' },
-    { feature: 'Voice Note Summaries', kt: '1-Tap Automated', standalone: 'Manual File Upload', traditional: 'Not Supported' },
-    { feature: 'Data Privacy', kt: 'Signal Encrypted Stream', standalone: 'Data Trained on Web', traditional: 'N/A' }
+    { feature: t('In Chat Access'), kt: t('Built in Native'), standalone: t('Browser App Only'), traditional: t('Not Available') },
+    { feature: t('Image Generation'), kt: t('Included Free'), standalone: t('Paid Upgrade'), traditional: t('Not Supported') },
+    { feature: t('Group Chat Co Pilot'), kt: t('Included (@KTAI)'), standalone: t('Not Supported'), traditional: t('Not Supported') },
+    { feature: t('Voice Note Summaries'), kt: t('1-Tap Automated'), standalone: t('Manual File Upload'), traditional: t('Not Supported') },
+    { feature: t('Data Privacy'), kt: t('KT Encrypted Stream'), standalone: t('Data Trained on Web'), traditional: 'N/A' }
   ]
 
   const faqs = [
     {
-      q: 'What is KT AI?',
-      a: 'KT AI is an intelligent assistant built directly into KT Messenger that helps you answer questions, generate images, write text, and summarize voice notes inside personal and group chats.'
+      q: t('What is KT AI?'),
+      a: t('KT AI is an intelligent assistant built directly into KT Messenger that helps you answer questions, generate images, write text, and summarize voice notes inside personal and group chats.')
     },
     {
-      q: 'How do I generate an image using KT AI?',
-      a: 'Simply type `/imagine` followed by a description of the image you want (e.g. `/imagine A futuristic city on Mars`). KT AI will create and deliver the artwork in seconds.'
+      q: t('How do I generate an image using KT AI?'),
+      a: t('Simply type `/imagine` followed by a description of the image you want (e.g. `/imagine A futuristic city on Mars`). KT AI will create and deliver the artwork in seconds.')
     },
     {
-      q: 'Can I use KT AI inside group chats?',
-      a: 'Yes! Simply mention `@KTAI` in any group chat followed by your question (e.g. `@KTAI recommend 3 Italian restaurants nearby`), and KT AI will respond to the group.'
+      q: t('Can I use KT AI inside group chats?'),
+      a: t('Yes! Simply mention `@KTAI` in any group chat followed by your question (e.g. `@KTAI recommend 3 good restaurants nearby`), and KT AI will respond to the group.')
     },
     {
-      q: 'Is my data used to train AI models?',
-      a: 'No. Your AI interactions and chat content are processed privately and are never stored or used to train public AI models.'
+      q: t('Is my data used to train AI models?'),
+      a: t('No. Your AI interactions and chat content are processed privately and are never stored or used to train public AI models.')
     },
     {
-      q: 'Is KT AI free to use?',
-      a: 'Yes, KT AI includes a generous daily quota of free text answers, image generations, and voice transcriptions for all KT users.'
+      q: t('Is KT AI free to use?'),
+      a: t('Yes, KT AI includes a generous daily quota of free text answers, image generations, and voice transcriptions for all KT users.')
     },
     {
-      q: 'Which languages does KT AI support?',
-      a: 'KT AI supports over 100 languages for text answers, translation, and speech-to-text voice note transcription.'
+      q: t('Which languages does KT AI support?'),
+      a: t('KT AI supports over 100 languages for text answers, translation, and speech to text voice note transcription.')
     }
   ]
 
@@ -173,7 +175,7 @@ export function KtAIPage() {
                 </div>
 
                 <span className="font-extrabold tracking-wide uppercase text-[11px] bg-gradient-to-r from-sky-600 via-indigo-600 to-purple-600 dark:from-sky-300 dark:via-indigo-300 dark:to-purple-300 bg-clip-text text-transparent">
-                  Next-Gen Artificial Intelligence
+                  {t('Next Gen Artificial Intelligence')}
                 </span>
 
                 {/* Live AI Pulse Ring */}
@@ -184,29 +186,29 @@ export function KtAIPage() {
               </div>
 
               <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                Meet KT AI — Your <br />
+                {t('Meet KT AI Your')} <br />
                 <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  personal AI assistant
+                  {t('personal AI assistant')}
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                Ask questions, generate artwork, summarize audio, and brainstorm ideas directly inside your personal and group conversations.
+                {t('Ask questions, generate artwork, summarize audio, and brainstorm ideas directly inside your personal and group conversations.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
-                  Try KT AI Free <FiDownload className="text-lg" />
+                  {t('Try KT AI Free')} <FiDownload className="text-lg" />
                 </Button>
                 <Button variant="secondary" size="lg" onClick={() => navigate('/apps')}>
-                  Explore Capabilities <FiChevronRight />
+                  {t('Explore Capabilities')} <FiChevronRight />
                 </Button>
               </div>
 
               <div className="mt-8 flex items-center gap-6 border-t border-line pt-6 text-sm text-body">
                 <span className="flex items-center gap-2">
-                  <FiCheckCircle className="text-brand-strong" /> Text & Image Generation
+                  <FiCheckCircle className="text-brand-strong" /> {t('Text & Image Generation')}
                 </span>
                 <span className="flex items-center gap-2">
-                  <FiCheckCircle className="text-brand-strong" /> 100+ Languages
+                  <FiCheckCircle className="text-brand-strong" /> {t('100+ Languages')}
                 </span>
               </div>
             </Reveal>
@@ -220,8 +222,8 @@ export function KtAIPage() {
                     <SparklesIcon className="relative z-10 h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-ink text-base">KT AI Studio</h3>
-                    <p className="text-xs text-brand-ink font-semibold">Online • Image Generator</p>
+                    <h3 className="font-bold text-ink text-base">{t('KT AI Studio')}</h3>
+                    <p className="text-xs text-brand-ink font-semibold">{t('Online • Image Generator')}</p>
                   </div>
                 </div>
 
@@ -235,19 +237,19 @@ export function KtAIPage() {
                   {isGenerating ? (
                     <div className="absolute inset-0 flex items-center justify-center bg-slate-950/90 text-white text-xs font-semibold">
                       <SparklesIcon className="animate-spin text-2xl mr-2 text-brand-strong" />
-                      Generating high-res image...
+                      {t('Generating high res image...')}
                     </div>
                   ) : (
-                    <img src={currentImg} alt="AI Generated" className="h-full w-full object-cover" />
+                    <img src={currentImg} alt={t('AI Generated')} className="h-full w-full object-cover" />
                   )}
                   <div className="absolute bottom-2.5 left-2.5 rounded-lg bg-black/70 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur-md">
-                    Generated by KT AI ✨
+                    {t('Generated by KT AI ✨')}
                   </div>
                 </div>
 
                 {/* Sample Prompt Selector */}
                 <div className="mt-4 space-y-1.5">
-                  <p className="text-[10px] font-bold text-muted uppercase tracking-wider">Tap sample prompt to generate:</p>
+                  <p className="text-[10px] font-bold text-muted uppercase tracking-wider">{t('Tap sample prompt to generate:')}</p>
                   {samplePrompts.map((p) => (
                     <button
                       key={p.text}
@@ -282,10 +284,10 @@ export function KtAIPage() {
       <Section className="bg-cream">
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            Everything AI Can Do For You
+            {t('Everything AI Can Do For You')}
           </h2>
           <p className="mt-4 text-lg text-body">
-            Explore the multi-modal artificial intelligence built directly into your everyday messaging interface.
+            {t('Explore the multi modal artificial intelligence built directly into your everyday messaging interface.')}
           </p>
         </Reveal>
 
@@ -315,7 +317,7 @@ export function KtAIPage() {
           <div className="rounded-3xl border border-line bg-surface p-8 shadow-card flex flex-col justify-between">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
-                AI Capability Deep Dive
+                {t('AI Capability Deep Dive')}
               </div>
               <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {aiTabs[activeTab].title}
@@ -335,9 +337,9 @@ export function KtAIPage() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
-              <span className="text-xs text-muted font-medium">Included free on all devices</span>
+              <span className="text-xs text-muted font-medium">{t('Included free on all devices')}</span>
               <Button size="sm" onClick={() => navigate('/apps')}>
-                Try KT AI Now <FiChevronRight />
+                {t('Try KT AI Now')} <FiChevronRight />
               </Button>
             </div>
           </div>
@@ -350,23 +352,23 @@ export function KtAIPage() {
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
             <Reveal from="left" className="lg:col-span-5 space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                🎬 Interactive KT AI Demo
+                {t('🎬 Interactive KT AI Demo')}
               </div>
               <h2 className="text-3xl font-extrabold text-ink sm:text-4xl lg:text-[2.5rem] tracking-tight leading-tight">
-                Neural Multimodal AI Assistant
+                {t('Neural Multimodal AI Assistant')}
               </h2>
               <p className="text-base sm:text-lg leading-relaxed text-body">
-                Type `/imagine` prompts for 4K artwork or mention `@KTAI` in any group chat to answer questions instantly.
+                {t('Type `/imagine` prompts for 4K artwork or mention `@KTAI` in any group chat to answer questions instantly.')}
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> /imagine 4K Artwork
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('/imagine 4K Artwork')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> Group Chat Co-Pilot
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('Group Chat Co Pilot')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> Sub-second GPU Render
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('Sub second GPU Render')}
                 </span>
               </div>
             </Reveal>
@@ -383,7 +385,7 @@ export function KtAIPage() {
               </div>
 
               <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-2 left-2 sm:left-6 z-20 flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 shadow-float border border-brand-strong/30 text-xs font-bold text-brand-ink">
-                <FiShield className="text-brand-strong" /> Multi-Modal Neural AI Active
+                <FiShield className="text-brand-strong" /> {t('Multi Modal Neural AI Active')}
               </motion.div>
             </Reveal>
           </div>
@@ -396,27 +398,27 @@ export function KtAIPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
               <div className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                <FiZap className="text-brand-strong" /> Group Chat Assistant
+                <FiZap className="text-brand-strong" /> {t('Group Chat Assistant')}
               </div>
               <h2 className="mt-4 text-3xl font-extrabold leading-tight text-ink sm:text-4xl lg:text-5xl">
-                Bring artificial intelligence into group discussions
+                {t('Bring artificial intelligence into group discussions')}
               </h2>
               <p className="mt-6 text-base leading-relaxed text-body">
-                Need to settle a friendly debate, generate a quick 3-day travel schedule, or translate a message for overseas friends? Mention `@KTAI` in any group to get shared instant answers.
+                {t('Need to settle a friendly debate, generate a quick 3-day travel schedule, or translate a message for overseas friends? Mention `@KTAI` in any group to get shared instant answers.')}
               </p>
 
               <div className="mt-6 space-y-3 text-sm font-semibold text-ink">
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>Responds directly in the group thread for everyone to see</span>
+                  <span>{t('Responds directly in the group thread for everyone to see')}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>Understands chat context and previous messages</span>
+                  <span>{t('Understands chat context and previous messages')}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FiCheckCircle className="text-brand-strong text-lg" />
-                  <span>Translates messages into 50+ languages instantly</span>
+                  <span>{t('Translates messages into 50+ languages instantly')}</span>
                 </div>
               </div>
             </Reveal>
@@ -424,17 +426,17 @@ export function KtAIPage() {
             <Reveal from="right" className="flex justify-center">
               <div className="w-full max-w-[400px] rounded-3xl bg-surface p-6 shadow-float border border-line space-y-3">
                 <div className="rounded-2xl bg-cream p-3 border border-line text-xs">
-                  <span className="font-bold text-brand-strong">@KTAI</span> What are 3 healthy 15-minute dinner recipes?
+                  <span className="font-bold text-brand-strong">@KTAI</span> {t('What are 3 healthy 15-minute dinner recipes?')}
                 </div>
 
                 <div className="rounded-2xl bg-brand-soft p-4 border border-brand-strong/20 text-xs text-ink space-y-2">
                   <div className="flex items-center gap-2 font-bold text-brand-ink">
-                    <SparklesIcon className="text-brand-strong" /> KT AI Co-Pilot:
+                    <SparklesIcon className="text-brand-strong" /> {t('KT AI Co Pilot:')}
                   </div>
                   <ol className="list-decimal list-inside space-y-1 text-body leading-relaxed">
-                    <li>Avocado & Poached Egg Whole-grain Toast</li>
-                    <li>Mediterranean Chickpea & Feta Salad</li>
-                    <li>Garlic Butter Lemon Shrimp Stir-fry</li>
+                    <li>{t('Avocado & Poached Egg Whole grain Toast')}</li>
+                    <li>{t('Herbed Chickpea & Feta Salad')}</li>
+                    <li>{t('Garlic Butter Lemon Shrimp Stir fry')}</li>
                   </ol>
                 </div>
               </div>
@@ -447,10 +449,10 @@ export function KtAIPage() {
       <Section className="bg-cream">
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            Real-World AI Productivity
+            {t('Real World AI Productivity')}
           </h2>
           <p className="mt-4 text-lg text-body">
-            See how KT AI powers work, creativity, and daily organization.
+            {t('See how KT AI powers work, creativity, and daily organization.')}
           </p>
         </Reveal>
 
@@ -476,10 +478,10 @@ export function KtAIPage() {
         <Container>
           <Reveal from="up" className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Why KT AI is Superior
+              {t('Why KT AI is Superior')}
             </h2>
             <p className="mt-4 text-lg text-body">
-              Comparing in-chat AI assistance against web-only standalone chatbots.
+              {t('Comparing in chat AI assistance against web only standalone chatbots.')}
             </p>
           </Reveal>
 
@@ -487,10 +489,10 @@ export function KtAIPage() {
             <table className="w-full min-w-[600px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-line bg-cream">
-                  <th className="p-4 font-bold text-ink">Feature</th>
+                  <th className="p-4 font-bold text-ink">{t('Feature')}</th>
                   <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT AI</th>
-                  <th className="p-4 font-bold text-body">Standalone Web AI</th>
-                  <th className="p-4 font-bold text-body">Traditional Messaging</th>
+                  <th className="p-4 font-bold text-body">{t('Standalone Web AI')}</th>
+                  <th className="p-4 font-bold text-body">{t('Traditional Messaging')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line text-sm">
@@ -513,10 +515,10 @@ export function KtAIPage() {
         <Container className="max-w-4xl">
           <Reveal from="up" className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-              <FiHelpCircle /> AI FAQs
+              <FiHelpCircle /> {t('AI FAQs')}
             </div>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Frequently Asked Questions
+              {t('Frequently Asked Questions')}
             </h2>
           </Reveal>
 
@@ -558,17 +560,17 @@ export function KtAIPage() {
         <Container className="text-center">
           <Reveal from="up">
             <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
-              Start Using KT AI Today
+              {t('Start Using KT AI Today')}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Download KT Messenger now and experience next-gen AI image generation, group assistant, and search.
+              {t('Download KT Messenger now and experience next gen AI image generation, group assistant, and search.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
-                Try KT AI Free <FiDownload />
+                {t('Try KT AI Free')} <FiDownload />
               </Button>
               <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
-                Launch Web Version <FiChevronRight />
+                {t('Launch Web Version')} <FiChevronRight />
               </Button>
             </div>
           </Reveal>

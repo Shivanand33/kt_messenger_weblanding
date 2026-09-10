@@ -40,6 +40,7 @@ import { RelatedPages } from '../../components/feature/RelatedPages'
 import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
+import { useLanguage } from '../../context/LanguageContext'
 
 const DEPARTMENTS = ['All', 'Engineering', 'Design', 'Security', 'Product', 'Policy & Legal', 'Support']
 
@@ -48,78 +49,78 @@ const ROLES = [
     id: 'eng-android',
     title: 'Senior Android Engineer',
     department: 'Engineering',
-    location: 'Bengaluru or remote',
+    location: 'Remote',
     type: 'Full-time',
     level: 'Senior',
-    salary: '₹55–80L',
-    summary: 'Own message delivery and media handling on the Android client, with a hard focus on mid-range devices.',
+    salary: '95–130k',
+    summary: 'Own message delivery and media handling on the Android client, with a hard focus on mid range devices.',
     responsibilities: [
-      'Cut cold-start time on 4GB devices without dropping features.',
+      'Cut cold start time on 4GB devices without dropping features.',
       'Own the offline queue and reconciliation logic end to end.',
-      'Work directly with the protocol team on client-side key handling.',
+      'Work directly with the protocol team on client side key handling.',
     ],
-    requirements: ['5+ years shipping Android apps at scale', 'Kotlin and coroutines in production', 'Comfort profiling on low-end hardware'],
+    requirements: ['5+ years shipping Android apps at scale', 'Kotlin and coroutines in production', 'Comfort profiling on low end hardware'],
   },
   {
     id: 'eng-protocol',
     title: 'Protocol Engineer, Cryptography',
     department: 'Engineering',
-    location: 'Stockholm',
+    location: 'Remote',
     type: 'Full-time',
     level: 'Senior',
-    salary: 'SEK 780k–1.1M',
-    summary: 'Extend the double-ratchet implementation and drive the post-quantum migration across clients.',
+    salary: '110–150k',
+    summary: 'Extend the double ratchet implementation and drive the post quantum migration across clients.',
     responsibilities: [
-      'Implement and review hybrid post-quantum key agreement.',
+      'Implement and review hybrid post quantum key agreement.',
       'Write the specs that external auditors review.',
       'Keep handshake latency under two milliseconds on target hardware.',
     ],
-    requirements: ['Applied cryptography experience', 'Rust or C++ in security-critical code', 'Published or audited protocol work is a plus'],
+    requirements: ['Applied cryptography experience', 'Rust or C++ in security critical code', 'Published or audited protocol work is a plus'],
   },
   {
     id: 'eng-payments',
     title: 'Backend Engineer, Payments',
     department: 'Engineering',
-    location: 'Bengaluru',
+    location: 'Distributed team',
     type: 'Full-time',
     level: 'Mid',
-    salary: '₹40–60L',
+    salary: '75–105k',
     summary: 'Build the escrow and settlement services behind KT Wallet and Marketplace orders.',
     responsibilities: [
       'Design idempotent settlement flows against partner bank APIs.',
       'Own reconciliation tooling and the dispute pipeline.',
       'Keep the audit trail complete enough to survive a regulator.',
     ],
-    requirements: ['Payments or ledger experience', 'Strong Go, Java or Rust', 'Instinct for exactly-once semantics'],
+    requirements: ['Payments or ledger experience', 'Strong Go, Java or Rust', 'Instinct for exactly once semantics'],
   },
   {
     id: 'eng-infra',
     title: 'Site Reliability Engineer',
     department: 'Engineering',
-    location: 'Remote (EU timezones)',
+    location: 'Distributed team',
     type: 'Full-time',
     level: 'Senior',
-    salary: '€90–125k',
+    salary: '90–125k',
     summary: 'Keep message delivery at four nines while the fleet keeps growing across regions.',
     responsibilities: [
       'Own capacity planning for regional message brokers.',
-      'Run blameless incident review and drive the follow-ups.',
-      'Reduce alert noise so on-call is genuinely sustainable.',
+      'Run blameless incident review and drive the follow ups.',
+      'Reduce alert noise so on call is genuinely sustainable.',
     ],
-    requirements: ['Kubernetes at real scale', 'Observability tooling ownership', 'Been on-call for something people notice'],
+    requirements: ['Kubernetes at real scale', 'Observability tooling ownership', 'Been on call for something people notice'],
   },
   {
     id: 'design-product',
     title: 'Product Designer, Messaging',
     department: 'Design',
-    location: 'Lisbon or remote',
+    location: 'Remote',
     type: 'Full-time',
     level: 'Mid',
-    salary: '€65–85k',
+    salary: '65–85k',
     summary: 'Design defaults that stay safe for people who will never open the settings screen.',
     responsibilities: [
       'Own the chat and composer surfaces end to end.',
-      'Run research with users on low-end devices and slow networks.',
+      'Run research with users on low end devices and slow networks.',
       'Prototype in code well enough to argue with engineers.',
     ],
     requirements: ['4+ years product design', 'Portfolio showing shipped mobile work', 'Comfort designing for accessibility first'],
@@ -131,7 +132,7 @@ const ROLES = [
     location: 'Remote',
     type: 'Contract · 12 months',
     level: 'Mid',
-    salary: '€55–70k',
+    salary: '55–70k',
     summary: 'Evolve the KT identity across product, store listings and the Brand Center.',
     responsibilities: [
       'Maintain and extend the brand system and its documentation.',
@@ -147,10 +148,10 @@ const ROLES = [
     location: 'Remote (worldwide)',
     type: 'Full-time',
     level: 'Senior',
-    salary: '$140–190k',
+    salary: '140–190k',
     summary: 'Break our clients before anyone else does, and turn what you find into shipped fixes.',
     responsibilities: [
-      'Red-team the mobile and desktop clients each release cycle.',
+      'Red team the mobile and desktop clients each release cycle.',
       'Triage bug bounty reports and set severity honestly.',
       'Publish findings, including the ones that are embarrassing.',
     ],
@@ -160,14 +161,14 @@ const ROLES = [
     id: 'sec-appsec',
     title: 'Application Security Engineer',
     department: 'Security',
-    location: 'Stockholm or remote',
+    location: 'Distributed team',
     type: 'Full-time',
     level: 'Mid',
-    salary: 'SEK 650k–880k',
+    salary: '90–120k',
     summary: 'Build the guardrails that keep insecure code from reaching a release branch.',
     responsibilities: [
-      'Own the secure SDLC and the pre-merge security checks.',
-      'Threat-model new surfaces before they are built.',
+      'Own the secure SDLC and the pre merge security checks.',
+      'Threat model new surfaces before they are built.',
       'Run the internal security training that engineers actually attend.',
     ],
     requirements: ['AppSec at a product company', 'Fluency in at least two of Kotlin, Swift, Go, TypeScript', 'Pragmatism about risk'],
@@ -176,13 +177,13 @@ const ROLES = [
     id: 'prod-wallet',
     title: 'Product Manager, Wallet',
     department: 'Product',
-    location: 'Bengaluru',
+    location: 'Remote',
     type: 'Full-time',
     level: 'Senior',
-    salary: '₹60–85L',
-    summary: 'Own the roadmap for payments, from peer-to-peer transfers to merchant settlement.',
+    salary: '100–140k',
+    summary: 'Own the roadmap for payments, from peer to peer transfers to merchant settlement.',
     responsibilities: [
-      'Define the limits, fees and disclosures — and defend them publicly.',
+      'Define the limits, fees and disclosures and defend them publicly.',
       'Work with partner banks and the compliance team as one group.',
       'Decide what not to build when it needs data we refuse to collect.',
     ],
@@ -192,49 +193,49 @@ const ROLES = [
     id: 'policy-counsel',
     title: 'Privacy Counsel',
     department: 'Policy & Legal',
-    location: 'Berlin',
+    location: 'Remote',
     type: 'Full-time',
     level: 'Senior',
-    salary: '€100–140k',
+    salary: '100–140k',
     summary: 'Advise product teams on data minimisation and represent us in regulatory conversations.',
     responsibilities: [
       'Review new features against GDPR, DPDP and equivalents.',
-      'Own the transparency report and lawful-access process.',
+      'Own the transparency report and lawful access process.',
       'Push back internally when a shortcut would cost user trust.',
     ],
-    requirements: ['Qualified lawyer with privacy specialism', 'Experience with cross-border data transfers', 'Plain-language drafting'],
+    requirements: ['Qualified lawyer with privacy specialism', 'Experience with cross border data transfers', 'Plain language drafting'],
   },
   {
     id: 'policy-comms',
-    title: 'Public Policy Manager, APAC',
+    title: 'Public Policy Manager',
     department: 'Policy & Legal',
-    location: 'Singapore',
+    location: 'Distributed team',
     type: 'Full-time',
     level: 'Mid',
-    salary: 'SGD 120–160k',
-    summary: 'Engage regulators across APAC on encryption, payments and platform rules.',
+    salary: '105–140k',
+    summary: 'Engage regulators worldwide on encryption, payments and platform rules.',
     responsibilities: [
       'Build relationships before there is a crisis, not during one.',
       'Translate technical constraints into policy language.',
       'Coordinate submissions on consultations that affect encryption.',
     ],
-    requirements: ['Policy or regulatory affairs background', 'APAC market knowledge', 'Genuinely understands how E2EE works'],
+    requirements: ['Policy or regulatory affairs background', 'Multi market regulatory knowledge', 'Genuinely understands how E2EE works'],
   },
   {
     id: 'support-lead',
     title: 'Support Operations Lead',
     department: 'Support',
-    location: 'Remote (IST overlap)',
+    location: 'Remote (flexible hours)',
     type: 'Full-time',
     level: 'Mid',
-    salary: '₹28–42L',
+    salary: '55–75k',
     summary: 'Run the team that answers people when payments, accounts or bans go wrong.',
     responsibilities: [
-      'Own first-response and resolution targets across regions.',
+      'Own first response and resolution targets across regions.',
       'Turn recurring tickets into product bugs with real owners.',
       'Keep escalation paths short enough to actually work.',
     ],
-    requirements: ['Support leadership at scale', 'Data-led queue management', 'Patience with genuinely hard cases'],
+    requirements: ['Support leadership at scale', 'Data led queue management', 'Patience with genuinely hard cases'],
   },
 ]
 
@@ -248,33 +249,33 @@ const NAV_ITEMS = [
 ]
 
 const STATS = [
-  { value: 12, label: 'Open roles', icon: <FiBriefcase />, hint: 'Across six teams and seven locations.' },
-  { value: 38, suffix: '%', label: 'Fully remote', icon: <FiHome />, hint: 'Remote is a location, not a lesser tier.' },
-  { value: 14, label: 'Offices', icon: <FiGlobe />, hint: 'Plus hub stipends wherever you are based.' },
+  { value: 12, label: 'Open roles', icon: <FiBriefcase />, hint: 'Across six teams, every one of them remote.' },
+  { value: 100, suffix: '%', label: 'Fully remote', icon: <FiHome />, hint: 'Remote is the default, not a lesser tier.' },
+  { value: 14, label: 'Timezones covered', icon: <FiGlobe />, hint: 'Plus a home office stipend wherever you are based.' },
   { value: 4.6, decimals: 1, label: 'Average tenure (years)', icon: <FiAward />, hint: 'People tend to stay and finish things.' },
 ]
 
 const BENEFITS = [
-  { icon: <FiHome />, title: 'Remote by default', desc: 'Work from anywhere in your team’s timezone band. Office access if you want it, never a requirement.' },
+  { icon: <FiHome />, title: 'Remote by default', desc: 'Work from anywhere in your team’s timezone band. There is no office to commute to and no relocation attached to any role.' },
   { icon: <FiDollarSign />, title: 'Transparent bands', desc: 'Every posting shows its salary range up front, and the band does not move based on how hard you negotiate.' },
-  { icon: <FiHeart />, title: 'Health cover for the family', desc: 'Comprehensive medical, dental and mental-health cover for you, a partner and dependants from day one.' },
-  { icon: <FiClock />, title: '30 days off, taken seriously', desc: 'Thirty days plus public holidays, with a two-week minimum the company actually enforces.' },
-  { icon: <FiBookOpen />, title: 'Learning budget', desc: '€2,500 a year for conferences, courses or books, with no approval theatre attached to it.' },
-  { icon: <FiShield />, title: 'Security-first equipment', desc: 'Hardware keys, a managed laptop and a device refresh every three years, all provided.' },
+  { icon: <FiHeart />, title: 'Health cover for the family', desc: 'Comprehensive medical, dental and mental health cover for you, a partner and dependants from day one.' },
+  { icon: <FiClock />, title: '30 days off, taken seriously', desc: 'Thirty days plus public holidays, with a two week minimum the company actually enforces.' },
+  { icon: <FiBookOpen />, title: 'Learning budget', desc: '2,500 a year for conferences, courses or books, with no approval theatre attached to it.' },
+  { icon: <FiShield />, title: 'Security first equipment', desc: 'Hardware keys, a managed laptop and a device refresh every three years, all provided.' },
   { icon: <FiUsers />, title: 'Parental leave', desc: 'Six months fully paid for any parent, plus a phased return over the following month.' },
-  { icon: <FiZap />, title: 'Focus Fridays', desc: 'No recurring meetings company-wide on Fridays. It has held for four years.' },
-  { icon: <FiGlobe />, title: 'Relocation support', desc: 'Visa sponsorship and relocation costs covered for roles tied to a specific office.' },
+  { icon: <FiZap />, title: 'Focus Fridays', desc: 'No recurring meetings company wide on Fridays. It has held for four years.' },
+  { icon: <FiGlobe />, title: 'Home office budget', desc: 'A setup allowance for desk, chair and connectivity, plus a co working stipend wherever you are based.' },
 ]
 
 const PROCESS = [
   { icon: <FiSend />, title: 'Apply', desc: 'One form, no cover letter required. A human reads every application within five working days.' },
   { icon: <FiMessageSquare />, title: 'Intro call', desc: '45 minutes with the hiring manager on what the role actually involves and what you want next.' },
-  { icon: <FiActivity />, title: 'Craft interview', desc: 'A paid take-home or a live session — your choice. Scoped to four hours, never a weekend project.' },
+  { icon: <FiActivity />, title: 'Craft interview', desc: 'A paid take home or a live session your choice. Scoped to four hours, never a weekend project.' },
   { icon: <FiCheckCircle />, title: 'Team and offer', desc: 'Two conversations with the team, then a decision within three days. The band is the band.' },
 ]
 
 const VOICES = [
-  { quote: 'The take-home was paid and capped at four hours. That single detail told me more about the company than the careers page did.', name: 'Meera Kapoor', role: 'Android Engineer, 2 years' },
+  { quote: 'The take home was paid and capped at four hours. That single detail told me more about the company than the careers page did.', name: 'Meera Kapoor', role: 'Android Engineer, 2 years' },
   { quote: 'I have turned down features here because they needed data we refuse to collect. Nobody overruled me. That is rare.', name: 'Anders Holm', role: 'Product Manager, 4 years' },
   { quote: 'Focus Fridays are real. Four years in and my calendar has never had a recurring Friday meeting on it.', name: 'Fatima Bello', role: 'SRE, 3 years' },
   { quote: 'Salary bands are published and fixed. I did not have to negotiate to get paid the same as the person beside me.', name: 'Diego Ramos', role: 'Designer, 1 year' },
@@ -283,25 +284,26 @@ const VOICES = [
 ]
 
 const FAQS = [
-  { q: 'Do you sponsor visas?', a: 'Yes, for roles tied to a specific office. Relocation costs and immigration support are covered, and we start the process before you sign, not after.', tag: 'Hiring' },
-  { q: 'Is the take-home paid?', a: 'Always. It is scoped to four hours, we pay a flat fee at a senior contractor rate, and you can choose a live session instead if you prefer.', tag: 'Process' },
-  { q: 'Can I work fully remote?', a: 'For most engineering, design and support roles, yes — within your team’s timezone band. Policy and payments roles are usually tied to a jurisdiction.', tag: 'Remote' },
+  { q: 'Do you hire internationally?', a: 'Yes. Every role is remote first, so there is nowhere to move to we handle employment and payroll wherever you already are, and we sort that out before you sign, not after.', tag: 'Hiring' },
+  { q: 'Is the take home paid?', a: 'Always. It is scoped to four hours, we pay a flat fee at a senior contractor rate, and you can choose a live session instead if you prefer.', tag: 'Process' },
+  { q: 'Can I work fully remote?', a: 'Every role is remote you only need to keep a workable overlap with your team’s timezone band. There is no office tier and no in person requirement.', tag: 'Remote' },
   { q: 'Are salary bands negotiable?', a: 'The band is published and fixed. Where you land inside it depends on levelling, not on how hard you push, and we tell you the level before the offer.', tag: 'Pay' },
   { q: 'How long does the process take?', a: 'Typically three weeks from application to offer. If it is going to take longer, your recruiter tells you why rather than going quiet.', tag: 'Process' },
   { q: 'Do you hire junior engineers?', a: 'Yes, in cohorts twice a year rather than continuously, so there is a proper mentoring structure waiting instead of a desk and good luck.', tag: 'Levels' },
   { q: 'What happens to my application data?', a: 'It is stored encrypted, visible only to the hiring panel, and deleted after twelve months unless you ask us to keep it for future roles.', tag: 'Privacy' },
-  { q: 'Can I reapply if I am rejected?', a: 'After six months, or immediately for a different team. Rejection feedback is written and specific — we do not send template emails.', tag: 'Hiring' },
+  { q: 'Can I reapply if I am rejected?', a: 'After six months, or immediately for a different team. Rejection feedback is written and specific we do not send template emails.', tag: 'Hiring' },
 ]
 
 const RELATED = [
-  { to: '/about', label: 'About', desc: 'Our mission, story and the no-ads charter.', icon: <FiCompass /> },
+  { to: '/about', label: 'About', desc: 'Our mission, story and the no ads charter.', icon: <FiCompass /> },
   { to: '/contact', label: 'Contact', desc: 'Questions about a role or the process.', icon: <FiMessageSquare /> },
   { to: '/community', label: 'Community', desc: 'Forums, events and the ambassador programme.', icon: <FiUsers /> },
-  { to: '/blog', label: 'Blog', desc: 'Engineering write-ups from the teams hiring.', icon: <FiBookOpen /> },
+  { to: '/blog', label: 'Blog', desc: 'Engineering write ups from the teams hiring.', icon: <FiBookOpen /> },
 ]
 
 export function CareersPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   const [department, setDepartment] = useState('All')
   const [query, setQuery] = useState('')
@@ -336,11 +338,11 @@ export function CareersPage() {
   const submitApplication = (event) => {
     event.preventDefault()
     if (!form.name.trim()) {
-      setToast('Please add your name.')
+      setToast(t('Please add your name.'))
       return
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim())) {
-      setToast('Enter a valid email address.')
+      setToast(t('Enter a valid email address.'))
       return
     }
     setSubmitted({ role: openRole.title, ref: `KT-${openRole.id.toUpperCase()}-${form.name.trim().split(' ')[0].toUpperCase()}` })
@@ -354,30 +356,30 @@ export function CareersPage() {
       <PageHero
         badge={
           <>
-            <FiBriefcase /> 12 open roles · 7 locations
+            <FiBriefcase /> {t('12 open roles · fully remote')}
           </>
         }
-        title="Careers at"
+        title={t('Careers at')}
         highlight="KT Messenger"
-        description="Build private messaging for two billion people, at a company whose business model does not depend on reading any of it."
+        description={t('Build private messaging for two billion people, at a company whose business model does not depend on reading any of it.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={() => document.getElementById('roles')?.scrollIntoView({ behavior: 'smooth' })}>
-              Browse open roles <FiChevronRight />
+              {t('Browse open roles')} <FiChevronRight />
             </Button>
             <Button size="lg" variant="onDark" onClick={() => { navigate('/about'); window.scrollTo(0, 0) }}>
-              About the company
+              {t('About the company')}
             </Button>
           </>
         }
         chips={[
-          { icon: <FiDollarSign />, label: 'Published salary bands' },
-          { icon: <FiHome />, label: 'Remote by default' },
-          { icon: <FiCheckCircle />, label: 'Paid take-home, 4h cap' },
+          { icon: <FiDollarSign />, label: t('Published salary bands') },
+          { icon: <FiHome />, label: t('Remote by default') },
+          { icon: <FiCheckCircle />, label: t('Paid take home, 4h cap') },
         ]}
         aside={
           <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur-xl sm:p-8">
-            <span className="text-[11px] font-black uppercase tracking-[0.16em] text-sky-300">Latest openings</span>
+            <span className="text-[11px] font-black uppercase tracking-[0.16em] text-sky-300">{t('Latest openings')}</span>
             <ul className="mt-5 space-y-3">
               {ROLES.slice(0, 4).map((role) => (
                 <li key={role.id}>
@@ -387,9 +389,9 @@ export function CareersPage() {
                     className="flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 text-left transition-colors hover:border-sky-400/40 hover:bg-white/[0.07]"
                   >
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-xs font-bold text-white">{role.title}</span>
+                      <span className="block truncate text-xs font-bold text-white">{t(role.title)}</span>
                       <span className="block truncate text-[10px] font-semibold text-slate-400">
-                        {role.department} · {role.location}
+                        {t(role.department)} · {t(role.location)}
                       </span>
                     </span>
                     <FiChevronRight className="shrink-0 text-slate-400" />
@@ -398,7 +400,7 @@ export function CareersPage() {
               ))}
             </ul>
             <p className="mt-5 border-t border-white/10 pt-4 text-[11px] leading-relaxed text-slate-400">
-              Every application is read by a person within five working days. Rejections come with written feedback.
+              {t('Every application is read by a person within five working days. Rejections come with written feedback.')}
             </p>
           </div>
         }
@@ -409,7 +411,7 @@ export function CareersPage() {
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search by title, team or location…"
+            placeholder={t('Search by title, team or location…')}
             className="w-full bg-transparent text-sm font-semibold text-white outline-none placeholder:text-slate-400"
           />
           {query ? (
@@ -418,7 +420,7 @@ export function CareersPage() {
               onClick={() => setQuery('')}
               className="mr-2 shrink-0 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-300 hover:bg-white/10 hover:text-white"
             >
-              Clear
+              {t('Clear')}
             </button>
           ) : null}
         </div>
@@ -436,25 +438,25 @@ export function CareersPage() {
           onChange={setDepartment}
           query={query}
           onQuery={setQuery}
-          placeholder="Search roles…"
+          placeholder={t('Search roles…')}
         />
 
         <Section className="bg-surface">
           <SectionHead
-            eyebrow={`${filtered.length} ${filtered.length === 1 ? 'role' : 'roles'}`}
-            title={department === 'All' ? 'Every open position' : department}
-            description="Salary bands are published on each posting and are not adjusted by negotiation."
+            eyebrow={`${filtered.length} ${filtered.length === 1 ? t('role') : t('roles')}`}
+            title={department === 'All' ? t('Every open position') : t(department)}
+            description={t('Salary bands are published on each posting and are not adjusted by negotiation.')}
           />
 
           {filtered.length === 0 ? (
             <div className="mt-12">
               <EmptyState
                 icon={<FiSearch />}
-                title="No roles match"
-                description="Try another team, or clear the search to see all 12 openings."
+                title={t('No roles match')}
+                description={t('Try another team, or clear the search to see all 12 openings.')}
                 action={
                   <Button variant="secondary" onClick={() => { setDepartment('All'); setQuery('') }}>
-                    Reset filters
+                    {t('Reset filters')}
                   </Button>
                 }
               />
@@ -468,22 +470,22 @@ export function CareersPage() {
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="rounded-full bg-brand-soft px-3 py-1 text-[10px] font-black uppercase tracking-wide text-brand-ink">
-                            {role.department}
+                            {t(role.department)}
                           </span>
                           <span className="rounded-full border border-line bg-surface px-3 py-1 text-[10px] font-bold text-muted">
-                            {role.level}
+                            {t(role.level)}
                           </span>
                         </div>
 
-                        <h3 className="mt-3 text-lg font-extrabold leading-snug text-ink">{role.title}</h3>
-                        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-body">{role.summary}</p>
+                        <h3 className="mt-3 text-lg font-extrabold leading-snug text-ink">{t(role.title)}</h3>
+                        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-body">{t(role.summary)}</p>
 
                         <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-bold text-muted">
                           <span className="flex items-center gap-1.5">
-                            <FiMapPin /> {role.location}
+                            <FiMapPin /> {t(role.location)}
                           </span>
                           <span className="flex items-center gap-1.5">
-                            <FiClock /> {role.type}
+                            <FiClock /> {t(role.type)}
                           </span>
                           <span className="flex items-center gap-1.5 text-brand-ink">
                             <FiDollarSign /> {role.salary}
@@ -493,7 +495,7 @@ export function CareersPage() {
 
                       <div className="flex shrink-0 gap-2.5">
                         <Button variant="secondary" onClick={() => setOpenRole(role)}>
-                          Details
+                          {t('Details')}
                         </Button>
                         <Button
                           onClick={() => {
@@ -501,7 +503,7 @@ export function CareersPage() {
                             setApplying(true)
                           }}
                         >
-                          Apply <FiSend />
+                          {t('Apply')} <FiSend />
                         </Button>
                       </div>
                     </div>
@@ -516,9 +518,9 @@ export function CareersPage() {
       {/* BENEFITS */}
       <Section id="benefits" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
-          eyebrow="Benefits"
-          title="Nine things you get, stated precisely"
-          description="No vague wellness language — these are the actual numbers and policies."
+          eyebrow={t('Benefits')}
+          title={t('Nine things you get, stated precisely')}
+          description={t('No vague wellness language these are the actual numbers and policies.')}
         />
         <FeatureGrid className="mt-12" items={BENEFITS} />
       </Section>
@@ -526,56 +528,55 @@ export function CareersPage() {
       {/* PROCESS */}
       <Section id="process" className="scroll-mt-36 bg-surface">
         <SectionHead
-          eyebrow="Hiring process"
-          title="Four steps, about three weeks"
-          description="No surprise rounds, no unpaid weekend projects, no silence between stages."
+          eyebrow={t('Hiring process')}
+          title={t('Four steps, about three weeks')}
+          description={t('No surprise rounds, no unpaid weekend projects, no silence between stages.')}
         />
         <Steps className="mt-12" items={PROCESS} />
 
         <Reveal from="up" className="mx-auto mt-12 max-w-3xl rounded-[24px] border border-line bg-cream p-6 dark:bg-cream-2">
           <p className="flex items-start gap-3 text-sm leading-relaxed text-body">
             <FiShield className="mt-0.5 shrink-0 text-lg text-brand-strong" />
-            Your application data is stored encrypted, visible only to the hiring panel, and deleted after twelve months
-            unless you ask us to keep it on file. We never run it through an automated screening model.
+            {t('Your application data is stored encrypted, visible only to the hiring panel, and deleted after twelve months unless you ask us to keep it on file. We never run it through an automated screening model.')}
           </p>
         </Reveal>
       </Section>
 
       {/* LIFE */}
       <Section id="life" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
-        <SectionHead eyebrow="Life here" title="What people say six months in" />
+        <SectionHead eyebrow={t('Life here')} title={t('What people say six months in')} />
         <Testimonials className="mt-12" items={VOICES} />
       </Section>
 
       {/* FAQ */}
       <Section id="faq" container={false} className="scroll-mt-36 bg-surface">
         <Container maxW="max-w-3xl">
-          <SectionHead eyebrow="FAQ" title="Questions candidates actually ask" />
+          <SectionHead eyebrow={t('FAQ')} title={t('Questions candidates actually ask')} />
           <div className="mt-12">
-            <FaqAccordion items={FAQS} placeholder="Search the FAQ…" />
+            <FaqAccordion items={FAQS} placeholder={t('Search the FAQ…')} />
           </div>
         </Container>
       </Section>
 
       <CtaBand
-        eyebrow="Apply"
-        title="Nothing here fits? Tell us anyway"
-        description="We open roles continuously. A short note about what you do well is enough — no cover letter required."
+        eyebrow={t('Apply')}
+        title={t('Nothing here fits? Tell us anyway')}
+        description={t('We open roles continuously. A short note about what you do well is enough no cover letter required.')}
         actions={
           <>
             <Button size="lg" variant="white" onClick={() => document.getElementById('roles')?.scrollIntoView({ behavior: 'smooth' })}>
-              Browse open roles
+              {t('Browse open roles')}
             </Button>
             <Button size="lg" variant="onDark" onClick={() => { navigate('/contact'); window.scrollTo(0, 0) }}>
-              Contact the team
+              {t('Contact the team')}
             </Button>
           </>
         }
-        points={['Read within 5 working days', 'Written feedback', 'Paid take-home', 'Published bands']}
+        points={[t('Read within 5 working days'), t('Written feedback'), t('Paid take home'), t('Published bands')]}
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow="Keep exploring" title="More about KT Messenger" />
+        <SectionHead eyebrow={t('Keep exploring')} title={t('More about KT Messenger')} />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 
@@ -583,15 +584,15 @@ export function CareersPage() {
       <Modal
         open={Boolean(openRole) && !applying}
         onClose={() => setOpenRole(null)}
-        eyebrow={openRole ? `${openRole.department} · ${openRole.level}` : ''}
-        title={openRole?.title}
+        eyebrow={openRole ? `${t(openRole.department)} · ${t(openRole.level)}` : ''}
+        title={openRole ? t(openRole.title) : undefined}
         size="lg"
         footer={
           openRole ? (
             <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="text-sm font-black text-ink">{openRole.salary}</span>
               <Button onClick={() => setApplying(true)}>
-                Apply for this role <FiSend />
+                {t('Apply for this role')} <FiSend />
               </Button>
             </div>
           ) : null
@@ -602,37 +603,36 @@ export function CareersPage() {
             <div className="flex flex-wrap gap-2">
               {[openRole.location, openRole.type, openRole.level].map((tag) => (
                 <span key={tag} className="rounded-full border border-line bg-cream px-3 py-1 text-[11px] font-bold text-muted dark:bg-cream-2">
-                  {tag}
+                  {t(tag)}
                 </span>
               ))}
             </div>
 
-            <p className="mt-5 text-base font-semibold leading-relaxed text-ink">{openRole.summary}</p>
+            <p className="mt-5 text-base font-semibold leading-relaxed text-ink">{t(openRole.summary)}</p>
 
-            <h4 className="mt-7 text-xs font-black uppercase tracking-[0.16em] text-muted">What you will own</h4>
+            <h4 className="mt-7 text-xs font-black uppercase tracking-[0.16em] text-muted">{t('What you will own')}</h4>
             <ul className="mt-3 space-y-2.5">
               {openRole.responsibilities.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-body">
                   <FiCheckCircle className="mt-0.5 shrink-0 text-brand-strong" />
-                  {item}
+                  {t(item)}
                 </li>
               ))}
             </ul>
 
-            <h4 className="mt-7 text-xs font-black uppercase tracking-[0.16em] text-muted">What we are looking for</h4>
+            <h4 className="mt-7 text-xs font-black uppercase tracking-[0.16em] text-muted">{t('What we are looking for')}</h4>
             <ul className="mt-3 space-y-2.5">
               {openRole.requirements.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-body">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-strong" />
-                  {item}
+                  {t(item)}
                 </li>
               ))}
             </ul>
 
             <div className="mt-7 rounded-2xl border border-line bg-cream p-4 dark:bg-cream-2">
               <p className="text-xs leading-relaxed text-body">
-                <strong className="text-ink">Salary band: {openRole.salary}.</strong> Published up front and fixed —
-                where you land inside it depends on levelling, which we confirm before any offer.
+                <strong className="text-ink">{t('Salary band:')} {openRole.salary}.</strong> {t('Published up front and fixed where you land inside it depends on levelling, which we confirm before any offer.')}
               </p>
             </div>
           </div>
@@ -643,35 +643,35 @@ export function CareersPage() {
       <Modal
         open={applying}
         onClose={() => setApplying(false)}
-        eyebrow="Application"
-        title={openRole?.title}
+        eyebrow={t('Application')}
+        title={openRole ? t(openRole.title) : undefined}
         size="md"
         footer={
           <div className="flex flex-wrap items-center justify-between gap-3">
             <span className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
-              <FiShield /> Stored encrypted, panel-only
+              <FiShield /> {t('Stored encrypted, panel only')}
             </span>
             <Button type="submit" form="application-form">
-              Submit application <FiSend />
+              {t('Submit application')} <FiSend />
             </Button>
           </div>
         }
       >
         <form id="application-form" onSubmit={submitApplication} noValidate>
           <label htmlFor="app-name" className="mb-1.5 block text-[11px] font-black uppercase tracking-wide text-muted">
-            Full name
+            {t('Full name')}
           </label>
           <input
             id="app-name"
             type="text"
             value={form.name}
             onChange={(event) => setForm({ ...form, name: event.target.value })}
-            placeholder="Your name"
+            placeholder={t('Your name')}
             className="h-12 w-full rounded-2xl border border-line bg-cream px-4 text-sm font-semibold text-ink outline-none focus:border-brand/60 placeholder:font-medium placeholder:text-muted dark:bg-cream-2"
           />
 
           <label htmlFor="app-email" className="mb-1.5 mt-5 block text-[11px] font-black uppercase tracking-wide text-muted">
-            Email
+            {t('Email')}
           </label>
           <input
             id="app-email"
@@ -683,7 +683,7 @@ export function CareersPage() {
           />
 
           <label htmlFor="app-link" className="mb-1.5 mt-5 block text-[11px] font-black uppercase tracking-wide text-muted">
-            Portfolio, GitHub or LinkedIn (optional)
+            {t('Portfolio, GitHub or LinkedIn (optional)')}
           </label>
           <input
             id="app-link"
@@ -695,14 +695,14 @@ export function CareersPage() {
           />
 
           <label htmlFor="app-note" className="mb-1.5 mt-5 block text-[11px] font-black uppercase tracking-wide text-muted">
-            Anything you want the panel to know (optional)
+            {t('Anything you want the panel to know (optional)')}
           </label>
           <textarea
             id="app-note"
             rows={4}
             value={form.note}
             onChange={(event) => setForm({ ...form, note: event.target.value })}
-            placeholder="No cover letter needed — a few honest sentences is plenty."
+            placeholder={t('No cover letter needed a few honest sentences is plenty.')}
             className="w-full resize-none rounded-2xl border border-line bg-cream p-4 text-sm font-semibold leading-relaxed text-ink outline-none focus:border-brand/60 placeholder:font-medium placeholder:text-muted dark:bg-cream-2"
           />
         </form>
@@ -712,20 +712,19 @@ export function CareersPage() {
       <Modal
         open={Boolean(submitted)}
         onClose={() => setSubmitted(null)}
-        eyebrow="Application received"
-        title="Thanks — that is all we need"
+        eyebrow={t('Application received')}
+        title={t('Thanks that is all we need')}
         size="sm"
-        footer={<Button className="w-full justify-center" onClick={() => setSubmitted(null)}>Done</Button>}
+        footer={<Button className="w-full justify-center" onClick={() => setSubmitted(null)}>{t('Done')}</Button>}
       >
         {submitted ? (
           <div className="text-center">
             <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-emerald-500/12 text-3xl text-emerald-600 dark:text-emerald-400">
               <FiCheckCircle />
             </span>
-            <h3 className="mt-5 text-lg font-extrabold text-ink">{submitted.role}</h3>
+            <h3 className="mt-5 text-lg font-extrabold text-ink">{t(submitted.role)}</h3>
             <p className="mt-2 text-sm leading-relaxed text-body">
-              A person on the hiring panel will read this within five working days. If it is not a fit you will get
-              written feedback, not a template.
+              {t('A person on the hiring panel will read this within five working days. If it is not a fit you will get written feedback, not a template.')}
             </p>
             <p className="mt-5 rounded-2xl border border-line bg-cream px-4 py-3 font-mono text-xs font-black text-ink dark:bg-cream-2">
               {submitted.ref}

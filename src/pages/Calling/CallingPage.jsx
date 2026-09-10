@@ -34,9 +34,11 @@ import securityImg from '../../assets/images/security.jpg'
 import groupImg from '../../assets/images/group.jpg'
 import avatarMale from '../../assets/images/avatar_male_1.png'
 import avatarFemale from '../../assets/images/avatar_female_1.png'
+import { useLanguage } from '../../context/LanguageContext'
 
 export function CallingPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState(0)
   const [isMuted, setIsMuted] = useState(false)
   const [isVideoOn, setIsVideoOn] = useState(true)
@@ -49,109 +51,109 @@ export function CallingPage() {
   const featureTabs = [
     {
       id: 'hd-video',
-      title: '1-on-1 Ultra HD Video',
+      title: t('1-on-1 Ultra HD Video'),
       icon: <FiVideo className="text-xl" />,
-      tagline: 'Face-to-face quality that feels like standing in the same room.',
-      desc: 'Connect with loved ones and colleagues in crystal-clear 1080p 60fps video. Built-in dynamic bandwidth management adapts smoothly even on low 3G or weak Wi-Fi networks.',
-      highlights: ['Dynamic 1080p HD Resolution', 'Zero Lag WebRTC Engine', 'End-to-End Encrypted Stream']
+      tagline: t('Face to face quality that feels like standing in the same room.'),
+      desc: t('Connect with loved ones and colleagues in crystal clear 1080p 60fps video. Built in dynamic bandwidth management adapts smoothly even on low 3G or weak Wi Fi networks.'),
+      highlights: [t('Dynamic 1080p HD Resolution'), t('Zero Lag WebRTC Engine'), t('End to End Encrypted Stream')]
     },
     {
       id: 'group-calls',
-      title: '32-Person Group Calls',
+      title: t('32-Person Group Calls'),
       icon: <FiUsers className="text-xl" />,
-      tagline: 'Bring the whole team or family together without time limits.',
-      desc: 'Host group video calls with up to 32 participants simultaneously. Enjoy active speaker spotlighting, grid layouts, and zero duration caps.',
-      highlights: ['Grid & Speaker View Modes', 'Unlimited Call Duration', 'Instant Group Link Invites']
+      tagline: t('Bring the whole team or family together without time limits.'),
+      desc: t('Host group video calls with up to 32 participants simultaneously. Enjoy active speaker spotlighting, grid layouts, and zero duration caps.'),
+      highlights: [t('Grid & Speaker View Modes'), t('Unlimited Call Duration'), t('Instant Group Link Invites')]
     },
     {
       id: 'screen-share',
-      title: 'Live Screen Sharing',
+      title: t('Live Screen Sharing'),
       icon: <FiMonitor className="text-xl" />,
-      tagline: 'Present decks, apps, and photos straight from your screen.',
-      desc: 'Share your phone, tablet, or desktop screen with high frame rate and low latency. Perfect for remote presentation, technical help, or watching videos together.',
-      highlights: ['Full Desktop or App Window Share', 'High Frame Rate Audio Pass', 'Cross-Platform Compatibility']
+      tagline: t('Present decks, apps, and photos straight from your screen.'),
+      desc: t('Share your phone, tablet, or desktop screen with high frame rate and low latency. Perfect for remote presentation, technical help, or watching videos together.'),
+      highlights: [t('Full Desktop or App Window Share'), t('High Frame Rate Audio Pass'), t('Cross Platform Compatibility')]
     },
     {
       id: 'ai-noise',
-      title: 'AI Noise Suppression',
+      title: t('AI Noise Suppression'),
       icon: <FiVolume2 className="text-xl" />,
-      tagline: 'Silences background noise so your voice comes through clear.',
-      desc: 'Advanced deep-learning audio filters remove dog barks, keyboard clatters, street traffic, and wind noise while keeping your natural voice full and crisp.',
-      highlights: ['Deep Neural Network Filter', 'Acoustic Echo Cancellation', 'Low Data Bandwidth Mode']
+      tagline: t('Silences background noise so your voice comes through clear.'),
+      desc: t('Advanced deep learning audio filters remove dog barks, keyboard clatters, street traffic, and wind noise while keeping your natural voice full and crisp.'),
+      highlights: [t('Deep Neural Network Filter'), t('Acoustic Echo Cancellation'), t('Low Data Bandwidth Mode')]
     },
     {
       id: 'handoff',
-      title: 'Multi-Device Handoff',
+      title: t('Multi Device Handoff'),
       icon: <FiZap className="text-xl" />,
-      tagline: 'Seamlessly switch calls between phone, desktop, and tablet.',
-      desc: 'Start a call on your mobile phone while commuting, and hand it off smoothly to your Mac, Windows PC, or iPad when you reach your desk with a single click.',
-      highlights: ['One-Tap Device Transfer', 'Unified Call History Sync', 'Web Browser Direct Join']
+      tagline: t('Seamlessly switch calls between phone, desktop, and tablet.'),
+      desc: t('Start a call on your mobile phone while commuting, and hand it off smoothly to your Mac, Windows PC, or iPad when you reach your desk with a single click.'),
+      highlights: [t('One Tap Device Transfer'), t('Unified Call History Sync'), t('Web Browser Direct Join')]
     }
   ]
 
   const metrics = [
-    { value: '32', label: 'Max Group Callers' },
-    { value: '1080p', label: 'Ultra HD Video Quality' },
-    { value: '99.99%', label: 'Uptime & Reliability' },
-    { value: '256-bit', label: 'End-to-End Encryption' }
+    { value: '32', label: t('Max Group Callers') },
+    { value: '1080p', label: t('Ultra HD Video Quality') },
+    { value: '99.99%', label: t('Uptime & Reliability') },
+    { value: '256-bit', label: t('End to End Encryption') }
   ]
 
   const useCases = [
     {
-      title: 'Family & Friends Catchups',
-      desc: 'Celebrate birthdays, holidays, and everyday moments with crisp video and interactive face filters.',
+      title: t('Family & Friends Catchups'),
+      desc: t('Celebrate birthdays, holidays, and everyday moments with crisp video and interactive face filters.'),
       img: groupImg
     },
     {
-      title: 'Remote Business Standups',
-      desc: 'Conduct team meetings with HD screen sharing, noise suppression, and hands-up notifications.',
+      title: t('Remote Business Standups'),
+      desc: t('Conduct team meetings with HD screen sharing, noise suppression, and hands up notifications.'),
       img: businessImg
     },
     {
-      title: 'Online Tutoring & Classes',
-      desc: 'Share documents, slide presentations, and whiteboards seamlessly with up to 32 students.',
+      title: t('Online Tutoring & Classes'),
+      desc: t('Share documents, slide presentations, and whiteboards seamlessly with up to 32 students.'),
       img: multideviceImg
     },
     {
-      title: 'Global Consultations',
-      desc: 'Host secure 1-on-1 video calls with clients worldwide, fully protected by Signal protocol E2EE.',
+      title: t('Global Consultations'),
+      desc: t('Host secure 1-on-1 video calls with clients worldwide, fully protected by KT Encryption Protocol E2EE.'),
       img: securityImg
     }
   ]
 
   const comparisonTable = [
-    { feature: 'End-to-End Encryption', kt: 'Default (100%)', standard: 'Optional / None', apps: 'Varies' },
-    { feature: 'Group Call Capacity', kt: 'Up to 32 People', standard: '4 - 8 People', apps: 'Time Limited' },
-    { feature: 'Call Time Limit', kt: 'Unlimited Free', standard: '60 Min Limit', apps: '40 Min Limit' },
-    { feature: 'Screen Sharing Quality', kt: '1080p 60fps', standard: 'Basic 720p', apps: 'Paid Feature' },
-    { feature: 'AI Background Noise Reduction', kt: 'Included Free', standard: 'Not Available', apps: 'Premium Tier' },
-    { feature: 'Cross-Device Call Handoff', kt: 'Instant 1-Tap', standard: 'Manual Rejoin', apps: 'Not Supported' }
+    { feature: t('End to End Encryption'), kt: t('Default (100%)'), standard: t('Optional / None'), apps: t('Varies') },
+    { feature: t('Group Call Capacity'), kt: t('Up to 32 People'), standard: t('4 - 8 People'), apps: t('Time Limited') },
+    { feature: t('Call Time Limit'), kt: t('Unlimited Free'), standard: t('60 Min Limit'), apps: t('40 Min Limit') },
+    { feature: t('Screen Sharing Quality'), kt: '1080p 60fps', standard: t('Basic 720p'), apps: t('Paid Feature') },
+    { feature: t('AI Background Noise Reduction'), kt: t('Included Free'), standard: t('Not Available'), apps: t('Premium Tier') },
+    { feature: t('Cross Device Call Handoff'), kt: t('Instant 1-Tap'), standard: t('Manual Rejoin'), apps: t('Not Supported') }
   ]
 
   const faqs = [
     {
-      q: 'Are video and voice calls on KT completely free?',
-      a: 'Yes! All 1-on-1 and group voice and video calls on KT Messenger are 100% free with no hidden charges, subscription requirements, or annoying time limits.'
+      q: t('Are video and voice calls on KT completely free?'),
+      a: t('Yes! All 1-on-1 and group voice and video calls on KT Messenger are 100% free with no hidden charges, subscription requirements, or annoying time limits.')
     },
     {
-      q: 'Are my calls encrypted and private?',
-      a: 'Absolutely. Every single voice call, video call, and screen-sharing session on KT is protected by end-to-end encryption using the Signal Protocol. Neither KT nor any third party can listen in or view your calls.'
+      q: t('Are my calls encrypted and private?'),
+      a: t('Absolutely. Every single voice call, video call, and screen sharing session on KT is protected by end to end encryption using the KT Encryption Protocol. Neither KT nor any third party can listen in or view your calls.')
     },
     {
-      q: 'Can I make group video calls on desktop or browser?',
-      a: 'Yes, KT supports native calling across Windows, macOS, iOS, Android, iPadOS, and directly inside modern web browsers like Chrome, Safari, and Edge.'
+      q: t('Can I make group video calls on desktop or browser?'),
+      a: t('Yes, KT supports native calling across Windows, macOS, iOS, Android, iPadOS, and directly inside all modern web browsers.')
     },
     {
-      q: 'How does live screen sharing work during a call?',
-      a: 'While on a call, simply tap the screen share icon. You can choose to broadcast your entire screen or a specific application window to all participants in real time.'
+      q: t('How does live screen sharing work during a call?'),
+      a: t('While on a call, simply tap the screen share icon. You can choose to broadcast your entire screen or a specific application window to all participants in real time.')
     },
     {
-      q: 'What network speeds do I need for HD calling?',
-      a: 'KT automatically adjusts video resolution and audio bitrate according to your network speed. You can enjoy clear voice calls even on 3G connections, while HD video optimizes for 4G/5G and Wi-Fi.'
+      q: t('What network speeds do I need for HD calling?'),
+      a: t('KT automatically adjusts video resolution and audio bitrate according to your network speed. You can enjoy clear voice calls even on 3G connections, while HD video optimizes for 4G/5G and Wi Fi.')
     },
     {
-      q: 'How many participants can join a single group call?',
-      a: 'You can host up to 32 participants simultaneously in a single voice or video call with unlimited duration.'
+      q: t('How many participants can join a single group call?'),
+      a: t('You can host up to 32 participants simultaneously in a single voice or video call with unlimited duration.')
     }
   ]
 
@@ -163,32 +165,32 @@ export function CallingPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
-                <FiPhone className="text-brand-strong" /> Next-Gen HD Calling Suite
+                <FiPhone className="text-brand-strong" /> {t('Next Gen HD Calling Suite')}
               </div>
               <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                Everyone is <br />
+                {t('Everyone is')} <br />
                 <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  just a call away
+                  {t('just a call away')}
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                Connect instantly with crystal-clear audio and 1080p video. Unlimited time, zero fees, and 100% end-to-end encrypted across mobile, desktop, and web.
+                {t('Connect instantly with crystal clear audio and 1080p video. Unlimited time, zero fees, and 100% end to end encrypted across mobile, desktop, and web.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
-                  Download Free App <FiDownload className="text-lg" />
+                  {t('Download Free App')} <FiDownload className="text-lg" />
                 </Button>
                 <Button variant="secondary" size="lg" onClick={() => navigate('/help')}>
-                  Explore Specs <FiChevronRight />
+                  {t('Explore Specs')} <FiChevronRight />
                 </Button>
               </div>
 
               <div className="mt-8 flex items-center gap-6 border-t border-line pt-6 text-sm text-body">
                 <span className="flex items-center gap-2">
-                  <FiCheckCircle className="text-brand-strong" /> 32-Person Group Calls
+                  <FiCheckCircle className="text-brand-strong" /> {t('32-Person Group Calls')}
                 </span>
                 <span className="flex items-center gap-2">
-                  <FiCheckCircle className="text-brand-strong" /> End-to-End Encrypted
+                  <FiCheckCircle className="text-brand-strong" /> {t('End to End Encrypted')}
                 </span>
               </div>
             </Reveal>
@@ -208,7 +210,7 @@ export function CallingPage() {
                       <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" /> 1080p HD • 12:45
                     </span>
                     <span className="rounded-full bg-brand-strong/80 px-3 py-1 text-[11px] font-bold">
-                      E2E Encrypted
+                      {t('E2E Encrypted')}
                     </span>
                   </div>
 
@@ -216,16 +218,16 @@ export function CallingPage() {
                   <div className="mt-4 relative h-[70%] w-full overflow-hidden rounded-2xl bg-slate-900 border border-slate-800">
                     <img
                       src={avatarFemale}
-                      alt="Call partner"
+                      alt={t('Call partner')}
                       className="h-full w-full object-cover transition-all duration-300"
                     />
                     <div className="absolute bottom-3 left-3 rounded-lg bg-black/60 px-2.5 py-1 text-xs font-medium backdrop-blur-md">
-                      Emiko (Speaking...)
+                      {t('Emiko (Speaking...)')}
                     </div>
 
                     {/* Self Video PIP */}
                     <div className="absolute top-3 right-3 h-28 w-20 overflow-hidden rounded-xl border-2 border-white/40 bg-slate-800 shadow-lg">
-                      <img src={avatarMale} alt="You" className="h-full w-full object-cover" />
+                      <img src={avatarMale} alt={t('You')} className="h-full w-full object-cover" />
                     </div>
                   </div>
 
@@ -282,10 +284,10 @@ export function CallingPage() {
       <Section className="bg-cream">
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            Engineered for Perfect Communication
+            {t('Engineered for Perfect Communication')}
           </h2>
           <p className="mt-4 text-lg text-body">
-            Explore the powerful calling technologies that keep your conversations crisp, private, and effortless.
+            {t('Explore the powerful calling technologies that keep your conversations crisp, private, and effortless.')}
           </p>
         </Reveal>
 
@@ -320,7 +322,7 @@ export function CallingPage() {
           <div className="rounded-3xl border border-line bg-surface p-8 shadow-card flex flex-col justify-between">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
-                Feature Deep Dive
+                {t('Feature Deep Dive')}
               </div>
               <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {featureTabs[activeTab].title}
@@ -340,9 +342,9 @@ export function CallingPage() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
-              <span className="text-xs text-muted font-medium">Included in all KT apps</span>
+              <span className="text-xs text-muted font-medium">{t('Included in all KT apps')}</span>
               <Button size="sm" onClick={() => navigate('/apps')}>
-                Try Feature Now <FiChevronRight />
+                {t('Try Feature Now')} <FiChevronRight />
               </Button>
             </div>
           </div>
@@ -355,23 +357,23 @@ export function CallingPage() {
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
             <Reveal from="left" className="lg:col-span-5 space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                🎬 Interactive Calling Demo
+                {t('🎬 Interactive Calling Demo')}
               </div>
               <h2 className="text-3xl font-extrabold text-ink sm:text-4xl lg:text-[2.5rem] tracking-tight leading-tight">
-                Studio 1080p Calling &amp; Screen Share
+                {t('Studio 1080p Calling & Screen Share')}
               </h2>
               <p className="text-base sm:text-lg leading-relaxed text-body">
-                Opus 48kHz spatial audio, 32-participant group calling, and 1-tap 60FPS desktop screen sharing.
+                {t('Opus 48kHz spatial audio, 32-participant group calling, and 1-tap 60FPS desktop screen sharing.')}
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> 32-Person Group Calls
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('32-Person Group Calls')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> 1080p 60FPS Screen Share
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('1080p 60FPS Screen Share')}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 p-2 px-3 text-xs font-bold text-ink border border-line">
-                  <FiCheckCircle className="text-brand-strong text-sm" /> Spatial Audio Equalizer
+                  <FiCheckCircle className="text-brand-strong text-sm" /> {t('Spatial Audio Equalizer')}
                 </span>
               </div>
             </Reveal>
@@ -388,7 +390,7 @@ export function CallingPage() {
               </div>
 
               <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-2 left-2 sm:left-6 z-20 flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 shadow-float border border-brand-strong/30 text-xs font-bold text-brand-ink">
-                <FiShield className="text-brand-strong" /> 1080p HD E2EE Calling
+                <FiShield className="text-brand-strong" /> {t('1080p HD E2EE Calling')}
               </motion.div>
             </Reveal>
           </div>
@@ -401,22 +403,22 @@ export function CallingPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
-                <FiVolume2 className="text-brand-strong" /> Low Latency Audio Architecture
+                <FiVolume2 className="text-brand-strong" /> {t('Low Latency Audio Architecture')}
               </div>
               <h2 className="mt-4 text-3xl font-extrabold text-ink sm:text-4xl lg:text-5xl leading-tight">
-                Hear every word as if you were in the same room
+                {t('Hear every word as if you were in the same room')}
               </h2>
               <p className="mt-6 text-base leading-relaxed text-body">
-                With Opus audio codec integration and AI-assisted echo cancellation, KT calls deliver high-fidelity 48kHz audio clarity with minimal latency even over variable mobile connections.
+                {t('With Opus audio codec integration and AI assisted echo cancellation, KT calls deliver high fidelity 48kHz audio clarity with minimal latency even over variable mobile connections.')}
               </p>
               <div className="mt-8 space-y-4">
                 <div className="rounded-2xl bg-surface p-4 border border-line shadow-soft">
-                  <h4 className="font-bold text-ink text-sm">Opus 48kHz High-Fidelity Sound</h4>
-                  <p className="mt-1 text-xs text-body">Captures full vocal range, whispers, and tone subtleties with studio-grade fidelity.</p>
+                  <h4 className="font-bold text-ink text-sm">{t('Opus 48kHz High Fidelity Sound')}</h4>
+                  <p className="mt-1 text-xs text-body">{t('Captures full vocal range, whispers, and tone subtleties with studio grade fidelity.')}</p>
                 </div>
                 <div className="rounded-2xl bg-surface p-4 border border-line shadow-soft">
-                  <h4 className="font-bold text-ink text-sm">Spatial Audio Directionality</h4>
-                  <p className="mt-1 text-xs text-body">Group calls place participant voices logically across stereo space for natural listening.</p>
+                  <h4 className="font-bold text-ink text-sm">{t('Spatial Audio Directionality')}</h4>
+                  <p className="mt-1 text-xs text-body">{t('Group calls place participant voices logically across stereo space for natural listening.')}</p>
                 </div>
               </div>
             </Reveal>
@@ -534,7 +536,7 @@ export function CallingPage() {
                             <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
                           </svg>
                         </button>
-                        <span className="mt-1.5 text-xs font-semibold text-slate-800">Video</span>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">{t('Video')}</span>
                       </div>
 
                       {/* Phone */}
@@ -545,7 +547,7 @@ export function CallingPage() {
                             <path d="M15 3a5 5 0 0 1 5 5" />
                           </svg>
                         </button>
-                        <span className="mt-1.5 text-xs font-semibold text-slate-800">Phone</span>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">{t('Phone')}</span>
                       </div>
 
                       {/* Mute */}
@@ -557,7 +559,7 @@ export function CallingPage() {
                             <line x1="12" y1="19" x2="12" y2="22" />
                           </svg>
                         </button>
-                        <span className="mt-1.5 text-xs font-semibold text-slate-800">Mute</span>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">{t('Mute')}</span>
                       </div>
 
                       {/* More */}
@@ -569,7 +571,7 @@ export function CallingPage() {
                             <circle cx="19" cy="12" r="2" />
                           </svg>
                         </button>
-                        <span className="mt-1.5 text-xs font-semibold text-slate-800">More</span>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">{t('More')}</span>
                       </div>
 
                       {/* Share */}
@@ -581,7 +583,7 @@ export function CallingPage() {
                             <path d="M10 9h4v4" />
                           </svg>
                         </button>
-                        <span className="mt-1.5 text-xs font-semibold text-slate-800">Share</span>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">{t('Share')}</span>
                       </div>
 
                       {/* End */}
@@ -591,7 +593,7 @@ export function CallingPage() {
                             <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" />
                           </svg>
                         </button>
-                        <span className="mt-1.5 text-xs font-semibold text-slate-800">End</span>
+                        <span className="mt-1.5 text-xs font-semibold text-slate-800">{t('End')}</span>
                       </div>
                     </div>
                   </div>
@@ -609,10 +611,10 @@ export function CallingPage() {
       <Section className="bg-cream">
         <Reveal from="up" className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            Designed for Every Conversation
+            {t('Designed for Every Conversation')}
           </h2>
           <p className="mt-4 text-lg text-body">
-            Whether for personal warmth or corporate efficiency, KT calling fits into all aspects of life.
+            {t('Whether for personal warmth or corporate efficiency, KT calling fits into all aspects of life.')}
           </p>
         </Reveal>
 
@@ -638,10 +640,10 @@ export function CallingPage() {
         <Container>
           <Reveal from="up" className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Why KT Calling Outshines the Rest
+              {t('Why KT Calling Outshines the Rest')}
             </h2>
             <p className="mt-4 text-lg text-body">
-              Compare KT Messenger calling features against traditional telecom and conventional video meeting platforms.
+              {t('Compare KT Messenger calling features against traditional telecom and conventional video meeting platforms.')}
             </p>
           </Reveal>
 
@@ -649,10 +651,10 @@ export function CallingPage() {
             <table className="w-full min-w-[600px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-line bg-cream">
-                  <th className="p-4 font-bold text-ink">Feature</th>
+                  <th className="p-4 font-bold text-ink">{t('Feature')}</th>
                   <th className="p-4 font-bold text-brand-strong bg-brand-soft/60">KT Messenger</th>
-                  <th className="p-4 font-bold text-body">Standard Phone Calls</th>
-                  <th className="p-4 font-bold text-body">Video Apps</th>
+                  <th className="p-4 font-bold text-body">{t('Standard Phone Calls')}</th>
+                  <th className="p-4 font-bold text-body">{t('Video Apps')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line text-sm">
@@ -675,10 +677,10 @@ export function CallingPage() {
         <Container className="max-w-4xl">
           <Reveal from="up" className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
-              <FiHelpCircle /> Got Questions?
+              <FiHelpCircle /> {t('Got Questions?')}
             </div>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Frequently Asked Questions
+              {t('Frequently Asked Questions')}
             </h2>
           </Reveal>
 
@@ -720,17 +722,17 @@ export function CallingPage() {
         <Container className="text-center">
           <Reveal from="up">
             <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
-              Ready to Experience Crystal-Clear Calls?
+              {t('Ready to Experience Crystal Clear Calls?')}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Download KT Messenger now on mobile, desktop, or tablet and start calling completely free today.
+              {t('Download KT Messenger now on mobile, desktop, or tablet and start calling completely free today.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
-                Download Free App <FiDownload />
+                {t('Download Free App')} <FiDownload />
               </Button>
               <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
-                Web Call Launcher <FiGlobe />
+                {t('Web Call Launcher')} <FiGlobe />
               </Button>
             </div>
           </Reveal>
