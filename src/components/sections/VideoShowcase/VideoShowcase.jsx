@@ -23,7 +23,6 @@ import { Reveal } from '../../common/Reveal/Reveal'
 import { KtChatScreen } from '../../common/AppScreens/KtChatScreen'
 import { KtCallScreen } from '../../common/AppScreens/KtCallScreen'
 import { KtStatusScreen } from '../../common/AppScreens/KtStatusScreen'
-import { KtNewsScreen } from '../../common/AppScreens/KtNewsScreen'
 import { KtMinisScreen } from '../../common/AppScreens/KtMinisScreen'
 import { GroupsLoopVideo } from '../../common/VideoAnimations/GroupsLoopVideo'
 import { ChannelsLoopVideo } from '../../common/VideoAnimations/ChannelsLoopVideo'
@@ -114,20 +113,10 @@ export function VideoShowcase() {
       badge: t('24-Hour Vanish • Voice Status'),
       videoComponent: <KtStatusScreen />
     },
-    news: {
-      id: 'news',
-      route: '/news',
-      label: t('News'),
-      icon: <FiGrid />,
-      headline: t('Live News Feed Inside Your Chats'),
-      shortTag: t('Trending stories, live channels, and a searchable feed read the day’s headlines without leaving the app.'),
-      specs: [t('Trending & Live Channels'), t('Category Filters'), t('Save & Share in One Tap')],
-      badge: t('Fresh Headlines • Zero Ad Tracking'),
-      videoComponent: <KtNewsScreen />
-    },
+
     minis: {
       id: 'minis',
-      route: '/news',
+      route: '/minis',
       label: t('Minis'),
       icon: <FiPlayCircle />,
       headline: t('Minis Short Video, Full Screen'),

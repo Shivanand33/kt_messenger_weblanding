@@ -11,6 +11,7 @@ import { trackDownload } from '../../../services/analytics'
 // the source of truth, and they remain the fallback if the API is unreachable.
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.ogoul.kalamtime'
 const APP_STORE_URL = 'https://apps.apple.com/in/app/kt-messenger/id6478195913'
+const WINDOWS_EXE_URL = 'https://cdn1.ktmessenger.com/KT%20MESSENGER%20INSTALL.EXE'
 
 // One class string for all call-to-actions so they stay identical in height and
 // never wrap. `text-white!` is forced because the global `a { color: inherit }`
@@ -71,6 +72,7 @@ const TRACK_KEY = { ANDROID: 'android', IOS: 'ios', WINDOWS: 'desktop', MAC: 'de
 const FALLBACK_PLATFORMS = [
   { platform: 'ANDROID', url: PLAY_STORE_URL },
   { platform: 'IOS', url: APP_STORE_URL },
+  { platform: 'WINDOWS', url: WINDOWS_EXE_URL },
 ]
 
 /**
@@ -91,7 +93,7 @@ const isUsableUrl = (url) => {
 }
 
 function toPlatforms(rows) {
-  return (rows || [])
+  const list = (rows || [])
     .map((r) => {
       const platform = String(r.platform || '').toUpperCase()
       // A direct installer wins over a store page when both are present.
@@ -99,17 +101,23 @@ function toPlatforms(rows) {
       return PLATFORM_UI[platform] && url ? { platform, url, version: r.version } : null
     })
     .filter(Boolean)
-    .sort((a, b) => {
-      const order = ['ANDROID', 'IOS', 'WINDOWS', 'MAC']
-      return order.indexOf(a.platform) - order.indexOf(b.platform)
-    })
+
+  const merged = [...list]
+  for (const fb of FALLBACK_PLATFORMS) {
+    if (!merged.some((m) => m.platform === fb.platform)) {
+      merged.push(fb)
+    }
+  }
+
+  const order = ['ANDROID', 'IOS', 'WINDOWS', 'MAC']
+  return merged.sort((a, b) => order.indexOf(a.platform) - order.indexOf(b.platform))
 }
 
 export function DownloadModal({ isOpen, onClose }) {
   const { t } = useLanguage()
 
   // Admin App Releases are the source of truth. If the API is unreachable or
-  // returns nothing usable, the original Android + iOS rows stay on screen.
+  // returns nothing usable, the fallback rows stay on screen.
   const [platforms] = useRemoteContent(() => api.getDownloads().then(toPlatforms), FALLBACK_PLATFORMS)
 
   if (!isOpen) return null
@@ -148,7 +156,7 @@ export function DownloadModal({ isOpen, onClose }) {
             </div>
             <h3 className="text-2xl font-bold text-[#111b21]">{t('Download KT Messenger')}</h3>
             <p className="mt-1 text-xs text-stone-500">
-              {t('Get the official app for Android or iOS')}
+              {t('Get the official app for Android, iOS, or Windows')}
             </p>
           </div>
 

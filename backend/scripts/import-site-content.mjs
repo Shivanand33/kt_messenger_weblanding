@@ -54,6 +54,7 @@ const FEATURES_MENU = [
   { label: 'Security', href: '/security' },
   { label: 'KT Plus', href: '/plus' },
   { label: 'Notes', href: '/notes' },
+  { label: 'Minis', href: '/minis' },
 ]
 
 // src/components/layout/Footer/Footer.jsx → columns

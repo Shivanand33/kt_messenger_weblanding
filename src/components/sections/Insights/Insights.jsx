@@ -1,5 +1,4 @@
 import { img } from '../../../utils/imageOverrides'
-import { useEffect, useState } from 'react'
 import {
   FiZap, FiLayers, FiMessageSquare, FiHeadphones, FiGlobe, FiGrid, FiUsers,
   FiActivity, FiPhone, FiRadio, FiCompass, FiSearch, FiCheck, FiArrowRight, FiShield, FiHeart,
@@ -14,7 +13,6 @@ import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
 import { useModal } from '../../../context/ModalContext'
 import { useLanguage } from '../../../context/LanguageContext'
 import { useCountUp } from '../../../hooks/useCountUp'
-import { api } from '../../../services/apiClient'
 import aiImg from '../../../assets/images/cyberpunk_neon_city.png'
 import communityImg from '../../../assets/images/footer.jpg'
 import contentImg from '../../../assets/images/private.jpg'
@@ -134,83 +132,7 @@ const capabilities = [
   { icon: <FiLayers />, label: 'Unified Platform Experience' },
 ]
 
-const articles = [
-  {
-    image: communityImg, tag: 'Ecosystem', read: '4 min read',
-    title: 'Why KT Messenger Is More Than Messaging',
-    excerpt: 'Messaging, AI, news, updates, communities and calls how KT brings a full digital ecosystem into one app.',
-  },
-  {
-    image: updatesImg, tag: 'Discovery', read: '3 min read',
-    title: 'Communicate, Discover, and Stay Updated',
-    excerpt: 'News, updates and messaging working together so you never miss what matters to the people around you.',
-  },
-  {
-    image: aiImg, tag: 'KT AI', read: '4 min read',
-    title: 'KT AI: Smarter Conversations',
-    excerpt: 'Ask KT AI right inside your chats for instant answers and smart search intelligence built into the experience.',
-  },
-  {
-    image: voiceImg, tag: 'Voice', read: '3 min read',
-    title: 'Listen To Messages Anywhere',
-    excerpt: 'Play voice messages hands free while driving, travelling or multitasking communication made more accessible.',
-  },
-  {
-    image: collabImg, tag: 'Communities', read: '5 min read',
-    title: 'Communities Built For Collaboration',
-    excerpt: 'Groups, @mentions and organized discussions that keep teams and communities coordinated and engaged.',
-  },
-  {
-    image: ecosystemImg, tag: 'Ecosystem', read: '4 min read',
-    title: 'Everything In One Place',
-    excerpt: 'Chats, AI, news, updates, calls, communities, broadcasts and minis one seamless platform experience.',
-  },
-  {
-    image: privacyImg, tag: 'Privacy', read: '3 min read',
-    title: 'Privacy By Default: Your Chats Stay Yours',
-    excerpt: 'Private conversations that stay private security is built into every message, call and community.',
-  },
-  {
-    image: updatesImg, tag: 'Broadcasts', read: '3 min read',
-    title: 'Broadcasts That Reach Everyone',
-    excerpt: 'Send announcements and reach many people at once with fast, efficient one to many communication.',
-  },
-  {
-    image: voiceImg, tag: 'Calls', read: '3 min read',
-    title: 'Calls That Feel Effortless',
-    excerpt: 'Voice calls and connected conversations that make real time interaction feel simple and seamless.',
-  },
-  {
-    image: contentImg, tag: 'Minis', read: '4 min read',
-    title: 'Minis: Quick Tools Inside KT',
-    excerpt: 'Lightweight mini experiences and saved Minis you can reach instantly a growing in app ecosystem.',
-  },
-  {
-    image: collabImg, tag: 'Updates', read: '3 min read',
-    title: 'Updates: Stay In The Loop',
-    excerpt: 'Follow activity, share moments and discover what’s happening beyond your private chats.',
-  },
-  {
-    image: aiImg, tag: 'KT AI', read: '4 min read',
-    title: 'Smart Search Powered By KT AI',
-    excerpt: 'Find people, messages and answers faster with AI assisted search built right into the app.',
-  },
-]
 
-// ── "From the KT Blog" cards, sourced live from the SAME blog API as /blog ──
-// The hardcoded `articles` above are used only as an offline fallback.
-// Local covers fill in when a post has no coverUrl, so cards always look complete.
-const FALLBACK_COVERS = [communityImg, updatesImg, aiImg, voiceImg, collabImg, ecosystemImg, privacyImg, contentImg]
-const readMinutes = (text) => Math.max(2, Math.round(String(text || '').trim().split(/\s+/).filter(Boolean).length / 40))
-// Map a published post from GET /api/blog to the existing blog-card shape.
-const toHomeArticle = (p, i) => ({
-  key: p.slug,
-  image: p.coverUrl || FALLBACK_COVERS[i % FALLBACK_COVERS.length],
-  tag: p.category?.name || 'Blog',
-  read: `${readMinutes(p.excerpt)} min read`,
-  title: p.title,
-  excerpt: p.excerpt || '',
-})
 
 const stats = [
   { icon: <FiMessageSquare />, value: 100, suffix: '%', label: 'Smart Communication', hint: 'Encrypted chats, groups & broadcasts' },
@@ -283,20 +205,6 @@ function StatCard({ item, index }) {
 export function Insights() {
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
-
-  // Home blog cards come from the live blog API — the same PostgreSQL/DB source
-  // as the /blog page. Drafts/deleted posts never appear (the public API returns
-  // only published posts). Refetched on every mount so create/edit/publish/
-  // delete are reflected. Falls back to bundled cards only if the API is down.
-  const [blogArticles, setBlogArticles] = useState(articles)
-  useEffect(() => {
-    let alive = true
-    api
-      .listBlog({ page: 1, pageSize: 6 })
-      .then(({ items }) => { if (alive && items?.length) setBlogArticles(items.map(toHomeArticle)) })
-      .catch(() => {}) // API down → keep the bundled fallback cards
-    return () => { alive = false }
-  }, [])
 
   return (
     <Section id="insights" className="border-y border-line bg-cream">
@@ -527,47 +435,7 @@ export function Insights() {
         </div>
       </div>
 
-      {/* From the KT Blog */}
-      <div className="mt-16">
-        <SectionHeading
-          align="center"
-          title={t('From the KT Blog')}
-          description={t('Deep dives into the ideas and features that make KT a complete digital ecosystem.')}
-          className="mx-auto max-w-2xl"
-          titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
-        />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {blogArticles.map((article, index) => (
-            <Reveal key={article.key || article.title} from="up" delay={(index % 3) * 0.06} className="h-full">
-              <article className={`${cardBase} h-full`}>
-                <div className="relative overflow-hidden">
-                  <img
-                    src={img(article.image)}
-                    alt={article.title}
-                    loading="lazy"
-                    className="h-48 w-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-110"
-                  />
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-slate-950/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  />
-                  <span className="absolute left-4 top-4 rounded-full border border-line bg-surface/90 px-3 py-1 text-[11px] font-bold text-brand-ink backdrop-blur transition-transform duration-300 group-hover:-translate-y-0.5">
-                    {article.tag}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-muted">{article.read}</span>
-                  <h3 className="mt-2 text-lg font-bold leading-snug text-ink">{article.title}</h3>
-                  <p className="mt-2 flex-1 text-sm leading-6 text-body">{article.excerpt}</p>
-                  <div className="mt-5 border-t border-line pt-4">
-                    <LinkArrow to="/blog">{t('Read More')}</LinkArrow>
-                  </div>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </div>
+
 
       {/* Final CTA */}
       <Reveal from="up" className="mt-16">

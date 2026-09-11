@@ -22,7 +22,8 @@ import {
   // FiTrendingUp,
   // FiCreditCard,
   // FiShoppingBag,
-  FiEdit3
+  FiEdit3,
+  FiPlayCircle
 } from 'react-icons/fi'
 import { Container } from '../../common/Container/Container'
 import { Button } from '../../common/Button/Button'
@@ -49,7 +50,8 @@ const FALLBACK_FEATURE_ITEMS = [
   // { label: 'Markets', to: '/markets', icon: <FiTrendingUp /> },
   // { label: 'Wallet', to: '/wallet', icon: <FiCreditCard /> },
   // { label: 'Marketplace', to: '/marketplace', icon: <FiShoppingBag /> },
-  { label: 'Notes', to: '/notes', icon: <FiEdit3 /> }
+  { label: 'Notes', to: '/notes', icon: <FiEdit3 /> },
+  { label: 'Minis', to: '/minis', icon: <FiPlayCircle /> }
 ]
 
 const FALLBACK_NAV_LINKS = [
@@ -72,6 +74,8 @@ const ICON_BY_HREF = {
   '/security': <FiShield />,
   '/plus': <FiStar />,
   '/notes': <FiEdit3 />,
+  '/minis': <FiPlayCircle />,
+  '/news': <FiPlayCircle />,
 }
 
 // Admin navigation_items -> the shape this component already renders.

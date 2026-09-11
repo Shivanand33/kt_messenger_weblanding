@@ -14,6 +14,7 @@ import privateImg from '../../assets/images/private.jpg'
 import groupImg from '../../assets/images/group.jpg'
 import businessImg from '../../assets/images/business.jpg'
 import { useLanguage } from '../../context/LanguageContext'
+import { useModal } from '../../context/ModalContext'
 import { trackDownload } from '../../services/analytics'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 
@@ -117,13 +118,25 @@ const STORE_PLATFORM = {
   'Microsoft Store': 'desktop',
 }
 
-function StoreBadge({ icon, top, bottom }) {
+function StoreBadge({ icon, top, bottom, onClick, href }) {
   const { t } = useLanguage()
+  const { openDownloadModal } = useModal()
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    if (onClick) {
+      onClick(e)
+    } else {
+      openDownloadModal()
+    }
+    trackDownload(STORE_PLATFORM[bottom] || 'desktop', bottom)
+  }
+
   return (
     <a
-      href="#apps-hero"
-      onClick={() => trackDownload(STORE_PLATFORM[bottom] || 'desktop', bottom)}
-      className="inline-flex w-fit items-center gap-2.5 rounded-xl bg-[#111827] px-4 py-2.5 text-white transition-transform hover:-translate-y-0.5"
+      href={href || '#'}
+      onClick={handleClick}
+      className="inline-flex w-fit items-center gap-2.5 rounded-xl bg-[#111827] px-4 py-2.5 text-white transition-transform hover:-translate-y-0.5 cursor-pointer"
     >
       <span className="text-2xl">{icon}</span>
       <span className="text-left leading-tight">
@@ -166,6 +179,7 @@ export function AppsPage() {
 
   const navigate = useNavigate()
   const { t } = useLanguage()
+  const { openDownloadModal } = useModal()
   const optionsRail = useRef(null)
   const featuresRail = useRef(null)
 
@@ -232,14 +246,17 @@ export function AppsPage() {
             </Reveal>
 
             <Reveal from="up" delay={0.16}>
-              <div className="mt-8 max-w-md rounded-[28px] border border-line bg-surface p-7 shadow-card">
+              <div
+                onClick={openDownloadModal}
+                className="mt-8 max-w-md rounded-[28px] border border-line bg-surface p-7 shadow-card cursor-pointer transition-all hover:border-brand/40 hover:shadow-lg"
+              >
                 <p className="text-sm text-muted">{t('Desktop')}</p>
                 <h3 className="mt-1 text-2xl font-bold text-ink">Windows</h3>
                 <p className="mt-3 text-[15px] leading-7 text-body">
                   {t('Get calling, screen sharing, and a faster experience with the Windows app. Requires Windows 10 or newer.')}
                 </p>
                 <div className="mt-5">
-                  <StoreBadge icon={<FaWindows />} top="Get it from" bottom="Microsoft Store" />
+                  <StoreBadge onClick={openDownloadModal} icon={<FaWindows />} top="Get it from" bottom="Microsoft Store" />
                 </div>
               </div>
             </Reveal>

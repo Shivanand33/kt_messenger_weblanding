@@ -27,6 +27,7 @@ import { MarketsPage } from './pages/Markets/MarketsPage'
 import { WalletPage } from './pages/Wallet/WalletPage'
 import { MarketplacePage } from './pages/Marketplace/MarketplacePage'
 import { NotesPage } from './pages/Notes/NotesPage'
+import { MinisPage } from './pages/Minis/MinisPage'
 import { NotFoundPage } from './pages/NotFound/NotFoundPage'
 import { AnalyticsTracker } from './components/common/AnalyticsTracker/AnalyticsTracker'
 
@@ -64,6 +65,7 @@ function App() {
       <Route path="/wallet" element={<WalletPage />} />
       <Route path="/marketplace" element={<MarketplacePage />} />
       <Route path="/notes" element={<NotesPage />} />
+      <Route path="/minis" element={<MinisPage />} />
 
       {/* BUSINESS CONVERSATION CATEGORY DIRECT ALIASES */}
       <Route path="/products/conversation-categories/authentication" element={<SecurityPage />} />
