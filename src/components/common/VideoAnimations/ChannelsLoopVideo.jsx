@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiCheckCircle, FiLock } from 'react-icons/fi'
@@ -53,7 +54,7 @@ export function ChannelsLoopVideo({ className = '' }) {
       {/* Mobile Channel Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-2">
         <div className="flex items-center gap-2">
-          <img src={techImg} alt={t('Channel')} className="h-7 w-7 rounded-full object-cover border border-brand-strong" />
+          <img src={img(techImg)} alt={t('Channel')} className="h-7 w-7 rounded-full object-cover border border-brand-strong" />
           <div>
             <p className="flex items-center gap-1 font-bold text-xs text-white">
               KT Tech Pulse <FiCheckCircle className="text-brand-strong text-xs" />

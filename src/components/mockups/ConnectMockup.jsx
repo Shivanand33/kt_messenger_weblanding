@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { useState } from 'react'
 import { FiPlay, FiPause, FiCheck } from 'react-icons/fi'
 import { useLanguage } from '../../context/LanguageContext'
@@ -31,7 +32,7 @@ export function ConnectMockup({ className = '' }) {
         {/* Floating Emoji Reaction Bar */}
         <div className="absolute -top-5 left-8 z-30 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-stone-100">
           <div className="mr-1 flex items-center gap-1.5">
-            <img src={emikoAvatar} alt="Emiko" className="h-5 w-5 rounded-full object-cover" />
+            <img src={img(emikoAvatar)} alt="Emiko" className="h-5 w-5 rounded-full object-cover" />
             <span className="text-[11px] font-semibold text-rose-500">Emiko</span>
           </div>
           <div className="h-3.5 w-[1px] bg-stone-200" />
@@ -54,7 +55,7 @@ export function ConnectMockup({ className = '' }) {
         <div className="overflow-hidden rounded-2xl bg-white p-1.5 shadow-[0_12px_35px_rgba(0,0,0,0.1)] border border-stone-200/60">
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-stone-900">
             <img
-              src={beachImage}
+              src={img(beachImage)}
               alt={t('Beach bicycles')}
               className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
             />
@@ -79,7 +80,7 @@ export function ConnectMockup({ className = '' }) {
       <div className="relative z-20 ml-auto max-w-[310px] rounded-2xl rounded-tr-xs bg-[#d9fdd3] p-3 shadow-[0_8px_25px_rgba(0,0,0,0.06)] border border-emerald-200/60">
         <div className="flex items-center gap-3">
           <div className="relative shrink-0">
-            <img src={userAvatar} alt={t('Sender')} className="h-10 w-10 rounded-full object-cover" />
+            <img src={img(userAvatar)} alt={t('Sender')} className="h-10 w-10 rounded-full object-cover" />
             <div className="absolute -bottom-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-white text-[9px]">
               🎤
             </div>

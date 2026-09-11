@@ -1,3 +1,4 @@
+import { SiteImagesPage } from './pages/SiteImagesPage.jsx'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { ProtectedRoute } from './components/ProtectedRoute.jsx'
 import { AdminLayout } from './layouts/AdminLayout.jsx'
@@ -13,6 +14,7 @@ import { RolesPage } from './pages/RolesPage.jsx'
 import { ProfilePage } from './pages/ProfilePage.jsx'
 import { EmailSettingsPage } from './pages/EmailSettingsPage.jsx'
 import { HeroSettingsPage } from './pages/HeroSettingsPage.jsx'
+import { PageTextPage } from './pages/PageTextPage.jsx'
 import { ContactMessagesPage } from './pages/ContactMessagesPage.jsx'
 import {
   FaqsPage, BlogCategoriesPage, BlogTagsPage, SuccessStoriesPage, AppReleasesPage,
@@ -36,6 +38,8 @@ export default function App() {
         <Route path="success-stories" element={<SuccessStoriesPage />} />
         <Route path="app-releases" element={<AppReleasesPage />} />
         <Route path="homepage-hero" element={<HeroSettingsPage />} />
+        <Route path="site-images" element={<SiteImagesPage />} />
+        <Route path="page-text" element={<PageTextPage />} />
         <Route path="website-content" element={<WebsiteContentPage />} />
         <Route path="navigation" element={<NavigationPage />} />
         <Route path="footer" element={<FooterPage />} />

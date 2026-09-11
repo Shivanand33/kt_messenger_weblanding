@@ -23,6 +23,11 @@ r.get('/faqs', content.listFaqs)
 r.get('/success-stories', content.listSuccessStories)
 r.get('/success-stories/:slug', content.getSuccessStory)
 r.get('/downloads', content.getDownloads)
+
+/* Phase 8: structured CMS entities */
+r.get('/news', content.listNews)
+r.get('/marketplace-products', content.listMarketplaceProducts)
+r.get('/business-products', content.listBusinessProducts)
 r.get('/locales', content.listLocales)
 
 // ── Navigation / Footer / Content blocks ──────────────

@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 import { motion } from 'framer-motion'
 import {
   FiChevronLeft,
@@ -198,7 +199,7 @@ export function KtCallScreen({ className = '' }) {
               <FiRefreshCw />
             </span>
             <div className="h-20 w-14 overflow-hidden rounded-xl border border-white/40 bg-slate-800 shadow-lg">
-              <img src={selfAvatar} alt="" className="h-full w-full object-cover" />
+              <img src={img(selfAvatar)} alt="" className="h-full w-full object-cover" />
             </div>
           </div>
 

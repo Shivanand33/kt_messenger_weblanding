@@ -1,3 +1,6 @@
+import { translateCopy } from '../../utils/translateCopy'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useEffect, useMemo, useState } from 'react'
 import {
   FiActivity,
@@ -56,11 +59,11 @@ import {
   fxRates,
   marketAssets,
   marketCategories,
-  marketFaqs,
-  marketLearn,
-  marketSteps,
-  marketTestimonials,
-  marketTools,
+  marketFaqs as FALLBACK_MARKETFAQS,
+  marketLearn as RAW_MARKET_LEARN,
+  marketSteps as RAW_MARKET_STEPS,
+  marketTestimonials as RAW_MARKET_TESTIMONIALS,
+  marketTools as RAW_MARKET_TOOLS,
 } from './marketsData'
 
 const NAV_ITEMS = [
@@ -153,8 +156,20 @@ function ChangeBadge({ change, className = '' }) {
 }
 
 export function MarketsPage() {
+  // Admin-managed FAQs for this page (Admin -> FAQs, page='markets').
+  const [marketFaqs] = useRemoteContent(
+    () => api.listFaqs('markets').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
+    FALLBACK_MARKETFAQS,
+  )
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
+
+  // Marketing copy from the data file, routed through the admin content
+  // override. t() returns the original string when nothing overrides it.
+  const marketTools = translateCopy(RAW_MARKET_TOOLS, t)
+  const marketSteps = translateCopy(RAW_MARKET_STEPS, t)
+  const marketLearn = translateCopy(RAW_MARKET_LEARN, t)
+  const marketTestimonials = translateCopy(RAW_MARKET_TESTIMONIALS, t)
 
   const [activeCategory, setActiveCategory] = useState('All')
   const [query, setQuery] = useState('')

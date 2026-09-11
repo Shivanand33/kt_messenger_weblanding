@@ -27,6 +27,8 @@ import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Button } from '../../components/common/Button/Button'
 import { SecurityLoopVideo } from '../../components/common/VideoAnimations/SecurityLoopVideo'
 import { useLanguage } from '../../context/LanguageContext'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 
 export function SecurityPage() {
   const navigate = useNavigate()
@@ -123,7 +125,7 @@ export function SecurityPage() {
     { feature: t('Passkey & PIN Protection'), kt: t('Included Free'), sms: t('Carrier Lock Only'), apps: t('Paid Feature') }
   ]
 
-  const faqs = [
+  const localFaqs = [
     {
       q: t('What are KT Authentication Messages?'),
       a: t('KT Authentication Messages are secure, 1-tap One Time Passcodes (OTPs) and account verification codes sent over KT Messenger Cloud API. They feature instant delivery, 1-tap copy buttons, and high conversion at 60% lower cost than SMS.')
@@ -141,6 +143,16 @@ export function SecurityPage() {
       a: t('KT Authentication messages eliminate international SMS roaming surcharges, saving enterprises up to 60% while increasing delivery speed to under 2 seconds worldwide.')
     }
   ]
+
+  // Admin-managed FAQs for this page. The array above stays as the
+  // fallback and is still rebuilt from t() on every render, so language
+  // switching keeps working whenever the API has nothing to serve.
+  const [remoteFaqs] = useRemoteContent(
+    () => api.listFaqs('security'),
+    null,
+    (rows) => Array.isArray(rows) && rows.length > 0,
+  )
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
 
   return (
     <MainLayout>

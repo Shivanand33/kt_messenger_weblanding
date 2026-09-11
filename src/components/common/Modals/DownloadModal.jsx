@@ -1,18 +1,21 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX, FiDownload, FiExternalLink } from 'react-icons/fi'
-import { FaAndroid } from 'react-icons/fa'
+import { FaAndroid, FaWindows, FaApple } from 'react-icons/fa'
 import { useLanguage } from '../../../context/LanguageContext'
+import { api } from '../../../services/apiClient'
+import { useRemoteContent } from '../../../hooks/useRemoteContent'
 import { trackDownload } from '../../../services/analytics'
 
 // Mobile builds live on the app stores, so those rows link out rather than
-// serving a file.
+// serving a file. These are the links the site shipped before the admin became
+// the source of truth, and they remain the fallback if the API is unreachable.
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.ogoul.kalamtime'
 const APP_STORE_URL = 'https://apps.apple.com/in/app/kt-messenger/id6478195913'
 
 // One class string for all call-to-actions so they stay identical in height and
 // never wrap. `text-white!` is forced because the global `a { color: inherit }`
 // rule is unlayered, and unlayered CSS outranks Tailwind's layered utilities —
-// without it the two store links render in the body colour instead of white.
+// without it the store links render in the body colour instead of white.
 const CTA_CLASS =
   'flex h-9 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-brand-strong px-4 text-xs font-semibold text-white! shadow-sm transition-colors hover:bg-brand-strong-hover'
 
@@ -24,8 +27,91 @@ function AppleIcon({ className = 'h-5 w-5' }) {
   )
 }
 
+// Per-platform presentation. The admin owns the URLs and versions; the icon,
+// wording and styling stay in code so the modal always looks the same.
+const PLATFORM_UI = {
+  ANDROID: {
+    name: 'Android',
+    source: 'Google Play Store',
+    cta: 'Google Play',
+    iconWrap: 'bg-emerald-100 text-emerald-600',
+    icon: <FaAndroid className="text-xl" />,
+    ctaIcon: <FiExternalLink />,
+  },
+  IOS: {
+    name: 'iPhone & iPad',
+    source: 'Apple App Store',
+    cta: 'App Store',
+    iconWrap: 'bg-stone-200 text-stone-800',
+    icon: <AppleIcon className="text-xl" />,
+    ctaIcon: <FiExternalLink />,
+  },
+  WINDOWS: {
+    name: 'Windows PC',
+    source: 'Direct download',
+    cta: 'Download',
+    iconWrap: 'bg-sky-100 text-sky-700',
+    icon: <FaWindows className="text-xl" />,
+    ctaIcon: <FiDownload />,
+  },
+  MAC: {
+    name: 'macOS',
+    source: 'Direct download',
+    cta: 'Download',
+    iconWrap: 'bg-stone-200 text-stone-800',
+    icon: <FaApple className="text-xl" />,
+    ctaIcon: <FiDownload />,
+  },
+}
+
+// Analytics platform key expected by trackDownload().
+const TRACK_KEY = { ANDROID: 'android', IOS: 'ios', WINDOWS: 'desktop', MAC: 'desktop' }
+
+// The exact rows the modal shipped with, used until the API answers.
+const FALLBACK_PLATFORMS = [
+  { platform: 'ANDROID', url: PLAY_STORE_URL },
+  { platform: 'IOS', url: APP_STORE_URL },
+]
+
+/**
+ * Turn /api/downloads rows into renderable entries.
+ *
+ * A platform is only shown when it has a link we can actually send someone to.
+ * A store *homepage* (no path) is treated as a placeholder, not a real link —
+ * otherwise an unfinished admin row would ship a download button that drops
+ * users on apple.com instead of KT Messenger.
+ */
+const isUsableUrl = (url) => {
+  if (!url || !/^https?:\/\//i.test(url)) return false
+  try {
+    return new URL(url).pathname.replace(/\/+$/, '').length > 0
+  } catch {
+    return false
+  }
+}
+
+function toPlatforms(rows) {
+  return (rows || [])
+    .map((r) => {
+      const platform = String(r.platform || '').toUpperCase()
+      // A direct installer wins over a store page when both are present.
+      const url = [r.downloadUrl, r.storeUrl].find(isUsableUrl)
+      return PLATFORM_UI[platform] && url ? { platform, url, version: r.version } : null
+    })
+    .filter(Boolean)
+    .sort((a, b) => {
+      const order = ['ANDROID', 'IOS', 'WINDOWS', 'MAC']
+      return order.indexOf(a.platform) - order.indexOf(b.platform)
+    })
+}
+
 export function DownloadModal({ isOpen, onClose }) {
   const { t } = useLanguage()
+
+  // Admin App Releases are the source of truth. If the API is unreachable or
+  // returns nothing usable, the original Android + iOS rows stay on screen.
+  const [platforms] = useRemoteContent(() => api.getDownloads().then(toPlatforms), FALLBACK_PLATFORMS)
+
   if (!isOpen) return null
 
   return (
@@ -68,49 +154,34 @@ export function DownloadModal({ isOpen, onClose }) {
 
           {/* Download Options */}
           <div className="mt-6 space-y-3">
-            {/* Android */}
-            <div className="flex items-center justify-between rounded-2xl border border-stone-200 p-3.5 hover:border-brand-strong transition-all bg-stone-50/50">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600">
-                  <FaAndroid className="text-xl" />
+            {platforms.map(({ platform, url }) => {
+              const ui = PLATFORM_UI[platform]
+              return (
+                <div
+                  key={platform}
+                  className="flex items-center justify-between rounded-2xl border border-stone-200 p-3.5 hover:border-brand-strong transition-all bg-stone-50/50"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${ui.iconWrap}`}>
+                      {ui.icon}
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-bold text-stone-900">{ui.name}</p>
+                      <p className="text-[11px] text-stone-500">{ui.source}</p>
+                    </div>
+                  </div>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackDownload(TRACK_KEY[platform] || 'desktop', url)}
+                    className={CTA_CLASS}
+                  >
+                    {ui.ctaIcon} {ui.cta}
+                  </a>
                 </div>
-                <div className="text-left">
-                  <p className="text-sm font-bold text-stone-900">Android</p>
-                  <p className="text-[11px] text-stone-500">Google Play Store</p>
-                </div>
-              </div>
-              <a
-                href={PLAY_STORE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackDownload('android', PLAY_STORE_URL)}
-                className={CTA_CLASS}
-              >
-                <FiExternalLink /> Google Play
-              </a>
-            </div>
-
-            {/* iOS */}
-            <div className="flex items-center justify-between rounded-2xl border border-stone-200 p-3.5 hover:border-brand-strong transition-all bg-stone-50/50">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-stone-200 text-stone-800">
-                  <AppleIcon className="text-xl" />
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-bold text-stone-900">iPhone &amp; iPad</p>
-                  <p className="text-[11px] text-stone-500">Apple App Store</p>
-                </div>
-              </div>
-              <a
-                href={APP_STORE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackDownload('ios', APP_STORE_URL)}
-                className={CTA_CLASS}
-              >
-                <FiExternalLink /> App Store
-              </a>
-            </div>
+              )
+            })}
           </div>
         </motion.div>
       </div>

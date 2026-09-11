@@ -23,6 +23,8 @@ import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Button } from '../../components/common/Button/Button'
 import { PlusLoopVideo } from '../../components/common/VideoAnimations/PlusLoopVideo'
 import { useLanguage } from '../../context/LanguageContext'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 
 function CrownIcon({ className = 'h-4 w-4' }) {
   return (
@@ -122,7 +124,7 @@ export function KtPlusPage() {
     { feature: t('Group Member Capacity'), free: t('1,024 Members'), plus: t('Up to 10,000 Members') }
   ]
 
-  const faqs = [
+  const localFaqs = [
     {
       q: t('What is KT Plus?'),
       a: t('KT Plus is our premium power user subscription that unlocks advanced theme customization, 10GB file transfers, 5-account switching, stealth privacy settings, and priority AI.')
@@ -148,6 +150,16 @@ export function KtPlusPage() {
       a: t('Yes, you can cancel your subscription at any time with one click from app settings. You retain Plus features until the end of your billing period.')
     }
   ]
+
+  // Admin-managed FAQs for this page. The array above stays as the
+  // fallback and is still rebuilt from t() on every render, so language
+  // switching keeps working whenever the API has nothing to serve.
+  const [remoteFaqs] = useRemoteContent(
+    () => api.listFaqs('plus'),
+    null,
+    (rows) => Array.isArray(rows) && rows.length > 0,
+  )
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
 
   return (
     <MainLayout>

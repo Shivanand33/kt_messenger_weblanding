@@ -9,7 +9,10 @@ import { Container } from '../../common/Container/Container'
 import { Logo } from '../../common/Logo/Logo'
 import { Modal } from '../../feature/Modal'
 import { useModal } from '../../../context/ModalContext'
+import { api } from '../../../services/apiClient'
+import { useRemoteContent } from '../../../hooks/useRemoteContent'
 import { useLanguage } from '../../../context/LanguageContext'
+import { SUPPORTED_LANGS } from '../../../i18n/translations'
 
 // External KT Web app — same destination as the navbar Log In button.
 const KT_WEB_URL = 'https://web.ktmessenger.com/auth/qr'
@@ -22,7 +25,7 @@ const KT_WEB_URL = 'https://web.ktmessenger.com/auth/qr'
  *  - `action: 'download'` → opens the shared download modal
  * Every entry resolves to one of those, so no link is a dead anchor.
  */
-const columns = [
+const FALLBACK_COLUMNS = [
   {
     title: 'Product',
     links: [
@@ -61,7 +64,35 @@ const columns = [
   },
 ]
 
-const languages = [
+// Admin footer_links store only { label, href }. Translate that back into the
+// three shapes this footer already knows how to handle, so behaviour is
+// identical: the download modal, an external URL, or an internal route/anchor.
+const DOWNLOAD_ACTION = '#download'
+const toFooterLink = (row) => {
+  if (row.href === DOWNLOAD_ACTION) return { label: row.label, action: 'download' }
+  if (/^https?:\/\//i.test(row.href)) return { label: row.label, href: row.href }
+  return { label: row.label, to: row.href }
+}
+// A bare "#" means the admin row exists but has no destination yet. Rendering
+// it would put a dead link in the footer, so unconfigured rows are skipped
+// (the row itself is left alone in the database) — and an empty section is
+// dropped rather than shown as a heading with nothing under it.
+const isConfigured = (row) => row.href && row.href.trim() !== '#'
+
+// Admin locales -> the shape the picker renders. Only codes the i18n bundle
+// actually supports are offered: an enabled row for a language with no
+// translation table would switch the site to a code t() cannot resolve.
+const toLanguages = (rows) =>
+  (rows || [])
+    .filter((l) => l.enabled !== false && SUPPORTED_LANGS.includes(l.code))
+    .map((l) => ({ code: l.code, label: l.label, native: l.nativeLabel || l.label }))
+
+const toFooterColumns = (rows) =>
+  rows
+    .map((s) => ({ title: s.title, links: (s.links || []).filter(isConfigured).map(toFooterLink) }))
+    .filter((s) => s.links.length > 0)
+
+const FALLBACK_LANGUAGES = [
   { code: 'en', label: 'English', native: 'English' },
   { code: 'es', label: 'Spanish', native: 'Español' },
   { code: 'pt', label: 'Portuguese', native: 'Português' },
@@ -183,6 +214,20 @@ export function Footer() {
   const navigate = useNavigate()
   const location = useLocation()
   const { openDownloadModal } = useModal()
+
+  // Admin-managed footer, falling back to the hardcoded columns until the
+  // API returns sections that actually contain links.
+  // Admin-managed language list (Admin -> Locales).
+  const [languages] = useRemoteContent(
+    () => api.listLocales().then(toLanguages),
+    FALLBACK_LANGUAGES,
+  )
+
+  const [columns] = useRemoteContent(
+    () => api.getFooter().then(toFooterColumns),
+    FALLBACK_COLUMNS,
+    (data) => Array.isArray(data) && data.length > 0 && data.some((c) => c.links.length > 0),
+  )
   const { lang, setLang, t } = useLanguage()
 
   const [langOpen, setLangOpen] = useState(false)

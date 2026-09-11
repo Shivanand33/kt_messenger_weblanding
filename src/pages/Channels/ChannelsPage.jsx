@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -29,6 +30,8 @@ import sportsImg from '../../assets/images/beach_bicycles.png'
 import techImg from '../../assets/images/hd_landscape.png'
 import newsImg from '../../assets/images/multidevice.jpg'
 import { useLanguage } from '../../context/LanguageContext'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 
 export function ChannelsPage() {
   const navigate = useNavigate()
@@ -134,7 +137,7 @@ export function ChannelsPage() {
     { feature: t('Subscriber Capacity'), kt: t('Unlimited Free'), social: t('Algorithm Caps'), email: t('Tiered Pricing') }
   ]
 
-  const faqs = [
+  const localFaqs = [
     {
       q: t('What are KT Channels?'),
       a: t('Channels are a one way broadcast tool for admins to send text updates, photos, videos, stickers, and polls to an unlimited audience of subscribers.')
@@ -160,6 +163,16 @@ export function ChannelsPage() {
       a: t('Because channels are public broadcast tools intended for large audiences, channel updates are stored securely and encrypted in transit, while personal chats remain KT E2EE.')
     }
   ]
+
+  // Admin-managed FAQs for this page. The array above stays as the
+  // fallback and is still rebuilt from t() on every render, so language
+  // switching keeps working whenever the API has nothing to serve.
+  const [remoteFaqs] = useRemoteContent(
+    () => api.listFaqs('channels'),
+    null,
+    (rows) => Array.isArray(rows) && rows.length > 0,
+  )
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
 
   return (
     <MainLayout>
@@ -204,7 +217,7 @@ export function ChannelsPage() {
               <div className="relative w-full max-w-[420px] rounded-[36px] border border-line bg-surface p-6 shadow-float">
                 <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
                   <div className="flex items-center gap-3">
-                    <img src={techImg} alt={t('Channel')} className="h-12 w-12 rounded-full object-cover border-2 border-brand-strong" />
+                    <img src={img(techImg)} alt={t('Channel')} className="h-12 w-12 rounded-full object-cover border-2 border-brand-strong" />
                     <div>
                       <h3 className="flex items-center gap-1.5 font-bold text-ink text-base">
                         {t('KT Tech Pulse')} <FiCheckCircle className="text-brand-strong text-sm" />
@@ -446,7 +459,7 @@ export function ChannelsPage() {
             <Reveal key={card.name} from="up">
               <div className="group overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all hover:-translate-y-1">
                 <div className="h-44 overflow-hidden bg-brand-soft">
-                  <img src={card.img} alt={card.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={img(card.img)} alt={card.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <span className="text-[10px] font-bold text-brand-ink uppercase tracking-wider">{card.category}</span>

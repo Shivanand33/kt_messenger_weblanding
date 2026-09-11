@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
@@ -363,7 +364,7 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
               object-contain only kicks in for very tall images, which would
               otherwise push the article off the screen. */}
           <img
-            src={imageFor(post)}
+            src={img(imageFor(post))}
             alt={post.title}
             className="max-h-[760px] w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
           />
@@ -407,7 +408,7 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
               >
                 <div className="relative h-32 overflow-hidden">
                   <img
-                    src={imageFor(rel)}
+                    src={img(imageFor(rel))}
                     alt={rel.title}
                     loading="lazy"
                     className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
@@ -686,7 +687,7 @@ export function BlogPage() {
                 >
                   <div className="relative min-h-[260px] overflow-hidden lg:min-h-[360px]">
                     <img
-                      src={imageFor(featuredPost)}
+                      src={img(imageFor(featuredPost))}
                       alt={featuredPost.title}
                       className="h-full w-full object-contain transition-transform duration-[600ms] ease-out group-hover:scale-105"
                     />
@@ -769,7 +770,7 @@ export function BlogPage() {
                   >
                     <div className="relative h-52 overflow-hidden">
                       <img
-                        src={imageFor(post)}
+                        src={img(imageFor(post))}
                         alt={post.title}
                         loading="lazy"
                         className="h-full w-full object-contain transition-transform duration-[600ms] ease-out group-hover:scale-110"

@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { translations, SUPPORTED_LANGS, RTL_LANGS } from '../i18n/translations'
+import { api } from '../services/apiClient'
+import { setImageOverrides } from '../utils/imageOverrides'
 
 const STORAGE_KEY = 'lang'
 
@@ -36,12 +38,48 @@ export function LanguageProvider({ children }) {
     root.dir = RTL_LANGS.includes(lang) ? 'rtl' : 'ltr'
   }, [lang])
 
+  // Admin-editable copy. Every page's visible text is stored in website_content
+  // as `text.<page>` maps of { English source -> replacement }. Loading them
+  // here means business users can edit any string on the site without a single
+  // component being rewired.
+  //
+  // Precedence is deliberate: a real translation still wins, so the 48
+  // translated strings behave exactly as they do today. The admin override only
+  // fills in where no translation exists — which is the English site and every
+  // untranslated language. If the request fails the map stays empty and `t()`
+  // behaves precisely as before.
+  const [overrides, setOverrides] = useState({})
+  useEffect(() => {
+    let alive = true
+    api
+      .getPageContent('text')
+      .then((blocks) => {
+        if (!alive || !blocks || typeof blocks !== 'object') return
+        const merged = {}
+        const images = {}
+        for (const [key, block] of Object.entries(blocks)) {
+          if (!block || typeof block !== 'object') continue
+          // 'images.*' blocks hold image replacements, everything else is copy.
+          if (key.startsWith('images.')) Object.assign(images, block)
+          else Object.assign(merged, block)
+        }
+        setOverrides(merged)
+        setImageOverrides(images)
+      })
+      .catch(() => {
+        /* no admin copy available — the hardcoded English stays in place */
+      })
+    return () => {
+      alive = false
+    }
+  }, [])
+
   const value = useMemo(() => {
     const dict = translations[lang] || {}
-    // Look up by English source string; fall back to the key (English) itself.
-    const t = (key) => dict[key] ?? key
+    // Translation first, then the admin override, then the English key itself.
+    const t = (key) => dict[key] ?? overrides[key] ?? key
     return { lang, setLang, t }
-  }, [lang])
+  }, [lang, overrides])
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
 }

@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { FiSearch, FiVideo, FiPhone, FiMoreVertical, FiPhoneOff, FiCheck, FiPlus } from 'react-icons/fi'
 import { Logo } from '../common/Logo/Logo'
 import { useLanguage } from '../../context/LanguageContext'
@@ -52,7 +53,7 @@ export function DesktopAppMockup({ className = '' }) {
                   className={`flex items-center gap-2.5 px-2.5 py-1.5 ${chat.active ? 'bg-brand-soft' : ''}`}
                 >
                   <img
-                    src={chat.avatar}
+                    src={img(chat.avatar)}
                     alt={chat.name}
                     className="h-9 w-9 shrink-0 rounded-full object-cover border border-stone-200 shadow-xs"
                   />
@@ -73,7 +74,7 @@ export function DesktopAppMockup({ className = '' }) {
             <div className="flex items-center justify-between border-b border-line px-3 py-2">
               <div className="flex items-center gap-2">
                 <img
-                  src={nadiaAvatar}
+                  src={img(nadiaAvatar)}
                   alt="Ayesha"
                   className="h-8 w-8 rounded-full object-cover border border-stone-200"
                 />
@@ -97,7 +98,7 @@ export function DesktopAppMockup({ className = '' }) {
                 {t('We could all get together at the park.')}
               </div>
               <div className="ml-auto max-w-[70%] overflow-hidden rounded-2xl rounded-tr-sm shadow-soft">
-                <img src={photoMessage} alt="" className="h-24 w-full object-cover" />
+                <img src={img(photoMessage)} alt="" className="h-24 w-full object-cover" />
               </div>
               <div className="ml-auto flex max-w-[78%] items-center gap-1 rounded-2xl rounded-tr-sm bg-[#dbeafe] px-3 py-2 text-[11px] text-ink dark:bg-[#1e3a63] dark:text-white">
                 {t('Sounds amazing!')}
@@ -116,7 +117,7 @@ export function DesktopAppMockup({ className = '' }) {
       {/* floating incoming call */}
       <div className="absolute -right-3 top-16 hidden w-44 rounded-2xl bg-[#0b1220] p-3 text-white shadow-float sm:block border border-stone-800">
         <div className="flex items-center gap-2 mb-2">
-          <img src={businessAvatar} alt="Pablo Morales" className="h-7 w-7 rounded-full object-cover border border-white/20" />
+          <img src={img(businessAvatar)} alt="Pablo Morales" className="h-7 w-7 rounded-full object-cover border border-white/20" />
           <div className="min-w-0">
             <p className="text-xs font-semibold truncate">Pablo Morales</p>
             <p className="text-[9px] text-white/60 truncate">{t('KT video call')}</p>

@@ -29,8 +29,10 @@ import { Button } from '../../common/Button/Button'
 import { Logo } from '../../common/Logo/Logo'
 import { useModal } from '../../../context/ModalContext'
 import { useLanguage } from '../../../context/LanguageContext'
+import { api } from '../../../services/apiClient'
+import { useRemoteContent } from '../../../hooks/useRemoteContent'
 
-const featureItems = [
+const FALLBACK_FEATURE_ITEMS = [
   { label: 'Calling', to: '/calling', icon: <FiPhone /> },
   { label: 'Messaging', to: '/messaging', icon: <FiMessageSquare /> },
   { label: 'Groups', to: '/groups', icon: <FiUsers /> },
@@ -50,13 +52,30 @@ const featureItems = [
   { label: 'Notes', to: '/notes', icon: <FiEdit3 /> }
 ]
 
-const navLinks = [
+const FALLBACK_NAV_LINKS = [
   { label: 'Privacy', to: '/privacy' },
   { label: 'Blog', to: '/blog' },
   { label: 'Apps', to: '/apps' },
   { label: 'Help Center', to: '/help', external: true },
   { label: 'For Business', to: '/business', external: true },
 ]
+
+// Icons live in code, not the database — the admin stores label + href only.
+// A route that has no icon here still renders, just without one.
+const ICON_BY_HREF = {
+  '/calling': <FiPhone />,
+  '/messaging': <FiMessageSquare />,
+  '/groups': <FiUsers />,
+  '/channels': <FiTv />,
+  '/ai': <FiZap />,
+  '/status': <FiRadio />,
+  '/security': <FiShield />,
+  '/plus': <FiStar />,
+  '/notes': <FiEdit3 />,
+}
+
+// Admin navigation_items -> the shape this component already renders.
+const toNavItem = (row) => ({ label: row.label, to: row.href, icon: ICON_BY_HREF[row.href] })
 
 const SECTION_IDS = ['hero', 'web', 'devices', 'calls', 'privacy', 'groups', 'expression', 'business', 'features', 'download']
 
@@ -75,6 +94,30 @@ export function Navbar() {
   const closeTimer = useRef(null)
   const navigate = useNavigate()
   const location = useLocation()
+
+  // Admin-managed navigation. Falls back to the arrays above until the API
+  // returns a non-empty list, so the header can never render empty.
+  const [featureItems] = useRemoteContent(
+    () => api.getNavigation('features_menu').then((rows) => rows.map(toNavItem)),
+    FALLBACK_FEATURE_ITEMS,
+  )
+  const [navLinks] = useRemoteContent(
+    () =>
+      api.getNavigation('header').then((rows) =>
+        rows
+          // 'Features' is rendered as a dropdown, not a link, so the admin row
+          // for it is not used here.
+          .filter((r) => r.label !== 'Features')
+          .map((r) => ({
+            ...toNavItem(r),
+            // 'external' drives the small arrow icon and is not stored in the
+            // database; carry it over from the fallback so the header keeps
+            // looking identical.
+            external: FALLBACK_NAV_LINKS.find((f) => f.label === r.label)?.external,
+          })),
+      ),
+    FALLBACK_NAV_LINKS,
+  )
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)

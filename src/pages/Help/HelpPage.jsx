@@ -13,6 +13,7 @@ import { Reveal } from '../../components/common/Reveal/Reveal'
 import { PhoneChatMockup } from '../../components/mockups/PhoneChatMockup'
 import { useSwipeTheme } from '../../hooks/useSwipeTheme'
 import { useLanguage } from '../../context/LanguageContext'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
 
 const D = <MdArticle />
 
@@ -271,6 +272,10 @@ function HelpFooter({ onNav }) {
 }
 
 export function HelpPage() {
+  // Per-page SEO from admin (Website Content -> seo.help).
+  // No block configured = unchanged behaviour.
+  useAdminSeo('help', '/help')
+
   const navigate = useNavigate()
   const { handlers } = useSwipeTheme()
   const { t } = useLanguage()

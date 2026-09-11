@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import {
   FiZap, FiLayers, FiMessageSquare, FiHeadphones, FiGlobe, FiGrid, FiUsers,
@@ -363,7 +364,7 @@ export function Insights() {
           <Reveal key={h.title} from="up" delay={index * 0.08} className="h-full">
             <article className={`${cardBase} relative h-full min-h-[300px] justify-end`}>
               <img
-                src={h.image}
+                src={img(h.image)}
                 alt={t(h.title)}
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -541,7 +542,7 @@ export function Insights() {
               <article className={`${cardBase} h-full`}>
                 <div className="relative overflow-hidden">
                   <img
-                    src={article.image}
+                    src={img(article.image)}
                     alt={article.title}
                     loading="lazy"
                     className="h-48 w-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-110"

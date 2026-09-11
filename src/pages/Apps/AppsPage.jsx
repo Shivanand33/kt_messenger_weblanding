@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -14,6 +15,7 @@ import groupImg from '../../assets/images/group.jpg'
 import businessImg from '../../assets/images/business.jpg'
 import { useLanguage } from '../../context/LanguageContext'
 import { trackDownload } from '../../services/analytics'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
 
 const appStore = { icon: <FaApple />, top: 'Download on the', bottom: 'App Store' }
 
@@ -158,6 +160,10 @@ const railClass =
   'flex gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth'
 
 export function AppsPage() {
+  // Per-page SEO from admin (Website Content -> seo.apps).
+  // No block configured = unchanged behaviour.
+  useAdminSeo('apps', '/apps')
+
   const navigate = useNavigate()
   const { t } = useLanguage()
   const optionsRail = useRef(null)
@@ -335,7 +341,7 @@ export function AppsPage() {
                 <div key={feature.title} className="w-[300px] shrink-0 snap-start flex flex-col justify-between">
                   <div>
                     <div className="overflow-hidden rounded-[20px]">
-                      <img src={feature.image} alt={t(feature.title)} loading="lazy" className="h-52 w-full object-cover transition-transform duration-300 hover:scale-105" />
+                      <img src={img(feature.image)} alt={t(feature.title)} loading="lazy" className="h-52 w-full object-cover transition-transform duration-300 hover:scale-105" />
                     </div>
                     <h3 className="mt-4 text-xl font-extrabold text-ink">{t(feature.title)}</h3>
                     <p className="mt-2 text-sm text-body leading-relaxed">{t(feature.desc)}</p>

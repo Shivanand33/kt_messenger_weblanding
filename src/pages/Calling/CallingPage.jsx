@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -35,8 +36,15 @@ import groupImg from '../../assets/images/group.jpg'
 import avatarMale from '../../assets/images/avatar_male_1.png'
 import avatarFemale from '../../assets/images/avatar_female_1.png'
 import { useLanguage } from '../../context/LanguageContext'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
 
 export function CallingPage() {
+  // Per-page SEO from admin (Website Content -> seo.calling).
+  // No block configured = unchanged behaviour.
+  useAdminSeo('calling', '/calling')
+
   const navigate = useNavigate()
   const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState(0)
@@ -130,7 +138,7 @@ export function CallingPage() {
     { feature: t('Cross Device Call Handoff'), kt: t('Instant 1-Tap'), standard: t('Manual Rejoin'), apps: t('Not Supported') }
   ]
 
-  const faqs = [
+  const localFaqs = [
     {
       q: t('Are video and voice calls on KT completely free?'),
       a: t('Yes! All 1-on-1 and group voice and video calls on KT Messenger are 100% free with no hidden charges, subscription requirements, or annoying time limits.')
@@ -156,6 +164,16 @@ export function CallingPage() {
       a: t('You can host up to 32 participants simultaneously in a single voice or video call with unlimited duration.')
     }
   ]
+
+  // Admin-managed FAQs for this page. The array above stays as the
+  // fallback and is still rebuilt from t() on every render, so language
+  // switching keeps working whenever the API has nothing to serve.
+  const [remoteFaqs] = useRemoteContent(
+    () => api.listFaqs('calling'),
+    null,
+    (rows) => Array.isArray(rows) && rows.length > 0,
+  )
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
 
   return (
     <MainLayout>
@@ -217,7 +235,7 @@ export function CallingPage() {
                   {/* Main Call Video Preview */}
                   <div className="mt-4 relative h-[70%] w-full overflow-hidden rounded-2xl bg-slate-900 border border-slate-800">
                     <img
-                      src={avatarFemale}
+                      src={img(avatarFemale)}
                       alt={t('Call partner')}
                       className="h-full w-full object-cover transition-all duration-300"
                     />
@@ -227,7 +245,7 @@ export function CallingPage() {
 
                     {/* Self Video PIP */}
                     <div className="absolute top-3 right-3 h-28 w-20 overflow-hidden rounded-xl border-2 border-white/40 bg-slate-800 shadow-lg">
-                      <img src={avatarMale} alt={t('You')} className="h-full w-full object-cover" />
+                      <img src={img(avatarMale)} alt={t('You')} className="h-full w-full object-cover" />
                     </div>
                   </div>
 
@@ -623,7 +641,7 @@ export function CallingPage() {
             <Reveal key={card.title} from="up">
               <div className="group overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all hover:-translate-y-1">
                 <div className="h-48 overflow-hidden bg-brand-soft">
-                  <img src={card.img} alt={card.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={img(card.img)} alt={card.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-ink">{card.title}</h3>

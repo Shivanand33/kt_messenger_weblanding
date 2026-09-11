@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiMic, FiLock } from 'react-icons/fi'
@@ -49,7 +50,7 @@ export function StatusLoopVideo({ className = '' }) {
       {/* Mobile Status Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-2">
         <div className="flex items-center gap-2">
-          <img src={familyAvatar} alt={t('Avatar')} className="h-7 w-7 rounded-full border border-brand-strong object-cover" />
+          <img src={img(familyAvatar)} alt={t('Avatar')} className="h-7 w-7 rounded-full border border-brand-strong object-cover" />
           <div>
             <p className="text-xs font-bold text-white">{t('My Status')}</p>
             <p className="text-[9px] text-slate-400">{t('24-Hour Disappearing')}</p>
@@ -64,7 +65,7 @@ export function StatusLoopVideo({ className = '' }) {
       <div className="my-auto relative h-full flex flex-col justify-center py-1">
         {phase === 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative h-full w-full overflow-hidden rounded-xl bg-slate-950 border border-slate-800">
-            <img src={sunsetImage} alt={t('Story')} className="h-full w-full object-cover" />
+            <img src={img(sunsetImage)} alt={t('Story')} className="h-full w-full object-cover" />
             <div className="absolute bottom-2 inset-x-2 text-center">
               <span className="text-[10px] font-semibold text-white bg-black/65 px-2.5 py-1 rounded-full backdrop-blur-md">
                 {t('Evening sunset run vibes! 🌄')}

@@ -34,6 +34,11 @@ import {
   navItemSchema, navItemUpdateSchema, footerSectionSchema, footerLinkSchema, localeSchema, localeUpdateSchema,
 } from '../validators/content.validator.js'
 import { adminCreateSchema, adminUpdateSchema, roleCreateSchema, roleUpdateSchema } from '../validators/admin.validator.js'
+import {
+ newsArticleSchema, newsArticleUpdateSchema,
+ marketplaceProductSchema, marketplaceProductUpdateSchema,
+ businessProductSchema, businessProductUpdateSchema,
+} from '../validators/content.validator.js'
 import { contactUpdateSchema, contactReplySchema, subscriberUpdateSchema } from '../validators/forms.validator.js'
 
 const r = Router()
@@ -100,6 +105,11 @@ r.delete('/help/articles/:id', P('help:delete'), validate(idParam, 'params'), he
 mountCrud('/faqs', crudFactory({ model: 'faq', entityName: 'faq', searchable: ['question'], defaultOrderBy: { order: 'asc' } }), { resource: 'faq', createSchema: faqSchema, updateSchema: faqUpdateSchema })
 mountCrud('/success-stories', crudFactory({ model: 'successStory', entityName: 'success_story', searchable: ['company', 'summary'], slugFrom: 'company', defaultOrderBy: { order: 'asc' } }), { resource: 'success_story', createSchema: successStorySchema, updateSchema: successStoryUpdateSchema })
 mountCrud('/app-releases', crudFactory({ model: 'appRelease', entityName: 'app_release', searchable: ['version'] }), { resource: 'app_release', createSchema: appReleaseSchema, updateSchema: appReleaseUpdateSchema })
+
+/* ── Phase 8: structured CMS entities ─────────────────── */
+mountCrud('/news-articles', crudFactory({ model: 'newsArticle', entityName: 'news_article', searchable: ['title', 'summary', 'category'] }), { resource: 'website_content', createSchema: newsArticleSchema, updateSchema: newsArticleUpdateSchema })
+mountCrud('/marketplace-products', crudFactory({ model: 'marketplaceProduct', entityName: 'marketplace_product', searchable: ['name', 'seller', 'category'] }), { resource: 'website_content', createSchema: marketplaceProductSchema, updateSchema: marketplaceProductUpdateSchema })
+mountCrud('/business-products', crudFactory({ model: 'businessProduct', entityName: 'business_product', searchable: ['title', 'slug'] }), { resource: 'website_content', createSchema: businessProductSchema, updateSchema: businessProductUpdateSchema })
 mountCrud('/website-content', crudFactory({ model: 'websiteContent', entityName: 'website_content', searchable: ['key', 'label'] }), { resource: 'website_content', createSchema: websiteContentSchema, updateSchema: websiteContentUpdateSchema })
 mountCrud('/navigation', crudFactory({ model: 'navigationItem', entityName: 'navigation', searchable: ['label'], defaultOrderBy: { order: 'asc' } }), { resource: 'navigation', createSchema: navItemSchema, updateSchema: navItemUpdateSchema })
 mountCrud('/footer-sections', crudFactory({ model: 'footerSection', entityName: 'footer', searchable: ['title'], defaultOrderBy: { order: 'asc' }, include: { links: { orderBy: { order: 'asc' } } } }), { resource: 'footer', createSchema: footerSectionSchema, updateSchema: footerSectionSchema.partial() })

@@ -438,8 +438,10 @@ model DownloadEvent {
 // Localization
 // ─────────────────────────────────────────────────────────────
 model Locale {
-  code      String   @id // "en-US"
-  label     String // "English (US)"
+  code        String  @id // "en-US"
+  label       String // "English (US)"
+  /// Endonym shown in the site language picker, e.g. "Espanol", "हिन्दी".
+  nativeLabel String?
   enabled   Boolean  @default(true)
   isDefault Boolean  @default(false)
   createdAt DateTime @default(now())
@@ -464,4 +466,93 @@ model AuditLog {
   @@index([adminId])
   @@index([entity, entityId])
   @@map("audit_logs")
+}
+
+// ── Phase 8: structured CMS entities ─────────────────────────────────────
+// These replace hardcoded arrays in the website data files. Each is a real
+// entity with its own columns rather than a generic key/value blob, so admin
+// can edit, order, publish and unpublish individual records.
+//
+// Deeply nested presentation structures (a business product page flows,
+// pricing tiers and steps) stay in a Json column: they are page-shaped, vary
+// per record, and splitting them into tables would add joins without adding
+// editability.
+
+/// News articles shown on /news. Mirrors the shape of newsData.js exactly.
+model NewsArticle {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  category    String
+  title       String
+  summary     String        @default("")
+  /// Ordered paragraphs. Json (not String[]) so an article can later carry
+  /// richer blocks without another migration.
+  body        Json?
+  author      String?
+  source      String?
+  readMins    Int           @default(1)
+  reads       String?
+  tags        String[]      @default([])
+  imageUrl    String?
+  hot         Boolean       @default(false)
+  status      ContentStatus @default(PUBLISHED)
+  order       Int           @default(0)
+  locale      String        @default("en-US")
+  publishedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status, order])
+  @@index([category])
+  @@map("news_articles")
+}
+
+/// Products listed on /marketplace.
+model MarketplaceProduct {
+  id        String        @id @default(cuid())
+  slug      String        @unique
+  name      String
+  seller    String?
+  price     Int           @default(0)
+  mrp       Int?
+  rating    Float?
+  reviews   Int           @default(0)
+  category  String?
+  tag       String?
+  delivery  String?
+  stock     Int?
+  imageUrl  String?
+  description String      @default("")
+  /// Bullet list of product features.
+  features  Json?
+  status    ContentStatus @default(PUBLISHED)
+  order     Int           @default(0)
+  locale    String        @default("en-US")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([status, order])
+  @@index([category])
+  @@map("marketplace_products")
+}
+
+/// Business sub-pages served at /business/:slug.
+model BusinessProduct {
+  id        String        @id @default(cuid())
+  slug      String        @unique
+  eyebrow   String?
+  title     String
+  subtitle  String        @default("")
+  imageUrl  String?
+  /// The page body: spotlight, points, cta, pricing, flows, steps and any
+  /// other section this particular product page renders.
+  content   Json?
+  status    ContentStatus @default(PUBLISHED)
+  order     Int           @default(0)
+  locale    String        @default("en-US")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([status, order])
+  @@map("business_products")
 }

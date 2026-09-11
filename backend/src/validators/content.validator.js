@@ -151,3 +151,58 @@ export const localeSchema = z.object({
   isDefault: z.boolean().optional(),
 })
 export const localeUpdateSchema = localeSchema.partial()
+
+/* ── Phase 8: structured CMS entities ──────────────────────────────────── */
+
+export const newsArticleSchema = z.object({
+  slug: optStr(120),
+  category: z.string().min(1).max(80),
+  title: z.string().min(1).max(300),
+  summary: optStr(1000),
+  body: z.any().optional(),
+  author: optStr(120),
+  source: optStr(120),
+  readMins: z.coerce.number().int().min(0).max(600).optional(),
+  reads: optStr(40),
+  tags: z.array(z.string().max(60)).optional(),
+  imageUrl: optStr(600),
+  hot: z.coerce.boolean().optional(),
+  status: z.enum(['DRAFT', 'SCHEDULED', 'PUBLISHED', 'ARCHIVED']).optional(),
+  order: z.coerce.number().int().optional(),
+  locale: optStr(12),
+})
+export const newsArticleUpdateSchema = newsArticleSchema.partial()
+
+export const marketplaceProductSchema = z.object({
+  slug: optStr(120),
+  name: z.string().min(1).max(300),
+  seller: optStr(160),
+  price: z.coerce.number().int().min(0).optional(),
+  mrp: z.coerce.number().int().min(0).optional().nullable(),
+  rating: z.coerce.number().min(0).max(5).optional().nullable(),
+  reviews: z.coerce.number().int().min(0).optional(),
+  category: optStr(80),
+  tag: optStr(80),
+  delivery: optStr(120),
+  stock: z.coerce.number().int().optional().nullable(),
+  imageUrl: optStr(600),
+  description: optStr(2000),
+  features: z.any().optional(),
+  status: z.enum(['DRAFT', 'SCHEDULED', 'PUBLISHED', 'ARCHIVED']).optional(),
+  order: z.coerce.number().int().optional(),
+  locale: optStr(12),
+})
+export const marketplaceProductUpdateSchema = marketplaceProductSchema.partial()
+
+export const businessProductSchema = z.object({
+  slug: optStr(120),
+  eyebrow: optStr(160),
+  title: z.string().min(1).max(300),
+  subtitle: optStr(1000),
+  imageUrl: optStr(600),
+  content: z.any().optional(),
+  status: z.enum(['DRAFT', 'SCHEDULED', 'PUBLISHED', 'ARCHIVED']).optional(),
+  order: z.coerce.number().int().optional(),
+  locale: optStr(12),
+})
+export const businessProductUpdateSchema = businessProductSchema.partial()

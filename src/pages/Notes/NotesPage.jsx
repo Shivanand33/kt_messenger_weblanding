@@ -1,3 +1,6 @@
+import { translateCopy } from '../../utils/translateCopy'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useEffect, useMemo, useState } from 'react'
 import {
   FiActivity,
@@ -58,11 +61,11 @@ import {
   noteCategories,
   noteColors,
   noteTemplates,
-  notesFaqs,
-  notesFeatures,
-  notesSteps,
-  notesTestimonials,
-  notesTips,
+  notesFaqs as FALLBACK_NOTESFAQS,
+  notesFeatures as RAW_NOTES_FEATURES,
+  notesSteps as RAW_NOTES_STEPS,
+  notesTestimonials as RAW_NOTES_TESTIMONIALS,
+  notesTips as RAW_NOTES_TIPS,
   reminders,
   shortcuts,
   syncDevices,
@@ -141,8 +144,20 @@ const PAGE_SIZE = 12
 const emptyDraft = { id: null, title: '', content: '', category: 'Work', color: 'default', pinned: false }
 
 export function NotesPage() {
+  // Admin-managed FAQs for this page (Admin -> FAQs, page='notes').
+  const [notesFaqs] = useRemoteContent(
+    () => api.listFaqs('notes').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
+    FALLBACK_NOTESFAQS,
+  )
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
+
+  // Marketing copy from the data file, routed through the admin content
+  // override. t() returns the original string when nothing overrides it.
+  const notesTips = translateCopy(RAW_NOTES_TIPS, t)
+  const notesFeatures = translateCopy(RAW_NOTES_FEATURES, t)
+  const notesSteps = translateCopy(RAW_NOTES_STEPS, t)
+  const notesTestimonials = translateCopy(RAW_NOTES_TESTIMONIALS, t)
 
   const [notes, setNotes] = useState(initialNotes)
   const [activeCategory, setActiveCategory] = useState('All')

@@ -1,3 +1,6 @@
+import { img } from '../../utils/imageOverrides'
+import { translateCopy } from '../../utils/translateCopy'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useEffect, useMemo, useState } from 'react'
 import {
   FiActivity,
@@ -52,16 +55,16 @@ import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import {
   breakingTicker,
-  digestSchedule,
-  factChecks,
+  digestSchedule as RAW_DIGEST_SCHEDULE,
+  factChecks as RAW_FACT_CHECKS,
   followTopics,
-  newsArticles,
+  newsArticles as FALLBACK_NEWS,
   newsCategories,
-  newsFaqs,
-  newsFeatures,
-  newsSources,
-  newsSteps,
-  newsTestimonials,
+  newsFaqs as FALLBACK_NEWSFAQS,
+  newsFeatures as RAW_NEWS_FEATURES,
+  newsSources as RAW_NEWS_SOURCES,
+  newsSteps as RAW_NEWS_STEPS,
+  newsTestimonials as RAW_NEWS_TESTIMONIALS,
 } from './newsData'
 
 const NAV_ITEMS = [
@@ -130,8 +133,25 @@ const formatClock = (seconds) => {
 }
 
 export function NewsPage() {
+  // Admin-managed FAQs for this page (Admin -> FAQs, page='news').
+  const [newsFaqs] = useRemoteContent(
+    () => api.listFaqs('news').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
+    FALLBACK_NEWSFAQS,
+  )
+  // Admin-managed news articles (Admin -> News Articles). Falls back to the
+  // bundled list until the API returns a non-empty response.
+  const [newsArticles] = useRemoteContent(() => api.listNews(), FALLBACK_NEWS)
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
+
+  // Marketing copy from the data file, routed through the admin content
+  // override. t() returns the original string when nothing overrides it.
+  const newsSources = translateCopy(RAW_NEWS_SOURCES, t)
+  const digestSchedule = translateCopy(RAW_DIGEST_SCHEDULE, t)
+  const factChecks = translateCopy(RAW_FACT_CHECKS, t)
+  const newsFeatures = translateCopy(RAW_NEWS_FEATURES, t)
+  const newsSteps = translateCopy(RAW_NEWS_STEPS, t)
+  const newsTestimonials = translateCopy(RAW_NEWS_TESTIMONIALS, t)
 
   const [activeCategory, setActiveCategory] = useState('All News')
   const [searchQuery, setSearchQuery] = useState('')
@@ -285,7 +305,7 @@ export function NewsPage() {
                     onClick={() => openArticle(item)}
                     className="flex w-full items-start gap-3 rounded-2xl border border-line bg-cream dark:bg-white/[0.03] p-3 text-left transition-colors hover:border-brand-strong/40 dark:hover:border-sky-400/40 hover:bg-cream-2 dark:hover:bg-white/[0.07]"
                   >
-                    <img src={item.image} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
+                    <img src={img(item.image)} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                     <span className="min-w-0">
                       <span className="line-clamp-2 block text-xs font-bold leading-snug text-ink dark:text-white">{item.title}</span>
                       <span className="mt-1 block text-[10px] font-semibold text-muted dark:text-slate-400">
@@ -364,7 +384,7 @@ export function NewsPage() {
               <button type="button" onClick={() => openArticle(spotlight)} className="block w-full text-left">
                 <div className="relative overflow-hidden">
                   <img
-                    src={spotlight.image}
+                    src={img(spotlight.image)}
                     alt={spotlight.title}
                     className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-80"
                   />
@@ -421,7 +441,7 @@ export function NewsPage() {
                   onClick={() => openArticle(item)}
                   className="group flex w-full items-start gap-4 rounded-[22px] border border-line bg-surface p-4 text-left shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/35 hover:shadow-card"
                 >
-                  <img src={item.image} alt="" className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
+                  <img src={img(item.image)} alt="" className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
                   <span className="min-w-0 flex-1">
                     <span className="text-[11px] font-black uppercase tracking-wide text-brand-strong">{item.category}</span>
                     <span className="mt-1 line-clamp-2 block text-sm font-extrabold leading-snug text-ink group-hover:text-brand-strong">
@@ -458,7 +478,7 @@ export function NewsPage() {
               <button type="button" onClick={() => openArticle(item)} className="block w-full text-left">
                 <div className="relative overflow-hidden">
                   <img
-                    src={item.image}
+                    src={img(item.image)}
                     alt=""
                     className="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
@@ -559,7 +579,7 @@ export function NewsPage() {
                     <article className="group flex h-full flex-col overflow-hidden rounded-[26px] border border-line bg-cream shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-card dark:bg-cream-2">
                       <button type="button" onClick={() => openArticle(article)} className="relative block overflow-hidden text-left">
                         <img
-                          src={article.image}
+                          src={img(article.image)}
                           alt=""
                           loading="lazy"
                           className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -1106,7 +1126,7 @@ export function NewsPage() {
             </div>
 
             <img
-              src={readingArticle.image}
+              src={img(readingArticle.image)}
               alt=""
               className="mt-5 h-56 w-full rounded-2xl object-cover sm:h-72"
             />
@@ -1145,7 +1165,7 @@ export function NewsPage() {
                         onClick={() => openArticle(item)}
                         className="flex w-full items-center gap-3 rounded-2xl border border-line p-3 text-left transition-colors hover:border-brand/40 hover:bg-surface-2"
                       >
-                        <img src={item.image} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
+                        <img src={img(item.image)} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                         <span className="line-clamp-2 flex-1 text-xs font-bold text-ink">{item.title}</span>
                         <FiChevronRight className="shrink-0 text-muted" />
                       </button>

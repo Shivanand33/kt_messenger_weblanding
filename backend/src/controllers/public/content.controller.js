@@ -14,6 +14,12 @@ function publishedWhere(extra = {}) {
   }
 }
 
+// Models added in Phase 8 have no scheduledAt column, so they use a plain
+// status filter rather than publishedWhere().
+function publishedSimple(extra = {}) {
+  return { status: 'PUBLISHED', ...extra }
+}
+
 const blogCard = (p) => ({
   id: p.id,
   slug: p.slug,
@@ -72,7 +78,7 @@ export const getHelpTree = asyncHandler(async (req, res) => {
         orderBy: { order: 'asc' },
         include: {
           articles: {
-            where: publishedWhere(),
+            where: publishedSimple(),
             orderBy: { order: 'asc' },
             select: { title: true, slug: true, popular: true },
           },
@@ -96,7 +102,7 @@ export const getHelpTree = asyncHandler(async (req, res) => {
 
 export const getHelpArticle = asyncHandler(async (req, res) => {
   const article = await prisma.helpArticle.findFirst({
-    where: publishedWhere({ slug: req.params.slug }),
+    where: publishedSimple({ slug: req.params.slug }),
     include: { subcategory: { include: { category: true } } },
   })
   if (!article) throw ApiError.notFound('Help article not found')
@@ -115,7 +121,7 @@ export const getHelpArticle = asyncHandler(async (req, res) => {
 
 export const getPopularArticles = asyncHandler(async (_req, res) => {
   const articles = await prisma.helpArticle.findMany({
-    where: publishedWhere({ popular: true }),
+    where: publishedSimple({ popular: true }),
     orderBy: { order: 'asc' },
     take: 10,
     select: { title: true, slug: true },
@@ -125,7 +131,7 @@ export const getPopularArticles = asyncHandler(async (_req, res) => {
 
 /* ── FAQs ───────────────────────────────────────────────── */
 export const listFaqs = asyncHandler(async (req, res) => {
-  const where = publishedWhere({ locale: req.query.locale || undefined })
+  const where = publishedSimple({ locale: req.query.locale || undefined })
   if (req.query.page) where.page = String(req.query.page)
   const faqs = await prisma.faq.findMany({ where, orderBy: { order: 'asc' }, select: { id: true, question: true, answer: true, page: true } })
   return ok(res, faqs)
@@ -134,14 +140,14 @@ export const listFaqs = asyncHandler(async (req, res) => {
 /* ── Success stories ────────────────────────────────────── */
 export const listSuccessStories = asyncHandler(async (req, res) => {
   const stories = await prisma.successStory.findMany({
-    where: publishedWhere({ locale: req.query.locale || undefined }),
+    where: publishedSimple({ locale: req.query.locale || undefined }),
     orderBy: { order: 'asc' },
   })
   return ok(res, stories.map((s) => ({ id: s.id, slug: s.slug, company: s.company, logoUrl: s.logoUrl, imageUrl: s.imageUrl, summary: s.summary, metrics: s.metrics })))
 })
 
 export const getSuccessStory = asyncHandler(async (req, res) => {
-  const story = await prisma.successStory.findFirst({ where: publishedWhere({ slug: req.params.slug }) })
+  const story = await prisma.successStory.findFirst({ where: publishedSimple({ slug: req.params.slug }) })
   if (!story) throw ApiError.notFound('Story not found')
   return ok(res, story)
 })
@@ -188,5 +194,47 @@ export const getPageContent = asyncHandler(async (req, res) => {
   const blocks = await prisma.websiteContent.findMany({ where: { page: req.params.page, locale: req.query.locale || 'en-US' } })
   const map = {}
   for (const b of blocks) map[b.key] = b.data
+  return ok(res, map)
+})
+
+/* ── Phase 8: structured CMS entities ──────────────────────────────────── */
+
+// GET /api/news  — published news articles in admin order.
+export const listNews = asyncHandler(async (req, res) => {
+  const where = publishedSimple({ locale: req.query.locale || undefined })
+  if (req.query.category) where.category = String(req.query.category)
+  const rows = await prisma.newsArticle.findMany({ where, orderBy: { order: 'asc' } })
+  return ok(res, rows.map((n) => ({
+    id: n.id, slug: n.slug, category: n.category, title: n.title, summary: n.summary,
+    body: n.body || [], author: n.author, source: n.source, readMins: n.readMins,
+    reads: n.reads, tags: n.tags, image: n.imageUrl, hot: n.hot,
+  })))
+})
+
+// GET /api/marketplace-products
+export const listMarketplaceProducts = asyncHandler(async (req, res) => {
+  const where = publishedSimple({ locale: req.query.locale || undefined })
+  if (req.query.category) where.category = String(req.query.category)
+  const rows = await prisma.marketplaceProduct.findMany({ where, orderBy: { order: 'asc' } })
+  return ok(res, rows.map((p) => ({
+    id: p.id, slug: p.slug, name: p.name, seller: p.seller, price: p.price, mrp: p.mrp,
+    rating: p.rating, reviews: p.reviews, category: p.category, tag: p.tag,
+    delivery: p.delivery, stock: p.stock, image: p.imageUrl, desc: p.description,
+    features: p.features || [],
+  })))
+})
+
+// GET /api/business-products  — all published business sub-pages.
+export const listBusinessProducts = asyncHandler(async (req, res) => {
+  const rows = await prisma.businessProduct.findMany({
+    where: publishedSimple({ locale: req.query.locale || undefined }),
+    orderBy: { order: 'asc' },
+  })
+  // Returned keyed by slug so the frontend can use it exactly like the
+  // hardcoded businessProducts object it replaces.
+  const map = {}
+  for (const b of rows) {
+    map[b.slug] = { eyebrow: b.eyebrow, title: b.title, subtitle: b.subtitle, image: b.imageUrl, ...(b.content || {}) }
+  }
   return ok(res, map)
 })

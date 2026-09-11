@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { FiVideo, FiPhone, FiMoreVertical, FiArrowLeft, FiLock, FiSmile, FiMic, FiPaperclip, FiWifi } from 'react-icons/fi'
 import { useLanguage } from '../../context/LanguageContext'
 import contactAvatar from '../../assets/images/business.jpg'
@@ -27,7 +28,7 @@ export function PhoneChatMockup({ className = '' }) {
           {/* chat header */}
           <div className="flex items-center gap-2 border-b border-white/10 bg-[#111c24] px-3 py-2">
             <FiArrowLeft className="text-sm text-white/70" />
-            <img src={contactAvatar} alt="" className="h-8 w-8 rounded-full object-cover" />
+            <img src={img(contactAvatar)} alt="" className="h-8 w-8 rounded-full object-cover" />
             <div className="flex-1 leading-tight">
               <p className="text-[13px] font-semibold text-white">Anika</p>
               <p className="text-[10px] text-white/50">{t('online')}</p>

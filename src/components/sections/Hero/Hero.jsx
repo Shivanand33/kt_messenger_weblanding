@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiDownload, FiVideo, FiCalendar, FiCheck } from 'react-icons/fi'
@@ -53,7 +54,7 @@ export function Hero() {
     <section id="hero" className="px-3 pt-3 sm:px-4 lg:px-5">
       <div className="relative overflow-hidden rounded-[22px] lg:rounded-[30px]">
         <img
-          src={bgUrl}
+          src={img(bgUrl)}
           alt="Friends staying in touch on KT Messenger"
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
@@ -105,8 +106,8 @@ export function Hero() {
                   <p className="text-sm font-bold text-[#0e1a13]">{t('Design Crew')}</p>
                   <div className="mt-1 flex items-center gap-1.5">
                     <div className="flex -space-x-2">
-                      {stackImages.map((img, index) => (
-                        <img key={index} src={img} alt="" className="h-5 w-5 rounded-full border-2 border-white object-cover" />
+                      {stackImages.map((avatar, index) => (
+                        <img key={index} src={img(avatar)} alt="" className="h-5 w-5 rounded-full border-2 border-white object-cover" />
                       ))}
                     </div>
                     <span className="text-xs text-[#7c877e]">{t('& 4 others')}</span>
@@ -132,7 +133,7 @@ export function Hero() {
               className="absolute right-16 top-[19rem] w-60 rounded-2xl bg-white/95 p-3.5 shadow-float backdrop-blur"
             >
               <div className="flex items-center gap-2">
-                <img src={nadiaAvatar} alt="Nadia" className="h-8 w-8 rounded-full object-cover shadow-sm border border-stone-200" />
+                <img src={img(nadiaAvatar)} alt="Nadia" className="h-8 w-8 rounded-full object-cover shadow-sm border border-stone-200" />
                 <p className="text-sm font-bold text-[#0e1a13]">{t('Nadia')}</p>
               </div>
               <p className="mt-2 text-sm text-[#4b5a53]">

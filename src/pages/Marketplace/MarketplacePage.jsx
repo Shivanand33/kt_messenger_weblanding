@@ -1,3 +1,7 @@
+import { img } from '../../utils/imageOverrides'
+import { translateCopy } from '../../utils/translateCopy'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useEffect, useMemo, useState } from 'react'
 import {
   FiActivity,
@@ -51,15 +55,15 @@ import { EmptyState } from '../../components/feature/EmptyState'
 import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
 import {
-  marketplaceFaqs,
-  marketplaceFeatures,
-  marketplaceReviews,
-  marketplaceSteps,
+  marketplaceFaqs as FALLBACK_MARKETPLACEFAQS,
+  marketplaceFeatures as RAW_MARKETPLACE_FEATURES,
+  marketplaceReviews as RAW_MARKETPLACE_REVIEWS,
+  marketplaceSteps as RAW_MARKETPLACE_STEPS,
   productCategories,
-  products,
-  protectionPoints,
+  products as FALLBACK_PRODUCTS,
+  protectionPoints as RAW_PROTECTION_POINTS,
   sellers,
-  trackingStages,
+  trackingStages as RAW_TRACKING_STAGES,
 } from './marketplaceData'
 
 const NAV_ITEMS = [
@@ -148,8 +152,23 @@ function Stars({ rating }) {
 }
 
 export function MarketplacePage() {
+  // Admin-managed FAQs for this page (Admin -> FAQs, page='marketplace').
+  const [marketplaceFaqs] = useRemoteContent(
+    () => api.listFaqs('marketplace').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
+    FALLBACK_MARKETPLACEFAQS,
+  )
+  // Admin-managed marketplace products (Admin -> Marketplace Products).
+  const [products] = useRemoteContent(() => api.listMarketplaceProducts(), FALLBACK_PRODUCTS)
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
+
+  // Marketing copy from the data file, routed through the admin content
+  // override. t() returns the original string when nothing overrides it.
+  const trackingStages = translateCopy(RAW_TRACKING_STAGES, t)
+  const protectionPoints = translateCopy(RAW_PROTECTION_POINTS, t)
+  const marketplaceFeatures = translateCopy(RAW_MARKETPLACE_FEATURES, t)
+  const marketplaceSteps = translateCopy(RAW_MARKETPLACE_STEPS, t)
+  const marketplaceReviews = translateCopy(RAW_MARKETPLACE_REVIEWS, t)
 
   const [activeCategory, setActiveCategory] = useState('All')
   const [query, setQuery] = useState('')
@@ -302,7 +321,7 @@ export function MarketplacePage() {
               <ul className="mt-4 space-y-3">
                 {cartRows.slice(0, 3).map((line) => (
                   <li key={line.id} className="flex items-center gap-3 rounded-2xl border border-line dark:border-white/10 bg-cream dark:bg-white/[0.03] p-3">
-                    <img src={line.product.image} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
+                    <img src={img(line.product.image)} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                     <span className="min-w-0 flex-1">
                       <span className="line-clamp-1 block text-xs font-bold text-ink dark:text-white">{line.product.name}</span>
                       <span className="text-[10px] font-semibold text-muted dark:text-slate-400">{t('Qty')} {line.qty}</span>
@@ -400,7 +419,7 @@ export function MarketplacePage() {
             >
               <button type="button" onClick={() => setQuickView(product)} className="relative block w-full overflow-hidden">
                 <img
-                  src={product.image}
+                  src={img(product.image)}
                   alt=""
                   loading="lazy"
                   className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -558,7 +577,7 @@ export function MarketplacePage() {
                       <div className="relative">
                         <button type="button" onClick={() => setQuickView(product)} className="block w-full overflow-hidden">
                           <img
-                            src={product.image}
+                            src={img(product.image)}
                             alt=""
                             loading="lazy"
                             className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -687,7 +706,7 @@ export function MarketplacePage() {
               {wishlisted.map((product, index) => (
                 <Reveal key={product.id} from="up" delay={index * 0.05} className="h-full">
                   <div className="flex h-full items-center gap-4 rounded-[22px] border border-line bg-surface p-4 shadow-soft">
-                    <img src={product.image} alt="" className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
+                    <img src={img(product.image)} alt="" className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
 
                     <div className="min-w-0 flex-1">
                       <h3 className="line-clamp-2 text-sm font-extrabold leading-snug text-ink">{product.name}</h3>
@@ -1032,7 +1051,7 @@ export function MarketplacePage() {
       >
         {quickView ? (
           <div>
-            <img src={quickView.image} alt="" className="h-56 w-full rounded-2xl object-cover sm:h-72" />
+            <img src={img(quickView.image)} alt="" className="h-56 w-full rounded-2xl object-cover sm:h-72" />
 
             <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
               <Stars rating={quickView.rating} />
@@ -1135,7 +1154,7 @@ export function MarketplacePage() {
           <ul className="divide-y divide-line">
             {cartRows.map((line) => (
               <li key={line.id} className="flex items-center gap-4 py-4 first:pt-0">
-                <img src={line.product.image} alt="" className="h-16 w-16 shrink-0 rounded-2xl object-cover" />
+                <img src={img(line.product.image)} alt="" className="h-16 w-16 shrink-0 rounded-2xl object-cover" />
 
                 <div className="min-w-0 flex-1">
                   <h4 className="line-clamp-2 text-sm font-extrabold leading-snug text-ink">{line.product.name}</h4>

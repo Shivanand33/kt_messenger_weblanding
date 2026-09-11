@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 /**
  * The signature framed image used across showcase sections: a padded surface
  * frame with a large radius and a soft premium shadow. Children render on top
@@ -14,7 +15,7 @@ export function MediaFrame({
   return (
     <div className={`relative ${className}`}>
       <div className={`overflow-hidden rounded-block border border-line bg-surface p-3 shadow-card ${frameClassName}`}>
-        <img src={image} alt={alt} loading="lazy" className={`w-full rounded-media object-cover ${height}`} />
+        <img src={img(image)} alt={alt} loading="lazy" className={`w-full rounded-media object-cover ${height}`} />
       </div>
       {children}
     </div>

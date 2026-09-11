@@ -13,8 +13,13 @@ import { Features } from '../../components/sections/Features/Features'
 import { Insights } from '../../components/sections/Insights/Insights'
 import { VideoShowcase } from '../../components/sections/VideoShowcase/VideoShowcase'
 import { DownloadCTA } from '../../components/sections/DownloadCTA/DownloadCTA'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
 
 export function Home() {
+  // Per-page SEO from admin (Website Content -> seo.home).
+  // No block configured = unchanged behaviour.
+  useAdminSeo('home', '/')
+
   return (
     <MainLayout>
       <Hero />

@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Container } from '../../common/Container/Container'
@@ -44,7 +45,7 @@ export function Statement() {
             className="flex items-center gap-2"
           >
             <img
-              src={chip.avatar}
+              src={img(chip.avatar)}
               alt=""
               className="h-10 w-10 shrink-0 rounded-full border-2 border-white object-cover shadow-soft"
             />

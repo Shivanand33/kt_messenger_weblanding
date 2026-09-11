@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 import { motion } from 'framer-motion'
 import {
   FiBookmark,
@@ -114,7 +115,7 @@ export function KtNewsScreen({ className = '' }) {
             <div className="mt-1.5 flex gap-2 overflow-hidden">
               {TRENDING.map((item) => (
                 <div key={item.title} className="w-[112px] shrink-0 overflow-hidden rounded-xl bg-white shadow-sm">
-                  <img src={item.image} alt="" className="h-[62px] w-full object-cover" />
+                  <img src={img(item.image)} alt="" className="h-[62px] w-full object-cover" />
                   <div className="p-1.5">
                     <p className="line-clamp-2 text-[9px] font-bold leading-tight text-slate-900">{t(item.title)}</p>
                     <div className="mt-1 flex items-center gap-1.5 text-[8px] font-semibold text-slate-500">
@@ -132,7 +133,7 @@ export function KtNewsScreen({ className = '' }) {
             <div className="mt-1 divide-y divide-slate-200">
               {RECENT.map((item) => (
                 <div key={item.title} className="flex items-center gap-2 py-2">
-                  <img src={item.image} alt="" className="h-9 w-9 shrink-0 rounded-md object-cover" />
+                  <img src={img(item.image)} alt="" className="h-9 w-9 shrink-0 rounded-md object-cover" />
                   <div className="min-w-0 flex-1">
                     <p className="line-clamp-2 text-[9.5px] font-bold leading-tight text-slate-900">{t(item.title)}</p>
                     <p className="mt-0.5 text-[8px] font-medium text-slate-500">

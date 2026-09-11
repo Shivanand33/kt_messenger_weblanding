@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -33,6 +34,8 @@ import userAvatar from '../../assets/images/business.jpg'
 import avatarMale from '../../assets/images/avatar_male_1.png'
 import avatarFemale from '../../assets/images/avatar_female_1.png'
 import { useLanguage } from '../../context/LanguageContext'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 
 export function GroupsPage() {
   const navigate = useNavigate()
@@ -131,7 +134,7 @@ export function GroupsPage() {
     { feature: t('Admin Approval Queue'), kt: t('Granular Control'), sms: t('None'), apps: t('Basic Admin') }
   ]
 
-  const faqs = [
+  const localFaqs = [
     {
       q: t('How many members can join a single KT group?'),
       a: t('A single KT group chat can host up to 1,024 participants with full administrative controls and end to end encryption.')
@@ -157,6 +160,16 @@ export function GroupsPage() {
       a: t('Yes! Tap the call button inside any group to launch a group voice or video call with up to 32 participants simultaneously.')
     }
   ]
+
+  // Admin-managed FAQs for this page. The array above stays as the
+  // fallback and is still rebuilt from t() on every render, so language
+  // switching keeps working whenever the API has nothing to serve.
+  const [remoteFaqs] = useRemoteContent(
+    () => api.listFaqs('groups'),
+    null,
+    (rows) => Array.isArray(rows) && rows.length > 0,
+  )
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
 
   return (
     <MainLayout>
@@ -246,11 +259,11 @@ export function GroupsPage() {
 
                       <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
                         <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative">
-                          <img src={privateImg} alt={t('Media')} className="h-full w-full object-cover" />
+                          <img src={img(privateImg)} alt={t('Media')} className="h-full w-full object-cover" />
                           <span className="absolute bottom-1 left-1 text-[7px] bg-black/70 px-1 py-0.2 rounded font-mono text-white">{t('Voice call')}</span>
                         </div>
                         <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative">
-                          <img src={groupImg} alt={t('Media')} className="h-full w-full object-cover" />
+                          <img src={img(groupImg)} alt={t('Media')} className="h-full w-full object-cover" />
                           <span className="absolute bottom-1 left-1 text-[7px] bg-sky-600/90 px-1 py-0.2 rounded font-mono text-white">{t('Check notif')}</span>
                         </div>
                         <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative p-1">
@@ -291,7 +304,7 @@ export function GroupsPage() {
                         {/* You */}
                         <div className="flex items-center justify-between p-2 hover:bg-slate-800/40 transition-colors cursor-pointer">
                           <div className="flex items-center gap-2.5">
-                            <img src={avatarMale} alt="You" className="h-8 w-8 rounded-full object-cover border border-slate-700 shrink-0" />
+                            <img src={img(avatarMale)} alt="You" className="h-8 w-8 rounded-full object-cover border border-slate-700 shrink-0" />
                             <div>
                               <h5 className="font-bold text-[11px] text-white">{t('You')}</h5>
                               <p className="text-[9px] text-sky-400 font-semibold">{t('Add member tag')}</p>
@@ -528,8 +541,8 @@ export function GroupsPage() {
 
                 <div className="mt-6 flex items-center justify-between rounded-2xl bg-cream p-3 border border-line">
                   <div className="flex -space-x-2">
-                    <img src={familyAvatar} alt="" className="h-8 w-8 rounded-full border-2 border-surface object-cover" />
-                    <img src={userAvatar} alt="" className="h-8 w-8 rounded-full border-2 border-surface object-cover" />
+                    <img src={img(familyAvatar)} alt="" className="h-8 w-8 rounded-full border-2 border-surface object-cover" />
+                    <img src={img(userAvatar)} alt="" className="h-8 w-8 rounded-full border-2 border-surface object-cover" />
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-strong text-[10px] font-bold text-white border-2 border-surface">
                       +16
                     </div>
@@ -558,7 +571,7 @@ export function GroupsPage() {
             <Reveal key={card.title} from="up">
               <div className="group overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all hover:-translate-y-1">
                 <div className="h-44 overflow-hidden bg-brand-soft">
-                  <img src={card.img} alt={card.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={img(card.img)} alt={card.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-ink">{card.title}</h3>

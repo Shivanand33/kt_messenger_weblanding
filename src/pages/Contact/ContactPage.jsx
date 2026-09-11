@@ -33,6 +33,7 @@ import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
 import { api } from '../../services/apiClient'
 import { useLanguage } from '../../context/LanguageContext'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', icon: <FiCompass /> },
@@ -160,6 +161,10 @@ const TONE_STYLES = {
 }
 
 export function ContactPage() {
+  // Per-page SEO from admin (Website Content -> seo.contact).
+  // No block configured = unchanged behaviour.
+  useAdminSeo('contact', '/contact')
+
   const navigate = useNavigate()
   const { t } = useLanguage()
 

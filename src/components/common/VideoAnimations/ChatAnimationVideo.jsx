@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiPlay, FiPause, FiRotateCcw, FiCheck, FiImage, FiSmile, FiMic, FiSend } from 'react-icons/fi'
@@ -71,7 +72,7 @@ export function ChatAnimationVideo({ className = '' }) {
           {/* Header */}
           <div className="flex items-center justify-between border-b border-slate-800 pb-2">
             <div className="flex items-center gap-2">
-              <img src={avatarFemale} alt="Sarah" className="h-8 w-8 rounded-full object-cover border border-brand-strong" />
+              <img src={img(avatarFemale)} alt="Sarah" className="h-8 w-8 rounded-full object-cover border border-brand-strong" />
               <div>
                 <p className="text-xs font-bold text-white">Sarah Jenkins</p>
                 <p className="text-[10px] text-emerald-400 font-semibold">{t('Online • KT E2EE')}</p>
@@ -115,7 +116,7 @@ export function ChatAnimationVideo({ className = '' }) {
                 animate={{ opacity: 1, y: 0 }}
                 className="ml-auto max-w-[70%] overflow-hidden rounded-2xl bg-slate-900 p-1.5 border border-slate-800"
               >
-                <img src={weddingImg} alt={t('Attachment')} className="h-28 w-full rounded-xl object-cover" />
+                <img src={img(weddingImg)} alt={t('Attachment')} className="h-28 w-full rounded-xl object-cover" />
                 <div className="mt-1 flex items-center justify-between px-1 text-[9px] text-slate-300">
                   <span>Project_Design.zip (1.8 GB)</span>
                   <FiCheck className="text-brand-strong text-xs" />

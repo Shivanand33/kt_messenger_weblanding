@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -30,6 +31,8 @@ import familyAvatar from '../../assets/images/group.jpg'
 import avatarMale from '../../assets/images/avatar_male_1.png'
 import avatarFemale from '../../assets/images/avatar_female_1.png'
 import { useLanguage } from '../../context/LanguageContext'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 
 export function StatusPage() {
   const navigate = useNavigate()
@@ -113,7 +116,7 @@ export function StatusPage() {
     { feature: t('Private Chat Replies'), kt: t('Direct Encrypted Reply'), social: t('Public DM'), standard: t('N/A') }
   ]
 
-  const faqs = [
+  const localFaqs = [
     {
       q: t('What is KT Status?'),
       a: t('Status lets you share text, photo, video, and audio updates with your contacts that automatically disappear after 24 hours.')
@@ -139,6 +142,16 @@ export function StatusPage() {
       a: t('In the Status tab, tap the microphone icon, press and hold to record an audio clip up to 30 seconds, pick a background color, and post.')
     }
   ]
+
+  // Admin-managed FAQs for this page. The array above stays as the
+  // fallback and is still rebuilt from t() on every render, so language
+  // switching keeps working whenever the API has nothing to serve.
+  const [remoteFaqs] = useRemoteContent(
+    () => api.listFaqs('status'),
+    null,
+    (rows) => Array.isArray(rows) && rows.length > 0,
+  )
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
 
   return (
     <MainLayout>
@@ -206,7 +219,7 @@ export function StatusPage() {
                   {/* Status Header Bar */}
                   <div className="absolute top-6 inset-x-3 z-30 flex items-center justify-between text-white">
                     <div className="flex items-center gap-2">
-                      <img src={familyAvatar} alt="" className="h-8 w-8 rounded-full border border-white object-cover" />
+                      <img src={img(familyAvatar)} alt="" className="h-8 w-8 rounded-full border border-white object-cover" />
                       <div>
                         <p className="text-xs font-bold">{stories[activeStory].name}</p>
                         <p className="text-[10px] text-white/70">{stories[activeStory].time} • {t('Encrypted')}</p>
@@ -216,7 +229,7 @@ export function StatusPage() {
 
                   {/* Story Image */}
                   <img
-                    src={stories[activeStory].img}
+                    src={img(stories[activeStory].img)}
                     alt={t('Status story')}
                     className="h-full w-full object-cover"
                   />
@@ -430,7 +443,7 @@ export function StatusPage() {
             <Reveal key={card.title} from="up">
               <div className="group overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all hover:-translate-y-1">
                 <div className="h-44 overflow-hidden bg-brand-soft">
-                  <img src={card.img} alt={card.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={img(card.img)} alt={card.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-ink">{card.title}</h3>

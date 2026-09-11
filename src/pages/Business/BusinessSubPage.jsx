@@ -1,3 +1,6 @@
+import { img } from '../../utils/imageOverrides'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useEffect } from 'react'
 import { useNavigate, useParams, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -34,7 +37,7 @@ import { ThemeToggle } from '../../components/common/ThemeToggle/ThemeToggle'
 import { Footer } from '../../components/layout/Footer/Footer'
 import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
-import { businessProducts } from './businessProducts'
+import { businessProducts as FALLBACK_BUSINESS } from './businessProducts'
 import imgBusiness from '../../assets/images/business.jpg'
 import imgGroup from '../../assets/images/group.jpg'
 import imgPrivate from '../../assets/images/private.jpg'
@@ -76,7 +79,7 @@ function HeroVisual({ data }) {
         transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         className="overflow-hidden rounded-[28px] border border-line bg-surface shadow-float"
       >
-        <img src={IMAGES[data.image] || imgBusiness} alt={data.title} className="h-[380px] w-full object-cover" />
+        <img src={img(IMAGES[data.image] || imgBusiness)} alt={data.title} className="h-[380px] w-full object-cover" />
       </motion.div>
       {/* Floating accent — a verified KT feature chip */}
       <motion.div
@@ -104,6 +107,14 @@ export function BusinessSubPage() {
   const navigate = useNavigate()
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
+  // Admin-managed business sub-pages (Admin -> Business Products). Falls back
+  // to the bundled map until the API returns pages, so an unreachable API
+  // never turns a live /business/:slug route into a 404.
+  const [businessProducts] = useRemoteContent(
+    () => api.getBusinessProducts(),
+    FALLBACK_BUSINESS,
+    (map) => map && typeof map === 'object' && Object.keys(map).length > 0,
+  )
   const data = businessProducts[slug]
 
   useEffect(() => {
@@ -206,7 +217,7 @@ export function BusinessSubPage() {
               <Reveal from="up">
                 <div className="overflow-hidden rounded-[28px] border border-line shadow-card">
                   <img
-                    src={IMAGES[data.spotlight.image] || imgBusiness}
+                    src={img(IMAGES[data.spotlight.image] || imgBusiness)}
                     alt={data.spotlight.title}
                     className="h-[300px] w-full object-cover lg:h-[420px]"
                   />

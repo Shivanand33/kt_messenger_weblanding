@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 import { motion } from 'framer-motion'
 import { FiArrowLeft, FiBell, FiPause, FiX } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
@@ -40,7 +41,7 @@ export function KtStatusScreen({ className = '' }) {
 
           <div className="mt-3 flex items-center gap-2 pb-3">
             <FiArrowLeft className="shrink-0 text-base text-white" />
-            <img src={ktLogo} alt="" className="h-6 w-6 shrink-0 rounded-md object-contain" />
+            <img src={img(ktLogo)} alt="" className="h-6 w-6 shrink-0 rounded-md object-contain" />
             <span className="flex-1 truncate text-[12px] font-bold text-white">KT Updates</span>
             <FiPause className="shrink-0 text-[13px] text-white" />
             <FiX className="shrink-0 text-base text-white" />

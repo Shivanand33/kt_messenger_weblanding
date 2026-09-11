@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { useState } from 'react'
 import { FiSearch, FiMoreVertical, FiFilter, FiGlobe, FiCheck } from 'react-icons/fi'
 import { useLanguage } from '../../context/LanguageContext'
@@ -73,7 +74,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
             <div className="flex items-center gap-3 text-stone-700 text-base">
               <FiSearch className="cursor-pointer hover:text-emerald-600" />
               <FiMoreVertical className="cursor-pointer hover:text-emerald-600" />
-              <img src={mumAvatar} alt="" className="h-6 w-6 rounded-full object-cover" />
+              <img src={img(mumAvatar)} alt="" className="h-6 w-6 rounded-full object-cover" />
             </div>
           </div>
 
@@ -119,7 +120,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
                     key={chat.name}
                     className="flex items-center gap-3 px-4 py-3 hover:bg-stone-50 transition-colors"
                   >
-                    <img src={chat.avatar} alt="" className="h-10 w-10 rounded-full object-cover shrink-0" />
+                    <img src={img(chat.avatar)} alt="" className="h-10 w-10 rounded-full object-cover shrink-0" />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
                         <span className="text-[13px] font-semibold text-stone-900 truncate">
@@ -159,7 +160,7 @@ export function OrganizeMockup({ activeTab = 0, className = '' }) {
                   key={chat.name}
                   className="flex items-center gap-3 p-2.5 rounded-xl bg-emerald-50/60 border border-emerald-100"
                 >
-                  <img src={chat.avatar} alt="" className="h-9 w-9 rounded-full object-cover shrink-0" />
+                  <img src={img(chat.avatar)} alt="" className="h-9 w-9 rounded-full object-cover shrink-0" />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <span className="text-[12px] font-semibold text-stone-900 truncate">

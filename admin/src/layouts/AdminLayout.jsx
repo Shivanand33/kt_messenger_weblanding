@@ -26,6 +26,8 @@ const NAV = [
     group: 'Site',
     items: [
       { to: '/homepage-hero', label: 'Homepage Hero', icon: 'media', perm: 'website_content:read' },
+      { to: '/page-text', label: 'Page Text', icon: 'edit', perm: 'website_content:read' },
+      { to: '/site-images', label: 'Site Images', icon: 'media', perm: 'website_content:read' },
       { to: '/website-content', label: 'Website Content', icon: 'content', perm: 'website_content:read' },
       { to: '/navigation', label: 'Navigation', icon: 'navigation', perm: 'navigation:read' },
       { to: '/footer', label: 'Footer', icon: 'footer', perm: 'footer:read' },

@@ -1,3 +1,4 @@
+import { img } from '../../utils/imageOverrides'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -37,8 +38,15 @@ import privateImg from '../../assets/images/private.jpg'
 import avatarMale from '../../assets/images/avatar_male_1.png'
 import avatarFemale from '../../assets/images/avatar_female_1.png'
 import { useLanguage } from '../../context/LanguageContext'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
 
 export function MessagingPage() {
+  // Per-page SEO from admin (Website Content -> seo.messaging).
+  // No block configured = unchanged behaviour.
+  useAdminSeo('messaging', '/messaging')
+
   const navigate = useNavigate()
   const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState(0)
@@ -129,7 +137,7 @@ export function MessagingPage() {
     { feature: t('Cross Device Sync'), kt: t('Instant Cloud Sync'), sms: t('Carrier Locked'), apps: t('Manual Sync') }
   ]
 
-  const faqs = [
+  const localFaqs = [
     {
       q: t('Are personal messages on KT encrypted by default?'),
       a: t('Yes! Every 1-on-1 and group chat on KT Messenger is end to end encrypted by default using the industry gold KT Encryption Protocol. No one outside the chat, not even KT, can read your messages.')
@@ -155,6 +163,16 @@ export function MessagingPage() {
       a: t('Yes! Using Chat Lock, you can move sensitive conversations into a protected folder accessible only via FaceID, Fingerprint, or a custom secret passcode.')
     }
   ]
+
+  // Admin-managed FAQs for this page. The array above stays as the
+  // fallback and is still rebuilt from t() on every render, so language
+  // switching keeps working whenever the API has nothing to serve.
+  const [remoteFaqs] = useRemoteContent(
+    () => api.listFaqs('messaging'),
+    null,
+    (rows) => Array.isArray(rows) && rows.length > 0,
+  )
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
 
   return (
     <MainLayout>
@@ -376,7 +394,7 @@ export function MessagingPage() {
                 {/* Media Card 1 */}
                 <div className="w-[320px] shrink-0">
                   <div className="h-44 overflow-hidden rounded-2xl">
-                    <img src={weddingImg} alt={t('Photos')} className="h-full w-full object-cover" />
+                    <img src={img(weddingImg)} alt={t('Photos')} className="h-full w-full object-cover" />
                   </div>
                   <h3 className="mt-4 text-xl font-bold text-ink">{t('4K Photo Bundles')}</h3>
                   <p className="mt-2 text-xs leading-relaxed text-body">{t('Share albums of up to 100 full res photos simultaneously without loss of details.')}</p>
@@ -385,7 +403,7 @@ export function MessagingPage() {
                 {/* Media Card 2 */}
                 <div className="w-[320px] shrink-0">
                   <div className="relative h-44 overflow-hidden rounded-2xl">
-                    <img src={hdImg} alt={t('HD Video')} className="h-full w-full object-cover" />
+                    <img src={img(hdImg)} alt={t('HD Video')} className="h-full w-full object-cover" />
                     <span className="absolute top-2 left-2 rounded-md bg-brand-strong px-2 py-0.5 text-[10px] font-bold text-white">
                       HD 60FPS
                     </span>

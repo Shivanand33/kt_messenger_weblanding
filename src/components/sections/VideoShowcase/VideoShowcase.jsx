@@ -1,3 +1,4 @@
+import { img } from '../../../utils/imageOverrides'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -293,7 +294,7 @@ export function VideoShowcase() {
                   transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
                   className="absolute bottom-2 left-2 sm:left-6 z-20 flex items-center gap-2.5 rounded-full bg-surface px-3.5 py-2 shadow-float border border-line"
                 >
-                  <img src={avatarFemale} alt={t('Avatar')} className="h-6 w-6 rounded-full object-cover border border-brand-strong" />
+                  <img src={img(avatarFemale)} alt={t('Avatar')} className="h-6 w-6 rounded-full object-cover border border-brand-strong" />
                   <div className="grid h-5 w-5 place-items-center rounded-full bg-emerald-500 text-white text-[9px]">
                     ▶
                   </div>

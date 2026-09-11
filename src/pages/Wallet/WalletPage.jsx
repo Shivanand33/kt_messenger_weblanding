@@ -1,3 +1,6 @@
+import { translateCopy } from '../../utils/translateCopy'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useEffect, useMemo, useState } from 'react'
 import {
   FiActivity,
@@ -54,15 +57,15 @@ import {
   cryptoHoldings,
   initialGoals,
   initialTransactions,
-  limitsTable,
+  limitsTable as RAW_LIMITS_TABLE,
   paymentMethods,
-  rewards,
-  securityFeatures,
+  rewards as RAW_REWARDS,
+  securityFeatures as RAW_SECURITY_FEATURES,
   transactionCategories,
-  walletFaqs,
-  walletFeatures,
-  walletSteps,
-  walletTestimonials,
+  walletFaqs as FALLBACK_WALLETFAQS,
+  walletFeatures as RAW_WALLET_FEATURES,
+  walletSteps as RAW_WALLET_STEPS,
+  walletTestimonials as RAW_WALLET_TESTIMONIALS,
 } from './walletData'
 
 const NAV_ITEMS = [
@@ -123,8 +126,22 @@ const rupees = (value, decimals = 2) =>
   `₹${Number(value).toLocaleString('en-IN', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`
 
 export function WalletPage() {
+  // Admin-managed FAQs for this page (Admin -> FAQs, page='wallet').
+  const [walletFaqs] = useRemoteContent(
+    () => api.listFaqs('wallet').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
+    FALLBACK_WALLETFAQS,
+  )
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
+
+  // Marketing copy from the data file, routed through the admin content
+  // override. t() returns the original string when nothing overrides it.
+  const rewards = translateCopy(RAW_REWARDS, t)
+  const limitsTable = translateCopy(RAW_LIMITS_TABLE, t)
+  const securityFeatures = translateCopy(RAW_SECURITY_FEATURES, t)
+  const walletFeatures = translateCopy(RAW_WALLET_FEATURES, t)
+  const walletSteps = translateCopy(RAW_WALLET_STEPS, t)
+  const walletTestimonials = translateCopy(RAW_WALLET_TESTIMONIALS, t)
 
   const [balance, setBalance] = useState(148500)
   const [transactions, setTransactions] = useState(initialTransactions)

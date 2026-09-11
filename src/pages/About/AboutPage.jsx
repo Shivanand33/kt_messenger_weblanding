@@ -29,6 +29,7 @@ import { CtaBand } from '../../components/feature/CtaBand'
 import { RelatedPages } from '../../components/feature/RelatedPages'
 import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', icon: <FiCompass /> },
@@ -141,6 +142,10 @@ const RELATED = [
 ]
 
 export function AboutPage() {
+  // Per-page SEO from admin (Website Content -> seo.about).
+  // No block configured = unchanged behaviour.
+  useAdminSeo('about', '/about')
+
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
   const navigate = useNavigate()
