@@ -55,14 +55,14 @@ export function Hero() {
   }, [])
   return (
     <section id="hero" className="px-3 pt-3 sm:px-4 lg:px-5">
-      <div className="relative overflow-hidden rounded-[22px] lg:rounded-[30px]">
+      <div className="group relative overflow-hidden rounded-[22px] lg:rounded-[30px]" title={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}>
         <img
           src={img(bgUrl)}
           alt={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}
           title={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/25 lg:via-black/40 lg:to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/25 lg:via-black/40 lg:to-transparent" />
 
         <Container className="relative grid min-h-[532px] items-center gap-8 py-16 sm:min-h-[600px] lg:min-h-[680px] lg:grid-cols-2 lg:py-20">
           {/* copy */}
