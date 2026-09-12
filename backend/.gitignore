@@ -9,4 +9,6 @@ dist
 
 # Database dumps — contain real data (hashed admin passwords, contact submissions).
 *.sql
+!prisma/migrations/**/*.sql
 *.zip
+
