@@ -9,7 +9,7 @@ import { useLanguage } from '../../context/LanguageContext'
  *
  * `items`: [{ q, a, tag? }]
  */
-export function FaqAccordion({ items, searchable = true, placeholder = 'Search questions…' }) {
+export function FaqAccordion({ items, faqs, searchable = true, placeholder = 'Search questions…' }) {
   const { t } = useLanguage()
   const [openIds, setOpenIds] = useState([0])
   const [query, setQuery] = useState('')
@@ -17,8 +17,9 @@ export function FaqAccordion({ items, searchable = true, placeholder = 'Search q
   const toggle = (index) =>
     setOpenIds((current) => (current.includes(index) ? current.filter((id) => id !== index) : [...current, index]))
 
+  const list = Array.isArray(items) ? items : Array.isArray(faqs) ? faqs : []
   const term = query.trim().toLowerCase()
-  const visible = items
+  const visible = list
     .map((item, index) => ({ ...item, index }))
     .filter((item) => !term || item.q.toLowerCase().includes(term) || item.a.toLowerCase().includes(term))
 

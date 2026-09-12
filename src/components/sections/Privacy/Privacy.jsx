@@ -12,13 +12,13 @@ export function Privacy() {
       reverse
       eyebrow={t('Privacy')}
       eyebrowIcon={<FiShield />}
-      title={t('Your conversations, locked to you.')}
-      description={t("Every message and call is secured with end to end encryption by default. Not even KT Messenger can read them only you and the people you're talking to.")}
+      title={t('Secure And Private Messaging')}
+      description={t('Your personal conversations deserve protection. KT Messenger provides a secure environment where you can communicate confidently with friends, family, and teams.')}
       image={privacyImage}
       imageAlt={t('People gathered around a laptop using KT Messenger')}
       bullets={[
-        { icon: <FiLock />, title: t('End to end encryption'), text: t('Locked the moment it leaves your device.') },
-        { icon: <FiClock />, title: t('Disappearing messages'), text: t('Set chats to auto delete on your own schedule.') },
+        { icon: <FiLock />, title: t('Private Conversations Made Simple'), text: t('Send messages instantly while keeping your conversations protected with privacy focused features.') },
+        { icon: <FiClock />, title: t('Share More Than Text'), text: t('KT Messenger allows you to share photos, videos, documents, files, and voice messages to keep every conversation meaningful.') },
       ]}
       cta={<LinkArrow to="/privacy">{t('How privacy works')}</LinkArrow>}
       accent={

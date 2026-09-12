@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -39,8 +39,15 @@ import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 export function CallingPage() {
+  useSeo({
+    title: 'Best Video Calling App for Private Chats | KT Messenger.',
+    description: 'Looking for the best video calling app? KT Messenger offers private chats, secure voice calls, instant messaging, and smooth online communication.',
+    path: '/calling',
+  })
+
   // Per-page SEO from admin (Website Content -> seo.calling).
   // No block configured = unchanged behaviour.
   useAdminSeo('calling', '/calling')
@@ -99,13 +106,6 @@ export function CallingPage() {
     }
   ]
 
-  const metrics = [
-    { value: '32', label: t('Max Group Callers') },
-    { value: '1080p', label: t('Ultra HD Video Quality') },
-    { value: '99.99%', label: t('Uptime & Reliability') },
-    { value: '256-bit', label: t('End to End Encryption') }
-  ]
-
   const useCases = [
     {
       title: t('Family & Friends Catchups'),
@@ -140,28 +140,32 @@ export function CallingPage() {
 
   const localFaqs = [
     {
-      q: t('Are video and voice calls on KT completely free?'),
-      a: t('Yes! All 1-on-1 and group voice and video calls on KT Messenger are 100% free with no hidden charges, subscription requirements, or annoying time limits.')
+      q: t('What is KT Messenger and why should I use it?'),
+      a: t('KT Messenger is an all-in-one messaging app that lets you send messages, make voice and video calls, and stay connected with people anytime. The KT Messenger app is designed for users who want a simple, secure, and reliable instant messaging app for personal and professional communication.')
     },
     {
-      q: t('Are my calls encrypted and private?'),
-      a: t('Absolutely. Every single voice call, video call, and screen sharing session on KT is protected by end to end encryption using the KT Encryption Protocol. Neither KT nor any third party can listen in or view your calls.')
+      q: t('Is KT Messenger free to use?'),
+      a: t('Yes, KT Messenger is a free messaging app that allows users to send messages and communicate online. As a free instant messaging app, it helps you stay connected without expensive SMS or traditional calling charges.')
     },
     {
-      q: t('Can I make group video calls on desktop or browser?'),
-      a: t('Yes, KT supports native calling across Windows, macOS, iOS, Android, iPadOS, and directly inside all modern web browsers.')
+      q: t('Can I have private chats on KT Messenger?'),
+      a: t('Yes, KT Messenger works as a private chat app where you can have personal conversations with your contacts. It is an easy-to-use app for private chat designed for secure and comfortable communication.')
     },
     {
-      q: t('How does live screen sharing work during a call?'),
-      a: t('While on a call, simply tap the screen share icon. You can choose to broadcast your entire screen or a specific application window to all participants in real time.')
+      q: t('Is KT Messenger available for Android users?'),
+      a: t('KT Messenger is designed to provide Android users with a smooth communication experience. If you are searching for the best messaging app for Android 2026, KT Messenger offers messaging, calling, and privacy-focused features.')
     },
     {
-      q: t('What network speeds do I need for HD calling?'),
-      a: t('KT automatically adjusts video resolution and audio bitrate according to your network speed. You can enjoy clear voice calls even on 3G connections, while HD video optimizes for 4G/5G and Wi Fi.')
+      q: t('Is KT Messenger better than regular chat apps?'),
+      a: t('KT Messenger provides more than a basic chat app by combining messaging, calling, and secure communication features. It works as a complete mobile chat platform for everyday conversations.')
     },
     {
-      q: t('How many participants can join a single group call?'),
-      a: t('You can host up to 32 participants simultaneously in a single voice or video call with unlimited duration.')
+      q: t('Does KT Messenger have AI features?'),
+      a: t('KT Messenger includes smart communication features that improve the user experience. As an AI powered chat app, it helps users enjoy a smarter and more connected way of communicating.')
+    },
+    {
+      q: t('Can I use KT Messenger internationally?'),
+      a: t('Yes, KT Messenger allows users to communicate globally through an online free messaging app experience. It works as an online messaging platform for connecting with people anywhere.')
     }
   ]
 
@@ -185,14 +189,14 @@ export function CallingPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiPhone className="text-brand-strong" /> {t('Next Gen HD Calling Suite')}
               </div>
-              <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                {t('Everyone is')} <br />
+              <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+                {t('Best Voice & Video Calling App for')} <br />
                 <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  {t('just a call away')}
+                  {t('Private Online Conversations')}
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                {t('Connect instantly with crystal clear audio and 1080p video. Unlimited time, zero fees, and 100% end to end encrypted across mobile, desktop, and web.')}
+                {t("Secure private messaging, calls, and video conferences await you. KT Messenger boasts real-time and smooth messaging across all devices. Enjoy KT's ease of international calling.")}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
@@ -280,20 +284,6 @@ export function CallingPage() {
                 </div>
               </div>
             </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* 2. STATS & METRICS BAR */}
-      <section className="border-y border-line bg-surface py-10">
-        <Container>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {metrics.map((m) => (
-              <div key={m.label} className="text-center">
-                <p className="text-3xl font-extrabold text-brand-strong lg:text-4xl">{m.value}</p>
-                <p className="mt-1 text-xs font-semibold tracking-wide text-body uppercase">{m.label}</p>
-              </div>
-            ))}
           </div>
         </Container>
       </section>
@@ -641,7 +631,7 @@ export function CallingPage() {
             <Reveal key={card.title} from="up">
               <div className="group overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all hover:-translate-y-1">
                 <div className="h-48 overflow-hidden bg-brand-soft">
-                  <img src={img(card.img)} alt={card.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={img(card.img)} alt={imgAlt(card.img, card.title)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-ink">{card.title}</h3>

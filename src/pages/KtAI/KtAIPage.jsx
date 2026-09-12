@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -30,6 +30,8 @@ import crystalParrotImage from '../../assets/images/crystal_tropical_parrot.png'
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 function SparklesIcon({ className = '' }) {
   return (
@@ -40,6 +42,14 @@ function SparklesIcon({ className = '' }) {
 }
 
 export function KtAIPage() {
+  useSeo({
+    title: 'KT Messenger | AI Assistant for Smart & Private Chats.',
+    description: 'KT Messenger AI helps you chat smarter with instant answers, AI-powered features, smart search, and seamless communication in one messaging app.',
+    path: '/ai',
+  })
+
+  useAdminSeo('ai', '/ai')
+
   const navigate = useNavigate()
   const { t } = useLanguage()
   const [promptText, setPromptText] = useState(t('An astronaut riding a unicorn on Mars 🦄'))
@@ -98,13 +108,6 @@ export function KtAIPage() {
       desc: t('Generate code snippets, debug syntax errors, rewrite essays, and format structured tables on demand.'),
       highlights: [t('Multi language code support'), t('Grammar & tone enhancement'), t('CSV & JSON data formatting')]
     }
-  ]
-
-  const metrics = [
-    { value: '< 1s', label: t('Response Latency') },
-    { value: '100+', label: t('Languages Supported') },
-    { value: '4K', label: t('Image Output Resolution') },
-    { value: '100%', label: t('Private & Secure') }
   ]
 
   const aiUseCases = [
@@ -198,14 +201,11 @@ export function KtAIPage() {
                 </span>
               </div>
 
-              <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                {t('Meet KT AI Your')} <br />
-                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  {t('personal AI assistant')}
-                </span>
+              <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+                {t('Meet KT AI, The Future of Smart Messaging')}
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                {t('Ask questions, generate artwork, summarize audio, and brainstorm ideas directly inside your personal and group conversations.')}
+                {t('Experience smarter conversations with KT AI. Get helpful answers, AI-powered assistance, and seamless communication inside a modern messaging platform.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
@@ -275,20 +275,6 @@ export function KtAIPage() {
                 </div>
               </div>
             </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* 2. STATS & METRICS BAR */}
-      <section className="border-y border-line bg-surface py-10">
-        <Container>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {metrics.map((m) => (
-              <div key={m.label} className="text-center">
-                <p className="text-3xl font-extrabold text-brand-strong lg:text-4xl">{m.value}</p>
-                <p className="mt-1 text-xs font-semibold tracking-wide text-body uppercase">{m.label}</p>
-              </div>
-            ))}
           </div>
         </Container>
       </section>
@@ -474,7 +460,7 @@ export function KtAIPage() {
             <Reveal key={card.title} from="up">
               <div className="group overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all hover:-translate-y-1">
                 <div className="h-44 overflow-hidden bg-brand-soft">
-                  <img src={img(card.img)} alt={card.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={img(card.img)} alt={imgAlt(card.img, card.title)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-ink">{card.title}</h3>

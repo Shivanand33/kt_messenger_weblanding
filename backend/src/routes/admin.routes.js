@@ -38,6 +38,7 @@ import {
  newsArticleSchema, newsArticleUpdateSchema,
  marketplaceProductSchema, marketplaceProductUpdateSchema,
  businessProductSchema, businessProductUpdateSchema,
+ jobOpeningSchema, jobOpeningUpdateSchema,
 } from '../validators/content.validator.js'
 import { contactUpdateSchema, contactReplySchema, subscriberUpdateSchema } from '../validators/forms.validator.js'
 
@@ -110,6 +111,7 @@ mountCrud('/app-releases', crudFactory({ model: 'appRelease', entityName: 'app_r
 mountCrud('/news-articles', crudFactory({ model: 'newsArticle', entityName: 'news_article', searchable: ['title', 'summary', 'category'] }), { resource: 'website_content', createSchema: newsArticleSchema, updateSchema: newsArticleUpdateSchema })
 mountCrud('/marketplace-products', crudFactory({ model: 'marketplaceProduct', entityName: 'marketplace_product', searchable: ['name', 'seller', 'category'] }), { resource: 'website_content', createSchema: marketplaceProductSchema, updateSchema: marketplaceProductUpdateSchema })
 mountCrud('/business-products', crudFactory({ model: 'businessProduct', entityName: 'business_product', searchable: ['title', 'slug'] }), { resource: 'website_content', createSchema: businessProductSchema, updateSchema: businessProductUpdateSchema })
+mountCrud('/job-openings', crudFactory({ model: 'jobOpening', entityName: 'job_opening', searchable: ['title', 'department', 'location'] }), { resource: 'website_content', createSchema: jobOpeningSchema, updateSchema: jobOpeningUpdateSchema })
 mountCrud('/website-content', crudFactory({ model: 'websiteContent', entityName: 'website_content', searchable: ['key', 'label'] }), { resource: 'website_content', createSchema: websiteContentSchema, updateSchema: websiteContentUpdateSchema })
 mountCrud('/navigation', crudFactory({ model: 'navigationItem', entityName: 'navigation', searchable: ['label'], defaultOrderBy: { order: 'asc' } }), { resource: 'navigation', createSchema: navItemSchema, updateSchema: navItemUpdateSchema })
 mountCrud('/footer-sections', crudFactory({ model: 'footerSection', entityName: 'footer', searchable: ['title'], defaultOrderBy: { order: 'asc' }, include: { links: { orderBy: { order: 'asc' } } } }), { resource: 'footer', createSchema: footerSectionSchema, updateSchema: footerSectionSchema.partial() })

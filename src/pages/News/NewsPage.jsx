@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { translateCopy } from '../../utils/translateCopy'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useEffect, useMemo, useState } from 'react'
@@ -305,7 +305,7 @@ export function NewsPage() {
                     onClick={() => openArticle(item)}
                     className="flex w-full items-start gap-3 rounded-2xl border border-line bg-cream dark:bg-white/[0.03] p-3 text-left transition-colors hover:border-brand-strong/40 dark:hover:border-sky-400/40 hover:bg-cream-2 dark:hover:bg-white/[0.07]"
                   >
-                    <img src={img(item.image)} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
+                    <img src={img(item.image)} alt={imgAlt(item.image, item.title)} className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                     <span className="min-w-0">
                       <span className="line-clamp-2 block text-xs font-bold leading-snug text-ink dark:text-white">{item.title}</span>
                       <span className="mt-1 block text-[10px] font-semibold text-muted dark:text-slate-400">
@@ -316,19 +316,6 @@ export function NewsPage() {
                 </li>
               ))}
             </ul>
-
-            <div className="mt-4 grid grid-cols-3 gap-2 border-t border-line dark:border-white/10 pt-4 text-center">
-              {[
-                { value: '450+', label: t('Sources') },
-                { value: '4×', label: t('Daily briefs') },
-                { value: '50+', label: t('Languages') },
-              ].map((item) => (
-                <div key={item.label}>
-                  <div className="text-base font-black text-ink dark:text-white">{item.value}</div>
-                  <div className="text-[10px] font-bold uppercase tracking-wide text-muted dark:text-slate-400">{item.label}</div>
-                </div>
-              ))}
-            </div>
           </div>
         }
       >

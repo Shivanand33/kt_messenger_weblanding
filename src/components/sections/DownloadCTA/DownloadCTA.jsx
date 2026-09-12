@@ -21,15 +21,15 @@ export function DownloadCTA() {
 
           <div className="relative mx-auto max-w-2xl text-center">
             <h2 className="text-[2rem] font-extrabold tracking-tight sm:text-4xl lg:text-[2.9rem]">
-              {t("Get KT Messenger. It's free.")}
+              {t('Connect Smarter With KT Messenger')}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-white/85">
-              {t('Download KT Messenger on your phone and desktop, and bring every conversation into one calm, secure place.')}
+              {t('Experience a secure and intelligent way to communicate. Download KT Messenger today and enjoy private conversations, powerful features, and meaningful connections.')}
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
               <Button variant="white" size="lg" onClick={openDownloadModal}>
-                <FiDownload /> {t('Download')}
+                <FiDownload /> {t('Download KT Messenger')}
               </Button>
               <Button variant="onDark" size="lg" href={LOGIN_URL}>
                 {t('Open KT Web')} <FiArrowUpRight />

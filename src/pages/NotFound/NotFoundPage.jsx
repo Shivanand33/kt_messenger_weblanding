@@ -1,16 +1,66 @@
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { FiHome, FiCompass } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { Container } from '../../components/common/Container/Container'
 import { Button } from '../../components/common/Button/Button'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { useLanguage } from '../../context/LanguageContext'
+import { api } from '../../services/apiClient'
+import { getComponentByLabelOrHref } from '../../App'
 
 // Custom 404 shown for any route that doesn't match. Wrapped in MainLayout so it
 // keeps the KT Messenger nav, footer, theme toggle and brand tokens.
 export function NotFoundPage() {
   const navigate = useNavigate()
+  const location = useLocation()
   const { t } = useLanguage()
+
+  const [ResolvedComponent, setResolvedComponent] = useState(() => getComponentByLabelOrHref(location.pathname))
+  const [checking, setChecking] = useState(() => !getComponentByLabelOrHref(location.pathname))
+
+  useEffect(() => {
+    const directComp = getComponentByLabelOrHref(location.pathname)
+    if (directComp) {
+      setResolvedComponent(() => directComp)
+      setChecking(false)
+      return
+    }
+
+    let isMounted = true
+    Promise.all([
+      api.getNavigation('features_menu').catch(() => []),
+      api.getNavigation('header').catch(() => []),
+      api.getNavigation('footer').catch(() => [])
+    ]).then(([features, header, footer]) => {
+      if (!isMounted) return
+      const allItems = [...(features || []), ...(header || []), ...(footer || [])]
+      const match = allItems.find(
+        (item) => item.href === location.pathname || item.href === location.pathname.toLowerCase()
+      )
+      if (match) {
+        const comp = getComponentByLabelOrHref(match)
+        if (comp) {
+          setResolvedComponent(() => comp)
+        }
+      }
+      setChecking(false)
+    }).catch(() => {
+      if (isMounted) setChecking(false)
+    })
+
+    return () => {
+      isMounted = false
+    }
+  }, [location.pathname])
+
+  if (ResolvedComponent) {
+    return <ResolvedComponent />
+  }
+
+  if (checking) {
+    return null
+  }
 
   return (
     <MainLayout>

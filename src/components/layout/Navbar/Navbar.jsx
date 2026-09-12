@@ -18,10 +18,7 @@ import {
   FiStar,
   // Icons for the four Features entries commented out below — uncomment
   // these together with those entries.
-  // FiGlobe,
-  // FiTrendingUp,
-  // FiCreditCard,
-  // FiShoppingBag,
+  FiGlobe,
   FiEdit3,
   FiPlayCircle
 } from 'react-icons/fi'
@@ -62,24 +59,34 @@ const FALLBACK_NAV_LINKS = [
   { label: 'For Business', to: '/business', external: true },
 ]
 
-// Icons live in code, not the database — the admin stores label + href only.
-// A route that has no icon here still renders, just without one.
-const ICON_BY_HREF = {
-  '/calling': <FiPhone />,
-  '/messaging': <FiMessageSquare />,
-  '/groups': <FiUsers />,
-  '/channels': <FiTv />,
-  '/ai': <FiZap />,
-  '/status': <FiRadio />,
-  '/security': <FiShield />,
-  '/plus': <FiStar />,
-  '/notes': <FiEdit3 />,
-  '/minis': <FiPlayCircle />,
-  '/news': <FiPlayCircle />,
+const getNavIcon = (row) => {
+  if (!row) return <FiMessageSquare />
+  const href = (row.href || row.to || '').toLowerCase()
+  const label = (row.label || '').toLowerCase()
+
+  if (label.includes('call') || href.includes('call') || href.includes('phone')) return <FiPhone />
+  if (label.includes('messag') || href.includes('messag') || href.includes('chat')) return <FiMessageSquare />
+  if (label.includes('group') || href.includes('group')) return <FiUsers />
+  if (label.includes('channel') || href.includes('channel')) return <FiTv />
+  if (label.includes('ai') || href.includes('ai')) return <FiZap />
+  if (label.includes('status') || href.includes('status')) return <FiRadio />
+  if (label.includes('secur') || href.includes('secur')) return <FiShield />
+  if (label.includes('plus') || href.includes('plus')) return <FiStar />
+  if (label.includes('note') || href.includes('note')) return <FiEdit3 />
+  if (label.includes('mini') || href.includes('mini')) return <FiPlayCircle />
+  if (label.includes('news') || href.includes('news')) return <FiGlobe />
+  if (label.includes('privac') || href.includes('privac')) return <FiShield />
+
+  return <FiMessageSquare />
 }
 
 // Admin navigation_items -> the shape this component already renders.
-const toNavItem = (row) => ({ label: row.label, to: row.href, icon: ICON_BY_HREF[row.href] })
+const toNavItem = (row) => ({
+  label: row.label,
+  to: row.href,
+  href: row.href,
+  icon: getNavIcon(row)
+})
 
 const SECTION_IDS = ['hero', 'web', 'devices', 'calls', 'privacy', 'groups', 'expression', 'business', 'features', 'download']
 
@@ -226,16 +233,23 @@ export function Navbar() {
                 // mode. These variables flip with the .dark class.
                 className="absolute left-0 top-full z-50 mt-2 w-60 max-h-[460px] overflow-y-auto rounded-2xl border border-line bg-surface p-2 shadow-float [scrollbar-width:thin]"
               >
-                {featureItems.map((item) => (
-                  <button
-                    key={item.label}
-                    onClick={() => go(item.to || item.href)}
-                    className="flex items-center gap-3 w-full rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold text-ink transition-colors hover:bg-surface-2 hover:text-brand-ink group"
-                  >
-                    <span className="text-base text-brand-strong group-hover:scale-110 transition-transform">{item.icon}</span>
-                    <span>{t(item.label)}</span>
-                  </button>
-                ))}
+                {featureItems.map((item) => {
+                  const itemActive = item.to ? isRouteActive(item.to) : isActive(item.href)
+                  return (
+                    <button
+                      key={item.label}
+                      onClick={() => go(item.to || item.href)}
+                      className={`flex items-center gap-3 w-full rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold transition-colors group ${
+                        itemActive
+                          ? 'bg-surface-2 text-brand-ink'
+                          : 'text-ink hover:bg-surface-2 hover:text-brand-ink'
+                      }`}
+                    >
+                      <span className="text-base text-brand-strong group-hover:scale-110 transition-transform">{item.icon}</span>
+                      <span>{t(item.label)}</span>
+                    </button>
+                  )
+                })}
               </motion.div>
             ) : null}
           </div>
@@ -294,16 +308,21 @@ export function Navbar() {
 
                 {mobileFeatures ? (
                   <div className="ml-3 space-y-1 border-l-2 border-brand/30 pl-3">
-                    {featureItems.map((item) => (
-                      <button
-                        key={item.label}
-                        onClick={() => go(item.to || item.href)}
-                        className="flex items-center gap-2 w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-body hover:bg-surface-2"
-                      >
-                        <span className="text-brand-strong">{item.icon}</span>
-                        <span>{t(item.label)}</span>
-                      </button>
-                    ))}
+                    {featureItems.map((item) => {
+                      const itemActive = item.to ? isRouteActive(item.to) : isActive(item.href)
+                      return (
+                        <button
+                          key={item.label}
+                          onClick={() => go(item.to || item.href)}
+                          className={`flex items-center gap-2 w-full rounded-lg px-3 py-2 text-left text-sm font-medium hover:bg-surface-2 ${
+                            itemActive ? 'bg-surface-2 text-brand-ink font-bold' : 'text-body'
+                          }`}
+                        >
+                          <span className="text-brand-strong">{item.icon}</span>
+                          <span>{t(item.label)}</span>
+                        </button>
+                      )
+                    })}
                   </div>
                 ) : null}
 

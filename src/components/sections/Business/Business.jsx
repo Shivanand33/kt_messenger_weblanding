@@ -15,11 +15,6 @@ export function Business() {
       description={t('Meet customers where they already are. Answer questions, share catalogs, and build trust with a business presence people instantly recognize.')}
       image={businessImage}
       imageAlt={t('A small business owner replying to customers')}
-      stats={[
-        { value: '2M+', label: t('Businesses on KT') },
-        { value: '1B+', label: t('Chats every day') },
-        { value: '3 min', label: t('Avg. reply time') },
-      ]}
       cta={<LinkArrow to="/business">{t('Explore KT Business')}</LinkArrow>}
       accent={
         <div className="absolute -bottom-4 left-5 flex items-center gap-2.5 rounded-2xl border border-line bg-surface/95 p-3 pr-5 shadow-card backdrop-blur sm:left-8">

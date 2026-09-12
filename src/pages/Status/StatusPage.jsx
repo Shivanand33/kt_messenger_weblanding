@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -33,8 +33,18 @@ import avatarFemale from '../../assets/images/avatar_female_1.png'
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 export function StatusPage() {
+  useSeo({
+    title: 'Status Updates & Stories Feature | KT Messenger App.',
+    description: 'Share moments, updates, and stories with KT Messenger Status. Enjoy a secure messaging experience with instant sharing and real-time connections.',
+    path: '/status',
+  })
+
+  useAdminSeo('status', '/status')
+
   const navigate = useNavigate()
   const { t } = useLanguage()
   const [activeStory, setActiveStory] = useState(0)
@@ -81,13 +91,6 @@ export function StatusPage() {
       desc: t('Share thoughts, quotes, and web hyperlinks with vibrant background colors and custom font styles.'),
       highlights: [t('Custom color gradient backgrounds'), t('Hyperlinked web URLs'), t('Rich font typography options')]
     }
-  ]
-
-  const metrics = [
-    { value: '24 Hours', label: t('Automatic Disappearing') },
-    { value: '100%', label: t('KT E2E Encrypted') },
-    { value: '60s', label: t('HD Video Clip Limit') },
-    { value: '30s', label: t('Voice Status Duration') }
   ]
 
   const statusUseCases = [
@@ -163,14 +166,11 @@ export function StatusPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiClock className="text-brand-strong" /> {t('24-Hour Disappearing Stories')}
               </div>
-              <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                {t('Share your everyday')} <br />
-                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  {t('moments with Status')}
-                </span>
+              <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+                {t('Share Your Moments With KT Messenger Status')}
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                {t('Share photos, HD videos, text, and 30-second voice notes that vanish after 24 hours. Protected by default end to end encryption.')}
+                {t('Stay connected by sharing updates, photos, and moments with your friends, family, and communities. KT Messenger Status makes communication more engaging with a simple and secure way to express yourself.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
@@ -243,20 +243,6 @@ export function StatusPage() {
                 </div>
               </div>
             </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* 2. STATS & METRICS BAR */}
-      <section className="border-y border-line bg-surface py-10">
-        <Container>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {metrics.map((m) => (
-              <div key={m.label} className="text-center">
-                <p className="text-3xl font-extrabold text-brand-strong lg:text-4xl">{m.value}</p>
-                <p className="mt-1 text-xs font-semibold tracking-wide text-body uppercase">{m.label}</p>
-              </div>
-            ))}
           </div>
         </Container>
       </section>
@@ -443,7 +429,7 @@ export function StatusPage() {
             <Reveal key={card.title} from="up">
               <div className="group overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all hover:-translate-y-1">
                 <div className="h-44 overflow-hidden bg-brand-soft">
-                  <img src={img(card.img)} alt={card.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={img(card.img)} alt={imgAlt(card.img, card.title)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-ink">{card.title}</h3>

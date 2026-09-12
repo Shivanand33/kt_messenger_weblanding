@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -36,8 +36,20 @@ import avatarFemale from '../../assets/images/avatar_female_1.png'
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 export function GroupsPage() {
+  useSeo({
+    title: 'Group Chat App & Messaging Platform | KT Messenger.',
+    description: 'KT Messenger builds private group chat solutions that help teams, communities, friends, and family collaborate and discuss group chat topics.',
+    path: '/groups',
+  })
+
+  // Per-page SEO from admin (Website Content -> seo.groups).
+  // No block configured = unchanged behaviour.
+  useAdminSeo('groups', '/groups')
+
   const navigate = useNavigate()
   const { t } = useLanguage()
   const [selectedOption, setSelectedOption] = useState(0)
@@ -93,13 +105,6 @@ export function GroupsPage() {
       desc: t('Keep conversation threads organized with inline direct replies and notify specific members with @mentions.'),
       highlights: [t('Threaded conversation view'), t('@mention notification bypass'), t('In chat media search')]
     }
-  ]
-
-  const metrics = [
-    { value: '1,024', label: t('Max Group Members') },
-    { value: '32', label: t('Live Voice & Video Callers') },
-    { value: '50', label: t('Sub Groups per Community') },
-    { value: '100%', label: t('KT E2E Encrypted') }
   ]
 
   const useCases = [
@@ -181,14 +186,14 @@ export function GroupsPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiUsers className="text-brand-strong" /> {t('Community & Group Collaboration')}
               </div>
-              <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                {t('Connect and get more')} <br />
+              <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+                {t('Connect, Collaborate, and Build')} <br />
                 <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  {t('done together with groups')}
+                  {t('Communities With KT Messenger Groups')}
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                {t('From daily family catchups to workplace teams, KT group messaging keeps all your conversations private, organized, and interactive.')}
+                {t('KT Messenger Groups makes it easy to bring people together and keeps discussions organized. Take advantage of personal and professional group messaging to easily stay in touch with everyone.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
@@ -365,20 +370,6 @@ export function GroupsPage() {
                 </div>
               </div>
             </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* 2. STATS & METRICS BAR */}
-      <section className="border-y border-line bg-surface py-10">
-        <Container>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {metrics.map((m) => (
-              <div key={m.label} className="text-center">
-                <p className="text-3xl font-extrabold text-brand-strong lg:text-4xl">{m.value}</p>
-                <p className="mt-1 text-xs font-semibold tracking-wide text-body uppercase">{m.label}</p>
-              </div>
-            ))}
           </div>
         </Container>
       </section>
@@ -571,7 +562,7 @@ export function GroupsPage() {
             <Reveal key={card.title} from="up">
               <div className="group overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all hover:-translate-y-1">
                 <div className="h-44 overflow-hidden bg-brand-soft">
-                  <img src={img(card.img)} alt={card.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={img(card.img)} alt={imgAlt(card.img, card.title)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-ink">{card.title}</h3>

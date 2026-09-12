@@ -238,3 +238,22 @@ export const listBusinessProducts = asyncHandler(async (req, res) => {
   }
   return ok(res, map)
 })
+
+// GET /api/jobs  — active job postings.
+export const listJobs = asyncHandler(async (req, res) => {
+  const where = publishedSimple({ locale: req.query.locale || undefined })
+  if (req.query.department) where.department = String(req.query.department)
+  const rows = await prisma.jobOpening.findMany({
+    where,
+    orderBy: { order: 'asc' },
+  })
+  return ok(res, rows.map((j) => ({
+    id: j.id,
+    title: j.title,
+    department: j.department,
+    location: j.location,
+    type: j.type,
+    experience: j.experience,
+    description: j.description,
+  })))
+})

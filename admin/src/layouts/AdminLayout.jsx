@@ -13,6 +13,8 @@ const NAV = [
   {
     group: 'Content',
     items: [
+      { to: '/about-admin', label: 'About Page', icon: 'content', perm: null },
+      { to: '/careers-admin', label: 'Careers Page', icon: 'subscribers', perm: null },
       { to: '/blogs', label: 'Blogs', icon: 'blogs', perm: 'blog:read' },
       { to: '/blog-categories', label: 'Blog Categories', icon: 'categories', perm: 'blog_category:read' },
       { to: '/blog-tags', label: 'Blog Tags', icon: 'tags', perm: 'blog_tag:read' },

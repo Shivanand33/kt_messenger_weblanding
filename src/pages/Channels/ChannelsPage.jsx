@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -32,8 +32,18 @@ import newsImg from '../../assets/images/multidevice.jpg'
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 export function ChannelsPage() {
+  useSeo({
+    title: 'Broadcast Channels & Community Updates | KT Messenger.',
+    description: 'KT Messenger Channels help you share updates, announcements, and content with communities. Build connections through secure broadcast messaging and engagement.',
+    path: '/channels',
+  })
+
+  useAdminSeo('channels', '/channels')
+
   const navigate = useNavigate()
   const { t } = useLanguage()
   const [followerCount, setFollowerCount] = useState(148500)
@@ -89,13 +99,6 @@ export function ChannelsPage() {
       desc: t('Assign co admins with granular posting permissions, post scheduling, and detailed reach analytics.'),
       highlights: [t('Multiple posting admins'), t('Post view counter analytics'), t('Automated link previews')]
     }
-  ]
-
-  const metrics = [
-    { value: t('Unlimited'), label: t('Subscriber Capacity') },
-    { value: '100%', label: t('Subscriber Privacy Shield') },
-    { value: '50+', label: t('Channel Categories') },
-    { value: '< 1s', label: t('Broadcast Push Speed') }
   ]
 
   const featuredChannels = [
@@ -184,14 +187,11 @@ export function ChannelsPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiRadio className="text-brand-strong" /> {t('Private Broadcast Channels')}
               </div>
-              <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                {t('Stay updated on')} <br />
-                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  {t('what matters most to you')}
-                </span>
+              <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+                {t('Create Channels and Share Updates With Your Community')}
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                {t('Follow your favorite creators, sports teams, news outlets, and organizations for private updates directly inside KT Messenger.')}
+                {t('Share updates, announcements, and content with your audience through KT Messenger Channels. Build communities, engage followers, and communicate easily with a secure messaging platform.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
@@ -258,20 +258,6 @@ export function ChannelsPage() {
                 </div>
               </div>
             </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* 2. STATS & METRICS BAR */}
-      <section className="border-y border-line bg-surface py-10">
-        <Container>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {metrics.map((m) => (
-              <div key={m.label} className="text-center">
-                <p className="text-3xl font-extrabold text-brand-strong lg:text-4xl">{m.value}</p>
-                <p className="mt-1 text-xs font-semibold tracking-wide text-body uppercase">{m.label}</p>
-              </div>
-            ))}
           </div>
         </Container>
       </section>
@@ -459,7 +445,7 @@ export function ChannelsPage() {
             <Reveal key={card.name} from="up">
               <div className="group overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all hover:-translate-y-1">
                 <div className="h-44 overflow-hidden bg-brand-soft">
-                  <img src={img(card.img)} alt={card.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={img(card.img)} alt={imgAlt(card.img, card.name)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
                   <span className="text-[10px] font-bold text-brand-ink uppercase tracking-wider">{card.category}</span>

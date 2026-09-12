@@ -41,8 +41,15 @@ import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 export function MessagingPage() {
+  useSeo({
+    title: 'Free Video Calling App & Secure Messaging | KT Messenger.',
+    description: 'KT Messenger is a free video calling app and secure messaging platform for private chats, voice calls, real-time messaging, and seamless communication across devices.',
+    path: '/messaging',
+  })
+
   // Per-page SEO from admin (Website Content -> seo.messaging).
   // No block configured = unchanged behaviour.
   useAdminSeo('messaging', '/messaging')
@@ -121,13 +128,6 @@ export function MessagingPage() {
     }
   ]
 
-  const metrics = [
-    { value: '100B+', label: t('Daily Messages Delivered') },
-    { value: '< 50ms', label: t('Average Delivery Latency') },
-    { value: '2 GB', label: t('Max File Attachment Limit') },
-    { value: '100%', label: t('KT E2E Encrypted') }
-  ]
-
   const comparisonTable = [
     { feature: t('End to End Encryption'), kt: t('Default (100%)'), sms: t('None (Plain Text)'), apps: t('Partial / Opt in') },
     { feature: t('File Sharing Limit'), kt: t('Up to 2 GB'), sms: t('3.5 MB Max'), apps: t('100 MB Limit') },
@@ -139,28 +139,28 @@ export function MessagingPage() {
 
   const localFaqs = [
     {
-      q: t('Are personal messages on KT encrypted by default?'),
-      a: t('Yes! Every 1-on-1 and group chat on KT Messenger is end to end encrypted by default using the industry gold KT Encryption Protocol. No one outside the chat, not even KT, can read your messages.')
+      q: t('What is KT Messenger?'),
+      a: t('KT Messenger is a modern communication feature that allows users to make voice calls, video calls, and send instant messages from one platform. The KT Messenger app works as an all-in-one instant messaging app designed for fast, private, and reliable communication.')
     },
     {
-      q: t('What is the maximum file size I can send in a message?'),
-      a: t('You can send files, documents, zip archives, and uncompressed media up to 2GB per attachment directly inside any chat thread.')
+      q: t('Is KT Messenger a free messaging and calling app?'),
+      a: t('Yes, KT Messenger is a free messaging app that allows users to send messages and make voice or video calls through an internet connection. As a free instant messaging app, it helps users stay connected without paying traditional calling charges.')
     },
     {
-      q: t('How does live in chat translation work?'),
-      a: t('Simply press and hold any message in a chat and tap "Translate". You can select your preferred target language, and KT will render the translation inline.')
+      q: t('Is KT Messenger a secure messaging app?'),
+      a: t('Yes, KT Messenger is designed as a secure instant messaging app that focuses on private and protected communication. Users looking for a safe messaging app can use KT Messenger to enjoy secure conversations with better privacy.')
     },
     {
-      q: t('Can I edit a message after sending it?'),
-      a: t('Yes, you can edit sent messages within 15 minutes of sending. Simply long press the message and select "Edit". Edited messages display an "Edited" badge for transparency.')
+      q: t('Can I make private chats using KT Messenger?'),
+      a: t('Yes, KT Messenger works as a private chat app that allows users to communicate securely with individuals and groups. It is a suitable app for private chat where users can exchange messages and stay connected.')
     },
     {
-      q: t('How do disappearing messages work?'),
-      a: t('When enabled for a chat, messages automatically erase for both sender and recipient after the chosen duration (24 hours, 7 days, or 90 days).')
+      q: t('Does KT Messenger support real-time messaging?'),
+      a: t('Yes, KT Messenger provides a real time messaging app experience where users can instantly send and receive messages. It works as an online messaging platform that helps people communicate quickly from anywhere.')
     },
     {
-      q: t('Can I lock specific chats behind biometric protection?'),
-      a: t('Yes! Using Chat Lock, you can move sensitive conversations into a protected folder accessible only via FaceID, Fingerprint, or a custom secret passcode.')
+      q: t('Can I use KT Messenger for voice and video calls?'),
+      a: t('Yes, KT Messenger combines messaging and calling features in one platform. Users can enjoy free texting app and calling features, making it easier to chat, share updates, and connect through voice or video calls.')
     }
   ]
 
@@ -184,14 +184,14 @@ export function MessagingPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiMessageSquare className="text-brand-strong" /> {t('Modern Messaging Platform')}
               </div>
-              <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                {t('Connect your way with')} <br />
+              <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+                {t('Private Messaging App For')} <br />
                 <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  {t('lightning fast messaging')}
+                  {t('Secure Conversations.')}
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                {t('Expressive, private, and seamlessly synced across all your devices. Send high def media, voice notes, and large files protected by default end to end encryption.')}
+                {t('Connect privately with KT Messenger, a secure private messaging app built for personal conversations. Send instant messages, photos, videos, files, and voice notes while staying connected across your devices.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
@@ -222,20 +222,6 @@ export function MessagingPage() {
                 showEncryptionNote={false}
               />
             </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* 2. STATS & METRICS BAR */}
-      <section className="border-y border-line bg-surface py-10">
-        <Container>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {metrics.map((m) => (
-              <div key={m.label} className="text-center">
-                <p className="text-3xl font-extrabold text-brand-strong lg:text-4xl">{m.value}</p>
-                <p className="mt-1 text-xs font-semibold tracking-wide text-body uppercase">{m.label}</p>
-              </div>
-            ))}
           </div>
         </Container>
       </section>

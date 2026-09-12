@@ -28,6 +28,7 @@ r.get('/downloads', content.getDownloads)
 r.get('/news', content.listNews)
 r.get('/marketplace-products', content.listMarketplaceProducts)
 r.get('/business-products', content.listBusinessProducts)
+r.get('/jobs', content.listJobs)
 r.get('/locales', content.listLocales)
 
 // ── Navigation / Footer / Content blocks ──────────────

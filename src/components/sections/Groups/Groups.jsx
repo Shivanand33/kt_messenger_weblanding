@@ -20,13 +20,13 @@ export function Groups() {
       id="groups"
       eyebrow={t('Communities')}
       eyebrowIcon={<FiUsers />}
-      title={t('Bring your whole circle together.')}
-      description={t('From close friends to big communities, keep everyone in sync with shared chats, events, and updates that never feel noisy.')}
+      title={t('Build Communities And Stay Connected')}
+      description={t('Communication is better when people can come together. KT Messenger helps users create groups and communities where they can share ideas, updates, and important information.')}
       image={groupsImage}
       imageAlt={t('A group of friends laughing together')}
       bullets={[
-        { icon: <FiUsers />, title: t('Groups & Communities'), text: t('Organize people into calm, focused spaces.') },
-        { icon: <FiBarChart2 />, title: t('Polls & events'), text: t('Decide together and plan it all in a single tap.') },
+        { icon: <FiUsers />, title: t('Create Meaningful Connections'), text: t('Use communities to share updates, collaborate with groups, exchange ideas, and build stronger connections.') },
+        { icon: <FiBarChart2 />, title: t('Groups & Communities'), text: t('Organize people into calm, focused spaces for team collaboration and shared interests.') },
       ]}
       cta={<LinkArrow to="/groups">{t('Discover Communities')}</LinkArrow>}
       accent={

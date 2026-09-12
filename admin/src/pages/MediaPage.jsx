@@ -76,11 +76,21 @@ export function MediaPage() {
     }
   }
 
+  const updateAlt = async (id, alt) => {
+    try {
+      await api.patch(`/admin/media/${id}`, { alt })
+      toast.success('ALT text saved')
+      setRows((current) => current.map((item) => (item.id === id ? { ...item, alt } : item)))
+    } catch (e) {
+      toast.error(errorMessage(e, 'Failed to save ALT text'))
+    }
+  }
+
   return (
     <div>
       <PageHeader
         title="Media Library"
-        subtitle="Upload and manage images used across the website."
+        subtitle="Upload and manage images used across the website, including ALT Text for SEO."
         actions={canWrite ? (
           <>
             <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={onUpload} />
@@ -95,7 +105,7 @@ export function MediaPage() {
         <div className="card"><Empty title="No media yet" hint="Upload your first image." /></div>
       ) : (
         <>
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))' }}>
+          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}>
             {rows.map((m) => (
               <div key={m.id} className="card" style={{ overflow: 'hidden' }}>
                 <div style={{ height: 130, background: 'var(--surface-2)', display: 'grid', placeItems: 'center', overflow: 'hidden' }}>
@@ -103,7 +113,17 @@ export function MediaPage() {
                 </div>
                 <div style={{ padding: 10 }}>
                   <div className="t-title" style={{ fontSize: 12.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{m.originalName}</div>
-                  <div style={{ fontSize: 11.5, color: 'var(--muted)', margin: '2px 0 8px' }}>{prettySize(m.size)}</div>
+                  <div style={{ fontSize: 11.5, color: 'var(--muted)', margin: '2px 0 6px' }}>{prettySize(m.size)}</div>
+                  <input
+                    className="input"
+                    defaultValue={m.alt || ''}
+                    onBlur={(e) => {
+                      if (e.target.value !== (m.alt || '')) updateAlt(m.id, e.target.value)
+                    }}
+                    placeholder="ALT Text (SEO keyword)..."
+                    style={{ fontSize: 11.5, marginBottom: 8, width: '100%', padding: '4px 8px' }}
+                    disabled={!canWrite}
+                  />
                   <div style={{ display: 'flex', gap: 6 }}>
                     <button className="btn ghost sm" style={{ flex: 1 }} onClick={() => copyUrl(m.url)}>Copy URL</button>
                     {canDelete ? <button className="icon-btn danger" onClick={() => setDeleting(m)}>🗑️</button> : null}

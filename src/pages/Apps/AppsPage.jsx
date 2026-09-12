@@ -103,7 +103,7 @@ const features = [
   },
   {
     title: 'KT Business Suite',
-    desc: 'Reach 2.5B+ customers with product catalogs, AI sales bots, and cloud API integrations.',
+    desc: 'Reach customers globally with product catalogs, AI sales bots, and cloud API integrations.',
     image: businessImg,
     to: '/business'
   }

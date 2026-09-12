@@ -206,3 +206,16 @@ export const businessProductSchema = z.object({
   locale: optStr(12),
 })
 export const businessProductUpdateSchema = businessProductSchema.partial()
+
+export const jobOpeningSchema = z.object({
+  title: str(200).min(1),
+  department: str(100).min(1),
+  location: str(100).optional().default('Remote'),
+  type: str(100).optional().default('Full-time'),
+  experience: optStr(100),
+  description: z.string().optional().default(''),
+  status: contentStatus.optional(),
+  order: z.coerce.number().int().optional(),
+  locale: localeStr.optional(),
+})
+export const jobOpeningUpdateSchema = jobOpeningSchema.partial()

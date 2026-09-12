@@ -1,4 +1,4 @@
-import { img } from '../../../utils/imageOverrides'
+import { img, imgAlt } from '../../../utils/imageOverrides'
 import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Container } from '../../common/Container/Container'
@@ -13,9 +13,9 @@ import groupAvatar from '../../../assets/images/group.jpg'
 
 const chips = [
   { text: 'Hello!', avatar: female1Avatar, side: 'received', pos: 'left-[7%] top-[12%]', vis: 'hidden sm:flex' },
-  { text: 'Hola!', avatar: male1Avatar, side: 'sent', pos: 'left-[24%] top-[26%]', vis: 'hidden lg:flex' },
-  { text: 'Ciao!', avatar: nadiaAvatar, side: 'received', pos: 'right-[22%] top-[11%]', vis: 'hidden lg:flex' },
-  { text: 'Hallo!', avatar: privateAvatar, side: 'sent', pos: 'right-[6%] top-[24%]', vis: 'hidden sm:flex' },
+  { text: 'Hola!', avatar: male1Avatar, side: 'sent', pos: 'left-[6%] top-[30%]', vis: 'hidden lg:flex' },
+  { text: 'Ciao!', avatar: nadiaAvatar, side: 'received', pos: 'right-[8%] top-[12%]', vis: 'hidden lg:flex' },
+  { text: 'Hallo!', avatar: privateAvatar, side: 'sent', pos: 'right-[6%] top-[28%]', vis: 'hidden sm:flex' },
   { text: 'Bonjour', avatar: businessAvatar, side: 'sent', pos: 'left-[6%] bottom-[16%]', vis: 'hidden sm:flex' },
   { text: 'Olá', avatar: groupAvatar, side: 'received', pos: 'right-[8%] bottom-[18%]', vis: 'hidden sm:flex' },
   { text: '안녕', avatar: female1Avatar, side: 'received', pos: 'left-[30%] bottom-[6%]', vis: 'hidden lg:flex' },
@@ -46,7 +46,7 @@ export function Statement() {
           >
             <img
               src={img(chip.avatar)}
-              alt=""
+              alt={imgAlt(chip.avatar, "private chat app user avatar")}
               className="h-10 w-10 shrink-0 rounded-full border-2 border-white object-cover shadow-soft"
             />
             <span
@@ -64,9 +64,15 @@ export function Statement() {
 
       <Container className="pointer-events-none relative z-10">
         <Reveal from="up" className="mx-auto max-w-4xl text-center">
-          <p className="text-[1.7rem] font-bold leading-[1.3] tracking-tight text-ink sm:text-[2.2rem] lg:text-[2.9rem] lg:leading-[1.28]">
-            {t('Great conversations feel effortless. KT Messenger stays out of the way so a quick hello, a long catch up, or a late night call all feel')}{' '}
-            <span className="text-brand-ink">{t('close, natural, and completely your own.')}</span>
+          <h2 className="text-[1.8rem] font-bold leading-[1.3] tracking-tight text-ink sm:text-[2.3rem] lg:text-[2.8rem] lg:leading-[1.28]">
+            {t('Why Choose KT Messenger?')}
+          </h2>
+          <p className="mt-4 text-[1.4rem] font-semibold leading-[1.35] text-ink sm:text-[1.8rem] lg:text-[2.1rem]">
+            {t('Communication should be simple, private, and accessible.')}{' '}
+            <span className="text-brand-ink">{t('KT Messenger brings everything you need to stay connected into one powerful platform.')}</span>
+          </p>
+          <p className="mt-4 text-base sm:text-lg text-body max-w-3xl mx-auto">
+            {t('Unlike traditional messaging apps, KT Messenger combines secure messaging, calling, communities, and AI powered features to create a complete digital communication experience.')}
           </p>
         </Reveal>
       </Container>

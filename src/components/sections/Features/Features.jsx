@@ -52,10 +52,10 @@ export function Features() {
     <Section id="features">
       <SectionHeading
         align="center"
-        eyebrow={t('Everything you need')}
+        eyebrow={t('Built For Everyone')}
         eyebrowIcon={<FiStar />}
-        title={t('One app for every kind of conversation.')}
-        description={t('Thoughtfully designed, endlessly reliable, and private from the very first message.')}
+        title={t('Everything You Need In One Communication Platform')}
+        description={t('KT Messenger combines messaging, calling, AI, and communities into one complete ecosystem. Instead of using multiple platforms, enjoy a connected communication experience designed for personal, community, and professional communication.')}
         className="mx-auto max-w-2xl"
       />
 

@@ -25,6 +25,8 @@ import { PlusLoopVideo } from '../../components/common/VideoAnimations/PlusLoopV
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 function CrownIcon({ className = 'h-4 w-4' }) {
   return (
@@ -35,6 +37,14 @@ function CrownIcon({ className = 'h-4 w-4' }) {
 }
 
 export function KtPlusPage() {
+  useSeo({
+    title: 'KT Messenger Plus | Advanced Messaging & Premium Features.',
+    description: 'Upgrade your communication with KT Messenger Plus. Enjoy advanced messaging, secure chats, enhanced privacy, smart features, and seamless connections.',
+    path: '/plus',
+  })
+
+  useAdminSeo('plus', '/plus')
+
   const navigate = useNavigate()
   const { t } = useLanguage()
   const [selectedTheme, setSelectedTheme] = useState('Midnight Sapphire')
@@ -85,13 +95,6 @@ export function KtPlusPage() {
     }
   ]
 
-  const metrics = [
-    { value: '10 GB', label: t('Max File Attachment Limit') },
-    { value: '5', label: t('Concurrent Accounts') },
-    { value: '50+', label: t('Exclusive UI Themes') },
-    { value: 'VIP 24/7', label: t('Priority Customer Support') }
-  ]
-
   const plusPerks = [
     {
       title: t('Custom App Launcher Icons'),
@@ -126,28 +129,24 @@ export function KtPlusPage() {
 
   const localFaqs = [
     {
-      q: t('What is KT Plus?'),
-      a: t('KT Plus is our premium power user subscription that unlocks advanced theme customization, 10GB file transfers, 5-account switching, stealth privacy settings, and priority AI.')
+      q: t('What is KT Messenger Plus?'),
+      a: t('KT Messenger Plus is an upgraded version of the KT Messenger app that gives users a better messaging app experience with enhanced features, smoother communication, and more ways to stay connected with people.')
     },
     {
-      q: t('Does KT Plus compromise end to end encryption?'),
-      a: t('Not at all. KT Plus operates on the exact same KT Encryption Protocol engine as the standard KT Messenger app. Your chats remain 100% encrypted and private.')
+      q: t('Why should I use KT Messenger Plus?'),
+      a: t('KT Messenger Plus helps you communicate more easily with improved messaging features, secure conversations, and smart tools. It is designed for users who want a simple yet powerful smart messaging app.')
     },
     {
-      q: t('Can I use KT Plus across multiple devices?'),
-      a: t('Yes! One KT Plus subscription activates premium features across all your connected devices including iOS, Android, Mac, Windows, and Web.')
+      q: t('What extra features do I get with KT Messenger Plus?'),
+      a: t('KT Messenger Plus offers advanced communication features that improve your chatting experience. You can enjoy smarter conversations, better connectivity, and additional tools that make everyday messaging easier.')
     },
     {
-      q: t('How does the Multi Account Switcher work?'),
-      a: t('You can add up to 5 phone numbers or profiles inside the app settings and switch between them instantly with a single tap without logging out.')
+      q: t('Is KT Messenger Plus safe for private chats?'),
+      a: t('Yes, KT Messenger Plus focuses on privacy and secure communication. It works as a secure messaging app where you can enjoy private conversations with confidence.')
     },
     {
-      q: t('What is Stealth Privacy?'),
-      a: t('Stealth Privacy allows you to hide your online status, freeze your last seen timestamp, read incoming messages without triggering blue receipts, and view messages edited or deleted by senders.')
-    },
-    {
-      q: t('Can I cancel my subscription anytime?'),
-      a: t('Yes, you can cancel your subscription at any time with one click from app settings. You retain Plus features until the end of your billing period.')
+      q: t('Why choose KT Messenger Plus in 2026?'),
+      a: t('KT Messenger Plus is designed for users who want a modern KT Messenger app experience with smarter features, secure communication, and improved messaging tools. It can be a strong choice for users looking for the best messaging app for Android 2026.')
     }
   ]
 
@@ -171,14 +170,11 @@ export function KtPlusPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <CrownIcon className="text-brand-strong" /> {t('KT Plus Premium Suite')}
               </div>
-              <h1 className="mt-4 text-[2.8rem] font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-[4.5rem]">
-                {t('Unlock Ultimate Power with')} <br />
-                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  {t('KT Plus Subscription')}
-                </span>
+              <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+                {t('More Features. More Privacy. More Ways to Connect.')}
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
-                {t('Elevate your daily messaging experience with custom themes, 10GB file transfers, stealth privacy controls, and priority Pro AI access.')}
+                {t('KT Messenger Plus enhances your everyday communication with smarter chats, improved privacy controls, and powerful messaging tools that help you stay connected easily.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={() => navigate('/apps')}>
@@ -240,20 +236,6 @@ export function KtPlusPage() {
                 </div>
               </div>
             </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* 2. STATS & METRICS BAR */}
-      <section className="border-y border-line bg-surface py-10">
-        <Container>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {metrics.map((m) => (
-              <div key={m.label} className="text-center">
-                <p className="text-3xl font-extrabold text-brand-strong lg:text-4xl">{m.value}</p>
-                <p className="mt-1 text-xs font-semibold tracking-wide text-body uppercase">{m.label}</p>
-              </div>
-            ))}
           </div>
         </Container>
       </section>

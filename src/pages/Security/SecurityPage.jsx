@@ -29,8 +29,18 @@ import { SecurityLoopVideo } from '../../components/common/VideoAnimations/Secur
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 export function SecurityPage() {
+  useSeo({
+    title: 'KT Messenger | Secure Messaging App End-to-End Encryption.',
+    description: 'KT Messenger provides secure messaging with end-to-end encryption, private chats, protected calls, and advanced privacy features to keep conversations safe.',
+    path: '/security',
+  })
+
+  useAdminSeo('security', '/security')
+
   const navigate = useNavigate()
   const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState(0)
@@ -58,7 +68,7 @@ export function SecurityPage() {
     {
       title: t('Authentication & OTP Verification'),
       icon: <FiKey className="text-xl" />,
-      desc: t('Deliver 1-time passcodes (OTP), 2FA login verification codes, and security alerts to over 2.5B users with 99.9% delivery rate and zero SMS roaming fees.'),
+      desc: t('Deliver 1-time passcodes (OTP), 2FA login verification codes, and security alerts with zero SMS roaming fees.'),
       highlights: [t('1-Tap Autofill Passcode Buttons'), t('KT 256-bit encrypted delivery'), t('60% cheaper than traditional SMS')]
     },
     {
@@ -85,13 +95,6 @@ export function SecurityPage() {
       desc: t('Secure your cloud chat archives with a custom password or 64-digit encryption key so cloud providers cannot access your chats.'),
       highlights: [t('64-digit custom encryption key'), t('Password protected cloud archives'), t('Zero knowledge cloud restore')]
     }
-  ]
-
-  const metrics = [
-    { value: '99.9%', label: t('OTP Instant Delivery Rate') },
-    { value: '< 2 sec', label: t('Global OTP Speed') },
-    { value: '-60%', label: t('SMS Authentication Cost') },
-    { value: '256-bit', label: t('KT Encryption') }
   ]
 
   const securityPillars = [
@@ -164,11 +167,11 @@ export function SecurityPage() {
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink border border-brand-strong/20 mb-4">
                 <FiShield className="text-brand-strong" /> {t('Security & Authentication API')}
               </div>
-              <h1 className="text-4xl font-extrabold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-                {t('Secure Authentication & E2E Encryption')}
+              <h1 className="text-2xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-[2.75rem] leading-[1.12]">
+                {t('Your Privacy Comes First With Secure Messaging')}
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-body max-w-xl">
-                {t('Deliver 1-tap OTP verification passcodes, account login alerts, and KT 256-bit encrypted security messages at scale.')}
+                {t('KT Messenger keeps your conversations private with end-to-end encryption, secure chats, and protected communication. Send messages, make calls, and connect confidently knowing your conversations stay between you and the people you choose.')}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
@@ -239,22 +242,6 @@ export function SecurityPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* 3. METRICS COUNTER BAR */}
-      <section className="bg-cream py-12 border-b border-line dark:bg-surface">
-        <Container>
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 text-center">
-            {metrics.map((m, i) => (
-              <Reveal key={i} from="up" delay={i * 0.05}>
-                <div className="p-4 rounded-2xl bg-surface border border-line">
-                  <div className="text-3xl font-extrabold text-brand-strong">{m.value}</div>
-                  <div className="text-xs font-bold text-body mt-1">{m.label}</div>
-                </div>
-              </Reveal>
-            ))}
           </div>
         </Container>
       </section>

@@ -17,6 +17,7 @@ export function PageHero({
   chips,
   children,
   id = 'overview',
+  titleTag: TitleTag = 'h1',
 }) {
   const { t } = useLanguage()
   return (
@@ -41,9 +42,9 @@ export function PageHero({
                 </span>
               ) : null}
 
-              <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-ink dark:text-white sm:text-6xl">
+              <TitleTag className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-ink dark:text-white sm:text-6xl">
                 {t(title)} {highlight ? <span className="text-brand-strong dark:text-sky-400">{t(highlight)}</span> : null}
-              </h1>
+              </TitleTag>
 
               {description ? (
                 <p className="mt-6 max-w-xl text-base leading-relaxed text-body dark:text-slate-300 sm:text-lg">{t(description)}</p>

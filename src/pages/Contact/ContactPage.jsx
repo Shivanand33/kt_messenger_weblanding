@@ -24,7 +24,6 @@ import { Section } from '../../components/common/Section/Section'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Button } from '../../components/common/Button/Button'
 import { PageHero } from '../../components/feature/PageHero'
-import { PageNav } from '../../components/feature/PageNav'
 import { SectionHead } from '../../components/feature/SectionHead'
 import { FaqAccordion } from '../../components/feature/FaqAccordion'
 import { CtaBand } from '../../components/feature/CtaBand'
@@ -38,9 +37,7 @@ import { useAdminSeo } from '../../hooks/useAdminSeo'
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', icon: <FiCompass /> },
   { id: 'getintouch', label: 'Get in touch', icon: <FiMail /> },
-  { id: 'reasons', label: 'Pick a team', icon: <FiUsers /> },
   { id: 'form', label: 'Send a message', icon: <FiSend /> },
-  { id: 'response', label: 'Response times', icon: <FiClock /> },
   { id: 'faq', label: 'FAQ', icon: <FiMessageSquare /> },
 ]
 
@@ -346,10 +343,10 @@ export function ContactPage() {
         description={t('Pick the team that fits, tell us what is going on, and a person will read it. We publish our response times below and hold ourselves to them.')}
         actions={
           <>
-            <Button size="lg" variant="white" onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button size="lg" variant="primary" onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}>
               {t('Send a message')} <FiSend />
             </Button>
-            <Button size="lg" variant="onDark" onClick={() => { navigate('/help'); window.scrollTo(0, 0) }}>
+            <Button size="lg" variant="secondary" onClick={() => { navigate('/help'); window.scrollTo(0, 0) }}>
               {t('Try the Help Center')} <FiChevronRight />
             </Button>
           </>
@@ -360,8 +357,10 @@ export function ContactPage() {
           { icon: <FiGlobe />, label: t('6 offices, 5 timezones') },
         ]}
         aside={
-          <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur-xl sm:p-8">
-            <span className="text-[11px] font-black uppercase tracking-[0.16em] text-sky-300">{t('Before you write')}</span>
+          <div className="rounded-[28px] border border-line bg-surface p-6 shadow-float sm:p-8 dark:bg-slate-900/90 dark:border-white/15">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3.5 py-1 text-[11px] font-black uppercase tracking-[0.14em] text-brand-ink dark:bg-sky-500/10 dark:text-sky-300 border border-brand-strong/20 dark:border-sky-400/30">
+              {t('Before you write')}
+            </span>
             <ul className="mt-5 space-y-4">
               {[
                 { icon: <FiHelpCircle />, text: 'Account problems are usually solved faster in the Help Center.' },
@@ -369,20 +368,20 @@ export function ContactPage() {
                 { icon: <FiImage />, text: 'Logos and press assets are already in the Brand Center.' },
                 { icon: <FiBriefcase />, text: 'Job applications go through the Careers page, not this form.' },
               ].map((item) => (
-                <li key={item.text} className="flex items-start gap-3 text-sm leading-relaxed text-slate-300">
-                  <span className="mt-0.5 shrink-0 text-sky-400">{item.icon}</span>
-                  {t(item.text)}
+                <li key={item.text} className="flex items-start gap-3.5 text-sm font-semibold leading-relaxed text-ink dark:text-slate-200">
+                  <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand-strong dark:bg-sky-400/15 dark:text-sky-300 text-sm">
+                    {item.icon}
+                  </span>
+                  <span>{t(item.text)}</span>
                 </li>
               ))}
             </ul>
-            <p className="mt-6 border-t border-white/10 pt-5 text-[11px] leading-relaxed text-slate-400">
+            <p className="mt-6 border-t border-line dark:border-white/10 pt-4 text-xs font-medium leading-relaxed text-muted dark:text-slate-400">
               {t('We do not offer phone support. Written support keeps a record both sides can refer back to.')}
             </p>
           </div>
         }
       />
-
-      <PageNav items={NAV_ITEMS} />
 
       {/* ---------------------------------------------------------------- */}
       {/* GET IN TOUCH — quick support + feedback, side by side             */}
@@ -650,50 +649,6 @@ export function ContactPage() {
         </div>
       </Section>
 
-      {/* TOPICS */}
-      <Section id="reasons" className="scroll-mt-36 bg-surface">
-        <SectionHead
-          eyebrow={t('Pick a team')}
-          title={t('Routing matters more than wording')}
-          description={t('Choosing the right team is what gets you a specialist instead of a hand off. Your selection carries into the form below.')}
-        />
-
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {TOPICS.map((item, index) => {
-            const active = topic === item.id
-            return (
-              <Reveal key={item.id} from="up" delay={Math.min(index * 0.05, 0.25)} className="h-full">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setTopic(item.id)
-                    document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })
-                  }}
-                  aria-pressed={active}
-                  className={`group flex h-full w-full flex-col rounded-[24px] border p-6 text-left shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-card ${
-                    active ? 'border-brand-strong bg-brand-soft' : 'border-line bg-cream hover:border-brand/35 dark:bg-cream-2'
-                  }`}
-                >
-                  <span className="flex items-start justify-between gap-3">
-                    <span className={`grid h-12 w-12 place-items-center rounded-2xl text-xl ${active ? 'bg-brand-strong text-white' : 'bg-brand-soft text-brand-ink'}`}>
-                      {item.icon}
-                    </span>
-                    {active ? <FiCheckCircle className="text-lg text-brand-strong" /> : null}
-                  </span>
-
-                  <span className="mt-5 text-base font-extrabold text-ink">{t(item.title)}</span>
-                  <span className="mt-2 flex-1 text-sm leading-relaxed text-body">{t(item.desc)}</span>
-
-                  <span className="mt-5 flex items-center gap-1.5 border-t border-line/70 pt-4 text-[11px] font-black uppercase tracking-wide text-brand-ink">
-                    <FiClock /> {t(item.sla)}
-                  </span>
-                </button>
-              </Reveal>
-            )
-          })}
-        </div>
-      </Section>
-
       {/* FORM */}
       <Section id="form" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
         <SectionHead
@@ -863,31 +818,6 @@ export function ContactPage() {
         </div>
       </Section>
 
-
-      {/* RESPONSE TIMES */}
-      <Section id="response" className="scroll-mt-36 border-y border-line bg-cream dark:bg-cream-2">
-        <SectionHead
-          eyebrow={t('Response times')}
-          title={t('What we commit to, in writing')}
-          description={t('Measured from when your message arrives, over the last 90 days. If we are going to miss one, you get told rather than left waiting.')}
-        />
-
-        <Reveal from="up" className="mt-12 overflow-hidden rounded-[26px] border border-line bg-surface shadow-card">
-          <ul className="divide-y divide-line">
-            {RESPONSE.map((row) => (
-              <li key={row.label} className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-6">
-                <div className="min-w-0">
-                  <h3 className="text-sm font-extrabold text-ink">{t(row.label)}</h3>
-                  <p className="mt-0.5 text-xs leading-relaxed text-body">{t(row.detail)}</p>
-                </div>
-                <span className={`shrink-0 rounded-full border px-3.5 py-1.5 text-[11px] font-black uppercase tracking-wide ${TONE_STYLES[row.tone]}`}>
-                  {t(row.time)}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-      </Section>
 
       {/* FAQ */}
       <Section id="faq" container={false} className="scroll-mt-36 bg-surface">

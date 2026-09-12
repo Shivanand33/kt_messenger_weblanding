@@ -21,6 +21,7 @@ export function HeroSettingsPage() {
   const [loading, setLoading] = useState(true)
   const [block, setBlock] = useState(null) // existing content-block row, or null
   const [bgUrl, setBgUrl] = useState('') // current (possibly unsaved) URL
+  const [bgAlt, setBgAlt] = useState('') // current (possibly unsaved) ALT text
   const [dirty, setDirty] = useState(false)
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -35,6 +36,7 @@ export function HeroSettingsPage() {
       const row = (res.data.data || []).find((r) => r.key === KEY) || null
       setBlock(row)
       setBgUrl(row?.data?.backgroundUrl || '')
+      setBgAlt(row?.data?.backgroundAlt || '')
       setDirty(false)
     } catch (err) {
       toast.error(errorMessage(err, 'Failed to load hero settings'))
@@ -55,6 +57,7 @@ export function HeroSettingsPage() {
       fd.append('folder', 'hero')
       const res = await api.post('/admin/media', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
       setBgUrl(res.data.data.url)
+      if (res.data.data.alt) setBgAlt(res.data.data.alt)
       setDirty(true)
       toast.success('Image uploaded — click Save to apply it')
     } catch (err) {
@@ -71,6 +74,9 @@ export function HeroSettingsPage() {
       const data = { ...(block?.data || {}) }
       if (bgUrl.trim()) data.backgroundUrl = bgUrl.trim()
       else delete data.backgroundUrl
+      if (bgAlt.trim()) data.backgroundAlt = bgAlt.trim()
+      else delete data.backgroundAlt
+
       if (block?.id) {
         const res = await api.put(`/admin/website-content/${block.id}`, { data })
         setBlock(res.data.data)
@@ -89,6 +95,7 @@ export function HeroSettingsPage() {
 
   const useDefault = () => {
     setBgUrl('')
+    setBgAlt('')
     setDirty(true)
   }
 
@@ -157,6 +164,23 @@ export function HeroSettingsPage() {
             />
             <div style={{ fontSize: 11.5, color: 'var(--muted)', marginTop: 6 }}>
               Paste an image URL, or upload a new image to the Media library.
+            </div>
+          </div>
+
+          <div>
+            <label style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--muted)', display: 'block', marginBottom: 6 }}>
+              ALT Text (SEO Keyword)
+            </label>
+            <input
+              className="input"
+              placeholder="e.g. secure instant messaging app"
+              value={bgAlt}
+              onChange={(e) => { setBgAlt(e.target.value); setDirty(true) }}
+              disabled={!canWrite}
+              style={{ width: '100%' }}
+            />
+            <div style={{ fontSize: 11.5, color: 'var(--muted)', marginTop: 6 }}>
+              Descriptive text used by search engines and screen readers for SEO.
             </div>
           </div>
 

@@ -6,6 +6,29 @@ import { Icon } from '../components/Icon.jsx'
 
 const SITE_URL = (import.meta.env.VITE_SITE_URL || 'http://localhost:5174').replace(/\/+$/, '')
 
+const DEFAULT_R2_HOST = 'pub-45b6365542624750bb6c3a89c2159a2a.r2.dev'
+
+/**
+ * Format any leftover raw R2 URLs for clean display in the admin UI.
+ */
+function formatDisplayUrl(url) {
+  if (!url || typeof url !== 'string') return ''
+  return url.replace(/https?:\/\/pub-[a-zA-Z0-9_-]+\.r2\.dev\//gi, 'http://localhost:4000/uploads/').replace(/pub-[a-zA-Z0-9_-]+\.r2\.dev/gi, 'pub.r2.dev')
+}
+
+/**
+ * Expand clean display URLs back if needed.
+ */
+function resolveFullUrl(inputVal, originalRealUrl) {
+  if (!inputVal) return ''
+  if (inputVal.includes('pub.r2.dev')) {
+    const match = originalRealUrl?.match(/(pub-[a-zA-Z0-9_-]+\.r2\.dev)/i)
+    const host = match ? match[1] : DEFAULT_R2_HOST
+    return inputVal.replace(/pub\.r2\.dev/gi, host)
+  }
+  return inputVal
+}
+
 /**
  * Site Images.
  *
@@ -19,6 +42,7 @@ const SITE_URL = (import.meta.env.VITE_SITE_URL || 'http://localhost:5174').repl
 export function SiteImagesPage() {
   const toast = useToast()
   const [block, setBlock] = useState(null)
+  const [altBlock, setAltBlock] = useState(null)
   const [rows, setRows] = useState([])
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
@@ -30,9 +54,18 @@ export function SiteImagesPage() {
       .then((res) => {
         const all = res.data.data?.items || res.data.data || []
         const b = all.find((r) => r.key === 'images.site')
+        const ab = all.find((r) => r.key === 'images.alt')
         setBlock(b || null)
+        setAltBlock(ab || null)
         const data = b?.data && typeof b.data === 'object' ? b.data : {}
-        setRows(Object.entries(data).map(([file, value]) => ({ file, value: String(value ?? '') })))
+        const altData = ab?.data && typeof ab.data === 'object' ? ab.data : {}
+        setRows(
+          Object.entries(data).map(([file, value]) => ({
+            file,
+            value: typeof value === 'object' ? String(value?.url || file) : String(value ?? ''),
+            alt: typeof value === 'object' ? String(value?.alt || value?.altText || '') : String(altData[file] || '')
+          }))
+        )
       })
       .catch((e) => toast.error(errorMessage(e)))
       .finally(() => setLoading(false))
@@ -42,26 +75,19 @@ export function SiteImagesPage() {
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
     if (!q) return rows
-    return rows.filter((r) => r.file.toLowerCase().includes(q) || r.value.toLowerCase().includes(q))
+    return rows.filter((r) => r.file.toLowerCase().includes(q) || r.value.toLowerCase().includes(q) || (r.alt || '').toLowerCase().includes(q))
   }, [rows, search])
 
   const replacedCount = rows.filter((r) => r.value && r.value !== r.file).length
 
   const setValue = (file, value) => setRows((list) => list.map((r) => (r.file === file ? { ...r, value } : r)))
-  const reset = (file) => setValue(file, file)
+  const setAltValue = (file, alt) => setRows((list) => list.map((r) => (r.file === file ? { ...r, alt } : r)))
+  const reset = (file) => setRows((list) => list.map((r) => (r.file === file ? { ...r, value: file, alt: '' } : r)))
 
   // One hidden <input type="file"> per row, so "Upload" can target that row.
   const fileInputs = useRef({})
   const [uploadingFile, setUploadingFile] = useState(null)
 
-  /**
-   * Upload a picture from the computer and use its stored URL as the
-   * replacement. Same media API the blog editor uses, so the file lands in the
-   * shared Media library and is served from the same place.
-   *
-   * The value is only set after a successful upload — a failed upload leaves
-   * the current replacement exactly as it was.
-   */
   const uploadFor = async (file, e) => {
     const picked = e.target.files?.[0]
     e.target.value = '' // let the same file be picked again
@@ -89,7 +115,14 @@ export function SiteImagesPage() {
     try {
       // Rebuild from the original filenames so a key can never be altered.
       const data = {}
-      for (const r of rows) data[r.file] = r.value.trim() === '' ? r.file : r.value.trim()
+      const altData = {}
+      for (const r of rows) {
+        data[r.file] = r.value.trim() === '' ? r.file : r.value.trim()
+        if (r.alt && r.alt.trim()) {
+          altData[r.file] = r.alt.trim()
+        }
+      }
+
       await api.put(`/admin/website-content/${block.id}`, {
         key: block.key,
         page: block.page,
@@ -97,7 +130,26 @@ export function SiteImagesPage() {
         data,
       })
       setBlock((b) => ({ ...b, data }))
-      toast.success('Saved — reload the website to see the change')
+
+      if (altBlock?.id) {
+        const res = await api.put(`/admin/website-content/${altBlock.id}`, {
+          key: 'images.alt',
+          page: 'text',
+          label: 'Image Alt Texts',
+          data: altData,
+        })
+        setAltBlock(res.data?.data || altBlock)
+      } else {
+        const res = await api.post('/admin/website-content', {
+          key: 'images.alt',
+          page: 'text',
+          label: 'Image Alt Texts',
+          data: altData,
+        })
+        setAltBlock(res.data?.data || null)
+      }
+
+      toast.success('Saved — reload the website to see the changes')
     } catch (e) {
       toast.error(errorMessage(e, 'Save failed'))
     } finally {
@@ -127,7 +179,7 @@ export function SiteImagesPage() {
     <div>
       <PageHeader
         title="Site Images"
-        subtitle="Upload a file or paste a URL to replace an image everywhere it appears. Leave it unchanged to keep the built-in one."
+        subtitle="Upload a file or paste a URL to replace an image everywhere it appears. Manage ALT Text for SEO & Accessibility."
         actions={
           <button className="btn primary" onClick={save} disabled={saving}>
             <Icon name="check" size={16} />
@@ -143,7 +195,7 @@ export function SiteImagesPage() {
         >
           <input
             className="input"
-            placeholder="Search images…"
+            placeholder="Search images or alt text…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             style={{ flex: 1 }}
@@ -156,25 +208,24 @@ export function SiteImagesPage() {
         <table className="table" style={{ width: '100%' }}>
           <thead>
             <tr>
-              <th style={{ width: 90 }}>Preview</th>
-              <th style={{ width: '26%' }}>Image</th>
-              <th>Replacement (upload a file or paste a URL)</th>
-              <th style={{ width: 70 }} />
+              <th style={{ width: 80 }}>Preview</th>
+              <th style={{ width: '22%' }}>Image</th>
+              <th style={{ width: '38%' }}>Replacement (upload a file or paste a URL)</th>
+              <th style={{ width: '30%' }}>ALT Text (SEO Keyword)</th>
+              <th style={{ width: 60 }} />
             </tr>
           </thead>
           <tbody>
             {filtered.map((r) => {
               const replaced = r.value && r.value !== r.file
-              // Unreplaced images live in the website bundle, not the admin, so
-              // preview those from the site's dev/public origin.
-              const previewSrc = replaced ? r.value : `${SITE_URL}/src/assets/images/${r.file}`
+              const previewSrc = replaced ? resolveFullUrl(r.value, r.value) : `${SITE_URL}/src/assets/images/${r.file}`
               return (
                 <tr key={r.file}>
                   <td>
                     <div
                       style={{
-                        width: 64,
-                        height: 44,
+                        width: 60,
+                        height: 40,
                         borderRadius: 8,
                         overflow: 'hidden',
                         background: 'var(--surface-2)',
@@ -203,8 +254,8 @@ export function SiteImagesPage() {
                     <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                       <input
                         className="input"
-                        value={r.value}
-                        onChange={(e) => setValue(r.file, e.target.value)}
+                        value={formatDisplayUrl(r.value)}
+                        onChange={(e) => setValue(r.file, resolveFullUrl(e.target.value, r.value))}
                         placeholder="Paste a URL, or upload a file →"
                         style={{ flex: 1, minWidth: 0, borderColor: replaced ? 'var(--brand)' : undefined }}
                       />
@@ -228,6 +279,15 @@ export function SiteImagesPage() {
                         {uploadingFile === r.file ? 'Uploading…' : '⬆ Upload'}
                       </button>
                     </div>
+                  </td>
+                  <td>
+                    <input
+                      className="input"
+                      value={r.alt || ''}
+                      onChange={(e) => setAltValue(r.file, e.target.value)}
+                      placeholder="e.g. instant messaging app"
+                      style={{ width: '100%' }}
+                    />
                   </td>
                   <td>
                     {replaced && (

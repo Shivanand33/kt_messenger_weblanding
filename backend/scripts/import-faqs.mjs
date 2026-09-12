@@ -39,7 +39,8 @@ const PAGES = {
 /** Pull the `{ q, a }` pairs out of a page's `const faqs = [ … ]` block. */
 function extractFaqs(file) {
   const src = fs.readFileSync(file, 'utf8')
-  const start = src.indexOf('const faqs = [')
+  let start = src.indexOf('const faqs = [')
+  if (start === -1) start = src.indexOf('const localFaqs = [')
   if (start === -1) return []
 
   // Walk to the matching closing bracket so nested brackets don't truncate it.

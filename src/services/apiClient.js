@@ -45,6 +45,7 @@ export const api = {
   getSuccessStory: (slug) => request(`/success-stories/${slug}`).then((r) => r.data),
   getDownloads: () => request('/downloads').then((r) => r.data),
   listNews: (params) => request('/news', { params }).then((r) => r.data),
+  listJobs: (params) => request('/jobs', { params }).then((r) => r.data),
   listMarketplaceProducts: (params) => request('/marketplace-products', { params }).then((r) => r.data),
   getBusinessProducts: () => request('/business-products').then((r) => r.data),
   listLocales: () => request('/locales').then((r) => r.data),

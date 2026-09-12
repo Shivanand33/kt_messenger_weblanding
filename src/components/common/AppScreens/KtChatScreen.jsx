@@ -130,7 +130,7 @@ export function KtChatScreen({
             <div className="min-w-0 flex-1">
               <div className="truncate text-[12px] font-bold leading-tight">David Miller</div>
               <div className="truncate text-[9px] font-semibold text-white/85">
-                {showEncryptionNote ? t('online • E2EE Active') : t('online')}
+                {t('online')}
               </div>
             </div>
 

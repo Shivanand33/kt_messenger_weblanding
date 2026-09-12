@@ -57,14 +57,26 @@ export function LanguageProvider({ children }) {
         if (!alive || !blocks || typeof blocks !== 'object') return
         const merged = {}
         const images = {}
+        const alts = {}
         for (const [key, block] of Object.entries(blocks)) {
           if (!block || typeof block !== 'object') continue
-          // 'images.*' blocks hold image replacements, everything else is copy.
-          if (key.startsWith('images.')) Object.assign(images, block)
-          else Object.assign(merged, block)
+          if (key === 'images.alt') {
+            Object.assign(alts, block)
+          } else if (key.startsWith('images.')) {
+            for (const [file, val] of Object.entries(block)) {
+              if (val && typeof val === 'object') {
+                if (val.url) images[file] = val.url
+                if (val.alt || val.altText) alts[file] = val.alt || val.altText
+              } else if (typeof val === 'string') {
+                images[file] = val
+              }
+            }
+          } else {
+            Object.assign(merged, block)
+          }
         }
         setOverrides(merged)
-        setImageOverrides(images)
+        setImageOverrides(images, alts)
       })
       .catch(() => {
         /* no admin copy available — the hardcoded English stays in place */

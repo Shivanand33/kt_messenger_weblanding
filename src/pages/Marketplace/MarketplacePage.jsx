@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { translateCopy } from '../../utils/translateCopy'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
@@ -321,7 +321,7 @@ export function MarketplacePage() {
               <ul className="mt-4 space-y-3">
                 {cartRows.slice(0, 3).map((line) => (
                   <li key={line.id} className="flex items-center gap-3 rounded-2xl border border-line dark:border-white/10 bg-cream dark:bg-white/[0.03] p-3">
-                    <img src={img(line.product.image)} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
+                    <img src={img(line.product.image)} alt={imgAlt(line.product.image, line.product.name)} className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                     <span className="min-w-0 flex-1">
                       <span className="line-clamp-1 block text-xs font-bold text-ink dark:text-white">{line.product.name}</span>
                       <span className="text-[10px] font-semibold text-muted dark:text-slate-400">{t('Qty')} {line.qty}</span>

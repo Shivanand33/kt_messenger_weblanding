@@ -16,6 +16,8 @@ import { EmailSettingsPage } from './pages/EmailSettingsPage.jsx'
 import { HeroSettingsPage } from './pages/HeroSettingsPage.jsx'
 import { PageTextPage } from './pages/PageTextPage.jsx'
 import { ContactMessagesPage } from './pages/ContactMessagesPage.jsx'
+import { AboutPageAdmin } from './pages/AboutPageAdmin.jsx'
+import { CareersPageAdmin } from './pages/CareersPageAdmin.jsx'
 import {
   FaqsPage, BlogCategoriesPage, BlogTagsPage, SuccessStoriesPage, AppReleasesPage,
   WebsiteContentPage, NavigationPage, FooterPage, LocalesPage,
@@ -35,6 +37,8 @@ export default function App() {
         <Route path="help" element={<HelpPage />} />
         <Route path="help/blogs/:id" element={<BlogFormPage basePath="/help/blogs" returnTo="/help?tab=blogs" />} />
         <Route path="faqs" element={<FaqsPage />} />
+        <Route path="about-admin" element={<AboutPageAdmin />} />
+        <Route path="careers-admin" element={<CareersPageAdmin />} />
         <Route path="success-stories" element={<SuccessStoriesPage />} />
         <Route path="app-releases" element={<AppReleasesPage />} />
         <Route path="homepage-hero" element={<HeroSettingsPage />} />

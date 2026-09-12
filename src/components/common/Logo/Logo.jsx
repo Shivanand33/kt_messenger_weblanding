@@ -1,4 +1,4 @@
-import { img } from '../../../utils/imageOverrides'
+import { img, imgAlt } from '../../../utils/imageOverrides'
 import ktLogo from '../../../assets/kt-logo.svg'
 
 /**
@@ -16,8 +16,8 @@ export function Logo({ showWordmark = true, className = '', wordmarkClassName = 
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <img
         src={img(ktLogo)}
-        alt=""
-        aria-hidden="true"
+        alt={imgAlt(ktLogo, "KT Messenger instant messaging app")}
+        title={imgAlt(ktLogo, "KT Messenger instant messaging app")}
         className={`shrink-0 object-contain ${markClassName || 'h-10 w-10'}`}
       />
       {showWordmark ? (

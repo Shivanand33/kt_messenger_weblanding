@@ -1,4 +1,5 @@
-import { img } from '../../../utils/imageOverrides'
+import { Link } from 'react-router-dom'
+import { img, imgAlt } from '../../../utils/imageOverrides'
 import {
   FiZap, FiLayers, FiMessageSquare, FiHeadphones, FiGlobe, FiGrid, FiUsers,
   FiActivity, FiPhone, FiRadio, FiCompass, FiSearch, FiCheck, FiArrowRight, FiShield, FiHeart,
@@ -13,6 +14,7 @@ import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
 import { useModal } from '../../../context/ModalContext'
 import { useLanguage } from '../../../context/LanguageContext'
 import { useCountUp } from '../../../hooks/useCountUp'
+import minisImg from '../../../assets/images/sunset_landscape.png'
 import aiImg from '../../../assets/images/cyberpunk_neon_city.png'
 import communityImg from '../../../assets/images/footer.jpg'
 import contentImg from '../../../assets/images/private.jpg'
@@ -87,22 +89,25 @@ const features = [
 
 const highlights = [
   {
-    image: aiImg,
-    label: 'KT AI',
-    title: 'Futuristic assistance, built in',
-    text: 'Smart search and instant answers live right inside your conversations.',
-  },
-  {
-    image: communityImg,
-    label: 'Communities',
-    title: 'Where audiences grow together',
-    text: 'Interest based communities and groups that scale to thousands.',
+    image: minisImg,
+    label: 'KT Minis',
+    title: 'Instant Apps & Shorts Feed',
+    text: 'Short video feeds, mini apps, and interactive tools right inside your messenger.',
+    link: '/minis',
   },
   {
     image: contentImg,
-    label: 'Content & News',
-    title: 'Discover, share, discuss',
-    text: 'Content and communication working side by side in one flow.',
+    label: 'KT Messaging',
+    title: 'Private & Secure Messaging',
+    text: 'Send instant messages, photos, videos, files, and voice notes with default E2E encryption.',
+    link: '/messaging',
+  },
+  {
+    image: collabImg,
+    label: 'Voice & Video Calls',
+    title: 'Ultra HD Voice & Video Calling',
+    text: 'Connect 1-on-1 or host group video calls with 1080p quality and AI noise reduction.',
+    link: '/calling',
   },
 ]
 
@@ -270,22 +275,25 @@ export function Insights() {
       <div className="mt-6 grid gap-5 md:grid-cols-3">
         {highlights.map((h, index) => (
           <Reveal key={h.title} from="up" delay={index * 0.08} className="h-full">
-            <article className={`${cardBase} relative h-full min-h-[300px] justify-end`}>
-              <img
-                src={img(h.image)}
-                alt={t(h.title)}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/35 to-transparent" />
-              <div className="relative p-6 text-white">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/15 px-3 py-1 text-[11px] font-bold backdrop-blur">
-                  {t(h.label)}
-                </span>
-                <h3 className="mt-3 text-xl font-bold leading-tight">{t(h.title)}</h3>
-                <p className="mt-1.5 text-sm leading-6 text-white/85">{t(h.text)}</p>
-              </div>
-            </article>
+            <Link to={h.link} className="block h-full cursor-pointer focus:outline-none">
+              <article className={`${cardBase} relative h-full min-h-[300px] justify-end group`}>
+                <img
+                  src={img(h.image)}
+                  alt={imgAlt(h.image, t(h.title))}
+                  title={imgAlt(h.image, t(h.title))}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/35 to-transparent transition-opacity duration-300 group-hover:from-slate-950/90" />
+                <div className="relative p-6 text-white">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/15 px-3 py-1 text-[11px] font-bold backdrop-blur">
+                    {t(h.label)}
+                  </span>
+                  <h3 className="mt-3 text-xl font-bold leading-tight group-hover:text-brand-soft transition-colors">{t(h.title)}</h3>
+                  <p className="mt-1.5 text-sm leading-6 text-white/85">{t(h.text)}</p>
+                </div>
+              </article>
+            </Link>
           </Reveal>
         ))}
       </div>
@@ -402,13 +410,6 @@ export function Insights() {
             </Reveal>
           ))}
         </div>
-      </div>
-
-      {/* Animated statistics */}
-      <div className="mt-16 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-5">
-        {stats.map((item, index) => (
-          <StatCard key={item.label} item={item} index={index} />
-        ))}
       </div>
 
       {/* Trust */}

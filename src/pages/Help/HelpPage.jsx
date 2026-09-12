@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { FiChevronDown, FiSearch, FiLink, FiX, FiFlag, FiShield, FiCloud, FiMessageCircle, FiUsers, FiBriefcase } from 'react-icons/fi'
+import { FiChevronDown, FiSearch, FiLink, FiX, FiFlag, FiShield, FiCloud, FiMessageCircle, FiUsers, FiBriefcase, FiChevronRight, FiDownload } from 'react-icons/fi'
 import {
   MdArticle, MdFileDownload, MdHowToReg, MdAlternateEmail, MdDevices, MdHelpOutline, MdContacts, MdRadioButtonChecked,
   MdFlag, MdChat, MdStorefront, MdCall, MdGroups, MdCampaign, MdLock, MdPerson, MdCreditCard, MdBusinessCenter,
@@ -10,6 +10,7 @@ import { FaAndroid, FaApple, FaWindows } from 'react-icons/fa'
 import { ThemeToggle } from '../../components/common/ThemeToggle/ThemeToggle'
 import { Logo } from '../../components/common/Logo/Logo'
 import { Reveal } from '../../components/common/Reveal/Reveal'
+import { Button } from '../../components/common/Button/Button'
 import { PhoneChatMockup } from '../../components/mockups/PhoneChatMockup'
 import { useSwipeTheme } from '../../hooks/useSwipeTheme'
 import { useLanguage } from '../../context/LanguageContext'
@@ -157,6 +158,7 @@ const footerColumns = [
 const proseClass = 'space-y-5 text-[15px] leading-7 text-body'
 
 function ArticleBody({ title, tab }) {
+  const navigate = useNavigate()
   const { t } = useLanguage()
   if (title === 'How to download or uninstall KT Messenger') {
     const store = { Android: 'Google Play Store', iOS: 'App Store', Mac: 'Mac App Store', Windows: 'Microsoft Store' }[tab]
@@ -165,9 +167,28 @@ function ArticleBody({ title, tab }) {
       <div className={proseClass}>
         <h3 className="text-xl font-bold text-ink">{t('Download KT Messenger')}</h3>
         <p>Open the {store} on your {tab} device and search for KT Messenger, then tap {action} to begin the download.</p>
-        <div className="grid h-44 w-44 place-items-center rounded-2xl border-2 border-dashed border-line bg-surface-2 text-center text-sm font-medium text-muted">
-          {t('Scan to download')}<br />KT Messenger
+        
+        <div className="my-4 flex flex-wrap items-center gap-4">
+          <button
+            type="button"
+            onClick={() => { navigate('/apps'); window.scrollTo(0, 0) }}
+            className="grid h-44 w-44 place-items-center rounded-2xl border-2 border-dashed border-line bg-surface-2 p-4 text-center text-sm font-medium text-muted transition-all hover:border-brand-strong hover:bg-brand-soft hover:text-brand-ink hover:shadow-card cursor-pointer"
+          >
+            <span className="text-xs font-bold text-brand-ink">{t('Click to Download')}</span>
+            <span className="text-sm font-extrabold text-ink">KT Messenger</span>
+            <span className="text-[10px] font-semibold text-muted">Android • iOS • Windows</span>
+          </button>
+
+          <div className="flex flex-col gap-2.5">
+            <Button variant="primary" size="lg" onClick={() => { navigate('/apps'); window.scrollTo(0, 0) }}>
+              {t('Download for')} {tab} <FiChevronRight />
+            </Button>
+            <span className="text-xs font-semibold text-muted">
+              {t('Clicking will redirect to official download options for Android, iOS & Windows.')}
+            </span>
+          </div>
         </div>
+
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
           <li>Find KT Messenger in the {store}, then tap {action}.</li>
           <li>Open the app and review the Terms of Service, then tap <strong>{t('Agree and continue')}</strong>.</li>
@@ -196,7 +217,7 @@ function ArticleBody({ title, tab }) {
   }
   return (
     <div className={proseClass}>
-      <p>{t('This article explains')} <strong>{title.charAt(0).toLowerCase() + title.slice(1)}</strong> {t('on KT Messenger. Follow the steps below to get set up.')}</p>
+      <p>{t('This step-by-step guide explains')} <strong>{title.charAt(0).toLowerCase() + title.slice(1)}</strong> {t('on KT Messenger. Follow the steps below to get set up.')}</p>
       <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
         <li>{t('Open KT Messenger and go to')} <strong>{t('Settings')}</strong>.</li>
         <li>{t('Select the option related to this topic and follow the on screen instructions.')}</li>
@@ -364,8 +385,8 @@ export function HelpPage() {
                 <FiSearch className="text-muted" />
                 <input
                   type="text"
-                  placeholder={t('Search help articles...')}
-                  aria-label={t('Search help articles')}
+                  placeholder={t('Search help steps...')}
+                  aria-label={t('Search help steps')}
                   className="w-44 bg-transparent text-sm text-ink outline-none placeholder:text-muted"
                 />
               </label>
@@ -496,8 +517,8 @@ export function HelpPage() {
                     <FiSearch className="text-xl text-muted" />
                     <input
                       type="text"
-                      placeholder={t('Search help articles...')}
-                      aria-label={t('Search help articles')}
+                      placeholder={t('Search help steps...')}
+                      aria-label={t('Search help steps')}
                       className="flex-1 bg-transparent text-ink outline-none placeholder:text-muted"
                     />
                   </label>
@@ -521,7 +542,7 @@ export function HelpPage() {
 
                 <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-start lg:gap-14">
                   <div className="min-w-0">
-                    <h2 className="text-2xl font-bold text-ink">{t('Popular Articles')}</h2>
+                    <h2 className="text-2xl font-bold text-ink">{t('Popular Help Steps')}</h2>
                     <ul className="mt-6 space-y-4">
                       {popularArticles.map((article) => (
                         <li key={article}>

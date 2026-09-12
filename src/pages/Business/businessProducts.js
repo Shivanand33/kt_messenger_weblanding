@@ -17,7 +17,7 @@ export const businessProducts = {
       { icon: 'FiUsers', title: 'Shared team inbox', desc: 'Let agents collaborate on one number with assignments, labels, and internal notes.' },
       { icon: 'FiBarChart2', title: 'Delivery & engagement analytics', desc: 'Track sent, delivered, read, and reply rates for every template and campaign.' },
       { icon: 'FiShield', title: 'KT grade encryption', desc: 'Every conversation is protected end to end with the KT Encryption Protocol by default.' },
-      { icon: 'FiGlobe', title: 'Global scale & reliability', desc: 'Reach 2.5B+ users with regional infrastructure and 99.9% delivery uptime.' },
+      { icon: 'FiGlobe', title: 'Global scale & reliability', desc: 'Reach customers globally with regional infrastructure and high delivery uptime.' },
     ],
     spotlight: {
       title: 'Built for developers and teams',

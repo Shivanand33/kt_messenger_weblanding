@@ -1,6 +1,5 @@
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { Hero } from '../../components/sections/Hero/Hero'
-import { TrustBar } from '../../components/sections/TrustBar/TrustBar'
 import { Statement } from '../../components/sections/Statement/Statement'
 import { LoopWeb } from '../../components/sections/LoopWeb/LoopWeb'
 import { MultiDevice } from '../../components/sections/MultiDevice/MultiDevice'
@@ -14,8 +13,15 @@ import { Insights } from '../../components/sections/Insights/Insights'
 import { VideoShowcase } from '../../components/sections/VideoShowcase/VideoShowcase'
 import { DownloadCTA } from '../../components/sections/DownloadCTA/DownloadCTA'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 export function Home() {
+  useSeo({
+    title: 'KTMessenger | Secure Messaging App For Private Messaging.',
+    description: 'KT Messenger is a secure messaging app for private chats, calls, AI features, and communities. Connect safely and privately across all your devices.',
+    path: '/',
+  })
+
   // Per-page SEO from admin (Website Content -> seo.home).
   // No block configured = unchanged behaviour.
   useAdminSeo('home', '/')
@@ -23,7 +29,6 @@ export function Home() {
   return (
     <MainLayout>
       <Hero />
-      <TrustBar />
       <VideoShowcase />
       <Statement />
       <LoopWeb />

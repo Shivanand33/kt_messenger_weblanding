@@ -13,17 +13,38 @@ const title = (key = 'name') => (r) => <span className="t-title">{r[key]}</span>
 export const FaqsPage = () => (
   <ResourcePage config={{
     title: 'FAQ', addLabel: 'FAQ', endpoint: '/admin/faqs', permission: 'faq',
-    subtitle: 'Questions shown on the Calling, Messaging, Help and Business pages.',
+    subtitle: 'Questions shown across all pages on the website.',
     columns: [
       { key: 'question', header: 'Question', render: title('question') },
       { key: 'page', header: 'Page', render: (r) => <Badge tone="blue">{r.page}</Badge> },
       { key: 'status', header: 'Status', render: (r) => <StatusBadge status={r.status} /> },
       { key: 'order', header: 'Order' },
+      { key: 'updatedAt', header: 'Date', render: (r) => <span style={{ fontSize: 12, color: 'var(--muted)' }}>{fmtDate(r.updatedAt || r.createdAt)}</span> },
     ],
     fields: [
       { name: 'question', label: 'Question' },
       { name: 'answer', label: 'Answer', type: 'textarea' },
-      { name: 'page', label: 'Page', type: 'select', default: 'help', options: [{ value: 'help', label: 'Help' }, { value: 'calling', label: 'Calling' }, { value: 'messaging', label: 'Messaging' }, { value: 'business', label: 'Business' }, { value: 'home', label: 'Home' }] },
+      { name: 'page', label: 'Page', type: 'select', default: 'help', options: [
+        { value: 'home', label: 'Home' },
+        { value: 'calling', label: 'Calling' },
+        { value: 'messaging', label: 'Messaging' },
+        { value: 'groups', label: 'Groups' },
+        { value: 'channels', label: 'Channels' },
+        { value: 'ai', label: 'KT AI' },
+        { value: 'status', label: 'Status' },
+        { value: 'security', label: 'Security' },
+        { value: 'plus', label: 'KT Plus' },
+        { value: 'notes', label: 'Notes' },
+        { value: 'privacy', label: 'Privacy' },
+        { value: 'community', label: 'Community' },
+        { value: 'minis', label: 'Minis' },
+        { value: 'business', label: 'Business' },
+        { value: 'help', label: 'Help' },
+        { value: 'news', label: 'News' },
+        { value: 'markets', label: 'Markets' },
+        { value: 'wallet', label: 'Wallet' },
+        { value: 'marketplace', label: 'Marketplace' },
+      ] },
       { name: 'status', label: 'Status', type: 'select', default: 'PUBLISHED', options: STATUS },
       { name: 'order', label: 'Order', type: 'number', default: 0 },
     ],
@@ -82,7 +103,12 @@ export const WebsiteContentPage = () => (
   <ResourcePage config={{
     title: 'Content Block', addLabel: 'Block', endpoint: '/admin/website-content', permission: 'website_content',
     subtitle: 'Editable hero/section content used across the site.',
-    columns: [{ key: 'key', header: 'Key', render: title('key') }, { key: 'page', header: 'Page' }, { key: 'label', header: 'Label' }],
+    columns: [
+      { key: 'key', header: 'Key', render: title('key') },
+      { key: 'page', header: 'Page' },
+      { key: 'label', header: 'Label' },
+      { key: 'updatedAt', header: 'Date', render: (r) => <span style={{ fontSize: 12, color: 'var(--muted)' }}>{fmtDate(r.updatedAt || r.createdAt)}</span> },
+    ],
     fields: [{ name: 'key', label: 'Key', hint: 'e.g. home.hero' }, { name: 'page', label: 'Page', hint: 'e.g. home' }, { name: 'label', label: 'Label' }, { name: 'data', label: 'Data (JSON)', type: 'json' }],
   }} />
 )

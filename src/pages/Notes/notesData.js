@@ -551,54 +551,39 @@ export const notesSteps = [
 
 export const notesFaqs = [
   {
-    q: 'Are my notes end to end encrypted?',
-    a: 'Yes. Every note, voice memo and checklist is encrypted on your device before it syncs. The server holds ciphertext and has no key to read it.',
-    tag: 'Encryption',
+    q: 'What is KT Messenger Notes?',
+    a: 'KT Messenger Notes is a simple feature that lets you save important information, ideas, reminders, tasks, lists, and personal thoughts in one place.',
+    tag: 'Overview',
   },
   {
-    q: 'Can I use notes on desktop and web?',
-    a: 'Yes. The vault syncs across iOS, Android, macOS, Windows and the web client. You can see when each device last synced.',
-    tag: 'Sync',
+    q: 'Why should I use KT Messenger Notes?',
+    a: 'KT Messenger Notes helps you remember important things without relying only on your memory. You can quickly write something down and come back to it whenever you need it.',
+    tag: 'Benefits',
   },
   {
-    q: 'How does “message yourself” work?',
-    a: 'Your own chat thread acts as a capture inbox. Forward a link, dictate a voice note or paste a photo, then file it into a note whenever you get to it.',
-    tag: 'Self-chat',
+    q: 'What can I save in KT Messenger Notes?',
+    a: 'You can save ideas, reminders, tasks, shopping lists, meeting points, business information, customer details, personal thoughts, and anything else you want to remember.',
+    tag: 'Features',
   },
   {
-    q: 'What happens if I lose my phone?',
-    a: 'Sign in on another device with your recovery shares and the vault restores from encrypted backup. Without enough shares nobody including us can decrypt it.',
-    tag: 'Recovery',
+    q: 'Can I use KT Messenger Notes for business?',
+    a: 'Yes. Businesses and professionals can use Notes to save customer requirements, meeting details, business ideas, tasks, follow-ups, and other important work information.',
+    tag: 'Business',
   },
   {
-    q: 'Do notes work offline?',
-    a: 'Fully. Create, edit and search with no connection. Changes reconcile automatically when you are back online, with conflicts kept side by side rather than overwritten.',
-    tag: 'Offline',
+    q: 'Can I use KT Messenger Notes for personal use?',
+    a: 'Yes. You can use Notes for personal reminders, plans, shopping lists, events, ideas, daily tasks, and other information you want to keep organized.',
+    tag: 'Personal',
   },
   {
-    q: 'Is voice transcription sent to a server?',
-    a: 'No. Transcription runs on device using the local model. The audio and the transcript both stay inside your encrypted vault.',
-    tag: 'Voice',
+    q: 'How do KT Messenger Notes help me stay organized?',
+    a: 'Notes give you one place to keep important information instead of keeping everything in your memory or scattered across different conversations and apps.',
+    tag: 'Organization',
   },
   {
-    q: 'Can I share a note with someone?',
-    a: 'Yes, into a chat. The note is re encrypted for that recipient, and you can revoke access later which removes it from their vault too.',
-    tag: 'Sharing',
-  },
-  {
-    q: 'Is there a limit on notes or attachments?',
-    a: 'No note count limit. Individual attachments are capped at 100MB, and the vault is included with your account at no extra cost.',
-    tag: 'Limits',
-  },
-  {
-    q: 'What happens when I delete a note?',
-    a: 'It goes to trash for 30 days, then is purged from every synced device. Purged notes are unrecoverable by design.',
-    tag: 'Deleting',
-  },
-  {
-    q: 'Can I export everything?',
-    a: 'Yes. Export the whole vault as Markdown files with attachments in a single archive, any time you want it.',
-    tag: 'Export',
+    q: 'Can I save important information from chats?',
+    a: 'Yes. If a conversation contains an important idea, task, reminder, or detail, you can save that information as a note so you can refer to it later.',
+    tag: 'Chats',
   },
 ]
 

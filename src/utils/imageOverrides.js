@@ -1,22 +1,14 @@
 import { makeImageResolver } from './imageKey'
+import { getKeywordFallback } from './imageAlt'
 
 /**
  * Admin image replacements, resolved at render time.
- *
- * This is deliberately a module-level function rather than a React hook.
- * Images are rendered from many places — nested sub-components, module-scope
- * helper functions, mapped card renderers — and a hook is only usable inside a
- * component body. A plain import works everywhere, so wiring an `<img>` can
- * never land somewhere the resolver is out of scope.
- *
- * The map is filled once by LanguageProvider, whose own state change re-renders
- * the tree, so no subscription mechanism is needed here.
  */
-let resolve = makeImageResolver({})
+let resolver = makeImageResolver({}, {})
 
 /** Called by LanguageProvider when the admin overrides arrive. */
-export function setImageOverrides(map) {
-  resolve = makeImageResolver(map)
+export function setImageOverrides(urlMap, altMap = {}) {
+  resolver = makeImageResolver(urlMap, altMap)
 }
 
 /**
@@ -24,5 +16,12 @@ export function setImageOverrides(map) {
  * Safe before the overrides load and safe if they never load.
  */
 export function img(src) {
-  return resolve(src)
+  return resolver.resolveUrl(src)
+}
+
+/**
+ * Resolve an image's ALT text using Admin-configured ALT text or a keyword fallback.
+ */
+export function imgAlt(src, fallbackText) {
+  return resolver.resolveAlt(src, fallbackText)
 }

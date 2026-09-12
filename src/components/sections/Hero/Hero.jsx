@@ -1,4 +1,4 @@
-import { img } from '../../../utils/imageOverrides'
+import { img, imgAlt } from '../../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiDownload, FiVideo, FiCalendar, FiCheck } from 'react-icons/fi'
@@ -35,6 +35,8 @@ export function Hero() {
   // bundled image is shown instantly and only replaced if the admin has set one
   // — so the hero always renders even when the API is unreachable.
   const [bgUrl, setBgUrl] = useState(heroImage)
+  const [bgAlt, setBgAlt] = useState('')
+
   useEffect(() => {
     let alive = true
     api
@@ -42,6 +44,7 @@ export function Hero() {
       .then((data) => {
         const url = resolveUrl(data?.backgroundUrl)
         if (alive && url) setBgUrl(url)
+        if (alive && data?.backgroundAlt) setBgAlt(data.backgroundAlt)
       })
       .catch(() => {
         /* no block set or API down — keep the bundled image */
@@ -55,7 +58,8 @@ export function Hero() {
       <div className="relative overflow-hidden rounded-[22px] lg:rounded-[30px]">
         <img
           src={img(bgUrl)}
-          alt="Friends staying in touch on KT Messenger"
+          alt={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}
+          title={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/25 lg:via-black/40 lg:to-transparent" />
@@ -64,21 +68,24 @@ export function Hero() {
           {/* copy */}
           <div className="max-w-xl text-white">
             <Reveal from="up">
-              <h1 className="text-[2.7rem] font-extrabold leading-[0.98] tracking-[-0.03em] sm:text-[3.8rem] lg:text-[5rem]">
+              <h2 className="text-[2.7rem] font-extrabold leading-[0.98] tracking-[-0.03em] sm:text-[3.8rem] lg:text-[5rem]">
                 {t('Stay close,')}
                 <br />
                 {t('stay private.')}
-              </h1>
+              </h2>
             </Reveal>
             <Reveal from="up" delay={0.08}>
               <p className="mt-6 max-w-md text-lg leading-8 text-white/90">
-                {t('Simple, secure messaging and calling for everyone free, encrypted, and in sync across all your devices.')}
+                {t('KT Messenger has private messaging, calls, file sharing, AI interaction, and group forming features. Secure communications across multiple devices are possible with KT Messenger.')}
               </p>
             </Reveal>
             <Reveal from="up" delay={0.16}>
-              <div className="mt-8">
+              <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={openDownloadModal}>
-                  {t('Download')} <FiDownload />
+                  {t('Download KT Messenger')} <FiDownload />
+                </Button>
+                <Button variant="onDark" size="lg" onClick={() => window.location.href = '/messaging'}>
+                  {t('Explore Features')}
                 </Button>
               </div>
               <p className="mt-4 text-sm text-white/70">{t('*Standard data rates may apply.')}</p>

@@ -37,10 +37,35 @@ export function createApp() {
   app.use(cookieParser())
   if (!env.isProd) app.use(morgan('dev'))
 
-  // Serve locally-stored uploaded media.
-  if (env.storage.provider === 'local') {
-    app.use('/uploads', express.static(storage.localRoot()))
-  }
+  // Serve uploaded media (local disk or R2 stream).
+  app.use('/uploads', async (req, res, next) => {
+    const fs = await import('node:fs')
+    const path = await import('node:path')
+    const localPath = path.join(storage.localRoot(), req.path)
+    if (fs.existsSync(localPath) && fs.statSync(localPath).isFile()) {
+      return express.static(storage.localRoot())(req, res, next)
+    }
+
+    if (env.storage.provider === 'r2') {
+      try {
+        const key = req.path.replace(/^\/+/, '')
+        const r2Obj = await storage.getObjectStream(key)
+        if (r2Obj && r2Obj.stream) {
+          if (r2Obj.contentType) res.setHeader('Content-Type', r2Obj.contentType)
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
+          if (typeof r2Obj.stream.pipe === 'function') {
+            return r2Obj.stream.pipe(res)
+          } else {
+            const { Readable } = await import('node:stream')
+            return Readable.fromWeb(r2Obj.stream).pipe(res)
+          }
+        }
+      } catch {
+        /* fallback */
+      }
+    }
+    return express.static(storage.localRoot())(req, res, next)
+  })
 
   app.get('/', (_req, res) => res.json({ name: 'KT Messenger Website API', health: '/api/health' }))
   app.use('/api', apiLimiter, routes)

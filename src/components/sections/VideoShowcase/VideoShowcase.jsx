@@ -161,9 +161,9 @@ export function VideoShowcase() {
           <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
             <FiPlay className="text-brand-strong" /> {t('Interactive Product Video Demonstrator')}
           </div>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
+          <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
             {t('See How Every Feature Works in Action')}
-          </h2>
+          </h1>
           <p className="mt-3 text-base text-body">
             {t('Tap a feature tab below to watch real time simulated mobile video animations.')}
           </p>

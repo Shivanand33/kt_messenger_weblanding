@@ -18,8 +18,8 @@ export function MultiDevice() {
       reverse
       eyebrow={t('Desktop')}
       eyebrowIcon={<FiMonitor />}
-      title={t('Get KT Messenger on your desktop.')}
-      description={t('Chat and call on a larger screen with the KT Messenger desktop app everything stays perfectly in sync with your phone, even when it is asleep.')}
+      title={t('Connect Across All Your Devices')}
+      description={t('Your conversations should move with you. KT Messenger provides a seamless experience across mobile devices, desktop platforms, and web access. Start a conversation from one device and continue from another without losing connection.')}
       media={<DesktopAppMockup />}
       cta={
         <Button>

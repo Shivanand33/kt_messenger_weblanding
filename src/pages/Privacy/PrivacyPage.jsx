@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -45,6 +45,9 @@ import privateImg from '../../assets/images/private.jpg'
 import groupImg from '../../assets/images/group.jpg'
 import businessImg from '../../assets/images/business.jpg'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
+import { api } from '../../services/apiClient'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
 
 
 const privacyControlsCards = [
@@ -113,6 +116,12 @@ const discoverMoreFeatures = [
 ]
 
 export function PrivacyPage() {
+  useSeo({
+    title: 'KT Messenger Privacy Policy | Secure Messaging App.',
+    description: 'Learn how KT Messenger protects your privacy with secure messaging, private chats, encryption, privacy controls, and safe communication features.',
+    path: '/privacy',
+  })
+
   // Per-page SEO from admin (Website Content -> seo.privacy).
   // No block configured = unchanged behaviour.
   useAdminSeo('privacy', '/privacy')
@@ -120,7 +129,7 @@ export function PrivacyPage() {
   const navigate = useNavigate()
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
-  const [activeFaq, setActiveFaq] = useState(1)
+  const [activeFaq, setActiveFaq] = useState(0)
   const [activePrivacyModal, setActivePrivacyModal] = useState('lastSeen')
   const [selectedLastSeen, setSelectedLastSeen] = useState('Everyone')
   const [selectedOnline, setSelectedOnline] = useState('Everyone')
@@ -144,53 +153,64 @@ export function PrivacyPage() {
     discoverRef.current.scrollBy({ left: dir * 300, behavior: 'smooth' })
   }
 
-  const faqs = [
+  const localFaqs = [
     {
-      q: 'What is end to end encryption?',
-      a: 'End to end encryption ensures that only you and the recipient hold the cryptographic keys to read your messages. Not even KT Messenger servers can decrypt your content.'
+      q: t('Is KT Messenger a secure messaging app?'),
+      a: t('KT Messenger provides privacy and security features designed to support secure online communication. Users can review the Privacy Policy to understand how information is handled.')
     },
     {
-      q: 'What is two step verification?',
-      a: 'Two step verification adds a required 6-digit PIN whenever your phone number is re registered on KT Messenger, protecting you against SIM swap attacks.'
+      q: t('Is KT Messenger a private chat app?'),
+      a: t('KT Messenger provides features for private communication and messaging. Users can review the privacy information to understand how their information and conversations are handled.')
     },
     {
-      q: 'Is KT Messenger private and secure?',
-      a: 'Yes. All messages, calls, photos, videos, and cloud backups are protected by default KT Encryption Protocol 256-bit encryption.'
+      q: t('What makes a safe messaging app?'),
+      a: t('A safe messaging app should consider areas such as encryption, account protection, privacy controls, data handling, and transparency about how information is used.')
     },
     {
-      q: 'How do I block and report spam contacts?',
-      a: 'Open any contact info screen, tap "Block & Report". The last 5 messages will be securely reviewed to eliminate spam.'
+      q: t('What information does a messaging app collect?'),
+      a: t('The information collected can vary by platform and how its features are used. KT Messenger\'s Privacy Policy explains the types of information that may be collected and how it may be handled.')
+    },
+    {
+      q: t('How can I protect my privacy when using a messaging app?'),
+      a: t('Use available privacy settings, protect your account credentials, review permissions, and understand the platform\'s Privacy Policy before sharing sensitive information.')
     }
   ]
+
+  const [remoteFaqs] = useRemoteContent(
+    () => api.listFaqs('privacy'),
+    null,
+    (rows) => Array.isArray(rows) && rows.length > 0,
+  )
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
 
   return (
     <MainLayout>
       
       {/* 1. HERO SECTION: MESSAGE PRIVATELY */}
-      <section className="relative overflow-hidden bg-cream dark:bg-surface border-b border-line py-16 sm:py-24 lg:py-28">
+      <section className="relative overflow-hidden bg-cream dark:bg-surface border-b border-line py-10 sm:py-14 lg:py-16">
         <div aria-hidden className="pointer-events-none absolute -right-24 top-10 h-96 w-96 rounded-full bg-brand-strong/10 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl" />
 
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
             <div>
               <Reveal from="up">
                 <span className="inline-flex items-center gap-2 rounded-full border border-brand-strong/20 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                   <FiShield className="text-brand-strong" /> {t('Default End to End Encryption')}
                 </span>
-                <h1 className="mt-6 text-[3rem] font-extrabold leading-[1.02] tracking-tight text-ink sm:text-6xl lg:text-[4.8rem]">
-                  {t('Message')} <span className="text-brand-strong">{t('privately')}</span>
+                <h1 className="mt-4 text-3xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[3.25rem] lg:leading-[1.15]">
+                  {t('KT Messenger Privacy – Secure Messaging App')}
                 </h1>
               </Reveal>
 
               <Reveal from="up" delay={0.06}>
-                <p className="mt-6 max-w-lg text-lg leading-relaxed text-body">
-                  {t('Your privacy is our priority. With end to end encryption on KT Messenger, your personal messages, photos, calls and more stay between you and the people you choose, meaning not even KT Messenger can see them.')}
+                <p className="mt-5 max-w-xl text-lg sm:text-xl leading-relaxed text-body">
+                  {t('KT Messenger is a secure messaging app designed to help users communicate, connect, and share information online. Learn how privacy, secure communication, and private chat features can support a safer messaging experience.')}
                 </p>
               </Reveal>
 
               <Reveal from="up" delay={0.12}>
-                <div className="mt-8 flex flex-wrap gap-4">
+                <div className="mt-7 flex flex-wrap gap-4">
                   <Button size="lg" onClick={openDownloadModal}>
                     {t('Download App')} <FiDownload />
                   </Button>
@@ -224,7 +244,7 @@ export function PrivacyPage() {
                       <img src={img(maleAvatar)} alt="David Miller" className="h-8 w-8 rounded-full object-cover border-2 border-emerald-400 shadow" />
                       <div>
                         <h4 className="font-extrabold text-xs tracking-tight">David Miller</h4>
-                        <span className="text-[9px] text-sky-200 block font-medium">online • E2EE Active</span>
+                        <span className="text-[9px] text-sky-200 block font-medium">online</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-white/90">
@@ -289,6 +309,112 @@ export function PrivacyPage() {
                 </div>
               </div>
             </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      {/* PRIVACY OVERVIEW & FRAMEWORK SECTION */}
+      <section className="py-20 bg-cream dark:bg-surface border-b border-line">
+        <Container>
+          <Reveal from="up" className="max-w-3xl mx-auto text-center mb-12">
+            <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
+              {t('Privacy Framework')}
+            </span>
+            <h2 className="mt-4 text-3xl font-extrabold text-ink sm:text-4xl lg:text-5xl">
+              {t('Privacy on an Messaging App')}
+            </h2>
+            <p className="mt-4 text-lg text-body leading-relaxed">
+              {t('Messaging apps should allow users to message quickly and easily while also explaining how their information gathers and uses that information. KT Messenger is unique because it outlines its privacy practices in order to assist its users in their decision making.')}
+            </p>
+          </Reveal>
+
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <Reveal from="up" delay={0.05}>
+              <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft flex flex-col justify-between">
+                <div>
+                  <h2 className="text-xl font-bold text-ink">
+                    {t('private chat app')}
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-body">
+                    {t('A chat app lets you connect with people directly. KT Messenger allows you to have secure and private conversations with your selected contacts with all the features to support that.')}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal from="up" delay={0.1}>
+              <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft flex flex-col justify-between">
+                <div>
+                  <h2 className="text-xl font-bold text-ink">
+                    {t('Safest Messaging App and Privacy')}
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-body">
+                    {t('When finding the safest messaging apps, user privacy is the most important consideration. Factors include encryption, privacy controls, and how secure user accounts and data are. KT Messenger has features that enable secure digital communication and privacy.')}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal from="up" delay={0.15}>
+              <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-bold text-ink">
+                    {t('Online Messaging Platform')}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-body">
+                    {t('Understanding how online messaging platforms manage the privacy of their users helps users better understand the tradeoffs of the services. The more users know, the more likely users are to choose products which respect their privacy.')}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal from="up" delay={0.2}>
+              <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-bold text-ink">
+                    {t('Real-Time Messaging App')}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-body">
+                    {t('Real-time messaging apps allow users to stay connected through instant messages. As a messaging app that combines privacy features with real-time communication, KT Messenger makes instant messaging even more convenient.')}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal from="up" delay={0.25}>
+              <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xl font-bold text-ink">
+                    {t('Free Messaging App with Privacy')}
+                  </h4>
+                  <p className="mt-3 text-sm leading-relaxed text-body">
+                    {t('Free messaging apps should not compromise privacy for users. Anyone that employs the use of a messaging service should know the information collection process and how the vendor will manipulate the information.')}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal from="up" delay={0.3}>
+              <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xl font-bold text-ink">
+                    {t('End-to-End Encrypted Messaging')}
+                  </h4>
+                  <p className="mt-3 text-sm leading-relaxed text-body">
+                    {t('Content of messages can be protected by end-to-end encrypted messaging platforms while messages traverse the internet. Users should review the platform\'s own encryption and privacy information.')}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          <div className="mt-8 text-center max-w-2xl mx-auto rounded-2xl bg-brand-soft/60 p-6 border border-brand-strong/20">
+            <h5 className="text-lg font-bold text-ink">
+              {t('Messaging App for privacy')}
+            </h5>
+            <p className="mt-2 text-sm text-body leading-relaxed">
+              {t('Users need to trust that their data is safe. KT Messenger shares its privacy information to guide users of its messaging services.')}
+            </p>
           </div>
         </Container>
       </section>
@@ -1183,7 +1309,7 @@ export function PrivacyPage() {
               {discoverMoreFeatures.map((item, idx) => (
                 <div key={idx} className="w-[280px] shrink-0">
                   <div className="overflow-hidden rounded-[20px]">
-                    <img src={img(item.image)} alt={t(item.title)} className="h-44 w-full object-cover transition-transform duration-300 hover:scale-105" />
+                    <img src={img(item.image)} alt={imgAlt(item.image, t(item.title))} className="h-44 w-full object-cover transition-transform duration-300 hover:scale-105" />
                   </div>
                   <h3 className="mt-4 text-xl font-extrabold text-ink">{t(item.title)}</h3>
                   <button

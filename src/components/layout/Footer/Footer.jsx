@@ -180,15 +180,7 @@ const sitemap = [
       { label: 'Status', to: '/status' },
       { label: 'KT AI', to: '/ai' },
       { label: 'KT Plus', to: '/plus' },
-    ],
-  },
-  {
-    group: 'In chat surfaces',
-    links: [
-      { label: 'News', to: '/news' },
-      { label: 'Markets', to: '/markets' },
-      { label: 'Wallet', to: '/wallet' },
-      { label: 'Marketplace', to: '/marketplace' },
+      { label: 'KT Minis', to: '/minis' },
       { label: 'Notes', to: '/notes' },
     ],
   },

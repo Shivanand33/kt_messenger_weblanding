@@ -37,21 +37,47 @@ export function imageKey(src) {
   return base.replace(HASH, '$1')
 }
 
+import { getKeywordFallback } from './imageAlt'
+
 /**
  * Build the resolver the app uses at render time.
  * Returns the override when one exists, otherwise the original source, so an
  * empty or unreachable override map leaves every image exactly as it is today.
  */
-export function makeImageResolver(overrides) {
+export function makeImageResolver(overrides, altOverrides = {}) {
   const map = overrides && typeof overrides === 'object' ? overrides : {}
-  return function img(src) {
+  const alts = altOverrides && typeof altOverrides === 'object' ? altOverrides : {}
+
+  function resolveUrl(src) {
     if (typeof src !== 'string' || !src) return src
     const key = imageKey(src)
     if (!key) return src
     const replacement = map[key]
-    // An override equal to the key means "unchanged" — the identity value the
-    // importer seeds. Only a real, different URL takes effect.
+    if (typeof replacement === 'object' && replacement?.url) {
+      return replacement.url
+    }
     if (typeof replacement === 'string' && replacement && replacement !== key) return replacement
     return src
   }
+
+  function resolveAlt(src, fallbackText) {
+    if (typeof src !== 'string' || !src) return getKeywordFallback(src, fallbackText)
+    const key = imageKey(src)
+    const replacement = map[key]
+    if (typeof replacement === 'object' && replacement?.alt && typeof replacement.alt === 'string' && replacement.alt.trim()) {
+      return replacement.alt.trim()
+    }
+    if (typeof replacement === 'object' && replacement?.altText && typeof replacement.altText === 'string' && replacement.altText.trim()) {
+      return replacement.altText.trim()
+    }
+    if (alts[key] && typeof alts[key] === 'string' && alts[key].trim()) {
+      return alts[key].trim()
+    }
+    if (alts[src] && typeof alts[src] === 'string' && alts[src].trim()) {
+      return alts[src].trim()
+    }
+    return getKeywordFallback(src, fallbackText)
+  }
+
+  return { resolveUrl, resolveAlt }
 }

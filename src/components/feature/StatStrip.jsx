@@ -32,16 +32,6 @@ function Stat({ item, index }) {
  * Row of animated counters. Each number counts up once when it scrolls in.
  * `items`: [{ value, decimals?, prefix?, suffix?, label, icon?, hint? }]
  */
-export function StatStrip({ items, className = '', cols = 'sm:grid-cols-2 lg:grid-cols-4' }) {
-  return (
-    <section className={`border-y border-line bg-cream py-12 dark:bg-cream-2 ${className}`}>
-      <Container>
-        <div className={`grid grid-cols-2 gap-3 sm:gap-5 ${cols}`}>
-          {items.map((item, index) => (
-            <Stat key={item.label} item={item} index={index} />
-          ))}
-        </div>
-      </Container>
-    </section>
-  )
+export function StatStrip() {
+  return null
 }

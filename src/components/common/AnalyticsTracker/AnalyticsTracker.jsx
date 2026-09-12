@@ -21,6 +21,12 @@ export function AnalyticsTracker() {
     if (lastPath.current === pathname) return
     lastPath.current = pathname
     trackPageView(pathname)
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('config', 'G-820D237JNX', {
+        page_path: pathname,
+      })
+    }
   }, [pathname])
 
   // Heartbeat only while the tab is actually visible, so a backgrounded tab

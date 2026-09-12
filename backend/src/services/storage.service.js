@@ -64,7 +64,7 @@ export const storage = {
           CacheControl: 'public, max-age=31536000, immutable',
         }),
       )
-      return { key, url: `${publicUrl}/${key}` }
+      return { key, url: `${env.storage.publicUrl}/${key}` }
     }
 
     // Default: local disk.
@@ -72,6 +72,31 @@ export const storage = {
     ensureDir(dir)
     fs.writeFileSync(path.join(localDir, key), buffer)
     return { key, url: `${env.storage.publicUrl}/${folder}/${filename}` }
+  },
+
+  async getObjectStream(key) {
+    if (env.storage.provider === 'r2') {
+      const { bucket, publicUrl } = env.storage.r2
+      if (publicUrl) {
+        try {
+          const r2Res = await fetch(`${publicUrl}/${key}`)
+          if (r2Res.ok) {
+            return { stream: r2Res.body, contentType: r2Res.headers.get('content-type') }
+          }
+        } catch {
+          /* fallback to S3 client */
+        }
+      }
+      try {
+        const { GetObjectCommand } = await import('@aws-sdk/client-s3')
+        const cmd = new GetObjectCommand({ Bucket: bucket, Key: key })
+        const res = await getR2Client().send(cmd)
+        return { stream: res.Body, contentType: res.ContentType }
+      } catch {
+        return null
+      }
+    }
+    return null
   },
 
   async remove(key) {
