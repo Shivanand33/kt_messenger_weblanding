@@ -241,7 +241,7 @@ export function PrivacyPage() {
                   {/* Header (Blue wave gradient) */}
                   <div className="bg-gradient-to-r from-sky-500 via-sky-600 to-blue-600 p-2.5 text-white shadow-md flex items-center justify-between shrink-0">
                     <div className="flex items-center gap-2.5">
-                      <img src={img(maleAvatar)} alt="David Miller" className="h-8 w-8 rounded-full object-cover border-2 border-emerald-400 shadow" />
+                      <img src={img(maleAvatar)} alt={imgAlt(maleAvatar, "David Miller")} className="h-8 w-8 rounded-full object-cover border-2 border-emerald-400 shadow" />
                       <div>
                         <h4 className="font-extrabold text-xs tracking-tight">David Miller</h4>
                         <span className="text-[9px] text-sky-200 block font-medium">online</span>
@@ -279,7 +279,7 @@ export function PrivacyPage() {
                     {/* Attachment Card */}
                     <div className="flex justify-start">
                       <div className="rounded-2xl bg-white dark:bg-slate-800 p-1 text-slate-900 dark:text-white max-w-[85%] border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <img src={img(privateImg)} alt="Strawberry Attachment" className="h-24 w-full object-cover rounded-xl" />
+                        <img src={img(privateImg)} alt={imgAlt(privateImg, "Strawberry Attachment")} className="h-24 w-full object-cover rounded-xl" />
                         <div className="text-[8px] text-slate-400 text-right pr-2 pt-0.5 font-mono">10:05 am</div>
                       </div>
                     </div>
@@ -460,7 +460,7 @@ export function PrivacyPage() {
 
                     <div className="mt-3 space-y-2.5">
                       <div className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-cream-2 border border-slate-100 dark:border-slate-800/60 shadow-sm">
-                        <img src={img(maleAvatar)} alt="David Miller" className="h-10 w-10 rounded-full object-cover border border-sky-500/40" />
+                        <img src={img(maleAvatar)} alt={imgAlt(maleAvatar, "David Miller")} className="h-10 w-10 rounded-full object-cover border border-sky-500/40" />
                         <div className="flex-1">
                           <div className="flex justify-between font-bold text-xs text-ink">
                             <span>David Miller</span>
@@ -601,7 +601,7 @@ export function PrivacyPage() {
                     {/* Fresh Red Strawberry Image Attachment */}
                     <div className="flex justify-start">
                       <div className="rounded-2xl bg-white dark:bg-slate-800 p-1 text-slate-900 dark:text-white max-w-[84%] border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <img src={img(privateImg)} alt="Strawberry Attachment" className="h-32 w-full object-cover rounded-xl" />
+                        <img src={img(privateImg)} alt={imgAlt(privateImg, "Strawberry Attachment")} className="h-32 w-full object-cover rounded-xl" />
                         <div className="text-[8px] text-slate-400 text-right pr-2 pt-0.5 font-mono">2:37 pm</div>
                       </div>
                     </div>

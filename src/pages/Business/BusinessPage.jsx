@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -778,7 +778,7 @@ export function BusinessPage() {
 
           <Reveal from="scale" delay={0.1} className="relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
-              <img src={img(heroImg)} alt={tr('A small business owner helping a customer')} className="h-[420px] w-full rounded-[28px] object-cover sm:h-[520px] shadow-2xl border border-slate-700" />
+              <img src={img(heroImg)} alt={imgAlt(heroImg, tr('A small business owner helping a customer'))} className="h-[420px] w-full rounded-[28px] object-cover sm:h-[520px] shadow-2xl border border-slate-700" />
 
               <Sparkle className="absolute -right-2 -top-5 h-14 w-14 text-sky-400" />
               <Sparkle className="absolute right-10 top-6 h-7 w-7 text-sky-400/70" />
@@ -853,7 +853,7 @@ export function BusinessPage() {
       <section className="bg-cream py-20 lg:py-28 dark:bg-surface">
         <div className="mx-auto grid max-w-[1200px] items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
           <Reveal from="left">
-            <img src={img(whyImg)} alt={tr('A business owner working on a laptop')} className="h-[360px] w-full rounded-[28px] object-cover lg:h-[460px] shadow-card" />
+            <img src={img(whyImg)} alt={imgAlt(whyImg, tr('A business owner working on a laptop'))} className="h-[360px] w-full rounded-[28px] object-cover lg:h-[460px] shadow-card" />
           </Reveal>
           <Reveal from="right">
             <h2 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">

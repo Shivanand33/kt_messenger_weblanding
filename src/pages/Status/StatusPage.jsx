@@ -1,4 +1,4 @@
-import { img, imgAlt } from '../../utils/imageOverrides'
+import { img, imgAlt, imgAltOnly } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -219,7 +219,7 @@ export function StatusPage() {
                   {/* Status Header Bar */}
                   <div className="absolute top-6 inset-x-3 z-30 flex items-center justify-between text-white">
                     <div className="flex items-center gap-2">
-                      <img src={img(familyAvatar)} alt="" className="h-8 w-8 rounded-full border border-white object-cover" />
+                      <img src={img(familyAvatar)} alt={imgAltOnly(familyAvatar)} className="h-8 w-8 rounded-full border border-white object-cover" />
                       <div>
                         <p className="text-xs font-bold">{stories[activeStory].name}</p>
                         <p className="text-[10px] text-white/70">{stories[activeStory].time} • {t('Encrypted')}</p>
@@ -230,7 +230,7 @@ export function StatusPage() {
                   {/* Story Image */}
                   <img
                     src={img(stories[activeStory].img)}
-                    alt={t('Status story')}
+                    alt={imgAlt(stories[activeStory].img, t('Status story'))}
                     className="h-full w-full object-cover"
                   />
 

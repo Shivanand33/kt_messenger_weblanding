@@ -1,4 +1,4 @@
-import { img } from '../../../utils/imageOverrides'
+import { img, imgAltOnly } from '../../../utils/imageOverrides'
 import { motion } from 'framer-motion'
 import {
   FiChevronLeft,
@@ -78,7 +78,7 @@ export function KtCallScreen({ className = '' }) {
 
           <motion.img
             src={callerAvatar}
-            alt=""
+            alt={imgAltOnly(callerAvatar)}
             animate={{ scale: [1, 1.04, 1] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
             className="mt-8 h-24 w-24 rounded-full border-4 border-white object-cover shadow-md"
@@ -172,7 +172,7 @@ export function KtCallScreen({ className = '' }) {
           {/* Remote feed — slow drift reads as a live camera */}
           <motion.img
             src={videoFeed}
-            alt=""
+            alt={imgAltOnly(videoFeed)}
             animate={{ scale: [1.08, 1.16, 1.08], x: [0, -8, 0] }}
             transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
             className="h-full w-full object-cover"
@@ -199,7 +199,7 @@ export function KtCallScreen({ className = '' }) {
               <FiRefreshCw />
             </span>
             <div className="h-20 w-14 overflow-hidden rounded-xl border border-white/40 bg-slate-800 shadow-lg">
-              <img src={img(selfAvatar)} alt="" className="h-full w-full object-cover" />
+              <img src={img(selfAvatar)} alt={imgAltOnly(selfAvatar)} className="h-full w-full object-cover" />
             </div>
           </div>
 

@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAltOnly } from '../../utils/imageOverrides'
 import { FiVideo, FiMic, FiMonitor, FiPhoneOff, FiLock } from 'react-icons/fi'
 import { useLanguage } from '../../context/LanguageContext'
 import feed1 from '../../assets/images/hero.jpg'
@@ -43,7 +43,7 @@ export function BrowserCallMockup({ className = '' }) {
         <div className="grid grid-cols-3 gap-1 bg-black p-1">
           {tiles.map((tile) => (
             <div key={tile.name} className="relative aspect-[4/3] overflow-hidden rounded-md">
-              <img src={img(tile.src)} alt="" className="h-full w-full object-cover" />
+              <img src={img(tile.src)} alt={imgAltOnly(tile.src)} className="h-full w-full object-cover" />
               <span className="absolute bottom-1 left-1 rounded bg-black/55 px-1.5 py-0.5 text-[9px] font-medium text-white">
                 {t(tile.name)}
               </span>

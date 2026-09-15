@@ -1,4 +1,4 @@
-import { img } from '../../../utils/imageOverrides'
+import { img, imgAlt } from '../../../utils/imageOverrides'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiPlay, FiPause, FiRotateCcw, FiPhone, FiVideo, FiMic, FiMicOff, FiMonitor, FiPhoneOff, FiVolume2 } from 'react-icons/fi'
@@ -72,7 +72,7 @@ export function CallAnimationVideo({ className = '' }) {
               transition={{ repeat: Infinity, duration: 1.2 }}
               className="h-20 w-20 rounded-full border-4 border-brand-strong p-1 mb-3"
             >
-              <img src={img(avatarFemale)} alt="Emiko" className="h-full w-full rounded-full object-cover" />
+              <img src={img(avatarFemale)} alt={imgAlt(avatarFemale, "Emiko")} className="h-full w-full rounded-full object-cover" />
             </motion.div>
             <h4 className="font-bold text-sm">Emiko Takahashi</h4>
             <p className="text-xs text-brand-ink font-medium mt-0.5 animate-pulse">{t('Incoming 1080p HD Video Call...')}</p>
@@ -86,11 +86,11 @@ export function CallAnimationVideo({ className = '' }) {
 
         {callState === 1 && (
           <div className="relative h-full w-full overflow-hidden rounded-xl bg-slate-900">
-            <img src={img(avatarFemale)} alt="Emiko" className="h-full w-full object-cover" />
+            <img src={img(avatarFemale)} alt={imgAlt(avatarFemale, "Emiko")} className="h-full w-full object-cover" />
             
             {/* Self PIP */}
             <div className="absolute top-2 right-2 h-20 w-16 overflow-hidden rounded-lg border-2 border-white/40 bg-slate-800 shadow-md">
-              <img src={img(avatarMale)} alt={t('You')} className="h-full w-full object-cover" />
+              <img src={img(avatarMale)} alt={imgAlt(avatarMale, t('You'))} className="h-full w-full object-cover" />
             </div>
 
             {/* Audio Spectrum overlay */}

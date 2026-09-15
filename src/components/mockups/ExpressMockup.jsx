@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { useState } from 'react'
 import { FiPlay, FiSmile, FiCheck, FiHeart } from 'react-icons/fi'
 import { useLanguage } from '../../context/LanguageContext'
@@ -47,7 +47,7 @@ export function ExpressMockup({ activeTab = 1, className = '' }) {
           <div className="pt-2">
             {/* Header info */}
             <div className="mb-2 flex items-center gap-2">
-              <img src={img(lillyAvatar)} alt="Lilly" className="h-6 w-6 rounded-full object-cover" />
+              <img src={img(lillyAvatar)} alt={imgAlt(lillyAvatar, "Lilly")} className="h-6 w-6 rounded-full object-cover" />
               <span className="text-xs font-semibold text-stone-800">Lilly</span>
             </div>
 
@@ -55,7 +55,7 @@ export function ExpressMockup({ activeTab = 1, className = '' }) {
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-stone-900">
               <img
                 src={img(sunsetImage)}
-                alt={t('Sunset landscape')}
+                alt={imgAlt(sunsetImage, t('Sunset landscape'))}
                 className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
               />
 
@@ -80,7 +80,7 @@ export function ExpressMockup({ activeTab = 1, className = '' }) {
       {activeTab === 0 && (
         <div className="rounded-3xl bg-white p-3 shadow-xl border border-stone-200">
           <div className="flex items-center gap-2 mb-3">
-            <img src={img(lillyAvatar)} alt="Lilly" className="h-6 w-6 rounded-full object-cover" />
+            <img src={img(lillyAvatar)} alt={imgAlt(lillyAvatar, "Lilly")} className="h-6 w-6 rounded-full object-cover" />
             <span className="text-xs font-semibold text-stone-800">Lilly</span>
           </div>
 
@@ -108,14 +108,14 @@ export function ExpressMockup({ activeTab = 1, className = '' }) {
       {activeTab === 2 && (
         <div className="rounded-3xl bg-white p-4 shadow-xl border border-stone-200">
           <div className="flex items-center gap-2 mb-3">
-            <img src={img(lillyAvatar)} alt="Lilly" className="h-6 w-6 rounded-full object-cover" />
+            <img src={img(lillyAvatar)} alt={imgAlt(lillyAvatar, "Lilly")} className="h-6 w-6 rounded-full object-cover" />
             <span className="text-xs font-semibold text-stone-800">{t('Lilly (Video Note)')}</span>
           </div>
 
           {/* Circular Video Note Frame */}
           <div className="mx-auto relative flex h-40 w-40 items-center justify-center rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 p-1 shadow-lg">
             <div className="h-full w-full overflow-hidden rounded-full bg-stone-900 relative">
-              <img src={img(sunsetImage)} alt={t('Video preview')} className="h-full w-full object-cover" />
+              <img src={img(sunsetImage)} alt={imgAlt(sunsetImage, t('Video preview'))} className="h-full w-full object-cover" />
               <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-emerald-600 shadow-md">
                   <FiPlay className="ml-0.5 text-xl" />
@@ -133,7 +133,7 @@ export function ExpressMockup({ activeTab = 1, className = '' }) {
       {activeTab === 3 && (
         <div className="rounded-3xl bg-[#d9fdd3] p-4 shadow-xl border border-emerald-200">
           <div className="flex items-center gap-3">
-            <img src={img(lillyAvatar)} alt="Lilly" className="h-10 w-10 rounded-full object-cover" />
+            <img src={img(lillyAvatar)} alt={imgAlt(lillyAvatar, "Lilly")} className="h-10 w-10 rounded-full object-cover" />
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-600 text-white">
               <FiPlay className="ml-0.5 text-lg" />
             </div>

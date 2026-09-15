@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -380,7 +380,7 @@ export function MessagingPage() {
                 {/* Media Card 1 */}
                 <div className="w-[320px] shrink-0">
                   <div className="h-44 overflow-hidden rounded-2xl">
-                    <img src={img(weddingImg)} alt={t('Photos')} className="h-full w-full object-cover" />
+                    <img src={img(weddingImg)} alt={imgAlt(weddingImg, t('Photos'))} className="h-full w-full object-cover" />
                   </div>
                   <h3 className="mt-4 text-xl font-bold text-ink">{t('4K Photo Bundles')}</h3>
                   <p className="mt-2 text-xs leading-relaxed text-body">{t('Share albums of up to 100 full res photos simultaneously without loss of details.')}</p>
@@ -389,7 +389,7 @@ export function MessagingPage() {
                 {/* Media Card 2 */}
                 <div className="w-[320px] shrink-0">
                   <div className="relative h-44 overflow-hidden rounded-2xl">
-                    <img src={img(hdImg)} alt={t('HD Video')} className="h-full w-full object-cover" />
+                    <img src={img(hdImg)} alt={imgAlt(hdImg, t('HD Video'))} className="h-full w-full object-cover" />
                     <span className="absolute top-2 left-2 rounded-md bg-brand-strong px-2 py-0.5 text-[10px] font-bold text-white">
                       HD 60FPS
                     </span>

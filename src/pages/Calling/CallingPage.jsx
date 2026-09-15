@@ -240,7 +240,7 @@ export function CallingPage() {
                   <div className="mt-4 relative h-[70%] w-full overflow-hidden rounded-2xl bg-slate-900 border border-slate-800">
                     <img
                       src={img(avatarFemale)}
-                      alt={t('Call partner')}
+                      alt={imgAlt(avatarFemale, t('Call partner'))}
                       className="h-full w-full object-cover transition-all duration-300"
                     />
                     <div className="absolute bottom-3 left-3 rounded-lg bg-black/60 px-2.5 py-1 text-xs font-medium backdrop-blur-md">
@@ -249,7 +249,7 @@ export function CallingPage() {
 
                     {/* Self Video PIP */}
                     <div className="absolute top-3 right-3 h-28 w-20 overflow-hidden rounded-xl border-2 border-white/40 bg-slate-800 shadow-lg">
-                      <img src={img(avatarMale)} alt={t('You')} className="h-full w-full object-cover" />
+                      <img src={img(avatarMale)} alt={imgAlt(avatarMale, t('You'))} className="h-full w-full object-cover" />
                     </div>
                   </div>
 

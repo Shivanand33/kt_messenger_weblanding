@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -358,7 +358,7 @@ export function AppsPage() {
                 <div key={feature.title} className="w-[300px] shrink-0 snap-start flex flex-col justify-between">
                   <div>
                     <div className="overflow-hidden rounded-[20px]">
-                      <img src={img(feature.image)} alt={t(feature.title)} loading="lazy" className="h-52 w-full object-cover transition-transform duration-300 hover:scale-105" />
+                      <img src={img(feature.image)} alt={imgAlt(feature.image, t(feature.title))} loading="lazy" className="h-52 w-full object-cover transition-transform duration-300 hover:scale-105" />
                     </div>
                     <h3 className="mt-4 text-xl font-extrabold text-ink">{t(feature.title)}</h3>
                     <p className="mt-2 text-sm text-body leading-relaxed">{t(feature.desc)}</p>

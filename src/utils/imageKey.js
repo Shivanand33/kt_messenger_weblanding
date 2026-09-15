@@ -60,8 +60,14 @@ export function makeImageResolver(overrides, altOverrides = {}) {
     return src
   }
 
-  function resolveAlt(src, fallbackText) {
-    if (typeof src !== 'string' || !src) return getKeywordFallback(src, fallbackText)
+  /**
+   * The ALT text the admin actually typed for this image, or '' when they left
+   * it blank. Kept separate from `resolveAlt` so a decorative image can pick up
+   * an admin-set ALT without inheriting the keyword fallback — an image nobody
+   * labelled must stay `alt=""` rather than gain invented text.
+   */
+  function resolveAdminAlt(src) {
+    if (typeof src !== 'string' || !src) return ''
     const key = imageKey(src)
     const replacement = map[key]
     if (typeof replacement === 'object' && replacement?.alt && typeof replacement.alt === 'string' && replacement.alt.trim()) {
@@ -76,8 +82,13 @@ export function makeImageResolver(overrides, altOverrides = {}) {
     if (alts[src] && typeof alts[src] === 'string' && alts[src].trim()) {
       return alts[src].trim()
     }
-    return getKeywordFallback(src, fallbackText)
+    return ''
   }
 
-  return { resolveUrl, resolveAlt }
+  function resolveAlt(src, fallbackText) {
+    if (typeof src !== 'string' || !src) return getKeywordFallback(src, fallbackText)
+    return resolveAdminAlt(src) || getKeywordFallback(src, fallbackText)
+  }
+
+  return { resolveUrl, resolveAlt, resolveAdminAlt }
 }

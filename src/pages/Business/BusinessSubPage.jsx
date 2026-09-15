@@ -1,4 +1,4 @@
-import { img } from '../../utils/imageOverrides'
+import { img, imgAlt } from '../../utils/imageOverrides'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useEffect } from 'react'
@@ -79,7 +79,7 @@ function HeroVisual({ data }) {
         transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         className="overflow-hidden rounded-[28px] border border-line bg-surface shadow-float"
       >
-        <img src={img(IMAGES[data.image] || imgBusiness)} alt={data.title} className="h-[380px] w-full object-cover" />
+        <img src={img(IMAGES[data.image] || imgBusiness)} alt={imgAlt(IMAGES[data.image] || imgBusiness, data.title)} className="h-[380px] w-full object-cover" />
       </motion.div>
       {/* Floating accent — a verified KT feature chip */}
       <motion.div
@@ -218,7 +218,7 @@ export function BusinessSubPage() {
                 <div className="overflow-hidden rounded-[28px] border border-line shadow-card">
                   <img
                     src={img(IMAGES[data.spotlight.image] || imgBusiness)}
-                    alt={data.spotlight.title}
+                    alt={imgAlt(IMAGES[data.spotlight.image] || imgBusiness, data.spotlight.title)}
                     className="h-[300px] w-full object-cover lg:h-[420px]"
                   />
                 </div>

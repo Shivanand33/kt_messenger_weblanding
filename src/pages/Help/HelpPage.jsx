@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FiChevronDown, FiSearch, FiLink, FiX, FiFlag, FiShield, FiCloud, FiMessageCircle, FiUsers, FiBriefcase, FiChevronRight, FiDownload } from 'react-icons/fi'
@@ -15,8 +15,76 @@ import { PhoneChatMockup } from '../../components/mockups/PhoneChatMockup'
 import { useSwipeTheme } from '../../hooks/useSwipeTheme'
 import { useLanguage } from '../../context/LanguageContext'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { api } from '../../services/apiClient'
+import { parseBody } from '../../utils/parseBody'
 
 const D = <MdArticle />
+
+// Help Center categories are managed in admin, where the icon is a free-text
+// name. Anything not listed here (including a blank one) falls back to the
+// generic article glyph, so an unknown name can never break the sidebar.
+const HELP_ICONS = {
+  flag: <MdFlag />,
+  chat: <MdChat />,
+  call: <MdCall />,
+  lock: <MdLock />,
+  groups: <MdGroups />,
+  campaign: <MdCampaign />,
+  person: <MdPerson />,
+  storefront: <MdStorefront />,
+  business: <MdBusinessCenter />,
+  payments: <MdCreditCard />,
+  devices: <MdDevices />,
+  contacts: <MdContacts />,
+  help: <MdHelpOutline />,
+}
+
+const helpIcon = (name) => HELP_ICONS[String(name || '').trim().toLowerCase()] || D
+
+/**
+ * Reshape GET /help/tree into exactly the structure the sidebar already
+ * renders: icons become elements and articles become plain titles, so the
+ * markup below is identical whether the data came from admin or the
+ * hardcoded fallback.
+ */
+function normalizeHelpTree(remote) {
+  return remote.map((category, ci) => ({
+    // Two categories may legitimately share a label, so the position makes the
+    // key unique — otherwise React collides and both branches expand together.
+    key: `c${ci}-${category.slug || category.label}`,
+    label: category.label,
+    icon: helpIcon(category.icon),
+    subs: (category.subs || []).map((sub, si) => ({
+      key: `s${ci}-${si}-${sub.slug || sub.label}`,
+      label: sub.label,
+      icon: helpIcon(sub.icon),
+      articles: (sub.articles || []).map((a) => a.title),
+    })),
+  }))
+}
+
+/** Give the hardcoded fallback the same key shape as the admin tree. */
+function withKeys(local) {
+  return local.map((category, ci) => ({
+    ...category,
+    key: `c${ci}-${category.label}`,
+    subs: category.subs.map((sub, si) => ({ ...sub, key: `s${ci}-${si}-${sub.label}` })),
+  }))
+}
+
+/** title -> slug, so selecting an admin article can fetch its real body. */
+function buildSlugIndex(remote) {
+  const index = {}
+  for (const category of remote) {
+    for (const sub of category.subs || []) {
+      for (const a of sub.articles || []) {
+        if (a.title && a.slug) index[a.title] = a.slug
+      }
+    }
+  }
+  return index
+}
 
 const helpTree = [
   {
@@ -156,6 +224,34 @@ const footerColumns = [
 ]
 
 const proseClass = 'space-y-5 text-[15px] leading-7 text-body'
+
+/**
+ * Body written in the admin Help Center. Bodies arrive as one string that may
+ * be HTML or markdown-ish, so they go through the same parser the Blog uses —
+ * which strips every tag rather than injecting raw HTML.
+ */
+function AdminArticleBody({ body }) {
+  const blocks = parseBody(body)
+  if (!blocks.length) return null
+
+  return (
+    <div className={proseClass}>
+      {blocks.map((block, i) => {
+        if (block.type === 'h') {
+          return <h3 key={i} className="text-xl font-bold text-ink">{block.text}</h3>
+        }
+        if (block.type === 'ul') {
+          return (
+            <ul key={i} className="list-disc space-y-2 pl-5">
+              {block.items.map((item, j) => <li key={j}>{item}</li>)}
+            </ul>
+          )
+        }
+        return <p key={i}>{block.text}</p>
+      })}
+    </div>
+  )
+}
 
 function ArticleBody({ title, tab }) {
   const navigate = useNavigate()
@@ -309,6 +405,30 @@ export function HelpPage() {
   const [activeTab, setActiveTab] = useState('Android')
   const [copied, setCopied] = useState(false)
 
+  // Help Center content from admin. Both fall back to the hardcoded copy, so
+  // an empty table or an unreachable API leaves the page exactly as it was.
+  const [remoteTree] = useRemoteContent(() => api.getHelpTree(), null)
+  const [remotePopular] = useRemoteContent(() => api.getPopularArticles(), null)
+
+  const tree = useMemo(
+    () => (Array.isArray(remoteTree) && remoteTree.length > 0 ? normalizeHelpTree(remoteTree) : withKeys(helpTree)),
+    [remoteTree],
+  )
+  const slugIndex = useMemo(
+    () => (Array.isArray(remoteTree) && remoteTree.length > 0 ? buildSlugIndex(remoteTree) : {}),
+    [remoteTree],
+  )
+  const popular = useMemo(
+    () =>
+      Array.isArray(remotePopular) && remotePopular.length > 0
+        ? remotePopular.map((a) => a.title).filter(Boolean)
+        : popularArticles,
+    [remotePopular],
+  )
+
+  // Body of the selected article, when it is one the admin manages.
+  const [articleBody, setArticleBody] = useState('')
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -347,13 +467,27 @@ export function HelpPage() {
     window.scrollTo(0, 0)
   }
 
-  const selectArticle = (catLabel, subLabel, title) => {
-    if (catLabel) setExpandedCat(catLabel)
-    if (subLabel) setExpandedSub(subLabel)
+  const selectArticle = (catKey, subKey, title) => {
+    if (catKey) setExpandedCat(catKey)
+    if (subKey) setExpandedSub(subKey)
     setActiveArticle({ title })
     setActiveTab('Android')
     setCopied(false)
     window.scrollTo(0, 0)
+
+    // Admin-managed articles carry a slug; fetch the body the editor wrote.
+    // Anything else keeps rendering the built-in ArticleBody.
+    setArticleBody('')
+    const slug = slugIndex[title]
+    if (!slug) return
+    api
+      .getHelpArticle(slug)
+      .then((article) => {
+        if (article?.body && String(article.body).trim()) setArticleBody(String(article.body))
+      })
+      .catch(() => {
+        /* no body from admin — the built-in guide stays on screen */
+      })
   }
 
   const copyLink = () => {
@@ -402,12 +536,12 @@ export function HelpPage() {
         {/* sidebar */}
         <aside className="border-b border-line lg:border-b-0 lg:border-r">
           <nav className="px-4 py-6 lg:sticky lg:top-16 lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto lg:px-5">
-            {helpTree.map((category) => {
-              const catOpen = expandedCat === category.label
+            {tree.map((category) => {
+              const catOpen = expandedCat === category.key
               return (
-                <div key={category.label}>
+                <div key={category.key}>
                   <button
-                    onClick={() => setExpandedCat(catOpen ? null : category.label)}
+                    onClick={() => setExpandedCat(catOpen ? null : category.key)}
                     aria-expanded={catOpen}
                     className={`flex w-full items-center gap-3.5 rounded-xl px-3 py-3 text-left transition-colors ${catOpen ? 'bg-surface-2' : 'hover:bg-surface-2'}`}
                   >
@@ -426,11 +560,11 @@ export function HelpPage() {
                         className="overflow-hidden pl-2"
                       >
                         {category.subs.map((sub) => {
-                          const subOpen = expandedSub === sub.label
+                          const subOpen = expandedSub === sub.key
                           return (
-                            <div key={sub.label}>
+                            <div key={sub.key}>
                               <button
-                                onClick={() => setExpandedSub(subOpen ? null : sub.label)}
+                                onClick={() => setExpandedSub(subOpen ? null : sub.key)}
                                 aria-expanded={subOpen}
                                 className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-surface-2"
                               >
@@ -448,12 +582,12 @@ export function HelpPage() {
                                     transition={{ duration: 0.2, ease: 'easeOut' }}
                                     className="overflow-hidden"
                                   >
-                                    {sub.articles.map((title) => {
+                                    {sub.articles.map((title, ai) => {
                                       const active = activeArticle?.title === title
                                       return (
-                                        <li key={title}>
+                                        <li key={`${title}-${ai}`}>
                                           <button
-                                            onClick={() => selectArticle(category.label, sub.label, title)}
+                                            onClick={() => selectArticle(category.key, sub.key, title)}
                                             className={`block w-full rounded-lg py-2 pl-[3.25rem] pr-3 text-left text-sm transition-colors ${active ? 'bg-brand-soft font-semibold text-brand-ink' : 'text-body hover:text-brand-ink'}`}
                                           >
                                             {t(title)}
@@ -506,7 +640,11 @@ export function HelpPage() {
                 ) : null}
 
                 <div className="mt-8 max-w-3xl">
-                  <ArticleBody title={activeArticle.title} tab={activeTab} />
+                  {articleBody ? (
+                    <AdminArticleBody body={articleBody} />
+                  ) : (
+                    <ArticleBody title={activeArticle.title} tab={activeTab} />
+                  )}
                 </div>
               </Reveal>
             ) : (
@@ -544,7 +682,7 @@ export function HelpPage() {
                   <div className="min-w-0">
                     <h2 className="text-2xl font-bold text-ink">{t('Popular Help Steps')}</h2>
                     <ul className="mt-6 space-y-4">
-                      {popularArticles.map((article) => (
+                      {popular.map((article) => (
                         <li key={article}>
                           <button
                             onClick={() => selectArticle(null, null, article)}

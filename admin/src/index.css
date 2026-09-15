@@ -498,3 +498,26 @@ body,
 
 /* Login card: soften the bright border on dark */
 :root[data-theme="dark"] .login-card { border-color: rgba(255, 255, 255, 0.09); }
+
+/* ── Card section headers & empty states ──────────────
+   Used by the content-editor screens (About, Careers) so each card states
+   what it controls and where it shows up on the public site. Colours come
+   from the theme variables, so dark mode needs no extra rules. */
+.card-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; padding-bottom: 14px; margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.card-head-text { min-width: 0; }
+.card-head h3 { font-size: 15px; font-weight: 800; color: var(--ink); margin: 0; }
+.card-head p { margin: 3px 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+.card-head-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+.empty-state { text-align: center; padding: 38px 20px; }
+.empty-state p { margin: 0 0 14px; color: var(--muted); font-size: 13.5px; }
+
+/* Two-column form row that stacks on narrow screens. */
+@media (max-width: 720px) {
+  .form-row { grid-template-columns: 1fr; }
+  .card-head { flex-direction: column; }
+}

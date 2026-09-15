@@ -47,11 +47,12 @@ export const search = asyncHandler(async (req, res) => {
     subscriber: allowed(req, 'subscriber:read'),
     adminUser: allowed(req, 'admin_user:read'),
     media: allowed(req, 'media:read'),
+    navigation: allowed(req, 'navigation:read'),
   }
 
   const none = () => Promise.resolve([])
 
-  const [blogs, helpArticles, faqs, stories, contacts, subscribers, adminUsers, media] = await Promise.all([
+  const [blogs, helpArticles, faqs, stories, contacts, subscribers, adminUsers, media, navItems] = await Promise.all([
     can.blog
       ? prisma.blogPost.findMany({
           where: { OR: [{ title: insensitive(q) }, { excerpt: insensitive(q) }, { slug: insensitive(q) }] },
@@ -118,6 +119,16 @@ export const search = asyncHandler(async (req, res) => {
           orderBy: { createdAt: 'desc' },
         })
       : none(),
+    // Menu links are matched on the href too, so searching a path like
+    // "/group-chat-app" finds the entry that points at it.
+    can.navigation
+      ? prisma.navigationItem.findMany({
+          where: { OR: [{ label: insensitive(q) }, { href: insensitive(q) }] },
+          select: { id: true, label: true, href: true, location: true, visible: true },
+          take,
+          orderBy: [{ location: 'asc' }, { order: 'asc' }],
+        })
+      : none(),
   ])
 
   const groups = [
@@ -173,6 +184,17 @@ export const search = asyncHandler(async (req, res) => {
       label: 'Media',
       icon: 'media',
       items: media.map((m) => ({ id: m.id, title: m.originalName, subtitle: null, to: '/media' })),
+    },
+    {
+      type: 'navigation',
+      label: 'Navigation',
+      icon: 'navigation',
+      items: navItems.map((n) => ({
+        id: n.id,
+        title: n.label,
+        subtitle: `${n.href} · ${n.location}${n.visible ? '' : ' · hidden'}`,
+        to: '/navigation',
+      })),
     },
   ].filter((g) => g.items.length > 0)
 

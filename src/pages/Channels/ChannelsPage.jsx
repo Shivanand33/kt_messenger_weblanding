@@ -217,7 +217,7 @@ export function ChannelsPage() {
               <div className="relative w-full max-w-[420px] rounded-[36px] border border-line bg-surface p-6 shadow-float">
                 <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
                   <div className="flex items-center gap-3">
-                    <img src={img(techImg)} alt={t('Channel')} className="h-12 w-12 rounded-full object-cover border-2 border-brand-strong" />
+                    <img src={img(techImg)} alt={imgAlt(techImg, t('Channel'))} className="h-12 w-12 rounded-full object-cover border-2 border-brand-strong" />
                     <div>
                       <h3 className="flex items-center gap-1.5 font-bold text-ink text-base">
                         {t('KT Tech Pulse')} <FiCheckCircle className="text-brand-strong text-sm" />

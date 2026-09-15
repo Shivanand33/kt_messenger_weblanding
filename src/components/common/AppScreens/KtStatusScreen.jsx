@@ -1,4 +1,4 @@
-import { img } from '../../../utils/imageOverrides'
+import { img, imgAltOnly } from '../../../utils/imageOverrides'
 import { motion } from 'framer-motion'
 import { FiArrowLeft, FiBell, FiPause, FiX } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
@@ -41,7 +41,7 @@ export function KtStatusScreen({ className = '' }) {
 
           <div className="mt-3 flex items-center gap-2 pb-3">
             <FiArrowLeft className="shrink-0 text-base text-white" />
-            <img src={img(ktLogo)} alt="" className="h-6 w-6 shrink-0 rounded-md object-contain" />
+            <img src={img(ktLogo)} alt={imgAltOnly(ktLogo)} className="h-6 w-6 shrink-0 rounded-md object-contain" />
             <span className="flex-1 truncate text-[12px] font-bold text-white">KT Updates</span>
             <FiPause className="shrink-0 text-[13px] text-white" />
             <FiX className="shrink-0 text-base text-white" />
@@ -52,7 +52,7 @@ export function KtStatusScreen({ className = '' }) {
         <div className="relative flex-1 overflow-hidden">
           <motion.img
             src={storyBackdrop}
-            alt=""
+            alt={imgAltOnly(storyBackdrop)}
             animate={{ scale: [1.05, 1.14, 1.05] }}
             transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute inset-0 h-full w-full object-cover"
@@ -79,7 +79,7 @@ export function KtStatusScreen({ className = '' }) {
                 <motion.img
                   key={tile}
                   src={tile}
-                  alt=""
+                  alt={imgAltOnly(tile)}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={progress >= 12 + index * 9 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4 }}

@@ -1,4 +1,4 @@
-import { img, imgAlt } from '../../utils/imageOverrides'
+import { img, imgAlt, imgAltOnly } from '../../utils/imageOverrides'
 import { translateCopy } from '../../utils/translateCopy'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
@@ -420,7 +420,7 @@ export function MarketplacePage() {
               <button type="button" onClick={() => setQuickView(product)} className="relative block w-full overflow-hidden">
                 <img
                   src={img(product.image)}
-                  alt=""
+                  alt={imgAltOnly(product.image)}
                   loading="lazy"
                   className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
@@ -578,7 +578,7 @@ export function MarketplacePage() {
                         <button type="button" onClick={() => setQuickView(product)} className="block w-full overflow-hidden">
                           <img
                             src={img(product.image)}
-                            alt=""
+                            alt={imgAltOnly(product.image)}
                             loading="lazy"
                             className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
@@ -706,7 +706,7 @@ export function MarketplacePage() {
               {wishlisted.map((product, index) => (
                 <Reveal key={product.id} from="up" delay={index * 0.05} className="h-full">
                   <div className="flex h-full items-center gap-4 rounded-[22px] border border-line bg-surface p-4 shadow-soft">
-                    <img src={img(product.image)} alt="" className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
+                    <img src={img(product.image)} alt={imgAltOnly(product.image)} className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
 
                     <div className="min-w-0 flex-1">
                       <h3 className="line-clamp-2 text-sm font-extrabold leading-snug text-ink">{product.name}</h3>
@@ -1051,7 +1051,7 @@ export function MarketplacePage() {
       >
         {quickView ? (
           <div>
-            <img src={img(quickView.image)} alt="" className="h-56 w-full rounded-2xl object-cover sm:h-72" />
+            <img src={img(quickView.image)} alt={imgAltOnly(quickView.image)} className="h-56 w-full rounded-2xl object-cover sm:h-72" />
 
             <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
               <Stars rating={quickView.rating} />
@@ -1154,7 +1154,7 @@ export function MarketplacePage() {
           <ul className="divide-y divide-line">
             {cartRows.map((line) => (
               <li key={line.id} className="flex items-center gap-4 py-4 first:pt-0">
-                <img src={img(line.product.image)} alt="" className="h-16 w-16 shrink-0 rounded-2xl object-cover" />
+                <img src={img(line.product.image)} alt={imgAltOnly(line.product.image)} className="h-16 w-16 shrink-0 rounded-2xl object-cover" />
 
                 <div className="min-w-0 flex-1">
                   <h4 className="line-clamp-2 text-sm font-extrabold leading-snug text-ink">{line.product.name}</h4>

@@ -1,4 +1,4 @@
-import { img, imgAlt } from '../../utils/imageOverrides'
+import { img, imgAlt, imgAltOnly } from '../../utils/imageOverrides'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -264,11 +264,11 @@ export function GroupsPage() {
 
                       <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
                         <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative">
-                          <img src={img(privateImg)} alt={t('Media')} className="h-full w-full object-cover" />
+                          <img src={img(privateImg)} alt={imgAlt(privateImg, t('Media'))} className="h-full w-full object-cover" />
                           <span className="absolute bottom-1 left-1 text-[7px] bg-black/70 px-1 py-0.2 rounded font-mono text-white">{t('Voice call')}</span>
                         </div>
                         <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative">
-                          <img src={img(groupImg)} alt={t('Media')} className="h-full w-full object-cover" />
+                          <img src={img(groupImg)} alt={imgAlt(groupImg, t('Media'))} className="h-full w-full object-cover" />
                           <span className="absolute bottom-1 left-1 text-[7px] bg-sky-600/90 px-1 py-0.2 rounded font-mono text-white">{t('Check notif')}</span>
                         </div>
                         <div className="h-14 w-16 shrink-0 rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 relative p-1">
@@ -309,7 +309,7 @@ export function GroupsPage() {
                         {/* You */}
                         <div className="flex items-center justify-between p-2 hover:bg-slate-800/40 transition-colors cursor-pointer">
                           <div className="flex items-center gap-2.5">
-                            <img src={img(avatarMale)} alt="You" className="h-8 w-8 rounded-full object-cover border border-slate-700 shrink-0" />
+                            <img src={img(avatarMale)} alt={imgAlt(avatarMale, "You")} className="h-8 w-8 rounded-full object-cover border border-slate-700 shrink-0" />
                             <div>
                               <h5 className="font-bold text-[11px] text-white">{t('You')}</h5>
                               <p className="text-[9px] text-sky-400 font-semibold">{t('Add member tag')}</p>
@@ -532,8 +532,8 @@ export function GroupsPage() {
 
                 <div className="mt-6 flex items-center justify-between rounded-2xl bg-cream p-3 border border-line">
                   <div className="flex -space-x-2">
-                    <img src={img(familyAvatar)} alt="" className="h-8 w-8 rounded-full border-2 border-surface object-cover" />
-                    <img src={img(userAvatar)} alt="" className="h-8 w-8 rounded-full border-2 border-surface object-cover" />
+                    <img src={img(familyAvatar)} alt={imgAltOnly(familyAvatar)} className="h-8 w-8 rounded-full border-2 border-surface object-cover" />
+                    <img src={img(userAvatar)} alt={imgAltOnly(userAvatar)} className="h-8 w-8 rounded-full border-2 border-surface object-cover" />
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-strong text-[10px] font-bold text-white border-2 border-surface">
                       +16
                     </div>

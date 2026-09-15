@@ -1,3 +1,4 @@
+import { imgAltOnly } from '../../../utils/imageOverrides'
 import { motion } from 'framer-motion'
 import { FiArrowLeft, FiBookmark, FiHeart, FiMessageCircle, FiMoreVertical, FiSend, FiVolume2 } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
@@ -29,7 +30,7 @@ export function KtMinisScreen({ className = '' }) {
         {/* Clip frame with a slow push-in so it reads as playing video */}
         <motion.img
           src={clipFrame}
-          alt=""
+          alt={imgAltOnly(clipFrame)}
           animate={{ scale: [1.06, 1.16, 1.06] }}
           transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
           className="h-full w-full object-cover opacity-95"

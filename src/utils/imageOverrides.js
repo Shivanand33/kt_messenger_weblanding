@@ -25,3 +25,14 @@ export function img(src) {
 export function imgAlt(src, fallbackText) {
   return resolver.resolveAlt(src, fallbackText)
 }
+
+/**
+ * Resolve ONLY an Admin-configured ALT text, with no keyword fallback.
+ *
+ * For images that are decorative by default (`alt=""`): if the Admin has
+ * labelled that image in Site Images, its text is used; otherwise the image
+ * stays decorative exactly as before.
+ */
+export function imgAltOnly(src) {
+  return resolver.resolveAdminAlt(src)
+}

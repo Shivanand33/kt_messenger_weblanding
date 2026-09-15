@@ -1,4 +1,4 @@
-import { img, imgAlt } from '../../utils/imageOverrides'
+import { img, imgAlt, imgAltOnly } from '../../utils/imageOverrides'
 import { translateCopy } from '../../utils/translateCopy'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useEffect, useMemo, useState } from 'react'
@@ -372,7 +372,7 @@ export function NewsPage() {
                 <div className="relative overflow-hidden">
                   <img
                     src={img(spotlight.image)}
-                    alt={spotlight.title}
+                    alt={imgAlt(spotlight.image, spotlight.title)}
                     className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-80"
                   />
                   <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-rose-600 px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white shadow-lg">
@@ -428,7 +428,7 @@ export function NewsPage() {
                   onClick={() => openArticle(item)}
                   className="group flex w-full items-start gap-4 rounded-[22px] border border-line bg-surface p-4 text-left shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/35 hover:shadow-card"
                 >
-                  <img src={img(item.image)} alt="" className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
+                  <img src={img(item.image)} alt={imgAltOnly(item.image)} className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
                   <span className="min-w-0 flex-1">
                     <span className="text-[11px] font-black uppercase tracking-wide text-brand-strong">{item.category}</span>
                     <span className="mt-1 line-clamp-2 block text-sm font-extrabold leading-snug text-ink group-hover:text-brand-strong">
@@ -466,7 +466,7 @@ export function NewsPage() {
                 <div className="relative overflow-hidden">
                   <img
                     src={img(item.image)}
-                    alt=""
+                    alt={imgAltOnly(item.image)}
                     className="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <span className="absolute left-3 top-3 grid h-8 w-8 place-items-center rounded-xl bg-slate-950/70 text-sm font-black text-white backdrop-blur">
@@ -567,7 +567,7 @@ export function NewsPage() {
                       <button type="button" onClick={() => openArticle(article)} className="relative block overflow-hidden text-left">
                         <img
                           src={img(article.image)}
-                          alt=""
+                          alt={imgAltOnly(article.image)}
                           loading="lazy"
                           className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
@@ -1114,7 +1114,7 @@ export function NewsPage() {
 
             <img
               src={img(readingArticle.image)}
-              alt=""
+              alt={imgAltOnly(readingArticle.image)}
               className="mt-5 h-56 w-full rounded-2xl object-cover sm:h-72"
             />
 
@@ -1152,7 +1152,7 @@ export function NewsPage() {
                         onClick={() => openArticle(item)}
                         className="flex w-full items-center gap-3 rounded-2xl border border-line p-3 text-left transition-colors hover:border-brand/40 hover:bg-surface-2"
                       >
-                        <img src={img(item.image)} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
+                        <img src={img(item.image)} alt={imgAltOnly(item.image)} className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                         <span className="line-clamp-2 flex-1 text-xs font-bold text-ink">{item.title}</span>
                         <FiChevronRight className="shrink-0 text-muted" />
                       </button>

@@ -117,6 +117,9 @@ export function CareersPage() {
   )
 
   const jobsList = (Array.isArray(remoteJobs) && remoteJobs.length > 0) ? remoteJobs : ROLES
+  // An admin-set headline replaces the whole title, so the split
+  // "Careers at" + highlighted "KT Messenger" only shows when none is set.
+  const heroTitle = heroData?.title?.trim() || ''
   const heroSubtitle = heroData?.subtitle || 'Join us and create something truly meaningful. Find innovative ways to chat, call, use AI, enhance security, and engage in digital experiences.'
   const heroBadge = heroData?.badge || 'Open roles · 100% remote'
 
@@ -153,8 +156,8 @@ export function CareersPage() {
             <FiBriefcase /> {t(heroBadge)}
           </>
         }
-        title={t('Careers at')}
-        highlight="KT Messenger"
+        title={heroTitle || t('Careers at')}
+        highlight={heroTitle ? '' : 'KT Messenger'}
         description={t(heroSubtitle)}
         actions={
           <>

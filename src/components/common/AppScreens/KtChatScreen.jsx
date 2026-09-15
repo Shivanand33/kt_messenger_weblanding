@@ -1,4 +1,4 @@
-import { img } from '../../../utils/imageOverrides'
+import { img, imgAlt } from '../../../utils/imageOverrides'
 import { motion } from 'framer-motion'
 import {
   FiArrowLeft,
@@ -166,7 +166,7 @@ export function KtChatScreen({
             {showPhoto ? (
               <Cue at={24} progress={progress} className="flex justify-start">
                 <div className="relative overflow-hidden rounded-2xl bg-white p-1 max-w-[85%] border border-slate-200 shadow-sm">
-                  <img src={img(photoMessage)} alt={t('Strawberries Photo')} className="h-[96px] w-[160px] object-cover rounded-xl" />
+                  <img src={img(photoMessage)} alt={imgAlt(photoMessage, t('Strawberries Photo'))} className="h-[96px] w-[160px] object-cover rounded-xl" />
                   <div className="text-[8px] text-slate-400 text-right pr-2 pt-0.5 font-mono">2:37 pm</div>
                 </div>
               </Cue>

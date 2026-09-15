@@ -1,4 +1,4 @@
-import { img } from '../../../utils/imageOverrides'
+import { img, imgAltOnly } from '../../../utils/imageOverrides'
 import { FiUsers, FiBarChart2 } from 'react-icons/fi'
 import { FeatureShowcase } from '../FeatureShowcase/FeatureShowcase'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
@@ -36,7 +36,7 @@ export function Groups() {
               <img
                 key={index}
                 src={img(src)}
-                alt=""
+                alt={imgAltOnly(src)}
                 className="h-8 w-8 rounded-full border-2 border-surface object-cover"
               />
             ))}
