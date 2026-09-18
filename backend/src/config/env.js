@@ -22,7 +22,7 @@ export const env = {
   jwtSecret: process.env.JWT_SECRET || 'dev-insecure-secret-change-me',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
 
-  corsOrigins: (process.env.CORS_ORIGINS || 'http://localhost:5174,http://localhost:5173')
+  corsOrigins: (process.env.CORS_ORIGINS || 'https://www.ktmessenger.com,http://localhost:5174,http://localhost:5173')
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean),
