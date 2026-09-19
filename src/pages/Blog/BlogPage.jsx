@@ -537,8 +537,8 @@ export function BlogPage() {
   useSeo({
     enabled: !activeSlug,
     path: '/blog',
-    title: 'KT Messenger Blog',
-    description: 'Everything KT can do, explained simply from messaging and calls to AI, payments, communities and business.',
+    title: 'KT Messenger Blog | Messaging & Social Media Insights',
+    description: 'Explore messaging, social media, technology, and digital communication insights, tips, trends, and useful guides on the KT Messenger blog.',
   })
 
   if (activeSlug) {

@@ -33,34 +33,48 @@ import { NotFoundPage } from './pages/NotFound/NotFoundPage'
 import { AnalyticsTracker } from './components/common/AnalyticsTracker/AnalyticsTracker'
 import { api } from './services/apiClient'
 
+// [component, label keywords, href keywords] — checked in this order.
+const PAGE_RULES = [
+  [CallingPage, ['call'], ['call', 'phone']],
+  [MessagingPage, ['messag'], ['messag', 'chat']],
+  [GroupsPage, ['group'], ['group']],
+  [ChannelsPage, ['channel'], ['channel']],
+  [KtAIPage, ['ai'], ['ai']],
+  [StatusPage, ['status'], ['status']],
+  [SecurityPage, ['secur'], ['secur']],
+  [KtPlusPage, ['plus'], ['plus']],
+  [NotesPage, ['note'], ['note']],
+  [MinisPage, ['mini'], ['mini']],
+  [NewsPage, ['news'], ['news']],
+  [MarketsPage, ['market'], ['market']],
+  [WalletPage, ['wallet'], ['wallet']],
+  [PrivacyPage, ['privac'], ['privac']],
+  [AboutPage, ['about'], ['about']],
+  [CareersPage, ['career'], ['job']],
+  [ContactPage, ['contact'], ['contact']],
+  [CommunityPage, ['community'], ['community']],
+  [BlogPage, ['blog'], ['blog']],
+  [HelpPage, ['help'], ['help']],
+  [AppsPage, ['app'], ['app']],
+  [BusinessPage, ['business'], ['business']],
+]
+
 export function getComponentByLabelOrHref(item) {
   if (!item) return null
   const label = typeof item === 'string' ? '' : (item.label || '').toLowerCase().trim()
   const href = typeof item === 'string' ? item.toLowerCase().trim() : (item.href || item.to || '').toLowerCase().trim()
 
-  if (label.includes('call') || href.includes('call') || href.includes('phone')) return CallingPage
-  if (label.includes('messag') || href.includes('messag') || href.includes('chat')) return MessagingPage
-  if (label.includes('group') || href.includes('group')) return GroupsPage
-  if (label.includes('channel') || href.includes('channel')) return ChannelsPage
-  if (label.includes('ai') || href.includes('ai')) return KtAIPage
-  if (label.includes('status') || href.includes('status')) return StatusPage
-  if (label.includes('secur') || href.includes('secur')) return SecurityPage
-  if (label.includes('plus') || href.includes('plus')) return KtPlusPage
-  if (label.includes('note') || href.includes('note')) return NotesPage
-  if (label.includes('mini') || href.includes('mini')) return MinisPage
-  if (label.includes('news') || href.includes('news')) return NewsPage
-  if (label.includes('market') || href.includes('market')) return MarketsPage
-  if (label.includes('wallet') || href.includes('wallet')) return WalletPage
-  if (label.includes('privac') || href.includes('privac')) return PrivacyPage
-  if (label.includes('about') || href.includes('about')) return AboutPage
-  if (label.includes('career') || href.includes('job')) return CareersPage
-  if (label.includes('contact') || href.includes('contact')) return ContactPage
-  if (label.includes('community') || href.includes('community')) return CommunityPage
-  if (label.includes('blog') || href.includes('blog')) return BlogPage
-  if (label.includes('help') || href.includes('help')) return HelpPage
-  if (label.includes('app') || href.includes('app')) return AppsPage
-  if (label.includes('business') || href.includes('business')) return BusinessPage
-
+  // The label is checked first across every rule. SEO URLs are keyword-heavy
+  // ("/group-chat-app", "/secure-messaging-app"), so matching the URL first let
+  // an early rule like Messaging ("chat", "messag") capture pages that belong
+  // elsewhere. The URL is only consulted when no label matches — which is
+  // always the case for a bare path string, so that behaviour is unchanged.
+  for (const [Page, labelKeys] of PAGE_RULES) {
+    if (label && labelKeys.some((k) => label.includes(k))) return Page
+  }
+  for (const [Page, , hrefKeys] of PAGE_RULES) {
+    if (hrefKeys.some((k) => href.includes(k))) return Page
+  }
   return null
 }
 

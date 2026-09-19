@@ -17,6 +17,7 @@ import { useLanguage } from '../../context/LanguageContext'
 import { useModal } from '../../context/ModalContext'
 import { trackDownload } from '../../services/analytics'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 const appStore = { icon: <FaApple />, top: 'Download on the', bottom: 'App Store' }
 
@@ -175,6 +176,8 @@ const railClass =
 export function AppsPage() {
   // Per-page SEO from admin (Website Content -> seo.apps).
   // No block configured = unchanged behaviour.
+  // Canonical for this page (follows the URL it is opened at).
+  useSeo({ path: '/apps' })
   useAdminSeo('apps', '/apps')
 
   const navigate = useNavigate()

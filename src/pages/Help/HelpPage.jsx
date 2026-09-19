@@ -15,6 +15,7 @@ import { PhoneChatMockup } from '../../components/mockups/PhoneChatMockup'
 import { useSwipeTheme } from '../../hooks/useSwipeTheme'
 import { useLanguage } from '../../context/LanguageContext'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { api } from '../../services/apiClient'
 import { parseBody } from '../../utils/parseBody'
@@ -391,6 +392,8 @@ function HelpFooter({ onNav }) {
 export function HelpPage() {
   // Per-page SEO from admin (Website Content -> seo.help).
   // No block configured = unchanged behaviour.
+  // Canonical for this page (follows the URL it is opened at).
+  useSeo({ path: '/help' })
   useAdminSeo('help', '/help')
 
   const navigate = useNavigate()

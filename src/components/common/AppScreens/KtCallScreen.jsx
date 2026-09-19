@@ -1,4 +1,5 @@
 import { img, imgAltOnly } from '../../../utils/imageOverrides'
+import { avif } from '../../../utils/avif'
 import { motion } from 'framer-motion'
 import {
   FiChevronLeft,
@@ -77,7 +78,7 @@ export function KtCallScreen({ className = '' }) {
           </span>
 
           <motion.img
-            src={callerAvatar}
+            src={avif(callerAvatar)}
             alt={imgAltOnly(callerAvatar)}
             animate={{ scale: [1, 1.04, 1] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
@@ -171,7 +172,7 @@ export function KtCallScreen({ className = '' }) {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative h-full w-full bg-black">
           {/* Remote feed — slow drift reads as a live camera */}
           <motion.img
-            src={videoFeed}
+            src={avif(videoFeed)}
             alt={imgAltOnly(videoFeed)}
             animate={{ scale: [1.08, 1.16, 1.08], x: [0, -8, 0] }}
             transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}

@@ -37,6 +37,7 @@ import { useLanguage } from '../../context/LanguageContext'
 import heroImg from '../../assets/images/business.jpg'
 import whyImg from '../../assets/images/private.jpg'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useSeo } from '../../hooks/useSeo'
 
 const DARK = '#0b162c'
 
@@ -62,6 +63,8 @@ function LinkArrow({ children, href = '#' }) {
 export function BusinessPage() {
   // Per-page SEO from admin (Website Content -> seo.business).
   // No block configured = unchanged behaviour.
+  // Canonical for this page (follows the URL it is opened at).
+  useSeo({ path: '/business' })
   useAdminSeo('business', '/business')
 
   const navigate = useNavigate()

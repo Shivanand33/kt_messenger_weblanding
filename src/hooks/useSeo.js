@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 /**
  * Sets the document title, canonical link and social meta tags for the
@@ -29,6 +30,25 @@ export const siteUrl = SITE_URL
 export function absoluteUrl(path = '/') {
   if (/^https?:\/\//i.test(path)) return path
   return `${SITE_URL}${path.startsWith('/') ? '' : '/'}${path}`
+}
+
+const stripSlash = (p) => (p.length > 1 ? p.replace(/\/+$/, '') : p)
+const samePath = (a, b) => stripSlash(a).toLowerCase() === stripSlash(b).toLowerCase()
+
+/**
+ * The path the canonical should point at.
+ *
+ * Feature pages declare their own path (`/calling`), but App.jsx also mounts
+ * them at the SEO URLs configured in admin Navigation (`/video-calling-app`).
+ * Canonicalising those to the declared path tells search engines to ignore the
+ * very URL the page is being served from, so whenever the served path really
+ * differs, the served one wins. When they only differ by case or a trailing
+ * slash the declared path is kept, so pages served at their own URL — and the
+ * slug-based blog canonical — behave exactly as before.
+ */
+function canonicalPath(declared, served) {
+  if (!declared || !served || /^https?:\/\//i.test(declared)) return declared
+  return samePath(declared, served) ? declared : stripSlash(served)
 }
 
 function upsertMeta(attr, key, content) {
@@ -71,10 +91,13 @@ function upsertCanonical(href) {
  * @param {boolean} seo.enabled      Skip entirely when false (e.g. still loading).
  */
 export function useSeo({ title, description, path, image, type = 'website', enabled = true } = {}) {
+  const { pathname } = useLocation()
+
   useEffect(() => {
     if (!enabled || typeof document === 'undefined') return undefined
 
-    const url = path ? absoluteUrl(path) : undefined
+    const resolved = canonicalPath(path, pathname)
+    const url = resolved ? absoluteUrl(resolved) : undefined
     const img = image ? absoluteUrl(image) : undefined
     const prevTitle = document.title
     if (title) document.title = title
@@ -102,5 +125,5 @@ export function useSeo({ title, description, path, image, type = 'website', enab
         else if (previous !== null) el.setAttribute(el.tagName === 'LINK' ? 'href' : 'content', previous)
       }
     }
-  }, [title, description, path, image, type, enabled])
+  }, [title, description, path, pathname, image, type, enabled])
 }

@@ -1,5 +1,6 @@
 import { makeImageResolver } from './imageKey'
 import { getKeywordFallback } from './imageAlt'
+import { avif } from './avif'
 
 /**
  * Admin image replacements, resolved at render time.
@@ -16,7 +17,10 @@ export function setImageOverrides(urlMap, altMap = {}) {
  * Safe before the overrides load and safe if they never load.
  */
 export function img(src) {
-  return resolver.resolveUrl(src)
+  const resolved = resolver.resolveUrl(src)
+  // An admin replacement always wins; otherwise serve the AVIF version of the
+  // bundled file where the browser supports it (the original everywhere else).
+  return resolved === src ? avif(src) : resolved
 }
 
 /**

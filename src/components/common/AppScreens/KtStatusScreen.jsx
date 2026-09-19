@@ -1,4 +1,5 @@
 import { img, imgAltOnly } from '../../../utils/imageOverrides'
+import { avif } from '../../../utils/avif'
 import { motion } from 'framer-motion'
 import { FiArrowLeft, FiBell, FiPause, FiX } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
@@ -51,7 +52,7 @@ export function KtStatusScreen({ className = '' }) {
         {/* Story card */}
         <div className="relative flex-1 overflow-hidden">
           <motion.img
-            src={storyBackdrop}
+            src={avif(storyBackdrop)}
             alt={imgAltOnly(storyBackdrop)}
             animate={{ scale: [1.05, 1.14, 1.05] }}
             transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut' }}
@@ -78,7 +79,7 @@ export function KtStatusScreen({ className = '' }) {
               {TILES.map((tile, index) => (
                 <motion.img
                   key={tile}
-                  src={tile}
+                  src={avif(tile)}
                   alt={imgAltOnly(tile)}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={progress >= 12 + index * 9 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
