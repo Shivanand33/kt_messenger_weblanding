@@ -1,37 +1,49 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Home } from './pages/Home/Home'
-import { PrivacyPage } from './pages/Privacy/PrivacyPage'
-import { BlogPage } from './pages/Blog/BlogPage'
-import { AppsPage } from './pages/Apps/AppsPage'
-import { HelpPage } from './pages/Help/HelpPage'
-import { BusinessPage } from './pages/Business/BusinessPage'
-import { BusinessSubPage } from './pages/Business/BusinessSubPage'
-import { CallingPage } from './pages/Calling/CallingPage'
-import { MessagingPage } from './pages/Messaging/MessagingPage'
-import { GroupsPage } from './pages/Groups/GroupsPage'
-import { ChannelsPage } from './pages/Channels/ChannelsPage'
-import { KtAIPage } from './pages/KtAI/KtAIPage'
-import { StatusPage } from './pages/Status/StatusPage'
-import { SecurityPage } from './pages/Security/SecurityPage'
-import { KtPlusPage } from './pages/KtPlus/KtPlusPage'
-
-// FOOTER / COMPANY PAGES
-import { AboutPage } from './pages/About/AboutPage'
-import { CareersPage } from './pages/Careers/CareersPage'
-import { ContactPage } from './pages/Contact/ContactPage'
-import { CommunityPage } from './pages/Community/CommunityPage'
-
-// NEW 5 FEATURE PAGES
-import { NewsPage } from './pages/News/NewsPage'
-import { MarketsPage } from './pages/Markets/MarketsPage'
-import { WalletPage } from './pages/Wallet/WalletPage'
-import { MarketplacePage } from './pages/Marketplace/MarketplacePage'
-import { NotesPage } from './pages/Notes/NotesPage'
-import { MinisPage } from './pages/Minis/MinisPage'
 import { NotFoundPage } from './pages/NotFound/NotFoundPage'
 import { AnalyticsTracker } from './components/common/AnalyticsTracker/AnalyticsTracker'
 import { api } from './services/apiClient'
+import { IS_MOBILE } from './utils/mobileImage'
+
+// Every page except Home is its own chunk, fetched the first time it is
+// opened, so loading the home page no longer means downloading and parsing
+// the code of every other page first. Navigation runs inside a transition
+// (BrowserRouter), so the current page stays on screen while a chunk loads.
+const pageLoaders = []
+const page = (load, name) => {
+  pageLoaders.push(load)
+  return lazy(() => load().then((m) => ({ default: m[name] })))
+}
+
+const PrivacyPage = page(() => import('./pages/Privacy/PrivacyPage'), 'PrivacyPage')
+const BlogPage = page(() => import('./pages/Blog/BlogPage'), 'BlogPage')
+const AppsPage = page(() => import('./pages/Apps/AppsPage'), 'AppsPage')
+const HelpPage = page(() => import('./pages/Help/HelpPage'), 'HelpPage')
+const BusinessPage = page(() => import('./pages/Business/BusinessPage'), 'BusinessPage')
+const BusinessSubPage = page(() => import('./pages/Business/BusinessSubPage'), 'BusinessSubPage')
+const CallingPage = page(() => import('./pages/Calling/CallingPage'), 'CallingPage')
+const MessagingPage = page(() => import('./pages/Messaging/MessagingPage'), 'MessagingPage')
+const GroupsPage = page(() => import('./pages/Groups/GroupsPage'), 'GroupsPage')
+const ChannelsPage = page(() => import('./pages/Channels/ChannelsPage'), 'ChannelsPage')
+const KtAIPage = page(() => import('./pages/KtAI/KtAIPage'), 'KtAIPage')
+const StatusPage = page(() => import('./pages/Status/StatusPage'), 'StatusPage')
+const SecurityPage = page(() => import('./pages/Security/SecurityPage'), 'SecurityPage')
+const KtPlusPage = page(() => import('./pages/KtPlus/KtPlusPage'), 'KtPlusPage')
+
+// FOOTER / COMPANY PAGES
+const AboutPage = page(() => import('./pages/About/AboutPage'), 'AboutPage')
+const CareersPage = page(() => import('./pages/Careers/CareersPage'), 'CareersPage')
+const ContactPage = page(() => import('./pages/Contact/ContactPage'), 'ContactPage')
+const CommunityPage = page(() => import('./pages/Community/CommunityPage'), 'CommunityPage')
+
+// NEW 5 FEATURE PAGES
+const NewsPage = page(() => import('./pages/News/NewsPage'), 'NewsPage')
+const MarketsPage = page(() => import('./pages/Markets/MarketsPage'), 'MarketsPage')
+const WalletPage = page(() => import('./pages/Wallet/WalletPage'), 'WalletPage')
+const MarketplacePage = page(() => import('./pages/Marketplace/MarketplacePage'), 'MarketplacePage')
+const NotesPage = page(() => import('./pages/Notes/NotesPage'), 'NotesPage')
+const MinisPage = page(() => import('./pages/Minis/MinisPage'), 'MinisPage')
 
 // [component, label keywords, href keywords] — checked in this order.
 const PAGE_RULES = [
@@ -102,9 +114,24 @@ function App() {
     })
   }, [])
 
+  // Desktop keeps the one-bundle feel: once the browser is idle every page
+  // chunk is fetched, so later navigation is instant. Phones skip this and
+  // download a page's code only when that page is opened.
+  useEffect(() => {
+    if (IS_MOBILE) return undefined
+    const warm = () => pageLoaders.forEach((load) => load().catch(() => {}))
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(warm, { timeout: 3000 })
+      return () => window.cancelIdleCallback(id)
+    }
+    const id = window.setTimeout(warm, 1500)
+    return () => window.clearTimeout(id)
+  }, [])
+
   return (
     <>
       <AnalyticsTracker />
+      <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/privacy" element={<PrivacyPage />} />
@@ -151,6 +178,7 @@ function App() {
         {/* CUSTOM 404 — handles remaining unknown routes or dynamic resolution */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      </Suspense>
     </>
   )
 }

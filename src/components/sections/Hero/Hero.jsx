@@ -1,4 +1,5 @@
 import { img, imgAlt, imgAltOnly } from '../../../utils/imageOverrides'
+import { IS_MOBILE, mobileLazy } from '../../../utils/mobileImage'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiDownload, FiVideo, FiCalendar, FiCheck } from 'react-icons/fi'
@@ -61,6 +62,7 @@ export function Hero() {
           alt={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}
           title={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}
           className="absolute inset-0 h-full w-full object-cover object-center"
+          fetchPriority={IS_MOBILE ? 'high' : undefined}
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/25 lg:via-black/40 lg:to-transparent" />
 
@@ -114,7 +116,7 @@ export function Hero() {
                   <div className="mt-1 flex items-center gap-1.5">
                     <div className="flex -space-x-2">
                       {stackImages.map((avatar, index) => (
-                        <img key={index} src={img(avatar)} alt={imgAltOnly(avatar)} className="h-5 w-5 rounded-full border-2 border-white object-cover" />
+                        <img key={index} src={img(avatar)} alt={imgAltOnly(avatar)} loading={mobileLazy} className="h-5 w-5 rounded-full border-2 border-white object-cover" />
                       ))}
                     </div>
                     <span className="text-xs text-[#7c877e]">{t('& 4 others')}</span>
@@ -140,7 +142,7 @@ export function Hero() {
               className="absolute right-16 top-[19rem] w-60 rounded-2xl bg-white/95 p-3.5 shadow-float backdrop-blur"
             >
               <div className="flex items-center gap-2">
-                <img src={img(nadiaAvatar)} alt={imgAlt(nadiaAvatar, "Nadia")} className="h-8 w-8 rounded-full object-cover shadow-sm border border-stone-200" />
+                <img src={img(nadiaAvatar)} alt={imgAlt(nadiaAvatar, "Nadia")} loading={mobileLazy} className="h-8 w-8 rounded-full object-cover shadow-sm border border-stone-200" />
                 <p className="text-sm font-bold text-[#0e1a13]">{t('Nadia')}</p>
               </div>
               <p className="mt-2 text-sm text-[#4b5a53]">

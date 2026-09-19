@@ -1,4 +1,5 @@
 import { img, imgAlt } from '../../../utils/imageOverrides'
+import { mobileLazy } from '../../../utils/mobileImage'
 import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Container } from '../../common/Container/Container'
@@ -47,6 +48,7 @@ export function Statement() {
             <img
               src={img(chip.avatar)}
               alt={imgAlt(chip.avatar, "private chat app user avatar")}
+              loading={mobileLazy}
               className="h-10 w-10 shrink-0 rounded-full border-2 border-white object-cover shadow-soft"
             />
             <span

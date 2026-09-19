@@ -1,4 +1,5 @@
 import { img, imgAlt, imgAltOnly } from '../../utils/imageOverrides'
+import { imgSmall, mobileLazy } from '../../utils/mobileImage'
 import { FiSearch, FiVideo, FiPhone, FiMoreVertical, FiPhoneOff, FiCheck, FiPlus } from 'react-icons/fi'
 import { Logo } from '../common/Logo/Logo'
 import { useLanguage } from '../../context/LanguageContext'
@@ -53,8 +54,9 @@ export function DesktopAppMockup({ className = '' }) {
                   className={`flex items-center gap-2.5 px-2.5 py-1.5 ${chat.active ? 'bg-brand-soft' : ''}`}
                 >
                   <img
-                    src={img(chat.avatar)}
+                    src={imgSmall(chat.avatar)}
                     alt={imgAlt(chat.avatar, chat.name)}
+                    loading={mobileLazy}
                     className="h-9 w-9 shrink-0 rounded-full object-cover border border-stone-200 shadow-xs"
                   />
                   <div className="min-w-0 flex-1 border-b border-line/60 pb-1.5">
@@ -74,8 +76,9 @@ export function DesktopAppMockup({ className = '' }) {
             <div className="flex items-center justify-between border-b border-line px-3 py-2">
               <div className="flex items-center gap-2">
                 <img
-                  src={img(nadiaAvatar)}
+                  src={imgSmall(nadiaAvatar)}
                   alt={imgAlt(nadiaAvatar, "Ayesha")}
+                  loading={mobileLazy}
                   className="h-8 w-8 rounded-full object-cover border border-stone-200"
                 />
                 <div>
@@ -98,7 +101,7 @@ export function DesktopAppMockup({ className = '' }) {
                 {t('We could all get together at the park.')}
               </div>
               <div className="ml-auto max-w-[70%] overflow-hidden rounded-2xl rounded-tr-sm shadow-soft">
-                <img src={img(photoMessage)} alt={imgAltOnly(photoMessage)} className="h-24 w-full object-cover" />
+                <img src={imgSmall(photoMessage)} alt={imgAltOnly(photoMessage)} loading={mobileLazy} className="h-24 w-full object-cover" />
               </div>
               <div className="ml-auto flex max-w-[78%] items-center gap-1 rounded-2xl rounded-tr-sm bg-[#dbeafe] px-3 py-2 text-[11px] text-ink dark:bg-[#1e3a63] dark:text-white">
                 {t('Sounds amazing!')}
@@ -117,7 +120,7 @@ export function DesktopAppMockup({ className = '' }) {
       {/* floating incoming call */}
       <div className="absolute -right-3 top-16 hidden w-44 rounded-2xl bg-[#0b1220] p-3 text-white shadow-float sm:block border border-stone-800">
         <div className="flex items-center gap-2 mb-2">
-          <img src={img(businessAvatar)} alt={imgAlt(businessAvatar, "Pablo Morales")} className="h-7 w-7 rounded-full object-cover border border-white/20" />
+          <img src={img(businessAvatar)} alt={imgAlt(businessAvatar, "Pablo Morales")} loading={mobileLazy} className="h-7 w-7 rounded-full object-cover border border-white/20" />
           <div className="min-w-0">
             <p className="text-xs font-semibold truncate">Pablo Morales</p>
             <p className="text-[9px] text-white/60 truncate">{t('KT video call')}</p>

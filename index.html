@@ -11,6 +11,16 @@
     <meta name="theme-color" content="#fcf5eb" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b141a" media="(prefers-color-scheme: dark)" />
     <title>KT Messenger · messaging &amp; calling</title>
+    <!-- Inter, previously pulled in by an @import at the top of src/index.css.
+         Linking it here lets it download in parallel with the app CSS instead
+         of only after it (same stylesheet, same font files). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+    <!-- Mobile LCP: start the hero image download with the HTML instead of
+         after the app script runs. Phones only (media), and only browsers that
+         decode AVIF (type) — the same file the hero <img> then uses. -->
+    <link rel="preload" as="image" href="/src/assets/images/hero.avif" type="image/avif" media="(max-width: 767px)" fetchpriority="high" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-820D237JNX"></script>
     <script>

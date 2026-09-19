@@ -62,6 +62,9 @@ export function detectAvifSupport(timeoutMs = 500) {
   })
 }
 
+/** Whether detectAvifSupport() found AVIF decoding available. */
+export const isAvifSupported = () => supported
+
 /** The AVIF URL for a bundled JPG/PNG when the browser supports it, else `src` unchanged. */
 export function avif(src) {
   if (!supported || typeof src !== 'string' || !src) return src

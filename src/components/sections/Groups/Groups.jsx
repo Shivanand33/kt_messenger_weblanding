@@ -1,4 +1,5 @@
 import { img, imgAltOnly } from '../../../utils/imageOverrides'
+import { imgSmall, mobileLazy } from '../../../utils/mobileImage'
 import { FiUsers, FiBarChart2 } from 'react-icons/fi'
 import { FeatureShowcase } from '../FeatureShowcase/FeatureShowcase'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
@@ -35,8 +36,9 @@ export function Groups() {
             {memberAvatars.map((src, index) => (
               <img
                 key={index}
-                src={img(src)}
+                src={imgSmall(src)}
                 alt={imgAltOnly(src)}
+                loading={mobileLazy}
                 className="h-8 w-8 rounded-full border-2 border-surface object-cover"
               />
             ))}
