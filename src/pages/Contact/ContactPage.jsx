@@ -6,13 +6,11 @@ import {
   FiCheckCircle,
   FiChevronRight,
   FiClock,
-  FiCompass,
   FiGlobe,
   FiHelpCircle,
   FiImage,
   FiLock,
   FiMail,
-  FiMessageSquare,
   FiSend,
   FiShield,
   FiStar,
@@ -33,13 +31,6 @@ import { Toast } from '../../components/feature/Toast'
 import { api } from '../../services/apiClient'
 import { useLanguage } from '../../context/LanguageContext'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
-
-const NAV_ITEMS = [
-  { id: 'overview', label: 'Overview', icon: <FiCompass /> },
-  { id: 'getintouch', label: 'Get in touch', icon: <FiMail /> },
-  { id: 'form', label: 'Send a message', icon: <FiSend /> },
-  { id: 'faq', label: 'FAQ', icon: <FiMessageSquare /> },
-]
 
 const TOPICS = [
   {
@@ -93,15 +84,6 @@ const TOPICS = [
 ]
 
 
-const RESPONSE = [
-  { label: 'Security disclosures', time: '1 business day', detail: 'Triaged by a human, never an auto responder.', tone: 'fast' },
-  { label: 'Press & brand', time: '1 business day', detail: 'Assets usually attached to the first reply.', tone: 'fast' },
-  { label: 'Account support', time: '24 hours', detail: 'Faster in app, where we can see the account context.', tone: 'normal' },
-  { label: 'Business & partnerships', time: '2 business days', detail: 'Longer if it needs a regional compliance review.', tone: 'normal' },
-  { label: 'Careers', time: '5 working days', detail: 'Every application read by a person on the panel.', tone: 'normal' },
-  { label: 'Privacy requests', time: 'Up to 30 days', detail: 'Statutory window; identity verification comes first.', tone: 'slow' },
-]
-
 const FAQS = [
   {
     q: 'What is the fastest way to get help with my account?',
@@ -149,13 +131,8 @@ const RELATED = [
   { to: '/help', label: 'Help Center', desc: 'Hundreds of articles usually faster than writing in.', icon: <FiHelpCircle /> },
   { to: '/community', label: 'Community', desc: 'Forums, events and the ambassador programme.', icon: <FiUsers /> },
   { to: '/careers', label: 'Careers', desc: 'Open roles and how the hiring process works.', icon: <FiBriefcase /> },
+  { to: '/minis', label: 'KT Minis', desc: 'Watch, create and share short video clips.', icon: <FiVideo /> },
 ]
-
-const TONE_STYLES = {
-  fast: 'border-emerald-300 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300',
-  normal: 'border-brand/30 bg-brand-soft text-brand-ink',
-  slow: 'border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300',
-}
 
 export function ContactPage() {
   // Per-page SEO from admin (Website Content -> seo.contact).

@@ -56,12 +56,15 @@ export function Hero() {
   }, [])
   return (
     <section id="hero" className="px-3 pt-3 sm:px-4 lg:px-5">
-      <div className="relative overflow-hidden rounded-[22px] lg:rounded-[30px]" title={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}>
+      {/* Phones (max-md) show the whole landscape image across the top of the
+          tall card instead of a cropped slice; the dark card colour fills the
+          space below it. Desktop and tablet keep the full-bleed cover image. */}
+      <div className="relative overflow-hidden rounded-[22px] lg:rounded-[30px] max-md:bg-[#0b141a]" title={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}>
         <img
           src={img(bgUrl)}
           alt={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}
           title={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          className="absolute inset-0 h-full w-full object-cover object-center max-md:object-contain max-md:object-top"
           fetchPriority={IS_MOBILE ? 'high' : undefined}
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/25 lg:via-black/40 lg:to-transparent" />

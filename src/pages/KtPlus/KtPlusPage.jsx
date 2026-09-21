@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  FiDownload,
   FiStar,
   FiZap,
-  FiCheck,
   FiLayers,
   FiShield,
   FiUploadCloud,
@@ -13,7 +11,6 @@ import {
   FiChevronDown,
   FiHelpCircle,
   FiCheckCircle,
-  FiMoon,
   FiUserCheck
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
@@ -201,7 +198,7 @@ export function KtPlusPage() {
                 <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
                   <div className="flex items-center gap-2">
                     <CrownIcon className="text-brand-strong text-2xl" />
-                    <h3 className="font-bold text-ink text-base">{t('Theme Customizer Engine')}</h3>
+                    <p className="font-bold text-ink text-base">{t('Theme Customizer Engine')}</p>
                   </div>
                   <span className="rounded-full bg-brand-soft px-3 py-1 text-[10px] font-bold text-brand-ink">
                     {t('PRO UNLOCKED')}
@@ -279,9 +276,11 @@ export function KtPlusPage() {
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
                 {t('KT Plus Pillar Deep Dive')}
               </div>
-              <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
+              {/* Not a heading: the same title is already the <h3> in the tab list
+                  beside it, so a second <h3> would duplicate it for SEO. */}
+              <p className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {plusTabs[activeTab].title}
-              </h3>
+              </p>
               <p className="mt-3 text-base leading-relaxed text-body">
                 {plusTabs[activeTab].desc}
               </p>
@@ -388,7 +387,7 @@ export function KtPlusPage() {
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-strong text-white text-2xl mb-4 shadow-brand">
                   <CrownIcon className="text-2xl" />
                 </div>
-                <h3 className="font-bold text-lg text-ink">{t('Stealth Controls Active')}</h3>
+                <p className="font-bold text-lg text-ink">{t('Stealth Controls Active')}</p>
                 <p className="text-xs text-body mt-1">{t('Full control over read receipts and online visibility')}</p>
 
                 <div className="mt-4 rounded-2xl bg-cream p-4 border border-line space-y-2 text-xs">

@@ -1,5 +1,4 @@
 import { makeImageResolver } from './imageKey'
-import { getKeywordFallback } from './imageAlt'
 import { avif } from './avif'
 
 /**

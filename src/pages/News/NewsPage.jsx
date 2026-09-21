@@ -46,7 +46,6 @@ import { Testimonials } from '../../components/feature/Testimonials'
 import { FaqAccordion } from '../../components/feature/FaqAccordion'
 import { CtaBand } from '../../components/feature/CtaBand'
 import { RelatedPages } from '../../components/feature/RelatedPages'
-import { Marquee } from '../../components/feature/Marquee'
 import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
@@ -54,7 +53,6 @@ import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import {
-  breakingTicker,
   digestSchedule as RAW_DIGEST_SCHEDULE,
   factChecks as RAW_FACT_CHECKS,
   followTopics,

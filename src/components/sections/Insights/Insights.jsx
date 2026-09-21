@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { img, imgAlt } from '../../../utils/imageOverrides'
 import {
   FiZap, FiLayers, FiMessageSquare, FiHeadphones, FiGlobe, FiGrid, FiUsers,
-  FiActivity, FiPhone, FiRadio, FiCompass, FiSearch, FiCheck, FiArrowRight, FiShield, FiHeart,
+  FiActivity, FiPhone, FiRadio, FiCompass, FiCheck, FiArrowRight, FiShield,
   FiAtSign, FiSmartphone,
 } from 'react-icons/fi'
 import { Section } from '../../common/Section/Section'
@@ -13,16 +13,9 @@ import { Button } from '../../common/Button/Button'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
 import { useModal } from '../../../context/ModalContext'
 import { useLanguage } from '../../../context/LanguageContext'
-import { useCountUp } from '../../../hooks/useCountUp'
 import minisImg from '../../../assets/images/sunset_landscape.png'
-import aiImg from '../../../assets/images/cyberpunk_neon_city.png'
-import communityImg from '../../../assets/images/footer.jpg'
 import contentImg from '../../../assets/images/private.jpg'
-import updatesImg from '../../../assets/images/business.jpg'
-import voiceImg from '../../../assets/images/multidevice.jpg'
 import collabImg from '../../../assets/images/group.jpg'
-import ecosystemImg from '../../../assets/images/hero.jpg'
-import privacyImg from '../../../assets/images/security.jpg'
 
 // Card chrome matched 1:1 to the site-wide <Card hover> component.
 const cardBase =
@@ -139,14 +132,6 @@ const capabilities = [
 
 
 
-const stats = [
-  { icon: <FiMessageSquare />, value: 100, suffix: '%', label: 'Smart Communication', hint: 'Encrypted chats, groups & broadcasts' },
-  { icon: <FiZap />, value: 24, suffix: '/7', label: 'AI Assistance', hint: 'KT AI ready inside every chat' },
-  { icon: <FiGlobe />, value: 1000, suffix: '+', label: 'News Discovery', hint: 'Stories and sources to explore' },
-  { icon: <FiUsers />, value: 1024, label: 'Community Engagement', hint: 'Members in a single community' },
-  { icon: <FiLayers />, value: 8, suffix: '-in-1', label: 'Content Experiences', hint: 'Chats, News, Minis, Calls & more' },
-]
-
 const reasons = [
   { icon: <FiMessageSquare />, title: 'Communication', items: ['Messaging', 'Calls', 'Communities', 'Broadcasts', 'Smart Mentions'] },
   { icon: <FiZap />, title: 'Intelligence', items: ['KT AI', 'Smart Search', 'Instant Assistance'] },
@@ -185,27 +170,6 @@ const trust = [
   { icon: <FiLayers />, title: 'Content ecosystem', text: 'News, updates and discovery in one flow.' },
   { icon: <FiUsers />, title: 'Community engagement', text: 'Spaces where audiences grow together.' },
 ]
-
-function StatCard({ item, index }) {
-  const { t } = useLanguage()
-  const [ref, value] = useCountUp(item.value, { duration: 1400 + index * 120 })
-  return (
-    <div
-      ref={ref}
-      className="group rounded-3xl border border-line bg-surface p-5 text-center shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-brand/35 hover:shadow-card sm:p-6"
-    >
-      <span className="mx-auto mb-3 grid h-11 w-11 place-items-center rounded-2xl bg-brand-soft text-lg text-brand-ink transition-transform duration-300 group-hover:scale-110">
-        {item.icon}
-      </span>
-      <div className="text-2xl font-black tracking-tight text-ink sm:text-3xl">
-        {Math.round(value).toLocaleString('en-US')}
-        {item.suffix}
-      </div>
-      <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.1em] text-muted">{t(item.label)}</div>
-      <p className="mt-2 text-xs leading-relaxed text-body">{t(item.hint)}</p>
-    </div>
-  )
-}
 
 export function Insights() {
   const { openDownloadModal } = useModal()

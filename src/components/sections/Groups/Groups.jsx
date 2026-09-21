@@ -1,4 +1,4 @@
-import { img, imgAltOnly } from '../../../utils/imageOverrides'
+import { imgAltOnly } from '../../../utils/imageOverrides'
 import { imgSmall, mobileLazy } from '../../../utils/mobileImage'
 import { FiUsers, FiBarChart2 } from 'react-icons/fi'
 import { FeatureShowcase } from '../FeatureShowcase/FeatureShowcase'

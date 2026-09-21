@@ -1,7 +1,7 @@
 import { img, imgAlt } from '../../../utils/imageOverrides'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { FiPhone, FiVideo, FiMic, FiMicOff, FiMonitor, FiPhoneOff, FiVolume2, FiShield } from 'react-icons/fi'
+import { FiPhone, FiVideo, FiMic, FiMonitor, FiPhoneOff, FiVolume2 } from 'react-icons/fi'
 import { PhoneVideoFrame } from './PhoneVideoFrame'
 import avatarFemale from '../../../assets/images/avatar_female_1.png'
 import avatarMale from '../../../assets/images/avatar_male_1.png'

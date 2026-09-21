@@ -7,17 +7,13 @@ import {
   FiUsers,
   FiCheckCircle,
   FiPlus,
-  FiVideo,
   FiShield,
   FiCalendar,
   FiBarChart2,
   FiChevronRight,
   FiChevronDown,
   FiHelpCircle,
-  FiZap,
   FiGlobe,
-  FiLock,
-  FiCheck,
   FiArrowLeft,
   FiMoreVertical
 } from 'react-icons/fi'
@@ -52,27 +48,12 @@ export function GroupsPage() {
 
   const navigate = useNavigate()
   const { t } = useLanguage()
-  const [selectedOption, setSelectedOption] = useState(0)
-  const [votes, setVotes] = useState([14, 7, 3])
   const [activeTab, setActiveTab] = useState(0)
   const [faqOpen, setFaqOpen] = useState(0)
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
-
-  const pollOptions = ['Friday Dinner & Movie 🍿', 'Saturday Mountain Hike 🏔️', 'Sunday Beach Brunch ☕']
-
-  const handleVote = (idx) => {
-    setSelectedOption(idx)
-    setVotes((prev) => {
-      const copy = [...prev]
-      copy[idx] += 1
-      return copy
-    })
-  }
-
-  const totalVotes = votes.reduce((a, b) => a + b, 0)
 
   const groupTabs = [
     {
@@ -318,15 +299,15 @@ export function GroupsPage() {
                           <FiChevronRight className="text-slate-500 text-xs" />
                         </div>
 
-                        {/* Farhan Bhai (Admin) */}
+                        {/* Lucas Martin (Admin) */}
                         <div className="flex items-center justify-between p-2 hover:bg-slate-800/40 transition-colors cursor-pointer">
                           <div className="flex items-center gap-2.5">
                             <div className="grid h-8 w-8 place-items-center rounded-full bg-indigo-600 text-white font-extrabold text-[11px] shadow shrink-0">
-                              FB
+                              LM
                             </div>
                             <div>
                               <div className="flex items-center gap-1.5">
-                                <h5 className="font-bold text-[11px] text-white">Farhan Bhai</h5>
+                                <h5 className="font-bold text-[11px] text-white">Lucas Martin</h5>
                                 <span className="rounded bg-sky-500/20 px-1 py-0.2 text-[8px] font-bold text-sky-400 border border-sky-500/30">{t('Admin')}</span>
                               </div>
                               <p className="text-[9px] text-slate-400">{t('Group admin')}</p>
@@ -334,27 +315,27 @@ export function GroupsPage() {
                           </div>
                         </div>
 
-                        {/* Irfan Bhai (Omre) */}
+                        {/* Sofia Rossi */}
                         <div className="flex items-center justify-between p-2 hover:bg-slate-800/40 transition-colors cursor-pointer">
                           <div className="flex items-center gap-2.5">
                             <div className="grid h-8 w-8 place-items-center rounded-full bg-emerald-600 text-white font-extrabold text-[11px] shadow shrink-0">
-                              IO
+                              SR
                             </div>
                             <div>
-                              <h5 className="font-bold text-[11px] text-white">Irfan Bhai (Omre)</h5>
+                              <h5 className="font-bold text-[11px] text-white">Sofia Rossi</h5>
                               <p className="text-[9px] text-slate-400">{t('Tap for options')}</p>
                             </div>
                           </div>
                         </div>
 
-                        {/* Saad Bhati */}
+                        {/* Daniel Weber */}
                         <div className="flex items-center justify-between p-2 hover:bg-slate-800/40 transition-colors cursor-pointer">
                           <div className="flex items-center gap-2.5">
                             <div className="grid h-8 w-8 place-items-center rounded-full bg-amber-600 text-white font-extrabold text-[11px] shadow shrink-0">
-                              SB
+                              DW
                             </div>
                             <div>
-                              <h5 className="font-bold text-[11px] text-white">Saad Bhati</h5>
+                              <h5 className="font-bold text-[11px] text-white">Daniel Weber</h5>
                               <p className="text-[9px] text-slate-400">{t('Active recently')}</p>
                             </div>
                           </div>
@@ -413,9 +394,11 @@ export function GroupsPage() {
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
                 {t('Group Power Feature')}
               </div>
-              <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
+              {/* Not a heading: the same title is already the <h3> in the tab list
+                  beside it, so a second <h3> would duplicate it for SEO. */}
+              <p className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {groupTabs[activeTab].title}
-              </h3>
+              </p>
               <p className="mt-3 text-base leading-relaxed text-body">
                 {groupTabs[activeTab].desc}
               </p>
@@ -527,7 +510,7 @@ export function GroupsPage() {
                     {t('Upcoming')}
                   </span>
                 </div>
-                <h4 className="text-xl font-bold text-ink">{t('Annual Team Picnic 🏖️')}</h4>
+                <p className="text-xl font-bold text-ink">{t('Annual Team Picnic 🏖️')}</p>
                 <p className="mt-1 text-xs text-body">{t('Saturday, Aug 12 • 2:00 PM • Sunset Beach Park')}</p>
 
                 <div className="mt-6 flex items-center justify-between rounded-2xl bg-cream p-3 border border-line">

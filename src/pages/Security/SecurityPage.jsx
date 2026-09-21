@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 import {
-  FiDownload,
   FiShield,
   FiLock,
   FiKey,
@@ -11,18 +9,12 @@ import {
   FiPhoneOff,
   FiChevronRight,
   FiChevronDown,
-  FiHelpCircle,
   FiUploadCloud,
   FiZap,
-  FiCheck,
-  FiAlertTriangle,
-  FiSmartphone,
   FiCopy,
-  FiSend
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { Container } from '../../components/common/Container/Container'
-import { Section } from '../../components/common/Section/Section'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Button } from '../../components/common/Button/Button'
 import { SecurityLoopVideo } from '../../components/common/VideoAnimations/SecurityLoopVideo'

@@ -19,7 +19,6 @@ import {
   FiPhoneOff,
   FiShare2,
   FiZap,
-  FiSmile,
   FiGlobe,
   FiHelpCircle
 } from 'react-icons/fi'
@@ -332,9 +331,11 @@ export function CallingPage() {
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
                 {t('Feature Deep Dive')}
               </div>
-              <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
+              {/* Not a heading: the same title is already the <h3> in the tab list
+                  beside it, so a second <h3> would duplicate it for SEO. */}
+              <p className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {featureTabs[activeTab].title}
-              </h3>
+              </p>
               <p className="mt-3 text-base leading-relaxed text-body">
                 {featureTabs[activeTab].desc}
               </p>

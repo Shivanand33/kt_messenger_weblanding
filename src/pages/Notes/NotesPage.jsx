@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
@@ -13,7 +12,6 @@ import {
   FiWifiOff,
   FiZap,
   FiCheckCircle,
-  FiCheck,
   FiMessageSquare,
   FiBriefcase,
   FiGlobe,
@@ -209,9 +207,9 @@ export function NotesPage() {
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-soft text-brand-strong mb-4">
                     <FiMessageSquare className="text-xl" />
                   </div>
-                  <h4 className="text-xl font-bold text-ink">
+                  <h3 className="text-xl font-bold text-ink">
                     {t('Save Important Chat Information')}
-                  </h4>
+                  </h3>
                   <p className="mt-3 text-sm leading-relaxed text-body">
                     {t('Important details, messages, and reminders may exist within a chat. Rather than navigating past screens to find information, copy and archive/save important messages in your Notes.')}
                   </p>
@@ -224,9 +222,9 @@ export function NotesPage() {
           <div className="mt-12 grid gap-8 md:grid-cols-2">
             <Reveal from="left">
               <div className="rounded-3xl border border-line bg-brand-soft/50 p-8 shadow-card">
-                <h5 className="text-2xl font-bold text-ink">
+                <h3 className="text-2xl font-bold text-ink">
                   {t('Notes for Social Networking')}
-                </h5>
+                </h3>
                 <p className="mt-3 text-base leading-relaxed text-body">
                   {t('Social networking creates many conversations and ideas every day. Use Notes to save important information, contacts, plans, and thoughts you want to remember.')}
                 </p>
@@ -235,9 +233,9 @@ export function NotesPage() {
 
             <Reveal from="right">
               <div className="rounded-3xl border border-line bg-brand-soft/50 p-8 shadow-card">
-                <h5 className="text-2xl font-bold text-ink">
+                <h3 className="text-2xl font-bold text-ink">
                   {t('Notes While Using Messaging Apps')}
-                </h5>
+                </h3>
                 <p className="mt-3 text-base leading-relaxed text-body">
                   {t('Messaging apps are used for many conversations every day. KT Messenger Notes helps you save the information that matters instead of letting it get lost in your chats.')}
                 </p>
@@ -254,9 +252,9 @@ export function NotesPage() {
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink mb-3">
               <FiHelpCircle /> {t('FAQ')}
             </div>
-            <h6 className="text-3xl font-extrabold text-ink sm:text-4xl lg:text-5xl">
+            <h2 className="text-3xl font-extrabold text-ink sm:text-4xl lg:text-5xl">
               {t('Why Use KT Messenger Notes?')}
-            </h6>
+            </h2>
             <p className="mt-3 text-base text-body max-w-xl mx-auto">
               {t('KT Messenger Notes gives you a simple way to capture information before you forget it. Save what matters, keep it organized, and access it whenever you need it.')}
             </p>

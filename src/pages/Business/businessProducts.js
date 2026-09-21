@@ -542,5 +542,3 @@ export const businessProducts = {
     cta: { title: 'Browse the partner directory', desc: 'Find a certified KT expert near you.' },
   },
 }
-
-export const businessProductSlugs = Object.keys(businessProducts)

@@ -9,14 +9,9 @@ import {
   FiSearch,
   FiLock,
   FiHeart,
-  FiThumbsUp,
-  FiStar,
   FiChevronRight,
   FiChevronDown,
   FiHelpCircle,
-  FiEye,
-  FiShare2,
-  FiTrendingUp,
   FiShield
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
@@ -107,7 +102,9 @@ export function ChannelsPage() {
       category: t('Technology & AI'),
       followers: '148.5K',
       desc: t('Daily breakdown of breakthrough tech, gadgets, and next gen AI software updates.'),
-      img: techImg
+      img: techImg,
+      // Rendered as plain text, not an <h3> (SEO: KT Tech Pulse is not a heading).
+      notHeading: true
     },
     {
       name: t('Global Sports Daily'),
@@ -219,9 +216,9 @@ export function ChannelsPage() {
                   <div className="flex items-center gap-3">
                     <img src={img(techImg)} alt={imgAlt(techImg, t('Channel'))} className="h-12 w-12 rounded-full object-cover border-2 border-brand-strong" />
                     <div>
-                      <h3 className="flex items-center gap-1.5 font-bold text-ink text-base">
+                      <p className="flex items-center gap-1.5 font-bold text-ink text-base">
                         {t('KT Tech Pulse')} <FiCheckCircle className="text-brand-strong text-sm" />
-                      </h3>
+                      </p>
                       <p className="text-xs text-muted">{followerCount.toLocaleString()} {t('subscribers')}</p>
                     </div>
                   </div>
@@ -449,9 +446,14 @@ export function ChannelsPage() {
                 </div>
                 <div className="p-6">
                   <span className="text-[10px] font-bold text-brand-ink uppercase tracking-wider">{card.category}</span>
-                  <h3 className="text-lg font-bold text-ink mt-1 flex items-center gap-1.5">
-                    {card.name} <FiCheckCircle className="text-brand-strong text-sm" />
-                  </h3>
+                  {(() => {
+                    const Title = card.notHeading ? 'p' : 'h3'
+                    return (
+                      <Title className="text-lg font-bold text-ink mt-1 flex items-center gap-1.5">
+                        {card.name} <FiCheckCircle className="text-brand-strong text-sm" />
+                      </Title>
+                    )
+                  })()}
                   <p className="mt-2 text-xs leading-relaxed text-body line-clamp-2">{card.desc}</p>
                   <div className="mt-4 pt-4 border-t border-line flex items-center justify-between">
                     <span className="text-xs text-muted font-medium">{card.followers} {t('followers')}</span>

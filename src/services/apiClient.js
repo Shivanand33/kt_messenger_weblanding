@@ -62,5 +62,3 @@ export const api = {
   trackDownload: (payload) => request('/track/download', { method: 'POST', body: payload }).catch(() => {}),
   trackEvent: (payload) => request('/track/event', { method: 'POST', body: payload }).catch(() => {}),
 }
-
-export default api

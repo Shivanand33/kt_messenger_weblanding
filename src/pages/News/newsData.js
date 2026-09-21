@@ -14,16 +14,6 @@ export const newsCategories = [
   'Entertainment',
 ]
 
-export const breakingTicker = [
-  'Standards body adopts universal end to end encryption for all consumer messaging',
-  'KT AI Co Pilot crosses 500M daily assistant queries across 120 countries',
-  'Fusion reactor sustains 100MW clean output for 12 straight hours',
-  'Bitcoin holds above $67,400 as zero fee in chat wallets go live',
-  'LEO satellite direct to cellular messaging enters global beta',
-  'Global esports championship final draws record 85M concurrent viewers',
-  'Direct air capture plant begins removing 1M tons of CO₂ a year',
-]
-
 export const newsArticles = [
   // ---------------------------------------------------------------- TECH & AI
   {

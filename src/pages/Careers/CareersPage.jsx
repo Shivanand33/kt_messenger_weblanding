@@ -13,6 +13,7 @@ import {
   FiSend,
   FiShield,
   FiUsers,
+  FiVideo,
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { Container } from '../../components/common/Container/Container'
@@ -22,7 +23,6 @@ import { Button } from '../../components/common/Button/Button'
 import { PageHero } from '../../components/feature/PageHero'
 import { SectionHead } from '../../components/feature/SectionHead'
 import { FaqAccordion } from '../../components/feature/FaqAccordion'
-import { CtaBand } from '../../components/feature/CtaBand'
 import { RelatedPages } from '../../components/feature/RelatedPages'
 import { Modal } from '../../components/feature/Modal'
 import { Toast } from '../../components/feature/Toast'
@@ -93,6 +93,7 @@ const RELATED = [
   { to: '/about', label: 'About', desc: 'Our mission, story and privacy charter.', icon: <FiCompass /> },
   { to: '/contact', label: 'Contact', desc: 'Reach out to our support or hiring team.', icon: <FiMessageSquare /> },
   { to: '/community', label: 'Community', desc: 'Join our user forums and discussion spaces.', icon: <FiUsers /> },
+  { to: '/minis', label: 'KT Minis', desc: 'Watch, create and share short video clips.', icon: <FiVideo /> },
 ]
 
 export function CareersPage() {

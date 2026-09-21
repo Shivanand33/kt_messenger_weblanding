@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   FiDownload,
   FiMessageSquare,
-  FiLock,
   FiFilter,
   FiBookmark,
   FiGlobe,
@@ -14,7 +13,6 @@ import {
   FiPaperclip,
   FiMic,
   FiSmile,
-  FiCheck,
   FiCheckCircle,
   FiChevronRight,
   FiChevronDown,
@@ -32,11 +30,6 @@ import { MessagingLoopVideo } from '../../components/common/VideoAnimations/Mess
 import { KtChatScreen } from '../../components/common/AppScreens/KtChatScreen'
 import weddingImg from '../../assets/images/wedding_grid.png'
 import hdImg from '../../assets/images/hd_landscape.png'
-import groupImg from '../../assets/images/group.jpg'
-import securityImg from '../../assets/images/security.jpg'
-import privateImg from '../../assets/images/private.jpg'
-import avatarMale from '../../assets/images/avatar_male_1.png'
-import avatarFemale from '../../assets/images/avatar_female_1.png'
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
@@ -57,7 +50,6 @@ export function MessagingPage() {
   const navigate = useNavigate()
   const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState(0)
-  const [activeExpress, setActiveExpress] = useState(0)
   const [faqOpen, setFaqOpen] = useState(0)
   const carouselRef = useRef(null)
 
@@ -219,7 +211,6 @@ export function MessagingPage() {
                 showControls={false}
                 showProgress={false}
                 showPhoto={false}
-                showEncryptionNote={false}
               />
             </Reveal>
           </div>

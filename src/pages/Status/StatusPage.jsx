@@ -7,15 +7,12 @@ import {
   FiClock,
   FiLock,
   FiMic,
-  FiEye,
   FiHeart,
-  FiPlay,
   FiCheckCircle,
   FiChevronRight,
   FiChevronDown,
   FiHelpCircle,
   FiImage,
-  FiSmile,
   FiEdit3,
   FiShield
 } from 'react-icons/fi'
@@ -28,8 +25,6 @@ import { StatusLoopVideo } from '../../components/common/VideoAnimations/StatusL
 import sunsetImage from '../../assets/images/sunset_landscape.png'
 import beachImage from '../../assets/images/beach_bicycles.png'
 import familyAvatar from '../../assets/images/group.jpg'
-import avatarMale from '../../assets/images/avatar_male_1.png'
-import avatarFemale from '../../assets/images/avatar_female_1.png'
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
@@ -63,6 +58,8 @@ export function StatusPage() {
   const statusTabs = [
     {
       title: t('HD Photo & Short Video Stories'),
+      // Rendered as plain text in the tab list, not an <h3> (SEO).
+      notHeading: true,
       icon: <FiImage className="text-xl" />,
       desc: t('Post high definition photos and up to 60-second video clips that automatically vanish after 24 hours.'),
       highlights: [t('Uncompressed 4K photo resolution'), t('Up to 60s video clips'), t('Auto delete in 24 hours')]
@@ -275,7 +272,11 @@ export function StatusPage() {
                   <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${active ? 'bg-white/20 text-white' : 'bg-brand-soft text-brand-strong'}`}>
                     {tab.icon}
                   </div>
-                  <h3 className="font-bold text-base">{tab.title}</h3>
+                  {tab.notHeading ? (
+                    <p className="font-bold text-base">{tab.title}</p>
+                  ) : (
+                    <h3 className="font-bold text-base">{tab.title}</h3>
+                  )}
                 </button>
               )
             })}
@@ -286,9 +287,11 @@ export function StatusPage() {
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
                 {t('Status Feature Deep Dive')}
               </div>
-              <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
+              {/* Not a heading: the tab titles already live in the tab list
+                  beside it, so a second <h3> would duplicate them for SEO. */}
+              <p className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {statusTabs[activeTab].title}
-              </h3>
+              </p>
               <p className="mt-3 text-base leading-relaxed text-body">
                 {statusTabs[activeTab].desc}
               </p>
@@ -395,7 +398,7 @@ export function StatusPage() {
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-strong text-white text-2xl mb-4 shadow-brand">
                   <FiMic />
                 </div>
-                <h3 className="font-bold text-lg text-ink">{t('Voice Status Update')}</h3>
+                <p className="font-bold text-lg text-ink">{t('Voice Status Update')}</p>
                 <p className="text-xs text-body mt-1">&quot;{t('Morning thoughts on our upcoming launch! ☕')}&quot;</p>
 
                 <div className="mt-4 flex items-center justify-center gap-2 rounded-2xl bg-cream p-3 border border-line">

@@ -106,7 +106,9 @@ function App() {
         if (item.href && item.href.startsWith('/')) {
           const Comp = getComponentByLabelOrHref(item)
           if (Comp) {
-            routes.push({ path: item.href, Component: Comp })
+            // The Help Center gives every article its own URL under its path.
+            const path = Comp === HelpPage ? `${item.href.replace(/\/+$/, '')}/:slug?` : item.href
+            routes.push({ path, Component: Comp })
           }
         }
       }
@@ -138,7 +140,7 @@ function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogPage />} />
         <Route path="/apps" element={<AppsPage />} />
-        <Route path="/help" element={<HelpPage />} />
+        <Route path="/help/:slug?" element={<HelpPage />} />
         <Route path="/business" element={<BusinessPage />} />
         <Route path="/business/:slug" element={<BusinessSubPage />} />
         <Route path="/calling" element={<CallingPage />} />

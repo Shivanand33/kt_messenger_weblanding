@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { FiChevronDown, FiSearch, FiLink, FiX, FiFlag, FiShield, FiCloud, FiMessageCircle, FiUsers, FiBriefcase, FiChevronRight, FiDownload } from 'react-icons/fi'
+import { FiChevronDown, FiSearch, FiLink, FiX, FiFlag, FiShield, FiCloud, FiMessageCircle, FiUsers, FiBriefcase, FiChevronRight } from 'react-icons/fi'
 import {
   MdArticle, MdFileDownload, MdHowToReg, MdAlternateEmail, MdDevices, MdHelpOutline, MdContacts, MdRadioButtonChecked,
   MdFlag, MdChat, MdStorefront, MdCall, MdGroups, MdCampaign, MdLock, MdPerson, MdCreditCard, MdBusinessCenter,
@@ -19,6 +19,9 @@ import { useSeo } from '../../hooks/useSeo'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { api } from '../../services/apiClient'
 import { parseBody } from '../../utils/parseBody'
+import { useModal } from '../../context/ModalContext'
+import qrAndroid from '../../assets/images/help/qr-android.svg'
+import qrIos from '../../assets/images/help/qr-ios.svg'
 
 const D = <MdArticle />
 
@@ -61,8 +64,25 @@ function normalizeHelpTree(remote) {
       label: sub.label,
       icon: helpIcon(sub.icon),
       articles: (sub.articles || []).map((a) => a.title),
+      // Kept by position so each article opens at its own admin slug, even
+      // when two articles share a title.
+      slugs: (sub.articles || []).map((a) => a.slug || ''),
     })),
   }))
+}
+
+/**
+ * Same rules as the backend's slugify(), so the URL built here for a title is
+ * the slug the admin stores for it. Used for the hardcoded fallback articles.
+ */
+function slugify(input = '') {
+  return String(input)
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80)
 }
 
 /** Give the hardcoded fallback the same key shape as the admin tree. */
@@ -194,7 +214,69 @@ const platformTabs = [
   { label: 'Windows', icon: <FaWindows /> },
 ]
 
-const tabbedArticles = ['How to download or uninstall KT Messenger']
+// Articles shown with platform tabs, and which tabs each one offers.
+const tabbedArticles = {
+  'How to download or uninstall KT Messenger': ['Android', 'iOS', 'Mac', 'Windows'],
+  'About supported devices': ['Android', 'iOS'],
+}
+
+// Per-platform copy for the download / uninstall article. Phones get a store
+// QR code to scan; computers get the download button instead, because a
+// computer's own camera cannot scan a code shown on its own screen.
+const downloadGuides = {
+  Android: {
+    store: 'Google Play Store',
+    url: 'https://play.google.com/store/apps/details?id=com.ogoul.kalamtime',
+    qr: qrAndroid,
+    install: ['Scan the QR code above, or open the Google Play Store and search for KT Messenger.', 'Tap Install and wait for the download to finish.'],
+    uninstall: [
+      'Touch and hold the KT Messenger icon on your home screen or in your app drawer.',
+      'Tap Uninstall (or drag the icon to Uninstall).',
+      'Tap OK to confirm.',
+    ],
+  },
+  iOS: {
+    store: 'App Store',
+    url: 'https://apps.apple.com/in/app/kt-messenger/id6478195913',
+    qr: qrIos,
+    install: ['Scan the QR code above, or open the App Store and search for KT Messenger.', 'Tap Get, then confirm with Face ID, Touch ID or your Apple ID password.'],
+    uninstall: [
+      'Touch and hold the KT Messenger icon on your home screen.',
+      'Tap Remove App.',
+      'Tap Delete App, then tap Delete to confirm.',
+    ],
+  },
+  Mac: {
+    install: ['Click Download for Mac above to see the official download options.', 'Open the downloaded file and move KT Messenger to your Applications folder.'],
+    uninstall: [
+      'Quit KT Messenger.',
+      'Open Finder and go to Applications.',
+      'Drag KT Messenger to the Bin, or right-click it and choose Move to Bin.',
+    ],
+  },
+  Windows: {
+    install: ['Click Download for Windows above to download the KT Messenger installer.', 'Open the downloaded file and follow the on-screen steps to install.'],
+    uninstall: [
+      'Open Start, then go to Settings > Apps > Installed apps.',
+      'Find KT Messenger in the list and click the ... (more) button next to it.',
+      'Click Uninstall, then click Uninstall again to confirm.',
+    ],
+  },
+}
+
+const supportedSystems = [
+  'Android 10.0 and later',
+  'iOS 16.6 and later',
+  'iPadOS 16.6 and later',
+  'macOS 13.5 and later (Mac devices with Apple Silicon)',
+  'visionOS 1.0 and later',
+]
+
+// Articles whose built-in guide is kept on screen instead of the backend seed
+// text used for articles the admin has not written yet; any real body written
+// in admin still takes over.
+const builtInGuides = ['How to download or uninstall KT Messenger', 'About supported operating systems', 'About supported devices', 'About rooted phones and custom ROMs', 'Ending support for legacy phones']
+const isSeedPlaceholder = (body) => /Manage the full content from the admin panel/i.test(body)
 
 // Every entry resolves to a route, or to a route plus a section id — nothing
 // is left as a dead anchor. Social links open the Community page's verified
@@ -254,45 +336,186 @@ function AdminArticleBody({ body }) {
   )
 }
 
-function ArticleBody({ title, tab }) {
-  const navigate = useNavigate()
+/** Grey "Related Resources" box; each link opens another Help Center article. */
+function RelatedResources({ links, onOpenArticle }) {
+  return (
+    <div className="rounded-2xl bg-surface-2 p-6">
+      <h2 className="text-xl font-bold text-ink">Related Resources</h2>
+      {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
+      <ul className="mt-3! list-disc! space-y-2 pl-5!">
+        {links.map(([label, article]) => (
+          <li key={article}>
+            <button
+              type="button"
+              onClick={() => onOpenArticle?.(article)}
+              className="text-left font-semibold text-brand-ink transition-colors hover:text-brand-strong hover:underline"
+            >
+              {label}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function ArticleBody({ title, tab, onOpenArticle }) {
+  const { openDownloadModal } = useModal()
   const { t } = useLanguage()
   if (title === 'How to download or uninstall KT Messenger') {
-    const store = { Android: 'Google Play Store', iOS: 'App Store', Mac: 'Mac App Store', Windows: 'Microsoft Store' }[tab]
-    const action = tab === 'Android' || tab === 'Windows' ? 'Install' : 'Get'
+    const guide = downloadGuides[tab] || downloadGuides.Android
     return (
       <div className={proseClass}>
         <h3 className="text-xl font-bold text-ink">{t('Download KT Messenger')}</h3>
-        <p>Open the {store} on your {tab} device and search for KT Messenger, then tap {action} to begin the download.</p>
-        
-        <div className="my-4 flex flex-wrap items-center gap-4">
-          <button
-            type="button"
-            onClick={() => { navigate('/apps'); window.scrollTo(0, 0) }}
-            className="grid h-44 w-44 place-items-center rounded-2xl border-2 border-dashed border-line bg-surface-2 p-4 text-center text-sm font-medium text-muted transition-all hover:border-brand-strong hover:bg-brand-soft hover:text-brand-ink hover:shadow-card cursor-pointer"
-          >
-            <span className="text-xs font-bold text-brand-ink">{t('Click to Download')}</span>
-            <span className="text-sm font-extrabold text-ink">KT Messenger</span>
-            <span className="text-[10px] font-semibold text-muted">Android • iOS • Windows</span>
-          </button>
 
-          <div className="flex flex-col gap-2.5">
-            <Button variant="primary" size="lg" onClick={() => { navigate('/apps'); window.scrollTo(0, 0) }}>
-              {t('Download for')} {tab} <FiChevronRight />
-            </Button>
-            <span className="text-xs font-semibold text-muted">
-              {t('Clicking will redirect to official download options for Android, iOS & Windows.')}
-            </span>
-          </div>
-        </div>
+        {guide.qr ? (
+          <>
+            <p>Scan the QR code with your phone&apos;s camera and tap the link to be taken to the KT Messenger download page on the {guide.store}.</p>
+            {/* Always black on white, so the code stays scannable in dark mode. */}
+            <div className="my-4 inline-block rounded-2xl border border-line bg-white p-3">
+              <img
+                src={guide.qr}
+                alt={`QR code to download KT Messenger from the ${guide.store}`}
+                width="200"
+                height="200"
+                loading="lazy"
+                className="block h-[200px] w-[200px]"
+              />
+            </div>
+            <p>
+              Already on your {tab} device?{' '}
+              <a href={guide.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand-ink hover:underline">
+                Open KT Messenger on the {guide.store}
+              </a>
+              .
+            </p>
+          </>
+        ) : (
+          <>
+            <p>Download KT Messenger for your {tab} computer from the official download options.</p>
+            <div className="my-4">
+              <Button variant="primary" size="lg" onClick={openDownloadModal}>
+                {t('Download for')} {tab} <FiChevronRight />
+              </Button>
+            </div>
+          </>
+        )}
 
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-          <li>Find KT Messenger in the {store}, then tap {action}.</li>
-          <li>Open the app and review the Terms of Service, then tap <strong>{t('Agree and continue')}</strong>.</li>
-          <li>{t('Register your phone number to start chatting.')}</li>
+          {guide.install.map((step) => <li key={step}>{step}</li>)}
+          <li>Open the app and review the Terms of Service, then {guide.qr ? 'tap' : 'click'} <strong>{t('Agree and continue')}</strong>.</li>
+          <li>{guide.qr ? t('Register your phone number to start chatting.') : 'Follow the on-screen steps to log in to your KT Messenger account.'}</li>
         </ol>
+
         <h3 className="text-xl font-bold text-ink">{t('Uninstall KT Messenger')}</h3>
-        <p>Press and hold the KT Messenger icon on your {tab} device, then choose <strong>{t('Uninstall')}</strong> or <strong>{t('Remove')}</strong>. Back up your chats first if you want to keep them.</p>
+        <p>Uninstalling removes KT Messenger and its chats from this {tab} device. Back up your chats first if you want to keep them.</p>
+        <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
+          {guide.uninstall.map((step) => <li key={step}>{step}</li>)}
+        </ol>
+        <p>You can reinstall KT Messenger at any time by following the download steps above.</p>
+      </div>
+    )
+  }
+  if (title === 'About supported operating systems') {
+    return (
+      <div className={proseClass}>
+        <p>Currently, KT Messenger supports the following operating systems:</p>
+        {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
+        <ul className="list-disc! space-y-2 pl-5! mb-5!">
+          {supportedSystems.map((system) => <li key={system}>{system}</li>)}
+        </ul>
+        <p>Once you have a supported device, download KT Messenger from the appropriate app store and complete the registration process using your phone number.</p>
+        <p><strong>Note:</strong> An internet connection is required during registration and verification. We recommend keeping your device and KT Messenger updated to the latest available version.</p>
+        <h3 className="text-xl font-bold text-ink">How We Choose What to Support</h3>
+        <p>Devices and operating systems change over time, so we regularly review the versions supported by KT Messenger.</p>
+        <p>Older operating systems may not support the latest security updates, bug fixes, or features available in newer versions of KT Messenger.</p>
+        <h3 className="text-xl font-bold text-ink">What Happens If Your Operating System Is No Longer Supported</h3>
+        <p>If your operating system is no longer supported, you may not be able to install or update KT Messenger.</p>
+        <p>To continue using KT Messenger, update your device to a supported operating system version.</p>
+        <p>We update this article whenever our supported operating system requirements change.</p>
+      </div>
+    )
+  }
+  if (title === 'About supported devices') {
+    return (
+      <div className={proseClass}>
+        <p>KT Messenger works on supported Android and Apple devices.</p>
+        {tab === 'iOS' ? (
+          <>
+            <h3 className="text-xl font-bold text-ink">Apple Devices</h3>
+            <p>Supported Apple devices include:</p>
+            {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
+            <ul className="list-disc! space-y-2 pl-5! mb-5!">
+              <li>iPhones running iOS 16.6 and later.</li>
+              <li>iPads running iPadOS 16.6 and later.</li>
+              <li>Mac devices running macOS 13.5 and later with Apple Silicon (M1 or later).</li>
+              <li>Apple Vision devices running visionOS 1.0 and later.</li>
+            </ul>
+          </>
+        ) : (
+          <>
+            <h3 className="text-xl font-bold text-ink">Android</h3>
+            <p>Supported Android devices include:</p>
+            {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
+            <ul className="list-disc! space-y-2 pl-5! mb-5!">
+              <li>Android phones running Android 10.0 and later.</li>
+              <li>Android devices with access to the Google Play Store.</li>
+              <li>Android devices with an active internet connection.</li>
+            </ul>
+          </>
+        )}
+        <p>We regularly review the devices and operating systems supported by KT Messenger.</p>
+        <p>As technology evolves, older devices and operating systems may no longer support the latest KT Messenger features, security updates, and performance improvements.</p>
+        <p>If support for your device or operating system changes, we&apos;ll update this article with the latest requirements.</p>
+        <div className="rounded-2xl bg-surface-2 p-6">
+          <h2 className="text-xl font-bold text-ink">Related Resources</h2>
+          <p className="mt-3">
+            <button
+              type="button"
+              onClick={() => onOpenArticle?.('About supported operating systems')}
+              className="text-left font-semibold text-brand-ink transition-colors hover:text-brand-strong hover:underline"
+            >
+              About Supported Operating Systems
+            </button>
+          </p>
+        </div>
+      </div>
+    )
+  }
+  if (title === 'Ending support for legacy phones') {
+    return (
+      <div className={proseClass}>
+        <h2 className="text-xl font-bold text-ink">End of Support for Older Operating Systems</h2>
+        <p>KT Messenger may discontinue support for older operating system versions over time.</p>
+        <p>Our goal is to provide a secure, reliable, and high-quality messaging experience. As technology evolves, older operating systems may no longer support the latest security standards, performance improvements, and features required by KT Messenger.</p>
+        <p>When an operating system is no longer supported, users may be unable to install new versions of KT Messenger or receive future updates. To keep using KT Messenger, update your device to a supported operating system version.</p>
+        <p>If our support requirements change, the latest supported operating systems will be listed in About Supported Operating Systems.</p>
+        <RelatedResources
+          onOpenArticle={onOpenArticle}
+          links={[
+            ['About Supported Operating Systems', 'About supported operating systems'],
+            ['About Supported Devices', 'About supported devices'],
+          ]}
+        />
+      </div>
+    )
+  }
+  if (title === 'About rooted phones and custom ROMs') {
+    return (
+      <div className={proseClass}>
+        <h2 className="text-xl font-bold text-ink">About Rooted Android Devices and Custom ROMs</h2>
+        <p>Rooted Android devices and custom ROMs are not officially supported by KT Messenger.</p>
+        <p>Because device modifications vary significantly, we cannot guarantee that KT Messenger will function correctly on rooted devices or devices running modified operating systems.</p>
+        <p>Using a rooted device or custom ROM may affect app security, stability, performance, and compatibility with KT Messenger features.</p>
+        <p>For the best experience, we recommend using the official operating system provided by your device manufacturer and keeping your device updated to the latest available version.</p>
+        <RelatedResources
+          onOpenArticle={onOpenArticle}
+          links={[
+            ['About Supported Devices', 'About supported devices'],
+            ['About Supported Operating Systems', 'About supported operating systems'],
+            ['How to Download or Uninstall KT Messenger', 'How to download or uninstall KT Messenger'],
+          ]}
+        />
       </div>
     )
   }
@@ -397,14 +620,19 @@ export function HelpPage() {
   useAdminSeo('help', '/help')
 
   const navigate = useNavigate()
+  const { pathname, state: navState } = useLocation()
+  // Each article has its own URL: <help path>/<article slug>. The help path is
+  // /help or an admin navigation alias, so it is read from the URL itself.
+  const { slug } = useParams()
+  const trimmedPath = pathname.replace(/\/+$/, '')
+  const basePath = (slug ? trimmedPath.slice(0, trimmedPath.lastIndexOf('/')) : trimmedPath) || '/help'
   const { handlers } = useSwipeTheme()
   const { t } = useLanguage()
   // Sidebar starts fully collapsed — no category or sub-category is opened
-  // for the reader. Opening an article still expands its branch via
-  // selectArticle() below.
+  // for the reader. Opening an article still expands its branch (see the
+  // effect below that follows the URL).
   const [expandedCat, setExpandedCat] = useState(null)
   const [expandedSub, setExpandedSub] = useState(null)
-  const [activeArticle, setActiveArticle] = useState(null)
   const [activeTab, setActiveTab] = useState('Android')
   const [copied, setCopied] = useState(false)
 
@@ -421,13 +649,40 @@ export function HelpPage() {
     () => (Array.isArray(remoteTree) && remoteTree.length > 0 ? buildSlugIndex(remoteTree) : {}),
     [remoteTree],
   )
+  // Admin slug for a title when there is one, otherwise the same slug the
+  // backend would generate for it.
+  const slugFor = (title) => slugIndex[title] || slugify(title)
   const popular = useMemo(
     () =>
       Array.isArray(remotePopular) && remotePopular.length > 0
-        ? remotePopular.map((a) => a.title).filter(Boolean)
-        : popularArticles,
-    [remotePopular],
+        ? remotePopular.filter((a) => a?.title).map((a) => ({ title: a.title, slug: a.slug || slugIndex[a.title] || slugify(a.title), remote: Boolean(a.slug) }))
+        : popularArticles.map((title) => ({ title, slug: slugIndex[title] || slugify(title), remote: Boolean(slugIndex[title]) })),
+    [remotePopular, slugIndex],
   )
+
+  // slug -> article, for every article the page can open. `remote` marks the
+  // slugs that came from admin, i.e. the ones with a body to fetch.
+  const articleIndex = useMemo(() => {
+    const index = {}
+    for (const category of tree) {
+      for (const sub of category.subs) {
+        sub.articles.forEach((title, ai) => {
+          const adminSlug = sub.slugs?.[ai]
+          const key = adminSlug || slugIndex[title] || slugify(title)
+          if (key && !index[key]) index[key] = { title, catKey: category.key, subKey: sub.key, remote: Boolean(adminSlug || slugIndex[title]) }
+        })
+      }
+    }
+    for (const article of popular) {
+      if (article.slug && !index[article.slug]) index[article.slug] = { title: article.title, catKey: null, subKey: null, remote: article.remote }
+    }
+    return index
+  }, [tree, popular, slugIndex])
+
+  // The open article is whatever the URL names. An unknown slug (or one the
+  // admin tree has not delivered yet) shows the Help Center home.
+  const current = slug ? articleIndex[slug] : null
+  const activeArticle = useMemo(() => (current ? { title: current.title } : null), [current])
 
   // Body of the selected article, when it is one the admin manages.
   const [articleBody, setArticleBody] = useState('')
@@ -435,6 +690,43 @@ export function HelpPage() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  // Every article change starts on the first tab at the top of the page.
+  useEffect(() => {
+    setActiveTab('Android')
+    setCopied(false)
+    window.scrollTo(0, 0)
+  }, [slug])
+
+  // Expand the sidebar branch of the article in the URL — on a direct visit,
+  // a refresh, or Back/Forward. Opening from Popular Help Steps or a related
+  // link leaves the sidebar as it is, as it always has.
+  const keepSidebar = navState?.helpSidebar === 'keep'
+  useEffect(() => {
+    if (!current || keepSidebar) return
+    if (current.catKey) setExpandedCat(current.catKey)
+    if (current.subKey) setExpandedSub(current.subKey)
+  }, [current, keepSidebar])
+
+  // Admin-managed articles carry a slug; fetch the body the editor wrote.
+  // Anything else keeps rendering the built-in ArticleBody.
+  const bodySlug = current?.remote ? slug : null
+  useEffect(() => {
+    setArticleBody('')
+    if (!bodySlug) return undefined
+    let alive = true
+    api
+      .getHelpArticle(bodySlug)
+      .then((article) => {
+        if (alive && article?.body && String(article.body).trim()) setArticleBody(String(article.body))
+      })
+      .catch(() => {
+        /* no body from admin — the built-in guide stays on screen */
+      })
+    return () => {
+      alive = false
+    }
+  }, [bodySlug])
 
   const goTo = (target) => {
     if (!target) return
@@ -466,35 +758,27 @@ export function HelpPage() {
   }
 
   const goHelpHome = () => {
-    setActiveArticle(null)
-    window.scrollTo(0, 0)
+    if (slug) navigate(basePath)
+    else window.scrollTo(0, 0)
   }
 
-  const selectArticle = (catKey, subKey, title) => {
-    if (catKey) setExpandedCat(catKey)
-    if (subKey) setExpandedSub(subKey)
-    setActiveArticle({ title })
-    setActiveTab('Android')
-    setCopied(false)
-    window.scrollTo(0, 0)
-
-    // Admin-managed articles carry a slug; fetch the body the editor wrote.
-    // Anything else keeps rendering the built-in ArticleBody.
-    setArticleBody('')
-    const slug = slugIndex[title]
-    if (!slug) return
-    api
-      .getHelpArticle(slug)
-      .then((article) => {
-        if (article?.body && String(article.body).trim()) setArticleBody(String(article.body))
-      })
-      .catch(() => {
-        /* no body from admin — the built-in guide stays on screen */
-      })
+  // Opening an article changes the URL; the effects above follow it.
+  // `keepSidebar` is for links outside the sidebar (Popular Help Steps,
+  // related articles), which never expanded it.
+  const openArticle = (articleSlug, { keepSidebar: keep = false } = {}) => {
+    if (!articleSlug) return
+    if (articleSlug === slug) {
+      // Already open: same as before — back to the first tab, at the top.
+      setActiveTab('Android')
+      setCopied(false)
+      window.scrollTo(0, 0)
+      return
+    }
+    navigate(`${basePath}/${encodeURIComponent(articleSlug)}`, keep ? { state: { helpSidebar: 'keep' } } : undefined)
   }
 
   const copyLink = () => {
-    const url = `${window.location.origin}/help`
+    const url = `${window.location.origin}${trimmedPath || '/help'}`
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(url).then(() => {
         setCopied(true)
@@ -503,7 +787,8 @@ export function HelpPage() {
     }
   }
 
-  const hasTabs = activeArticle && tabbedArticles.includes(activeArticle.title)
+  const articleTabs = activeArticle ? tabbedArticles[activeArticle.title] : null
+  const hasTabs = Boolean(articleTabs)
 
   return (
     <div {...handlers} className="min-h-screen overflow-x-clip bg-cream text-body">
@@ -586,11 +871,12 @@ export function HelpPage() {
                                     className="overflow-hidden"
                                   >
                                     {sub.articles.map((title, ai) => {
-                                      const active = activeArticle?.title === title
+                                      const articleSlug = sub.slugs?.[ai] || slugFor(title)
+                                      const active = Boolean(slug) && articleSlug === slug
                                       return (
                                         <li key={`${title}-${ai}`}>
                                           <button
-                                            onClick={() => selectArticle(category.key, sub.key, title)}
+                                            onClick={() => openArticle(articleSlug)}
                                             className={`block w-full rounded-lg py-2 pl-[3.25rem] pr-3 text-left text-sm transition-colors ${active ? 'bg-brand-soft font-semibold text-brand-ink' : 'text-body hover:text-brand-ink'}`}
                                           >
                                             {t(title)}
@@ -630,7 +916,7 @@ export function HelpPage() {
 
                 {hasTabs ? (
                   <div className="mt-8 flex flex-wrap gap-x-7 gap-y-2 border-b border-line">
-                    {platformTabs.map((tab) => (
+                    {platformTabs.filter((tab) => articleTabs.includes(tab.label)).map((tab) => (
                       <button
                         key={tab.label}
                         onClick={() => setActiveTab(tab.label)}
@@ -643,10 +929,10 @@ export function HelpPage() {
                 ) : null}
 
                 <div className="mt-8 max-w-3xl">
-                  {articleBody ? (
+                  {articleBody && !(builtInGuides.includes(activeArticle.title) && isSeedPlaceholder(articleBody)) ? (
                     <AdminArticleBody body={articleBody} />
                   ) : (
-                    <ArticleBody title={activeArticle.title} tab={activeTab} />
+                    <ArticleBody title={activeArticle.title} tab={activeTab} onOpenArticle={(title) => openArticle(slugFor(title), { keepSidebar: true })} />
                   )}
                 </div>
               </Reveal>
@@ -686,12 +972,12 @@ export function HelpPage() {
                     <h2 className="text-2xl font-bold text-ink">{t('Popular Help Steps')}</h2>
                     <ul className="mt-6 space-y-4">
                       {popular.map((article) => (
-                        <li key={article}>
+                        <li key={article.title}>
                           <button
-                            onClick={() => selectArticle(null, null, article)}
+                            onClick={() => openArticle(article.slug, { keepSidebar: true })}
                             className="text-left text-[15px] font-semibold text-brand-ink transition-colors hover:text-brand-strong hover:underline"
                           >
-                            {t(article)}
+                            {t(article.title)}
                           </button>
                         </li>
                       ))}

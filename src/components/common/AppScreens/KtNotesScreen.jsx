@@ -30,7 +30,7 @@ export function KtNotesScreen({ className = '' }) {
         <div className="shrink-0 px-3.5 pt-9 pb-3 bg-gradient-to-r from-[#1b85f3] to-[#0a52bd] shadow-md">
           <div className="flex items-center gap-3">
             <FiX className="text-lg text-white font-bold cursor-pointer" />
-            <h4 className="text-[14px] font-extrabold tracking-tight text-white">{t('Add Note')}</h4>
+            <p className="text-[14px] font-extrabold tracking-tight text-white">{t('Add Note')}</p>
           </div>
         </div>
 
@@ -69,7 +69,7 @@ export function KtNotesScreen({ className = '' }) {
           {/* Pin note Option Row */}
           <div className="flex items-center justify-between py-1 px-1">
             <div>
-              <h5 className="text-[12px] font-extrabold text-white">{t('Pin note')}</h5>
+              <p className="text-[12px] font-extrabold text-white">{t('Pin note')}</p>
               <p className="text-[9.5px] font-medium text-slate-400">{t('Keep this note at the top')}</p>
             </div>
 
@@ -86,7 +86,7 @@ export function KtNotesScreen({ className = '' }) {
                 <FiClipboard />
               </div>
               <div>
-                <h5 className="text-[12px] font-extrabold text-[#f39c12]">{t('Mark as Task')}</h5>
+                <p className="text-[12px] font-extrabold text-[#f39c12]">{t('Mark as Task')}</p>
                 <p className="text-[9px] font-medium leading-tight text-slate-300/80 mt-0.5">
                   {t('Tasks have special visual badges in your notes.')}
                 </p>

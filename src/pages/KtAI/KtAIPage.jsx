@@ -5,17 +5,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   FiDownload,
   FiCpu,
-  FiSend,
   FiImage,
   FiHelpCircle,
   FiCheckCircle,
   FiChevronRight,
   FiChevronDown,
   FiZap,
-  FiGlobe,
-  FiLock,
   FiCode,
-  FiEdit3,
   FiShield
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
@@ -235,7 +231,7 @@ export function KtAIPage() {
                     <SparklesIcon className="relative z-10 h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-ink text-base">{t('KT AI Studio')}</h3>
+                    <p className="font-bold text-ink text-base">{t('KT AI Studio')}</p>
                     <p className="text-xs text-brand-ink font-semibold">{t('Online • Image Generator')}</p>
                   </div>
                 </div>

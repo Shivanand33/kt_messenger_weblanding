@@ -6,15 +6,12 @@ import {
   FiCamera,
   FiCheck,
   FiChevronDown,
-  FiCornerUpRight,
-  FiDownload,
   FiMic,
   FiMoreVertical,
   FiPaperclip,
   FiPhone,
   FiSmile,
   FiVideo,
-  FiVolume2,
 } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
 import { useLoopClock } from './useLoopClock'
@@ -42,51 +39,6 @@ function Cue({ at, progress, className = '', children }) {
   )
 }
 
-/** Grey document card used for the two JPG attachments. */
-function FileMessage({ name, time, showDownload }) {
-  return (
-    <div className="flex items-end gap-1.5">
-      <div className="min-w-0 flex-1 rounded-2xl rounded-tl-md bg-[#e9edf2] p-2">
-        <div className="flex items-center gap-2">
-          <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#4a5360] text-white">
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm0 2 4 4h-4V4Z" />
-            </svg>
-            <span className="absolute bottom-0.5 text-[5px] font-black tracking-tight">JPG</span>
-          </span>
-
-          <div className="min-w-0 flex-1">
-            <div className="truncate text-[11px] font-bold leading-tight text-slate-900">{name}</div>
-            <div className="mt-0.5 text-[9px] font-semibold text-slate-500">JPG · 22.2 KB</div>
-          </div>
-
-          {showDownload ? <FiDownload className="shrink-0 text-base text-slate-700" /> : null}
-        </div>
-        <div className="mt-0.5 text-right text-[8px] font-semibold text-slate-500">{time}</div>
-      </div>
-
-      <span className="mb-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#e9edf2] text-[10px] text-slate-500">
-        <FiCornerUpRight />
-      </span>
-    </div>
-  )
-}
-
-/** Small pill used for the received voice/text notes near the bottom. */
-function NoteBubble({ text, time, edited }) {
-  const { t } = useLanguage()
-  return (
-    <div className="flex items-center gap-1.5">
-      <div className="flex items-center gap-1.5 rounded-2xl rounded-tl-md bg-white px-2.5 py-1.5 shadow-sm">
-        <span className="text-[11px] font-semibold text-slate-900">{text}</span>
-        {edited ? <span className="text-[8px] font-medium text-slate-400">{t('Edited')}</span> : null}
-        <span className="text-[8px] font-semibold text-slate-400">{time}</span>
-      </div>
-      <FiVolume2 className="shrink-0 text-[11px] text-slate-500" />
-    </div>
-  )
-}
-
 /**
  * Every toggle defaults on, so any call site that passes nothing renders the
  * original screen. `showControls` (pause/replay) and `showProgress` are
@@ -98,7 +50,6 @@ export function KtChatScreen({
   showControls = true,
   showProgress = true,
   showPhoto = true,
-  showEncryptionNote = true,
 }) {
   const { t } = useLanguage()
   const { progress, isPlaying, togglePlay, restart } = useLoopClock({ durationMs: 15000 })

@@ -3,19 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   FiDownload,
-  FiPlayCircle,
   FiPlay,
-  FiHeart,
-  FiMessageCircle,
   FiShare2,
-  FiUserCheck,
-  FiShield,
-  FiCheckCircle,
   FiChevronRight,
   FiChevronDown,
   FiHelpCircle,
   FiVideo,
-  FiZap,
   FiCheck,
   FiTrendingUp,
   FiBriefcase,
@@ -149,9 +142,9 @@ export function MinisPage() {
                   <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-2xl text-brand-strong mb-5">
                     <FiVideo />
                   </div>
-                  <h2 className="text-2xl font-bold text-ink sm:text-3xl">
+                  <h3 className="text-2xl font-bold text-ink sm:text-3xl">
                     {t('Explore Minis')}
-                  </h2>
+                  </h3>
                   <p className="mt-4 text-base leading-relaxed text-body">
                     {t('Discover short, engaging videos from people and communities on KT Messenger.')}
                   </p>
@@ -170,9 +163,9 @@ export function MinisPage() {
                   <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-2xl text-brand-strong mb-5">
                     <FiShare2 />
                   </div>
-                  <h2 className="text-2xl font-bold text-ink sm:text-3xl">
+                  <h3 className="text-2xl font-bold text-ink sm:text-3xl">
                     {t('Create & Share')}
-                  </h2>
+                  </h3>
                   <p className="mt-4 text-base leading-relaxed text-body">
                     {t('Create your own short videos and share them with friends, followers, and your network.')}
                   </p>
@@ -216,9 +209,9 @@ export function MinisPage() {
                   <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-xl text-brand-strong mb-4">
                     <FiUsers />
                   </div>
-                  <h4 className="text-xl font-bold text-ink">
+                  <h3 className="text-xl font-bold text-ink">
                     {t('Connect & Engage')}
-                  </h4>
+                  </h3>
                   <p className="mt-3 text-sm leading-relaxed text-body">
                     {t('Like, comment, share, and connect with others through short-form social content.')}
                   </p>
@@ -233,9 +226,9 @@ export function MinisPage() {
                   <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-xl text-brand-strong mb-4">
                     <FiBriefcase />
                   </div>
-                  <h5 className="text-xl font-bold text-ink">
+                  <h3 className="text-xl font-bold text-ink">
                     {t('Minis for Business')}
-                  </h5>
+                  </h3>
                   <p className="mt-3 text-sm leading-relaxed text-body">
                     {t('Promote your brand, products, and services through engaging short videos and reach new audiences.')}
                   </p>

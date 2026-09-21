@@ -1,24 +1,16 @@
 import { img, imgAlt } from '../../utils/imageOverrides'
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 import {
   FiLock,
   FiClock,
-  FiKey,
   FiPhoneOff,
-  FiUploadCloud,
   FiEye,
   FiShield,
-  FiCheckCircle,
   FiDownload,
   FiArrowUpRight,
   FiChevronRight,
   FiChevronLeft,
-  FiChevronDown,
-  FiAlertOctagon,
-  FiUserX,
-  FiCheck,
   FiVideo,
   FiPhone,
   FiMoreVertical,
@@ -30,16 +22,13 @@ import {
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { Container } from '../../components/common/Container/Container'
-import { Section } from '../../components/common/Section/Section'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Button } from '../../components/common/Button/Button'
 import { DownloadCTA } from '../../components/sections/DownloadCTA/DownloadCTA'
 import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
 
-import nadiaAvatar from '../../assets/images/nadia_avatar.png'
 import maleAvatar from '../../assets/images/avatar_male_1.png'
-import femaleAvatar from '../../assets/images/avatar_female_1.png'
 import securityImg from '../../assets/images/security.jpg'
 import privateImg from '../../assets/images/private.jpg'
 import groupImg from '../../assets/images/group.jpg'
@@ -243,7 +232,7 @@ export function PrivacyPage() {
                     <div className="flex items-center gap-2.5">
                       <img src={img(maleAvatar)} alt={imgAlt(maleAvatar, "David Miller")} className="h-8 w-8 rounded-full object-cover border-2 border-emerald-400 shadow" />
                       <div>
-                        <h4 className="font-extrabold text-xs tracking-tight">David Miller</h4>
+                        <p className="font-extrabold text-xs tracking-tight">David Miller</p>
                         <span className="text-[9px] text-sky-200 block font-medium">online</span>
                       </div>
                     </div>
@@ -320,9 +309,9 @@ export function PrivacyPage() {
             <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
               {t('Privacy Framework')}
             </span>
-            <h2 className="mt-4 text-3xl font-extrabold text-ink sm:text-4xl lg:text-5xl">
+            <h3 className="mt-4 text-3xl font-extrabold text-ink sm:text-4xl lg:text-5xl">
               {t('Privacy on an Messaging App')}
-            </h2>
+            </h3>
             <p className="mt-4 text-lg text-body leading-relaxed">
               {t('Messaging apps should allow users to message quickly and easily while also explaining how their information gathers and uses that information. KT Messenger is unique because it outlines its privacy practices in order to assist its users in their decision making.')}
             </p>
@@ -332,9 +321,9 @@ export function PrivacyPage() {
             <Reveal from="up" delay={0.05}>
               <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft flex flex-col justify-between">
                 <div>
-                  <h2 className="text-xl font-bold text-ink">
+                  <h3 className="text-xl font-bold text-ink">
                     {t('private chat app')}
-                  </h2>
+                  </h3>
                   <p className="mt-3 text-sm leading-relaxed text-body">
                     {t('A chat app lets you connect with people directly. KT Messenger allows you to have secure and private conversations with your selected contacts with all the features to support that.')}
                   </p>
@@ -345,9 +334,9 @@ export function PrivacyPage() {
             <Reveal from="up" delay={0.1}>
               <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft flex flex-col justify-between">
                 <div>
-                  <h2 className="text-xl font-bold text-ink">
+                  <h3 className="text-xl font-bold text-ink">
                     {t('Safest Messaging App and Privacy')}
-                  </h2>
+                  </h3>
                   <p className="mt-3 text-sm leading-relaxed text-body">
                     {t('When finding the safest messaging apps, user privacy is the most important consideration. Factors include encryption, privacy controls, and how secure user accounts and data are. KT Messenger has features that enable secure digital communication and privacy.')}
                   </p>
@@ -384,9 +373,9 @@ export function PrivacyPage() {
             <Reveal from="up" delay={0.25}>
               <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft flex flex-col justify-between">
                 <div>
-                  <h4 className="text-xl font-bold text-ink">
+                  <h3 className="text-xl font-bold text-ink">
                     {t('Free Messaging App with Privacy')}
-                  </h4>
+                  </h3>
                   <p className="mt-3 text-sm leading-relaxed text-body">
                     {t('Free messaging apps should not compromise privacy for users. Anyone that employs the use of a messaging service should know the information collection process and how the vendor will manipulate the information.')}
                   </p>
@@ -397,9 +386,9 @@ export function PrivacyPage() {
             <Reveal from="up" delay={0.3}>
               <div className="h-full rounded-3xl border border-line bg-surface p-6 shadow-soft flex flex-col justify-between">
                 <div>
-                  <h4 className="text-xl font-bold text-ink">
+                  <h3 className="text-xl font-bold text-ink">
                     {t('End-to-End Encrypted Messaging')}
-                  </h4>
+                  </h3>
                   <p className="mt-3 text-sm leading-relaxed text-body">
                     {t('Content of messages can be protected by end-to-end encrypted messaging platforms while messages traverse the internet. Users should review the platform\'s own encryption and privacy information.')}
                   </p>
@@ -409,9 +398,9 @@ export function PrivacyPage() {
           </div>
 
           <div className="mt-8 text-center max-w-2xl mx-auto rounded-2xl bg-brand-soft/60 p-6 border border-brand-strong/20">
-            <h5 className="text-lg font-bold text-ink">
+            <h3 className="text-lg font-bold text-ink">
               {t('Messaging App for privacy')}
-            </h5>
+            </h3>
             <p className="mt-2 text-sm text-body leading-relaxed">
               {t('Users need to trust that their data is safe. KT Messenger shares its privacy information to guide users of its messaging services.')}
             </p>
@@ -441,7 +430,7 @@ export function PrivacyPage() {
                 <div className="p-3 space-y-3 flex-1 flex flex-col justify-start bg-white dark:bg-slate-900 my-0.5 rounded-[36px]">
                   <div>
                     <div className="flex items-center justify-between border-b border-line pb-3">
-                      <h4 className="font-extrabold text-ink text-base">KT Messenger</h4>
+                      <p className="font-extrabold text-ink text-base">KT Messenger</p>
                       <FiLock className="text-brand-strong text-lg" />
                     </div>
 
@@ -451,7 +440,7 @@ export function PrivacyPage() {
                           🔒
                         </div>
                         <div>
-                          <h5 className="font-extrabold text-ink text-sm">Locked chats</h5>
+                          <p className="font-extrabold text-ink text-sm">Locked chats</p>
                           <span className="text-[11px] text-brand-ink font-semibold">Biometrics Protected</span>
                         </div>
                       </div>
@@ -572,7 +561,7 @@ export function PrivacyPage() {
                         DM
                       </div>
                       <div>
-                        <h4 className="font-extrabold text-xs tracking-tight">David Miller</h4>
+                        <p className="font-extrabold text-xs tracking-tight">David Miller</p>
                         <span className="text-[9px] text-sky-200 block font-medium">Last seen 25 min ago</span>
                       </div>
                     </div>
@@ -718,7 +707,7 @@ export function PrivacyPage() {
                       <FiMaximize2 className="text-xs" />
                     </div>
                     <div>
-                      <h4 className="font-extrabold text-sm text-slate-900 dark:text-white tracking-wide">David Miller</h4>
+                      <p className="font-extrabold text-sm text-slate-900 dark:text-white tracking-wide">David Miller</p>
                       <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block pt-0.5">00:06</span>
                     </div>
                     <div className="grid h-7 w-7 place-items-center rounded-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm border border-slate-200 dark:border-slate-700 cursor-pointer">
@@ -834,7 +823,7 @@ export function PrivacyPage() {
                 <div className="relative rounded-t-2xl bg-gradient-to-r from-sky-600 to-blue-700 p-3 text-white shadow-md">
                   <div className="flex items-center gap-3">
                     <FiChevronLeft className="text-xl" />
-                    <h4 className="font-extrabold text-base tracking-wide">Privacy</h4>
+                    <p className="font-extrabold text-base tracking-wide">Privacy</p>
                   </div>
                 </div>
 
@@ -896,9 +885,9 @@ export function PrivacyPage() {
                   {/* Floating Modal Overlay */}
                   <div className="absolute inset-x-3 top-8 z-20 rounded-2xl bg-white dark:bg-slate-800 border border-sky-400/60 dark:border-sky-500/40 p-4 shadow-2xl backdrop-blur-md">
                     <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-2 mb-3">
-                      <h5 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                      <p className="font-extrabold text-sm text-slate-900 dark:text-white">
                         {activePrivacyModal === 'lastSeen' ? 'Last seen' : 'Online'}
-                      </h5>
+                      </p>
                       <div className="flex gap-1 bg-slate-100 dark:bg-slate-900 p-0.5 rounded-lg text-[9px] font-bold">
                         <button
                           onClick={() => setActivePrivacyModal('lastSeen')}
@@ -1029,7 +1018,7 @@ export function PrivacyPage() {
                 <div className="relative rounded-t-2xl bg-gradient-to-r from-sky-600 to-blue-700 p-3 text-white shadow-md">
                   <div className="flex items-center gap-3">
                     <FiChevronLeft className="text-xl" />
-                    <h4 className="font-extrabold text-base tracking-wide">Chat backup</h4>
+                    <p className="font-extrabold text-base tracking-wide">Chat backup</p>
                   </div>
                 </div>
 
@@ -1044,7 +1033,7 @@ export function PrivacyPage() {
                         ☁️
                       </div>
                       <div>
-                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white">No account connected</h5>
+                        <p className="font-extrabold text-sm text-slate-900 dark:text-white">No account connected</p>
                         <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-[240px] mx-auto">
                           Connect a Google account to back up your chats and media safely to Google Drive.
                         </p>
@@ -1145,7 +1134,7 @@ export function PrivacyPage() {
                 <div className="relative rounded-t-2xl bg-gradient-to-r from-sky-600 to-blue-700 p-3 text-white shadow-md">
                   <div className="flex items-center gap-3">
                     <FiChevronLeft className="text-xl" />
-                    <h4 className="font-extrabold text-base tracking-wide">Encryption &amp; Security</h4>
+                    <p className="font-extrabold text-base tracking-wide">Encryption &amp; Security</p>
                   </div>
                 </div>
 
@@ -1154,7 +1143,7 @@ export function PrivacyPage() {
                     <div className="grid h-14 w-14 place-items-center rounded-full bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400 text-2xl mx-auto border border-sky-300 dark:border-sky-500/40 shadow-sm">
                       🔒
                     </div>
-                    <h4 className="mt-2 text-sm font-extrabold text-slate-900 dark:text-white">Your chats and calls are private</h4>
+                    <p className="mt-2 text-sm font-extrabold text-slate-900 dark:text-white">Your chats and calls are private</p>
                     <p className="mt-1 text-[10px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-[260px] mx-auto">
                       End to end encryption keeps your personal messages and calls between you and the people you choose. No one outside of the chat, not even KT Messenger, can read, listen to, or share them.
                     </p>

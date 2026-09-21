@@ -18,12 +18,10 @@ import {
   FiLayers,
   FiLink,
   FiMenu,
-  FiUsers,
   FiCheckCircle,
   FiFilePlus,
   FiUserCheck,
   FiZap,
-  FiGlobe,
   FiSmartphone,
   FiCheck
 } from 'react-icons/fi'
@@ -49,17 +47,6 @@ function Sparkle({ className = 'h-5 w-5' }) {
   )
 }
 
-function LinkArrow({ children, href = '#' }) {
-  return (
-    <a href={href} className="group inline-flex items-center gap-2 font-semibold text-brand-ink transition-colors hover:text-brand-strong">
-      <span className="grid h-7 w-7 place-items-center rounded-full border border-brand transition-colors group-hover:bg-brand-soft">
-        <FiArrowRight className="text-xs" />
-      </span>
-      <span>{children}</span>
-    </a>
-  )
-}
-
 export function BusinessPage() {
   // Per-page SEO from admin (Website Content -> seo.business).
   // No block configured = unchanged behaviour.
@@ -74,7 +61,6 @@ export function BusinessPage() {
   const [topBannerClosed, setTopBannerClosed] = useState(false)
   const [activeMenu, setActiveMenu] = useState(null) // 'products' | 'resources' | 'developers' | 'partners' | null
   const [searchOpen, setSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [openWhy, setOpenWhy] = useState(0)
 
@@ -222,22 +208,6 @@ export function BusinessPage() {
         : 'Yes. All messages benefit from KT Encryption Protocol end to end encryption by default. Your business and customer communications remain private and protected.'
     }
   ]
-
-  const sampleSearchData = [
-    { title: t.bizPlatform, desc: 'Enterprise KT messaging API.', path: '/business' },
-    { title: t.bizApp, desc: 'Mobile app for small business owners.', path: '/apps' },
-    { title: t.flows, desc: 'Interactive form flows inside chat.', path: '/ai' },
-    { title: t.resourceLib, desc: 'Guides, tutorials, and eBooks.', path: '/help' },
-    { title: t.devHub, desc: 'API endpoints, webhooks, and SDKs.', path: '/security' }
-  ]
-
-  const searchResults = searchQuery.trim()
-    ? sampleSearchData.filter(
-        (item) =>
-          item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.desc.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : sampleSearchData
 
   return (
     <div className="min-h-screen bg-cream text-ink dark:bg-surface font-sans" ref={menuRef}>
@@ -879,7 +849,7 @@ export function BusinessPage() {
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ opacity: 0, opacity: 0 }}
+                          exit={{ opacity: 0 }}
                           transition={{ duration: 0.26, ease: 'easeOut' }}
                           className="overflow-hidden"
                         >

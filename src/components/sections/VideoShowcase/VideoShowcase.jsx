@@ -8,15 +8,11 @@ import {
   FiPhone,
   FiUsers,
   FiRadio,
-  FiCpu,
   FiClock,
   FiShield,
-  FiGrid,
   FiPlayCircle,
   FiPlay,
-  FiCheckCircle,
   FiArrowRight,
-  FiZap,
   FiCheck
 } from 'react-icons/fi'
 import { Reveal } from '../../common/Reveal/Reveal'
@@ -58,7 +54,7 @@ export function VideoShowcase() {
       shortTag: t('Send uncompressed photos, 2GB ZIP files, and voice notes with double blue tick delivery confirmations.'),
       specs: [t('KT 256-bit E2EE'), t('2GB Uncompressed Files'), t('1.5x Speed Voice Notes')],
       badge: t('Instant Delivery • Double Blue Ticks ✔✔'),
-      videoComponent: <KtChatScreen showControls={false} showProgress={false} showEncryptionNote={false} />
+      videoComponent: <KtChatScreen showControls={false} showProgress={false} />
     },
     call: {
       id: 'call',

@@ -24,8 +24,6 @@ const SITE_URL = (
   (typeof window !== 'undefined' ? window.location.origin : '')
 ).replace(/\/+$/, '')
 
-export const siteUrl = SITE_URL
-
 /** Absolute URL for a site-relative path: absoluteUrl('/blog/calling'). */
 export function absoluteUrl(path = '/') {
   if (/^https?:\/\//i.test(path)) return path

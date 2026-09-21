@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiX, FiSmartphone, FiCheckCircle, FiShield, FiArrowRight } from 'react-icons/fi'
+import { FiX, FiSmartphone } from 'react-icons/fi'
 import { useLanguage } from '../../../context/LanguageContext'
 
 function QrIcon({ className = 'h-6 w-6' }) {
