@@ -71,7 +71,7 @@ export function MinisPage() {
     null,
     (rows) => Array.isArray(rows) && rows.length > 0,
   )
-  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: t(r.question), a: t(r.answer) })) : localFaqs
 
   return (
     <MainLayout>

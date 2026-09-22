@@ -197,7 +197,7 @@ export function Navbar() {
       }`}
     >
       <Container className="flex h-16 items-center justify-between lg:h-[72px]">
-        <button onClick={() => go('#hero')} aria-label="KT Messenger home" className="shrink-0">
+        <button onClick={() => go('#hero')} aria-label={t('KT Messenger home')} className="shrink-0">
           <Logo />
         </button>
 
@@ -281,7 +281,7 @@ export function Navbar() {
 
         <button
           onClick={() => setOpen((value) => !value)}
-          aria-label="Toggle Navigation"
+          aria-label={t('Toggle Navigation')}
           className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink lg:hidden"
         >
           {open ? <FiX /> : <FiMenu />}

@@ -51,7 +51,7 @@ export function StatusPage() {
   }, [])
 
   const stories = [
-    { name: t('My Status'), time: '10m ago', img: sunsetImage, text: t('Evening sunset run vibes! 🌄') },
+    { name: t('My Status'), time: t('10m ago'), img: sunsetImage, text: t('Evening sunset run vibes! 🌄') },
     { name: 'Emiko', time: '2h ago', img: beachImage, text: t('Weekend beach bike ride 🚲') }
   ]
 
@@ -110,7 +110,7 @@ export function StatusPage() {
 
   const comparisonTable = [
     { feature: t('End to End Encryption'), kt: t('100% Encrypted'), social: t('Public Server Stored'), standard: t('Not Supported') },
-    { feature: t('Auto Delete Duration'), kt: '24 Hours', social: '24 Hours', standard: t('Manual Delete') },
+    { feature: t('Auto Delete Duration'), kt: t('24 Hours'), social: t('24 Hours'), standard: t('Manual Delete') },
     { feature: t('Voice Status Support'), kt: t('Included Free (30s)'), social: t('Not Supported'), standard: t('Not Supported') },
     { feature: t('Audience Control'), kt: t('Granular Exclusions'), social: t('Public / Close Friends'), standard: t('None') },
     { feature: t('Private Chat Replies'), kt: t('Direct Encrypted Reply'), social: t('Public DM'), standard: t('N/A') }
@@ -151,7 +151,7 @@ export function StatusPage() {
     null,
     (rows) => Array.isArray(rows) && rows.length > 0,
   )
-  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: t(r.question), a: t(r.answer) })) : localFaqs
 
   return (
     <MainLayout>

@@ -22,11 +22,20 @@ export function img(src) {
   return resolved === src ? avif(src) : resolved
 }
 
+// ALT text in the page's language — set by LanguageProvider (unchanged on
+// English pages).
+let translateAlt = (text) => text
+
+/** Called by LanguageProvider with its `t()`. */
+export function setAltTranslator(fn) {
+  translateAlt = fn
+}
+
 /**
  * Resolve an image's ALT text using Admin-configured ALT text or a keyword fallback.
  */
 export function imgAlt(src, fallbackText) {
-  return resolver.resolveAlt(src, fallbackText)
+  return translateAlt(resolver.resolveAlt(src, fallbackText))
 }
 
 /**
@@ -37,5 +46,6 @@ export function imgAlt(src, fallbackText) {
  * stays decorative exactly as before.
  */
 export function imgAltOnly(src) {
-  return resolver.resolveAdminAlt(src)
+  const alt = resolver.resolveAdminAlt(src)
+  return alt ? translateAlt(alt) : alt
 }

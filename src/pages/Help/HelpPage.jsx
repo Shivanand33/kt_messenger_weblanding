@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FiChevronDown, FiSearch, FiLink, FiX, FiFlag, FiShield, FiCloud, FiMessageCircle, FiUsers, FiBriefcase, FiChevronRight } from 'react-icons/fi'
@@ -15,10 +15,12 @@ import { PhoneChatMockup } from '../../components/mockups/PhoneChatMockup'
 import { useSwipeTheme } from '../../hooks/useSwipeTheme'
 import { useLanguage } from '../../context/LanguageContext'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
-import { useSeo } from '../../hooks/useSeo'
+import { useSeo, useHreflang } from '../../hooks/useSeo'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { api } from '../../services/apiClient'
-import { parseBody } from '../../utils/parseBody'
+import { languagePath } from '../../i18n/languageUrls'
+import { fill } from '../../i18n/fill'
+import { linkKind, parseHelpBody } from './helpBody'
 import { useModal } from '../../context/ModalContext'
 import qrAndroid from '../../assets/images/help/qr-android.svg'
 import qrIos from '../../assets/images/help/qr-ios.svg'
@@ -275,7 +277,7 @@ const supportedSystems = [
 // Articles whose built-in guide is kept on screen instead of the backend seed
 // text used for articles the admin has not written yet; any real body written
 // in admin still takes over.
-const builtInGuides = ['How to download or uninstall KT Messenger', 'About supported operating systems', 'About supported devices', 'About rooted phones and custom ROMs', 'Ending support for legacy phones']
+const builtInGuides = ['How to download or uninstall KT Messenger', 'About supported operating systems', 'About supported devices', 'About rooted phones and custom ROMs', 'Ending support for legacy phones', 'How to register your phone number', 'About registration and two step verification', 'About usernames']
 const isSeedPlaceholder = (body) => /Manage the full content from the admin panel/i.test(body)
 
 // Every entry resolves to a route, or to a route plus a section id — nothing
@@ -308,39 +310,158 @@ const footerColumns = [
 
 const proseClass = 'space-y-5 text-[15px] leading-7 text-body'
 
+const DOWNLOAD_ARTICLE = 'How to download or uninstall KT Messenger'
+
+// A tab name as the admin typed it ('android', 'IOS') -> the tab bar label.
+const canonicalTab = (name) => {
+  const clean = String(name || '').trim()
+  return platformTabs.find((p) => p.label.toLowerCase() === clean.toLowerCase())?.label || clean
+}
+
+// Tabs of an admin body: in the order of the article's Platforms field, then
+// any other tab sections in the order they appear in the body.
+function orderTabs(names, platforms) {
+  const tabs = names.map(canonicalTab)
+  const ranked = (platforms || []).map(canonicalTab).filter((p, i, all) => tabs.includes(p) && all.indexOf(p) === i)
+  return [...ranked, ...tabs.filter((tab) => !ranked.includes(tab))]
+}
+
+const hasQrToken = (blocks) => blocks.some((b) => b.type === 'qr' || (b.blocks && hasQrToken(b.blocks)))
+
+/** Store QR code for the Android / iOS tab of the download article. */
+function StoreQr({ tab }) {
+  const { t } = useLanguage()
+  const guide = downloadGuides[tab]
+  if (!guide?.qr) return null
+  return (
+    // Always black on white, so the code stays scannable in dark mode.
+    <div className="my-4 inline-block rounded-2xl border border-line bg-white p-3">
+      <img
+        src={guide.qr}
+        alt={fill(t('QR code to download KT Messenger from the {store}'), { store: guide.store })}
+        width="200"
+        height="200"
+        loading="lazy"
+        className="block h-[200px] w-[200px]"
+      />
+    </div>
+  )
+}
+
+// Normal weight, like every other Help Center link (the global `button { font:
+// inherit }` reset keeps the built-in guides' link buttons at normal weight).
+const linkClass = 'text-brand-ink! transition-colors hover:text-brand-strong! hover:underline'
+
+/** A link written in an admin body. Site links stay inside the app. */
+function HelpLink({ href, onLink, children }) {
+  const kind = linkKind(href)
+  if (!kind) return <span>{children}</span>
+  if (kind === 'external') {
+    return <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>{children}</a>
+  }
+  if (kind === 'mail' || kind === 'anchor') return <a href={href} className={linkClass}>{children}</a>
+  return (
+    <a
+      href={languagePath(href)}
+      className={linkClass}
+      onClick={(e) => {
+        // Ctrl/Cmd/Shift/middle click keep the browser's "open in new tab".
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+        e.preventDefault()
+        onLink(href)
+      }}
+    >
+      {children}
+    </a>
+  )
+}
+
+function HelpInlines({ nodes, onLink }) {
+  return nodes.map((n, i) => {
+    if (n.type === 'text') return n.text
+    if (n.type === 'br') return <br key={i} />
+    if (n.type === 'strong') return <strong key={i}><HelpInlines nodes={n.children} onLink={onLink} /></strong>
+    if (n.type === 'em') return <em key={i}><HelpInlines nodes={n.children} onLink={onLink} /></em>
+    if (n.type === 'link') return <HelpLink key={i} href={n.href} onLink={onLink}><HelpInlines nodes={n.children} onLink={onLink} /></HelpLink>
+    return null
+  })
+}
+
+// `!` on <ul> because the unlayered global `ul` reset outranks Tailwind
+// utilities (bullets, indent and the gap to the next block).
+function HelpList({ list, nested = false, inNote = false, onLink }) {
+  const items = list.items.map((item, j) => (
+    <li key={j}>
+      <HelpInlines nodes={item.inlines} onLink={onLink} />
+      {item.lists.map((sub, k) => <HelpList key={k} list={sub} nested onLink={onLink} />)}
+    </li>
+  ))
+  if (list.ordered) {
+    return <ol className={`list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink ${nested ? 'mt-2' : ''}`}>{items}</ol>
+  }
+  const gap = nested ? 'mt-2!' : inNote ? 'not-last:mb-3!' : 'not-last:mb-5!'
+  return <ul className={`list-disc! space-y-2 pl-5! ${gap}`}>{items}</ul>
+}
+
+function HelpBlocks({ blocks, ctx, inNote = false }) {
+  return blocks.map((b, i) => {
+    if (b.type === 'heading') {
+      return b.level === 2
+        ? <h2 key={i} className="text-xl font-bold text-ink"><HelpInlines nodes={b.inlines} onLink={ctx.onLink} /></h2>
+        : <h3 key={i} className="text-lg font-bold text-ink"><HelpInlines nodes={b.inlines} onLink={ctx.onLink} /></h3>
+    }
+    if (b.type === 'paragraph') return <p key={i}><HelpInlines nodes={b.inlines} onLink={ctx.onLink} /></p>
+    if (b.type === 'list') return <HelpList key={i} list={b} inNote={inNote} onLink={ctx.onLink} />
+    if (b.type === 'note') {
+      return (
+        <div key={i} className="rounded-2xl bg-surface-2 p-6">
+          <div className="space-y-3"><HelpBlocks blocks={b.blocks} ctx={ctx} inNote /></div>
+        </div>
+      )
+    }
+    if (b.type === 'tab') {
+      return canonicalTab(b.name) === ctx.tab ? <Fragment key={i}><HelpBlocks blocks={b.blocks} ctx={ctx} inNote={inNote} /></Fragment> : null
+    }
+    if (b.type === 'download') {
+      return (
+        <div key={i} className="my-4">
+          <Button variant="primary" size="lg" onClick={ctx.openDownloadModal}>
+            {b.label || (ctx.tab ? `${ctx.t('Download for')} ${ctx.tab}` : ctx.t('Download KT Messenger'))} <FiChevronRight />
+          </Button>
+        </div>
+      )
+    }
+    if (b.type === 'qr') return ctx.isDownload ? <StoreQr key={i} tab={ctx.tab} /> : null
+    return null
+  })
+}
+
 /**
- * Body written in the admin Help Center. Bodies arrive as one string that may
- * be HTML or markdown-ish, so they go through the same parser the Blog uses —
- * which strips every tag rather than injecting raw HTML.
+ * Body written in the admin Help Center (see ./helpBody.js for the format).
+ * Everything is rendered from parsed data — author markup is never injected.
+ * On the download article the store QR code shows automatically at the top
+ * of the Android / iOS tab, unless the body places it with {{qr}}.
  */
-function AdminArticleBody({ body }) {
-  const blocks = parseBody(body)
-  if (!blocks.length) return null
+function AdminArticleBody({ parsed, tab, isDownload, onLink }) {
+  const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
+  if (!parsed.blocks.length) return null
+  const ctx = { tab, isDownload, onLink, openDownloadModal, t }
 
   return (
     <div className={proseClass}>
-      {blocks.map((block, i) => {
-        if (block.type === 'h') {
-          return <h3 key={i} className="text-xl font-bold text-ink">{block.text}</h3>
-        }
-        if (block.type === 'ul') {
-          return (
-            <ul key={i} className="list-disc space-y-2 pl-5">
-              {block.items.map((item, j) => <li key={j}>{item}</li>)}
-            </ul>
-          )
-        }
-        return <p key={i}>{block.text}</p>
-      })}
+      {isDownload && !hasQrToken(parsed.blocks) ? <StoreQr tab={tab} /> : null}
+      <HelpBlocks blocks={parsed.blocks} ctx={ctx} />
     </div>
   )
 }
 
 /** Grey "Related Resources" box; each link opens another Help Center article. */
 function RelatedResources({ links, onOpenArticle }) {
+  const { t } = useLanguage()
   return (
     <div className="rounded-2xl bg-surface-2 p-6">
-      <h2 className="text-xl font-bold text-ink">Related Resources</h2>
+      <h2 className="text-xl font-bold text-ink">{t('Related Resources')}</h2>
       {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
       <ul className="mt-3! list-disc! space-y-2 pl-5!">
         {links.map(([label, article]) => (
@@ -350,7 +471,7 @@ function RelatedResources({ links, onOpenArticle }) {
               onClick={() => onOpenArticle?.(article)}
               className="text-left font-semibold text-brand-ink transition-colors hover:text-brand-strong hover:underline"
             >
-              {label}
+              {t(label)}
             </button>
           </li>
         ))}
@@ -375,7 +496,7 @@ function ArticleBody({ title, tab, onOpenArticle }) {
             <div className="my-4 inline-block rounded-2xl border border-line bg-white p-3">
               <img
                 src={guide.qr}
-                alt={`QR code to download KT Messenger from the ${guide.store}`}
+                alt={fill(t('QR code to download KT Messenger from the {store}'), { store: guide.store })}
                 width="200"
                 height="200"
                 loading="lazy"
@@ -519,6 +640,141 @@ function ArticleBody({ title, tab, onOpenArticle }) {
       </div>
     )
   }
+  if (title === 'How to register your phone number') {
+    const articleLink = (label, article) => (
+      <button
+        type="button"
+        onClick={() => onOpenArticle?.(article)}
+        className="font-semibold text-brand-ink transition-colors hover:text-brand-strong hover:underline"
+      >
+        {label}
+      </button>
+    )
+    return (
+      <div className={proseClass}>
+        <h2 className="text-xl font-bold text-ink">How to Register Your Account</h2>
+        <p>To use KT Messenger, you must register with a valid phone number and email address.</p>
+        <p>During registration, a verification code will be sent to your email address to verify your account. The verification code is unique and changes each time you register a new account or sign in on a new device.</p>
+        <h3 className="text-xl font-bold text-ink">Registration Requirements</h3>
+        <p>Before registering your account, make sure that:</p>
+        {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
+        <ul className="list-disc! space-y-2 pl-5! mb-5!">
+          <li>You are using the {articleLink('latest version', 'How to download or uninstall KT Messenger')} of KT Messenger.</li>
+          <li>You have a {articleLink('supported device', 'About supported devices')} and {articleLink('operating system', 'About supported operating systems')}.</li>
+          <li>You have a valid phone number.</li>
+          <li>You have access to a valid email address.</li>
+          <li>Your device has an active internet connection.</li>
+        </ul>
+        <h3 className="text-xl font-bold text-ink">Register Your Account</h3>
+        <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
+          <li>Open KT Messenger.</li>
+          <li>Select your country or region.</li>
+          <li>Enter your phone number.</li>
+          <li>Enter your email address.</li>
+          <li>Tap <strong>Continue</strong>.</li>
+          <li>Check your email inbox for the verification code.</li>
+          <li>Enter the verification code in KT Messenger.</li>
+          <li>Complete your profile setup.</li>
+        </ol>
+        <p>Once registration is complete, you can start using KT Messenger.</p>
+        <h3 className="text-xl font-bold text-ink">Didn&apos;t Receive the Verification Code?</h3>
+        <p>If you don&apos;t receive the verification code:</p>
+        <ul className="list-disc! space-y-2 pl-5! mb-5!">
+          <li>Verify that your email address was entered correctly.</li>
+          <li>Check your Spam or Junk folder.</li>
+          <li>Wait a few minutes and request a new code.</li>
+          <li>Make sure your device has an active internet connection.</li>
+        </ul>
+        <p>If you&apos;re still unable to receive the verification code, contact KT Messenger Support for assistance.</p>
+        <h3 className="text-xl font-bold text-ink">Keep Your Account Secure</h3>
+        <p>Never share your verification code with anyone.</p>
+        <p><strong>Note:</strong> KT Messenger Support will never ask for your verification code.</p>
+        <RelatedResources
+          onOpenArticle={onOpenArticle}
+          links={[
+            ['About Supported Devices', 'About supported devices'],
+            ['About Supported Operating Systems', 'About supported operating systems'],
+            ['How to Update KT Messenger', 'How to download or uninstall KT Messenger'],
+          ]}
+        />
+      </div>
+    )
+  }
+  if (title === 'About registration and two step verification') {
+    return (
+      <div className={proseClass}>
+        <p>When you create a KT Messenger account, you&apos;ll go through two different security steps: account registration and two-step verification.</p>
+        <h2 className="text-xl font-bold text-ink">Registration</h2>
+        <p>Registration is required to create a new KT Messenger account or sign in on a new device.</p>
+        <p>To register your account, you&apos;ll need to provide your phone number and email address. A verification code will be sent to your email address to confirm your identity.</p>
+        <p>The verification code is unique and changes each time you register a new account or sign in on a new device.</p>
+        <p>Verifying your account is the only way to activate KT Messenger and access your messages and contacts.</p>
+        <p>
+          Learn more in{' '}
+          <button
+            type="button"
+            onClick={() => onOpenArticle?.('How to register your phone number')}
+            className="font-semibold text-brand-ink transition-colors hover:text-brand-strong hover:underline"
+          >
+            How to Register Your Account
+          </button>
+          .
+        </p>
+        <h2 className="text-xl font-bold text-ink">Two-Step Verification</h2>
+        <p>Two-step verification is an optional security feature that helps protect your KT Messenger account from unauthorized access.</p>
+        <p>When enabled, you&apos;ll be asked to enter an additional verification code or security credential when signing in to your account on a new device.</p>
+        <p>This extra layer of security helps keep your account protected even if someone gains access to your email address or device.</p>
+        <h2 className="text-xl font-bold text-ink">Keep Your Account Secure</h2>
+        <p>To help keep your account safe:</p>
+        {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
+        <ul className="list-disc! space-y-2 pl-5! mb-5!">
+          <li>Never share your verification code with anyone.</li>
+          <li>Do not share your password or security credentials.</li>
+          <li>Use a secure email address that only you can access.</li>
+          <li>Keep KT Messenger updated to the latest version.</li>
+        </ul>
+        <p><strong>Note:</strong> KT Messenger Support will never ask for your verification code, password, or security credentials.</p>
+        <h2 className="text-xl font-bold text-ink">Forgot Your Verification Information?</h2>
+        <p>If you&apos;re unable to complete verification or access your account, contact KT Messenger Support for assistance.</p>
+        <RelatedResources
+          onOpenArticle={onOpenArticle}
+          links={[
+            ['How to Register Your Account', 'How to register your phone number'],
+            ['How to Enable Two-Step Verification', 'Turning it on'],
+            ['How to Protect Your Account', 'Avoiding scams'],
+          ]}
+        />
+      </div>
+    )
+  }
+  if (title === 'About usernames') {
+    return (
+      <div className={proseClass}>
+        <p>A username helps people find and connect with you on KT Messenger without sharing your phone number.</p>
+        <p>Your username is unique to your account and can be shared with others so they can easily find you on KT Messenger.</p>
+        <h2 className="text-xl font-bold text-ink">Username Requirements</h2>
+        <p>When creating a username:</p>
+        {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
+        <ul className="list-disc! space-y-2 pl-5! mb-5!">
+          <li>Usernames must be unique.</li>
+          <li>Usernames can contain letters, numbers, underscores (_), and periods (.).</li>
+          <li>Usernames cannot contain spaces.</li>
+          <li>Usernames cannot impersonate another person, business, or organization.</li>
+        </ul>
+        <h2 className="text-xl font-bold text-ink">Changing Your Username</h2>
+        <p>You can update your username from your account settings if username changes are available for your account.</p>
+        <p>If you change your username, people may need to use your new username to find you on KT Messenger.</p>
+        <RelatedResources
+          onOpenArticle={onOpenArticle}
+          links={[
+            ['How to Create a KT Messenger Account', 'How to register your phone number'],
+            ['About Privacy Settings', 'Managing your privacy'],
+            ['Managing Your Profile Information', 'Updating your profile'],
+          ]}
+        />
+      </div>
+    )
+  }
   if (title === 'Parent Managed Accounts') {
     return (
       <div className={proseClass}>
@@ -613,11 +869,9 @@ function HelpFooter({ onNav }) {
 }
 
 export function HelpPage() {
-  // Per-page SEO from admin (Website Content -> seo.help).
-  // No block configured = unchanged behaviour.
-  // Canonical for this page (follows the URL it is opened at).
-  useSeo({ path: '/help' })
-  useAdminSeo('help', '/help')
+  // Canonical for this page (follows the URL it is opened at). Its hreflang
+  // links are set below, once it is known whether the URL names an article.
+  useSeo({ path: '/help', hreflang: false })
 
   const navigate = useNavigate()
   const { pathname, state: navState } = useLocation()
@@ -684,8 +938,13 @@ export function HelpPage() {
   const current = slug ? articleIndex[slug] : null
   const activeArticle = useMemo(() => (current ? { title: current.title } : null), [current])
 
-  // Body of the selected article, when it is one the admin manages.
-  const [articleBody, setArticleBody] = useState('')
+  // hreflang for the Help Center home and every article; an unknown slug gets none.
+  useHreflang('/help', { enabled: !slug || Boolean(current) })
+
+  // Body, platforms and SEO fields of the selected article, when it is one the
+  // admin manages. Tagged with its slug so a previous article's data is never
+  // shown while the next one loads.
+  const [adminArticle, setAdminArticle] = useState(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -712,13 +971,20 @@ export function HelpPage() {
   // Anything else keeps rendering the built-in ArticleBody.
   const bodySlug = current?.remote ? slug : null
   useEffect(() => {
-    setArticleBody('')
+    setAdminArticle(null)
     if (!bodySlug) return undefined
     let alive = true
     api
       .getHelpArticle(bodySlug)
       .then((article) => {
-        if (alive && article?.body && String(article.body).trim()) setArticleBody(String(article.body))
+        if (!alive || !article) return
+        setAdminArticle({
+          slug: bodySlug,
+          body: article.body && String(article.body).trim() ? String(article.body) : '',
+          platforms: Array.isArray(article.platforms) ? article.platforms : [],
+          seoTitle: article.seoTitle || '',
+          seoDescription: article.seoDescription || '',
+        })
       })
       .catch(() => {
         /* no body from admin — the built-in guide stays on screen */
@@ -727,6 +993,13 @@ export function HelpPage() {
       alive = false
     }
   }, [bodySlug])
+  const currentAdmin = adminArticle && adminArticle.slug === bodySlug ? adminArticle : null
+  const articleBody = currentAdmin?.body || ''
+
+  // Per-page SEO from admin (Website Content -> seo.help). An article's own
+  // SEO title / description (set in the admin Help Center) takes over while
+  // that article is open. No block configured = unchanged behaviour.
+  useAdminSeo('help', '/help', currentAdmin ? { title: currentAdmin.seoTitle, description: currentAdmin.seoDescription } : null)
 
   const goTo = (target) => {
     if (!target) return
@@ -778,7 +1051,7 @@ export function HelpPage() {
   }
 
   const copyLink = () => {
-    const url = `${window.location.origin}${trimmedPath || '/help'}`
+    const url = `${window.location.origin}${languagePath(trimmedPath || '/help')}`
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(url).then(() => {
         setCopied(true)
@@ -787,8 +1060,36 @@ export function HelpPage() {
     }
   }
 
-  const articleTabs = activeArticle ? tabbedArticles[activeArticle.title] : null
+  // Links inside an admin body: /help/<slug> opens that article here, /help
+  // goes to the Help Center home, other site paths navigate as usual.
+  const openHelpLink = (href) => {
+    const path = href.split(/[?#]/)[0].replace(/\/+$/, '')
+    const article = path.match(/^\/help\/([^/]+)$/i)
+    if (article) {
+      let articleSlug = article[1]
+      try { articleSlug = decodeURIComponent(articleSlug) } catch { /* keep as written */ }
+      openArticle(articleSlug, { keepSidebar: true })
+    } else if (/^\/help$/i.test(path)) goHelpHome()
+    else goTo(href)
+  }
+
+  // The admin body is shown unless it is only the seed placeholder on an
+  // article that has a built-in guide.
+  const showAdminBody = Boolean(activeArticle && articleBody) && !(builtInGuides.includes(activeArticle.title) && isSeedPlaceholder(articleBody))
+  // Parsed in the page's language: the body's translation arrives with it.
+  const parsedBody = useMemo(() => (showAdminBody ? parseHelpBody(t(articleBody)) : null), [showAdminBody, articleBody, t])
+
+  // Tabs come from the admin body's tab sections (ordered by its Platforms
+  // field) or from the built-in guide. The download article always keeps its
+  // platform tabs so the store QR codes have a place.
+  const adminTabs = parsedBody ? orderTabs(parsedBody.tabs, currentAdmin?.platforms) : []
+  const articleTabs = !activeArticle
+    ? null
+    : parsedBody
+      ? (adminTabs.length ? adminTabs : activeArticle.title === DOWNLOAD_ARTICLE ? tabbedArticles[DOWNLOAD_ARTICLE] : null)
+      : tabbedArticles[activeArticle.title] || null
   const hasTabs = Boolean(articleTabs)
+  const currentTab = hasTabs && !articleTabs.includes(activeTab) ? articleTabs[0] : activeTab
 
   return (
     <div {...handlers} className="min-h-screen overflow-x-clip bg-cream text-body">
@@ -916,23 +1217,23 @@ export function HelpPage() {
 
                 {hasTabs ? (
                   <div className="mt-8 flex flex-wrap gap-x-7 gap-y-2 border-b border-line">
-                    {platformTabs.filter((tab) => articleTabs.includes(tab.label)).map((tab) => (
+                    {articleTabs.map((label) => (
                       <button
-                        key={tab.label}
-                        onClick={() => setActiveTab(tab.label)}
-                        className={`flex items-center gap-2 border-b-2 pb-3 text-sm font-semibold transition-colors ${activeTab === tab.label ? 'border-brand text-brand-ink' : 'border-transparent text-body hover:text-ink'}`}
+                        key={label}
+                        onClick={() => setActiveTab(label)}
+                        className={`flex items-center gap-2 border-b-2 pb-3 text-sm font-semibold transition-colors ${currentTab === label ? 'border-brand text-brand-ink' : 'border-transparent text-body hover:text-ink'}`}
                       >
-                        {tab.icon} {tab.label}
+                        {platformTabs.find((tab) => tab.label === label)?.icon} {label}
                       </button>
                     ))}
                   </div>
                 ) : null}
 
                 <div className="mt-8 max-w-3xl">
-                  {articleBody && !(builtInGuides.includes(activeArticle.title) && isSeedPlaceholder(articleBody)) ? (
-                    <AdminArticleBody body={articleBody} />
+                  {parsedBody ? (
+                    <AdminArticleBody parsed={parsedBody} tab={hasTabs ? currentTab : null} isDownload={activeArticle.title === DOWNLOAD_ARTICLE} onLink={openHelpLink} />
                   ) : (
-                    <ArticleBody title={activeArticle.title} tab={activeTab} onOpenArticle={(title) => openArticle(slugFor(title), { keepSidebar: true })} />
+                    <ArticleBody title={activeArticle.title} tab={currentTab} onOpenArticle={(title) => openArticle(slugFor(title), { keepSidebar: true })} />
                   )}
                 </div>
               </Reveal>

@@ -15,6 +15,7 @@ import {
   FiShield,
   FiStar,
   FiUsers,
+  FiVideo,
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { Container } from '../../components/common/Container/Container'
@@ -31,6 +32,7 @@ import { Toast } from '../../components/feature/Toast'
 import { api } from '../../services/apiClient'
 import { useLanguage } from '../../context/LanguageContext'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
+import { useHreflang } from '../../hooks/useSeo'
 
 const TOPICS = [
   {
@@ -138,6 +140,7 @@ export function ContactPage() {
   // Per-page SEO from admin (Website Content -> seo.contact).
   // No block configured = unchanged behaviour.
   useAdminSeo('contact', '/contact')
+  useHreflang('/contact')
 
   const navigate = useNavigate()
   const { t } = useLanguage()

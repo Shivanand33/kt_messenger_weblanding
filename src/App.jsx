@@ -5,15 +5,19 @@ import { NotFoundPage } from './pages/NotFound/NotFoundPage'
 import { AnalyticsTracker } from './components/common/AnalyticsTracker/AnalyticsTracker'
 import { api } from './services/apiClient'
 import { IS_MOBILE } from './utils/mobileImage'
+import { loadPageDictionary } from './i18n/dictionaries'
 
 // Every page except Home is its own chunk, fetched the first time it is
 // opened, so loading the home page no longer means downloading and parsing
 // the code of every other page first. Navigation runs inside a transition
 // (BrowserRouter), so the current page stays on screen while a chunk loads.
+// A page's translations (src/i18n/locales/<lang>/<Page>.json, named after its
+// folder under src/pages/) load together with its code, so it first renders
+// already in the page's language.
 const pageLoaders = []
-const page = (load, name) => {
+const page = (load, name, dictionary = name.replace(/Page$/, '')) => {
   pageLoaders.push(load)
-  return lazy(() => load().then((m) => ({ default: m[name] })))
+  return lazy(() => Promise.all([load(), loadPageDictionary(dictionary)]).then(([m]) => ({ default: m[name] })))
 }
 
 const PrivacyPage = page(() => import('./pages/Privacy/PrivacyPage'), 'PrivacyPage')
@@ -21,7 +25,7 @@ const BlogPage = page(() => import('./pages/Blog/BlogPage'), 'BlogPage')
 const AppsPage = page(() => import('./pages/Apps/AppsPage'), 'AppsPage')
 const HelpPage = page(() => import('./pages/Help/HelpPage'), 'HelpPage')
 const BusinessPage = page(() => import('./pages/Business/BusinessPage'), 'BusinessPage')
-const BusinessSubPage = page(() => import('./pages/Business/BusinessSubPage'), 'BusinessSubPage')
+const BusinessSubPage = page(() => import('./pages/Business/BusinessSubPage'), 'BusinessSubPage', 'Business')
 const CallingPage = page(() => import('./pages/Calling/CallingPage'), 'CallingPage')
 const MessagingPage = page(() => import('./pages/Messaging/MessagingPage'), 'MessagingPage')
 const GroupsPage = page(() => import('./pages/Groups/GroupsPage'), 'GroupsPage')

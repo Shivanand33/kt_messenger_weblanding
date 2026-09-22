@@ -1,14 +1,14 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { translations, SUPPORTED_LANGS, RTL_LANGS } from '../i18n/translations'
+import { createContext, useContext, useEffect, useMemo, useState, useSyncExternalStore } from 'react'
+import { SUPPORTED_LANGS, RTL_LANGS } from '../i18n/translations'
 import { api } from '../services/apiClient'
-import { setImageOverrides } from '../utils/imageOverrides'
+import { setAltTranslator, setImageOverrides } from '../utils/imageOverrides'
+import { DEFAULT_LANG, currentLanguage, languageUrl, saveLanguage } from '../i18n/languageUrls'
+import { contentText, contentTranslationsVersion, subscribeContentTranslations } from '../i18n/contentTranslations'
 
-const STORAGE_KEY = 'lang'
-
+// Each language has its own URL (src/i18n/languageUrls.js), so the page's
+// language is the one its URL names.
 function readInitialLang() {
-  if (typeof window === 'undefined') return 'en'
-  const saved = window.localStorage.getItem(STORAGE_KEY)
-  return saved && SUPPORTED_LANGS.includes(saved) ? saved : 'en'
+  return currentLanguage().lang
 }
 
 const LanguageContext = createContext({
@@ -17,17 +17,21 @@ const LanguageContext = createContext({
   t: (key) => key,
 })
 
-export function LanguageProvider({ children }) {
-  const [lang, setLangState] = useState(readInitialLang)
+/**
+ * @param {object} props
+ * @param {Record<string,string>} [props.dictionary] UI translations of the
+ *   page's language, loaded by main.jsx before the first render.
+ */
+export function LanguageProvider({ dictionary = {}, children }) {
+  const [lang] = useState(readInitialLang)
+  // Admin content translations arrive with API responses; re-render when they do.
+  const contentVersion = useSyncExternalStore(subscribeContentTranslations, contentTranslationsVersion)
 
+  // Choosing a language opens this same page at that language's URL.
   const setLang = (next) => {
-    if (!SUPPORTED_LANGS.includes(next)) return
-    setLangState(next)
-    try {
-      window.localStorage.setItem(STORAGE_KEY, next)
-    } catch {
-      /* storage unavailable — selection just won't persist */
-    }
+    if (!SUPPORTED_LANGS.includes(next) || next === lang) return
+    saveLanguage(next)
+    window.location.assign(languageUrl(next))
   }
 
   // Keep the document's language and text direction in sync with the choice, so
@@ -43,11 +47,11 @@ export function LanguageProvider({ children }) {
   // here means business users can edit any string on the site without a single
   // component being rewired.
   //
-  // Precedence is deliberate: a real translation still wins, so the 48
-  // translated strings behave exactly as they do today. The admin override only
-  // fills in where no translation exists — which is the English site and every
-  // untranslated language. If the request fails the map stays empty and `t()`
-  // behaves precisely as before.
+  // Precedence is deliberate: on the English site the admin override wins. In
+  // another language, a string the admin rewrote shows the translation of the
+  // rewrite (sent by the backend with this response); until that exists, the
+  // translation of the original — and failing both, the admin's English. If the
+  // request fails the map stays empty and `t()` uses the translations alone.
   const [overrides, setOverrides] = useState({})
   useEffect(() => {
     let alive = true
@@ -84,14 +88,28 @@ export function LanguageProvider({ children }) {
     return () => {
       alive = false
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const value = useMemo(() => {
-    const dict = translations[lang] || {}
-    // Translation first, then the admin override, then the English key itself.
-    const t = (key) => dict[key] ?? overrides[key] ?? key
+    const t = (key) => {
+      const override = overrides[key]
+      if (lang === DEFAULT_LANG) return override ?? key
+      // An admin rewrite: its translation, else the original's, else the rewrite.
+      // A rewrite without words (a blanked-out string) stays exactly as the admin set it.
+      if (override !== undefined && override !== key) {
+        if (!/\p{L}/u.test(override)) return override
+        return contentText(override) ?? dictionary[key] ?? override
+      }
+      // UI text from the dictionary, admin content from its translations.
+      return dictionary[key] ?? contentText(key) ?? override ?? key
+    }
+    // Image ALT text follows the page's language too (utils/imageOverrides.js).
+    setAltTranslator(lang === DEFAULT_LANG ? (text) => text : t)
     return { lang, setLang, t }
-  }, [lang, overrides])
+    // contentVersion: a new `t` whenever more admin translations arrive.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang, overrides, dictionary, contentVersion])
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
 }

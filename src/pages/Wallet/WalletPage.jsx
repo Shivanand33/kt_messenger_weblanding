@@ -50,6 +50,8 @@ import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
 import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
+import { fill } from '../../i18n/fill'
+import { useHreflang } from '../../hooks/useSeo'
 import {
   billCategories,
   cards,
@@ -126,6 +128,8 @@ const rupees = (value, decimals = 2) =>
   `₹${Number(value).toLocaleString('en-IN', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`
 
 export function WalletPage() {
+  useHreflang('/wallet')
+
   // Admin-managed FAQs for this page (Admin -> FAQs, page='wallet').
   const [walletFaqs] = useRemoteContent(
     () => api.listFaqs('wallet').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
@@ -187,18 +191,18 @@ export function WalletPage() {
     }
 
     if (mode === 'send' && value > balance) {
-      setToast(`Not enough balance you have ${rupees(balance)} available.`)
+      setToast(fill(t('Not enough balance you have {amount} available.'), { amount: rupees(balance) }))
       return
     }
 
     const entry = {
       id: `t${Date.now()}`,
       name: recipient,
-      note: note.trim() || (mode === 'send' ? 'Sent from chat' : 'Requested in chat'),
+      note: note.trim() || (mode === 'send' ? t('Sent from chat') : t('Requested in chat')),
       category: mode === 'send' ? 'Sent' : 'Received',
       direction: mode === 'send' ? 'out' : 'in',
       amount: value,
-      date: 'Just now',
+      date: t('Just now'),
       method: 'KT Instant Transfer',
       status: mode === 'send' ? 'Completed' : 'Pending',
     }
@@ -209,7 +213,7 @@ export function WalletPage() {
       setReceipt({ ...entry, contact: selectedContact })
     } else {
       setTransactions((current) => [entry, ...current])
-      setToast(`Request for ${rupees(value)} sent to ${recipient}.`)
+      setToast(fill(t('Request for {amount} sent to {name}.'), { amount: rupees(value), name: t(recipient) }))
     }
 
     setAmount('')
@@ -254,7 +258,7 @@ export function WalletPage() {
   // -------------------------------------------------------------------- Goals
   const addToGoal = (id, value) => {
     if (value > balance) {
-      setToast(`Not enough balance you have ${rupees(balance)} available.`)
+      setToast(fill(t('Not enough balance you have {amount} available.'), { amount: rupees(balance) }))
       return
     }
     let goalName = ''
@@ -266,7 +270,7 @@ export function WalletPage() {
       }),
     )
     setBalance((current) => current - value)
-    setToast(`${rupees(value, 0)} moved into ${goalName || 'your goal'}.`)
+    setToast(fill(t('{amount} moved into {goal}.'), { amount: rupees(value, 0), goal: goalName ? t(goalName) : t('your goal') }))
   }
 
   const cryptoTotal = cryptoHoldings.reduce((sum, item) => sum + item.value, 0)
@@ -274,9 +278,9 @@ export function WalletPage() {
   const copyCode = async (code) => {
     try {
       await navigator.clipboard.writeText(code)
-      setToast(`Code ${code} copied to your clipboard.`)
+      setToast(fill(t('Code {code} copied to your clipboard.'), { code }))
     } catch {
-      setToast(`Use code ${code} at checkout.`)
+      setToast(fill(t('Use code {code} at checkout.'), { code }))
     }
   }
 
@@ -341,7 +345,7 @@ export function WalletPage() {
               ].map((item) => (
                 <div key={item.label} className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-center backdrop-blur">
                   <div className={`truncate text-sm font-black ${item.tone}`}>{item.value}</div>
-                  <div className="mt-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-400">{item.label}</div>
+                  <div className="mt-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-400">{t(item.label)}</div>
                 </div>
               ))}
             </div>
@@ -383,7 +387,7 @@ export function WalletPage() {
                       mode === tab.key ? 'bg-brand-strong text-white shadow-brand' : 'text-body hover:text-ink'
                     }`}
                   >
-                    {tab.icon} {tab.label}
+                    {tab.icon} {t(tab.label)}
                   </button>
                 ))}
               </div>
@@ -399,7 +403,7 @@ export function WalletPage() {
                         type="button"
                         onClick={() => setRecipient(contact.name)}
                         aria-pressed={active}
-                        aria-label={`${mode === 'send' ? 'Pay' : 'Request from'} ${contact.name}`}
+                        aria-label={fill(mode === 'send' ? t('Pay {name}') : t('Request from {name}'), { name: t(contact.name) })}
                         className={`w-20 shrink-0 rounded-2xl border p-2.5 text-center transition-all ${
                           active
                             ? 'border-brand-strong bg-brand-soft shadow-soft'
@@ -421,7 +425,7 @@ export function WalletPage() {
                   })}
                 </div>
                 <p className="mt-2 text-[11px] font-semibold text-muted">
-                  {t('Paying')} <span className="font-black text-ink">{selectedContact.name}</span> · {selectedContact.payId}
+                  {t('Paying')} <span className="font-black text-ink">{t(selectedContact.name)}</span> · {selectedContact.payId}
                 </p>
               </div>
 
@@ -516,8 +520,8 @@ export function WalletPage() {
                         {item.direction === 'in' ? <FiArrowDownLeft /> : <FiArrowUpRight />}
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-xs font-extrabold text-ink">{item.name}</span>
-                        <span className="block truncate text-[10px] font-semibold text-muted">{item.date}</span>
+                        <span className="block truncate text-xs font-extrabold text-ink">{t(item.name)}</span>
+                        <span className="block truncate text-[10px] font-semibold text-muted">{t(item.date)}</span>
                       </span>
                       <span
                         className={`shrink-0 text-xs font-black ${
@@ -622,7 +626,7 @@ export function WalletPage() {
                       { label: t('Total'), value: rupees(split.withTip, 0) },
                     ].map((item) => (
                       <div key={item.label} className="rounded-2xl border border-line bg-cream p-4 text-center dark:bg-cream-2">
-                        <dt className="text-[10px] font-black uppercase tracking-wide text-muted">{item.label}</dt>
+                        <dt className="text-[10px] font-black uppercase tracking-wide text-muted">{t(item.label)}</dt>
                         <dd className="mt-1 text-sm font-black text-ink">{item.value}</dd>
                       </div>
                     ))}
@@ -638,7 +642,7 @@ export function WalletPage() {
 
                   <Button
                     className="mt-5 w-full justify-center"
-                    onClick={() => setToast(`Request for ${rupees(split.each)} sent to ${split.heads - 1 > 0 ? split.heads - 1 : split.heads} friends.`)}
+                    onClick={() => setToast(fill(t('Request for {amount} sent to {count} friends.'), { amount: rupees(split.each), count: split.heads - 1 > 0 ? split.heads - 1 : split.heads }))}
                   >
                     {t('Send requests to the group')} <FiUsers />
                   </Button>
@@ -664,7 +668,7 @@ export function WalletPage() {
                       {contact.name.charAt(0)}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-sm font-extrabold text-ink">{contact.name}</span>
+                      <span className="block truncate text-sm font-extrabold text-ink">{t(contact.name)}</span>
                       <span className="block truncate text-[11px] font-semibold text-muted">{contact.payId}</span>
                     </span>
                     <span className="shrink-0 text-right">
@@ -720,7 +724,7 @@ export function WalletPage() {
                         : 'border-line bg-surface text-body hover:text-ink'
                     }`}
                   >
-                    {category} <span className={activityFilter === category ? 'text-white/70' : 'text-muted'}>{count}</span>
+                    {t(category)} <span className={activityFilter === category ? 'text-white/70' : 'text-muted'}>{count}</span>
                   </button>
                 )
               })}
@@ -780,9 +784,9 @@ export function WalletPage() {
 
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="truncate text-sm font-extrabold text-ink">{item.name}</span>
+                      <span className="truncate text-sm font-extrabold text-ink">{t(item.name)}</span>
                       <span className="rounded-full border border-line bg-surface px-2 py-0.5 text-[10px] font-black uppercase text-muted">
-                        {item.category}
+                        {t(item.category)}
                       </span>
                       {item.status === 'Pending' ? (
                         <span className="rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-[10px] font-black uppercase text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300">
@@ -791,7 +795,7 @@ export function WalletPage() {
                       ) : null}
                     </div>
                     <div className="mt-0.5 truncate text-[11px] font-semibold text-muted">
-                      {item.note} · {item.date} · {item.method}
+                      {t(item.note)} · {t(item.date)} · {t(item.method)}
                     </div>
                   </div>
 
@@ -838,8 +842,8 @@ export function WalletPage() {
 
                     <div className="relative flex items-start justify-between">
                       <div>
-                        <div className="text-sm font-extrabold">{card.label}</div>
-                        <div className="text-[10px] font-semibold uppercase tracking-wide text-white/70">{card.kind}</div>
+                        <div className="text-sm font-extrabold">{t(card.label)}</div>
+                        <div className="text-[10px] font-semibold uppercase tracking-wide text-white/70">{t(card.kind)}</div>
                       </div>
                       {isFrozen ? (
                         <span className="rounded-full bg-white/20 px-2.5 py-1 text-[10px] font-black uppercase backdrop-blur">
@@ -909,8 +913,8 @@ export function WalletPage() {
               <Reveal key={method.name} from="up" delay={Math.min(index * 0.04, 0.2)} className="h-full">
                 <div className="flex h-full flex-col rounded-[22px] border border-line bg-surface p-5 text-center shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-card">
                   <span className="text-3xl">{method.icon}</span>
-                  <h3 className="mt-3 text-sm font-extrabold text-ink">{method.name}</h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-body">{method.desc}</p>
+                  <h3 className="mt-3 text-sm font-extrabold text-ink">{t(method.name)}</h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-body">{t(method.desc)}</p>
                 </div>
               </Reveal>
             ))}
@@ -933,12 +937,12 @@ export function WalletPage() {
             <Reveal key={bill.name} from="up" delay={Math.min(index * 0.03, 0.2)} className="h-full">
               <button
                 type="button"
-                onClick={() => setToast(`${bill.name} opened — biller list and due dates loaded.`)}
+                onClick={() => setToast(fill(t('{bill} opened — biller list and due dates loaded.'), { bill: t(bill.name) }))}
                 className="group flex h-full w-full flex-col items-start rounded-[22px] border border-line bg-cream p-5 text-left shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-brand/35 hover:shadow-card dark:bg-cream-2"
               >
                 <span className="text-2xl transition-transform duration-300 group-hover:scale-110">{bill.icon}</span>
-                <span className="mt-3 text-sm font-extrabold text-ink">{bill.name}</span>
-                <span className="mt-1 text-[11px] font-semibold leading-relaxed text-muted">{bill.due}</span>
+                <span className="mt-3 text-sm font-extrabold text-ink">{t(bill.name)}</span>
+                <span className="mt-1 text-[11px] font-semibold leading-relaxed text-muted">{t(bill.due)}</span>
               </button>
             </Reveal>
           ))}
@@ -967,9 +971,9 @@ export function WalletPage() {
                       {goal.emoji}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <h3 className="truncate text-base font-extrabold text-ink">{goal.name}</h3>
+                      <h3 className="truncate text-base font-extrabold text-ink">{t(goal.name)}</h3>
                       <p className="text-[11px] font-bold text-muted">
-                        {rupees(goal.saved, 0)} of {rupees(goal.target, 0)}
+                        {fill(t('{saved} of {target}'), { saved: rupees(goal.saved, 0), target: rupees(goal.target, 0) })}
                       </p>
                     </div>
                     {complete ? (
@@ -1035,8 +1039,8 @@ export function WalletPage() {
                   </span>
                 </div>
 
-                <h3 className="mt-4 text-base font-extrabold text-ink">{reward.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-body">{reward.desc}</p>
+                <h3 className="mt-4 text-base font-extrabold text-ink">{t(reward.title)}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-body">{t(reward.desc)}</p>
 
                 <button
                   type="button"
@@ -1084,7 +1088,7 @@ export function WalletPage() {
                       {holding.symbol}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <div className="truncate text-sm font-extrabold text-ink">{holding.name}</div>
+                      <div className="truncate text-sm font-extrabold text-ink">{t(holding.name)}</div>
                       <div className="truncate text-[11px] font-semibold text-muted">
                         {holding.qty} {holding.symbol}
                       </div>
@@ -1130,8 +1134,8 @@ export function WalletPage() {
                     {item.icon}
                   </span>
                   <div>
-                    <h3 className="text-sm font-extrabold text-ink">{item.title}</h3>
-                    <p className="mt-1.5 text-xs leading-relaxed text-body">{item.desc}</p>
+                    <h3 className="text-sm font-extrabold text-ink">{t(item.title)}</h3>
+                    <p className="mt-1.5 text-xs leading-relaxed text-body">{t(item.desc)}</p>
                   </div>
                 </div>
               ))}
@@ -1290,7 +1294,7 @@ export function WalletPage() {
 
             <div className="mt-5 text-3xl font-black tracking-tight text-ink">{rupees(receipt.amount)}</div>
             <p className="mt-1.5 text-sm font-semibold text-body">
-              {t('sent to')} <span className="font-extrabold text-ink">{receipt.name}</span>
+              {t('sent to')} <span className="font-extrabold text-ink">{t(receipt.name)}</span>
             </p>
 
             <dl className="mt-7 divide-y divide-line rounded-2xl border border-line bg-cream text-left dark:bg-cream-2">
@@ -1302,7 +1306,7 @@ export function WalletPage() {
                 { label: t('Status'), value: t('Completed') },
               ].map((row) => (
                 <div key={row.label} className="flex items-center justify-between gap-4 px-4 py-3">
-                  <dt className="text-[11px] font-black uppercase tracking-wide text-muted">{row.label}</dt>
+                  <dt className="text-[11px] font-black uppercase tracking-wide text-muted">{t(row.label)}</dt>
                   <dd className="truncate text-xs font-bold text-ink">{row.value}</dd>
                 </div>
               ))}

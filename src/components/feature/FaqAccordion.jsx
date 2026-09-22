@@ -32,7 +32,7 @@ export function FaqAccordion({ items, faqs, searchable = true, placeholder = 'Se
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder={placeholder}
+            placeholder={t(placeholder)}
             className="w-full bg-transparent text-sm font-semibold text-ink outline-none placeholder:font-medium placeholder:text-muted"
           />
           {query ? (

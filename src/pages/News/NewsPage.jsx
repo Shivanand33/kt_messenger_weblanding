@@ -51,6 +51,8 @@ import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
 import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
+import { fill } from '../../i18n/fill'
+import { useHreflang } from '../../hooks/useSeo'
 import { api } from '../../services/apiClient'
 import {
   digestSchedule as RAW_DIGEST_SCHEDULE,
@@ -131,6 +133,8 @@ const formatClock = (seconds) => {
 }
 
 export function NewsPage() {
+  useHreflang('/news')
+
   // Admin-managed FAQs for this page (Admin -> FAQs, page='news').
   const [newsFaqs] = useRemoteContent(
     () => api.listFaqs('news').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
@@ -236,7 +240,7 @@ export function NewsPage() {
     // Persist the subscriber so it actually appears in the admin list.
     try {
       await api.subscribe({ email: address, sourcePage: '/news' })
-      setToast(`Daily brief confirmed for ${address}.`)
+      setToast(fill(t('Daily brief confirmed for {address}.'), { address }))
       setEmail('')
     } catch {
       setToast(t('Could not subscribe right now. Please try again.'))
@@ -305,9 +309,9 @@ export function NewsPage() {
                   >
                     <img src={img(item.image)} alt={imgAlt(item.image, item.title)} className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                     <span className="min-w-0">
-                      <span className="line-clamp-2 block text-xs font-bold leading-snug text-ink dark:text-white">{item.title}</span>
+                      <span className="line-clamp-2 block text-xs font-bold leading-snug text-ink dark:text-white">{t(item.title)}</span>
                       <span className="mt-1 block text-[10px] font-semibold text-muted dark:text-slate-400">
-                        {item.source} · {item.time}
+                        {t(item.source)} · {t(item.time)}
                       </span>
                     </span>
                   </button>
@@ -381,17 +385,17 @@ export function NewsPage() {
 
               <div className="p-6 sm:p-8">
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs font-bold">
-                  <span className="text-brand-strong">{spotlight.category}</span>
+                  <span className="text-brand-strong">{t(spotlight.category)}</span>
                   <span className="text-muted">·</span>
-                  <span className="text-muted">{spotlight.source}</span>
+                  <span className="text-muted">{t(spotlight.source)}</span>
                   <span className="text-muted">·</span>
                   <span className="flex items-center gap-1 text-muted">
                     <FiClock className="text-[13px]" /> {spotlight.readMins} {t('min read')}
                   </span>
                 </div>
 
-                <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink sm:text-3xl">{spotlight.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-body sm:text-[15px]">{spotlight.summary}</p>
+                <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink sm:text-3xl">{t(spotlight.title)}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-body sm:text-[15px]">{t(spotlight.summary)}</p>
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
                   <Button onClick={() => openArticle(spotlight)}>
@@ -410,7 +414,7 @@ export function NewsPage() {
                     {bookmarkedIds.includes(spotlight.id) ? t('Saved') : t('Save')}
                   </button>
                   <span className="flex items-center gap-1.5 text-xs font-bold text-muted">
-                    <FiEye /> {spotlight.reads} {t('reads')}
+                    <FiEye /> {t(spotlight.reads)} {t('reads')}
                   </span>
                 </div>
               </div>
@@ -428,12 +432,12 @@ export function NewsPage() {
                 >
                   <img src={img(item.image)} alt={imgAltOnly(item.image)} className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
                   <span className="min-w-0 flex-1">
-                    <span className="text-[11px] font-black uppercase tracking-wide text-brand-strong">{item.category}</span>
+                    <span className="text-[11px] font-black uppercase tracking-wide text-brand-strong">{t(item.category)}</span>
                     <span className="mt-1 line-clamp-2 block text-sm font-extrabold leading-snug text-ink group-hover:text-brand-strong">
-                      {item.title}
+                      {t(item.title)}
                     </span>
                     <span className="mt-1.5 flex items-center gap-2 text-[11px] font-semibold text-muted">
-                      <FiClock /> {item.readMins} {t('min')} · {item.reads} {t('reads')}
+                      <FiClock /> {item.readMins} {t('min')} · {t(item.reads)} {t('reads')}
                     </span>
                   </span>
                 </button>
@@ -473,14 +477,14 @@ export function NewsPage() {
                 </div>
 
                 <div className="p-5">
-                  <span className="text-[11px] font-black uppercase tracking-wide text-brand-strong">{item.category}</span>
+                  <span className="text-[11px] font-black uppercase tracking-wide text-brand-strong">{t(item.category)}</span>
                   <h3 className="mt-2 line-clamp-2 text-sm font-extrabold leading-snug text-ink group-hover:text-brand-strong">
-                    {item.title}
+                    {t(item.title)}
                   </h3>
                   <div className="mt-3 flex items-center justify-between border-t border-line pt-3 text-[11px] font-bold text-muted">
-                    <span>{item.source}</span>
+                    <span>{t(item.source)}</span>
                     <span className="flex items-center gap-1">
-                      <FiEye /> {item.reads}
+                      <FiEye /> {t(item.reads)}
                     </span>
                   </div>
                 </div>
@@ -581,8 +585,8 @@ export function NewsPage() {
 
                       <div className="flex flex-1 flex-col p-5">
                         <div className="flex items-center justify-between text-[11px] font-bold">
-                          <span className="text-brand-strong">{article.category}</span>
-                          <span className="text-muted">{article.time}</span>
+                          <span className="text-brand-strong">{t(article.category)}</span>
+                          <span className="text-muted">{t(article.time)}</span>
                         </div>
 
                         <h3
@@ -594,10 +598,10 @@ export function NewsPage() {
                           }}
                           className="mt-2.5 cursor-pointer text-base font-extrabold leading-snug text-ink transition-colors hover:text-brand-strong"
                         >
-                          {article.title}
+                          {t(article.title)}
                         </h3>
 
-                        <p className="mt-2 line-clamp-3 flex-1 text-xs leading-relaxed text-body">{article.summary}</p>
+                        <p className="mt-2 line-clamp-3 flex-1 text-xs leading-relaxed text-body">{t(article.summary)}</p>
 
                         <div className="mt-4 flex flex-wrap gap-1.5">
                           {article.tags.slice(0, 3).map((tag) => (
@@ -605,7 +609,7 @@ export function NewsPage() {
                               key={tag}
                               className="rounded-full border border-line bg-surface px-2.5 py-0.5 text-[10px] font-bold text-muted"
                             >
-                              {tag}
+                              {t(tag)}
                             </span>
                           ))}
                         </div>
@@ -632,7 +636,7 @@ export function NewsPage() {
                             </button>
                             <button
                               type="button"
-                              onClick={() => setToast(`Preview of “${article.title}” ready to share.`)}
+                              onClick={() => setToast(fill(t('Preview of “{title}” ready to share.'), { title: t(article.title) }))}
                               aria-label={t('Share article')}
                               className="grid h-9 w-9 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-ink"
                             >
@@ -682,7 +686,7 @@ export function NewsPage() {
                   <span className="rounded-md bg-brand-soft px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-brand-ink">
                     {t("Today’s edition")}
                   </span>
-                  <h3 className="mt-1.5 text-lg font-extrabold text-ink">{t('Executive briefing')} · 7 August</h3>
+                  <h3 className="mt-1.5 text-lg font-extrabold text-ink">{t('Executive briefing')} · {t('7 August')}</h3>
                   <p className="mt-1 text-xs text-body">{t('Synthesised from 450+ verified sources in 12 languages.')}</p>
                 </div>
               </div>
@@ -752,7 +756,7 @@ export function NewsPage() {
                         }`}
                       >
                         <span className="w-10 shrink-0 text-[11px] font-black text-muted">{formatClock(segmentStart)}</span>
-                        <span className="line-clamp-1 flex-1 text-xs font-bold text-ink">{item.title}</span>
+                        <span className="line-clamp-1 flex-1 text-xs font-bold text-ink">{t(item.title)}</span>
                         <FiChevronRight className="shrink-0 text-muted" />
                       </button>
                     </li>
@@ -767,11 +771,11 @@ export function NewsPage() {
               <Reveal key={slot.slot} from="up" delay={index * 0.05}>
                 <div className="flex items-start gap-4 rounded-[22px] border border-line bg-surface p-5 shadow-soft">
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-soft text-xs font-black text-brand-ink">
-                    {slot.time}
+                    {t(slot.time)}
                   </span>
                   <div className="min-w-0">
-                    <h4 className="text-sm font-extrabold text-ink">{slot.slot}</h4>
-                    <p className="mt-1 text-xs leading-relaxed text-body">{slot.desc}</p>
+                    <h4 className="text-sm font-extrabold text-ink">{t(slot.slot)}</h4>
+                    <p className="mt-1 text-xs leading-relaxed text-body">{t(slot.desc)}</p>
                   </div>
                 </div>
               </Reveal>
@@ -807,7 +811,7 @@ export function NewsPage() {
                   }`}
                 >
                   {active ? <FiCheckCircle /> : <FiZap className="text-muted" />}
-                  {topic}
+                  {t(topic)}
                 </button>
               )
             })}
@@ -817,9 +821,10 @@ export function NewsPage() {
             <p className="text-sm font-semibold text-body">
               {followed.length === 0
                 ? t('No topics followed your feed will show a broad general mix until you pick a few.')
-                : `Your feed is currently weighted toward ${followed.slice(0, 3).join(', ')}${
-                    followed.length > 3 ? ` and ${followed.length - 3} more` : ''
-                  }.`}
+                : fill(followed.length > 3 ? t('Your feed is currently weighted toward {topics} and {count} more.') : t('Your feed is currently weighted toward {topics}.'), {
+                    topics: followed.slice(0, 3).map((topic) => t(topic)).join(', '),
+                    count: followed.length - 3,
+                  })}
             </p>
             {followed.length > 0 ? (
               <button
@@ -853,10 +858,10 @@ export function NewsPage() {
                 </span>
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <h3 className="truncate text-sm font-extrabold text-ink">{source.name}</h3>
+                    <h3 className="truncate text-sm font-extrabold text-ink">{t(source.name)}</h3>
                     {source.verified ? <FiCheckCircle className="shrink-0 text-sm text-brand-strong" /> : null}
                   </div>
-                  <p className="truncate text-[11px] font-semibold text-muted">{source.focus}</p>
+                  <p className="truncate text-[11px] font-semibold text-muted">{t(source.focus)}</p>
                   <p className="mt-0.5 text-[11px] font-bold text-brand-ink">{source.articles} {t('stories this month')}</p>
                 </div>
               </div>
@@ -893,7 +898,7 @@ export function NewsPage() {
                 <Reveal key={item.id} from="up" delay={index * 0.05} className="h-full">
                   <div className="flex h-full flex-col rounded-[22px] border border-line bg-cream p-5 shadow-soft dark:bg-cream-2">
                     <div className="flex items-start justify-between gap-3">
-                      <span className="text-[11px] font-black uppercase tracking-wide text-brand-strong">{item.category}</span>
+                      <span className="text-[11px] font-black uppercase tracking-wide text-brand-strong">{t(item.category)}</span>
                       <button
                         type="button"
                         onClick={() => toggleBookmark(item.id)}
@@ -904,8 +909,8 @@ export function NewsPage() {
                       </button>
                     </div>
 
-                    <h3 className="mt-2 line-clamp-2 text-sm font-extrabold leading-snug text-ink">{item.title}</h3>
-                    <p className="mt-2 line-clamp-2 flex-1 text-xs leading-relaxed text-body">{item.summary}</p>
+                    <h3 className="mt-2 line-clamp-2 text-sm font-extrabold leading-snug text-ink">{t(item.title)}</h3>
+                    <p className="mt-2 line-clamp-2 flex-1 text-xs leading-relaxed text-body">{t(item.summary)}</p>
 
                     <div className="mt-4 flex items-center justify-between border-t border-line pt-3">
                       <span className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
@@ -946,11 +951,11 @@ export function NewsPage() {
                     verdictStyles[item.tone]
                   }`}
                 >
-                  {verdictIcons[item.tone]} {item.verdict}
+                  {verdictIcons[item.tone]} {t(item.verdict)}
                 </span>
 
-                <p className="mt-4 text-sm font-extrabold leading-snug text-ink">{item.claim}</p>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-body">{item.detail}</p>
+                <p className="mt-4 text-sm font-extrabold leading-snug text-ink">{t(item.claim)}</p>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-body">{t(item.detail)}</p>
 
                 <span className="mt-5 flex items-center gap-1.5 border-t border-line pt-4 text-[11px] font-bold text-muted">
                   <FiShield /> {t('Reviewed by an independent partner desk')}
@@ -1085,7 +1090,7 @@ export function NewsPage() {
                 {bookmarkedIds.includes(readingArticle.id) ? t('Saved to list') : t('Save for later')}
               </button>
 
-              <Button onClick={() => setToast(`“${readingArticle.title}” shared to your chat.`)}>
+              <Button onClick={() => setToast(fill(t('“{title}” shared to your chat.'), { title: t(readingArticle.title) }))}>
                 {t('Share to chat')} <FiShare2 />
               </Button>
             </div>
@@ -1094,19 +1099,19 @@ export function NewsPage() {
       >
         {readingArticle ? (
           <article>
-            <h2 className="text-2xl font-extrabold leading-tight text-ink">{readingArticle.title}</h2>
+            <h2 className="text-2xl font-extrabold leading-tight text-ink">{t(readingArticle.title)}</h2>
 
             <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-line pb-4 text-[11px] font-bold text-muted">
-              <span>{t('By')} {readingArticle.author}</span>
+              <span>{t('By')} {t(readingArticle.author)}</span>
               <span>·</span>
-              <span>{readingArticle.time}</span>
+              <span>{t(readingArticle.time)}</span>
               <span>·</span>
               <span className="flex items-center gap-1">
                 <FiClock /> {readingArticle.readMins} {t('min read')}
               </span>
               <span>·</span>
               <span className="flex items-center gap-1">
-                <FiEye /> {readingArticle.reads} {t('reads')}
+                <FiEye /> {t(readingArticle.reads)} {t('reads')}
               </span>
             </div>
 
@@ -1116,18 +1121,18 @@ export function NewsPage() {
               className="mt-5 h-56 w-full rounded-2xl object-cover sm:h-72"
             />
 
-            <p className="mt-5 text-base font-semibold leading-relaxed text-ink">{readingArticle.summary}</p>
+            <p className="mt-5 text-base font-semibold leading-relaxed text-ink">{t(readingArticle.summary)}</p>
 
             {readingArticle.body.map((paragraph) => (
               <p key={paragraph.slice(0, 40)} className="mt-4 text-sm leading-relaxed text-body">
-                {paragraph}
+                {t(paragraph)}
               </p>
             ))}
 
             <div className="mt-6 flex flex-wrap gap-2">
               {readingArticle.tags.map((tag) => (
                 <span key={tag} className="rounded-full bg-brand-soft px-3 py-1 text-[11px] font-bold text-brand-ink">
-                  #{tag}
+                  #{t(tag)}
                 </span>
               ))}
             </div>
@@ -1141,7 +1146,7 @@ export function NewsPage() {
 
             {relatedToReading.length > 0 ? (
               <div className="mt-8 border-t border-line pt-6">
-                <h4 className="text-xs font-black uppercase tracking-[0.16em] text-muted">{t('More in')} {readingArticle.category}</h4>
+                <h4 className="text-xs font-black uppercase tracking-[0.16em] text-muted">{t('More in')} {t(readingArticle.category)}</h4>
                 <ul className="mt-4 space-y-2">
                   {relatedToReading.map((item) => (
                     <li key={item.id}>
@@ -1151,7 +1156,7 @@ export function NewsPage() {
                         className="flex w-full items-center gap-3 rounded-2xl border border-line p-3 text-left transition-colors hover:border-brand/40 hover:bg-surface-2"
                       >
                         <img src={img(item.image)} alt={imgAltOnly(item.image)} className="h-12 w-12 shrink-0 rounded-xl object-cover" />
-                        <span className="line-clamp-2 flex-1 text-xs font-bold text-ink">{item.title}</span>
+                        <span className="line-clamp-2 flex-1 text-xs font-bold text-ink">{t(item.title)}</span>
                         <FiChevronRight className="shrink-0 text-muted" />
                       </button>
                     </li>

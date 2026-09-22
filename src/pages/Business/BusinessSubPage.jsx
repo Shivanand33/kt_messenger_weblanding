@@ -1,6 +1,8 @@
 import { img, imgAlt } from '../../utils/imageOverrides'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { useHreflang } from '../../hooks/useSeo'
+import { useTranslatedContent } from '../../i18n/translateContent'
 import { useEffect } from 'react'
 import { useNavigate, useParams, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -115,14 +117,19 @@ export function BusinessSubPage() {
     FALLBACK_BUSINESS,
     (map) => map && typeof map === 'object' && Object.keys(map).length > 0,
   )
-  const data = businessProducts[slug]
+  const product = businessProducts[slug]
+  // What the page shows, in its language (English pages: the product as is).
+  const data = useTranslatedContent(product)
+
+  // hreflang for a published page; an unknown slug redirects below.
+  useHreflang(`/business/${slug}`, { enabled: Boolean(product) })
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [slug])
 
   // Unknown slug → send back to the Business hub.
-  if (!data) return <Navigate to="/business" replace />
+  if (!product) return <Navigate to="/business" replace />
 
   return (
     <div className="min-h-screen bg-surface">

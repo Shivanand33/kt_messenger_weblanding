@@ -164,7 +164,7 @@ export function MessagingPage() {
     null,
     (rows) => Array.isArray(rows) && rows.length > 0,
   )
-  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: t(r.question), a: t(r.answer) })) : localFaqs
 
   return (
     <MainLayout>
@@ -396,7 +396,7 @@ export function MessagingPage() {
                       2GB
                     </div>
                     <span className="text-xs font-semibold text-ink">Project_Archive.zip</span>
-                    <span className="text-[10px] text-muted">1.85 GB • ZIP File</span>
+                    <span className="text-[10px] text-muted">1.85 GB • {t('ZIP File')}</span>
                   </div>
                   <h3 className="mt-4 text-xl font-bold text-ink">{t('2 GB File Attachments')}</h3>
                   <p className="mt-2 text-xs leading-relaxed text-body">{t('Send PDFs, zip files, code repositories, and presentations without cloud link dependencies.')}</p>

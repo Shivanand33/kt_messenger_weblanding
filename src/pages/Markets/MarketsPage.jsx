@@ -54,6 +54,8 @@ import { EmptyState } from '../../components/feature/EmptyState'
 import { Sparkline } from '../../components/feature/Sparkline'
 import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
+import { fill } from '../../i18n/fill'
+import { useHreflang } from '../../hooks/useSeo'
 import {
   economicCalendar,
   fxRates,
@@ -156,6 +158,8 @@ function ChangeBadge({ change, className = '' }) {
 }
 
 export function MarketsPage() {
+  useHreflang('/markets')
+
   // Admin-managed FAQs for this page (Admin -> FAQs, page='markets').
   const [marketFaqs] = useRemoteContent(
     () => api.listFaqs('markets').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
@@ -307,7 +311,7 @@ export function MarketsPage() {
       return
     }
     setAlerts((current) => [...current, { id: Date.now(), symbol: alertSymbol, direction: alertDirection, target }])
-    setToast(`${t('Alert set:')} ${alertSymbol} ${alertDirection} ${target}.`)
+    setToast(fill(alertDirection === 'above' ? t('Alert set: {symbol} above {target}.') : t('Alert set: {symbol} below {target}.'), { symbol: alertSymbol, target }))
   }
 
   return (
@@ -441,7 +445,7 @@ export function MarketsPage() {
                   >
                     {group.icon}
                   </span>
-                  <h3 className="text-base font-extrabold text-ink">{group.title}</h3>
+                  <h3 className="text-base font-extrabold text-ink">{t(group.title)}</h3>
                 </div>
 
                 <ul className="mt-2 divide-y divide-line">
@@ -454,7 +458,7 @@ export function MarketsPage() {
                       >
                         <span className="min-w-0 flex-1">
                           <span className="block truncate text-sm font-extrabold text-ink">{asset.symbol}</span>
-                          <span className="block truncate text-[11px] font-semibold text-muted">{asset.name}</span>
+                          <span className="block truncate text-[11px] font-semibold text-muted">{t(asset.name)}</span>
                         </span>
                         <Sparkline data={asset.series} up={asset.change >= 0} width={64} height={26} className="shrink-0" />
                         <span className="shrink-0 text-right">
@@ -577,7 +581,7 @@ export function MarketsPage() {
                             <button
                               type="button"
                               onClick={() => toggleWatch(asset.symbol)}
-                              aria-label={watched ? `Remove ${asset.symbol} from watchlist` : `Add ${asset.symbol} to watchlist`}
+                              aria-label={fill(watched ? t('Remove {symbol} from watchlist') : t('Add {symbol} to watchlist'), { symbol: asset.symbol })}
                               className={`grid h-9 w-9 place-items-center rounded-full transition-colors hover:bg-surface-2 ${
                                 watched ? 'text-amber-500' : 'text-muted'
                               }`}
@@ -587,11 +591,11 @@ export function MarketsPage() {
                           </td>
                           <td className="py-3.5">
                             <div className="font-extrabold text-ink">{asset.symbol}</div>
-                            <div className="text-xs font-medium text-muted">{asset.name}</div>
+                            <div className="text-xs font-medium text-muted">{t(asset.name)}</div>
                           </td>
                           <td className="py-3.5">
                             <span className="rounded-full border border-line bg-surface px-2.5 py-0.5 text-[11px] font-bold text-muted">
-                              {asset.category}
+                              {t(asset.category)}
                             </span>
                           </td>
                           <td className="py-3.5">
@@ -626,7 +630,7 @@ export function MarketsPage() {
                       <div className="flex items-start justify-between gap-3">
                         <button type="button" onClick={() => setSelected(asset)} className="min-w-0 flex-1 text-left">
                           <div className="truncate text-sm font-extrabold text-ink">{asset.symbol}</div>
-                          <div className="truncate text-[11px] font-semibold text-muted">{asset.name}</div>
+                          <div className="truncate text-[11px] font-semibold text-muted">{t(asset.name)}</div>
                         </button>
                         <button
                           type="button"
@@ -744,7 +748,7 @@ export function MarketsPage() {
                     >
                       {CURRENCY_CODES.map((code) => (
                         <option key={code} value={code}>
-                          {code} {fxRates[code].label}
+                          {code} {t(fxRates[code].label)}
                         </option>
                       ))}
                     </select>
@@ -771,7 +775,7 @@ export function MarketsPage() {
                     >
                       {CURRENCY_CODES.map((code) => (
                         <option key={code} value={code}>
-                          {code} {fxRates[code].label}
+                          {code} {t(fxRates[code].label)}
                         </option>
                       ))}
                     </select>
@@ -811,7 +815,7 @@ export function MarketsPage() {
                   <li key={code} className="flex items-center justify-between gap-3 py-3">
                     <span className="min-w-0">
                       <span className="block text-sm font-extrabold text-ink">{code}</span>
-                      <span className="block truncate text-[11px] font-semibold text-muted">{fxRates[code].label}</span>
+                      <span className="block truncate text-[11px] font-semibold text-muted">{t(fxRates[code].label)}</span>
                     </span>
                     <span className="shrink-0 text-sm font-black text-ink">
                       {(fxRates[code].rate / fxRates[fxFrom].rate).toLocaleString('en-US', { maximumFractionDigits: 4 })}
@@ -899,7 +903,7 @@ export function MarketsPage() {
                           <button
                             type="button"
                             onClick={() => setHoldings((current) => current.filter((item) => item.symbol !== row.symbol))}
-                            aria-label={`Remove ${row.symbol}`}
+                            aria-label={fill(t('Remove {symbol}'), { symbol: row.symbol })}
                             className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-rose-500/10 hover:text-rose-600"
                           >
                             <FiTrash2 />
@@ -945,7 +949,7 @@ export function MarketsPage() {
                   >
                     {marketAssets.map((asset) => (
                       <option key={asset.symbol} value={asset.symbol}>
-                        {asset.symbol} {asset.name}
+                        {asset.symbol} {t(asset.name)}
                       </option>
                     ))}
                   </select>
@@ -1030,7 +1034,7 @@ export function MarketsPage() {
                         }`}
                       >
                         {direction === 'above' ? <FiArrowUp className="mr-1 inline" /> : <FiArrowDown className="mr-1 inline" />}
-                        {t('Goes')} {direction}
+                        {direction === 'above' ? t('Goes above') : t('Goes below')}
                       </button>
                     ))}
                   </div>
@@ -1096,7 +1100,7 @@ export function MarketsPage() {
 
                         <div className="min-w-0 flex-1">
                           <div className="truncate text-sm font-extrabold text-ink">
-                            {alert.symbol} {alert.direction}{' '}
+                            {alert.symbol} {t(alert.direction)}{' '}
                             {alert.target.toLocaleString('en-US', { maximumFractionDigits: 4 })}
                           </div>
                           <div className="truncate text-[11px] font-semibold text-muted">
@@ -1150,16 +1154,16 @@ export function MarketsPage() {
               <tbody className="divide-y divide-line">
                 {economicCalendar.map((row) => (
                   <tr key={`${row.time}-${row.event}`} className="transition-colors hover:bg-surface-2">
-                    <td className="px-5 py-4 font-black text-ink">{row.time}</td>
+                    <td className="px-5 py-4 font-black text-ink">{t(row.time)}</td>
                     <td className="py-4">
                       <span className="rounded-lg border border-line bg-cream px-2 py-0.5 text-[11px] font-black text-muted dark:bg-cream-2">
-                        {row.region}
+                        {t(row.region)}
                       </span>
                     </td>
-                    <td className="py-4 font-bold text-ink">{row.event}</td>
+                    <td className="py-4 font-bold text-ink">{t(row.event)}</td>
                     <td className="py-4">
                       <span className={`rounded-full border px-2.5 py-0.5 text-[11px] font-black ${IMPACT_STYLES[row.impact]}`}>
-                        {row.impact}
+                        {t(row.impact)}
                       </span>
                     </td>
                     <td className="py-4 font-bold text-body">{row.forecast}</td>
@@ -1206,13 +1210,13 @@ export function MarketsPage() {
               <article className="group flex h-full flex-col rounded-[24px] border border-line bg-surface p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-brand/35 hover:shadow-card">
                 <div className="flex items-center justify-between">
                   <span className="rounded-full bg-brand-soft px-3 py-1 text-[10px] font-black uppercase tracking-wide text-brand-ink">
-                    {item.level}
+                    {t(item.level)}
                   </span>
                   <span className="text-[11px] font-bold text-muted">{item.minutes} {t('min')}</span>
                 </div>
 
-                <h3 className="mt-4 text-base font-extrabold leading-snug text-ink">{item.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-body">{item.desc}</p>
+                <h3 className="mt-4 text-base font-extrabold leading-snug text-ink">{t(item.title)}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-body">{t(item.desc)}</p>
 
                 <span className="mt-5 inline-flex items-center gap-1.5 border-t border-line pt-4 text-xs font-bold text-brand-ink">
                   {t('Read explainer')} <FiChevronRight className="transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -1358,14 +1362,14 @@ export function MarketsPage() {
                 { label: t('Volume'), value: selected.volume },
               ].map((item) => (
                 <div key={item.label} className="rounded-2xl border border-line bg-cream p-4 text-center dark:bg-cream-2">
-                  <dt className="text-[10px] font-black uppercase tracking-wide text-muted">{item.label}</dt>
+                  <dt className="text-[10px] font-black uppercase tracking-wide text-muted">{t(item.label)}</dt>
                   <dd className="mt-1 text-sm font-black text-ink">{item.value}</dd>
                 </div>
               ))}
             </dl>
 
             <h4 className="mt-7 text-xs font-black uppercase tracking-[0.16em] text-muted">{t('About')}</h4>
-            <p className="mt-2 text-sm leading-relaxed text-body">{selected.about}</p>
+            <p className="mt-2 text-sm leading-relaxed text-body">{t(selected.about)}</p>
 
             <div className="mt-6 flex items-start gap-3 rounded-2xl border border-line bg-cream p-4 dark:bg-cream-2">
               <FiInfo className="mt-0.5 shrink-0 text-lg text-brand-strong" />

@@ -170,7 +170,7 @@ export function PrivacyPage() {
     null,
     (rows) => Array.isArray(rows) && rows.length > 0,
   )
-  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: t(r.question), a: t(r.answer) })) : localFaqs
 
   return (
     <MainLayout>
@@ -233,7 +233,7 @@ export function PrivacyPage() {
                       <img src={img(maleAvatar)} alt={imgAlt(maleAvatar, "David Miller")} className="h-8 w-8 rounded-full object-cover border-2 border-emerald-400 shadow" />
                       <div>
                         <p className="font-extrabold text-xs tracking-tight">David Miller</p>
-                        <span className="text-[9px] text-sky-200 block font-medium">online</span>
+                        <span className="text-[9px] text-sky-200 block font-medium">{t("online")}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-white/90">
@@ -246,13 +246,13 @@ export function PrivacyPage() {
                   <div className="p-3 space-y-2.5 text-[11px] flex-1 overflow-y-auto no-scrollbar relative bg-[#f5f8fa] dark:bg-[#0b141a] bg-[radial-gradient(#d1d5db_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:14px_14px]">
                     {/* E2EE Protocol Pill */}
                     <div className="mx-auto w-fit rounded-full bg-white/90 dark:bg-slate-800/90 px-3 py-1 text-[9px] font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm text-center">
-                      🔒 End to end encrypted with KT Encryption Protocol
+                      {t("🔒 End to end encrypted with KT Encryption Protocol")}
                     </div>
 
                     {/* Received Message */}
                     <div className="flex justify-start">
                       <div className="rounded-2xl rounded-tl-sm bg-white dark:bg-slate-800 p-2.5 text-slate-900 dark:text-white max-w-[85%] shadow-sm border border-slate-200 dark:border-slate-700/80">
-                        <span className="font-semibold">Good morning David! ☀️ How was your day?</span>
+                        <span className="font-semibold">{t("Good morning David! ☀️ How was your day?")}</span>
                         <div className="text-[8px] text-slate-400 text-right pt-0.5 font-mono">10:02 am</div>
                       </div>
                     </div>
@@ -260,7 +260,7 @@ export function PrivacyPage() {
                     {/* Sent Blue Message */}
                     <div className="flex justify-end">
                       <div className="rounded-2xl rounded-tr-sm bg-gradient-to-r from-sky-500 to-blue-600 p-2.5 text-white max-w-[85%] shadow-md">
-                        <span className="font-semibold">Good morning! It was wonderful! Ready for our weekend coffee meetup? ☕✨</span>
+                        <span className="font-semibold">{t("Good morning! It was wonderful! Ready for our weekend coffee meetup? ☕✨")}</span>
                         <div className="text-[8px] text-sky-100 text-right font-mono mt-0.5">10:04 am ✓✓</div>
                       </div>
                     </div>
@@ -279,7 +279,7 @@ export function PrivacyPage() {
                     <div className="flex-1 rounded-full bg-slate-100 dark:bg-slate-800 px-3.5 py-1.5 text-xs text-slate-600 dark:text-slate-300 flex items-center justify-between border border-slate-200 dark:border-slate-700 shadow-inner">
                       <div className="flex items-center gap-2">
                         <span className="cursor-pointer text-sm">😃</span>
-                        <span className="text-slate-400 text-[11px] font-medium">Can't wait! 😊</span>
+                        <span className="text-slate-400 text-[11px] font-medium">{t("Can't wait! 😊")}</span>
                       </div>
                       <div className="flex items-center gap-2 text-slate-400 text-xs">
                         <span className="cursor-pointer">📎</span>
@@ -440,8 +440,8 @@ export function PrivacyPage() {
                           🔒
                         </div>
                         <div>
-                          <p className="font-extrabold text-ink text-sm">Locked chats</p>
-                          <span className="text-[11px] text-brand-ink font-semibold">Biometrics Protected</span>
+                          <p className="font-extrabold text-ink text-sm">{t("Locked chats")}</p>
+                          <span className="text-[11px] text-brand-ink font-semibold">{t("Biometrics Protected")}</span>
                         </div>
                       </div>
                       <span className="rounded-full bg-brand-strong px-2.5 py-0.5 text-[10px] font-bold text-white">2</span>
@@ -455,7 +455,7 @@ export function PrivacyPage() {
                             <span>David Miller</span>
                             <span className="text-[10px] text-muted">11:32</span>
                           </div>
-                          <span className="text-[11px] text-body">Video call completed • E2EE</span>
+                          <span className="text-[11px] text-body">{t("Video call completed • E2EE")}</span>
                         </div>
                       </div>
 
@@ -468,15 +468,15 @@ export function PrivacyPage() {
                             <span>Marcus Vance</span>
                             <span className="text-[10px] text-muted">10:04</span>
                           </div>
-                          <span className="text-[11px] text-body">Who is free around 5 PM?</span>
+                          <span className="text-[11px] text-body">{t("Who is free around 5 PM?")}</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <div className="rounded-2xl bg-sky-50 dark:bg-slate-800/90 p-3 text-center border border-sky-200 dark:border-slate-700">
-                    <span className="text-xs font-extrabold text-brand-strong block">🔐 FaceID / Fingerprint Lock</span>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400">Unlock required to view hidden messages</span>
+                    <span className="text-xs font-extrabold text-brand-strong block">{t("🔐 FaceID / Fingerprint Lock")}</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400">{t("Unlock required to view hidden messages")}</span>
                   </div>
                 </div>
 
@@ -562,7 +562,7 @@ export function PrivacyPage() {
                       </div>
                       <div>
                         <p className="font-extrabold text-xs tracking-tight">David Miller</p>
-                        <span className="text-[9px] text-sky-200 block font-medium">Last seen 25 min ago</span>
+                        <span className="text-[9px] text-sky-200 block font-medium">{t("Last seen 25 min ago")}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 text-white/90">
@@ -576,13 +576,13 @@ export function PrivacyPage() {
                   <div className="p-2.5 space-y-2.5 text-[11px] flex-1 overflow-y-auto no-scrollbar relative bg-[#f5f8fa] dark:bg-[#0b141a] bg-[radial-gradient(#d1d5db_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:14px_14px]">
                     {/* Date Badge Divider */}
                     <div className="text-center my-1">
-                      <span className="rounded-full bg-white dark:bg-slate-800 px-3 py-0.5 text-[9px] font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-mono shadow-sm">Today</span>
+                      <span className="rounded-full bg-white dark:bg-slate-800 px-3 py-0.5 text-[9px] font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-mono shadow-sm">{t("Today")}</span>
                     </div>
 
                     {/* Friendly Received Message 1 */}
                     <div className="flex justify-start">
                       <div className="rounded-2xl rounded-tl-sm bg-white dark:bg-slate-800 p-2.5 text-slate-900 dark:text-white max-w-[84%] border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <span className="font-semibold text-xs">Hey David! Check out these fresh strawberries we picked today! 🍓✨</span>
+                        <span className="font-semibold text-xs">{t("Hey David! Check out these fresh strawberries we picked today! 🍓✨")}</span>
                         <div className="text-[8px] text-slate-400 text-right pt-1 font-mono">2:33 pm</div>
                       </div>
                     </div>
@@ -598,7 +598,7 @@ export function PrivacyPage() {
                     {/* Friendly Received Message 2 */}
                     <div className="flex justify-start">
                       <div className="rounded-2xl bg-white dark:bg-slate-800 p-2.5 text-slate-900 dark:text-white max-w-[84%] border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <span className="font-semibold text-xs">They were so sweet and delicious! We should go back next weekend 🌿☕</span>
+                        <span className="font-semibold text-xs">{t("They were so sweet and delicious! We should go back next weekend 🌿☕")}</span>
                         <div className="text-[8px] text-slate-400 text-right pt-1 font-mono">2:38 pm</div>
                       </div>
                     </div>
@@ -608,7 +608,7 @@ export function PrivacyPage() {
                       <div className="rounded-2xl bg-white dark:bg-slate-800 p-2.5 text-slate-900 dark:text-white max-w-[78%] border border-slate-200 dark:border-slate-700 flex items-center gap-2.5 shadow-sm">
                         <span className="grid h-7 w-7 place-items-center rounded-full bg-sky-500 text-white text-xs shadow shrink-0">▶</span>
                         <div>
-                          <div className="font-extrabold text-xs">Voice Note (0:14)</div>
+                          <div className="font-extrabold text-xs">{t("Voice Note (0:14)")}</div>
                           <div className="text-[8px] text-slate-400 font-mono">11:04 am</div>
                         </div>
                       </div>
@@ -619,7 +619,7 @@ export function PrivacyPage() {
                     <div className="flex items-center justify-end gap-1.5">
                       <span className="text-slate-400 text-xs">🔊</span>
                       <div className="rounded-2xl rounded-tr-none bg-sky-500 p-2.5 text-white max-w-[82%] shadow-md">
-                        <span className="font-semibold text-xs">Good morning! That looks amazing! Hope you have a wonderful day ☀️✨</span>
+                        <span className="font-semibold text-xs">{t("Good morning! That looks amazing! Hope you have a wonderful day ☀️✨")}</span>
                         <div className="text-[8px] text-sky-100 text-right font-mono mt-0.5">4:24 pm ✓✓</div>
                       </div>
                     </div>
@@ -627,7 +627,7 @@ export function PrivacyPage() {
                     {/* Friendly Received Message 3 */}
                     <div className="flex justify-start">
                       <div className="rounded-2xl bg-white dark:bg-slate-800 p-2.5 text-slate-900 dark:text-white max-w-[84%] border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <span className="font-semibold text-xs">Let's catch up over coffee this Saturday! ☕😊</span>
+                        <span className="font-semibold text-xs">{t("Let's catch up over coffee this Saturday! ☕😊")}</span>
                         <div className="text-[8px] text-slate-400 text-right pt-1 font-mono">6:01 pm</div>
                       </div>
                     </div>
@@ -640,7 +640,7 @@ export function PrivacyPage() {
                         </div>
                         <div>
                           <div className="font-extrabold text-xs">Deno</div>
-                          <span className="text-[9px] text-slate-400 font-semibold">Note</span>
+                          <span className="text-[9px] text-slate-400 font-semibold">{t("Note")}</span>
                         </div>
                       </div>
                     </div>
@@ -658,7 +658,7 @@ export function PrivacyPage() {
                     <div className="flex-1 rounded-full bg-slate-100 dark:bg-slate-800 px-3.5 py-1.5 text-xs text-slate-600 dark:text-slate-300 flex items-center justify-between border border-slate-200 dark:border-slate-700 shadow-inner">
                       <div className="flex items-center gap-2">
                         <span className="cursor-pointer text-sm">😃</span>
-                        <span className="text-slate-400 text-[11px] font-medium">Message</span>
+                        <span className="text-slate-400 text-[11px] font-medium">{t("Message")}</span>
                       </div>
                       <div className="flex items-center gap-2 text-slate-400 text-xs">
                         <span className="cursor-pointer">📎</span>
@@ -732,42 +732,42 @@ export function PrivacyPage() {
                       <div className="grid h-11 w-11 place-items-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 mx-auto transition-transform hover:scale-105 cursor-pointer">
                         <FiVideo className="text-base" />
                       </div>
-                      <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-medium">Video</span>
+                      <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-medium">{t("Video")}</span>
                     </div>
 
                     <div className="space-y-1">
                       <div className="grid h-11 w-11 place-items-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 mx-auto transition-transform hover:scale-105 cursor-pointer">
                         <FiPhone className="text-base" />
                       </div>
-                      <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-medium">Phone</span>
+                      <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-medium">{t("Phone")}</span>
                     </div>
 
                     <div className="space-y-1">
                       <div className="grid h-11 w-11 place-items-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 mx-auto transition-transform hover:scale-105 cursor-pointer">
                         <FiMic className="text-base" />
                       </div>
-                      <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-medium">Mute</span>
+                      <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-medium">{t("Mute")}</span>
                     </div>
 
                     <div className="space-y-1">
                       <div className="grid h-11 w-11 place-items-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 mx-auto transition-transform hover:scale-105 cursor-pointer">
                         <FiMoreHorizontal className="text-base" />
                       </div>
-                      <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-medium">More</span>
+                      <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-medium">{t("More")}</span>
                     </div>
 
                     <div className="space-y-1">
                       <div className="grid h-11 w-11 place-items-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 mx-auto transition-transform hover:scale-105 cursor-pointer">
                         <FiShare2 className="text-base" />
                       </div>
-                      <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-medium">Share</span>
+                      <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-medium">{t("Share")}</span>
                     </div>
 
                     <div className="space-y-1">
                       <div className="grid h-11 w-11 place-items-center rounded-full bg-rose-500 text-white mx-auto shadow-md transition-transform hover:scale-105 cursor-pointer">
                         <FiPhoneOff className="text-base" />
                       </div>
-                      <span className="text-[10px] text-rose-500 font-extrabold block">End</span>
+                      <span className="text-[10px] text-rose-500 font-extrabold block">{t("End")}</span>
                     </div>
                   </div>
                 </div>
@@ -823,7 +823,7 @@ export function PrivacyPage() {
                 <div className="relative rounded-t-2xl bg-gradient-to-r from-sky-600 to-blue-700 p-3 text-white shadow-md">
                   <div className="flex items-center gap-3">
                     <FiChevronLeft className="text-xl" />
-                    <p className="font-extrabold text-base tracking-wide">Privacy</p>
+                    <p className="font-extrabold text-base tracking-wide">{t("Privacy")}</p>
                   </div>
                 </div>
 
@@ -831,7 +831,7 @@ export function PrivacyPage() {
                 <div className="bg-[#f5f8fa] dark:bg-[#0b141a] p-3 text-slate-900 dark:text-white space-y-3 relative text-xs flex-1 flex flex-col justify-between my-0.5 rounded-b-[36px]">
                   <div>
                     <div className="text-[10px] font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase mb-2">
-                      Who can see my personal info
+                      {t("Who can see my personal info")}
                     </div>
 
                     <div className="rounded-2xl bg-white dark:bg-slate-800 p-2.5 space-y-2 border border-slate-200 dark:border-slate-700/80 shadow-sm">
@@ -844,8 +844,8 @@ export function PrivacyPage() {
                             <FiEye />
                           </div>
                           <div>
-                            <div className="font-bold text-xs text-slate-900 dark:text-white">Last seen</div>
-                            <div className="text-[10px] text-slate-500 dark:text-slate-400">{selectedLastSeen}</div>
+                            <div className="font-bold text-xs text-slate-900 dark:text-white">{t("Last seen")}</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">{t(selectedLastSeen)}</div>
                           </div>
                         </div>
                         <FiChevronRight className="text-slate-400 text-sm" />
@@ -860,8 +860,8 @@ export function PrivacyPage() {
                             📡
                           </div>
                           <div>
-                            <div className="font-bold text-xs text-slate-900 dark:text-white">Online</div>
-                            <div className="text-[10px] text-slate-500 dark:text-slate-400">{selectedOnline}</div>
+                            <div className="font-bold text-xs text-slate-900 dark:text-white">{t("Online")}</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">{t(selectedOnline)}</div>
                           </div>
                         </div>
                         <FiChevronRight className="text-slate-400 text-sm" />
@@ -873,8 +873,8 @@ export function PrivacyPage() {
                             👤
                           </div>
                           <div>
-                            <div className="font-bold text-xs text-slate-900 dark:text-white">Profile photo</div>
-                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Everyone</div>
+                            <div className="font-bold text-xs text-slate-900 dark:text-white">{t("Profile photo")}</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">{t("Everyone")}</div>
                           </div>
                         </div>
                         <FiChevronRight className="text-slate-400 text-sm" />
@@ -886,20 +886,20 @@ export function PrivacyPage() {
                   <div className="absolute inset-x-3 top-8 z-20 rounded-2xl bg-white dark:bg-slate-800 border border-sky-400/60 dark:border-sky-500/40 p-4 shadow-2xl backdrop-blur-md">
                     <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-2 mb-3">
                       <p className="font-extrabold text-sm text-slate-900 dark:text-white">
-                        {activePrivacyModal === 'lastSeen' ? 'Last seen' : 'Online'}
+                        {activePrivacyModal === 'lastSeen' ? t('Last seen') : t('Online')}
                       </p>
                       <div className="flex gap-1 bg-slate-100 dark:bg-slate-900 p-0.5 rounded-lg text-[9px] font-bold">
                         <button
                           onClick={() => setActivePrivacyModal('lastSeen')}
                           className={`px-2 py-0.5 rounded-md transition-colors ${activePrivacyModal === 'lastSeen' ? 'bg-sky-500 text-white shadow' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'}`}
                         >
-                          Last seen
+                          {t("Last seen")}
                         </button>
                         <button
                           onClick={() => setActivePrivacyModal('online')}
                           className={`px-2 py-0.5 rounded-md transition-colors ${activePrivacyModal === 'online' ? 'bg-sky-500 text-white shadow' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'}`}
                         >
-                          Online
+                          {t("Online")}
                         </button>
                       </div>
                     </div>
@@ -920,7 +920,7 @@ export function PrivacyPage() {
                                 : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/60'
                             }`}
                           >
-                            <span>{opt}</span>
+                            <span>{t(opt)}</span>
                             <span className={`grid h-5 w-5 place-items-center rounded-full text-[11px] font-bold ${
                               isSelected ? 'bg-sky-500 text-white shadow-sm' : 'border border-slate-300 dark:border-slate-600'
                             }`}>
@@ -934,14 +934,14 @@ export function PrivacyPage() {
 
                   <div>
                     <div className="text-[10px] font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase mb-1">
-                      Disappearing Messages
+                      {t("Disappearing Messages")}
                     </div>
                     <div className="rounded-xl bg-white dark:bg-slate-800 p-2.5 flex items-center justify-between border border-slate-200 dark:border-slate-700/80 shadow-sm">
                       <div className="flex items-center gap-2">
                         <div className="grid h-6 w-6 place-items-center rounded-lg bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 text-xs">⏱️</div>
-                        <span className="font-bold text-xs text-slate-900 dark:text-white">Default message timer</span>
+                        <span className="font-bold text-xs text-slate-900 dark:text-white">{t("Default message timer")}</span>
                       </div>
-                      <span className="text-[10px] text-slate-400 font-semibold">Off &gt;</span>
+                      <span className="text-[10px] text-slate-400 font-semibold">{t('Off')} &gt;</span>
                     </div>
                   </div>
                 </div>
@@ -1018,7 +1018,7 @@ export function PrivacyPage() {
                 <div className="relative rounded-t-2xl bg-gradient-to-r from-sky-600 to-blue-700 p-3 text-white shadow-md">
                   <div className="flex items-center gap-3">
                     <FiChevronLeft className="text-xl" />
-                    <p className="font-extrabold text-base tracking-wide">Chat backup</p>
+                    <p className="font-extrabold text-base tracking-wide">{t("Chat backup")}</p>
                   </div>
                 </div>
 
@@ -1026,20 +1026,20 @@ export function PrivacyPage() {
                   {/* CLOUD BACKUP CARD */}
                   <div>
                     <div className="text-[10px] font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase mb-1.5">
-                      Cloud Backup
+                      {t("Cloud Backup")}
                     </div>
                     <div className="rounded-2xl bg-white dark:bg-slate-800 p-4 border border-slate-200 dark:border-slate-700/80 text-center space-y-3 shadow-sm">
                       <div className="grid h-12 w-12 place-items-center rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xl mx-auto border border-slate-200 dark:border-slate-600">
                         ☁️
                       </div>
                       <div>
-                        <p className="font-extrabold text-sm text-slate-900 dark:text-white">No account connected</p>
+                        <p className="font-extrabold text-sm text-slate-900 dark:text-white">{t("No account connected")}</p>
                         <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-[240px] mx-auto">
-                          Connect a Google account to back up your chats and media safely to Google Drive.
+                          {t("Connect a Google account to back up your chats and media safely to Google Drive.")}
                         </p>
                       </div>
                       <button className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500 hover:bg-sky-600 py-2.5 text-xs font-bold text-white shadow-md transition-all">
-                        <span className="text-sm">📁</span> Connect Google Drive
+                        <span className="text-sm">📁</span> {t("Connect Google Drive")}
                       </button>
                     </div>
                   </div>
@@ -1047,23 +1047,23 @@ export function PrivacyPage() {
                   {/* SETTINGS CARD */}
                   <div>
                     <div className="text-[10px] font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase mb-1.5">
-                      Settings
+                      {t("Settings")}
                     </div>
                     <div className="rounded-2xl bg-white dark:bg-slate-800 p-3 border border-slate-200 dark:border-slate-700/80 space-y-3 shadow-sm">
                       <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700/60 pb-2.5">
                         <div className="flex items-center gap-2.5">
                           <FiClock className="text-sky-500 text-sm" />
-                          <span className="font-bold text-xs text-slate-900 dark:text-white">Backup frequency</span>
+                          <span className="font-bold text-xs text-slate-900 dark:text-white">{t("Backup frequency")}</span>
                         </div>
-                        <span className="text-[11px] text-slate-400 font-semibold">Never &gt;</span>
+                        <span className="text-[11px] text-slate-400 font-semibold">{t('Never')} &gt;</span>
                       </div>
 
                       <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700/60 pb-2.5">
                         <div className="flex items-center gap-2.5">
                           <span className="text-sky-500 text-sm">📶</span>
                           <div>
-                            <div className="font-bold text-xs text-slate-900 dark:text-white">Back up over Wi Fi only</div>
-                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Automatic backups skip mobile data.</div>
+                            <div className="font-bold text-xs text-slate-900 dark:text-white">{t("Back up over Wi Fi only")}</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">{t("Automatic backups skip mobile data.")}</div>
                           </div>
                         </div>
                         <div
@@ -1078,8 +1078,8 @@ export function PrivacyPage() {
                         <div className="flex items-center gap-2.5">
                           <span className="text-sky-500 text-sm">🖼️</span>
                           <div>
-                            <div className="font-bold text-xs text-slate-900 dark:text-white">Include Photos &amp; Videos</div>
-                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Adds photos, videos and voice notes.</div>
+                            <div className="font-bold text-xs text-slate-900 dark:text-white">{t('Include Photos & Videos')}</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">{t("Adds photos, videos and voice notes.")}</div>
                           </div>
                         </div>
                         <div
@@ -1093,13 +1093,13 @@ export function PrivacyPage() {
                   </div>
 
                   <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight px-1 text-center">
-                    Backups are end to end encrypted and stored privately in your Google Drive.{' '}
+                    {t('Backups are end to end encrypted and stored privately in your Google Drive.')}{' '}
                     <button
                       type="button"
                       onClick={() => navigate('/help')}
                       className="text-sky-500 font-bold underline hover:text-sky-600 transition-colors"
                     >
-                      Learn more
+                      {t("Learn more")}
                     </button>
                   </p>
                 </div>
@@ -1134,7 +1134,7 @@ export function PrivacyPage() {
                 <div className="relative rounded-t-2xl bg-gradient-to-r from-sky-600 to-blue-700 p-3 text-white shadow-md">
                   <div className="flex items-center gap-3">
                     <FiChevronLeft className="text-xl" />
-                    <p className="font-extrabold text-base tracking-wide">Encryption &amp; Security</p>
+                    <p className="font-extrabold text-base tracking-wide">{t('Encryption & Security')}</p>
                   </div>
                 </div>
 
@@ -1143,26 +1143,26 @@ export function PrivacyPage() {
                     <div className="grid h-14 w-14 place-items-center rounded-full bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400 text-2xl mx-auto border border-sky-300 dark:border-sky-500/40 shadow-sm">
                       🔒
                     </div>
-                    <p className="mt-2 text-sm font-extrabold text-slate-900 dark:text-white">Your chats and calls are private</p>
+                    <p className="mt-2 text-sm font-extrabold text-slate-900 dark:text-white">{t("Your chats and calls are private")}</p>
                     <p className="mt-1 text-[10px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-[260px] mx-auto">
-                      End to end encryption keeps your personal messages and calls between you and the people you choose. No one outside of the chat, not even KT Messenger, can read, listen to, or share them.
+                      {t("End to end encryption keeps your personal messages and calls between you and the people you choose. No one outside of the chat, not even KT Messenger, can read, listen to, or share them.")}
                     </p>
                   </div>
 
                   <div className="rounded-2xl bg-white dark:bg-slate-800 p-3 border border-slate-200 dark:border-slate-700/80 space-y-1.5 text-[11px] shadow-sm">
-                    <div className="font-bold text-slate-500 dark:text-slate-400 text-[9px] uppercase tracking-wider mb-1">This includes your:</div>
-                    <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold"><span className="text-sky-500 text-sm">💬</span> Text and voice messages</div>
-                    <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold"><span className="text-sky-500 text-sm">📞</span> Audio and video calls</div>
-                    <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold"><span className="text-sky-500 text-sm">📎</span> Photos, videos and documents</div>
-                    <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold"><span className="text-sky-500 text-sm">📍</span> Location sharing</div>
-                    <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold"><span className="text-sky-500 text-sm">🔄</span> Status updates</div>
+                    <div className="font-bold text-slate-500 dark:text-slate-400 text-[9px] uppercase tracking-wider mb-1">{t("This includes your:")}</div>
+                    <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold"><span className="text-sky-500 text-sm">💬</span> {t("Text and voice messages")}</div>
+                    <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold"><span className="text-sky-500 text-sm">📞</span> {t("Audio and video calls")}</div>
+                    <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold"><span className="text-sky-500 text-sm">📎</span> {t("Photos, videos and documents")}</div>
+                    <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold"><span className="text-sky-500 text-sm">📍</span> {t("Location sharing")}</div>
+                    <div className="flex items-center gap-2.5 text-slate-800 dark:text-slate-200 font-semibold"><span className="text-sky-500 text-sm">🔄</span> {t("Status updates")}</div>
                   </div>
 
                   {/* Threat Shield / Block Popup Card */}
                   <div className="rounded-2xl bg-white dark:bg-slate-800 p-3 border border-slate-200 dark:border-slate-700/80 flex items-center justify-between shadow-sm">
                     <div>
-                      <div className="font-bold text-xs text-slate-900 dark:text-white">Report &amp; Block (Marcus Vance)</div>
-                      <div className="text-[9px] text-slate-500 dark:text-slate-400 leading-tight">Spam protection &amp; security filter active</div>
+                      <div className="font-bold text-xs text-slate-900 dark:text-white">{t('Report & Block')} (Marcus Vance)</div>
+                      <div className="text-[9px] text-slate-500 dark:text-slate-400 leading-tight">{t('Spam protection & security filter active')}</div>
                     </div>
                     <div
                       onClick={() => setShowSecurityNotifs(!showSecurityNotifs)}

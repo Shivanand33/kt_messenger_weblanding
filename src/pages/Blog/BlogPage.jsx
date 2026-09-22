@@ -14,6 +14,9 @@ import { parseBody } from '../../utils/parseBody'
 import { api } from '../../services/apiClient'
 import { trackBlogView } from '../../services/analytics'
 import { useSeo } from '../../hooks/useSeo'
+import { contentText } from '../../i18n/contentTranslations'
+import { fill } from '../../i18n/fill'
+import { DEFAULT_LANG, currentLanguage } from '../../i18n/languageUrls'
 import footerImg from '../../assets/images/footer.jpg'
 import multideviceImg from '../../assets/images/multidevice.jpg'
 import privateImg from '../../assets/images/private.jpg'
@@ -60,11 +63,18 @@ const withTimeout = (promise, ms = 7000) => {
  * public API payload into the exact shape the existing design already renders,
  * so nothing about the layout / styling changes.
  * ──────────────────────────────────────────────────────────── */
+// A post's text in the page's language: the backend sends its translation with
+// the post (src/i18n/contentTranslations.js). English pages get none.
+const localized = (s) => (typeof s === 'string' && contentText(s)) || s
+const localizedTag = (tag) => (tag && typeof tag === 'object' ? { ...tag, name: localized(tag.name) } : localized(tag))
+
 const formatDate = (iso) => {
   if (!iso) return ''
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return ''
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  // Month names in the page's language.
+  const { lang } = currentLanguage()
+  return d.toLocaleDateString(lang === DEFAULT_LANG ? 'en-US' : lang, { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
 const wordCount = (text) => String(text || '').trim().split(/\s+/).filter(Boolean).length
@@ -73,33 +83,36 @@ const readingTime = (text, floor = 2) => Math.max(floor, Math.round(wordCount(te
 
 const normalizeCard = (p) => ({
   slug: p.slug,
-  title: p.title,
-  category: p.category?.name || 'Blog',
-  description: p.excerpt || '',
+  title: localized(p.title),
+  category: localized(p.category?.name) || 'Blog',
+  description: localized(p.excerpt || ''),
   date: formatDate(p.publishedAt),
   readMins: readingTime(p.excerpt),
   coverUrl: p.coverUrl || null,
   featured: !!p.featured,
-  tags: p.tags || [],
+  tags: (p.tags || []).map(localizedTag),
   blocks: null, // filled in on demand when the article is opened
   _remote: true,
 })
 
 function normalizeDetail(p) {
-  let blocks = parseBody(p.body)
+  // The body is translated whole, then parsed, so its markdown survives.
+  const body = localized(p.body)
+  let blocks = parseBody(body)
   // Drop a leading heading that just repeats the title (many bodies start "# Title").
-  if (blocks[0]?.type === 'h' && blocks[0].text.trim().toLowerCase() === String(p.title).trim().toLowerCase()) {
+  const first = (body === p.body ? blocks : parseBody(p.body))[0]
+  if (first?.type === 'h' && blocks[0]?.type === 'h' && first.text.trim().toLowerCase() === String(p.title).trim().toLowerCase()) {
     blocks = blocks.slice(1)
   }
-  if (!blocks.length && p.excerpt) blocks = [{ type: 'p', text: p.excerpt }]
+  if (!blocks.length && p.excerpt) blocks = [{ type: 'p', text: localized(p.excerpt) }]
   return {
     ...normalizeCard(p),
     readMins: readingTime(p.body || p.excerpt),
     blocks,
     // Carried through for the canonical/social tags — normalizeCard covers
     // only what the list view renders.
-    seoTitle: p.seoTitle || null,
-    seoDescription: p.seoDescription || null,
+    seoTitle: localized(p.seoTitle) || null,
+    seoDescription: localized(p.seoDescription) || null,
     ogImage: p.ogImage || null,
   }
 }
@@ -421,7 +434,7 @@ export function BlogPage() {
   // shareable address and the browser Back button returns to the exact article
   // the reader came from (e.g. after tapping an in-article link to /ai).
   const navigate = useNavigate()
-  const { t } = useLanguage()
+  const { lang, t } = useLanguage()
   const { slug: activeSlug = null } = useParams()
   const [posts, setPosts] = useState(FALLBACK_POSTS)
   const [loading] = useState(false)
@@ -481,7 +494,9 @@ export function BlogPage() {
     // Record the article read (once per slug — the guard above de-dupes).
     trackBlogView(slug, card?.title)
     const bundled = FALLBACK_BY_SLUG.get(slug)
-    const instant = card?.blocks?.length ? card : bundled?.blocks?.length ? bundled : null
+    // The bundled English copy shows instantly only on English pages; other
+    // languages wait for the translated post (and fall back to it on failure).
+    const instant = card?.blocks?.length ? card : lang === DEFAULT_LANG && bundled?.blocks?.length ? bundled : null
     if (instant) {
       setActivePost(instant)
       setArticleLoading(false)
@@ -526,9 +541,11 @@ export function BlogPage() {
   // canonical link, the shared link and the stored slug are always one string.
   useSeo({
     enabled: !!activeSlug,
+    // hreflang once the article is on screen — not while it loads or for "Article not found".
+    hreflang: Boolean(activePost),
     path: activeSlug ? `/blog/${activeSlug}` : '/blog',
     type: 'article',
-    title: activePost ? `${activePost.seoTitle || activePost.title} · KT Messenger Blog` : undefined,
+    title: activePost ? `${activePost.seoTitle || activePost.title} · ${t('KT Messenger Blog')}` : undefined,
     description: activePost?.seoDescription || activePost?.description || undefined,
     image: activePost?.ogImage || activePost?.coverUrl || undefined,
   })
@@ -685,7 +702,7 @@ export function BlogPage() {
                       : 'border border-line bg-surface text-body hover:-translate-y-0.5 hover:border-brand/40 hover:text-ink'
                   }`}
                 >
-                  {cat}
+                  {t(cat)}
                 </button>
               ))}
             </div>
@@ -703,7 +720,12 @@ export function BlogPage() {
                 <p className="text-lg font-bold text-ink">{t('No articles found')}</p>
                 <p className="max-w-md text-sm leading-6 text-body">
                   {searching
-                    ? `Nothing matched “${search.trim()}”. Try a different keyword${category !== 'All' ? ' or category' : ''}.`
+                    ? fill(
+                        category !== 'All'
+                          ? t('Nothing matched “{query}”. Try a different keyword or category.')
+                          : t('Nothing matched “{query}”. Try a different keyword.'),
+                        { query: search.trim() },
+                      )
                     : t('No articles in this category yet.')}
                 </p>
                 {searching ? (

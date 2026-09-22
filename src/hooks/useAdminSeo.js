@@ -17,8 +17,11 @@ import { useSeo } from './useSeo'
  *
  * @param {string} page  Content-block suffix, e.g. 'home' -> `seo.home`.
  * @param {string} path  Site-relative path used for the canonical URL.
+ * @param {{ title?: string, description?: string } | null} [override]
+ *   Optional title/description that win over the block (e.g. a Help Center
+ *   article's own SEO fields). Pages that pass nothing behave as before.
  */
-export function useAdminSeo(page, path) {
+export function useAdminSeo(page, path, override) {
   const [seo, setSeo] = useState(null)
 
   useEffect(() => {
@@ -38,10 +41,13 @@ export function useAdminSeo(page, path) {
   }, [page])
 
   useSeo({
-    enabled: Boolean(seo),
+    enabled: Boolean(seo) || Boolean(override?.title || override?.description),
     path,
-    title: seo?.title,
-    description: seo?.description,
+    title: override?.title || seo?.title,
+    description: override?.description || seo?.description,
     image: seo?.image,
+    // The page's own useSeo() / useHreflang() writes the hreflang links: it
+    // knows when the view is a real page rather than a "not found" state.
+    hreflang: false,
   })
 }

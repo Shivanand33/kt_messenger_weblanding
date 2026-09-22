@@ -11,10 +11,16 @@
 // If the API is unreachable, the catch keeps the original content on screen.
 // ─────────────────────────────────────────────────────────────
 
+import { DEFAULT_LANG, currentLanguage } from '../i18n/languageUrls'
+import { addContentTranslations } from '../i18n/contentTranslations'
+
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:4000/api'
 
 async function request(path, { method = 'GET', body, params, signal } = {}) {
   let url = `${BASE}${path}`
+  // On a page in another language, content reads ask for its translations too.
+  const { lang } = currentLanguage()
+  if (method === 'GET' && lang !== DEFAULT_LANG) params = { ...params, lang }
   if (params) {
     const qs = new URLSearchParams(Object.entries(params).filter(([, v]) => v !== undefined && v !== '')).toString()
     if (qs) url += `?${qs}`
@@ -29,7 +35,9 @@ async function request(path, { method = 'GET', body, params, signal } = {}) {
   if (!res.ok || json.success === false) {
     throw Object.assign(new Error(json.message || `Request failed (${res.status})`), { status: res.status, code: json.error })
   }
-  return json // { success, data, meta }
+  // Stored before the data is handed over, so it renders translated at once.
+  if (json.translations) addContentTranslations(json.translations)
+  return json // { success, data, meta, translations? }
 }
 
 export const api = {

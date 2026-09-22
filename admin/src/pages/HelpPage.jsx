@@ -6,9 +6,17 @@ import { useToast } from '../components/Toast.jsx'
 import { PageHeader, Loading, StatusBadge, Badge } from '../components/ui.jsx'
 import { Modal, ConfirmDialog } from '../components/Modal.jsx'
 import { Input, Textarea, Select, Checkbox } from '../components/Field.jsx'
+import { HelpBodyEditor } from '../components/HelpBodyEditor.jsx'
 import { BlogListPage } from './BlogListPage.jsx'
 
 const STATUS = [{ value: 'PUBLISHED', label: 'Published' }, { value: 'DRAFT', label: 'Draft' }, { value: 'ARCHIVED', label: 'Archived' }]
+
+// Where the public Help Center lives, for an article's link. Set VITE_SITE_URL
+// per environment (same variable the blog form uses).
+const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://ktmessenger.com').replace(/\/+$/, '')
+
+// The article whose store QR codes the website adds on its own.
+const DOWNLOAD_ARTICLE = 'How to download or uninstall KT Messenger'
 
 export function HelpPage() {
   const { can } = useAuth()
@@ -57,7 +65,7 @@ export function HelpPage() {
       if (mode === 'edit') {
         try { const res = await api.get(`/admin/help/articles/${data.id}`); data = res.data.data } catch { /* keep */ }
       }
-      f = { title: data.title || '', body: data.body || '', status: data.status || 'PUBLISHED', popular: !!data.popular, order: data.order ?? 0, platforms: (data.platforms || []).join(', ') }
+      f = { title: data.title || '', body: data.body || '', status: data.status || 'PUBLISHED', popular: !!data.popular, order: data.order ?? 0, platforms: (data.platforms || []).join(', '), seoTitle: data.seoTitle || '', seoDescription: data.seoDescription || '' }
     }
     setForm(f)
     setModal({ kind, mode, data })
@@ -76,7 +84,7 @@ export function HelpPage() {
         if (mode === 'new') await api.post('/admin/help/subcategories', body)
         else await api.put(`/admin/help/subcategories/${data.id}`, body)
       } else if (kind === 'article') {
-        const body = { title: form.title, body: form.body, status: form.status, popular: !!form.popular, order: Number(form.order) || 0, platforms: form.platforms ? form.platforms.split(',').map((s) => s.trim()).filter(Boolean) : [], subcategoryId: subId }
+        const body = { title: form.title, body: form.body, status: form.status, popular: !!form.popular, order: Number(form.order) || 0, platforms: form.platforms ? form.platforms.split(',').map((s) => s.trim()).filter(Boolean) : [], seoTitle: form.seoTitle, seoDescription: form.seoDescription, subcategoryId: subId }
         if (mode === 'new') await api.post('/admin/help/articles', body)
         else await api.put(`/admin/help/articles/${data.id}`, body)
       }
@@ -106,6 +114,11 @@ export function HelpPage() {
     } finally {
       setSaving(false)
     }
+  }
+
+  const copyText = (text) => {
+    if (!navigator.clipboard?.writeText) { toast.error('Copy is not available in this browser'); return }
+    navigator.clipboard.writeText(text).then(() => toast.success('Copied')).catch(() => toast.error('Copy failed'))
   }
 
   const Col = ({ heading, addLabel, onAdd, children }) => (
@@ -190,12 +203,30 @@ export function HelpPage() {
           {modal.kind === 'category' ? <Input label="Icon" value={form.icon} onChange={(e) => setForm((f) => ({ ...f, icon: e.target.value }))} /> : null}
           {modal.kind === 'article' ? (
             <>
-              <Textarea label="Body (HTML)" value={form.body} onChange={(e) => setForm((f) => ({ ...f, body: e.target.value }))} style={{ minHeight: 180 }} />
+              {modal.mode === 'edit' && modal.data.slug ? (
+                <div className="field">
+                  <label>Article link</label>
+                  <div className="help-link-row">
+                    <code>{SITE_URL}/help/{modal.data.slug}</code>
+                    <button type="button" className="btn ghost sm" onClick={() => copyText(`/help/${modal.data.slug}`)}>Copy path</button>
+                    <button type="button" className="btn ghost sm" onClick={() => copyText(`${SITE_URL}/help/${modal.data.slug}`)}>Copy URL</button>
+                  </div>
+                  <div className="hint">When another article links here, use /help/{modal.data.slug} as the link address.</div>
+                </div>
+              ) : null}
+              <HelpBodyEditor
+                value={form.body}
+                onChange={(body) => setForm((f) => ({ ...f, body }))}
+                platforms={form.platforms ? form.platforms.split(',').map((s) => s.trim()).filter(Boolean) : []}
+                isDownload={form.title.trim() === DOWNLOAD_ARTICLE}
+              />
               <div className="form-row">
                 <Select label="Status" value={form.status} onChange={(e) => setForm((f) => ({ ...f, status: e.target.value }))} options={STATUS} />
-                <Input label="Platforms" hint="Comma-separated" value={form.platforms} onChange={(e) => setForm((f) => ({ ...f, platforms: e.target.value }))} />
+                <Input label="Platforms" hint="Comma-separated — sets the order of the tabs" value={form.platforms} onChange={(e) => setForm((f) => ({ ...f, platforms: e.target.value }))} />
               </div>
               <Checkbox label="Popular article" checked={form.popular} onChange={(e) => setForm((f) => ({ ...f, popular: e.target.checked }))} />
+              <Input label="SEO title" hint="Browser tab / search result title for this article. Leave empty to use the Help Center default." value={form.seoTitle} onChange={(e) => setForm((f) => ({ ...f, seoTitle: e.target.value }))} maxLength={200} />
+              <Textarea label="SEO description" hint="Search result description for this article." value={form.seoDescription} onChange={(e) => setForm((f) => ({ ...f, seoDescription: e.target.value }))} maxLength={400} style={{ minHeight: 70 }} />
             </>
           ) : null}
           <Input label="Order" type="number" value={form.order} onChange={(e) => setForm((f) => ({ ...f, order: e.target.value }))} />

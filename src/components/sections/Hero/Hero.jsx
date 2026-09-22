@@ -9,6 +9,7 @@ import { Reveal } from '../../common/Reveal/Reveal'
 import { useModal } from '../../../context/ModalContext'
 import { useLanguage } from '../../../context/LanguageContext'
 import { api } from '../../../services/apiClient'
+import { languagePath } from '../../../i18n/languageUrls'
 import heroImage from '../../../assets/images/hero.jpg'
 
 // Turn a stored image reference into a usable URL. Uploaded media on R2 come
@@ -89,7 +90,7 @@ export function Hero() {
                 <Button size="lg" onClick={openDownloadModal}>
                   {t('Download KT Messenger')} <FiDownload />
                 </Button>
-                <Button variant="onDark" size="lg" onClick={() => window.location.href = '/messaging'}>
+                <Button variant="onDark" size="lg" onClick={() => window.location.href = languagePath('/messaging')}>
                   {t('Explore Features')}
                 </Button>
               </div>

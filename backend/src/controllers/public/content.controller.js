@@ -161,7 +161,8 @@ export const getDownloads = asyncHandler(async (_req, res) => {
 /* ── Locales ────────────────────────────────────────────── */
 export const listLocales = asyncHandler(async (_req, res) => {
   const locales = await prisma.locale.findMany({ where: { enabled: true }, orderBy: { code: 'asc' } })
-  return ok(res, locales.map((l) => ({ code: l.code, label: l.label, isDefault: l.isDefault })))
+  // nativeLabel: the name the website's language picker shows (हिन्दी, Español…).
+  return ok(res, locales.map((l) => ({ code: l.code, label: l.label, nativeLabel: l.nativeLabel, isDefault: l.isDefault })))
 })
 
 /* ── Navigation & footer ────────────────────────────────── */

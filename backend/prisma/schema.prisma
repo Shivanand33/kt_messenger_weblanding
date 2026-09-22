@@ -449,6 +449,24 @@ model Locale {
   @@map("locales")
 }
 
+/// Machine translations of admin content (Help Center, blog, business pages,
+/// FAQs, page text…) into the website's other languages, made on demand by the
+/// public API (src/services/translation.service.js). Keyed by a hash of the
+/// English source, so edited content is simply translated again.
+model Translation {
+  id        String   @id @default(cuid())
+  /// Website language code, e.g. "hi", "zh-Hans".
+  locale    String
+  /// sha256 of the English source text.
+  hash      String
+  source    String
+  text      String
+  createdAt DateTime @default(now())
+
+  @@unique([locale, hash])
+  @@map("translations")
+}
+
 // ─────────────────────────────────────────────────────────────
 // Audit log
 // ─────────────────────────────────────────────────────────────

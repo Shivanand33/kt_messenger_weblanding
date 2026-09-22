@@ -1,0 +1,11 @@
+# KT Messenger — https://ktmessenger.com
+User-agent: *
+Allow: /
+# Block admin and internal areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /auth/
+
+# Sitemap
+Sitemap: https://ktmessenger.com/sitemap.xml

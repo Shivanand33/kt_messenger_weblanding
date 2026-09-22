@@ -302,7 +302,7 @@ export function Footer() {
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1.5fr_repeat(4,1fr)]">
           <div className="max-w-xs">
-            <button onClick={() => go({ to: '/' })} aria-label="KT Messenger home" className="block">
+            <button onClick={() => go({ to: '/' })} aria-label={t('KT Messenger home')} className="block">
               <Logo />
             </button>
 
@@ -312,7 +312,7 @@ export function Footer() {
           </div>
 
           {columns.map((column) => (
-            <nav key={column.title} aria-label={column.title} className="space-y-4">
+            <nav key={column.title} aria-label={t(column.title)} className="space-y-4">
               <h4 className="text-[13px] font-bold uppercase tracking-[0.14em] text-ink">{t(column.title)}</h4>
               <ul className="space-y-3 text-[15px] text-body">
                 {column.links.map((link) => (

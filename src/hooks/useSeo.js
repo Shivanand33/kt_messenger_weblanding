@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import { DEFAULT_LANG, hreflangPaths, languagePath } from '../i18n/languageUrls'
+import { useLanguage } from '../context/LanguageContext'
 
 /**
- * Sets the document title, canonical link and social meta tags for the
- * current view, then restores whatever was there before on unmount.
+ * Sets the document title, canonical link, hreflang links and social meta
+ * tags for the current view, then restores whatever was there before on unmount.
  *
  * The site is a single-page app with no server rendering, so `index.html`
  * carries one static title and description for every route. This hook lets a
@@ -79,6 +81,49 @@ function upsertCanonical(href) {
   return { el, created, previous }
 }
 
+function upsertAlternate(hreflang, href) {
+  let el = document.head.querySelector(`link[rel="alternate"][hreflang="${hreflang}"]`)
+  const created = !el
+  if (!el) {
+    el = document.createElement('link')
+    el.setAttribute('rel', 'alternate')
+    el.setAttribute('hreflang', hreflang)
+    el.setAttribute('data-seo', 'true')
+    document.head.appendChild(el)
+  }
+  const previous = el.getAttribute('href')
+  el.setAttribute('href', href)
+  return { el, created, previous }
+}
+
+/**
+ * `<link rel="alternate" hreflang>` for the page in every language, its own
+ * included, plus x-default (src/i18n/languageUrls.js). The page is resolved
+ * exactly like the canonical, so both always name the same page. useSeo()
+ * calls this; a page without useSeo() calls it directly.
+ *
+ * @param {string}  path             Site-relative path, as given to useSeo().
+ * @param {object}  [options]
+ * @param {boolean} [options.enabled] False while loading or on a "not found" view.
+ */
+export function useHreflang(path, { enabled = true } = {}) {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    if (!enabled || typeof document === 'undefined') return undefined
+
+    const resolved = canonicalPath(path, pathname)
+    const touched = hreflangPaths(resolved).map((a) => upsertAlternate(a.hreflang, absoluteUrl(a.path)))
+
+    return () => {
+      for (const { el, created, previous } of touched) {
+        if (created) el.remove()
+        else if (previous !== null) el.setAttribute('href', previous)
+      }
+    }
+  }, [path, pathname, enabled])
+}
+
 /**
  * @param {object}  seo
  * @param {string}  seo.title        Document title.
@@ -87,15 +132,23 @@ function upsertCanonical(href) {
  * @param {string}  seo.image        Absolute or site-relative image URL.
  * @param {string}  seo.type         Open Graph type. Defaults to 'website'.
  * @param {boolean} seo.enabled      Skip entirely when false (e.g. still loading).
+ * @param {boolean} seo.hreflang     Also write the hreflang links (default). False
+ *                                   while the view is loading or shows "not found".
  */
-export function useSeo({ title, description, path, image, type = 'website', enabled = true } = {}) {
+export function useSeo({ title: titleText, description: descriptionText, path, image, type = 'website', enabled = true, hreflang = true } = {}) {
   const { pathname } = useLocation()
+  useHreflang(path, { enabled: enabled && hreflang })
+  // Title and description in the page's language (English pages: as given).
+  const { lang, t } = useLanguage()
+  const title = titleText && lang !== DEFAULT_LANG ? t(titleText) : titleText
+  const description = descriptionText && lang !== DEFAULT_LANG ? t(descriptionText) : descriptionText
 
   useEffect(() => {
     if (!enabled || typeof document === 'undefined') return undefined
 
     const resolved = canonicalPath(path, pathname)
-    const url = resolved ? absoluteUrl(resolved) : undefined
+    // In the language the page is shown in: /hi/calling for the Hindi page.
+    const url = resolved ? absoluteUrl(languagePath(resolved)) : undefined
     const img = image ? absoluteUrl(image) : undefined
     const prevTitle = document.title
     if (title) document.title = title

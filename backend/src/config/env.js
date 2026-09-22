@@ -29,6 +29,23 @@ export const env = {
   frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5174',
   adminUrl: process.env.ADMIN_URL || 'http://localhost:5173',
 
+  // Public website origin used for every URL in the XML sitemap.
+  siteUrl: (process.env.SITE_URL || 'https://ktmessenger.com').replace(/\/+$/, ''),
+  sitemap: {
+    // How long a built sitemap is reused before it is rebuilt from the CMS.
+    cacheSeconds: Number.isFinite(Number(process.env.SITEMAP_CACHE_SECONDS)) && process.env.SITEMAP_CACHE_SECONDS !== ''
+      ? Math.max(0, Number(process.env.SITEMAP_CACHE_SECONDS))
+      : 600,
+  },
+
+  // Machine translation of admin content for the website's other languages
+  // (services/translation.service.js). Without a key, pages stay in English.
+  translate: {
+    googleKey: process.env.GOOGLE_TRANSLATE_API_KEY || '',
+    endpoint: process.env.GOOGLE_TRANSLATE_ENDPOINT || 'https://translation.googleapis.com/language/translate/v2',
+    timeoutMs: 8000,
+  },
+
   storage: {
     provider: process.env.STORAGE_PROVIDER || 'local',
     localDir: process.env.STORAGE_LOCAL_DIR || 'uploads',

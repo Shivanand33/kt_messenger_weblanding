@@ -54,6 +54,8 @@ import { Toast } from '../../components/feature/Toast'
 import { EmptyState } from '../../components/feature/EmptyState'
 import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
+import { fill } from '../../i18n/fill'
+import { useHreflang } from '../../hooks/useSeo'
 import {
   marketplaceFaqs as FALLBACK_MARKETPLACEFAQS,
   marketplaceFeatures as RAW_MARKETPLACE_FEATURES,
@@ -152,6 +154,8 @@ function Stars({ rating }) {
 }
 
 export function MarketplacePage() {
+  useHreflang('/marketplace')
+
   // Admin-managed FAQs for this page (Admin -> FAQs, page='marketplace').
   const [marketplaceFaqs] = useRemoteContent(
     () => api.listFaqs('marketplace').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
@@ -242,7 +246,7 @@ export function MarketplacePage() {
       if (existing) return current.map((line) => (line.id === product.id ? { ...line, qty: line.qty + 1 } : line))
       return [...current, { id: product.id, qty: 1 }]
     })
-    if (!quiet) setToast(`${product.name} added to your cart.`)
+    if (!quiet) setToast(fill(t('{product} added to your cart.'), { product: t(product.name) }))
   }
 
   const changeQty = (id, delta) =>
@@ -323,7 +327,7 @@ export function MarketplacePage() {
                   <li key={line.id} className="flex items-center gap-3 rounded-2xl border border-line dark:border-white/10 bg-cream dark:bg-white/[0.03] p-3">
                     <img src={img(line.product.image)} alt={imgAlt(line.product.image, line.product.name)} className="h-12 w-12 shrink-0 rounded-xl object-cover" />
                     <span className="min-w-0 flex-1">
-                      <span className="line-clamp-1 block text-xs font-bold text-ink dark:text-white">{line.product.name}</span>
+                      <span className="line-clamp-1 block text-xs font-bold text-ink dark:text-white">{t(line.product.name)}</span>
                       <span className="text-[10px] font-semibold text-muted dark:text-slate-400">{t('Qty')} {line.qty}</span>
                     </span>
                     <span className="shrink-0 text-xs font-black text-ink dark:text-white">{rupees(line.product.price * line.qty)}</span>
@@ -404,7 +408,7 @@ export function MarketplacePage() {
               ].map((unit) => (
                 <div key={unit.label} className="w-16 rounded-2xl border border-line bg-cream p-3 text-center shadow-soft dark:bg-cream-2">
                   <div className="text-xl font-black tabular-nums text-ink">{unit.value}</div>
-                  <div className="text-[10px] font-black uppercase tracking-wide text-muted">{unit.label}</div>
+                  <div className="text-[10px] font-black uppercase tracking-wide text-muted">{t(unit.label)}</div>
                 </div>
               ))}
             </div>
@@ -430,8 +434,8 @@ export function MarketplacePage() {
               </button>
 
               <div className="p-5">
-                <span className="text-[11px] font-bold text-brand-ink">{product.seller}</span>
-                <h3 className="mt-1 line-clamp-2 text-sm font-extrabold leading-snug text-ink">{product.name}</h3>
+                <span className="text-[11px] font-bold text-brand-ink">{t(product.seller)}</span>
+                <h3 className="mt-1 line-clamp-2 text-sm font-extrabold leading-snug text-ink">{t(product.name)}</h3>
 
                 <div className="mt-3 flex items-end justify-between gap-3">
                   <div>
@@ -585,7 +589,7 @@ export function MarketplacePage() {
                         </button>
 
                         <span className="absolute left-3 top-3 rounded-full bg-brand-strong px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-white shadow">
-                          {product.tag}
+                          {t(product.tag)}
                         </span>
 
                         <button
@@ -603,7 +607,7 @@ export function MarketplacePage() {
                       <div className="flex flex-1 flex-col p-4">
                         <div className="flex items-center justify-between gap-2">
                           <span className="flex min-w-0 items-center gap-1 text-[11px] font-bold text-brand-ink">
-                            <span className="truncate">{product.seller}</span>
+                            <span className="truncate">{t(product.seller)}</span>
                             <FiCheckCircle className="shrink-0 text-brand-strong" />
                           </span>
                           <Stars rating={product.rating} />
@@ -618,11 +622,11 @@ export function MarketplacePage() {
                           }}
                           className="mt-2 line-clamp-2 cursor-pointer text-sm font-extrabold leading-snug text-ink transition-colors hover:text-brand-strong"
                         >
-                          {product.name}
+                          {t(product.name)}
                         </h3>
 
                         <div className="mt-2 flex items-center gap-1.5 text-[11px] font-semibold text-muted">
-                          <FiTruck className="shrink-0" /> {product.delivery}
+                          <FiTruck className="shrink-0" /> {t(product.delivery)}
                         </div>
 
                         <div className="mt-auto pt-4">
@@ -709,7 +713,7 @@ export function MarketplacePage() {
                     <img src={img(product.image)} alt={imgAltOnly(product.image)} className="h-20 w-20 shrink-0 rounded-2xl object-cover" />
 
                     <div className="min-w-0 flex-1">
-                      <h3 className="line-clamp-2 text-sm font-extrabold leading-snug text-ink">{product.name}</h3>
+                      <h3 className="line-clamp-2 text-sm font-extrabold leading-snug text-ink">{t(product.name)}</h3>
                       <div className="mt-1 text-sm font-black text-ink">{rupees(product.price)}</div>
                       <div className="mt-2 flex items-center gap-2">
                         <button
@@ -766,10 +770,10 @@ export function MarketplacePage() {
                   </span>
                   <div className="min-w-0">
                     <div className="flex items-center gap-1.5">
-                      <h3 className="truncate text-sm font-extrabold text-ink">{seller.name}</h3>
+                      <h3 className="truncate text-sm font-extrabold text-ink">{t(seller.name)}</h3>
                       <FiCheckCircle className="shrink-0 text-sm text-brand-strong" />
                     </div>
-                    <p className="truncate text-[11px] font-semibold text-muted">{seller.focus}</p>
+                    <p className="truncate text-[11px] font-semibold text-muted">{t(seller.focus)}</p>
                   </div>
                 </div>
 
@@ -780,7 +784,7 @@ export function MarketplacePage() {
                     { label: t('Since'), value: seller.since },
                   ].map((item) => (
                     <div key={item.label}>
-                      <dt className="text-[9px] font-black uppercase tracking-wide text-muted">{item.label}</dt>
+                      <dt className="text-[9px] font-black uppercase tracking-wide text-muted">{t(item.label)}</dt>
                       <dd className="mt-0.5 text-xs font-black text-ink">{item.value}</dd>
                     </div>
                   ))}
@@ -822,8 +826,8 @@ export function MarketplacePage() {
                   </div>
 
                   <div className={`pb-8 ${index === trackingStages.length - 1 ? 'pb-0' : ''}`}>
-                    <h3 className={`text-sm font-extrabold ${stage.done ? 'text-ink' : 'text-muted'}`}>{stage.title}</h3>
-                    <p className="mt-1 text-xs leading-relaxed text-body">{stage.desc}</p>
+                    <h3 className={`text-sm font-extrabold ${stage.done ? 'text-ink' : 'text-muted'}`}>{t(stage.title)}</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-body">{t(stage.desc)}</p>
                   </div>
                 </li>
               ))}
@@ -842,7 +846,7 @@ export function MarketplacePage() {
                   </span>
                   <div className="min-w-0">
                     <div className="text-sm font-extrabold text-ink">Order #KT-84920</div>
-                    <div className="text-[11px] font-semibold text-muted">KT Verified Store · 2 items</div>
+                    <div className="text-[11px] font-semibold text-muted">{t('KT Verified Store · 2 items')}</div>
                   </div>
                 </div>
 
@@ -854,7 +858,7 @@ export function MarketplacePage() {
                   ].map((row) => (
                     <div key={row.text} className="flex items-center gap-2 text-body">
                       <span className="text-brand-strong">{row.icon}</span>
-                      {row.text}
+                      {t(row.text)}
                     </div>
                   ))}
                 </div>
@@ -949,8 +953,8 @@ export function MarketplacePage() {
               ].map((item) => (
                 <div key={item.label} className="rounded-[24px] border border-line bg-cream p-5 shadow-soft dark:bg-cream-2">
                   <div className="text-3xl font-black tracking-tight text-brand-strong">{item.value}</div>
-                  <div className="mt-1 text-sm font-extrabold text-ink">{item.label}</div>
-                  <p className="mt-1.5 text-xs leading-relaxed text-body">{item.desc}</p>
+                  <div className="mt-1 text-sm font-extrabold text-ink">{t(item.label)}</div>
+                  <p className="mt-1.5 text-xs leading-relaxed text-body">{t(item.desc)}</p>
                 </div>
               ))}
             </div>
@@ -1057,7 +1061,7 @@ export function MarketplacePage() {
               <Stars rating={quickView.rating} />
               <span className="text-[11px] font-semibold text-muted">{quickView.reviews.toLocaleString('en-IN')} {t('reviews')}</span>
               <span className="flex items-center gap-1.5 text-[11px] font-semibold text-muted">
-                <FiTruck /> {quickView.delivery}
+                <FiTruck /> {t(quickView.delivery)}
               </span>
               <span
                 className={`rounded-full px-2.5 py-0.5 text-[11px] font-black ${
@@ -1070,14 +1074,14 @@ export function MarketplacePage() {
               </span>
             </div>
 
-            <p className="mt-4 text-sm leading-relaxed text-body">{quickView.desc}</p>
+            <p className="mt-4 text-sm leading-relaxed text-body">{t(quickView.desc)}</p>
 
             <h4 className="mt-6 text-xs font-black uppercase tracking-[0.16em] text-muted">{t('Highlights')}</h4>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
               {quickView.features.map((feature) => (
                 <li key={feature} className="flex items-center gap-2 rounded-xl border border-line bg-cream px-3 py-2.5 text-xs font-bold text-ink dark:bg-cream-2">
                   <FiCheckCircle className="shrink-0 text-brand-strong" />
-                  {feature}
+                  {t(feature)}
                 </li>
               ))}
             </ul>
@@ -1086,7 +1090,7 @@ export function MarketplacePage() {
               <FiLock className="mt-0.5 shrink-0 text-lg text-brand-strong" />
               <p className="text-xs leading-relaxed text-body">
                 Your payment is held in escrow until this order is marked delivered, and your address is shared
-                end to end encrypted with {quickView.seller} alone.
+                end to end encrypted with {t(quickView.seller)} alone.
               </p>
             </div>
           </div>
@@ -1244,7 +1248,7 @@ export function MarketplacePage() {
                 { label: t('Returns'), value: t('7 days from delivery') },
               ].map((row) => (
                 <div key={row.label} className="flex items-center justify-between gap-4 px-4 py-3">
-                  <dt className="text-[11px] font-black uppercase tracking-wide text-muted">{row.label}</dt>
+                  <dt className="text-[11px] font-black uppercase tracking-wide text-muted">{t(row.label)}</dt>
                   <dd className="truncate text-xs font-bold text-ink">{row.value}</dd>
                 </div>
               ))}

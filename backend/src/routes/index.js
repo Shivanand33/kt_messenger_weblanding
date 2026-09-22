@@ -2,6 +2,7 @@ import { Router } from 'express'
 import publicRoutes from './public.routes.js'
 import adminRoutes from './admin.routes.js'
 import { checkDbConnection } from '../config/db.js'
+import { translateResponses } from '../middleware/translate.js'
 
 const r = Router()
 
@@ -18,6 +19,7 @@ r.get('/health', async (_req, res) => {
 })
 
 r.use('/admin', adminRoutes)
-r.use('/', publicRoutes)
+// Public content in the website's other languages: ?lang=<code> adds `translations`.
+r.use('/', translateResponses, publicRoutes)
 
 export default r

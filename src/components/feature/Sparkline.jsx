@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import { useLanguage } from '../../context/LanguageContext'
 
 /**
  * Tiny inline price chart. `data` is a plain array of numbers; the line is
@@ -7,6 +8,7 @@ import { useId } from 'react'
  */
 export function Sparkline({ data, up, width = 120, height = 40, className = '' }) {
   const gradientId = useId()
+  const { t } = useLanguage()
 
   if (!data?.length) return null
 
@@ -31,7 +33,7 @@ export function Sparkline({ data, up, width = 120, height = 40, className = '' }
       height={height}
       preserveAspectRatio="none"
       role="img"
-      aria-label={rising ? 'Trending up' : 'Trending down'}
+      aria-label={rising ? t('Trending up') : t('Trending down')}
       className={className}
     >
       <defs>

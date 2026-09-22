@@ -155,7 +155,7 @@ export function KtPlusPage() {
     null,
     (rows) => Array.isArray(rows) && rows.length > 0,
   )
-  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: t(r.question), a: t(r.answer) })) : localFaqs
 
   return (
     <MainLayout>
@@ -207,24 +207,24 @@ export function KtPlusPage() {
 
                 <p className="text-xs text-muted mb-3 font-medium">{t('Select your active theme preset:')}</p>
                 <div className="grid grid-cols-2 gap-2 mb-4">
-                  {themes.map((t) => (
+                  {themes.map((theme) => (
                     <button
-                      key={t.name}
-                      onClick={() => setSelectedTheme(t.name)}
+                      key={theme.name}
+                      onClick={() => setSelectedTheme(theme.name)}
                       className={`rounded-xl p-2.5 text-xs font-bold border transition-all ${
-                        selectedTheme === t.name
+                        selectedTheme === theme.name
                           ? 'border-brand-strong bg-brand-soft text-brand-ink shadow-soft ring-2 ring-brand-strong/30'
                           : 'border-line bg-cream hover:bg-surface text-ink'
                       }`}
                     >
-                      {t.name}
+                      {t(theme.name)}
                     </button>
                   ))}
                 </div>
 
                 <div className="rounded-2xl bg-slate-950 p-4 text-white text-xs space-y-2 border border-slate-800 shadow-card">
                   <div className="flex justify-between text-[11px] text-brand-ink font-semibold">
-                    <span>{t('Active Theme:')} {selectedTheme}</span>
+                    <span>{t('Active Theme:')} {t(selectedTheme)}</span>
                     <span>{t('10GB Max File Limit')}</span>
                   </div>
                   <div className="rounded-xl bg-slate-900 p-2.5 text-slate-300 border border-slate-800">

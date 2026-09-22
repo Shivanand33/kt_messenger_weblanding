@@ -97,7 +97,7 @@ export function GroupsLoopVideo({ className = '' }) {
               <span className="rounded bg-brand-strong px-1.5 py-0.5 text-[8px] text-white font-bold">{t('Upcoming')}</span>
             </div>
             <p className="font-bold text-white text-xs">{t('Annual Beach Picnic 🏖️')}</p>
-            <p className="text-[9px] text-slate-400">Saturday, Aug 12 • 2:00 PM</p>
+            <p className="text-[9px] text-slate-400">{t('Saturday, Aug 12 • 2:00 PM')}</p>
             <div className="flex items-center justify-between pt-1">
               <span className="text-[9px] text-emerald-400 font-semibold">{t('✓ 16 Going')}</span>
               <span className="rounded-full bg-brand-strong px-2.5 py-0.5 text-[9px] font-bold text-white">{t('RSVP Going')}</span>

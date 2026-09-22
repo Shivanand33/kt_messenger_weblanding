@@ -6,6 +6,8 @@ import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
 import { env } from './config/env.js'
 import routes from './routes/index.js'
+import sitemapRoutes from './routes/sitemap.routes.js'
+import llmsRoutes from './routes/llms.routes.js'
 import { notFound, errorHandler } from './middleware/error.js'
 import { apiLimiter } from './middleware/rateLimit.js'
 import { storage } from './services/storage.service.js'
@@ -66,6 +68,14 @@ export function createApp() {
     }
     return express.static(storage.localRoot())(req, res, next)
   })
+
+  // XML sitemap and llms.txt of the public website, at the root and under /api
+  // so the website host can proxy either path. Mounted before the API rate
+  // limiter; responses are cached, so crawlers never reach the database directly.
+  app.use(sitemapRoutes)
+  app.use('/api', sitemapRoutes)
+  app.use(llmsRoutes)
+  app.use('/api', llmsRoutes)
 
   app.get('/', (_req, res) => res.json({ name: 'KT Messenger Website API', health: '/api/health' }))
   app.use('/api', apiLimiter, routes)

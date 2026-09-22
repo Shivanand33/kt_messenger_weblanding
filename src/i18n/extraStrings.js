@@ -8,7 +8,12 @@
  *
  * Keep each entry identical to the English source string used at runtime.
  */
+import { ALT_KEYWORDS } from '../utils/imageAlt.js'
+
 export default [
+  // Keyword ALT text used for images without an admin ALT (utils/imageAlt.js)
+  ...ALT_KEYWORDS,
+
   // DownloadCTA checklist
   'No ads',
   'No subscription',
@@ -38,4 +43,21 @@ export default [
   'iOS & Android',
   'Tablet',
   'Mac & Windows',
+
+  // Download page: Microsoft Store badge (AppsPage <StoreBadge top="…">)
+  'Get it from',
+
+  // KT Plus theme names (PlusLoopVideo)
+  'Midnight Sapphire',
+  'Electric Cyan',
+  'Royal Gold',
+  'Neon Purple',
+
+  // FaqAccordion default search placeholder; blog "All" category
+  'Search questions…',
+  'All',
+
+  // Site-wide title and description from index.html (translated in main.jsx)
+  'KT Messenger · messaging & calling',
+  'KT Messenger — simple, secure messaging and calling for everyone. Private by default, delightfully fast, and in sync on every device.',
 ]

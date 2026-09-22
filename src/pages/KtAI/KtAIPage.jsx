@@ -129,7 +129,7 @@ export function KtAIPage() {
     { feature: t('Image Generation'), kt: t('Included Free'), standalone: t('Paid Upgrade'), traditional: t('Not Supported') },
     { feature: t('Group Chat Co Pilot'), kt: t('Included (@KTAI)'), standalone: t('Not Supported'), traditional: t('Not Supported') },
     { feature: t('Voice Note Summaries'), kt: t('1-Tap Automated'), standalone: t('Manual File Upload'), traditional: t('Not Supported') },
-    { feature: t('Data Privacy'), kt: t('KT Encrypted Stream'), standalone: t('Data Trained on Web'), traditional: 'N/A' }
+    { feature: t('Data Privacy'), kt: t('KT Encrypted Stream'), standalone: t('Data Trained on Web'), traditional: t('N/A') }
   ]
 
   const localFaqs = [
@@ -167,7 +167,7 @@ export function KtAIPage() {
     null,
     (rows) => Array.isArray(rows) && rows.length > 0,
   )
-  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: r.question, a: r.answer })) : localFaqs
+  const faqs = remoteFaqs ? remoteFaqs.map((r) => ({ q: t(r.question), a: t(r.answer) })) : localFaqs
 
   return (
     <MainLayout>

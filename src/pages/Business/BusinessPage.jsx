@@ -56,8 +56,8 @@ export function BusinessPage() {
 
   const navigate = useNavigate()
   const { openDownloadModal } = useModal()
-  const { t: tr } = useLanguage()
-  const [lang, setLang] = useState('en') // 'en' or 'hi'
+  // The page follows the site language; its region chip switches English <-> Hindi.
+  const { lang, setLang, t: tr } = useLanguage()
   const [topBannerClosed, setTopBannerClosed] = useState(false)
   const [activeMenu, setActiveMenu] = useState(null) // 'products' | 'resources' | 'developers' | 'partners' | null
   const [searchOpen, setSearchOpen] = useState(false)
@@ -89,7 +89,7 @@ export function BusinessPage() {
   }, [])
 
   const isHindi = lang === 'hi'
-  const toggleLang = () => setLang((prev) => (prev === 'en' ? 'hi' : 'en'))
+  const toggleLang = () => setLang(isHindi ? 'en' : 'hi')
 
   const go = (path) => {
     setActiveMenu(null)
@@ -108,104 +108,90 @@ export function BusinessPage() {
 
   // Translation Dictionary
   const t = {
-    topBannerText: isHindi ? 'क्या हमने सही देश/क्षेत्र चुना?' : 'Did we select the right country/region?',
-    countryName: isHindi ? 'ग्लोबल' : 'Global',
-    announcementText: isHindi
-      ? 'हर KT बातचीत में बड़े पैमाने पर पर्सनलाइजेशन. Meet KT Business Agent.'
-      : 'Personalization at scale, in every KT conversation. Meet KT Business Agent.',
-    learnMore: isHindi ? 'और जानें' : 'Learn more',
-    navProducts: isHindi ? 'प्रोडक्ट' : 'Products',
-    navResources: isHindi ? 'रिसोर्स' : 'Resources',
-    navDevelopers: isHindi ? 'डेवलपर' : 'Developers',
-    navPartners: isHindi ? 'पार्टनर' : 'Partners',
-    btnGetStarted: isHindi ? 'शुरुआत करें' : 'Get started',
-    btnDownloadApp: isHindi ? 'ऐप डाउनलोड करें' : 'Download app',
+    topBannerText: tr('Did we select the right country/region?'),
+    countryName: tr('Global'),
+    announcementText: tr('Personalization at scale, in every KT conversation. Meet KT Business Agent.'),
+    learnMore: tr('Learn more'),
+    navProducts: tr('Products'),
+    navResources: tr('Resources'),
+    navDevelopers: tr('Developers'),
+    navPartners: tr('Partners'),
+    btnGetStarted: tr('Get started'),
+    btnDownloadApp: tr('Download app'),
 
     // Hero Text
-    heroTitle: isHindi ? 'बेहतर परिणाम पाने के लिए बातचीत का फ़ायदा उठाएं' : 'Turn conversations into customers',
-    heroDesc: isHindi
-      ? 'दुनिया भर में 2 बिलियन से ज़्यादा यूज़र के साथ प्लेटफ़ॉर्म पर AI की सुविधा वाला कस्टमर एंगेजमेंट बढ़ाएं।'
-      : 'Reach and engage more than 2 billion people with AI powered messaging built for business.',
-    bubble1: isHindi ? 'मुझे एक छोटा पौधा चाहिए! 🌱' : 'I need a small plant! 🌱',
-    bubble2: isHindi ? 'आपको हमारा मिनी पोथॉस पसंद आएगा 🪴' : "You'll love our Mini Pothos 🪴",
-    bubble3: isHindi ? 'ऑर्डर #KT4821 कन्फर्म हो गया ✓' : 'Order #KT4821 confirmed ✓',
+    heroTitle: tr('Turn conversations into customers'),
+    heroDesc: tr('Reach and engage more than 2 billion people with AI powered messaging built for business.'),
+    bubble1: tr('I need a small plant! 🌱'),
+    bubble2: tr("You'll love our Mini Pothos 🪴"),
+    bubble3: tr('Order #KT4821 confirmed ✓'),
 
     // Mega Menu Products
-    bizPlatform: isHindi ? 'बिज़नेस प्लेटफ़ॉर्म' : 'Business Platform',
-    bizApp: isHindi ? 'बिज़नेस ऐप' : 'Business App',
-    adsClick: isHindi ? 'क्लिक से KT पर ले जाने वाले विज्ञापन' : 'Ads that click to KT',
-    overview: isHindi ? 'ओवरव्यू' : 'Overview',
-    features: isHindi ? 'फ़ीचर' : 'Features',
-    pricing: isHindi ? 'कीमत' : 'Pricing',
-    flows: isHindi ? 'KT Flows' : 'KT Flows',
-    msgCategories: isHindi ? 'मैसेज कैटेगरी:' : 'Message categories:',
-    marketingMsg: isHindi ? 'मार्केटिंग मैसेज' : 'Marketing messages',
-    authMsg: isHindi ? 'वेरिफ़िकेशन मैसेज' : 'Authentication messages',
-    utilityMsg: isHindi ? 'यूटिलिटी मैसेज' : 'Utility messages',
-    serviceMsg: isHindi ? 'सर्विस मैसेज' : 'Service messages',
-    howToStart: isHindi ? 'शुरुआत कैसे करते हैं' : 'How to get started',
-    bizAgent: isHindi ? 'KT Business Agent' : 'KT Business Agent',
-    howCreateAd: isHindi ? 'विज्ञापन कैसे बनाते हैं' : 'How to create an ad',
-    adsStatusChannels: isHindi ? "'स्टेटस' और 'चैनल' पर विज्ञापन" : 'Ads in Status and Channels',
+    bizPlatform: tr('Business Platform'),
+    bizApp: tr('Business App'),
+    adsClick: tr('Ads that click to KT'),
+    overview: tr('Overview'),
+    features: tr('Features'),
+    pricing: tr('Pricing'),
+    flows: tr('KT Flows'),
+    msgCategories: tr('Message categories:'),
+    marketingMsg: tr('Marketing messages'),
+    authMsg: tr('Authentication messages'),
+    utilityMsg: tr('Utility messages'),
+    serviceMsg: tr('Service messages'),
+    howToStart: tr('How to get started'),
+    bizAgent: tr('KT Business Agent'),
+    howCreateAd: tr('How to create an ad'),
+    adsStatusChannels: tr('Ads in Status and Channels'),
 
     // Mega Menu Resources
-    resourceLib: isHindi ? 'रिसोर्स लाइब्रेरी' : 'Resource Library',
-    blog: isHindi ? 'ब्लॉग' : 'Blog',
-    successStories: isHindi ? 'सक्सेस स्टोरीज़' : 'Success Stories',
-    faqs: isHindi ? 'अक्सर पूछे जाने वाले सवाल' : 'FAQs',
+    resourceLib: tr('Resource Library'),
+    blog: tr('Blog'),
+    successStories: tr('Success Stories'),
+    faqs: tr('FAQs'),
 
     // Mega Menu Developers
-    platform: isHindi ? 'प्लेटफ़ॉर्म' : 'Platform',
-    devHub: isHindi ? 'डेवलपर हब' : 'Developer Hub',
-    devLinks: isHindi ? 'डेवलपर लिंक' : 'Developer Links',
-    community: isHindi ? 'कम्युनिटी' : 'Community',
-    devSupport: isHindi ? 'डेवलपर सपोर्ट' : 'Developer Support',
-    apiStatus: isHindi ? 'API स्टेटस' : 'API Status',
+    platform: tr('Platform'),
+    devHub: tr('Developer Hub'),
+    devLinks: tr('Developer Links'),
+    community: tr('Community'),
+    devSupport: tr('Developer Support'),
+    apiStatus: tr('API Status'),
 
     // Mega Menu Partners
-    becomePartner: isHindi ? 'पार्टनर बनें' : 'Become a Partner',
-    findPartner: isHindi ? 'पार्टनर खोजें' : 'Find a Partner'
+    becomePartner: tr('Become a Partner'),
+    findPartner: tr('Find a Partner')
   }
 
   const products = [
     {
       icon: '📱',
-      title: isHindi ? 'KT बिज़नेस ऐप' : 'KT Business App',
-      desc: isHindi
-        ? 'छोटे बिज़नेस मालिकों के लिए जो अपने फ़ोन पर कस्टमर बातचीत को मैनेज करते हैं।'
-        : 'For small business owners who manage customer conversations on their phone. Share a catalog, automate quick replies, and organize your chats.',
-      cta: isHindi ? 'ऐप के बारे में जानें' : 'Learn about the app',
+      title: tr('KT Business App'),
+      desc: tr('For small business owners who manage customer conversations on their phone. Share a catalog, automate quick replies, and organize your chats.'),
+      cta: tr('Learn about the app'),
       to: '/apps'
     },
     {
       icon: '⚡',
-      title: isHindi ? 'KT बिज़नेस प्लेटफ़ॉर्म (API)' : 'KT Business Platform (API)',
-      desc: isHindi
-        ? 'मध्यम और बड़े बिज़नेस के लिए जो AI टूल और CRM इंटीग्रेशन के साथ बातचीत बढ़ाना चाहते हैं।'
-        : 'For medium & large businesses looking to scale customer engagement via enterprise grade messaging APIs, AI tools, and CRM integrations.',
-      cta: isHindi ? 'प्लेटफ़ॉर्म API एक्सप्लोर करें' : 'Explore Platform API',
+      title: tr('KT Business Platform (API)'),
+      desc: tr('For medium & large businesses looking to scale customer engagement via enterprise grade messaging APIs, AI tools, and CRM integrations.'),
+      cta: tr('Explore Platform API'),
       to: '/security'
     }
   ]
 
   const whyItems = [
     {
-      q: isHindi ? 'मेरे बिज़नेस को KT Messenger का उपयोग क्यों करना चाहिए?' : 'Why should my business use KT Messenger?',
-      a: isHindi
-        ? 'KT Messenger आपको दुनिया भर के 2 अरब से ज़्यादा यूज़र्स से जोड़ता है जिन्हें वे हर दिन चेक करते हैं।'
-        : 'KT Messenger connects you to over 2 billion global users on a platform they already check daily. With 98% open rates and instant 1-on-1 interaction, it outperforms traditional email and SMS.'
+      q: tr('Why should my business use KT Messenger?'),
+      a: tr('KT Messenger connects you to over 2 billion global users on a platform they already check daily. With 98% open rates and instant 1-on-1 interaction, it outperforms traditional email and SMS.')
     },
     {
-      q: isHindi ? 'KT बिज़नेस ऐप और प्लेटफ़ॉर्म API में क्या अंतर है?' : 'What is the difference between the KT Business App and Platform API?',
-      a: isHindi
-        ? 'बिज़नेस ऐप फ्री है और छोटे बिज़नेस के लिए है। प्लेटफ़ॉर्म API बड़ी टीमों के लिए मल्टी-एजेंट इनबॉक्स प्रदान करता है।'
-        : 'The Business App is free and designed for small businesses using a single mobile device. The Platform API is built for larger teams requiring multi agent inboxes, automated AI workflows, and custom CRM integrations.'
+      q: tr('What is the difference between the KT Business App and Platform API?'),
+      a: tr('The Business App is free and designed for small businesses using a single mobile device. The Platform API is built for larger teams requiring multi agent inboxes, automated AI workflows, and custom CRM integrations.')
     },
     {
-      q: isHindi ? 'क्या KT बिज़नेस पर कस्टमर डेटा सुरक्षित है?' : 'Is customer data secure on KT Business?',
-      a: isHindi
-        ? 'हाँ। सभी मैसेज डिफ़ॉल्ट रूप से KT Encryption Protocol एंड-टू-एंड एन्क्रिप्शन से सुरक्षित रहते हैं।'
-        : 'Yes. All messages benefit from KT Encryption Protocol end to end encryption by default. Your business and customer communications remain private and protected.'
+      q: tr('Is customer data secure on KT Business?'),
+      a: tr('Yes. All messages benefit from KT Encryption Protocol end to end encryption by default. Your business and customer communications remain private and protected.')
     }
   ]
 
@@ -791,9 +777,9 @@ export function BusinessPage() {
       <section id="biz-products" className="bg-surface py-20 lg:py-28 border-b border-line">
         <div className="mx-auto max-w-[1120px] px-5 lg:px-8">
           <Reveal from="up" className="text-center">
-            <p className="text-sm font-bold text-brand-strong uppercase tracking-wider">{isHindi ? 'हर कंपनी आकार के लिए KT बिज़नेस' : 'KT business for any company size'}</p>
+            <p className="text-sm font-bold text-brand-strong uppercase tracking-wider">{tr('KT business for any company size')}</p>
             <h2 className="mx-auto mt-4 max-w-4xl text-[1.9rem] font-bold leading-[1.15] tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              {isHindi ? 'KT बिज़नेस प्रोडक्ट हर आकार की कंपनियों का समर्थन करते हैं' : 'KT Business products support companies of every size find the one that fits you best.'}
+              {tr('KT Business products support companies of every size find the one that fits you best.')}
             </h2>
           </Reveal>
 
@@ -830,7 +816,7 @@ export function BusinessPage() {
           </Reveal>
           <Reveal from="right">
             <h2 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              {isHindi ? 'KT Messenger क्यों चुनें?' : 'Why choose KT Messenger?'}
+              {tr('Why choose KT Messenger?')}
             </h2>
             <div className="mt-8 border-t border-line">
               {whyItems.map((item, index) => {
