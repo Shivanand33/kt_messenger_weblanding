@@ -124,6 +124,9 @@ const DATA_KEYS = [
   'top', 'req',
   // Job openings: { department: 'Engineering' }
   'department',
+  // Admin-editable page copy keyed by its heading level, as the About page
+  // stores it: { h1Title, h1Subheading, p1Text, h2Title, p2Text … }
+  'h\\d\\w*', 'p\\d\\w*',
 ]
 // Keys whose value is an array of user-facing strings.
 const ARRAY_KEYS = [
@@ -218,16 +221,23 @@ function collectSourceStrings() {
     for (const s of extractStrings(code)) own(s, owner)
     // Only mine data arrays from components already wired to the i18n hook —
     // in those files the data really does flow through t() when rendered.
+    // A copy field can also hold an id, a tag name or a path; looksLikeText
+    // keeps those out of the dictionary.
     if (code.includes('useLanguage')) {
-      for (const s of extractDataStrings(code)) own(s, owner)
+      for (const s of extractDataStrings(code)) if (looksLikeText(s)) own(s, owner)
     }
-    // Data modules (./walletData …) of pages that translate their data
-    // (translateCopy / t()): their text is shown translated too.
-    if (code.includes('translateCopy(')) {
-      for (const m of code.matchAll(/from\s+['"](\.{1,2}\/[^'"]*Data)['"]/g)) {
-        const base = path.resolve(path.dirname(f), m[1])
-        const data = [`${base}.js`, `${base}.jsx`].find((p) => fs.existsSync(p))
-        if (data) for (const s of extractTextLiterals(fs.readFileSync(data, 'utf8'))) own(s, owner)
+    // Data modules (./walletData, ./businessProducts …) of pages that translate
+    // their data: their text is shown translated too. translateCopy() hands
+    // whole objects to t(), so every text literal counts; a page that only
+    // calls t() translates the copy fields, so mine those keys.
+    const mineData = code.includes('translateCopy(') ? extractTextLiterals : code.includes('useLanguage') ? extractDataStrings : null
+    if (mineData) {
+      for (const m of code.matchAll(/from\s+['"](\.{1,2}\/[^'"]+)['"]/g)) {
+        const data = `${path.resolve(path.dirname(f), m[1])}.js`
+        // Page-local .js modules only: a .jsx sibling is a component, walked on
+        // its own, and anything outside src/pages is shared plumbing.
+        if (!fs.existsSync(data) || !data.startsWith(path.join(SRC, 'pages') + path.sep)) continue
+        for (const s of mineData(fs.readFileSync(data, 'utf8'))) if (looksLikeText(s)) own(s, owner)
       }
     }
   }

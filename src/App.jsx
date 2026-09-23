@@ -123,15 +123,32 @@ function App() {
   // Desktop keeps the one-bundle feel: once the browser is idle every page
   // chunk is fetched, so later navigation is instant. Phones skip this and
   // download a page's code only when that page is opened.
+  //
+  // It waits for `load` first: these 30-odd chunks are worth nothing until the
+  // visitor navigates, and fetching them while this page is still painting
+  // takes bandwidth from the hero image and the rest of the first screen.
   useEffect(() => {
     if (IS_MOBILE) return undefined
     const warm = () => pageLoaders.forEach((load) => load().catch(() => {}))
-    if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(warm, { timeout: 3000 })
-      return () => window.cancelIdleCallback(id)
+    let cancel = () => {}
+    const schedule = () => {
+      if ('requestIdleCallback' in window) {
+        const id = window.requestIdleCallback(warm, { timeout: 3000 })
+        cancel = () => window.cancelIdleCallback(id)
+        return
+      }
+      const id = window.setTimeout(warm, 1500)
+      cancel = () => window.clearTimeout(id)
     }
-    const id = window.setTimeout(warm, 1500)
-    return () => window.clearTimeout(id)
+    if (document.readyState === 'complete') {
+      schedule()
+      return () => cancel()
+    }
+    window.addEventListener('load', schedule, { once: true })
+    return () => {
+      window.removeEventListener('load', schedule)
+      cancel()
+    }
   }, [])
 
   return (

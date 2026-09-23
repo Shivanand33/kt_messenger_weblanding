@@ -16,6 +16,13 @@ import { addContentTranslations } from '../i18n/contentTranslations'
 
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:4000/api'
 
+// Two components asking for the same URL at the same moment share one request
+// (the header and the route table both read the features menu). The entry is
+// dropped as soon as it settles, so nothing is cached between renders and a
+// later call still goes to the API. Everyone after the first gets a copy, so
+// no caller can see another's changes.
+const inFlight = new Map()
+
 async function request(path, { method = 'GET', body, params, signal } = {}) {
   let url = `${BASE}${path}`
   // On a page in another language, content reads ask for its translations too.
@@ -25,6 +32,17 @@ async function request(path, { method = 'GET', body, params, signal } = {}) {
     const qs = new URLSearchParams(Object.entries(params).filter(([, v]) => v !== undefined && v !== '')).toString()
     if (qs) url += `?${qs}`
   }
+  if (method === 'GET' && !signal) {
+    const shared = inFlight.get(url)
+    if (shared) return shared.then((json) => (typeof structuredClone === 'function' ? structuredClone(json) : json))
+    const run = send(url, { method, body, signal }).finally(() => inFlight.delete(url))
+    inFlight.set(url, run)
+    return run
+  }
+  return send(url, { method, body, signal })
+}
+
+async function send(url, { method, body, signal }) {
   const res = await fetch(url, {
     method,
     signal,

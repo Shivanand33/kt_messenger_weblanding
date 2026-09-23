@@ -29,6 +29,7 @@ import { useModal } from '../../../context/ModalContext'
 import { useLanguage } from '../../../context/LanguageContext'
 import { api } from '../../../services/apiClient'
 import { useRemoteContent } from '../../../hooks/useRemoteContent'
+import { languagePath } from '../../../i18n/languageUrls'
 
 const FALLBACK_FEATURE_ITEMS = [
   { label: 'Calling', to: '/calling', icon: <FiPhone /> },
@@ -56,7 +57,9 @@ const FALLBACK_NAV_LINKS = [
   { label: 'Blog', to: '/blog' },
   { label: 'Apps', to: '/apps' },
   { label: 'Help Center', to: '/help', external: true },
-  { label: 'For Business', to: '/business', external: true },
+  // KT Business is its own section of the site, so it opens in a new tab and
+  // the page the visitor was reading stays where it is.
+  { label: 'For Business', to: '/business', external: true, newTab: true },
 ]
 
 const getNavIcon = (row) => {
@@ -119,13 +122,13 @@ export function Navbar() {
           // 'Features' is rendered as a dropdown, not a link, so the admin row
           // for it is not used here.
           .filter((r) => r.label !== 'Features')
-          .map((r) => ({
-            ...toNavItem(r),
-            // 'external' drives the small arrow icon and is not stored in the
-            // database; carry it over from the fallback so the header keeps
-            // looking identical.
-            external: FALLBACK_NAV_LINKS.find((f) => f.label === r.label)?.external,
-          })),
+          .map((r) => {
+            // 'external' draws the small arrow icon and 'newTab' opens the link
+            // in its own tab. Neither is stored in the database, so both come
+            // from the fallback and an admin-managed header behaves the same.
+            const fallback = FALLBACK_NAV_LINKS.find((f) => f.label === r.label)
+            return { ...toNavItem(r), external: fallback?.external, newTab: fallback?.newTab }
+          }),
       ),
     FALLBACK_NAV_LINKS,
   )
@@ -159,6 +162,15 @@ export function Navbar() {
     document.addEventListener('mousedown', onDocClick)
     return () => document.removeEventListener('mousedown', onDocClick)
   }, [featuresOpen])
+
+  // A link marked `newTab` opens in its own tab, in the language of the page
+  // the visitor is on (languagePath adds the /hi, /es … prefix).
+  const openInNewTab = (target) => {
+    setOpen(false)
+    setFeaturesOpen(false)
+    setMobileFeatures(false)
+    window.open(languagePath(target), '_blank', 'noopener,noreferrer')
+  }
 
   const go = (target) => {
     setOpen(false)
@@ -259,7 +271,7 @@ export function Navbar() {
             return (
               <button
                 key={link.label}
-                onClick={() => go(link.to || link.href)}
+                onClick={() => (link.newTab ? openInNewTab(link.to || link.href) : go(link.to || link.href))}
                 className="relative inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium text-ink transition-colors hover:text-brand-ink"
               >
                 {t(link.label)}
@@ -329,7 +341,7 @@ export function Navbar() {
                 {navLinks.map((link) => (
                   <button
                     key={link.label}
-                    onClick={() => go(link.to || link.href)}
+                    onClick={() => (link.newTab ? openInNewTab(link.to || link.href) : go(link.to || link.href))}
                     className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left font-semibold text-ink hover:bg-surface-2"
                   >
                     <span>{t(link.label)}</span>

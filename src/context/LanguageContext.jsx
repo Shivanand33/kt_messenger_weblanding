@@ -92,6 +92,12 @@ export function LanguageProvider({ dictionary = {}, children }) {
   }, [])
 
   const value = useMemo(() => {
+    // Admin copy sometimes carries spacing the English source does not
+    // (' About KT Messenger', 'more   inclusive'), which would miss the
+    // dictionary and leave that one line in English. Look the string up on its
+    // collapsed form too.
+    const translated = (key) =>
+      dictionary[key] ?? (typeof key === 'string' ? dictionary[key.replace(/\s+/g, ' ').trim()] : undefined)
     const t = (key) => {
       const override = overrides[key]
       if (lang === DEFAULT_LANG) return override ?? key
@@ -99,10 +105,10 @@ export function LanguageProvider({ dictionary = {}, children }) {
       // A rewrite without words (a blanked-out string) stays exactly as the admin set it.
       if (override !== undefined && override !== key) {
         if (!/\p{L}/u.test(override)) return override
-        return contentText(override) ?? dictionary[key] ?? override
+        return contentText(override) ?? translated(key) ?? override
       }
       // UI text from the dictionary, admin content from its translations.
-      return dictionary[key] ?? contentText(key) ?? override ?? key
+      return translated(key) ?? contentText(key) ?? override ?? key
     }
     // Image ALT text follows the page's language too (utils/imageOverrides.js).
     setAltTranslator(lang === DEFAULT_LANG ? (text) => text : t)

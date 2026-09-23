@@ -17,12 +17,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
-    <!-- Mobile LCP: start the hero image download with the HTML instead of
-         after the app script runs. Phones only (media), and only browsers that
-         decode AVIF (type) — the same file the hero <img> then uses. -->
-    <link rel="preload" as="image" href="/src/assets/images/hero.avif" type="image/avif" media="(max-width: 767px)" fetchpriority="high" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-820D237JNX"></script>
+    <!-- LCP: start the hero image download with the HTML instead of after the
+         app script runs — it is the largest element on every viewport, so it
+         starts alongside the bundle rather than ~2.5 s later. Only browsers
+         that decode AVIF (type) fetch it — the same file the hero <img> uses. -->
+    <link rel="preload" as="image" href="/src/assets/images/hero.avif" type="image/avif" fetchpriority="high" />
+    <!-- Google tag (gtag.js). It is the largest script the page downloads, and
+         nothing on screen waits for it, so it yields bandwidth to the app
+         bundle and the hero image. It still loads on every page view. -->
+    <script async fetchpriority="low" src="https://www.googletagmanager.com/gtag/js?id=G-820D237JNX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}

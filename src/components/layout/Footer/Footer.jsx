@@ -350,7 +350,7 @@ export function Footer() {
                 <ul
                   role="listbox"
                   aria-label="Select language"
-                  className="absolute bottom-full left-0 z-30 mb-2 max-h-64 w-56 overflow-y-auto rounded-2xl border border-line bg-surface p-1.5 shadow-float"
+                  className="absolute bottom-full left-0 z-30 mb-2 max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2.5rem))] overflow-y-auto rounded-2xl border border-line bg-surface p-1.5 shadow-float"
                 >
                   {languages.map((option) => {
                     const active = option.code === lang
