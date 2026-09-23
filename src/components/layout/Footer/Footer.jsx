@@ -13,9 +13,27 @@ import { api } from '../../../services/apiClient'
 import { useRemoteContent } from '../../../hooks/useRemoteContent'
 import { useLanguage } from '../../../context/LanguageContext'
 import { SUPPORTED_LANGS } from '../../../i18n/translations'
+import jaadoeIcon from '../../../assets/images/social/jaadoe.png'
+import seezittIcon from '../../../assets/images/social/seezitt.svg'
+import wnsocialIcon from '../../../assets/images/social/wnsocial.svg'
+import omreIcon from '../../../assets/images/social/omre.png'
+import werfieIcon from '../../../assets/images/social/werfie.png'
+import vidmeroIcon from '../../../assets/images/social/vidmero.png'
 
 // External KT Web app — same destination as the navbar Log In button.
 const KT_WEB_URL = 'https://web.ktmessenger.com/auth/qr'
+
+// KT Messenger's profile on each social platform, shown as a row of round
+// buttons in the bottom bar. Each icon is that platform's own mark, saved in
+// assets/images/social so nothing is fetched from their servers at runtime.
+const SOCIAL_LINKS = [
+  { name: 'Jaadoe', href: 'https://jaadoe.com/profile/ktmessenger', icon: jaadoeIcon },
+  { name: 'Seezitt', href: 'https://seezitt.com/profile/ktmessenger', icon: seezittIcon },
+  { name: 'WN Social', href: 'https://wnsocial.com/profile/d91d8611-eca9-4850-8273-5d232297a49c', icon: wnsocialIcon },
+  { name: 'Omre', href: 'https://omre.ai/app/profile/ktmessenger', icon: omreIcon },
+  { name: 'Werfie', href: 'https://werfie.com/profile/ktmessenger', icon: werfieIcon },
+  { name: 'Vidmero', href: 'https://vidmero.com/@ktmessenger', icon: vidmeroIcon },
+]
 
 /**
  * Footer link targets:
@@ -385,6 +403,26 @@ export function Footer() {
             <button type="button" onClick={() => setSitemapOpen(true)} className="transition-colors hover:text-ink">
               {t('Sitemap')}
             </button>
+
+            {/* SOCIAL PROFILES. The chip is white in both themes: these marks
+                are drawn for a light background, and two of them carry one of
+                their own. */}
+            <div className="flex items-center gap-3">
+              {SOCIAL_LINKS.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                  title={social.name}
+                  className="grid h-11 w-11 place-items-center rounded-full border border-line bg-white transition-colors hover:border-brand-strong"
+                >
+                  {/* The link already carries the platform name, so the icon is decorative. */}
+                  <img src={social.icon} alt="" width="24" height="24" loading="lazy" className="h-6 w-6 object-contain" />
+                </a>
+              ))}
+            </div>
           </div>
 
           <p className="text-sm text-muted">{`© 2026 KT Messenger. ${t('All rights reserved.')}`}</p>
