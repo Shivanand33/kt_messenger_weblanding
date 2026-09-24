@@ -10,9 +10,9 @@ import { api } from '../../services/apiClient'
 import { getComponentByLabelOrHref } from '../../App'
 import { img, imgAlt } from '../../utils/imageOverrides'
 import securityImg from '../../assets/images/security.jpg'
-import privateImg from '../../assets/images/private.jpg'
-import groupImg from '../../assets/images/group.jpg'
-import businessImg from '../../assets/images/business.jpg'
+import privateImg from '../../assets/images/messaging-app-private-chat.jpg'
+import groupImg from '../../assets/images/group-chat-app-community.jpg'
+import businessImg from '../../assets/images/online-marketplace-app-business.jpg'
 
 // "Discover more features" carousel — the same cards, images and links as the
 // one on the Privacy page, so a visitor who lands on a missing page can keep

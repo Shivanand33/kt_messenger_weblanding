@@ -10,18 +10,18 @@ import { useModal } from '../../../context/ModalContext'
 import { useLanguage } from '../../../context/LanguageContext'
 import { api } from '../../../services/apiClient'
 import { languagePath } from '../../../i18n/languageUrls'
-import heroImage from '../../../assets/images/hero.jpg'
+import heroImage from '../../../assets/images/ai-assistant-app-hero.jpg'
 
 // Turn a stored image reference into a usable URL. Uploaded media on R2 come
 // back as absolute https URLs; a locally-served path (starts with "/") is
 // resolved against the backend origin derived from the API base.
 const API_ORIGIN = (import.meta.env.VITE_API_URL || 'http://localhost:4000/api').replace(/\/api\/?$/, '')
 const resolveUrl = (u) => (!u ? '' : /^https?:\/\//i.test(u) ? u : `${API_ORIGIN}${u.startsWith('/') ? '' : '/'}${u}`)
-import nadiaAvatar from '../../../assets/images/nadia_avatar.png'
-import femaleAvatar from '../../../assets/images/avatar_female_1.png'
-import privateAvatar from '../../../assets/images/private.jpg'
-import businessAvatar from '../../../assets/images/business.jpg'
-import groupAvatar from '../../../assets/images/group.jpg'
+import nadiaAvatar from '../../../assets/images/ai-assistant-nadia-avatar.png'
+import femaleAvatar from '../../../assets/images/social-networking-app-female-avatar.png'
+import privateAvatar from '../../../assets/images/messaging-app-private-chat.jpg'
+import businessAvatar from '../../../assets/images/online-marketplace-app-business.jpg'
+import groupAvatar from '../../../assets/images/group-chat-app-community.jpg'
 
 const stackImages = [privateAvatar, businessAvatar, groupAvatar, femaleAvatar]
 

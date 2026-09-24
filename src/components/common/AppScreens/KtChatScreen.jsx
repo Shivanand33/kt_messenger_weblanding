@@ -16,7 +16,7 @@ import {
 import { AppPhoneFrame } from './AppPhoneFrame'
 import { useLoopClock } from './useLoopClock'
 import { useLanguage } from '../../../context/LanguageContext'
-import photoMessage from '../../../assets/images/beach_bicycles.png'
+import photoMessage from '../../../assets/images/social-media-app-beach-bicycles.png'
 
 const HIDDEN = { opacity: 0, y: 10, scale: 0.97 }
 const SHOWN = { opacity: 1, y: 0, scale: 1 }

@@ -2,15 +2,15 @@
  * Stable identity for a bundled image, used as the admin override key.
  *
  * The same asset has a different URL in every environment:
- *   dev   →  /src/assets/images/hero.jpg
- *   build →  /assets/hero-_2h1fNGA.jpg     (Vite appends a content hash)
+ *   dev   →  /src/assets/images/ai-assistant-app-hero.jpg
+ *   build →  /assets/ai-assistant-app-hero-_2h1fNGA.jpg   (Vite adds a hash)
  *
  * Keying overrides on the URL would therefore break on every deploy. Keying on
  * the original filename instead gives one stable key per asset:
  *
- *   /src/assets/images/hero.jpg   →  hero.jpg
- *   /assets/hero-_2h1fNGA.jpg     →  hero.jpg
- *   /assets/hd_landscape-B7lZI_Gc.png → hd_landscape.png
+ *   /src/assets/images/ai-assistant-app-hero.jpg      →  ai-assistant-app-hero.jpg
+ *   /assets/ai-assistant-app-hero-_2h1fNGA.jpg        →  ai-assistant-app-hero.jpg
+ *   /assets/hd_landscape-B7lZI_Gc.png                 →  hd_landscape.png
  *
  * Remote images (an Unsplash or CDN URL) have no such ambiguity, so they are
  * keyed by the full URL exactly as written.
@@ -32,6 +32,11 @@ export function imageKey(src) {
   const clean = src.split('?')[0].split('#')[0]
   const base = clean.slice(clean.lastIndexOf('/') + 1)
   if (!base) return ''
+
+  // Only a built asset carries a hash. In dev the file is served straight from
+  // src/, where the last hyphen-separated part of a name like
+  // "ai-super-app-logo.svg" would otherwise be mistaken for one and stripped.
+  if (/(^|\/)src\//.test(clean)) return base
 
   // Strip Vite's content hash so dev and production agree on the key.
   return base.replace(HASH, '$1')

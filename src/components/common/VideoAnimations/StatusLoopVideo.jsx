@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiMic, FiLock } from 'react-icons/fi'
 import { PhoneVideoFrame } from './PhoneVideoFrame'
-import sunsetImage from '../../../assets/images/sunset_landscape.png'
-import familyAvatar from '../../../assets/images/group.jpg'
+import sunsetImage from '../../../assets/images/video-social-network-sunset-landscape.png'
+import familyAvatar from '../../../assets/images/group-chat-app-community.jpg'
 import { useLanguage } from '../../../context/LanguageContext'
 
 export function StatusLoopVideo({ className = '' }) {

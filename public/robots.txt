@@ -1,11 +1,99 @@
 # KT Messenger — https://ktmessenger.com
+#
+# Collecting content from this site by automated means is not permitted
+# without written permission from KT Messenger, and only for the purpose
+# that permission covers.
+#
+# Search engines, social link previews and AI answer engines are welcome.
+# None of them is listed below, because a crawler follows only the single
+# most specific group that matches its name: giving one its own "Allow"
+# block would also drop the shared rules at the bottom of this file. They
+# all match "User-agent: *" instead, which allows the whole public site and
+# keeps the internal areas out.
+#
+# Welcome, and covered by that group:
+#   Googlebot, Bingbot, DuckDuckBot, Yandex, Baiduspider, Naver (Yeti)
+#   facebookexternalhit, Twitterbot, LinkedInBot, Slackbot, TelegramBot
+#   GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot
+#   PerplexityBot, Google-Extended, Applebot, Applebot-Extended, Amazonbot
+#
+# AI assistants can also read /llms.txt — a short, curated overview of the
+# site, listing the same canonical URLs as /sitemap.xml.
+
+# ── Crawlers that are not welcome ──────────────────────────────────────
+# Bulk scrapers, content resellers and contact-data harvesters. They cost
+# bandwidth without sending a single visitor.
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
+User-agent: Brightbot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: Omgili
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Webzio-Extended
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: Barkrowler
+Disallow: /
+
+User-agent: SeekportBot
+Disallow: /
+
+User-agent: magpie-crawler
+Disallow: /
+
+User-agent: serpstatbot
+Disallow: /
+
+User-agent: YaK
+Disallow: /
+
+# ── Everyone else ──────────────────────────────────────────────────────
+# The whole public site is open, in every language (/hi/, /es/, /ar/ …).
+# Only the areas that are never public pages are closed.
+
 User-agent: *
 Allow: /
-# Block admin and internal areas
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /api/
 Disallow: /auth/
+Disallow: /login
+Disallow: /logout
+Disallow: /signin
+Disallow: /signup
 
-# Sitemap
 Sitemap: https://ktmessenger.com/sitemap.xml

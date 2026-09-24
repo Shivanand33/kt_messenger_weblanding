@@ -4,10 +4,10 @@ import { FiUsers, FiBarChart2 } from 'react-icons/fi'
 import { FeatureShowcase } from '../FeatureShowcase/FeatureShowcase'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
 import { useLanguage } from '../../../context/LanguageContext'
-import groupsImage from '../../../assets/images/group.jpg'
-import nadiaAvatar from '../../../assets/images/nadia_avatar.png'
-import femaleAvatar from '../../../assets/images/avatar_female_1.png'
-import maleAvatar from '../../../assets/images/avatar_male_1.png'
+import groupsImage from '../../../assets/images/group-chat-app-community.jpg'
+import nadiaAvatar from '../../../assets/images/ai-assistant-nadia-avatar.png'
+import femaleAvatar from '../../../assets/images/social-networking-app-female-avatar.png'
+import maleAvatar from '../../../assets/images/social-media-platform-male-avatar.png'
 
 // Decorative stack — the adjacent "Weekend Trip · 12 online now" carries the
 // meaning, so the photos stay out of the accessibility tree. Three faces plus

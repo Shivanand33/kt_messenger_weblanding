@@ -21,8 +21,8 @@ import {
 import { AppPhoneFrame } from './AppPhoneFrame'
 import { useLoopClock } from './useLoopClock'
 import { useLanguage } from '../../../context/LanguageContext'
-import callerAvatar from '../../../assets/images/avatar_male_1.png'
-import selfAvatar from '../../../assets/images/avatar_female_1.png'
+import callerAvatar from '../../../assets/images/social-media-platform-male-avatar.png'
+import selfAvatar from '../../../assets/images/social-networking-app-female-avatar.png'
 import videoFeed from '../../../assets/images/hd_landscape.png'
 
 const PHASE_STOPS = [34, 66]

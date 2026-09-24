@@ -5,12 +5,12 @@ import { FiArrowLeft, FiBell, FiPause, FiX } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
 import { useLoopClock } from './useLoopClock'
 import { useLanguage } from '../../../context/LanguageContext'
-import ktLogo from '../../../assets/kt-logo.svg'
-import storyBackdrop from '../../../assets/images/sunset_landscape.png'
-import tile1 from '../../../assets/images/avatar_female_1.png'
-import tile2 from '../../../assets/images/avatar_male_1.png'
-import tile3 from '../../../assets/images/nadia_avatar.png'
-import tile4 from '../../../assets/images/beach_bicycles.png'
+import ktLogo from '../../../assets/ai-super-app-logo.svg'
+import storyBackdrop from '../../../assets/images/video-social-network-sunset-landscape.png'
+import tile1 from '../../../assets/images/social-networking-app-female-avatar.png'
+import tile2 from '../../../assets/images/social-media-platform-male-avatar.png'
+import tile3 from '../../../assets/images/ai-assistant-nadia-avatar.png'
+import tile4 from '../../../assets/images/social-media-app-beach-bicycles.png'
 
 const TILES = [tile1, tile2, tile3, tile4]
 

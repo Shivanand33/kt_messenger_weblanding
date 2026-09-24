@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiUsers, FiBarChart2, FiCalendar, FiCheckCircle } from 'react-icons/fi'
 import { PhoneVideoFrame } from './PhoneVideoFrame'
-import groupImg from '../../../assets/images/group.jpg'
+import groupImg from '../../../assets/images/group-chat-app-community.jpg'
 import { useLanguage } from '../../../context/LanguageContext'
 
 export function GroupsLoopVideo({ className = '' }) {

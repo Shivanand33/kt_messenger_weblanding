@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiPhone, FiVideo, FiMic, FiMonitor, FiPhoneOff, FiVolume2 } from 'react-icons/fi'
 import { PhoneVideoFrame } from './PhoneVideoFrame'
-import avatarFemale from '../../../assets/images/avatar_female_1.png'
-import avatarMale from '../../../assets/images/avatar_male_1.png'
+import avatarFemale from '../../../assets/images/social-networking-app-female-avatar.png'
+import avatarMale from '../../../assets/images/social-media-platform-male-avatar.png'
 import { useLanguage } from '../../../context/LanguageContext'
 
 export function CallLoopVideo({ className = '' }) {

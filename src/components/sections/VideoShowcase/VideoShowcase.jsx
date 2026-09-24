@@ -29,7 +29,7 @@ import { PlusLoopVideo } from '../../common/VideoAnimations/PlusLoopVideo'
 
 import { useLanguage } from '../../../context/LanguageContext'
 
-import avatarFemale from '../../../assets/images/avatar_female_1.png'
+import avatarFemale from '../../../assets/images/social-networking-app-female-avatar.png'
 
 function CrownIcon({ className = 'h-4 w-4' }) {
   return (

@@ -1,5 +1,5 @@
 import { img, imgAlt } from '../../../utils/imageOverrides'
-import ktLogo from '../../../assets/kt-logo.svg'
+import ktLogo from '../../../assets/ai-super-app-logo.svg'
 
 /**
  * KT Messenger brand mark — the official logo asset (rounded blue gradient

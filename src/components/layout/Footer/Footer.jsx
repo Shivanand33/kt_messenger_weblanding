@@ -331,7 +331,10 @@ export function Footer() {
 
           {columns.map((column) => (
             <nav key={column.title} aria-label={t(column.title)} className="space-y-4">
-              <h4 className="text-[13px] font-bold uppercase tracking-[0.14em] text-ink">{t(column.title)}</h4>
+              {/* Plain text, not a heading: the footer repeats on every page and
+                  its column titles would otherwise sit in each page's heading
+                  outline. The <nav> above already carries the same label. */}
+              <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-ink">{t(column.title)}</p>
               <ul className="space-y-3 text-[15px] text-body">
                 {column.links.map((link) => (
                   <li key={link.label}>
@@ -440,7 +443,7 @@ export function Footer() {
         <div className="grid gap-8 sm:grid-cols-2">
           {sitemap.map((group) => (
             <div key={group.group}>
-              <h4 className="text-[11px] font-black uppercase tracking-[0.16em] text-muted">{group.group}</h4>
+              <p className="text-[11px] font-black uppercase tracking-[0.16em] text-muted">{group.group}</p>
               <ul className="mt-3 space-y-1.5">
                 {group.links.map((link) => (
                   <li key={link.to}>

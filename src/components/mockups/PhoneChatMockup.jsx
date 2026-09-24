@@ -1,7 +1,7 @@
 import { img, imgAltOnly } from '../../utils/imageOverrides'
 import { FiVideo, FiPhone, FiMoreVertical, FiArrowLeft, FiLock, FiSmile, FiMic, FiPaperclip, FiWifi } from 'react-icons/fi'
 import { useLanguage } from '../../context/LanguageContext'
-import contactAvatar from '../../assets/images/business.jpg'
+import contactAvatar from '../../assets/images/online-marketplace-app-business.jpg'
 
 const dotPattern = {
   backgroundImage: 'radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px)',

@@ -1,5 +1,6 @@
 import { env } from '../config/env.js'
 import { getSiteModel, absolute } from './siteModel.service.js'
+import { LANGUAGES } from './hreflang.service.js'
 
 /**
  * /llms.txt (https://llmstxt.org): a Markdown overview of the public website
@@ -102,6 +103,11 @@ export function renderLlms(model) {
     `> ${summary}`,
     '',
     `This file lists the main public pages of ${env.siteUrl}, grouped by topic, for AI assistants and language models. Every link is the page's canonical URL. The complete list of public URLs is in the sitemap: ${absolute('/sitemap.xml')}`,
+    '',
+    // Without this an assistant has no way to know the /hi, /es … copies exist,
+    // and would read them as duplicates of the English pages rather than as
+    // the same page in another language.
+    `Every page below is also published in ${LANGUAGES.length} languages. English is served at the address shown; the other languages use a prefix of the same path — for example ${absolute('/hi')}, ${absolute('/es')} and ${absolute('/ar')} for the home page. The sitemap lists each page's languages as hreflang alternates, with the English URL as x-default.`,
     '',
     sections.join('\n\n'),
     '',

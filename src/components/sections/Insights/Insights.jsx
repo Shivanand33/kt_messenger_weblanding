@@ -13,9 +13,9 @@ import { Button } from '../../common/Button/Button'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
 import { useModal } from '../../../context/ModalContext'
 import { useLanguage } from '../../../context/LanguageContext'
-import minisImg from '../../../assets/images/sunset_landscape.png'
-import contentImg from '../../../assets/images/private.jpg'
-import collabImg from '../../../assets/images/group.jpg'
+import minisImg from '../../../assets/images/video-social-network-sunset-landscape.png'
+import contentImg from '../../../assets/images/messaging-app-private-chat.jpg'
+import collabImg from '../../../assets/images/group-chat-app-community.jpg'
 
 // Card chrome matched 1:1 to the site-wide <Card hover> component.
 const cardBase =

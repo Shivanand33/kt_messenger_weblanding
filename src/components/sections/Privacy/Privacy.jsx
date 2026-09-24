@@ -1,7 +1,7 @@
 import { FiShield, FiLock, FiClock } from 'react-icons/fi'
 import { FeatureShowcase } from '../FeatureShowcase/FeatureShowcase'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
-import privacyImage from '../../../assets/images/footer.jpg'
+import privacyImage from '../../../assets/images/social-networking-platform-footer.jpg'
 import { useLanguage } from '../../../context/LanguageContext'
 
 export function Privacy() {

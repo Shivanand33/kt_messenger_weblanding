@@ -20,7 +20,8 @@ import {
   // these together with those entries.
   FiGlobe,
   FiEdit3,
-  FiPlayCircle
+  FiPlayCircle,
+  FiCompass
 } from 'react-icons/fi'
 import { Container } from '../../common/Container/Container'
 import { Button } from '../../common/Button/Button'
@@ -49,7 +50,8 @@ const FALLBACK_FEATURE_ITEMS = [
   // { label: 'Wallet', to: '/wallet', icon: <FiCreditCard /> },
   // { label: 'Marketplace', to: '/marketplace', icon: <FiShoppingBag /> },
   { label: 'Notes', to: '/notes', icon: <FiEdit3 /> },
-  { label: 'Minis', to: '/minis', icon: <FiPlayCircle /> }
+  { label: 'Minis', to: '/minis', icon: <FiPlayCircle /> },
+  { label: 'Community', to: '/community', icon: <FiCompass /> }
 ]
 
 const FALLBACK_NAV_LINKS = [
@@ -79,6 +81,7 @@ const getNavIcon = (row) => {
   if (label.includes('mini') || href.includes('mini')) return <FiPlayCircle />
   if (label.includes('news') || href.includes('news')) return <FiGlobe />
   if (label.includes('privac') || href.includes('privac')) return <FiShield />
+  if (label.includes('communit') || href.includes('communit')) return <FiCompass />
 
   return <FiMessageSquare />
 }
@@ -243,7 +246,9 @@ export function Navbar() {
                 // Theme tokens, not fixed hexes: this panel used to be
                 // hardcoded to the dark palette, so it stayed dark in light
                 // mode. These variables flip with the .dark class.
-                className="absolute left-0 top-full z-50 mt-2 w-60 max-h-[460px] overflow-y-auto rounded-2xl border border-line bg-surface p-2 shadow-float [scrollbar-width:thin]"
+                // Tall enough for the eleven entries (11 × 44px + the p-2 padding);
+                // anything longer still scrolls.
+                className="absolute left-0 top-full z-50 mt-2 w-60 max-h-[500px] overflow-y-auto rounded-2xl border border-line bg-surface p-2 shadow-float [scrollbar-width:thin]"
               >
                 {featureItems.map((item) => {
                   const itemActive = item.to ? isRouteActive(item.to) : isActive(item.href)
@@ -254,11 +259,21 @@ export function Navbar() {
                       className={`flex items-center gap-3 w-full rounded-xl px-3.5 py-2.5 text-left text-[14px] font-semibold transition-colors group ${
                         itemActive
                           ? 'bg-surface-2 text-brand-ink'
-                          : 'text-ink hover:bg-surface-2 hover:text-brand-ink'
+                          // Hovering only turns the label blue and draws the
+                          // underline; the tinted row marks the page you are on.
+                          : 'text-ink hover:text-brand-ink'
                       }`}
                     >
                       <span className="text-base text-brand-strong group-hover:scale-110 transition-transform">{item.icon}</span>
-                      <span>{t(item.label)}</span>
+                      <span className="relative">
+                        {t(item.label)}
+                        {/* Hover underline, wiped in from the left, in the brand
+                            blue the header already uses for the active link. */}
+                        <span
+                          aria-hidden
+                          className="pointer-events-none absolute -bottom-0.5 left-0 h-0.5 w-full origin-left scale-x-0 rounded-full bg-brand transition-transform duration-200 ease-out group-hover:scale-x-100"
+                        />
+                      </span>
                     </button>
                   )
                 })}

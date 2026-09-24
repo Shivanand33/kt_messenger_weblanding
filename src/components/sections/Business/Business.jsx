@@ -1,7 +1,7 @@
 import { FiBriefcase, FiCheck } from 'react-icons/fi'
 import { FeatureShowcase } from '../FeatureShowcase/FeatureShowcase'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
-import businessImage from '../../../assets/images/business.jpg'
+import businessImage from '../../../assets/images/online-marketplace-app-business.jpg'
 import { useLanguage } from '../../../context/LanguageContext'
 
 export function Business() {

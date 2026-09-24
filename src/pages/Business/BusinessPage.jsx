@@ -32,8 +32,8 @@ import { Footer } from '../../components/layout/Footer/Footer'
 import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
 
-import heroImg from '../../assets/images/business.jpg'
-import whyImg from '../../assets/images/private.jpg'
+import heroImg from '../../assets/images/online-marketplace-app-business.jpg'
+import whyImg from '../../assets/images/messaging-app-private-chat.jpg'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 

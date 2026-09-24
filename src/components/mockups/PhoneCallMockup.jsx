@@ -2,8 +2,8 @@ import { img, imgAltOnly } from '../../utils/imageOverrides'
 import { mobileLazy } from '../../utils/mobileImage'
 import { FiVideo, FiMicOff, FiVolume2, FiMoreHorizontal, FiPhoneOff, FiUserPlus, FiMinimize2, FiRefreshCw } from 'react-icons/fi'
 import { useLanguage } from '../../context/LanguageContext'
-import mainFeed from '../../assets/images/group.jpg'
-import selfFeed from '../../assets/images/business.jpg'
+import mainFeed from '../../assets/images/group-chat-app-community.jpg'
+import selfFeed from '../../assets/images/online-marketplace-app-business.jpg'
 
 /** A phone frame showing an end-to-end encrypted group video call. */
 export function PhoneCallMockup({ className = '' }) {

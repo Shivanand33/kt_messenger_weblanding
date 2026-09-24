@@ -5,12 +5,12 @@ import { motion } from 'framer-motion'
 import { Container } from '../../common/Container/Container'
 import { Reveal } from '../../common/Reveal/Reveal'
 import { useLanguage } from '../../../context/LanguageContext'
-import nadiaAvatar from '../../../assets/images/nadia_avatar.png'
-import female1Avatar from '../../../assets/images/avatar_female_1.png'
-import male1Avatar from '../../../assets/images/avatar_male_1.png'
-import privateAvatar from '../../../assets/images/private.jpg'
-import businessAvatar from '../../../assets/images/business.jpg'
-import groupAvatar from '../../../assets/images/group.jpg'
+import nadiaAvatar from '../../../assets/images/ai-assistant-nadia-avatar.png'
+import female1Avatar from '../../../assets/images/social-networking-app-female-avatar.png'
+import male1Avatar from '../../../assets/images/social-media-platform-male-avatar.png'
+import privateAvatar from '../../../assets/images/messaging-app-private-chat.jpg'
+import businessAvatar from '../../../assets/images/online-marketplace-app-business.jpg'
+import groupAvatar from '../../../assets/images/group-chat-app-community.jpg'
 
 const chips = [
   { text: 'Hello!', avatar: female1Avatar, side: 'received', pos: 'left-[7%] top-[12%]', vis: 'hidden sm:flex' },

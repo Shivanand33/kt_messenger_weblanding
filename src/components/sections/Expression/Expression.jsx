@@ -1,7 +1,7 @@
 import { FiSmile, FiCamera } from 'react-icons/fi'
 import { FeatureShowcase } from '../FeatureShowcase/FeatureShowcase'
 import { LinkArrow } from '../../common/LinkArrow/LinkArrow'
-import expressionImage from '../../../assets/images/footer.jpg'
+import expressionImage from '../../../assets/images/social-networking-platform-footer.jpg'
 import { useLanguage } from '../../../context/LanguageContext'
 
 const reactions = ['❤️', '😂', '🎉', '👍']
