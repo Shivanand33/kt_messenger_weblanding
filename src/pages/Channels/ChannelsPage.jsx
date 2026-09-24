@@ -185,7 +185,11 @@ export function ChannelsPage() {
                 <FiRadio className="text-brand-strong" /> {t('Private Broadcast Channels')}
               </div>
               <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-                {t('Create Channels and Share Updates With Your Community')}
+                {t('Create Channels and')} <br />
+                {t('Share Updates With')} <br />
+                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
+                  {t('Your Community')}
+                </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
                 {t('Share updates, announcements, and content with your audience through KT Messenger Channels. Build communities, engage followers, and communicate easily with a secure messaging platform.')}

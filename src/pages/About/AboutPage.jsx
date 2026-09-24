@@ -40,7 +40,7 @@ const RELATED = [
 export function AboutPage() {
   useSeo({
     title: 'About KT Messenger | Connecting People Worldwide.',
-    description: 'Available in over 180 countries, KT Messenger provides users a combination of fast messaging, HD voice calls and video calls, instant message translation, and easy file and media sharing.',
+    description: 'Learn about KT Messenger, a global communication platform for messaging, calling, sharing, and staying connected with people around the world.',
     path: '/about',
   })
 

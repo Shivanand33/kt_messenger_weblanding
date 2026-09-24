@@ -168,7 +168,11 @@ export function KtPlusPage() {
                 <CrownIcon className="text-brand-strong" /> {t('KT Plus Premium Suite')}
               </div>
               <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-                {t('More Features. More Privacy. More Ways to Connect.')}
+                {t('More Features.')} <br />
+                {t('More Privacy.')} <br />
+                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
+                  {t('More Ways to Connect.')}
+                </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
                 {t('KT Messenger Plus enhances your everyday communication with smarter chats, improved privacy controls, and powerful messaging tools that help you stay connected easily.')}

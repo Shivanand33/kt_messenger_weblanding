@@ -37,6 +37,7 @@ import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
+import { useFeatureNavHref } from '../../hooks/useFeatureNavHref'
 
 
 const privacyControlsCards = [
@@ -116,6 +117,7 @@ export function PrivacyPage() {
   useAdminSeo('privacy', '/privacy')
 
   const navigate = useNavigate()
+  const featureNavHref = useFeatureNavHref()
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
   const [activeFaq, setActiveFaq] = useState(0)
@@ -1302,7 +1304,7 @@ export function PrivacyPage() {
                   </div>
                   <h3 className="mt-4 text-xl font-extrabold text-ink">{t(item.title)}</h3>
                   <button
-                    onClick={() => navigate(item.to)}
+                    onClick={() => navigate(featureNavHref(item.to))}
                     className="group mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-brand-ink hover:text-brand-strong transition-colors"
                   >
                     <span>{t('Learn more')}</span>

@@ -164,7 +164,10 @@ export function StatusPage() {
                 <FiClock className="text-brand-strong" /> {t('24-Hour Disappearing Stories')}
               </div>
               <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-                {t('Share Your Moments With KT Messenger Status')}
+                {t('Share Your Moments With')} <br />
+                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
+                  {t('KT Messenger Status')}
+                </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
                 {t('Stay connected by sharing updates, photos, and moments with your friends, family, and communities. KT Messenger Status makes communication more engaging with a simple and secure way to express yourself.')}

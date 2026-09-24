@@ -11,6 +11,7 @@ import { Modal } from '../../feature/Modal'
 import { useModal } from '../../../context/ModalContext'
 import { api } from '../../../services/apiClient'
 import { useRemoteContent } from '../../../hooks/useRemoteContent'
+import { useFeatureNavHref } from '../../../hooks/useFeatureNavHref'
 import { useLanguage } from '../../../context/LanguageContext'
 import { SUPPORTED_LANGS } from '../../../i18n/translations'
 import jaadoeIcon from '../../../assets/images/social/jaadoe.png'
@@ -223,6 +224,7 @@ const sitemap = [
 export function Footer() {
   const navigate = useNavigate()
   const location = useLocation()
+  const featureNavHref = useFeatureNavHref()
   const { openDownloadModal } = useModal()
 
   // Admin-managed footer, falling back to the hardcoded columns until the
@@ -292,13 +294,16 @@ export function Footer() {
 
     // Section deep-link on another route, e.g. /community#social
     const [path, hash] = target.split('#')
+    // Feature pages live at the keyword-rich URLs the header Features menu
+    // uses, so a short route resolves to that same URL before navigating.
+    const resolved = featureNavHref(path)
 
-    if (location.pathname === path && !hash) {
+    if (location.pathname === resolved && !hash) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
 
-    navigate(path)
+    navigate(resolved)
 
     if (hash) {
       window.setTimeout(() => {

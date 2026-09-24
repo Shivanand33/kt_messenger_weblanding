@@ -39,7 +39,7 @@ import { useSeo } from '../../hooks/useSeo'
 export function MessagingPage() {
   useSeo({
     title: 'Free Video Calling App & Secure Messaging | KT Messenger.',
-    description: 'KT Messenger is a free video calling app and secure messaging platform for private chats, voice calls, real-time messaging, and seamless communication across devices.',
+    description: 'KT Messenger is a free, secure messaging and video calling app for private chats, voice calls, real-time messaging, and seamless communication.',
     path: '/messaging',
   })
 
@@ -177,9 +177,9 @@ export function MessagingPage() {
                 <FiMessageSquare className="text-brand-strong" /> {t('Modern Messaging Platform')}
               </div>
               <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-                {t('Private Messaging App For')} <br />
+                {t('Private Messaging App')} <br />
                 <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
-                  {t('Secure Conversations.')}
+                  {t('For Secure Conversations.')}
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">

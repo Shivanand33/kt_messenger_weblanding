@@ -81,7 +81,11 @@ export function CommunityPage() {
                 <FiUsers className="text-brand-strong" /> {t('Social & Messaging Ecosystem')}
               </div>
               <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-                {t('KT Messenger – Social Networking and Instant Messaging Platform')}
+                {t('KT Messenger – Social')} <br />
+                {t('Networking and Instant')} <br />
+                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
+                  {t('Messaging Platform')}
+                </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
                 {t('KT Messenger is a modern, secure social and messaging platform for real-time communication, private chats, and professional networking.')}

@@ -160,7 +160,10 @@ export function SecurityPage() {
                 <FiShield className="text-brand-strong" /> {t('Security & Authentication API')}
               </div>
               <h1 className="text-2xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-[2.75rem] leading-[1.12]">
-                {t('Your Privacy Comes First With Secure Messaging')}
+                {t('Your Privacy Comes First')} <br />
+                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
+                  {t('With Secure Messaging')}
+                </span>
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-body max-w-xl">
                 {t('KT Messenger keeps your conversations private with end-to-end encryption, secure chats, and protected communication. Send messages, make calls, and connect confidently knowing your conversations stay between you and the people you choose.')}

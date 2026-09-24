@@ -18,6 +18,7 @@ import { useModal } from '../../context/ModalContext'
 import { trackDownload } from '../../services/analytics'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
+import { useFeatureNavHref } from '../../hooks/useFeatureNavHref'
 
 const appStore = { icon: <FaApple />, top: 'Download on the', bottom: 'App Store' }
 
@@ -185,6 +186,7 @@ export function AppsPage() {
   const { openDownloadModal } = useModal()
   const optionsRail = useRef(null)
   const featuresRail = useRef(null)
+  const featureNavHref = useFeatureNavHref()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -367,7 +369,7 @@ export function AppsPage() {
                     <p className="mt-2 text-sm text-body leading-relaxed">{t(feature.desc)}</p>
                   </div>
                   <button
-                    onClick={() => goTo(feature.to)}
+                    onClick={() => goTo(featureNavHref(feature.to))}
                     className="group mt-4 inline-flex w-fit items-center gap-2 text-sm font-bold text-brand-ink transition-colors hover:text-brand-strong"
                   >
                     <span>{t('Learn more')}</span>

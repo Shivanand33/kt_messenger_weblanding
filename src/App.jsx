@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Home } from './pages/Home/Home'
 import { NotFoundPage } from './pages/NotFound/NotFoundPage'
 import { AnalyticsTracker } from './components/common/AnalyticsTracker/AnalyticsTracker'
+import { FeatureCanonicalRedirect } from './components/FeatureCanonicalRedirect'
 import { api } from './services/apiClient'
 import { IS_MOBILE } from './utils/mobileImage'
 import { loadPageDictionary } from './i18n/dictionaries'
@@ -154,6 +155,7 @@ function App() {
   return (
     <>
       <AnalyticsTracker />
+      <FeatureCanonicalRedirect />
       <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<Home />} />

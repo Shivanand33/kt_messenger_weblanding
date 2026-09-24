@@ -7,6 +7,7 @@ import { Button } from '../../components/common/Button/Button'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
+import { useFeatureNavHref } from '../../hooks/useFeatureNavHref'
 import { getComponentByLabelOrHref } from '../../App'
 import { img, imgAlt } from '../../utils/imageOverrides'
 import securityImg from '../../assets/images/security.jpg'
@@ -37,6 +38,7 @@ export function NotFoundPage() {
   const [ResolvedComponent, setResolvedComponent] = useState(() => getComponentByLabelOrHref(location.pathname))
   const [checking, setChecking] = useState(() => !getComponentByLabelOrHref(location.pathname))
   const discoverRef = useRef(null)
+  const featureNavHref = useFeatureNavHref()
 
   const scrollDiscover = (dir) => {
     if (!discoverRef.current) return
@@ -162,7 +164,7 @@ export function NotFoundPage() {
                   </div>
                   <h3 className="mt-4 text-xl font-extrabold text-ink">{t(item.title)}</h3>
                   <button
-                    onClick={() => navigate(item.to)}
+                    onClick={() => navigate(featureNavHref(item.to))}
                     className="group mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-brand-ink hover:text-brand-strong transition-colors"
                   >
                     <span>{t('Learn more')}</span>

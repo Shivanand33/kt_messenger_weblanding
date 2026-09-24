@@ -198,7 +198,11 @@ export function KtAIPage() {
               </div>
 
               <h1 className="mt-4 text-2xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-                {t('Meet KT AI, The Future of Smart Messaging')}
+                {t('Meet KT AI,')} <br />
+                {t('The Future of')} <br />
+                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
+                  {t('Smart Messaging')}
+                </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-body">
                 {t('Experience smarter conversations with KT AI. Get helpful answers, AI-powered assistance, and seamless communication inside a modern messaging platform.')}

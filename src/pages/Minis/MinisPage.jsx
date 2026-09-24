@@ -80,21 +80,24 @@ export function MinisPage() {
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
             {/* Left Column */}
-            <Reveal from="left" className="lg:col-span-6 space-y-5">
+            <Reveal from="left" className="lg:col-span-6">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiPlay className="text-brand-strong" /> {t('Short-Form Video Feed')}
               </div>
 
-              <h1 className="text-3xl font-extrabold text-ink sm:text-4xl lg:text-5xl tracking-tight leading-tight">
-                {t('KT Messenger Minis')}
+              <h1 className="mt-4 text-3xl font-extrabold text-ink sm:text-4xl lg:text-5xl tracking-tight leading-tight">
+                {t('KT Messenger')}{' '}
+                <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
+                  {t('Minis')}
+                </span>
               </h1>
 
-              <p className="text-base sm:text-lg leading-relaxed text-body max-w-xl">
+              <p className="mt-6 text-base sm:text-lg leading-relaxed text-body max-w-xl">
                 {t('Watch, create, and share short videos with KT Messenger Minis. Discover trending content and connect with your community.')}
               </p>
 
               {/* Feature Pills */}
-              <div className="flex flex-wrap gap-2 pt-1">
+              <div className="mt-6 flex flex-wrap gap-2">
                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface p-2 px-3 text-xs font-bold text-ink border border-line shadow-soft">
                   <FiCheck className="text-brand-strong text-sm" />
                   <span>{t('Watch & Discover')}</span>
@@ -110,7 +113,7 @@ export function MinisPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 flex flex-wrap items-center gap-3">
+              <div className="mt-8 flex flex-wrap items-center gap-3">
                 <Button size="lg" onClick={() => navigate('/apps')}>
                   <span>{t('Explore Minis')}</span>
                   <FiChevronRight />
