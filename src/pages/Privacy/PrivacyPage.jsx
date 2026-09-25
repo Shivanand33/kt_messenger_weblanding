@@ -311,9 +311,9 @@ export function PrivacyPage() {
             <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
               {t('Privacy Framework')}
             </span>
-            <h3 className="mt-4 text-3xl font-extrabold text-ink sm:text-4xl lg:text-5xl">
+            <h2 className="mt-4 text-3xl font-extrabold text-ink sm:text-4xl lg:text-5xl">
               {t('Privacy on an Messaging App')}
-            </h3>
+            </h2>
             <p className="mt-4 text-lg text-body leading-relaxed">
               {t('Messaging apps should allow users to message quickly and easily while also explaining how their information gathers and uses that information. KT Messenger is unique because it outlines its privacy practices in order to assist its users in their decision making.')}
             </p>
@@ -1247,7 +1247,7 @@ export function PrivacyPage() {
                     <span className="rounded-full bg-brand-soft px-3 py-1 text-[11px] font-bold text-brand-ink">
                       {t(card.badge)}
                     </span>
-                    <h3 className="mt-5 text-xl font-extrabold text-ink">{t(card.title)}</h3>
+                    <p className="mt-5 text-xl font-extrabold text-ink">{t(card.title)}</p>
                     <p className="mt-3 text-xs text-body leading-relaxed">{t(card.desc)}</p>
                   </div>
                   <div className="mt-6 pt-4 border-t border-line">
@@ -1302,7 +1302,7 @@ export function PrivacyPage() {
                   <div className="overflow-hidden rounded-[20px]">
                     <img src={img(item.image)} alt={imgAlt(item.image, t(item.title))} className="h-44 w-full object-cover transition-transform duration-300 hover:scale-105" />
                   </div>
-                  <h3 className="mt-4 text-xl font-extrabold text-ink">{t(item.title)}</h3>
+                  <p className="mt-4 text-xl font-extrabold text-ink">{t(item.title)}</p>
                   <button
                     onClick={() => navigate(featureNavHref(item.to))}
                     className="group mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-brand-ink hover:text-brand-strong transition-colors"
@@ -1341,7 +1341,7 @@ export function PrivacyPage() {
                       : 'bg-surface text-ink border-line hover:border-brand-strong/40'
                   }`}
                 >
-                  <span className="font-bold text-base">{t(f.q)}</span>
+                  <h3 className="font-bold text-base">{t(f.q)}</h3>
                   <span className={`grid h-8 w-8 place-items-center rounded-full transition-transform ${open ? 'bg-white/20 text-white rotate-45' : 'bg-brand-soft text-brand-ink'}`}>
                     <FiArrowUpRight className="text-lg" />
                   </span>

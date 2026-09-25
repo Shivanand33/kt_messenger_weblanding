@@ -102,9 +102,7 @@ export function ChannelsPage() {
       category: t('Technology & AI'),
       followers: '148.5K',
       desc: t('Daily breakdown of breakthrough tech, gadgets, and next gen AI software updates.'),
-      img: techImg,
-      // Rendered as plain text, not an <h3> (SEO: KT Tech Pulse is not a heading).
-      notHeading: true
+      img: techImg
     },
     {
       name: t('Global Sports Daily'),
@@ -291,7 +289,7 @@ export function ChannelsPage() {
                   <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${active ? 'bg-white/20 text-white' : 'bg-brand-soft text-brand-strong'}`}>
                     {tab.icon}
                   </div>
-                  <h3 className="font-bold text-base">{tab.title}</h3>
+                  <p className="font-bold text-base">{tab.title}</p>
                 </button>
               )
             })}
@@ -302,9 +300,9 @@ export function ChannelsPage() {
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
                 {t('Broadcast Power Pillar')}
               </div>
-              <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
+              <p className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {channelTabs[activeTab].title}
-              </h3>
+              </p>
               <p className="mt-3 text-base leading-relaxed text-body">
                 {channelTabs[activeTab].desc}
               </p>
@@ -450,14 +448,9 @@ export function ChannelsPage() {
                 </div>
                 <div className="p-6">
                   <span className="text-[10px] font-bold text-brand-ink uppercase tracking-wider">{card.category}</span>
-                  {(() => {
-                    const Title = card.notHeading ? 'p' : 'h3'
-                    return (
-                      <Title className="text-lg font-bold text-ink mt-1 flex items-center gap-1.5">
-                        {card.name} <FiCheckCircle className="text-brand-strong text-sm" />
-                      </Title>
-                    )
-                  })()}
+                  <p className="text-lg font-bold text-ink mt-1 flex items-center gap-1.5">
+                    {card.name} <FiCheckCircle className="text-brand-strong text-sm" />
+                  </p>
                   <p className="mt-2 text-xs leading-relaxed text-body line-clamp-2">{card.desc}</p>
                   <div className="mt-4 pt-4 border-t border-line flex items-center justify-between">
                     <span className="text-xs text-muted font-medium">{card.followers} {t('followers')}</span>
@@ -528,7 +521,7 @@ export function ChannelsPage() {
                     onClick={() => setFaqOpen(isOpen ? -1 : index)}
                     className="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink hover:text-brand-strong"
                   >
-                    <span className="text-base sm:text-lg">{faq.q}</span>
+                    <h3 className="text-base sm:text-lg">{faq.q}</h3>
                     <FiChevronDown className={`shrink-0 text-xl transition-transform duration-300 ${isOpen ? 'rotate-180 text-brand-strong' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
@@ -556,9 +549,9 @@ export function ChannelsPage() {
       <section className="bg-gradient-to-r from-brand-strong to-brand-ink py-16 text-white lg:py-20">
         <Container className="text-center">
           <Reveal from="up">
-            <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
+            <h4 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
               {t('Explore & Broadcast on Channels Today')}
-            </h2>
+            </h4>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
               {t('Download KT Messenger now to subscribe to top creators or launch your own broadcast channel.')}
             </p>

@@ -6,7 +6,7 @@ import { useLanguage } from '../../context/LanguageContext'
  * Closing call-to-action band. `points` renders as a short benefit list under
  * the action row.
  */
-export function CtaBand({ eyebrow, title, description, actions, points, id }) {
+export function CtaBand({ eyebrow, title, description, actions, points, id, titleTag: TitleTag = 'h2' }) {
   const { t } = useLanguage()
   return (
     <section id={id} className="relative isolate overflow-hidden bg-[#070e1b] py-20 text-white">
@@ -21,7 +21,7 @@ export function CtaBand({ eyebrow, title, description, actions, points, id }) {
             </span>
           ) : null}
 
-          <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">{t(title)}</h2>
+          <TitleTag className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">{t(title)}</TitleTag>
 
           {description ? (
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-300">{t(description)}</p>

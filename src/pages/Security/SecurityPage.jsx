@@ -209,7 +209,7 @@ export function SecurityPage() {
               <div className="flex items-center gap-3">
                 <div className="grid h-10 w-10 place-items-center rounded-2xl bg-brand-strong text-white font-black">KT</div>
                 <div>
-                  <h4 className="font-extrabold text-ink text-base">KT Verified Business Security</h4>
+                  <p className="font-extrabold text-ink text-base">KT Verified Business Security</p>
                   <p className="text-xs text-brand-ink font-semibold">{t('Official Verified Business Account')} ✓</p>
                 </div>
               </div>
@@ -267,7 +267,7 @@ export function SecurityPage() {
             </div>
 
             <div className="lg:col-span-2 rounded-3xl border border-line bg-cream p-8 shadow-card dark:bg-surface">
-              <h3 className="text-2xl font-extrabold text-ink">{securityTabs[activeTab].title}</h3>
+              <p className="text-2xl font-extrabold text-ink">{securityTabs[activeTab].title}</p>
               <p className="mt-4 text-base leading-relaxed text-body">{securityTabs[activeTab].desc}</p>
               <div className="mt-6 space-y-3">
                 {securityTabs[activeTab].highlights.map((h, i) => (
@@ -294,7 +294,7 @@ export function SecurityPage() {
               <Reveal key={idx} from="up" delay={idx * 0.05}>
                 <div className="h-full rounded-2xl border border-line bg-surface p-6 shadow-sm">
                   <div className="mb-4 inline-block rounded-xl bg-brand-soft p-3 text-brand-strong">{p.icon}</div>
-                  <h4 className="text-lg font-bold text-ink">{p.title}</h4>
+                  <p className="text-lg font-bold text-ink">{p.title}</p>
                   <p className="mt-2 text-xs text-body leading-relaxed">{p.desc}</p>
                 </div>
               </Reveal>
@@ -349,7 +349,7 @@ export function SecurityPage() {
                     onClick={() => setFaqOpen(open ? -1 : idx)}
                     className="flex w-full items-center justify-between gap-4 text-left font-bold text-ink text-base"
                   >
-                    <span>{f.q}</span>
+                    <h3>{f.q}</h3>
                     <FiChevronDown className={`text-xl transition-transform ${open ? 'rotate-180 text-brand-strong' : ''}`} />
                   </button>
                   {open && <p className="mt-3 text-sm text-body leading-relaxed border-t border-line pt-3">{f.a}</p>}

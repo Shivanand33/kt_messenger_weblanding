@@ -69,7 +69,7 @@ export function NotesPage() {
     <MainLayout>
       {/* 1. HERO SECTION */}
       <PageHero
-        titleTag="h2"
+        titleTag="h1"
         badge={
           <>
             <FiLock /> {t('Encrypted vault · Notes & Self Chat')}
@@ -113,9 +113,9 @@ export function NotesPage() {
             <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
               <FiEdit3 className="text-brand-strong" /> {t('Organize Everything')}
             </div>
-            <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
               {t('Social Media and Digital Communication')}
-            </h1>
+            </h2>
             <p className="mt-4 text-lg text-body">
               {t('From online communication to social media posts, people rely on digital platforms to store the most important information. KT Messenger Notes helps you do just that. Save helpful information from conversations instead of letting important notes slip your mind.')}
             </p>
@@ -128,9 +128,9 @@ export function NotesPage() {
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft text-brand-strong mb-4">
                     <FiBriefcase className="text-2xl" />
                   </div>
-                  <h2 className="text-2xl font-bold text-ink">
+                  <h3 className="text-2xl font-bold text-ink">
                     {t('Business Social Media Platform to Organize Ideas')}
-                  </h2>
+                  </h3>
                   <p className="mt-4 text-base leading-relaxed text-body">
                     {t('With Kt Messenger, you can keep detailed notes on all aspects of your business and therefore keep everything organized and avoid forgetting anything important.')}
                   </p>
@@ -148,9 +148,9 @@ export function NotesPage() {
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft text-brand-strong mb-4">
                     <FiGlobe className="text-2xl" />
                   </div>
-                  <h2 className="text-2xl font-bold text-ink">
+                  <h3 className="text-2xl font-bold text-ink">
                     {t('Create Notes Anywhere, Anytime')}
-                  </h2>
+                  </h3>
                   <p className="mt-4 text-base leading-relaxed text-body">
                     {t('Have a thought, idea, or reminder while chatting, working, or generally using your phone? Room for notes is available to help capture thoughts, then store them in the cloud for easy recall later when you have time to look back.')}
                   </p>
@@ -260,13 +260,14 @@ export function NotesPage() {
             </p>
           </Reveal>
           <div className="mt-12">
-            <FaqAccordion items={notesFaqs} placeholder={t('Search the FAQ…')} />
+            <FaqAccordion items={notesFaqs} placeholder={t('Search the FAQ…')} questionTag="h3" />
           </div>
         </Container>
       </Section>
 
       {/* 6. CTA BANNER */}
       <CtaBand
+        titleTag="h4"
         eyebrow={t('Start writing')}
         title={t('A vault that only you can open')}
         description={t('Notes, checklists and voice memos sealed on your device, synced across everything you own, and readable with no signal at all.')}
@@ -284,7 +285,7 @@ export function NotesPage() {
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow={t('Keep exploring')} title={t('More about KT Messenger')} />
+        <SectionHead titleTag="h4" eyebrow={t('Keep exploring')} title={t('More about KT Messenger')} />
         <RelatedPages className="mt-10" items={RELATED} />
       </Section>
     </MainLayout>

@@ -42,7 +42,7 @@ export function MessagingLoopVideo({ className = '' }) {
             DM
           </div>
           <div>
-            <h4 className="text-xs font-extrabold leading-tight tracking-tight">David Miller</h4>
+            <p className="text-xs font-extrabold leading-tight tracking-tight">David Miller</p>
             <span className="block text-[8px] font-medium leading-tight text-sky-100">{t('online')}</span>
           </div>
         </div>

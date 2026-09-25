@@ -1,0 +1,58 @@
+# KT Messenger
+
+> KT Messenger is a free, secure messaging and calling app for private chats,
+> voice calls, video calls, real-time messaging, and seamless communication
+> across devices - available worldwide.
+
+[KT Messenger](https://ktmessenger.com): the global communication platform for
+messaging, calling, sharing, and staying connected with people around the world.
+Available in over 180 countries.
+
+## Features
+
+- [Calling](https://ktmessenger.com/video-calling-app): free HD voice and video
+calls with end-to-end encryption, group calls, and screen sharing.
+- [Messaging](https://ktmessenger.com/messaging-app): fast private messaging with
+instant chat, photos, videos, files, voice notes, and 2GB attachments.
+- [Groups](https://ktmessenger.com/group-chat-app): group chats and communities
+up to 1024 members with admin controls, polls, and events.
+- [Channels](https://ktmessenger.com/social-media-platform): one-to-many
+broadcast channels for announcements, creators, and brands.
+- [KT AI](https://ktmessenger.com/ai-assistant-app): built-in AI assistant for
+answers, image generation, translation across 100+ languages, and smart search.
+- [Status](https://ktmessenger.com/social-feed-app): 24-hour disappearing photo,
+video, and voice status updates.
+- [Security](https://ktmessenger.com/secure-messaging-app): end-to-end
+encryption by default, biometric chat locks, and passcode protection.
+- [KT Plus](https://ktmessenger.com/premium-messaging-app): premium tier with
+10GB file sharing, custom themes, and the Stealth Privacy Suite.
+- [Notes](https://ktmessenger.com/notes-app): synced notes with rich formatting
+inside the app.
+- [Minis](https://ktmessenger.com/minis-short-video-app): short-form video feed
+to watch, create, and share clips with the community.
+- [Community](https://ktmessenger.com/community): the social networking and
+instant messaging platform for building connections and communities.
+
+## Pages
+
+- [Apps & Downloads](https://ktmessenger.com/messaging-app-download): KT
+Messenger apps for Android, iPhone, Mac, and PC, plus the KT Web version.
+- [Privacy](https://ktmessenger.com/private-messaging-app): how KT Messenger
+protects conversations with encryption, privacy controls, and safe settings.
+- [Blog](https://ktmessenger.com/messaging-social-media-blog): product updates,
+feature announcements, and engineering write-ups.
+- [Help Center](https://ktmessenger.com/messaging-app-help): guides, FAQs, and
+support articles for every platform.
+- [For Business](https://ktmessenger.com/business-messaging-app): the KT
+Business platform for customer conversations, catalogs, and broadcasts.
+
+## Optional
+
+- [About](https://ktmessenger.com/about): the story of KT Messenger, a global
+communication platform connecting people worldwide.
+- [Careers](https://ktmessenger.com/careers): open roles across engineering,
+design, and policy.
+- [Contact](https://ktmessenger.com/contact): how to reach the KT Messenger
+team.
+- [Sitemap](https://ktmessenger.com/sitemap.xml): the machine-readable list of
+every canonical page on this site.

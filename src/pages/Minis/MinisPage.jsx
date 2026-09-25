@@ -145,9 +145,9 @@ export function MinisPage() {
                   <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-2xl text-brand-strong mb-5">
                     <FiVideo />
                   </div>
-                  <h3 className="text-2xl font-bold text-ink sm:text-3xl">
+                  <p className="text-2xl font-bold text-ink sm:text-3xl">
                     {t('Explore Minis')}
-                  </h3>
+                  </p>
                   <p className="mt-4 text-base leading-relaxed text-body">
                     {t('Discover short, engaging videos from people and communities on KT Messenger.')}
                   </p>
@@ -166,9 +166,9 @@ export function MinisPage() {
                   <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-2xl text-brand-strong mb-5">
                     <FiShare2 />
                   </div>
-                  <h3 className="text-2xl font-bold text-ink sm:text-3xl">
+                  <p className="text-2xl font-bold text-ink sm:text-3xl">
                     {t('Create & Share')}
-                  </h3>
+                  </p>
                   <p className="mt-4 text-base leading-relaxed text-body">
                     {t('Create your own short videos and share them with friends, followers, and your network.')}
                   </p>
@@ -195,9 +195,9 @@ export function MinisPage() {
                   <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-xl text-brand-strong mb-4">
                     <FiTrendingUp />
                   </div>
-                  <h3 className="text-xl font-bold text-ink">
+                  <p className="text-xl font-bold text-ink">
                     {t('Trending Videos')}
-                  </h3>
+                  </p>
                   <p className="mt-3 text-sm leading-relaxed text-body">
                     {t('Find popular and engaging videos, discover new creators, and enjoy fresh content every day.')}
                   </p>
@@ -212,9 +212,9 @@ export function MinisPage() {
                   <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-xl text-brand-strong mb-4">
                     <FiUsers />
                   </div>
-                  <h3 className="text-xl font-bold text-ink">
+                  <p className="text-xl font-bold text-ink">
                     {t('Connect & Engage')}
-                  </h3>
+                  </p>
                   <p className="mt-3 text-sm leading-relaxed text-body">
                     {t('Like, comment, share, and connect with others through short-form social content.')}
                   </p>
@@ -229,9 +229,9 @@ export function MinisPage() {
                   <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-xl text-brand-strong mb-4">
                     <FiBriefcase />
                   </div>
-                  <h3 className="text-xl font-bold text-ink">
+                  <p className="text-xl font-bold text-ink">
                     {t('Minis for Business')}
-                  </h3>
+                  </p>
                   <p className="mt-3 text-sm leading-relaxed text-body">
                     {t('Promote your brand, products, and services through engaging short videos and reach new audiences.')}
                   </p>
@@ -263,7 +263,7 @@ export function MinisPage() {
                     onClick={() => setFaqOpen(isOpen ? -1 : index)}
                     className="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink hover:text-brand-strong"
                   >
-                    <span className="text-base sm:text-lg">{faq.q}</span>
+                    <h3 className="text-base sm:text-lg">{faq.q}</h3>
                     <FiChevronDown className={`shrink-0 text-xl transition-transform duration-300 ${isOpen ? 'rotate-180 text-brand-strong' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
@@ -291,9 +291,9 @@ export function MinisPage() {
       <section className="bg-gradient-to-r from-brand-strong to-brand-ink py-16 text-white lg:py-20">
         <Container className="text-center">
           <Reveal from="up">
-            <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
+            <h4 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
               {t('Join KT Minis Now')}
-            </h2>
+            </h4>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
               {t('Watch, create, share, and connect with KT Messenger Minis.')}
             </p>

@@ -14,7 +14,7 @@
 import { DEFAULT_LANG, currentLanguage } from '../i18n/languageUrls'
 import { addContentTranslations } from '../i18n/contentTranslations'
 
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:4000/api'
+const BASE = import.meta.env.VITE_API_URL || `${window.location.origin}/api`
 
 // Two components asking for the same URL at the same moment share one request
 // (the header and the route table both read the features menu). The entry is

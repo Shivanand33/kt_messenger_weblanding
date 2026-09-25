@@ -20,9 +20,9 @@ export function DownloadCTA() {
           <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-10 h-64 w-64 rounded-full bg-black/10 blur-2xl" />
 
           <div className="relative mx-auto max-w-2xl text-center">
-            <h2 className="text-[2rem] font-extrabold tracking-tight sm:text-4xl lg:text-[2.9rem]">
+            <h5 className="text-[2rem] font-extrabold tracking-tight sm:text-4xl lg:text-[2.9rem]">
               {t('Connect Smarter With KT Messenger')}
-            </h2>
+            </h5>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-white/85">
               {t('Experience a secure and intelligent way to communicate. Download KT Messenger today and enjoy private conversations, powerful features, and meaningful connections.')}
             </p>

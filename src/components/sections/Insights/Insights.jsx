@@ -185,6 +185,7 @@ export function Insights() {
         title={t('Why KT Messenger Is More Than Just Messaging')}
         description={t('KT combines communication, AI, content discovery, communities, news, minis, calls, creator experiences, and digital engagement into one powerful ecosystem.')}
         className="mx-auto max-w-3xl"
+        titleAs="h3"
       />
 
       {/* Feature showcase cards */}
@@ -195,7 +196,7 @@ export function Insights() {
               className={`${cardBase} h-full p-6 ${f.accent ? 'bg-gradient-to-br from-brand-soft to-cream-2' : ''}`}
             >
               <IconTile>{f.icon}</IconTile>
-              <h3 className="mt-5 text-lg font-bold leading-snug text-ink">{t(f.title)}</h3>
+              <p className="mt-5 text-lg font-bold leading-snug text-ink">{t(f.title)}</p>
               <p className="mt-2 flex-1 text-[15px] leading-7 text-body">{t(f.desc)}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {f.tags.map((tag) => (
@@ -215,7 +216,7 @@ export function Insights() {
       {/* Everything in one platform */}
       <Reveal from="up" className="mt-6">
         <div className="overflow-hidden rounded-card border border-line bg-cream-2 p-8 text-center shadow-soft sm:p-10">
-          <h3 className="text-xl font-bold text-ink sm:text-2xl">{t('Everything In One Platform')}</h3>
+          <p className="text-xl font-bold text-ink sm:text-2xl">{t('Everything In One Platform')}</p>
           <p className="mx-auto mt-2 max-w-xl text-[15px] leading-7 text-body">
             {t('One seamless experience no switching between several apps to get things done.')}
           </p>
@@ -253,7 +254,7 @@ export function Insights() {
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/15 px-3 py-1 text-[11px] font-bold backdrop-blur">
                     {t(h.label)}
                   </span>
-                  <h3 className="mt-3 text-xl font-bold leading-tight group-hover:text-brand-soft transition-colors">{t(h.title)}</h3>
+                  <p className="mt-3 text-xl font-bold leading-tight group-hover:text-brand-soft transition-colors">{t(h.title)}</p>
                   <p className="mt-1.5 text-sm leading-6 text-white/85">{t(h.text)}</p>
                 </div>
               </article>
@@ -270,13 +271,14 @@ export function Insights() {
           description={t('Five reasons KT feels less like a chat app and more like a complete platform.')}
           className="mx-auto max-w-2xl"
           titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
+          titleAs="h3"
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {reasons.map((reason, index) => (
             <Reveal key={reason.title} from="up" delay={(index % 3) * 0.06} className="h-full">
               <article className={`${cardBase} h-full p-6`}>
                 <IconTile>{reason.icon}</IconTile>
-                <h3 className="mt-5 text-lg font-bold leading-snug text-ink">{t(reason.title)}</h3>
+                <p className="mt-5 text-lg font-bold leading-snug text-ink">{t(reason.title)}</p>
                 <ul className="mt-4 space-y-2">
                   {reason.items.map((item) => (
                     <li key={item} className="flex items-center gap-2 text-sm font-medium text-body">
@@ -298,6 +300,7 @@ export function Insights() {
           description={t('A day on KT flows naturally from discovery to connection all in one place.')}
           className="mx-auto max-w-2xl"
           titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
+          titleAs="h3"
         />
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {journey.map((step, index) => (
@@ -323,9 +326,9 @@ export function Insights() {
         <div className="overflow-hidden rounded-card border border-line bg-gradient-to-br from-brand-soft/70 to-cream-2 p-8 sm:p-10 lg:p-12">
           <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <h3 className="text-2xl font-bold leading-tight text-ink lg:text-[1.9rem]">
+              <p className="text-2xl font-bold leading-tight text-ink lg:text-[1.9rem]">
                 {t('One app, every experience')}
-              </h3>
+              </p>
               <p className="mt-3 max-w-md text-[15px] leading-7 text-body">
                 {t('Access chats, updates, news, minis, calls, AI and communities from a single platform no more switching between several apps to get things done.')}
               </p>
@@ -358,6 +361,7 @@ export function Insights() {
           description={t('Everything you get in one place a complete digital experience, not just a chat box.')}
           className="mx-auto max-w-2xl"
           titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
+          titleAs="h4"
         />
         <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
           {capabilities.map((c, index) => (
@@ -384,6 +388,7 @@ export function Insights() {
           description={t('Secure, modern and intelligent the foundations behind every KT experience.')}
           className="mx-auto max-w-2xl"
           titleClassName="text-[1.6rem] sm:text-3xl lg:text-4xl"
+          titleAs="h4"
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {trust.map((item, index) => (
@@ -392,7 +397,7 @@ export function Insights() {
                 <span className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-xl text-brand-ink transition-transform duration-300 group-hover:scale-110">
                   {item.icon}
                 </span>
-                <h3 className="text-base font-bold text-ink">{t(item.title)}</h3>
+                <h5 className="text-base font-bold text-ink">{t(item.title)}</h5>
                 <p className="mt-1.5 text-xs leading-6 text-body">{t(item.text)}</p>
               </div>
             </Reveal>
@@ -408,7 +413,7 @@ export function Insights() {
           <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
           <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-10 h-64 w-64 rounded-full bg-black/10 blur-2xl" />
           <div className="relative mx-auto max-w-2xl">
-            <h3 className="text-[1.9rem] font-extrabold tracking-tight sm:text-4xl">{t('Experience More Than Messaging')}</h3>
+            <h5 className="text-[1.9rem] font-extrabold tracking-tight sm:text-4xl">{t('Experience More Than Messaging')}</h5>
             <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-white/90">
               {t('KT Messenger brings communication, AI, content discovery, communities, news, minis, calls, and engagement together in one seamless experience.')}
             </p>

@@ -9,17 +9,18 @@ export function SectionHeading({
   className = '',
   titleClassName = '',
   descriptionClassName = '',
+  titleAs: TitleTag = 'h2',
 }) {
   const isCenter = align === 'center'
   return (
     <div className={`flex flex-col gap-4 ${isCenter ? 'items-center text-center' : 'items-start text-left'} ${className}`}>
       {eyebrow ? <Pill icon={eyebrowIcon}>{eyebrow}</Pill> : null}
       {title ? (
-        <h2
+        <TitleTag
           className={`max-w-2xl text-[1.9rem] font-bold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[2.7rem] ${titleClassName}`}
         >
           {title}
-        </h2>
+        </TitleTag>
       ) : null}
       {description ? (
         <p className={`max-w-xl text-lg leading-8 text-body ${isCenter ? 'mx-auto' : ''} ${descriptionClassName}`}>

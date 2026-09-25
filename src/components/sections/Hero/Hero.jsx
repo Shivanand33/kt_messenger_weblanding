@@ -15,7 +15,7 @@ import heroImage from '../../../assets/images/ai-assistant-app-hero.jpg'
 // Turn a stored image reference into a usable URL. Uploaded media on R2 come
 // back as absolute https URLs; a locally-served path (starts with "/") is
 // resolved against the backend origin derived from the API base.
-const API_ORIGIN = (import.meta.env.VITE_API_URL || 'http://localhost:4000/api').replace(/\/api\/?$/, '')
+const API_ORIGIN = (import.meta.env.VITE_API_URL || `${window.location.origin}/api`).replace(/\/api\/?$/, '')
 const resolveUrl = (u) => (!u ? '' : /^https?:\/\//i.test(u) ? u : `${API_ORIGIN}${u.startsWith('/') ? '' : '/'}${u}`)
 import nadiaAvatar from '../../../assets/images/ai-assistant-nadia-avatar.png'
 import femaleAvatar from '../../../assets/images/social-networking-app-female-avatar.png'
@@ -76,11 +76,11 @@ export function Hero() {
           {/* copy */}
           <div className="max-w-xl text-white">
             <Reveal from="up">
-              <h2 className="text-[2.7rem] font-extrabold leading-[0.98] tracking-[-0.03em] sm:text-[3.8rem] lg:text-[5rem]">
+              <h1 className="text-[2.7rem] font-extrabold leading-[0.98] tracking-[-0.03em] sm:text-[3.8rem] lg:text-[5rem]">
                 {t('Stay close,')}
                 <br />
                 {t('stay private.')}
-              </h2>
+              </h1>
             </Reveal>
             <Reveal from="up" delay={0.08}>
               <p className="mt-6 max-w-md text-lg leading-8 text-white/90">

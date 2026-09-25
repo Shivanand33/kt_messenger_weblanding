@@ -317,7 +317,7 @@ export function CallingPage() {
                     {tab.icon}
                   </div>
                   <div>
-                    <h3 className="font-bold text-base leading-snug">{tab.title}</h3>
+                    <p className="font-bold text-base leading-snug">{tab.title}</p>
                     <p className={`text-xs mt-0.5 line-clamp-1 ${active ? 'text-white/80' : 'text-body'}`}>{tab.tagline}</p>
                   </div>
                 </button>
@@ -422,11 +422,11 @@ export function CallingPage() {
               </p>
               <div className="mt-8 space-y-4">
                 <div className="rounded-2xl bg-surface p-4 border border-line shadow-soft">
-                  <h4 className="font-bold text-ink text-sm">{t('Opus 48kHz High Fidelity Sound')}</h4>
+                  <p className="font-bold text-ink text-sm">{t('Opus 48kHz High Fidelity Sound')}</p>
                   <p className="mt-1 text-xs text-body">{t('Captures full vocal range, whispers, and tone subtleties with studio grade fidelity.')}</p>
                 </div>
                 <div className="rounded-2xl bg-surface p-4 border border-line shadow-soft">
-                  <h4 className="font-bold text-ink text-sm">{t('Spatial Audio Directionality')}</h4>
+                  <p className="font-bold text-ink text-sm">{t('Spatial Audio Directionality')}</p>
                   <p className="mt-1 text-xs text-body">{t('Group calls place participant voices logically across stereo space for natural listening.')}</p>
                 </div>
               </div>
@@ -484,9 +484,9 @@ export function CallingPage() {
 
                     {/* Name & Timer */}
                     <div className="text-center">
-                      <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-tight">
+                      <p className="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-tight">
                         Johan
-                      </h3>
+                      </p>
                       <p className="text-xs text-slate-400 font-medium mt-0.5">00:06</p>
                     </div>
 
@@ -702,7 +702,7 @@ export function CallingPage() {
                     onClick={() => setFaqOpen(isOpen ? -1 : index)}
                     className="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink hover:text-brand-strong"
                   >
-                    <span className="text-base sm:text-lg">{faq.q}</span>
+                    <h3 className="text-base sm:text-lg">{faq.q}</h3>
                     <FiChevronDown className={`shrink-0 text-xl transition-transform duration-300 ${isOpen ? 'rotate-180 text-brand-strong' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
@@ -730,9 +730,9 @@ export function CallingPage() {
       <section className="bg-gradient-to-r from-brand-strong to-brand-ink py-16 text-white lg:py-20">
         <Container className="text-center">
           <Reveal from="up">
-            <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
+            <h4 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
               {t('Ready to Experience Crystal Clear Calls?')}
-            </h2>
+            </h4>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
               {t('Download KT Messenger now on mobile, desktop, or tablet and start calling completely free today.')}
             </p>

@@ -269,7 +269,7 @@ export function KtPlusPage() {
                   <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${active ? 'bg-white/20 text-white' : 'bg-brand-soft text-brand-strong'}`}>
                     {tab.icon}
                   </div>
-                  <h3 className="font-bold text-base">{tab.title}</h3>
+                  <p className="font-bold text-base">{tab.title}</p>
                 </button>
               )
             })}
@@ -280,8 +280,8 @@ export function KtPlusPage() {
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
                 {t('KT Plus Pillar Deep Dive')}
               </div>
-              {/* Not a heading: the same title is already the <h3> in the tab list
-                  beside it, so a second <h3> would duplicate it for SEO. */}
+              {/* Not a heading: the same title is already a <p> in the tab list
+                  beside it, so a second heading would duplicate it for SEO. */}
               <p className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {plusTabs[activeTab].title}
               </p>
@@ -433,7 +433,7 @@ export function KtPlusPage() {
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft text-brand-strong mb-4">
                     {card.icon}
                   </div>
-                  <h3 className="text-lg font-bold text-ink">{card.title}</h3>
+                  <p className="text-lg font-bold text-ink">{card.title}</p>
                   <p className="mt-2 text-xs leading-relaxed text-body">{card.desc}</p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-line">
@@ -501,7 +501,7 @@ export function KtPlusPage() {
                     onClick={() => setFaqOpen(isOpen ? -1 : index)}
                     className="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink hover:text-brand-strong"
                   >
-                    <span className="text-base sm:text-lg">{faq.q}</span>
+                    <h3 className="text-base sm:text-lg">{faq.q}</h3>
                     <FiChevronDown className={`shrink-0 text-xl transition-transform duration-300 ${isOpen ? 'rotate-180 text-brand-strong' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
@@ -529,9 +529,9 @@ export function KtPlusPage() {
       <section className="bg-gradient-to-r from-brand-strong to-brand-ink py-16 text-white lg:py-20">
         <Container className="text-center">
           <Reveal from="up">
-            <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
+            <h4 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
               {t('Upgrade to KT Plus Today')}
-            </h2>
+            </h4>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
               {t('Unlock 10GB file transfers, 5-account dual space, custom themes, and stealth privacy.')}
             </p>

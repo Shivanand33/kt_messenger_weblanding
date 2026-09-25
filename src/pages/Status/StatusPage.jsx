@@ -58,8 +58,6 @@ export function StatusPage() {
   const statusTabs = [
     {
       title: t('HD Photo & Short Video Stories'),
-      // Rendered as plain text in the tab list, not an <h3> (SEO).
-      notHeading: true,
       icon: <FiImage className="text-xl" />,
       desc: t('Post high definition photos and up to 60-second video clips that automatically vanish after 24 hours.'),
       highlights: [t('Uncompressed 4K photo resolution'), t('Up to 60s video clips'), t('Auto delete in 24 hours')]
@@ -275,11 +273,7 @@ export function StatusPage() {
                   <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${active ? 'bg-white/20 text-white' : 'bg-brand-soft text-brand-strong'}`}>
                     {tab.icon}
                   </div>
-                  {tab.notHeading ? (
-                    <p className="font-bold text-base">{tab.title}</p>
-                  ) : (
-                    <h3 className="font-bold text-base">{tab.title}</h3>
-                  )}
+                  <p className="font-bold text-base">{tab.title}</p>
                 </button>
               )
             })}
@@ -438,7 +432,7 @@ export function StatusPage() {
                   <img src={img(card.img)} alt={imgAlt(card.img, card.title)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-lg font-bold text-ink">{card.title}</h3>
+                  <p className="text-lg font-bold text-ink">{card.title}</p>
                   <p className="mt-2 text-xs leading-relaxed text-body">{card.desc}</p>
                 </div>
               </div>
@@ -505,7 +499,7 @@ export function StatusPage() {
                     onClick={() => setFaqOpen(isOpen ? -1 : index)}
                     className="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink hover:text-brand-strong"
                   >
-                    <span className="text-base sm:text-lg">{faq.q}</span>
+                    <h3 className="text-base sm:text-lg">{faq.q}</h3>
                     <FiChevronDown className={`shrink-0 text-xl transition-transform duration-300 ${isOpen ? 'rotate-180 text-brand-strong' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
@@ -533,9 +527,9 @@ export function StatusPage() {
       <section className="bg-gradient-to-r from-brand-strong to-brand-ink py-16 text-white lg:py-20">
         <Container className="text-center">
           <Reveal from="up">
-            <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
+            <h4 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
               {t('Share Your First Status Update Today')}
-            </h2>
+            </h4>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
               {t('Download KT Messenger now to share 24-hour HD video, photos, and voice status updates.')}
             </p>

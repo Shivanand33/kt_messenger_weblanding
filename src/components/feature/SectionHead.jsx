@@ -5,7 +5,7 @@ import { useLanguage } from '../../context/LanguageContext'
  * Consistent heading block for every feature-page section: small coloured
  * eyebrow, headline, and an optional supporting line.
  */
-export function SectionHead({ eyebrow, title, description, align = 'center', className = '', children }) {
+export function SectionHead({ eyebrow, title, description, align = 'center', className = '', titleTag: TitleTag = 'h2', children }) {
   const { t } = useLanguage()
   const centered = align === 'center'
   return (
@@ -21,7 +21,7 @@ export function SectionHead({ eyebrow, title, description, align = 'center', cla
         </span>
       ) : null}
 
-      <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-ink sm:text-4xl">{t(title)}</h2>
+      <TitleTag className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-ink sm:text-4xl">{t(title)}</TitleTag>
 
       {description ? <p className="mt-3 text-[15px] leading-relaxed text-body">{t(description)}</p> : null}
 

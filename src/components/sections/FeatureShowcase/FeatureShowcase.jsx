@@ -43,7 +43,7 @@ export function FeatureShowcase({
               {bullets.map((bullet) => (
                 <div key={bullet.title} className="rounded-card border border-line bg-cream-2 p-5 shadow-soft">
                   {bullet.icon ? <IconTile size="sm">{bullet.icon}</IconTile> : null}
-                  <h3 className="mt-3.5 text-base font-semibold text-ink">{bullet.title}</h3>
+                  <p className="mt-3.5 text-base font-semibold text-ink">{bullet.title}</p>
                   <p className="mt-1.5 text-sm leading-6 text-body">{bullet.text}</p>
                 </div>
               ))}

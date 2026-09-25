@@ -73,7 +73,7 @@ export function CallLoopVideo({ className = '' }) {
               <img src={img(avatarFemale)} alt={imgAlt(avatarFemale, t('Calling'))} className="h-full w-full rounded-full object-cover" />
             </motion.div>
             <div>
-              <h4 className="font-bold text-sm text-white">Emiko Takahashi</h4>
+              <p className="font-bold text-sm text-white">Emiko Takahashi</p>
               <p className="text-xs text-brand-ink font-semibold animate-pulse mt-0.5">{t('Incoming 1080p Video Call...')}</p>
             </div>
             <div className="flex justify-center gap-6 pt-2">

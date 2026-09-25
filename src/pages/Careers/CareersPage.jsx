@@ -281,7 +281,7 @@ export function CareersPage() {
             description={t('Everything you need to know about applying and working at KT Messenger.')}
           />
           <div className="mt-10 mx-auto max-w-3xl">
-            <FaqAccordion items={FAQS} />
+            <FaqAccordion items={FAQS} questionTag="h3" />
           </div>
         </Container>
       </Section>
@@ -292,9 +292,9 @@ export function CareersPage() {
           <span className="rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink">
             {t('Keep Exploring')}
           </span>
-          <h2 className="mt-3 text-2xl font-extrabold text-ink sm:text-3xl">
+          <h4 className="mt-3 text-2xl font-extrabold text-ink sm:text-3xl">
             {t('More about KT Messenger')}
-          </h2>
+          </h4>
         </div>
         <RelatedPages className="mt-10" items={RELATED} />
       </Section>

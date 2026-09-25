@@ -226,7 +226,7 @@ export function GroupsPage() {
                         KD
                       </div>
                       <div>
-                        <h3 className="text-sm font-extrabold text-white tracking-tight">{t('kt messenger discussion')}</h3>
+                        <p className="text-sm font-extrabold text-white tracking-tight">{t('kt messenger discussion')}</p>
                         <p className="text-[10px] text-slate-400 font-medium">{t('Group • 18 members')}</p>
                       </div>
                       <p className="text-[10px] text-slate-300 max-w-[220px] mx-auto leading-tight bg-slate-900/80 p-2 rounded-xl border border-slate-800/80">
@@ -280,7 +280,7 @@ export function GroupsPage() {
                               <FiPlus className="text-sm" />
                             </div>
                             <div>
-                              <h5 className="font-bold text-[11px] text-white">{t('Add members')}</h5>
+                              <p className="font-bold text-[11px] text-white">{t('Add members')}</p>
                               <p className="text-[9px] text-slate-400">{t('Add contacts from your phone')}</p>
                             </div>
                           </div>
@@ -292,7 +292,7 @@ export function GroupsPage() {
                           <div className="flex items-center gap-2.5">
                             <img src={img(avatarMale)} alt={imgAlt(avatarMale, "You")} className="h-8 w-8 rounded-full object-cover border border-slate-700 shrink-0" />
                             <div>
-                              <h5 className="font-bold text-[11px] text-white">{t('You')}</h5>
+                              <p className="font-bold text-[11px] text-white">{t('You')}</p>
                               <p className="text-[9px] text-sky-400 font-semibold">{t('Add member tag')}</p>
                             </div>
                           </div>
@@ -307,7 +307,7 @@ export function GroupsPage() {
                             </div>
                             <div>
                               <div className="flex items-center gap-1.5">
-                                <h5 className="font-bold text-[11px] text-white">Lucas Martin</h5>
+                                <p className="font-bold text-[11px] text-white">Lucas Martin</p>
                                 <span className="rounded bg-sky-500/20 px-1 py-0.2 text-[8px] font-bold text-sky-400 border border-sky-500/30">{t('Admin')}</span>
                               </div>
                               <p className="text-[9px] text-slate-400">{t('Group admin')}</p>
@@ -322,7 +322,7 @@ export function GroupsPage() {
                               SR
                             </div>
                             <div>
-                              <h5 className="font-bold text-[11px] text-white">Sofia Rossi</h5>
+                              <p className="font-bold text-[11px] text-white">Sofia Rossi</p>
                               <p className="text-[9px] text-slate-400">{t('Tap for options')}</p>
                             </div>
                           </div>
@@ -335,7 +335,7 @@ export function GroupsPage() {
                               DW
                             </div>
                             <div>
-                              <h5 className="font-bold text-[11px] text-white">Daniel Weber</h5>
+                              <p className="font-bold text-[11px] text-white">Daniel Weber</p>
                               <p className="text-[9px] text-slate-400">{t('Active recently')}</p>
                             </div>
                           </div>
@@ -383,7 +383,7 @@ export function GroupsPage() {
                   <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${active ? 'bg-white/20 text-white' : 'bg-brand-soft text-brand-strong'}`}>
                     {tab.icon}
                   </div>
-                  <h3 className="font-bold text-base">{tab.title}</h3>
+                  <p className="font-bold text-base">{tab.title}</p>
                 </button>
               )
             })}
@@ -394,8 +394,8 @@ export function GroupsPage() {
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
                 {t('Group Power Feature')}
               </div>
-              {/* Not a heading: the same title is already the <h3> in the tab list
-                  beside it, so a second <h3> would duplicate it for SEO. */}
+              {/* Not a heading: the same title is already rendered in the tab list
+                  beside it, so a second heading would duplicate it for SEO. */}
               <p className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {groupTabs[activeTab].title}
               </p>
@@ -548,7 +548,7 @@ export function GroupsPage() {
                   <img src={img(card.img)} alt={imgAlt(card.img, card.title)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-lg font-bold text-ink">{card.title}</h3>
+                  <p className="text-lg font-bold text-ink">{card.title}</p>
                   <p className="mt-2 text-xs leading-relaxed text-body">{card.desc}</p>
                 </div>
               </div>
@@ -615,7 +615,7 @@ export function GroupsPage() {
                     onClick={() => setFaqOpen(isOpen ? -1 : index)}
                     className="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink hover:text-brand-strong"
                   >
-                    <span className="text-base sm:text-lg">{faq.q}</span>
+                    <h3 className="text-base sm:text-lg">{faq.q}</h3>
                     <FiChevronDown className={`shrink-0 text-xl transition-transform duration-300 ${isOpen ? 'rotate-180 text-brand-strong' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
@@ -643,9 +643,9 @@ export function GroupsPage() {
       <section className="bg-gradient-to-r from-brand-strong to-brand-ink py-16 text-white lg:py-20">
         <Container className="text-center">
           <Reveal from="up">
-            <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
+            <h4 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
               {t('Start Your First Group Today')}
-            </h2>
+            </h4>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
               {t('Download KT Messenger now to host 1,024 members, 32-person video calls, and interactive polls.')}
             </p>

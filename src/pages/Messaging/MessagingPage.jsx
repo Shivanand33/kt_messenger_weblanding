@@ -245,7 +245,7 @@ export function MessagingPage() {
                   <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${active ? 'bg-white/20 text-white' : 'bg-brand-soft text-brand-strong'}`}>
                     {tab.icon}
                   </div>
-                  <h3 className="font-bold text-base">{tab.title}</h3>
+                  <p className="font-bold text-base">{tab.title}</p>
                 </button>
               )
             })}
@@ -256,9 +256,9 @@ export function MessagingPage() {
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-xs font-bold text-brand-ink">
                 {t('Smart Messaging Pillar')}
               </div>
-              <h3 className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
+              <p className="mt-4 text-2xl font-bold text-ink lg:text-3xl">
                 {organizeTabs[activeTab].title}
-              </h3>
+              </p>
               <p className="mt-3 text-base leading-relaxed text-body">
                 {organizeTabs[activeTab].desc}
               </p>
@@ -373,7 +373,7 @@ export function MessagingPage() {
                   <div className="h-44 overflow-hidden rounded-2xl">
                     <img src={img(weddingImg)} alt={imgAlt(weddingImg, t('Photos'))} className="h-full w-full object-cover" />
                   </div>
-                  <h3 className="mt-4 text-xl font-bold text-ink">{t('4K Photo Bundles')}</h3>
+                  <p className="mt-4 text-xl font-bold text-ink">{t('4K Photo Bundles')}</p>
                   <p className="mt-2 text-xs leading-relaxed text-body">{t('Share albums of up to 100 full res photos simultaneously without loss of details.')}</p>
                 </div>
 
@@ -385,7 +385,7 @@ export function MessagingPage() {
                       HD 60FPS
                     </span>
                   </div>
-                  <h3 className="mt-4 text-xl font-bold text-ink">{t('Uncompressed HD Video')}</h3>
+                  <p className="mt-4 text-xl font-bold text-ink">{t('Uncompressed HD Video')}</p>
                   <p className="mt-2 text-xs leading-relaxed text-body">{t('Preserve raw video clarity and frame rates so your memories look crisp.')}</p>
                 </div>
 
@@ -398,7 +398,7 @@ export function MessagingPage() {
                     <span className="text-xs font-semibold text-ink">Project_Archive.zip</span>
                     <span className="text-[10px] text-muted">1.85 GB • {t('ZIP File')}</span>
                   </div>
-                  <h3 className="mt-4 text-xl font-bold text-ink">{t('2 GB File Attachments')}</h3>
+                  <p className="mt-4 text-xl font-bold text-ink">{t('2 GB File Attachments')}</p>
                   <p className="mt-2 text-xs leading-relaxed text-body">{t('Send PDFs, zip files, code repositories, and presentations without cloud link dependencies.')}</p>
                 </div>
               </div>
@@ -430,7 +430,7 @@ export function MessagingPage() {
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-soft text-brand-strong mb-4 transition-transform group-hover:scale-110">
                     {item.icon}
                   </div>
-                  <h3 className="text-lg font-bold text-ink">{item.title}</h3>
+                  <p className="text-lg font-bold text-ink">{item.title}</p>
                   <p className="mt-2 text-xs leading-relaxed text-body">{item.desc}</p>
                 </div>
                 <div className="mt-6 pt-4 border-t border-line flex items-center gap-1.5">
@@ -501,7 +501,7 @@ export function MessagingPage() {
                     onClick={() => setFaqOpen(isOpen ? -1 : index)}
                     className="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-ink hover:text-brand-strong"
                   >
-                    <span className="text-base sm:text-lg">{faq.q}</span>
+                    <h3 className="text-base sm:text-lg">{faq.q}</h3>
                     <FiChevronDown className={`shrink-0 text-xl transition-transform duration-300 ${isOpen ? 'rotate-180 text-brand-strong' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
@@ -529,9 +529,9 @@ export function MessagingPage() {
       <section className="bg-gradient-to-r from-brand-strong to-brand-ink py-16 text-white lg:py-20">
         <Container className="text-center">
           <Reveal from="up">
-            <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
+            <h4 className="text-3xl font-extrabold sm:text-4xl lg:text-5xl text-white">
               {t('Start Messaging Freely Today')}
-            </h2>
+            </h4>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
               {t('Download KT Messenger now across all your devices and experience private, high speed communication.')}
             </p>

@@ -9,6 +9,14 @@ export default defineConfig({
     host: true,
     open: false,
     strictPort: false,
+    // Same-origin API + media so the site works from any device on the LAN
+    // (and in production): the browser calls /api and /uploads on whatever
+    // host served the page, and the dev server forwards them to the backend.
+    // A built bundle with VITE_API_URL set still uses that absolute URL.
+    proxy: {
+      '/api': { target: 'http://localhost:4000', changeOrigin: true },
+      '/uploads': { target: 'http://localhost:4000', changeOrigin: true },
+    },
   },
   build: {
     // Admin image overrides are keyed on an asset's filename (see

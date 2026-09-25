@@ -20,7 +20,6 @@
 # AI assistants can also read /llms.txt — a short, curated overview of the
 # site, listing the same canonical URLs as /sitemap.xml.
 
-# ── Crawlers that are not welcome ──────────────────────────────────────
 # Bulk scrapers, content resellers and contact-data harvesters. They cost
 # bandwidth without sending a single visitor.
 
@@ -81,7 +80,6 @@ Disallow: /
 User-agent: YaK
 Disallow: /
 
-# ── Everyone else ──────────────────────────────────────────────────────
 # The whole public site is open, in every language (/hi/, /es/, /ar/ …).
 # Only the areas that are never public pages are closed.
 

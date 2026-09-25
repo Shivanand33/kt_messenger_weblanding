@@ -9,7 +9,7 @@ import { useLanguage } from '../../context/LanguageContext'
  *
  * `items`: [{ q, a, tag? }]
  */
-export function FaqAccordion({ items, faqs, searchable = true, placeholder = 'Search questions…' }) {
+export function FaqAccordion({ items, faqs, searchable = true, placeholder = 'Search questions…', questionTag: QuestionTag = 'span' }) {
   const { t } = useLanguage()
   const [openIds, setOpenIds] = useState([0])
   const [query, setQuery] = useState('')
@@ -68,7 +68,7 @@ export function FaqAccordion({ items, faqs, searchable = true, placeholder = 'Se
               aria-expanded={open}
               className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
             >
-              <span className="text-[15px] font-bold leading-snug text-ink">{t(item.q)}</span>
+              <QuestionTag className="text-[15px] font-bold leading-snug text-ink">{t(item.q)}</QuestionTag>
               <span
                 className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-all duration-300 ${
                   open ? 'rotate-45 border-brand-strong bg-brand-strong text-white' : 'border-line text-body'
