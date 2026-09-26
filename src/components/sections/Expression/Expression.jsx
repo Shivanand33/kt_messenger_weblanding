@@ -22,7 +22,7 @@ export function Expression() {
         { icon: <FiCamera />, title: t('Status'), text: t('Share moments that quietly vanish in 24 hours.') },
         { icon: <FiSmile />, title: t('Stickers & reactions'), text: t('Thousands of playful ways to react in an instant.') },
       ]}
-      cta={<LinkArrow to="/status">{t('Explore expression')}</LinkArrow>}
+      cta={<LinkArrow to="/social-feed-app">{t('Explore expression')}</LinkArrow>}
       accent={
         <div className="absolute -right-2 bottom-10 flex items-center gap-1 rounded-full border border-line bg-surface/95 px-3 py-2 shadow-card backdrop-blur sm:-right-5">
           {reactions.map((reaction) => (

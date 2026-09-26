@@ -119,7 +119,7 @@ const RELATED = [
   { to: '/markets', label: 'Markets', desc: 'Track prices and convert currencies at mid market.', icon: <FiTrendingUp /> },
   { to: '/marketplace', label: 'Marketplace', desc: 'Buy from verified stores and pay in one tap.', icon: <FiGrid /> },
   { to: '/news', label: 'News', desc: 'Business headlines and a daily audio brief.', icon: <FiActivity /> },
-  { to: '/notes', label: 'Notes', desc: 'Keep receipts and budgets in an encrypted vault.', icon: <FiFileText /> },
+  { to: '/notes-app', label: 'Notes', desc: 'Keep receipts and budgets in an encrypted vault.', icon: <FiFileText /> },
 ]
 
 const QUICK_AMOUNTS = [100, 500, 1000, 2500]

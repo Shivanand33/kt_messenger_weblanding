@@ -44,12 +44,12 @@ export function CallingPage() {
   useSeo({
     title: 'Best Video Calling App for Private Chats | KT Messenger.',
     description: 'Looking for the best video calling app? KT Messenger offers private chats, secure voice calls, instant messaging, and smooth online communication.',
-    path: '/calling',
+    path: '/video-calling-app',
   })
 
   // Per-page SEO from admin (Website Content -> seo.calling).
   // No block configured = unchanged behaviour.
-  useAdminSeo('calling', '/calling')
+  useAdminSeo('calling', '/video-calling-app')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -198,10 +198,10 @@ export function CallingPage() {
                 {t("Secure private messaging, calls, and video conferences await you. KT Messenger boasts real-time and smooth messaging across all devices. Enjoy KT's ease of international calling.")}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="lg" onClick={() => navigate('/apps')}>
+                <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Download Free App')} <FiDownload className="text-lg" />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/help')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging-app-help')}>
                   {t('Explore Specs')} <FiChevronRight />
                 </Button>
               </div>
@@ -352,7 +352,7 @@ export function CallingPage() {
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
               <span className="text-xs text-muted font-medium">{t('Included in all KT apps')}</span>
-              <Button size="sm" onClick={() => navigate('/apps')}>
+              <Button size="sm" onClick={() => navigate('/messaging-app-download')}>
                 {t('Try Feature Now')} <FiChevronRight />
               </Button>
             </div>
@@ -737,10 +737,10 @@ export function CallingPage() {
               {t('Download KT Messenger now on mobile, desktop, or tablet and start calling completely free today.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="white" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Download Free App')} <FiDownload />
               </Button>
-              <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="onDark" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Web Call Launcher')} <FiGlobe />
               </Button>
             </div>

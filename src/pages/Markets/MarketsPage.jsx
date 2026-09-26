@@ -107,7 +107,7 @@ const RELATED = [
   { to: '/wallet', label: 'Wallet', desc: 'Send money and hold crypto with passkey security.', icon: <FiZap /> },
   { to: '/news', label: 'News', desc: 'Market headlines and a three minute audio brief.', icon: <FiActivity /> },
   { to: '/marketplace', label: 'Marketplace', desc: 'Buy from verified stores inside a chat.', icon: <FiGrid /> },
-  { to: '/notes', label: 'Notes', desc: 'Keep trade journals in an encrypted vault.', icon: <FiBookOpen /> },
+  { to: '/notes-app', label: 'Notes', desc: 'Keep trade journals in an encrypted vault.', icon: <FiBookOpen /> },
 ]
 
 const CURRENCY_CODES = Object.keys(fxRates)

@@ -39,12 +39,12 @@ export function GroupsPage() {
   useSeo({
     title: 'Group Chat App & Messaging Platform | KT Messenger.',
     description: 'KT Messenger builds private group chat solutions that help teams, communities, friends, and family collaborate and discuss group chat topics.',
-    path: '/groups',
+    path: '/group-chat-app',
   })
 
   // Per-page SEO from admin (Website Content -> seo.groups).
   // No block configured = unchanged behaviour.
-  useAdminSeo('groups', '/groups')
+  useAdminSeo('groups', '/group-chat-app')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -177,10 +177,10 @@ export function GroupsPage() {
                 {t('KT Messenger Groups makes it easy to bring people together and keeps discussions organized. Take advantage of personal and professional group messaging to easily stay in touch with everyone.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="lg" onClick={() => navigate('/apps')}>
+                <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Create a Group Free')} <FiDownload className="text-lg" />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/apps')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Explore Features')} <FiChevronRight />
                 </Button>
               </div>
@@ -415,7 +415,7 @@ export function GroupsPage() {
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
               <span className="text-xs text-muted font-medium">{t('Free for up to 1,024 members')}</span>
-              <Button size="sm" onClick={() => navigate('/apps')}>
+              <Button size="sm" onClick={() => navigate('/messaging-app-download')}>
                 {t('Start Group Now')} <FiChevronRight />
               </Button>
             </div>
@@ -650,10 +650,10 @@ export function GroupsPage() {
               {t('Download KT Messenger now to host 1,024 members, 32-person video calls, and interactive polls.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="white" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Download Free App')} <FiDownload />
               </Button>
-              <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="onDark" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Launch Web App')} <FiChevronRight />
               </Button>
             </div>

@@ -192,7 +192,7 @@ const helpTree = [
 
 const topics = [
   { icon: <FiFlag />, title: 'Get Started', desc: 'Learn how to set up and start using KT Messenger.', to: '/' },
-  { icon: <FiShield />, title: 'Safety and Security', desc: 'Your privacy and security matter. Learn how to stay safe on KT Messenger.', to: '/privacy' },
+  { icon: <FiShield />, title: 'Safety and Security', desc: 'Your privacy and security matter. Learn how to stay safe on KT Messenger.', to: '/private-messaging-app' },
   { icon: <FiCloud />, title: 'Back Up or Restore Chats', desc: 'Learn how to back up and restore your chat history across devices.', to: null },
   { icon: <FiMessageCircle />, title: 'Chats', desc: 'Send messages, media, and voice notes, and manage every conversation.', to: null },
   { icon: <FiUsers />, title: 'Communities & Channels', desc: 'Create and manage groups, communities, and channels with ease.', to: '#groups' },
@@ -289,15 +289,15 @@ const footerColumns = [
     links: [
       { label: 'Features', to: '#features' },
       { label: 'KT Web', to: 'https://web.ktmessenger.com/auth/qr' },
-      { label: 'Download', to: '/apps' },
+      { label: 'Download', to: '/messaging-app-download' },
     ],
   },
   {
     title: 'About Us',
     links: [
       { label: 'Business', to: '#business' },
-      { label: 'Security', to: '/security' },
-      { label: 'Privacy & Terms', to: '/privacy' },
+      { label: 'Security', to: '/secure-messaging-app' },
+      { label: 'Privacy & Terms', to: '/private-messaging-app' },
     ],
   },
   {
@@ -871,7 +871,7 @@ function HelpFooter({ onNav }) {
 export function HelpPage() {
   // Canonical for this page (follows the URL it is opened at). Its hreflang
   // links are set below, once it is known whether the URL names an article.
-  useSeo({ path: '/help', hreflang: false })
+  useSeo({ path: '/messaging-app-help', hreflang: false })
 
   const navigate = useNavigate()
   const { pathname, state: navState } = useLocation()
@@ -879,7 +879,7 @@ export function HelpPage() {
   // /help or an admin navigation alias, so it is read from the URL itself.
   const { slug } = useParams()
   const trimmedPath = pathname.replace(/\/+$/, '')
-  const basePath = (slug ? trimmedPath.slice(0, trimmedPath.lastIndexOf('/')) : trimmedPath) || '/help'
+  const basePath = (slug ? trimmedPath.slice(0, trimmedPath.lastIndexOf('/')) : trimmedPath) || '/messaging-app-help'
   const { handlers } = useSwipeTheme()
   const { t } = useLanguage()
   // Sidebar starts fully collapsed — no category or sub-category is opened
@@ -939,7 +939,7 @@ export function HelpPage() {
   const activeArticle = useMemo(() => (current ? { title: current.title } : null), [current])
 
   // hreflang for the Help Center home and every article; an unknown slug gets none.
-  useHreflang('/help', { enabled: !slug || Boolean(current) })
+  useHreflang('/messaging-app-help', { enabled: !slug || Boolean(current) })
 
   // Body, platforms and SEO fields of the selected article, when it is one the
   // admin manages. Tagged with its slug so a previous article's data is never
@@ -999,7 +999,7 @@ export function HelpPage() {
   // Per-page SEO from admin (Website Content -> seo.help). An article's own
   // SEO title / description (set in the admin Help Center) takes over while
   // that article is open. No block configured = unchanged behaviour.
-  useAdminSeo('help', '/help', currentAdmin ? { title: currentAdmin.seoTitle, description: currentAdmin.seoDescription } : null)
+  useAdminSeo('help', '/messaging-app-help', currentAdmin ? { title: currentAdmin.seoTitle, description: currentAdmin.seoDescription } : null)
 
   const goTo = (target) => {
     if (!target) return
@@ -1051,7 +1051,7 @@ export function HelpPage() {
   }
 
   const copyLink = () => {
-    const url = `${window.location.origin}${languagePath(trimmedPath || '/help')}`
+    const url = `${window.location.origin}${languagePath(trimmedPath || '/messaging-app-help')}`
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(url).then(() => {
         setCopied(true)

@@ -1,6 +1,7 @@
 // Turn a body into the {type} blocks the article renderers expect.
 // Supports markdown-ish bodies ("## heading", "- bullet", blank-line
-// paragraphs) AND HTML bodies. HTML block tags are converted to the same
+// paragraphs, "![alt](src)" images, "> quote" lines, "| a | b |" tables,
+// "---" dividers) AND HTML bodies. HTML block tags are converted to the same
 // markers and every remaining tag is stripped — we never inject raw HTML
 // (no dangerouslySetInnerHTML), so author content cannot introduce XSS.
 //
@@ -31,11 +32,31 @@ export function parseBody(body) {
   let list = []
   const flushPara = () => { if (para.length) { blocks.push({ type: 'p', text: para.join(' ').trim() }); para = [] } }
   const flushList = () => { if (list.length) { blocks.push({ type: 'ul', items: list.slice() }); list = [] } }
-  for (const raw of lines) {
-    const line = raw.trim()
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim()
     if (!line) { flushPara(); flushList(); continue }
     const h = line.match(/^#{1,6}\s+(.*)$/)
     if (h) { flushPara(); flushList(); blocks.push({ type: 'h', text: h[1].trim() }); continue }
+    if (/^-{3,}$/.test(line)) { flushPara(); flushList(); blocks.push({ type: 'hr' }); continue }
+    const im = line.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/)
+    if (im) { flushPara(); flushList(); blocks.push({ type: 'img', alt: im[1].trim(), src: im[2].trim() }); continue }
+    const q = line.match(/^>\s?(.*)$/)
+    if (q) { flushPara(); flushList(); blocks.push({ type: 'quote', text: q[1].trim() }); continue }
+    if (line.startsWith('|') && line.endsWith('|')) {
+      flushPara(); flushList()
+      const rows = []
+      while (i < lines.length) {
+        const row = lines[i].trim()
+        if (!(row.startsWith('|') && row.endsWith('|'))) break
+        const cells = row.slice(1, -1).split('|').map((c) => c.trim())
+        // Skip the markdown separator row (|---|---|)
+        if (!cells.every((c) => c === '' || /^:?-+:?$/.test(c))) rows.push(cells)
+        i++
+      }
+      i--
+      if (rows.length) blocks.push({ type: 'table', rows })
+      continue
+    }
     const li = line.match(/^[-*]\s+(.*)$/)
     if (li) { flushPara(); list.push(li[1].trim()); continue }
     flushList(); para.push(line)

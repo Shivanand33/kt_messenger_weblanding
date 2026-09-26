@@ -130,7 +130,7 @@ const FAQS = [
 ]
 
 const RELATED = [
-  { to: '/help', label: 'Help Center', desc: 'Hundreds of articles usually faster than writing in.', icon: <FiHelpCircle /> },
+  { to: '/messaging-app-help', label: 'Help Center', desc: 'Hundreds of articles usually faster than writing in.', icon: <FiHelpCircle /> },
   { to: '/community', label: 'Community', desc: 'Forums, events and the ambassador programme.', icon: <FiUsers /> },
   { to: '/careers', label: 'Careers', desc: 'Open roles and how the hiring process works.', icon: <FiBriefcase /> },
   { to: '/minis', label: 'KT Minis', desc: 'Watch, create and share short video clips.', icon: <FiVideo /> },
@@ -326,7 +326,7 @@ export function ContactPage() {
             <Button size="lg" variant="primary" onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}>
               {t('Send a message')} <FiSend />
             </Button>
-            <Button size="lg" variant="secondary" onClick={() => { navigate('/help'); window.scrollTo(0, 0) }}>
+            <Button size="lg" variant="secondary" onClick={() => { navigate('/messaging-app-help'); window.scrollTo(0, 0) }}>
               {t('Try the Help Center')} <FiChevronRight />
             </Button>
           </>
@@ -773,7 +773,7 @@ export function ContactPage() {
                 <h3 className="text-sm font-extrabold text-ink">{t('Faster alternatives')}</h3>
                 <ul className="mt-4 space-y-2.5">
                   {[
-                    { label: 'Help Center articles', to: '/help' },
+                    { label: 'Help Center articles', to: '/messaging-app-help' },
                     { label: 'Community forums', to: '/community' },
                     { label: 'Careers and open roles', to: '/careers' },
                   ].map((item) => (
@@ -815,7 +815,7 @@ export function ContactPage() {
         description={t('Hundreds of articles covering setup, privacy, payments and account recovery searchable, and updated with every release.')}
         actions={
           <>
-            <Button size="lg" variant="white" onClick={() => { navigate('/help'); window.scrollTo(0, 0) }}>
+            <Button size="lg" variant="white" onClick={() => { navigate('/messaging-app-help'); window.scrollTo(0, 0) }}>
               {t('Open the Help Center')}
             </Button>
             <Button size="lg" variant="onDark" onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}>

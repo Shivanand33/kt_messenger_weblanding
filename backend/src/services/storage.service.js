@@ -64,14 +64,18 @@ export const storage = {
           CacheControl: 'public, max-age=31536000, immutable',
         }),
       )
-      return { key, url: `${env.storage.publicUrl}/${key}` }
+      const publicBase = env.storage.publicUrl || env.storage.r2.publicUrl
+      return { key, url: `${publicBase}/${key}` }
     }
 
-    // Default: local disk.
+    // Default: local disk. With no MEDIA_PUBLIC_URL the URL is host-relative
+    // (/uploads/...) so it resolves on whatever origin serves the site (dev
+    // proxy, LAN IP, production) instead of only the backend machine itself.
     const dir = path.join(localDir, folder)
     ensureDir(dir)
     fs.writeFileSync(path.join(localDir, key), buffer)
-    return { key, url: `${env.storage.publicUrl}/${folder}/${filename}` }
+    const base = env.storage.publicUrl.replace(/\/+$/, '')
+    return { key, url: base ? `${base}/${folder}/${filename}` : `/uploads/${folder}/${filename}` }
   },
 
   async getObjectStream(key) {

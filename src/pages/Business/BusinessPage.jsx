@@ -51,8 +51,8 @@ export function BusinessPage() {
   // Per-page SEO from admin (Website Content -> seo.business).
   // No block configured = unchanged behaviour.
   // Canonical for this page (follows the URL it is opened at).
-  useSeo({ path: '/business' })
-  useAdminSeo('business', '/business')
+  useSeo({ path: '/business-messaging-app' })
+  useAdminSeo('business', '/business-messaging-app')
 
   const navigate = useNavigate()
   const { openDownloadModal } = useModal()
@@ -169,14 +169,14 @@ export function BusinessPage() {
       title: tr('KT Business App'),
       desc: tr('For small business owners who manage customer conversations on their phone. Share a catalog, automate quick replies, and organize your chats.'),
       cta: tr('Learn about the app'),
-      to: '/apps'
+      to: '/messaging-app-download'
     },
     {
       icon: '⚡',
       title: tr('KT Business Platform (API)'),
       desc: tr('For medium & large businesses looking to scale customer engagement via enterprise grade messaging APIs, AI tools, and CRM integrations.'),
       cta: tr('Explore Platform API'),
-      to: '/security'
+      to: '/secure-messaging-app'
     }
   ]
 
@@ -273,7 +273,7 @@ export function BusinessPage() {
                               <span>{t.bizPlatform}</span>
                             </div>
                             <div className="space-y-2 text-sm font-semibold">
-                              <button onClick={() => go('/business')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.overview}</button>
+                              <button onClick={() => go('/business-messaging-app')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.overview}</button>
                               <button onClick={() => go('/business/features')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.features}</button>
                               <button onClick={() => go('/business/pricing')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.pricing}</button>
                               <button onClick={() => go('/business/flows')} className="block w-full text-left text-slate-700 hover:text-brand-strong transition-colors">{t.flows}</button>
@@ -297,7 +297,7 @@ export function BusinessPage() {
                               <span>{t.bizApp}</span>
                             </div>
                             <div className="space-y-2 text-sm font-semibold text-slate-700">
-                              <button onClick={() => go('/apps')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.overview}</button>
+                              <button onClick={() => go('/messaging-app-download')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.overview}</button>
                               <button onClick={() => go('/business/app-features')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.features}</button>
                               <button onClick={() => go('/business/get-started')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.howToStart}</button>
                               <button onClick={() => go('/business/agent')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.bizAgent}</button>
@@ -355,19 +355,19 @@ export function BusinessPage() {
                         <h3 className="text-lg font-extrabold text-slate-900 border-b pb-2 mb-4">{t.navResources}</h3>
                         
                         <div className="space-y-3">
-                          <button onClick={() => go('/help')} className="flex items-center gap-3 w-full p-2.5 rounded-xl hover:bg-sky-50 transition-colors text-left group">
+                          <button onClick={() => go('/messaging-app-help')} className="flex items-center gap-3 w-full p-2.5 rounded-xl hover:bg-sky-50 transition-colors text-left group">
                             <FiBookOpen className="text-brand-strong text-xl shrink-0" />
                             <span className="font-bold text-slate-900 group-hover:text-brand-strong transition-colors text-sm">{t.resourceLib}</span>
                           </button>
-                          <button onClick={() => go('/blog')} className="flex items-center gap-3 w-full p-2.5 rounded-xl hover:bg-sky-50 transition-colors text-left group">
+                          <button onClick={() => go('/messaging-social-media-blog')} className="flex items-center gap-3 w-full p-2.5 rounded-xl hover:bg-sky-50 transition-colors text-left group">
                             <FiFileText className="text-brand-strong text-xl shrink-0" />
                             <span className="font-bold text-slate-900 group-hover:text-brand-strong transition-colors text-sm">{t.blog}</span>
                           </button>
-                          <button onClick={() => go('/business')} className="flex items-center gap-3 w-full p-2.5 rounded-xl hover:bg-sky-50 transition-colors text-left group">
+                          <button onClick={() => go('/business-messaging-app')} className="flex items-center gap-3 w-full p-2.5 rounded-xl hover:bg-sky-50 transition-colors text-left group">
                             <FiTrendingUp className="text-brand-strong text-xl shrink-0" />
                             <span className="font-bold text-slate-900 group-hover:text-brand-strong transition-colors text-sm">{t.successStories}</span>
                           </button>
-                          <button onClick={() => go('/help')} className="flex items-center gap-3 w-full p-2.5 rounded-xl hover:bg-sky-50 transition-colors text-left group">
+                          <button onClick={() => go('/messaging-app-help')} className="flex items-center gap-3 w-full p-2.5 rounded-xl hover:bg-sky-50 transition-colors text-left group">
                             <FiHelpCircle className="text-brand-strong text-xl shrink-0" />
                             <span className="font-bold text-slate-900 group-hover:text-brand-strong transition-colors text-sm">{t.faqs}</span>
                           </button>
@@ -534,7 +534,7 @@ export function BusinessPage() {
       <div className="bg-[#e0f2fe] text-slate-900 py-3 border-b border-sky-200 select-none">
         <div className="mx-auto flex max-w-[1320px] flex-col items-center justify-between gap-2 px-5 text-center sm:flex-row sm:text-left lg:px-8">
           <p className="text-sm font-semibold">{t.announcementText}</p>
-          <button onClick={() => go('/ai')} className="inline-flex shrink-0 items-center gap-1.5 text-xs font-extrabold text-blue-700 hover:text-blue-900 transition-colors">
+          <button onClick={() => go('/ai-assistant-app')} className="inline-flex shrink-0 items-center gap-1.5 text-xs font-extrabold text-blue-700 hover:text-blue-900 transition-colors">
             <span>{t.learnMore}</span>
             <span className="grid h-5 w-5 place-items-center rounded-full bg-brand-strong text-white text-[10px]">
               <FiArrowRight />
@@ -688,7 +688,7 @@ export function BusinessPage() {
 
                     <div className="pt-4 flex flex-col gap-3">
                       <button
-                        onClick={() => { setGetStartedOpen(false); navigate('/apps') }}
+                        onClick={() => { setGetStartedOpen(false); navigate('/messaging-app-download') }}
                         className="w-full rounded-2xl bg-brand-strong hover:bg-brand-strong-hover py-3.5 text-base font-bold text-white shadow-brand transition-all"
                       >
                         {tr('Launch KT Business Dashboard')}

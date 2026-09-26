@@ -49,7 +49,11 @@ export const env = {
   storage: {
     provider: process.env.STORAGE_PROVIDER || 'local',
     localDir: process.env.STORAGE_LOCAL_DIR || 'uploads',
-    publicUrl: process.env.MEDIA_PUBLIC_URL || 'http://localhost:4000/uploads',
+    // Empty by default: local uploads are returned as host-relative URLs
+    // (/uploads/...) so they resolve on whatever origin serves the site (dev
+    // proxy, LAN IP, production). Set MEDIA_PUBLIC_URL for an absolute base
+    // (e.g. an R2 or CDN URL).
+    publicUrl: process.env.MEDIA_PUBLIC_URL || '',
     maxUploadMb: Number(process.env.MAX_UPLOAD_MB || 10),
     // Cloudflare R2 (S3-compatible). Used when STORAGE_PROVIDER="r2".
     r2: {

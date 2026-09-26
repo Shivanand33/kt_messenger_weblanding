@@ -39,7 +39,14 @@ const IMAGE_MAP = {
 // Live posts carry a real coverUrl (from the DB / media library); hardcoded
 // fallback posts carry an imageKey into the bundled asset map. Fall back to a
 // bundled image so a missing cover never renders a broken <img>.
-const imageFor = (post) => post.coverUrl || IMAGE_MAP[post.imageKey] || footerImg
+// Old uploads were stored as absolute http://localhost:4000/... URLs (the old
+// backend default). Those only resolve on the backend PC itself, so rewrite
+// them same-origin — /uploads is proxied to the backend in dev and routed in
+// production — and images load on every device and environment.
+const sameOriginMedia = (u) =>
+  typeof u === 'string' ? u.replace(/^https?:\/\/(localhost|127\.0\.0\.1):4000\//i, '/') : u
+
+const imageFor = (post) => sameOriginMedia(post.coverUrl) || IMAGE_MAP[post.imageKey] || footerImg
 
 // Bundled posts keyed by slug, so an opened article can render its full body
 // instantly — with no network round-trip, even when the API is unreachable on
@@ -97,7 +104,7 @@ const normalizeCard = (p) => ({
 
 function normalizeDetail(p) {
   // The body is translated whole, then parsed, so its markdown survives.
-  const body = localized(p.body)
+  const body = sameOriginMedia(localized(p.body))
   let blocks = parseBody(body)
   // Drop a leading heading that just repeats the title (many bodies start "# Title").
   const first = (body === p.body ? blocks : parseBody(p.body))[0]
@@ -210,6 +217,48 @@ function ArticleBody({ blocks }) {
             </ul>
           )
         }
+        if (block.type === 'img') {
+          return (
+            <figure key={i} className="mt-6 overflow-hidden rounded-2xl border border-line bg-surface">
+              <img src={img(block.src)} alt={imgAlt(block.src, block.alt)} loading="lazy" className="w-full object-cover" />
+              {block.alt ? (
+                <figcaption className="px-4 py-2 text-xs font-medium text-muted">{block.alt}</figcaption>
+              ) : null}
+            </figure>
+          )
+        }
+        if (block.type === 'quote') {
+          return (
+            <blockquote
+              key={i}
+              className="mt-6 rounded-2xl border-l-4 border-brand-strong bg-brand-soft/60 px-5 py-4 text-[17px] leading-8 text-ink italic"
+            >
+              {renderText(block.text)}
+            </blockquote>
+          )
+        }
+        if (block.type === 'hr') {
+          return <hr key={i} className="mt-8 border-line" />
+        }
+        if (block.type === 'table') {
+          return (
+            <div key={i} className="mt-6 overflow-x-auto rounded-2xl border border-line">
+              <table className="w-full text-left text-[15px]">
+                <tbody>
+                  {block.rows.map((row, r) => (
+                    <tr key={r} className={r === 0 ? 'bg-brand-soft font-bold text-ink' : 'odd:bg-surface even:bg-cream dark:odd:bg-surface-2 dark:even:bg-surface'}>
+                      {row.map((cell, c) => (
+                        <td key={c} className="border-b border-line px-4 py-2.5 align-top text-body">
+                          {renderText(cell)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )
+        }
         return (
           <p
             key={i}
@@ -231,18 +280,18 @@ function ArticleBody({ blocks }) {
 // keywords used to pick the most relevant pages for a given post, so the links
 // are contextual and useful (and improve internal linking / discoverability).
 const EXPLORE_PAGES = [
-  { href: '/ai', label: 'KT AI', blurb: 'Your intelligent assistant, built right into every chat.', Icon: FiCpu, kw: ['ai', 'assistant', 'intelligent', 'smart', 'automation', 'bot', 'summar'] },
-  { href: '/channels', label: 'Channels', blurb: 'Follow updates from the people and organizations you care about.', Icon: FiRadio, kw: ['channel', 'broadcast', 'follow', 'updates', 'creator', 'news', 'announcement'] },
-  { href: '/calling', label: 'Voice & Video Calls', blurb: 'Crystal clear calls that live right inside your conversations.', Icon: FiPhone, kw: ['call', 'calling', 'voice', 'video', 'audio'] },
-  { href: '/messaging', label: 'Messaging', blurb: 'Fast, private messaging for everything you want to share.', Icon: FiMessageCircle, kw: ['message', 'messaging', 'chat', 'text', 'conversation'] },
-  { href: '/groups', label: 'Groups & Communities', blurb: 'Bring people together at any scale from close friends to communities.', Icon: FiUsers, kw: ['group', 'community', 'communities', 'team', 'event', 'poll'] },
-  { href: '/status', label: 'Status', blurb: 'Share moments with photos, videos and text that disappear in 24 hours.', Icon: FiCamera, kw: ['status', 'story', 'stories', 'moment'] },
-  { href: '/security', label: 'Security & Privacy', blurb: 'End to end encryption, on by default, for every conversation.', Icon: FiShield, kw: ['security', 'privacy', 'private', 'encryption', 'encrypted', 'safe', 'secure', 'authentication'] },
-  { href: '/business', label: 'KT for Business', blurb: 'Turn conversations into lasting customer relationships.', Icon: FiBriefcase, kw: ['business', 'customer', 'marketing', 'commerce', 'sell', 'brand'] },
+  { href: '/ai-assistant-app', label: 'KT AI', blurb: 'Your intelligent assistant, built right into every chat.', Icon: FiCpu, kw: ['ai', 'assistant', 'intelligent', 'smart', 'automation', 'bot', 'summar'] },
+  { href: '/social-media-platform', label: 'Channels', blurb: 'Follow updates from the people and organizations you care about.', Icon: FiRadio, kw: ['channel', 'broadcast', 'follow', 'updates', 'creator', 'news', 'announcement'] },
+  { href: '/video-calling-app', label: 'Voice & Video Calls', blurb: 'Crystal clear calls that live right inside your conversations.', Icon: FiPhone, kw: ['call', 'calling', 'voice', 'video', 'audio'] },
+  { href: '/messaging-app', label: 'Messaging', blurb: 'Fast, private messaging for everything you want to share.', Icon: FiMessageCircle, kw: ['message', 'messaging', 'chat', 'text', 'conversation'] },
+  { href: '/group-chat-app', label: 'Groups & Communities', blurb: 'Bring people together at any scale from close friends to communities.', Icon: FiUsers, kw: ['group', 'community', 'communities', 'team', 'event', 'poll'] },
+  { href: '/social-feed-app', label: 'Status', blurb: 'Share moments with photos, videos and text that disappear in 24 hours.', Icon: FiCamera, kw: ['status', 'story', 'stories', 'moment'] },
+  { href: '/secure-messaging-app', label: 'Security & Privacy', blurb: 'End to end encryption, on by default, for every conversation.', Icon: FiShield, kw: ['security', 'privacy', 'private', 'encryption', 'encrypted', 'safe', 'secure', 'authentication'] },
+  { href: '/business-messaging-app', label: 'KT for Business', blurb: 'Turn conversations into lasting customer relationships.', Icon: FiBriefcase, kw: ['business', 'customer', 'marketing', 'commerce', 'sell', 'brand'] },
   { href: '/wallet', label: 'Wallet & Payments', blurb: 'Send and receive payments securely inside your chats.', Icon: FiCreditCard, kw: ['wallet', 'payment', 'pay', 'coin', 'money', 'transfer'] },
   { href: '/marketplace', label: 'Marketplace', blurb: 'Discover, buy and sell right where you already chat.', Icon: FiShoppingBag, kw: ['marketplace', 'buy', 'sell', 'shop', 'store', 'catalog'] },
 ]
-const DEFAULT_EXPLORE = ['/ai', '/channels', '/calling']
+const DEFAULT_EXPLORE = ['/ai-assistant-app', '/social-media-platform', '/video-calling-app']
 
 // Pick up to 3 internal pages most relevant to a post (by category, tags, title
 // and description), falling back to core pages so the section is always useful.
@@ -534,7 +583,7 @@ export function BlogPage() {
   }, [activeSlug])
 
   const openArticle = (slug) => navigate(`/blog/${slug}`)
-  const closeArticle = () => navigate('/blog')
+  const closeArticle = () => navigate('/messaging-social-media-blog')
 
   // Canonical + social tags. The path is built from `activeSlug` — the slug in
   // the URL, which is the admin-defined slug stored in the database — so the
@@ -543,7 +592,7 @@ export function BlogPage() {
     enabled: !!activeSlug,
     // hreflang once the article is on screen — not while it loads or for "Article not found".
     hreflang: Boolean(activePost),
-    path: activeSlug ? `/blog/${activeSlug}` : '/blog',
+    path: activeSlug ? `/blog/${activeSlug}` : '/messaging-social-media-blog',
     type: 'article',
     title: activePost ? `${activePost.seoTitle || activePost.title} · ${t('KT Messenger Blog')}` : undefined,
     description: activePost?.seoDescription || activePost?.description || undefined,
@@ -553,7 +602,7 @@ export function BlogPage() {
   // Index page tags, so /blog itself is also canonical.
   useSeo({
     enabled: !activeSlug,
-    path: '/blog',
+    path: '/messaging-social-media-blog',
     title: 'KT Messenger Blog | Messaging & Social Media Insights',
     description: 'Explore messaging, social media, technology, and digital communication insights, tips, trends, and useful guides on the KT Messenger blog.',
   })

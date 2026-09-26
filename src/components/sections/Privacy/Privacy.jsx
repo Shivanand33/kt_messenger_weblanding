@@ -20,7 +20,7 @@ export function Privacy() {
         { icon: <FiLock />, title: t('Private Conversations Made Simple'), text: t('Send messages instantly while keeping your conversations protected with privacy focused features.') },
         { icon: <FiClock />, title: t('Share More Than Text'), text: t('KT Messenger allows you to share photos, videos, documents, files, and voice messages to keep every conversation meaningful.') },
       ]}
-      cta={<LinkArrow to="/privacy">{t('How privacy works')}</LinkArrow>}
+      cta={<LinkArrow to="/private-messaging-app">{t('How privacy works')}</LinkArrow>}
       accent={
         <div className="absolute -bottom-4 right-5 flex items-center gap-2.5 rounded-2xl border border-brand/25 bg-brand-soft p-3 pr-5 shadow-card sm:right-8">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand text-white">

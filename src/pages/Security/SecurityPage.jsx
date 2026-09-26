@@ -28,10 +28,10 @@ export function SecurityPage() {
   useSeo({
     title: 'KT Messenger | Secure Messaging App End-to-End Encryption.',
     description: 'KT Messenger provides secure messaging with end-to-end encryption, private chats, protected calls, and advanced privacy features to keep conversations safe.',
-    path: '/security',
+    path: '/secure-messaging-app',
   })
 
-  useAdminSeo('security', '/security')
+  useAdminSeo('security', '/secure-messaging-app')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -170,10 +170,10 @@ export function SecurityPage() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <Button size="lg" onClick={() => navigate('/apps')}>
+                <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Get Started Free')} <FiChevronRight />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/help')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging-app-help')}>
                   {t('View API Docs')}
                 </Button>
               </div>

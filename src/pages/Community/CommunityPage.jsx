@@ -26,7 +26,7 @@ import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { api } from '../../services/apiClient'
 
 const RELATED = [
-  { to: '/help', label: 'Help Center', desc: 'Official articles and troubleshooting guides.', icon: <FiSearch /> },
+  { to: '/messaging-app-help', label: 'Help Center', desc: 'Official articles and troubleshooting guides.', icon: <FiSearch /> },
   { to: '/contact', label: 'Contact', desc: 'Reach a specific team directly.', icon: <FiMessageSquare /> },
   { to: '/about', label: 'About', desc: 'Our mission and privacy-first charter.', icon: <FiCompass /> },
   { to: '/careers', label: 'Careers', desc: 'We hire from the community regularly.', icon: <FiUsers /> },
@@ -91,10 +91,10 @@ export function CommunityPage() {
                 {t('KT Messenger is a modern, secure social and messaging platform for real-time communication, private chats, and professional networking.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="lg" onClick={() => navigate('/apps')}>
+                <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Join KT Community')} <FiChevronRight className="text-lg" />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging-app')}>
                   {t('Explore Features')}
                 </Button>
               </div>
@@ -190,7 +190,7 @@ export function CommunityPage() {
                   </p>
                 </div>
                 <div className="mt-8 pt-6 border-t border-line">
-                  <Button variant="secondary" size="sm" onClick={() => navigate('/business')}>
+                  <Button variant="secondary" size="sm" onClick={() => navigate('/business-messaging-app')}>
                     {t('Explore Business Connections')} <FiChevronRight />
                   </Button>
                 </div>
@@ -211,7 +211,7 @@ export function CommunityPage() {
                   </p>
                 </div>
                 <div className="mt-8 pt-6 border-t border-line">
-                  <Button variant="secondary" size="sm" onClick={() => navigate('/messaging')}>
+                  <Button variant="secondary" size="sm" onClick={() => navigate('/messaging-app')}>
                     {t('Learn About Private Messaging')} <FiChevronRight />
                   </Button>
                 </div>
@@ -240,7 +240,7 @@ export function CommunityPage() {
         description={t('Get started with KT Messenger today to connect with friends, family, and online communities worldwide.')}
         actions={
           <>
-            <Button size="lg" variant="white" onClick={() => navigate('/apps')}>
+            <Button size="lg" variant="white" onClick={() => navigate('/messaging-app-download')}>
               {t('Download App')}
             </Button>
             <Button size="lg" variant="onDark" onClick={() => { navigate('/contact'); window.scrollTo(0, 0) }}>

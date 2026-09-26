@@ -93,14 +93,14 @@ const highlights = [
     label: 'KT Messaging',
     title: 'Private & Secure Messaging',
     text: 'Send instant messages, photos, videos, files, and voice notes with default E2E encryption.',
-    link: '/messaging',
+    link: '/messaging-app',
   },
   {
     image: collabImg,
     label: 'Voice & Video Calls',
     title: 'Ultra HD Voice & Video Calling',
     text: 'Connect 1-on-1 or host group video calls with 1080p quality and AI noise reduction.',
-    link: '/calling',
+    link: '/video-calling-app',
   },
 ]
 
@@ -333,7 +333,7 @@ export function Insights() {
                 {t('Access chats, updates, news, minis, calls, AI and communities from a single platform no more switching between several apps to get things done.')}
               </p>
               <div className="mt-6">
-                <LinkArrow to="/blog">{t('Read More')}</LinkArrow>
+                <LinkArrow to="/messaging-social-media-blog">{t('Read More')}</LinkArrow>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">

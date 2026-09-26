@@ -14,7 +14,7 @@ export function Calling() {
       title={t('Voice And Video Calls For Better Connections')}
       description={t('Stay close to the people who matter with clear and reliable voice and video calling. Whether you are talking with family, friends, or colleagues, KT Messenger helps you communicate naturally through high quality voice calls, video calls, group calls, screen sharing, and cross device calling.')}
       media={<PhoneCallMockup />}
-      cta={<LinkArrow to="/calling">{t('Learn more about calls')}</LinkArrow>}
+      cta={<LinkArrow to="/video-calling-app">{t('Learn more about calls')}</LinkArrow>}
     />
   )
 }

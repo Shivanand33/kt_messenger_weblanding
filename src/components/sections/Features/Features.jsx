@@ -12,37 +12,37 @@ const features = [
     icon: <FiMessageCircle />,
     title: 'Instant messaging',
     text: 'Texts, photos, voice notes, and files that arrive the moment you hit send.',
-    to: '/messaging',
+    to: '/messaging-app',
   },
   {
     icon: <FiPhone />,
     title: 'Voice & video calls',
     text: 'Free calls that stay clear, whether it is one friend or a full group.',
-    to: '/calling',
+    to: '/video-calling-app',
   },
   {
     icon: <FiLock />,
     title: 'End to end encryption',
     text: 'Privacy that is on by default, for every chat and every call you make.',
-    to: '/security',
+    to: '/secure-messaging-app',
   },
   {
     icon: <FiCloud />,
     title: 'Synced everywhere',
     text: 'Pick up any conversation on your phone, tablet, or computer instantly.',
-    to: '/apps',
+    to: '/messaging-app-download',
   },
   {
     icon: <FiBell />,
     title: 'Calm notifications',
     text: 'Meaningful alerts you can shape, so you stay present and in control.',
-    to: '/messaging',
+    to: '/messaging-app',
   },
   {
     icon: <FiZap />,
     title: 'Fast & lightweight',
     text: 'Built to feel instant, even on older phones and slower networks.',
-    to: '/apps',
+    to: '/messaging-app-download',
   },
 ]
 

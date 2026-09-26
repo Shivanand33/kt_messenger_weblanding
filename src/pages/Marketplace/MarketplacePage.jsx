@@ -126,7 +126,7 @@ const RELATED = [
   { to: '/wallet', label: 'Wallet', desc: 'Pay in one tap and split orders with friends.', icon: <FiCreditCard /> },
   { to: '/markets', label: 'Markets', desc: 'Live prices and zero spread currency conversion.', icon: <FiTrendingUp /> },
   { to: '/news', label: 'News', desc: 'Business headlines and a daily audio brief.', icon: <FiActivity /> },
-  { to: '/notes', label: 'Notes', desc: 'Keep receipts and wish lists in an encrypted vault.', icon: <FiFileText /> },
+  { to: '/notes-app', label: 'Notes', desc: 'Keep receipts and wish lists in an encrypted vault.', icon: <FiFileText /> },
 ]
 
 const SORT_OPTIONS = ['Popular', 'Price: low', 'Price: high', 'Top rated', 'Biggest discount']

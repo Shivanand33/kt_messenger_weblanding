@@ -41,10 +41,10 @@ export function KtAIPage() {
   useSeo({
     title: 'KT Messenger | AI Assistant for Smart & Private Chats.',
     description: 'KT Messenger AI helps you chat smarter with instant answers, AI-powered features, smart search, and seamless communication in one messaging app.',
-    path: '/ai',
+    path: '/ai-assistant-app',
   })
 
-  useAdminSeo('ai', '/ai')
+  useAdminSeo('ai', '/ai-assistant-app')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -208,10 +208,10 @@ export function KtAIPage() {
                 {t('Experience smarter conversations with KT AI. Get helpful answers, AI-powered assistance, and seamless communication inside a modern messaging platform.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="lg" onClick={() => navigate('/apps')}>
+                <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Try KT AI Free')} <FiDownload className="text-lg" />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/apps')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Explore Capabilities')} <FiChevronRight />
                 </Button>
               </div>
@@ -337,7 +337,7 @@ export function KtAIPage() {
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
               <span className="text-xs text-muted font-medium">{t('Included free on all devices')}</span>
-              <Button size="sm" onClick={() => navigate('/apps')}>
+              <Button size="sm" onClick={() => navigate('/messaging-app-download')}>
                 {t('Try KT AI Now')} <FiChevronRight />
               </Button>
             </div>
@@ -565,10 +565,10 @@ export function KtAIPage() {
               {t('Download KT Messenger now and experience next gen AI image generation, group assistant, and search.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="white" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Try KT AI Free')} <FiDownload />
               </Button>
-              <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="onDark" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Launch Web Version')} <FiChevronRight />
               </Button>
             </div>

@@ -34,10 +34,10 @@ export function ChannelsPage() {
   useSeo({
     title: 'Broadcast Channels & Community Updates | KT Messenger.',
     description: 'KT Messenger Channels help you share updates, announcements, and content with communities. Build connections through secure broadcast messaging and engagement.',
-    path: '/channels',
+    path: '/social-media-platform',
   })
 
-  useAdminSeo('channels', '/channels')
+  useAdminSeo('channels', '/social-media-platform')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -193,10 +193,10 @@ export function ChannelsPage() {
                 {t('Share updates, announcements, and content with your audience through KT Messenger Channels. Build communities, engage followers, and communicate easily with a secure messaging platform.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="lg" onClick={() => navigate('/apps')}>
+                <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Explore Directory')} <FiDownload className="text-lg" />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/apps')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Create Channel')} <FiChevronRight />
                 </Button>
               </div>
@@ -319,7 +319,7 @@ export function ChannelsPage() {
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
               <span className="text-xs text-muted font-medium">{t('Free for all creators & channels')}</span>
-              <Button size="sm" onClick={() => navigate('/apps')}>
+              <Button size="sm" onClick={() => navigate('/messaging-app-download')}>
                 {t('Create Channel')} <FiChevronRight />
               </Button>
             </div>
@@ -556,10 +556,10 @@ export function ChannelsPage() {
               {t('Download KT Messenger now to subscribe to top creators or launch your own broadcast channel.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="white" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Explore Directory')} <FiDownload />
               </Button>
-              <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="onDark" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Launch Web App')} <FiChevronRight />
               </Button>
             </div>

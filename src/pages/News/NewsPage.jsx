@@ -106,7 +106,7 @@ const RELATED = [
   { to: '/markets', label: 'Markets', desc: 'Live prices, watchlists and FX conversion.', icon: <FiTrendingUp /> },
   { to: '/wallet', label: 'Wallet', desc: 'Send money in chat with zero transfer fees.', icon: <FiZap /> },
   { to: '/marketplace', label: 'Marketplace', desc: 'Shop verified stores without leaving a thread.', icon: <FiStar /> },
-  { to: '/notes', label: 'Notes', desc: 'Encrypted notes, checklists and self chat.', icon: <FiBookmark /> },
+  { to: '/notes-app', label: 'Notes', desc: 'Encrypted notes, checklists and self chat.', icon: <FiBookmark /> },
 ]
 
 const DIGEST_SECONDS = 200

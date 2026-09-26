@@ -59,55 +59,55 @@ const features = [
     title: 'Messaging',
     desc: 'Express yourself with instant voice notes, HD photos, 4K videos, and custom sticker packs.',
     image: privateImg,
-    to: '/messaging'
+    to: '/messaging-app'
   },
   {
     title: 'Voice & Video Calling',
     desc: 'Crystal clear encrypted 1-on-1 and group voice/video calls with low latency screen sharing.',
     image: privateImg,
-    to: '/calling'
+    to: '/video-calling-app'
   },
   {
     title: 'Group Communities',
     desc: 'Organize communities up to 1024 members with admin controls, polls, and event reminders.',
     image: groupImg,
-    to: '/groups'
+    to: '/group-chat-app'
   },
   {
     title: 'Channels & Broadcasts',
     desc: 'Follow official channels, creators, and brands for one way updates and announcements.',
     image: businessImg,
-    to: '/channels'
+    to: '/social-media-platform'
   },
   {
     title: 'KT AI Assistant',
     desc: 'Generate images, translate 50+ languages, and answer questions inside your chats.',
     image: securityImg,
-    to: '/ai'
+    to: '/ai-assistant-app'
   },
   {
     title: 'Status Stories',
     desc: 'Share text, photo, video, and 30-second voice updates that disappear in 24 hours.',
     image: privateImg,
-    to: '/status'
+    to: '/social-feed-app'
   },
   {
     title: 'KT Encryption',
     desc: 'End to end KT Encryption Protocol keeps your personal messages confidential.',
     image: securityImg,
-    to: '/security'
+    to: '/secure-messaging-app'
   },
   {
     title: 'KT Plus Customization',
     desc: 'Unlock ultra themes, custom fonts, auto reply, and ghost mode privacy controls.',
     image: groupImg,
-    to: '/plus'
+    to: '/premium-messaging-app'
   },
   {
     title: 'KT Business Suite',
     desc: 'Reach customers globally with product catalogs, AI sales bots, and cloud API integrations.',
     image: businessImg,
-    to: '/business'
+    to: '/business-messaging-app'
   }
 ]
 
@@ -178,8 +178,8 @@ export function AppsPage() {
   // Per-page SEO from admin (Website Content -> seo.apps).
   // No block configured = unchanged behaviour.
   // Canonical for this page (follows the URL it is opened at).
-  useSeo({ path: '/apps' })
-  useAdminSeo('apps', '/apps')
+  useSeo({ path: '/messaging-app-download' })
+  useAdminSeo('apps', '/messaging-app-download')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -239,11 +239,11 @@ export function AppsPage() {
             <Reveal from="up" delay={0.1}>
               <p className="mt-4 text-sm text-muted">
                 {t('By installing KT Messenger, you agree to our')}{' '}
-                <button className="underline transition-colors hover:text-brand-ink" onClick={() => navigate('/privacy')}>
+                <button className="underline transition-colors hover:text-brand-ink" onClick={() => navigate('/private-messaging-app')}>
                   {t('Terms')}
                 </button>{' '}
                 &amp;{' '}
-                <button className="underline transition-colors hover:text-brand-ink" onClick={() => navigate('/privacy')}>
+                <button className="underline transition-colors hover:text-brand-ink" onClick={() => navigate('/private-messaging-app')}>
                   {t('Privacy Policy')}
                 </button>
                 .

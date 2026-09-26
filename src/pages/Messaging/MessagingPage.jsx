@@ -40,12 +40,12 @@ export function MessagingPage() {
   useSeo({
     title: 'Free Video Calling App & Secure Messaging | KT Messenger.',
     description: 'KT Messenger is a free, secure messaging and video calling app for private chats, voice calls, real-time messaging, and seamless communication.',
-    path: '/messaging',
+    path: '/messaging-app',
   })
 
   // Per-page SEO from admin (Website Content -> seo.messaging).
   // No block configured = unchanged behaviour.
-  useAdminSeo('messaging', '/messaging')
+  useAdminSeo('messaging', '/messaging-app')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -186,10 +186,10 @@ export function MessagingPage() {
                 {t('Connect privately with KT Messenger, a secure private messaging app built for personal conversations. Send instant messages, photos, videos, files, and voice notes while staying connected across your devices.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="lg" onClick={() => navigate('/apps')}>
+                <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Download KT App')} <FiDownload className="text-lg" />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/apps')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Try Web Version')} <FiChevronRight />
                 </Button>
               </div>
@@ -275,7 +275,7 @@ export function MessagingPage() {
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
               <span className="text-xs text-muted font-medium">{t('Available on iOS, Android & Desktop')}</span>
-              <Button size="sm" onClick={() => navigate('/apps')}>
+              <Button size="sm" onClick={() => navigate('/messaging-app-download')}>
                 {t('Get Started')} <FiChevronRight />
               </Button>
             </div>
@@ -423,7 +423,7 @@ export function MessagingPage() {
             <Reveal key={item.title} from="up">
               <button
                 type="button"
-                onClick={() => navigate('/apps')}
+                onClick={() => navigate('/messaging-app-download')}
                 className="group h-full w-full text-left rounded-3xl border border-line bg-surface p-6 shadow-soft transition-all hover:-translate-y-1 hover:border-brand-strong/30 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 flex flex-col justify-between"
               >
                 <div>
@@ -536,10 +536,10 @@ export function MessagingPage() {
               {t('Download KT Messenger now across all your devices and experience private, high speed communication.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="white" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Download Free App')} <FiDownload />
               </Button>
-              <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="onDark" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Launch Web App')} <FiChevronRight />
               </Button>
             </div>

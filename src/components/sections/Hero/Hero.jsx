@@ -92,7 +92,7 @@ export function Hero() {
                 <Button size="lg" onClick={openDownloadModal}>
                   {t('Download KT Messenger')} <FiDownload />
                 </Button>
-                <Button variant="onDark" size="lg" onClick={() => window.location.href = languagePath('/messaging')}>
+                <Button variant="onDark" size="lg" onClick={() => window.location.href = languagePath('/messaging-app')}>
                   {t('Explore Features')}
                 </Button>
               </div>

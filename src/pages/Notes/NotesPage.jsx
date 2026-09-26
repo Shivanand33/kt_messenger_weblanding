@@ -48,10 +48,10 @@ export function NotesPage() {
   useSeo({
     title: 'KT Messenger Notes | Secure Messaging & Social Platform.',
     description: 'Explore KT Messenger Notes for secure messaging, social networking, and business communication, helping users and brands connect more easily.',
-    path: '/notes',
+    path: '/notes-app',
   })
 
-  useAdminSeo('notes', '/notes')
+  useAdminSeo('notes', '/notes-app')
 
   // Admin-managed FAQs for this page (Admin -> FAQs, page='notes').
   const [notesFaqs] = useRemoteContent(

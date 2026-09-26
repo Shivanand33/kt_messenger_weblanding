@@ -33,14 +33,14 @@ import { useRemoteContent } from '../../../hooks/useRemoteContent'
 import { languagePath } from '../../../i18n/languageUrls'
 
 const FALLBACK_FEATURE_ITEMS = [
-  { label: 'Calling', to: '/calling', icon: <FiPhone /> },
-  { label: 'Messaging', to: '/messaging', icon: <FiMessageSquare /> },
-  { label: 'Groups', to: '/groups', icon: <FiUsers /> },
-  { label: 'Channels', to: '/channels', icon: <FiTv /> },
-  { label: 'KT AI', to: '/ai', icon: <FiZap /> },
-  { label: 'Status', to: '/status', icon: <FiRadio /> },
-  { label: 'Security', to: '/security', icon: <FiShield /> },
-  { label: 'KT Plus', to: '/plus', icon: <FiStar /> },
+  { label: 'Calling', to: '/video-calling-app', icon: <FiPhone /> },
+  { label: 'Messaging', to: '/messaging-app', icon: <FiMessageSquare /> },
+  { label: 'Groups', to: '/group-chat-app', icon: <FiUsers /> },
+  { label: 'Channels', to: '/social-media-platform', icon: <FiTv /> },
+  { label: 'KT AI', to: '/ai-assistant-app', icon: <FiZap /> },
+  { label: 'Status', to: '/social-feed-app', icon: <FiRadio /> },
+  { label: 'Security', to: '/secure-messaging-app', icon: <FiShield /> },
+  { label: 'KT Plus', to: '/premium-messaging-app', icon: <FiStar /> },
   // Hidden from the Features menu. The pages and their routes are untouched,
   // so /news, /markets, /wallet and /marketplace still work if visited
   // directly. To restore, uncomment these four lines and the matching icon
@@ -49,19 +49,19 @@ const FALLBACK_FEATURE_ITEMS = [
   // { label: 'Markets', to: '/markets', icon: <FiTrendingUp /> },
   // { label: 'Wallet', to: '/wallet', icon: <FiCreditCard /> },
   // { label: 'Marketplace', to: '/marketplace', icon: <FiShoppingBag /> },
-  { label: 'Notes', to: '/notes', icon: <FiEdit3 /> },
+  { label: 'Notes', to: '/notes-app', icon: <FiEdit3 /> },
   { label: 'Minis', to: '/minis', icon: <FiPlayCircle /> },
   { label: 'Community', to: '/community', icon: <FiCompass /> }
 ]
 
 const FALLBACK_NAV_LINKS = [
-  { label: 'Privacy', to: '/privacy' },
-  { label: 'Blog', to: '/blog' },
-  { label: 'Apps', to: '/apps' },
-  { label: 'Help Center', to: '/help', external: true },
+  { label: 'Privacy', to: '/private-messaging-app' },
+  { label: 'Blog', to: '/messaging-social-media-blog' },
+  { label: 'Apps', to: '/messaging-app-download' },
+  { label: 'Help Center', to: '/messaging-app-help', external: true },
   // KT Business is its own section of the site, so it opens in a new tab and
   // the page the visitor was reading stays where it is.
-  { label: 'For Business', to: '/business', external: true, newTab: true },
+  { label: 'For Business', to: '/business-messaging-app', external: true, newTab: true },
 ]
 
 const getNavIcon = (row) => {

@@ -32,8 +32,8 @@ const FALLBACK_ABOUT = {
 
 const RELATED = [
   { to: '/careers', label: 'Careers', desc: 'Open roles across engineering, design and policy.', icon: <FiUsers /> },
-  { to: '/privacy', label: 'Privacy', desc: 'How encryption works and what we never collect.', icon: <FiLock /> },
-  { to: '/blog', label: 'Blog', desc: 'Product updates and engineering write ups.', icon: <FiMessageSquare /> },
+  { to: '/private-messaging-app', label: 'Privacy', desc: 'How encryption works and what we never collect.', icon: <FiLock /> },
+  { to: '/messaging-social-media-blog', label: 'Blog', desc: 'Product updates and engineering write ups.', icon: <FiMessageSquare /> },
   { to: '/minis', label: 'KT Minis', desc: 'Watch, create and share short video clips.', icon: <FiVideo /> },
 ]
 
@@ -93,7 +93,7 @@ export function AboutPage() {
                 <Button size="lg" onClick={openDownloadModal}>
                   {t('Get KT Messenger')}
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/privacy')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/private-messaging-app')}>
                   {t('Privacy Charter')}
                 </Button>
               </div>

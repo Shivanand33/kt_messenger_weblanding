@@ -37,10 +37,10 @@ export function KtPlusPage() {
   useSeo({
     title: 'KT Messenger Plus | Advanced Messaging & Premium Features.',
     description: 'Upgrade your communication with KT Messenger Plus. Enjoy advanced messaging, secure chats, enhanced privacy, smart features, and seamless connections.',
-    path: '/plus',
+    path: '/premium-messaging-app',
   })
 
-  useAdminSeo('plus', '/plus')
+  useAdminSeo('plus', '/premium-messaging-app')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -178,10 +178,10 @@ export function KtPlusPage() {
                 {t('KT Messenger Plus enhances your everyday communication with smarter chats, improved privacy controls, and powerful messaging tools that help you stay connected easily.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="lg" onClick={() => navigate('/apps')}>
+                <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Upgrade to KT Plus')} <CrownIcon className="text-lg ml-1" />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/apps')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Compare Plans')} <FiChevronRight />
                 </Button>
               </div>
@@ -301,7 +301,7 @@ export function KtPlusPage() {
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
               <span className="text-xs text-muted font-medium">{t('Unlocked with KT Plus Subscription')}</span>
-              <Button size="sm" onClick={() => navigate('/apps')}>
+              <Button size="sm" onClick={() => navigate('/messaging-app-download')}>
                 {t('Get KT Plus')} <FiChevronRight />
               </Button>
             </div>
@@ -536,10 +536,10 @@ export function KtPlusPage() {
               {t('Unlock 10GB file transfers, 5-account dual space, custom themes, and stealth privacy.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="white" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Get KT Plus Now')} <CrownIcon className="text-lg ml-1" />
               </Button>
-              <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="onDark" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Launch Web App')} <FiChevronRight />
               </Button>
             </div>

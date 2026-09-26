@@ -35,10 +35,10 @@ export function StatusPage() {
   useSeo({
     title: 'Status Updates & Stories Feature | KT Messenger App.',
     description: 'Share moments, updates, and stories with KT Messenger Status. Enjoy a secure messaging experience with instant sharing and real-time connections.',
-    path: '/status',
+    path: '/social-feed-app',
   })
 
-  useAdminSeo('status', '/status')
+  useAdminSeo('status', '/social-feed-app')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -171,10 +171,10 @@ export function StatusPage() {
                 {t('Stay connected by sharing updates, photos, and moments with your friends, family, and communities. KT Messenger Status makes communication more engaging with a simple and secure way to express yourself.')}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="lg" onClick={() => navigate('/apps')}>
+                <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Share Status Now')} <FiDownload className="text-lg" />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/apps')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Explore Features')} <FiChevronRight />
                 </Button>
               </div>
@@ -305,7 +305,7 @@ export function StatusPage() {
 
             <div className="mt-8 pt-6 border-t border-line flex items-center justify-between">
               <span className="text-xs text-muted font-medium">{t('Included free in KT Messenger')}</span>
-              <Button size="sm" onClick={() => navigate('/apps')}>
+              <Button size="sm" onClick={() => navigate('/messaging-app-download')}>
                 {t('Share Status Now')} <FiChevronRight />
               </Button>
             </div>
@@ -534,10 +534,10 @@ export function StatusPage() {
               {t('Download KT Messenger now to share 24-hour HD video, photos, and voice status updates.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="white" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Download Free App')} <FiDownload />
               </Button>
-              <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="onDark" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Launch Web App')} <FiChevronRight />
               </Button>
             </div>

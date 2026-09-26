@@ -45,25 +45,25 @@ const privacyControlsCards = [
     title: 'Privacy checkup',
     desc: 'Personalize your KT Messenger privacy settings with easy step by step guidance to keep your account safe and private.',
     badge: 'Checkup Guide 🛡️',
-    to: '/security'
+    to: '/secure-messaging-app'
   },
   {
     title: 'View once media',
     desc: 'Send photos and videos that disappear after the recipient opens them once, without leaving a trace in their phone gallery.',
     badge: 'Media Privacy 📷',
-    to: '/messaging'
+    to: '/messaging-app'
   },
   {
     title: 'Two step verification',
     desc: 'Add an extra layer of protection to your phone registration with a custom 6-digit PIN and Passkey biometrics.',
     badge: 'PIN Security 🔐',
-    to: '/security'
+    to: '/secure-messaging-app'
   },
   {
     title: 'Group privacy controls',
     desc: 'Decide who can add you to group chats choose between Everyone, My Contacts, or My Contacts Except.',
     badge: 'Group Safety 👥',
-    to: '/groups'
+    to: '/group-chat-app'
   }
 ]
 
@@ -71,37 +71,37 @@ const discoverMoreFeatures = [
   {
     title: 'Calling',
     image: privateImg,
-    to: '/calling'
+    to: '/video-calling-app'
   },
   {
     title: 'Groups',
     image: groupImg,
-    to: '/groups'
+    to: '/group-chat-app'
   },
   {
     title: 'KT AI',
     image: securityImg,
-    to: '/ai'
+    to: '/ai-assistant-app'
   },
   {
     title: 'Channels',
     image: businessImg,
-    to: '/channels'
+    to: '/social-media-platform'
   },
   {
     title: 'Status Stories',
     image: privateImg,
-    to: '/status'
+    to: '/social-feed-app'
   },
   {
     title: 'KT Business',
     image: businessImg,
-    to: '/business'
+    to: '/business-messaging-app'
   },
   {
     title: 'KT Plus',
     image: groupImg,
-    to: '/plus'
+    to: '/premium-messaging-app'
   }
 ]
 
@@ -109,12 +109,12 @@ export function PrivacyPage() {
   useSeo({
     title: 'KT Messenger Privacy Policy | Secure Messaging App.',
     description: 'Learn how KT Messenger protects your privacy with secure messaging, private chats, encryption, privacy controls, and safe communication features.',
-    path: '/privacy',
+    path: '/private-messaging-app',
   })
 
   // Per-page SEO from admin (Website Content -> seo.privacy).
   // No block configured = unchanged behaviour.
-  useAdminSeo('privacy', '/privacy')
+  useAdminSeo('privacy', '/private-messaging-app')
 
   const navigate = useNavigate()
   const featureNavHref = useFeatureNavHref()
@@ -190,7 +190,10 @@ export function PrivacyPage() {
                   <FiShield className="text-brand-strong" /> {t('Default End to End Encryption')}
                 </span>
                 <h1 className="mt-4 text-3xl font-extrabold leading-[1.12] tracking-tight text-ink sm:text-4xl lg:text-[3.25rem] lg:leading-[1.15]">
-                  {t('KT Messenger Privacy – Secure Messaging App')}
+                  {t('KT Messenger')} <br />
+                  <span className="bg-gradient-to-r from-brand-strong to-brand-ink bg-clip-text text-transparent">
+                    {t('Privacy – Secure Messaging App')}
+                  </span>
                 </h1>
               </Reveal>
 
@@ -205,7 +208,7 @@ export function PrivacyPage() {
                   <Button size="lg" onClick={openDownloadModal}>
                     {t('Download App')} <FiDownload />
                   </Button>
-                  <Button variant="secondary" size="lg" onClick={() => navigate('/security')}>
+                  <Button variant="secondary" size="lg" onClick={() => navigate('/secure-messaging-app')}>
                     {t('Security Architecture')} <FiChevronRight />
                   </Button>
                 </div>
@@ -501,7 +504,7 @@ export function PrivacyPage() {
               </p>
               <div className="mt-8">
                 <button
-                  onClick={() => navigate('/security')}
+                  onClick={() => navigate('/secure-messaging-app')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
                   <span>{t('Learn more')}</span>
@@ -529,7 +532,7 @@ export function PrivacyPage() {
               </p>
               <div className="mt-8">
                 <button
-                  onClick={() => navigate('/messaging')}
+                  onClick={() => navigate('/messaging-app')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
                   <span>{t('Learn more')}</span>
@@ -793,7 +796,7 @@ export function PrivacyPage() {
               </p>
               <div className="mt-8">
                 <button
-                  onClick={() => navigate('/calling')}
+                  onClick={() => navigate('/video-calling-app')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
                   <span>{t('Learn more')}</span>
@@ -967,7 +970,7 @@ export function PrivacyPage() {
               </p>
               <div className="mt-8">
                 <button
-                  onClick={() => navigate('/help')}
+                  onClick={() => navigate('/messaging-app-help')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
                   <span>{t('Learn more')}</span>
@@ -995,7 +998,7 @@ export function PrivacyPage() {
               </p>
               <div className="mt-8">
                 <button
-                  onClick={() => navigate('/security')}
+                  onClick={() => navigate('/secure-messaging-app')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
                   <span>{t('Learn more')}</span>
@@ -1098,7 +1101,7 @@ export function PrivacyPage() {
                     {t('Backups are end to end encrypted and stored privately in your Google Drive.')}{' '}
                     <button
                       type="button"
-                      onClick={() => navigate('/help')}
+                      onClick={() => navigate('/messaging-app-help')}
                       className="text-sky-500 font-bold underline hover:text-sky-600 transition-colors"
                     >
                       {t("Learn more")}
@@ -1194,7 +1197,7 @@ export function PrivacyPage() {
               </p>
               <div className="mt-8">
                 <button
-                  onClick={() => navigate('/security')}
+                  onClick={() => navigate('/secure-messaging-app')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
                   <span>{t('Learn more')}</span>
@@ -1322,7 +1325,7 @@ export function PrivacyPage() {
         <Container maxW="max-w-3xl">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-extrabold text-ink sm:text-4xl">{t('Need more help?')}</h2>
-            <button onClick={() => navigate('/help')} className="inline-flex items-center gap-1 text-sm font-bold text-brand-ink hover:text-brand-strong">
+            <button onClick={() => navigate('/messaging-app-help')} className="inline-flex items-center gap-1 text-sm font-bold text-brand-ink hover:text-brand-strong">
               <span>{t('See all FAQs')}</span>
               <FiArrowUpRight />
             </button>

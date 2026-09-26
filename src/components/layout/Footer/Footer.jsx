@@ -49,10 +49,10 @@ const FALLBACK_COLUMNS = [
     title: 'Product',
     links: [
       { label: 'Features', to: '#features' },
-      { label: 'Calls', to: '/calling' },
-      { label: 'Groups', to: '/groups' },
-      { label: 'Privacy', to: '/privacy' },
-      { label: 'Business', to: '/business' },
+      { label: 'Calls', to: '/video-calling-app' },
+      { label: 'Groups', to: '/group-chat-app' },
+      { label: 'Privacy', to: '/private-messaging-app' },
+      { label: 'Business', to: '/business-messaging-app' },
     ],
   },
   {
@@ -60,7 +60,7 @@ const FALLBACK_COLUMNS = [
     links: [
       { label: 'About', to: '/about' },
       { label: 'Careers', to: '/careers' },
-      { label: 'Blog', to: '/blog' },
+      { label: 'Blog', to: '/messaging-social-media-blog' },
     ],
   },
   {
@@ -75,10 +75,10 @@ const FALLBACK_COLUMNS = [
   {
     title: 'Support',
     links: [
-      { label: 'Help Center', to: '/help' },
+      { label: 'Help Center', to: '/messaging-app-help' },
       { label: 'Contact Us', to: '/contact' },
       { label: 'Community', to: '/community' },
-      { label: 'Status', to: '/status' },
+      { label: 'Status', to: '/social-feed-app' },
     ],
   },
 ]
@@ -183,24 +183,24 @@ const sitemap = [
     group: 'Main',
     links: [
       { label: 'Home', to: '/' },
-      { label: 'Apps & downloads', to: '/apps' },
-      { label: 'Blog', to: '/blog' },
-      { label: 'Help Center', to: '/help' },
-      { label: 'For Business', to: '/business' },
+      { label: 'Apps & downloads', to: '/messaging-app-download' },
+      { label: 'Blog', to: '/messaging-social-media-blog' },
+      { label: 'Help Center', to: '/messaging-app-help' },
+      { label: 'For Business', to: '/business-messaging-app' },
     ],
   },
   {
     group: 'Features',
     links: [
-      { label: 'Messaging', to: '/messaging' },
-      { label: 'Calling', to: '/calling' },
-      { label: 'Groups', to: '/groups' },
-      { label: 'Channels', to: '/channels' },
-      { label: 'Status', to: '/status' },
-      { label: 'KT AI', to: '/ai' },
-      { label: 'KT Plus', to: '/plus' },
+      { label: 'Messaging', to: '/messaging-app' },
+      { label: 'Calling', to: '/video-calling-app' },
+      { label: 'Groups', to: '/group-chat-app' },
+      { label: 'Channels', to: '/social-media-platform' },
+      { label: 'Status', to: '/social-feed-app' },
+      { label: 'KT AI', to: '/ai-assistant-app' },
+      { label: 'KT Plus', to: '/premium-messaging-app' },
       { label: 'KT Minis', to: '/minis' },
-      { label: 'Notes', to: '/notes' },
+      { label: 'Notes', to: '/notes-app' },
     ],
   },
   {
@@ -215,8 +215,8 @@ const sitemap = [
   {
     group: 'Trust',
     links: [
-      { label: 'Privacy', to: '/privacy' },
-      { label: 'Security', to: '/security' },
+      { label: 'Privacy', to: '/private-messaging-app' },
+      { label: 'Security', to: '/secure-messaging-app' },
     ],
   },
 ]
@@ -404,7 +404,7 @@ export function Footer() {
               ) : null}
             </div>
 
-            <button type="button" onClick={() => go({ to: '/privacy' })} className="transition-colors hover:text-ink">
+            <button type="button" onClick={() => go({ to: '/private-messaging-app' })} className="transition-colors hover:text-ink">
               {t('Terms & Privacy Policy')}
             </button>
 

@@ -15,7 +15,7 @@ export function Business() {
       description={t('Meet customers where they already are. Answer questions, share catalogs, and build trust with a business presence people instantly recognize.')}
       image={businessImage}
       imageAlt={t('A small business owner replying to customers')}
-      cta={<LinkArrow to="/business">{t('Explore KT Business')}</LinkArrow>}
+      cta={<LinkArrow to="/business-messaging-app">{t('Explore KT Business')}</LinkArrow>}
       accent={
         <div className="absolute -bottom-4 left-5 flex items-center gap-2.5 rounded-2xl border border-line bg-surface/95 p-3 pr-5 shadow-card backdrop-blur sm:left-8">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand text-white">

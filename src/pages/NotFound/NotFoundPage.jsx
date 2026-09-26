@@ -19,13 +19,13 @@ import businessImg from '../../assets/images/online-marketplace-app-business.jpg
 // one on the Privacy page, so a visitor who lands on a missing page can keep
 // exploring.
 const discoverMoreFeatures = [
-  { title: 'Calling', image: privateImg, to: '/calling' },
-  { title: 'Groups', image: groupImg, to: '/groups' },
-  { title: 'KT AI', image: securityImg, to: '/ai' },
-  { title: 'Channels', image: businessImg, to: '/channels' },
-  { title: 'Status Stories', image: privateImg, to: '/status' },
-  { title: 'KT Business', image: businessImg, to: '/business' },
-  { title: 'KT Plus', image: groupImg, to: '/plus' },
+  { title: 'Calling', image: privateImg, to: '/video-calling-app' },
+  { title: 'Groups', image: groupImg, to: '/group-chat-app' },
+  { title: 'KT AI', image: securityImg, to: '/ai-assistant-app' },
+  { title: 'Channels', image: businessImg, to: '/social-media-platform' },
+  { title: 'Status Stories', image: privateImg, to: '/social-feed-app' },
+  { title: 'KT Business', image: businessImg, to: '/business-messaging-app' },
+  { title: 'KT Plus', image: groupImg, to: '/premium-messaging-app' },
 ]
 
 // Custom 404 shown for any route that doesn't match. Wrapped in MainLayout so it
@@ -118,7 +118,7 @@ export function NotFoundPage() {
               <Button size="lg" onClick={() => navigate('/')}>
                 <FiHome /> {t('Go to Home Page')}
               </Button>
-              <Button size="lg" variant="secondary" onClick={() => navigate('/help')}>
+              <Button size="lg" variant="secondary" onClick={() => navigate('/messaging-app-help')}>
                 <FiCompass /> {t('Visit Help Center')}
               </Button>
             </div>

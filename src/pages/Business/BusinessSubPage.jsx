@@ -129,7 +129,7 @@ export function BusinessSubPage() {
   }, [slug])
 
   // Unknown slug → send back to the Business hub.
-  if (!product) return <Navigate to="/business" replace />
+  if (!product) return <Navigate to="/business-messaging-app" replace />
 
   return (
     <div className="min-h-screen bg-surface">
@@ -137,7 +137,7 @@ export function BusinessSubPage() {
       <header style={{ backgroundColor: DARK }} className="sticky top-0 z-50 border-b border-slate-800 text-white shadow-md">
         <div className="mx-auto flex max-w-[1320px] items-center justify-between px-5 py-3.5 lg:px-8">
           <div className="flex items-center gap-8">
-            <button onClick={() => navigate('/business')} className="flex items-center gap-2 text-xl font-bold tracking-tight text-white hover:opacity-90 transition-opacity">
+            <button onClick={() => navigate('/business-messaging-app')} className="flex items-center gap-2 text-xl font-bold tracking-tight text-white hover:opacity-90 transition-opacity">
               <Logo showWordmark={false} markClassName="h-9 w-9" />
               <span>KT Business</span>
             </button>
@@ -145,7 +145,7 @@ export function BusinessSubPage() {
               {NAV.map((item) => (
                 <button
                   key={item}
-                  onClick={() => navigate('/business')}
+                  onClick={() => navigate('/business-messaging-app')}
                   className="text-[15px] font-semibold text-white/90 transition-colors hover:text-sky-400"
                 >
                   {t(item)}

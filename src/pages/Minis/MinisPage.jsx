@@ -114,7 +114,7 @@ export function MinisPage() {
 
               {/* Action Buttons */}
               <div className="mt-8 flex flex-wrap items-center gap-3">
-                <Button size="lg" onClick={() => navigate('/apps')}>
+                <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   <span>{t('Explore Minis')}</span>
                   <FiChevronRight />
                 </Button>
@@ -153,7 +153,7 @@ export function MinisPage() {
                   </p>
                 </div>
                 <div className="mt-8 pt-6 border-t border-line">
-                  <Button variant="secondary" size="sm" onClick={() => navigate('/apps')}>
+                  <Button variant="secondary" size="sm" onClick={() => navigate('/messaging-app-download')}>
                     {t('Start Watching')} <FiChevronRight />
                   </Button>
                 </div>
@@ -174,7 +174,7 @@ export function MinisPage() {
                   </p>
                 </div>
                 <div className="mt-8 pt-6 border-t border-line">
-                  <Button variant="secondary" size="sm" onClick={() => navigate('/apps')}>
+                  <Button variant="secondary" size="sm" onClick={() => navigate('/messaging-app-download')}>
                     {t('Create Minis')} <FiChevronRight />
                   </Button>
                 </div>
@@ -298,10 +298,10 @@ export function MinisPage() {
               {t('Watch, create, share, and connect with KT Messenger Minis.')}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button variant="white" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="white" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Download Free App')} <FiDownload />
               </Button>
-              <Button variant="onDark" size="lg" onClick={() => navigate('/apps')}>
+              <Button variant="onDark" size="lg" onClick={() => navigate('/messaging-app-download')}>
                 {t('Launch Web App')} <FiChevronRight />
               </Button>
             </div>

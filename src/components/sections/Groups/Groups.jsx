@@ -29,7 +29,7 @@ export function Groups() {
         { icon: <FiUsers />, title: t('Create Meaningful Connections'), text: t('Use communities to share updates, collaborate with groups, exchange ideas, and build stronger connections.') },
         { icon: <FiBarChart2 />, title: t('Groups & Communities'), text: t('Organize people into calm, focused spaces for team collaboration and shared interests.') },
       ]}
-      cta={<LinkArrow to="/groups">{t('Discover Communities')}</LinkArrow>}
+      cta={<LinkArrow to="/group-chat-app">{t('Discover Communities')}</LinkArrow>}
       accent={
         <div className="absolute -bottom-4 -left-3 flex items-center gap-3 rounded-2xl border border-line bg-surface/95 p-3 pr-5 shadow-card backdrop-blur sm:-left-6">
           <div className="flex -space-x-2.5">

@@ -47,7 +47,7 @@ export function VideoShowcase() {
   const featuresData = {
     chat: {
       id: 'chat',
-      route: '/messaging',
+      route: '/messaging-app',
       label: t('Messaging'),
       icon: <FiMessageSquare />,
       headline: t('Instant 4K Media & 2GB Files'),
@@ -58,7 +58,7 @@ export function VideoShowcase() {
     },
     call: {
       id: 'call',
-      route: '/calling',
+      route: '/video-calling-app',
       label: t('Calling'),
       icon: <FiPhone />,
       headline: t('Studio 1080p HD Calling & Screen Share'),
@@ -69,7 +69,7 @@ export function VideoShowcase() {
     },
     groups: {
       id: 'groups',
-      route: '/groups',
+      route: '/group-chat-app',
       label: t('Groups'),
       icon: <FiUsers />,
       headline: t('1,024 Member Groups & Live Polls'),
@@ -80,7 +80,7 @@ export function VideoShowcase() {
     },
     channels: {
       id: 'channels',
-      route: '/channels',
+      route: '/social-media-platform',
       label: t('Channels'),
       icon: <FiRadio />,
       headline: t('1-to Many Broadcast Channels'),
@@ -91,7 +91,7 @@ export function VideoShowcase() {
     },
     ai: {
       id: 'ai',
-      route: '/ai',
+      route: '/ai-assistant-app',
       label: 'KT AI',
       headline: t('Neural AI Multimodal Assistant'),
       shortTag: t('Type `/imagine` prompts for 4K artwork or mention `@KTAI` in groups for instant intelligent answers.'),
@@ -101,7 +101,7 @@ export function VideoShowcase() {
     },
     status: {
       id: 'status',
-      route: '/status',
+      route: '/social-feed-app',
       label: t('Status'),
       icon: <FiClock />,
       headline: t('Disappearing 24-Hour Stories'),
@@ -124,7 +124,7 @@ export function VideoShowcase() {
     },
     security: {
       id: 'security',
-      route: '/security',
+      route: '/secure-messaging-app',
       label: t('Security'),
       icon: <FiShield />,
       headline: t('KT Encryption Protocol 256-bit'),
@@ -135,7 +135,7 @@ export function VideoShowcase() {
     },
     plus: {
       id: 'plus',
-      route: '/plus',
+      route: '/premium-messaging-app',
       label: 'KT Plus',
       icon: <CrownIcon />,
       headline: t('KT Plus Theme Engine & Pro Suite'),

@@ -182,11 +182,11 @@ async function main() {
   console.log('› Seeding navigation & footer...')
   const navItems = [
     { label: 'Features', href: '#features', location: 'header', order: 0 },
-    { label: 'Privacy', href: '/privacy', location: 'header', order: 1 },
-    { label: 'Blog', href: '/blog', location: 'header', order: 2 },
-    { label: 'Apps', href: '/apps', location: 'header', order: 3 },
-    { label: 'Help Center', href: '/help', location: 'header', order: 4 },
-    { label: 'For Business', href: '/business', location: 'header', order: 5 },
+    { label: 'Privacy', href: '/private-messaging-app', location: 'header', order: 1 },
+    { label: 'Blog', href: '/messaging-social-media-blog', location: 'header', order: 2 },
+    { label: 'Apps', href: '/messaging-app-download', location: 'header', order: 3 },
+    { label: 'Help Center', href: '/messaging-app-help', location: 'header', order: 4 },
+    { label: 'For Business', href: '/business-messaging-app', location: 'header', order: 5 },
   ]
   for (const item of navItems) {
     const existing = await prisma.navigationItem.findFirst({ where: { label: item.label, location: item.location } })
