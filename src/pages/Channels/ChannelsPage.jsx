@@ -30,10 +30,109 @@ import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 
+const CHANNELS_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/social-media-platform#webpage",
+      "url": "https://ktmessenger.com/social-media-platform",
+      "name": "KT Messenger · Social Media Platform",
+      "description": "KT Messenger Channels help you share updates, announcements, and content with communities. Build connections through secure broadcast messaging and engagement."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ktmessenger.com/social-media-platform#software",
+      "name": "KT Messenger",
+      "url": "https://ktmessenger.com/social-media-platform",
+      "applicationCategory": "SocialNetworkingApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "description": "KT Messenger Channels help you share updates, announcements, and content with communities. Build connections through secure broadcast messaging and engagement.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ktmessenger.com/social-media-platform#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Social Media Platform",
+          "item": "https://ktmessenger.com/social-media-platform"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/social-media-platform#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are KT Channels?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Channels are a social media feature on KT Messenger that allows creators, organizations, and communities to share updates, announcements, and broadcasts with followers. Users can discover channels and follow the ones they are interested in."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can channel admins or other followers see my phone number?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, your phone number is not shared with channel admins or other followers simply because you follow a KT Channel. Your personal contact information remains private while you interact with channel content."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I find and follow channels on KT?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can discover KT Channels through the channel discovery features in KT Messenger. Search or browse available channels, open a channel to view its content, and select the follow option to receive updates from that channel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I create my own channel on KT?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger allows users to create their own channels for sharing updates, announcements, and other content with followers. Channel creators can publish broadcasts and manage their channel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do verified badges work for channels?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Verified badges help identify authentic or officially verified KT Channels. A verification badge indicates that KT has verified the channel according to its verification requirements and helps followers distinguish official channels from impersonators."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are channel broadcasts end to end encrypted?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Channel broadcasts are not end-to-end encrypted like private chats. Channel content is designed for distribution to followers, so it should not be treated as a private end-to-end encrypted conversation."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 export function ChannelsPage() {
   useSeo({
     title: 'Broadcast Channels & Community Updates | KT Messenger.',
-    description: 'KT Messenger Channels help you share updates, announcements, and content with communities. Build connections through secure broadcast messaging and engagement.',
+    description: 'KT Messenger Channels help you share updates, announcements, content with communities. Build connections through secure broadcast messaging & engagement.',
     path: '/social-media-platform',
   })
 
@@ -174,6 +273,7 @@ export function ChannelsPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: CHANNELS_PAGE_SCHEMA }} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
         <Container>

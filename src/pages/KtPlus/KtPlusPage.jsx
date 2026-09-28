@@ -25,6 +25,97 @@ import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 
+const KTPLUS_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/premium-messaging-app#webpage",
+      "url": "https://ktmessenger.com/premium-messaging-app",
+      "name": "KT Messenger Plus · Premium Messaging App",
+      "description": "Upgrade your communication with KT Messenger Plus. Enjoy advanced messaging, secure chats, enhanced privacy, smart features, and seamless connections."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ktmessenger.com/premium-messaging-app#software",
+      "name": "KT Messenger Plus",
+      "url": "https://ktmessenger.com/premium-messaging-app",
+      "applicationCategory": "CommunicationApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "description": "Upgrade your communication with KT Messenger Plus. Enjoy advanced messaging, secure chats, enhanced privacy, smart features, and seamless connections.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ktmessenger.com/premium-messaging-app#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Premium Messaging App",
+          "item": "https://ktmessenger.com/premium-messaging-app"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/premium-messaging-app#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is KT Messenger Plus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger Plus is an upgraded version of the KT Messenger app that gives users a better messaging app experience with enhanced features, smoother communication, and more ways to stay connected with people."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why should I use KT Messenger Plus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger Plus helps you communicate more easily with improved messaging features, secure conversations, and smart tools. It is designed for users who want a simple yet powerful smart messaging app."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What extra features do I get with KT Messenger Plus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger Plus offers advanced communication features that improve your chatting experience. You can enjoy smarter conversations, better connectivity, and additional tools that make everyday messaging easier."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is KT Messenger Plus safe for private chats?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger Plus focuses on privacy and secure communication. It works as a secure messaging app where you can enjoy private conversations with confidence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why choose KT Messenger Plus in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger Plus is designed for users who want a modern KT Messenger app experience with smarter features, secure communication, and improved messaging tools. It provides an enhanced messaging experience for users looking for modern communication features in 2026."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 function CrownIcon({ className = 'h-4 w-4' }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 16 16">
@@ -159,6 +250,7 @@ export function KtPlusPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: KTPLUS_PAGE_SCHEMA }} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
         <Container>

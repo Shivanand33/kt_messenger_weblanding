@@ -31,6 +31,105 @@ import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 
+const STATUS_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/social-feed-app#webpage",
+      "url": "https://ktmessenger.com/social-feed-app",
+      "name": "KT Messenger · Status",
+      "description": "Share moments, updates, and stories with KT Messenger Status. Enjoy a secure messaging experience with instant sharing and real-time connections."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ktmessenger.com/social-feed-app#software",
+      "name": "KT Messenger",
+      "url": "https://ktmessenger.com/social-feed-app",
+      "applicationCategory": "SocialNetworkingApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "description": "Share moments, updates, and stories with KT Messenger Status. Enjoy a secure messaging experience with instant sharing and real-time connections.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ktmessenger.com/social-feed-app#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Social Feed",
+          "item": "https://ktmessenger.com/social-feed-app"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/social-feed-app#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is KT Status?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Status lets you share text, photos, HD videos, and voice updates with your contacts. Status updates automatically disappear after 24 hours."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my Status end to end encrypted?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Status updates are protected by end-to-end encryption. Status content is encrypted and available only to authorized contacts selected through your privacy settings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I choose who sees my Status updates?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Status provides granular audience controls that let you choose which contacts can see your Status updates and exclude specific contacts when needed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long can a video Status clip be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A KT Status video clip can be up to 60 seconds long. Video Status updates are designed to be short, high-quality updates and automatically disappear after 24 hours."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I see who viewed my Status?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Status lets you see who has viewed your Status updates, subject to the applicable privacy and visibility settings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do Voice Status updates work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Status supports voice Status updates of up to 30 seconds. You can record a voice clip, customize its appearance with background colors and emoji overlays, and share it with authorized contacts. Voice Status updates automatically disappear after 24 hours."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 export function StatusPage() {
   useSeo({
     title: 'Status Updates & Stories Feature | KT Messenger App.',
@@ -153,6 +252,7 @@ export function StatusPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: STATUS_PAGE_SCHEMA }} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
         <Container>

@@ -29,6 +29,105 @@ import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 
+const KTAI_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/ai-assistant-app#webpage",
+      "url": "https://ktmessenger.com/ai-assistant-app",
+      "name": "KT Messenger · AI Assistant",
+      "description": "KT Messenger AI helps you chat smarter with instant answers, AI-powered features, smart search, and seamless communication in one messaging app."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ktmessenger.com/ai-assistant-app#software",
+      "name": "KT Messenger",
+      "url": "https://ktmessenger.com/ai-assistant-app",
+      "applicationCategory": "AIApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "description": "KT Messenger AI helps you chat smarter with instant answers, AI-powered features, smart search, and seamless communication in one messaging app.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ktmessenger.com/ai-assistant-app#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AI Assistant",
+          "item": "https://ktmessenger.com/ai-assistant-app"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/ai-assistant-app#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is KT AI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT AI is an AI assistant built into KT Messenger that helps users get answers, generate content, create images, and complete everyday tasks through natural language conversations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I generate an image using KT AI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To generate an image with KT AI, open the AI assistant in KT Messenger and describe the image you want to create. KT AI can use your text description to generate a visual based on your request."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use KT AI inside group chats?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT AI can be used in group chats to help participants answer questions, generate ideas, create content, and assist with conversations without leaving the chat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data used to train AI models?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger is designed with user privacy in mind. Your personal conversations and information are not used to train AI models without appropriate permission or disclosure. Users should review KT Messenger's current privacy policy for details about how AI interactions and data are handled."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is KT AI free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger AI helps you chat smarter with instant answers, AI-powered features, smart search, and seamless communication in one messaging app.\\n"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which languages does KT AI support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT AI supports conversations in multiple languages, allowing users to interact with the assistant using natural language. Supported languages and capabilities may vary by feature and can change as KT AI is updated."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 function SparklesIcon({ className = '' }) {
   return (
     <svg className={`h-4 w-4 shrink-0 ${className}`} viewBox="0 0 24 24" fill="currentColor">
@@ -171,6 +270,7 @@ export function KtAIPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: KTAI_PAGE_SCHEMA }} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
         <Container>

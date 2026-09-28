@@ -8,7 +8,7 @@ import { Reveal } from '../../components/common/Reveal/Reveal'
 import { useLanguage } from '../../context/LanguageContext'
 import { api } from '../../services/apiClient'
 import { useFeatureNavHref } from '../../hooks/useFeatureNavHref'
-import { getComponentByLabelOrHref } from '../../App'
+import { getComponentByExactPath, getComponentByLabelOrHref } from '../../App'
 import { img, imgAlt } from '../../utils/imageOverrides'
 import securityImg from '../../assets/images/security.jpg'
 import privateImg from '../../assets/images/messaging-app-private-chat.jpg'
@@ -35,8 +35,8 @@ export function NotFoundPage() {
   const location = useLocation()
   const { t } = useLanguage()
 
-  const [ResolvedComponent, setResolvedComponent] = useState(() => getComponentByLabelOrHref(location.pathname))
-  const [checking, setChecking] = useState(() => !getComponentByLabelOrHref(location.pathname))
+  const [ResolvedComponent, setResolvedComponent] = useState(() => getComponentByExactPath(location.pathname))
+  const [checking, setChecking] = useState(() => !getComponentByExactPath(location.pathname))
   const discoverRef = useRef(null)
   const featureNavHref = useFeatureNavHref()
 
@@ -46,7 +46,7 @@ export function NotFoundPage() {
   }
 
   useEffect(() => {
-    const directComp = getComponentByLabelOrHref(location.pathname)
+    const directComp = getComponentByExactPath(location.pathname)
     if (directComp) {
       setResolvedComponent(() => directComp)
       setChecking(false)

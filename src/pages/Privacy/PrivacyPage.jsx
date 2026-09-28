@@ -39,6 +39,97 @@ import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useFeatureNavHref } from '../../hooks/useFeatureNavHref'
 
+const PRIVACY_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/private-messaging-app#webpage",
+      "url": "https://ktmessenger.com/private-messaging-app",
+      "name": "KT Messenger · Private Messaging App",
+      "description": "Learn how KT Messenger protects your privacy with secure messaging, private chats, encryption, privacy controls, and safe communication features."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ktmessenger.com/private-messaging-app#software",
+      "name": "KT Messenger",
+      "url": "https://ktmessenger.com/private-messaging-app",
+      "applicationCategory": "CommunicationApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "description": "Learn how KT Messenger protects your privacy with secure messaging, private chats, encryption, privacy controls, and safe communication features.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ktmessenger.com/private-messaging-app#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Private Messaging App",
+          "item": "https://ktmessenger.com/private-messaging-app"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/private-messaging-app#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is KT Messenger a secure messaging app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger provides privacy and security features designed to support secure online communication. Users can review the Privacy Policy to understand how information is handled."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is KT Messenger a private chat app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger provides features for private communication and messaging. Users can review the privacy information to understand how their information and conversations are handled."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes a safe messaging app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A safe messaging app should consider areas such as encryption, account protection, privacy controls, data handling, and transparency about how information is used."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What information does a messaging app collect?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The information collected can vary by platform and how its features are used. KT Messenger's Privacy Policy explains the types of information that may be collected and how it may be handled."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I protect my privacy when using a messaging app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use available privacy settings, protect your account credentials, review permissions, and understand the platform's Privacy Policy before sharing sensitive information."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 
 const privacyControlsCards = [
   {
@@ -176,14 +267,15 @@ export function PrivacyPage() {
 
   return (
     <MainLayout>
-      
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: PRIVACY_PAGE_SCHEMA }} />
+
       {/* 1. HERO SECTION: MESSAGE PRIVATELY */}
       <section className="relative overflow-hidden bg-cream dark:bg-surface border-b border-line py-10 sm:py-14 lg:py-16">
         <div aria-hidden className="pointer-events-none absolute -right-24 top-10 h-96 w-96 rounded-full bg-brand-strong/10 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl" />
 
         <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:items-start lg:gap-14">
             <div>
               <Reveal from="up">
                 <span className="inline-flex items-center gap-2 rounded-full border border-brand-strong/20 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">

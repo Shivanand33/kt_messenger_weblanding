@@ -36,6 +36,111 @@ import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 
+const MESSAGING_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/messaging-app#webpage",
+      "url": "https://ktmessenger.com/messaging-app",
+      "name": "KT Messenger · messaging & calling",
+      "description": "KT Messenger is a free, secure messaging and video calling app for private chats, voice calls, real-time messaging, and seamless communication.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://ktmessenger.com/#website",
+        "url": "https://ktmessenger.com/",
+        "name": "KT Messenger"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ktmessenger.com/messaging-app#software",
+      "name": "KT Messenger",
+      "url": "https://ktmessenger.com/messaging-app",
+      "applicationCategory": "CommunicationApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "description": "KT Messenger is a free, secure messaging and video calling app for private chats, voice calls, real-time messaging, and seamless communication.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ktmessenger.com/messaging-app#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Messaging App",
+          "item": "https://ktmessenger.com/messaging-app"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/messaging-app#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is KT Messenger?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger is a modern communication feature that allows users to make voice calls, video calls, and send instant messages from one platform. The KT Messenger app works as an all-in-one instant messaging app designed for fast, private, and reliable communication."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is KT Messenger a free messaging and calling app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger is a free messaging app that allows users to send messages and make voice or video calls through an internet connection. As a free instant messaging app, it helps users stay connected without paying traditional calling charges."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is KT Messenger a secure messaging app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger is designed as a secure instant messaging app that focuses on private and protected communication. Users looking for a safe messaging app can use KT Messenger to enjoy secure conversations with better privacy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I make private chats using KT Messenger?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger works as a private chat app that allows users to communicate securely with individuals and groups. It is a suitable app for private chat where users can exchange messages and stay connected."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does KT Messenger support real-time messaging?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger provides a real time messaging app experience where users can instantly send and receive messages. It works as an online messaging platform that helps people communicate quickly from anywhere."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use KT Messenger for voice and video calls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger combines messaging and calling features in one platform. Users can enjoy free texting app and calling features, making it easier to chat, share updates, and connect through voice or video calls."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 export function MessagingPage() {
   useSeo({
     title: 'Free Video Calling App & Secure Messaging | KT Messenger.',
@@ -168,6 +273,7 @@ export function MessagingPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: MESSAGING_PAGE_SCHEMA }} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
         <Container>

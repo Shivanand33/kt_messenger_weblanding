@@ -50,6 +50,28 @@ const MarketplacePage = page(() => import('./pages/Marketplace/MarketplacePage')
 const NotesPage = page(() => import('./pages/Notes/NotesPage'), 'NotesPage')
 const MinisPage = page(() => import('./pages/Minis/MinisPage'), 'MinisPage')
 
+// Canonical admin-navigation URLs pinned to their page. These URLs are too
+// close to each other for the keyword matching below — '/messaging-app' and
+// '/messaging-app-download' both contain "messag" and "app" — so they are
+// resolved by exact path first and can never swap pages.
+const EXACT_PATH_TO_PAGE = {
+  '/video-calling-app': CallingPage,
+  '/messaging-app': MessagingPage,
+  '/group-chat-app': GroupsPage,
+  '/social-media-platform': ChannelsPage,
+  '/ai-assistant-app': KtAIPage,
+  '/social-feed-app': StatusPage,
+  '/secure-messaging-app': SecurityPage,
+  '/premium-messaging-app': KtPlusPage,
+  '/notes-app': NotesPage,
+  '/minis-short-video-app': MinisPage,
+  '/private-messaging-app': PrivacyPage,
+  '/messaging-social-media-blog': BlogPage,
+  '/messaging-app-download': AppsPage,
+  '/messaging-app-help': HelpPage,
+  '/business-messaging-app': BusinessPage,
+}
+
 // [component, label keywords, href keywords] — checked in this order.
 const PAGE_RULES = [
   [CallingPage, ['call'], ['call', 'phone']],
@@ -76,10 +98,27 @@ const PAGE_RULES = [
   [BusinessPage, ['business'], ['business']],
 ]
 
+/**
+ * Resolve a URL path to a page only when it is exactly one of the canonical
+ * feature URLs. Unlike getComponentByLabelOrHref this never keyword-matches,
+ * so a made-up URL that merely contains a keyword ("/messaging-app-xyz")
+ * stays on the 404 page instead of rendering a page it is not.
+ */
+export function getComponentByExactPath(path) {
+  const key = String(path || '').toLowerCase().split(/[?#]/)[0].replace(/\/+$/, '')
+  return EXACT_PATH_TO_PAGE[key] || null
+}
+
 export function getComponentByLabelOrHref(item) {
   if (!item) return null
   const label = typeof item === 'string' ? '' : (item.label || '').toLowerCase().trim()
   const href = typeof item === 'string' ? item.toLowerCase().trim() : (item.href || item.to || '').toLowerCase().trim()
+
+  // Canonical URLs resolve by exact path before any keyword guessing, so a
+  // URL that merely contains another page's keyword ("/messaging-app-download"
+  // contains "messag") still opens its own page.
+  const exact = getComponentByExactPath(href)
+  if (exact) return exact
 
   // The label is checked first across every rule. SEO URLs are keyword-heavy
   // ("/group-chat-app", "/secure-messaging-app"), so matching the URL first let

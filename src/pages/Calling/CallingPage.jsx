@@ -40,6 +40,142 @@ import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 
+const CALLING_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/video-calling-app#webpage",
+      "url": "https://ktmessenger.com/video-calling-app",
+      "name": "KT Messenger · messaging & calling",
+      "description": "Looking for the best video calling app? KT Messenger offers private chats, secure voice calls, instant messaging, and smooth online communication.",
+      "isPartOf": {
+        "@id": "https://ktmessenger.com/#website"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ktmessenger.com/assets/kt-logo-jSiulogK.svg"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ktmessenger.com/#website",
+      "url": "https://ktmessenger.com/",
+      "name": "KT Messenger",
+      "publisher": {
+        "@id": "https://ktmessenger.com/#organization"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://ktmessenger.com/#organization",
+      "name": "KT Messenger",
+      "url": "https://ktmessenger.com/"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ktmessenger.com/video-calling-app#software",
+      "name": "KT Messenger",
+      "operatingSystem": "iOS, Android, Windows, macOS",
+      "applicationCategory": "SocialNetworkingApplication",
+      "applicationSubCategory": "Video Calling App",
+      "description": "Looking for the best video calling app? KT Messenger offers private chats, secure voice calls, instant messaging, and smooth online communication.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "One-on-one voice and video calls",
+        "Group voice and video calls",
+        "End-to-end encrypted messaging",
+        "Photo, video, document, and location sharing",
+        "Multi-language support"
+      ],
+      "url": "https://ktmessenger.com/video-calling-app"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Video Calling App",
+          "item": "https://ktmessenger.com/video-calling-app"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/video-calling-app#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is KT Messenger and why should I use it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger is an all-in-one messaging app that lets you send messages, make voice and video calls, and stay connected with people anytime. The KT Messenger app is designed for users who want a simple, secure, and reliable instant messaging app for personal and professional communication."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is KT Messenger free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger is a free messaging app that allows users to send messages and communicate online. As a free instant messaging app, it helps you stay connected without expensive SMS or traditional calling charges."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I have private chats on KT Messenger?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger works as a private chat app where you can have personal conversations with your contacts. It is an easy-to-use app for private chat designed for secure and comfortable communication."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is KT Messenger available for Android users?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger is designed to provide Android users with a smooth communication experience. If you are searching for the best messaging app for Android 2026, KT Messenger offers messaging, calling, and privacy-focused features."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is KT Messenger better than regular chat apps?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger provides more than a basic chat app by combining messaging, calling, and secure communication features. It works as a complete mobile chat platform for everyday conversations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does KT Messenger have AI features?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger includes smart communication features that improve the user experience. As an AI powered chat app, it helps users enjoy a smarter and more connected way of communicating."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use KT Messenger internationally?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger allows users to communicate globally through an online free messaging app experience. It works as an online messaging platform for connecting with people anywhere."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 export function CallingPage() {
   useSeo({
     title: 'Best Video Calling App for Private Chats | KT Messenger.',
@@ -180,6 +316,7 @@ export function CallingPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: CALLING_PAGE_SCHEMA }} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
         <Container>

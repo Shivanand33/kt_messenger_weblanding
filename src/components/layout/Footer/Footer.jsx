@@ -78,7 +78,6 @@ const FALLBACK_COLUMNS = [
       { label: 'Help Center', to: '/messaging-app-help' },
       { label: 'Contact Us', to: '/contact' },
       { label: 'Community', to: '/community' },
-      { label: 'Status', to: '/social-feed-app' },
     ],
   },
 ]
@@ -357,7 +356,7 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col gap-6 border-t border-line pt-8 md:flex-row md:items-center md:justify-between">
+        <div className="mt-10 flex flex-col gap-6 border-t border-line pt-8 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted">
             {/* LANGUAGE PICKER */}
             <div ref={langRef} className="relative">

@@ -35,6 +35,111 @@ import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 
+const GROUPS_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/group-chat-app#webpage",
+      "url": "https://ktmessenger.com/group-chat-app",
+      "name": "KT Messenger · Group Chat App",
+      "description": "KT Messenger builds private group chat solutions that help teams, communities, friends, and family collaborate and discuss group chat topics.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://ktmessenger.com/#website",
+        "url": "https://ktmessenger.com/",
+        "name": "KT Messenger"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ktmessenger.com/group-chat-app#software",
+      "name": "KT Messenger",
+      "url": "https://ktmessenger.com/group-chat-app",
+      "applicationCategory": "CommunicationApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "description": "KT Messenger builds private group chat solutions that help teams, communities, friends, and family collaborate and discuss group chat topics.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ktmessenger.com/group-chat-app#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Group Chat App",
+          "item": "https://ktmessenger.com/group-chat-app"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/group-chat-app#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many members can join a single KT group?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger allows users to create group chats and invite multiple members to communicate in one place. The maximum number of members that can join a single KT group depends on the group size limit supported by KT Messenger."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are group chats on KT encrypted?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger is designed to provide private and secure group communication. Group chats use encryption and security measures intended to help protect conversations and shared information."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do Communities differ from regular groups?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Communities on KT Messenger are designed to organize and connect multiple groups or larger communities around shared interests or topics, while regular groups are intended for direct group conversations among members."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can admins control who sends messages in a group?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger group administrators can manage group settings and control member permissions, including who is allowed to send messages when supported by the group's settings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do group polls work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Group polls on KT Messenger allow members to create questions with multiple answer options and collect responses directly within a group chat. Polls can help groups gather opinions and make decisions together."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I start a voice or video call inside a group?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Messenger supports voice and video calling features that allow group members to connect through calls directly from group conversations, subject to the available group calling features and limits."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 export function GroupsPage() {
   useSeo({
     title: 'Group Chat App & Messaging Platform | KT Messenger.',
@@ -159,6 +264,7 @@ export function GroupsPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: GROUPS_PAGE_SCHEMA }} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
         <Container>

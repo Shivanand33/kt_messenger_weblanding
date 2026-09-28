@@ -24,10 +24,93 @@ import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 
+const SECURITY_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/secure-messaging-app#webpage",
+      "url": "https://ktmessenger.com/secure-messaging-app",
+      "name": "KT Messenger · Secure Messaging",
+      "description": "KT Messenger provides secure messaging with end-to-end encryption, private chats, protected calls, and advanced privacy features to keep conversations safe."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ktmessenger.com/secure-messaging-app#software",
+      "name": "KT Messenger",
+      "url": "https://ktmessenger.com/secure-messaging-app",
+      "applicationCategory": "CommunicationApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "description": "KT Messenger provides secure messaging with end-to-end encryption, private chats, protected calls, and advanced privacy features to keep conversations safe.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ktmessenger.com/secure-messaging-app#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Secure Messaging",
+          "item": "https://ktmessenger.com/secure-messaging-app"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/secure-messaging-app#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are KT Authentication Messages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Authentication Messages are secure messages designed to deliver verification codes and one-time passcodes directly to users through KT Messenger. They provide an alternative to traditional SMS OTP delivery for authentication and account verification."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do 1-Tap Autofill Passcodes work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1-Tap Autofill Passcodes allow users to receive an authentication code in KT Messenger and enter it into a supported verification flow with a single tap, reducing manual typing and making sign-in and account verification faster."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is end to end encryption active on Authentication Messages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, KT Authentication Messages use end-to-end encryption to protect authentication messages and verification codes while they are delivered through KT Messenger."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does KT compare to SMS OTP delivery costs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Authentication Messages are designed to provide a cost-efficient alternative to traditional SMS OTP delivery. By delivering verification messages through KT Messenger, businesses can reduce reliance on SMS-based authentication and associated messaging costs. Actual savings depend on usage, region, and the applicable KT pricing plan."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 export function SecurityPage() {
   useSeo({
     title: 'KT Messenger | Secure Messaging App End-to-End Encryption.',
-    description: 'KT Messenger provides secure messaging with end-to-end encryption, private chats, protected calls, and advanced privacy features to keep conversations safe.',
+    description: 'KT Messenger provides secure messaging with end-to-end encryption, private chats, protected calls, advanced privacy features to keep conversations safe.',
     path: '/secure-messaging-app',
   })
 
@@ -151,6 +234,7 @@ export function SecurityPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: SECURITY_PAGE_SCHEMA }} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24 dark:bg-surface">
         <Container>

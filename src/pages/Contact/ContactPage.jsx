@@ -136,6 +136,96 @@ const RELATED = [
   { to: '/minis', label: 'KT Minis', desc: 'Watch, create and share short video clips.', icon: <FiVideo /> },
 ]
 
+const CONTACT_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/contact#webpage",
+      "url": "https://ktmessenger.com/contact",
+      "name": "KT Messenger · Contact & Support",
+      "description": "Contact KT Messenger for technical support, account assistance, business enquiries, issue reports, feedback, partnerships, and other platform-related questions.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://ktmessenger.com/#website",
+        "url": "https://ktmessenger.com/",
+        "name": "KT Messenger"
+      }
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://ktmessenger.com/contact#contactpage",
+      "url": "https://ktmessenger.com/contact",
+      "name": "KT Messenger Contact",
+      "description": "Contact the KT Messenger team for technical support, account help, business enquiries, issue reports, feedback, and other assistance."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ktmessenger.com/contact#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Contact",
+          "item": "https://ktmessenger.com/contact"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/contact#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How can I contact KT Messenger?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can contact the KT Messenger team through the contact options available on this page."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I contact KT Messenger for technical support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can contact the support team for help with technical issues, accounts, messaging, and other platform-related concerns."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can businesses contact KT Messenger?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Businesses can contact KT Messenger for partnerships, business enquiries, and professional opportunities."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I report an issue on KT Messenger?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Contact the KT Messenger team to report problems or share details about an issue you are experiencing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I send feedback to KT Messenger?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can use the contact form to share feedback, suggestions, or recommendations with the KT Messenger team."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 export function ContactPage() {
   // Per-page SEO from admin (Website Content -> seo.contact).
   // No block configured = unchanged behaviour.
@@ -312,6 +402,7 @@ export function ContactPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: CONTACT_PAGE_SCHEMA }} />
       <PageHero
         badge={
           <>

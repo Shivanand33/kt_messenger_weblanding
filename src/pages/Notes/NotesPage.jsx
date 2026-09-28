@@ -44,6 +44,113 @@ const RELATED = [
   { to: '/minis', label: 'KT Minis', desc: 'Watch, create and share short video clips.', icon: <FiVideo /> },
 ]
 
+const NOTES_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://ktmessenger.com/notes-app#webpage",
+      "url": "https://ktmessenger.com/notes-app",
+      "name": "KT Messenger Notes",
+      "description": "Explore KT Messenger Notes for secure messaging, social networking, and business communication, helping users and brands connect more easily."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ktmessenger.com/notes-app#software",
+      "name": "KT Messenger",
+      "url": "https://ktmessenger.com/notes-app",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "description": "Explore KT Messenger Notes for secure messaging, social networking, and business communication, helping users and brands connect more easily.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ktmessenger.com/notes-app#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "KT Messenger Notes",
+          "item": "https://ktmessenger.com/notes-app"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ktmessenger.com/notes-app#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is KT Messenger Notes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger Notes is a simple feature that lets you save important information, ideas, reminders, tasks, lists, and personal thoughts in one place."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why should I use KT Messenger Notes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger Notes helps you remember important things without relying only on your memory. You can quickly write something down and come back to it whenever you need it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What can I save in KT Messenger Notes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can save ideas, reminders, tasks, shopping lists, meeting points, business information, customer details, personal thoughts, and anything else you want to remember."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use KT Messenger Notes for business?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Businesses and professionals can use KT Messenger Notes to save customer requirements, meeting details, business ideas, tasks, follow-ups, and other important work information."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use KT Messenger Notes for personal use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can use KT Messenger Notes for personal reminders, plans, shopping lists, events, ideas, daily tasks, and other information you want to keep organized."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do KT Messenger Notes help me stay organized?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger Notes gives you one place to keep important information instead of keeping everything in your memory or scattered across different conversations and apps."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I save important information from chats?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. If a conversation contains an important idea, task, reminder, or detail, you can save that information as a note so you can refer to it later."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 export function NotesPage() {
   useSeo({
     title: 'KT Messenger Notes | Secure Messaging & Social Platform.',
@@ -67,6 +174,7 @@ export function NotesPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: NOTES_PAGE_SCHEMA }} />
       {/* 1. HERO SECTION */}
       <PageHero
         titleTag="h1"

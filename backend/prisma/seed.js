@@ -197,7 +197,7 @@ async function main() {
     { title: 'Product', links: ['Features', 'Calls', 'Groups', 'Privacy', 'Business'] },
     { title: 'Company', links: ['About', 'Careers', 'Brand Center', 'Blog'] },
     { title: 'Get KT Messenger', links: ['Android', 'iPhone', 'Mac & PC', 'KT Web'] },
-    { title: 'Support', links: ['Help Center', 'Contact Us', 'Community', 'Status'] },
+    { title: 'Support', links: ['Help Center', 'Contact Us', 'Community'] },
   ]
   let secOrder = 0
   for (const sec of footer) {

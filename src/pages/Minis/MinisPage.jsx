@@ -26,6 +26,97 @@ import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 
+const MINIS_PAGE_SCHEMA = `{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "http://ktmessenger.com/minis-short-video-app#webpage",
+      "url": "http://ktmessenger.com/minis-short-video-app",
+      "name": "KT Messenger Minis · Short Video App",
+      "description": "Watch, create, and share short videos with KT Messenger Minis. Discover trending content and connect with your community."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "http://ktmessenger.com/minis-short-video-app#software",
+      "name": "KT Messenger",
+      "url": "http://ktmessenger.com/minis-short-video-app",
+      "applicationCategory": "SocialNetworkingApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "description": "Watch, create, and share short videos with KT Messenger Minis. Discover trending content and connect with your community.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "http://ktmessenger.com/minis-short-video-app#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "http://ktmessenger.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Minis Short Video App",
+          "item": "http://ktmessenger.com/minis-short-video-app"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "http://ktmessenger.com/minis-short-video-app#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are KT Messenger Minis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KT Messenger Minis are short videos that you can watch, create, and share with your online community."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I create and share Minis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, you can create short videos and share them with your friends, followers, and network."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I like and comment on Minis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Minis allow users to interact with short-form content through likes, comments, and shares."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can businesses use Minis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, businesses can use short videos to promote products, connect with audiences, and increase engagement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are Minis a social media feature?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Minis are a short-form video feature that helps users discover content and connect with others."
+          }
+        }
+      ]
+    }
+  ]
+}`
+
 export function MinisPage() {
   useSeo({
     title: 'KT Messenger Minis | Watch, Create & Share Short Videos',
@@ -75,6 +166,7 @@ export function MinisPage() {
 
   return (
     <MainLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: MINIS_PAGE_SCHEMA }} />
       {/* 1. HERO SECTION (H1) */}
       <section className="relative overflow-hidden bg-cream py-14 lg:py-20 border-b border-line dark:bg-surface">
         <Container>
