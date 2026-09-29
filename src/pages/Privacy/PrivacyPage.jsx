@@ -38,6 +38,7 @@ import { useSeo } from '../../hooks/useSeo'
 import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useFeatureNavHref } from '../../hooks/useFeatureNavHref'
+import { JsonLd } from '../../components/common/JsonLd/JsonLd'
 
 const PRIVACY_PAGE_SCHEMA = `{
   "@context": "https://schema.org",
@@ -142,7 +143,7 @@ const privacyControlsCards = [
     title: 'View once media',
     desc: 'Send photos and videos that disappear after the recipient opens them once, without leaving a trace in their phone gallery.',
     badge: 'Media Privacy 📷',
-    to: '/messaging-app'
+    to: '/messaging'
   },
   {
     title: 'Two step verification',
@@ -267,7 +268,7 @@ export function PrivacyPage() {
 
   return (
     <MainLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: PRIVACY_PAGE_SCHEMA }} />
+      <JsonLd id="PRIVACY_PAGE_SCHEMA" json={PRIVACY_PAGE_SCHEMA} />
 
       {/* 1. HERO SECTION: MESSAGE PRIVATELY */}
       <section className="relative overflow-hidden bg-cream dark:bg-surface border-b border-line py-10 sm:py-14 lg:py-16">
@@ -624,7 +625,7 @@ export function PrivacyPage() {
               </p>
               <div className="mt-8">
                 <button
-                  onClick={() => navigate('/messaging-app')}
+                  onClick={() => navigate('/messaging')}
                   className="group inline-flex items-center gap-2 text-base font-bold text-brand-ink hover:text-brand-strong transition-colors"
                 >
                   <span>{t('Learn more')}</span>

@@ -35,14 +35,15 @@ import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
+import { JsonLd } from '../../components/common/JsonLd/JsonLd'
 
 const MESSAGING_PAGE_SCHEMA = `{
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "@id": "https://ktmessenger.com/messaging-app#webpage",
-      "url": "https://ktmessenger.com/messaging-app",
+      "@id": "https://ktmessenger.com/messaging#webpage",
+      "url": "https://ktmessenger.com/messaging",
       "name": "KT Messenger · messaging & calling",
       "description": "KT Messenger is a free, secure messaging and video calling app for private chats, voice calls, real-time messaging, and seamless communication.",
       "isPartOf": {
@@ -54,9 +55,9 @@ const MESSAGING_PAGE_SCHEMA = `{
     },
     {
       "@type": "SoftwareApplication",
-      "@id": "https://ktmessenger.com/messaging-app#software",
+      "@id": "https://ktmessenger.com/messaging#software",
       "name": "KT Messenger",
-      "url": "https://ktmessenger.com/messaging-app",
+      "url": "https://ktmessenger.com/messaging",
       "applicationCategory": "CommunicationApplication",
       "operatingSystem": "Android, iOS, Web",
       "description": "KT Messenger is a free, secure messaging and video calling app for private chats, voice calls, real-time messaging, and seamless communication.",
@@ -68,7 +69,7 @@ const MESSAGING_PAGE_SCHEMA = `{
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://ktmessenger.com/messaging-app#breadcrumb",
+      "@id": "https://ktmessenger.com/messaging#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -80,13 +81,13 @@ const MESSAGING_PAGE_SCHEMA = `{
           "@type": "ListItem",
           "position": 2,
           "name": "Messaging App",
-          "item": "https://ktmessenger.com/messaging-app"
+          "item": "https://ktmessenger.com/messaging"
         }
       ]
     },
     {
       "@type": "FAQPage",
-      "@id": "https://ktmessenger.com/messaging-app#faq",
+      "@id": "https://ktmessenger.com/messaging#faq",
       "mainEntity": [
         {
           "@type": "Question",
@@ -145,12 +146,12 @@ export function MessagingPage() {
   useSeo({
     title: 'Free Video Calling App & Secure Messaging | KT Messenger.',
     description: 'KT Messenger is a free, secure messaging and video calling app for private chats, voice calls, real-time messaging, and seamless communication.',
-    path: '/messaging-app',
+    path: '/messaging',
   })
 
   // Per-page SEO from admin (Website Content -> seo.messaging).
   // No block configured = unchanged behaviour.
-  useAdminSeo('messaging', '/messaging-app')
+  useAdminSeo('messaging', '/messaging')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -273,7 +274,7 @@ export function MessagingPage() {
 
   return (
     <MainLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: MESSAGING_PAGE_SCHEMA }} />
+      <JsonLd id="MESSAGING_PAGE_SCHEMA" json={MESSAGING_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
         <Container>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
@@ -34,7 +34,7 @@ import { languagePath } from '../../../i18n/languageUrls'
 
 const FALLBACK_FEATURE_ITEMS = [
   { label: 'Calling', to: '/video-calling-app', icon: <FiPhone /> },
-  { label: 'Messaging', to: '/messaging-app', icon: <FiMessageSquare /> },
+  { label: 'Messaging', to: '/messaging', icon: <FiMessageSquare /> },
   { label: 'Groups', to: '/group-chat-app', icon: <FiUsers /> },
   { label: 'Channels', to: '/social-media-platform', icon: <FiTv /> },
   { label: 'KT AI', to: '/ai-assistant-app', icon: <FiZap /> },
@@ -50,13 +50,13 @@ const FALLBACK_FEATURE_ITEMS = [
   // { label: 'Wallet', to: '/wallet', icon: <FiCreditCard /> },
   // { label: 'Marketplace', to: '/marketplace', icon: <FiShoppingBag /> },
   { label: 'Notes', to: '/notes-app', icon: <FiEdit3 /> },
-  { label: 'Minis', to: '/minis', icon: <FiPlayCircle /> },
+  { label: 'Minis', to: '/minis-short-video-app', icon: <FiPlayCircle /> },
   { label: 'Community', to: '/community', icon: <FiCompass /> }
 ]
 
 const FALLBACK_NAV_LINKS = [
   { label: 'Privacy', to: '/private-messaging-app' },
-  { label: 'Blog', to: '/messaging-social-media-blog' },
+  { label: 'Products', to: '/products' },
   { label: 'Apps', to: '/messaging-app-download' },
   { label: 'Help Center', to: '/messaging-app-help', external: true },
   // KT Business is its own section of the site, so it opens in a new tab and
@@ -118,13 +118,14 @@ export function Navbar() {
     () => api.getNavigation('features_menu').then((rows) => rows.map(toNavItem)),
     FALLBACK_FEATURE_ITEMS,
   )
-  const [navLinks] = useRemoteContent(
+  const [rawNavLinks] = useRemoteContent(
     () =>
       api.getNavigation('header').then((rows) =>
         rows
           // 'Features' is rendered as a dropdown, not a link, so the admin row
-          // for it is not used here.
-          .filter((r) => r.label !== 'Features')
+          // for it is not used here. 'Blog' was removed from the navbar; its
+          // page and route are untouched.
+          .filter((r) => r.label !== 'Features' && r.label !== 'Blog')
           .map((r) => {
             // 'external' draws the small arrow icon and 'newTab' opens the link
             // in its own tab. Neither is stored in the database, so both come
@@ -135,6 +136,18 @@ export function Navbar() {
       ),
     FALLBACK_NAV_LINKS,
   )
+
+  // 'Products' replaces the removed 'Blog' item at the same spot (between
+  // Privacy and Apps). Applied after both sources so the admin-driven header
+  // and the fallback behave identically.
+  const navLinks = useMemo(() => {
+    const items = rawNavLinks.filter((l) => l.label !== 'Blog')
+    if (items.some((l) => l.label === 'Products')) return items
+    const products = { label: 'Products', to: '/products', href: '/products', icon: getNavIcon({ label: 'Products', href: '/products' }) }
+    const at = items.findIndex((l) => l.label === 'Apps')
+    const pos = at >= 0 ? at : items.length
+    return [...items.slice(0, pos), products, ...items.slice(pos)]
+  }, [rawNavLinks])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)

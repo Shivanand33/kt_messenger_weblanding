@@ -86,14 +86,14 @@ const highlights = [
     label: 'KT Minis',
     title: 'Instant Apps & Shorts Feed',
     text: 'Short video feeds, mini apps, and interactive tools right inside your messenger.',
-    link: '/minis',
+    link: '/minis-short-video-app',
   },
   {
     image: contentImg,
     label: 'KT Messaging',
     title: 'Private & Secure Messaging',
     text: 'Send instant messages, photos, videos, files, and voice notes with default E2E encryption.',
-    link: '/messaging-app',
+    link: '/messaging',
   },
   {
     image: collabImg,

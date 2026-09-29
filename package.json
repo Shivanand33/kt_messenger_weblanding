@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender-schema.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "i18n:translate": "node scripts/i18n-translate.mjs"

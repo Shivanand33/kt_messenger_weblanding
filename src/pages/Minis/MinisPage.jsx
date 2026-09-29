@@ -25,6 +25,7 @@ import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
+import { JsonLd } from '../../components/common/JsonLd/JsonLd'
 
 const MINIS_PAGE_SCHEMA = `{
   "@context": "https://schema.org",
@@ -121,10 +122,10 @@ export function MinisPage() {
   useSeo({
     title: 'KT Messenger Minis | Watch, Create & Share Short Videos',
     description: 'Watch, create, and share short videos with KT Messenger Minis. Discover trending content and connect with your community.',
-    path: '/minis',
+    path: '/minis-short-video-app',
   })
 
-  useAdminSeo('minis', '/minis')
+  useAdminSeo('minis', '/minis-short-video-app')
 
   const navigate = useNavigate()
   const { t } = useLanguage()
@@ -166,7 +167,7 @@ export function MinisPage() {
 
   return (
     <MainLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: MINIS_PAGE_SCHEMA }} />
+      <JsonLd id="MINIS_PAGE_SCHEMA" json={MINIS_PAGE_SCHEMA} />
       {/* 1. HERO SECTION (H1) */}
       <section className="relative overflow-hidden bg-cream py-14 lg:py-20 border-b border-line dark:bg-surface">
         <Container>

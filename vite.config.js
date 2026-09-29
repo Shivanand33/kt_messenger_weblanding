@@ -1,9 +1,35 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { schemaTagsFor } from './scripts/schema-blocks.mjs'
+
+// Dev server: serve each schema route its index.html with the page's JSON-LD
+// already in <head> — the same output the build prerender produces — so SEO
+// extensions and view source see the schema on localhost too. The JsonLd
+// component detects the static block and skips its own copy, so the DOM never
+// carries duplicates. Dev-only (apply: 'serve'); the production build is
+// handled by scripts/prerender-schema.mjs.
+function devSchemaPrerender() {
+  return {
+    name: 'dev-schema-prerender',
+    apply: 'serve',
+    transformIndexHtml: {
+      order: 'pre',
+      handler(html, ctx) {
+        // SPA fallback serves index.html with ctx.path '/index.html' — the
+        // route the browser asked for is in originalUrl.
+        const asked = ctx.originalUrl || ctx.path || ''
+        const route = asked.split('?')[0].replace(/\/+$/, '') || '/'
+        const tags = schemaTagsFor(route)
+        if (!tags) return html
+        return html.replace('</head>', `${tags}\n  </head>`)
+      },
+    },
+  }
+}
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), devSchemaPrerender()],
   server: {
     port: 5174,
     host: true,

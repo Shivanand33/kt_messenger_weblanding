@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { Home } from './pages/Home/Home'
 import { NotFoundPage } from './pages/NotFound/NotFoundPage'
 import { AnalyticsTracker } from './components/common/AnalyticsTracker/AnalyticsTracker'
@@ -23,6 +23,7 @@ const page = (load, name, dictionary = name.replace(/Page$/, '')) => {
 
 const PrivacyPage = page(() => import('./pages/Privacy/PrivacyPage'), 'PrivacyPage')
 const BlogPage = page(() => import('./pages/Blog/BlogPage'), 'BlogPage')
+const ProductsPage = page(() => import('./pages/Products/ProductsPage'), 'ProductsPage')
 const AppsPage = page(() => import('./pages/Apps/AppsPage'), 'AppsPage')
 const HelpPage = page(() => import('./pages/Help/HelpPage'), 'HelpPage')
 const BusinessPage = page(() => import('./pages/Business/BusinessPage'), 'BusinessPage')
@@ -51,12 +52,12 @@ const NotesPage = page(() => import('./pages/Notes/NotesPage'), 'NotesPage')
 const MinisPage = page(() => import('./pages/Minis/MinisPage'), 'MinisPage')
 
 // Canonical admin-navigation URLs pinned to their page. These URLs are too
-// close to each other for the keyword matching below — '/messaging-app' and
+// close to each other for the keyword matching below — '/messaging' and
 // '/messaging-app-download' both contain "messag" and "app" — so they are
 // resolved by exact path first and can never swap pages.
 const EXACT_PATH_TO_PAGE = {
   '/video-calling-app': CallingPage,
-  '/messaging-app': MessagingPage,
+  '/messaging': MessagingPage,
   '/group-chat-app': GroupsPage,
   '/social-media-platform': ChannelsPage,
   '/ai-assistant-app': KtAIPage,
@@ -134,6 +135,22 @@ export function getComponentByLabelOrHref(item) {
   return null
 }
 
+/**
+ * Older builds let Help Center URLs stack article slugs
+ * (/messaging-app-help/a/b/c), so bookmarks and history from that era open a
+ * path the :slug route never matches. The last segment is the article the
+ * reader wanted — normalize to it at the canonical Help Center URL. Anything
+ * that is not a clean slug falls through to the 404 page.
+ */
+function HelpDeepLink() {
+  const { pathname } = useLocation()
+  const last = pathname.split('/').filter(Boolean).pop()
+  if (last && /^[a-z0-9-]+$/i.test(last)) {
+    return <Navigate replace to={`/messaging-app-help/${encodeURIComponent(last)}`} />
+  }
+  return <NotFoundPage />
+}
+
 function App() {
   const [dynamicRoutes, setDynamicRoutes] = useState([])
 
@@ -201,6 +218,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogPage />} />
+        <Route path="/products" element={<ProductsPage />} />
         <Route path="/apps" element={<AppsPage />} />
         <Route path="/help/:slug?" element={<HelpPage />} />
         <Route path="/business" element={<BusinessPage />} />
@@ -232,6 +250,11 @@ function App() {
         {dynamicRoutes.map((r, index) => (
           <Route key={`${r.path}-${index}`} path={r.path} element={<r.Component />} />
         ))}
+
+        {/* LEGACY HELP CENTER DEEP LINKS — stacked-slug URLs from older
+            builds normalize to the article named by their last segment */}
+        <Route path="/help/*" element={<HelpDeepLink />} />
+        <Route path="/messaging-app-help/*" element={<HelpDeepLink />} />
 
         {/* BUSINESS CONVERSATION CATEGORY DIRECT ALIASES */}
         <Route path="/products/conversation-categories/authentication" element={<SecurityPage />} />

@@ -283,7 +283,7 @@ const EXPLORE_PAGES = [
   { href: '/ai-assistant-app', label: 'KT AI', blurb: 'Your intelligent assistant, built right into every chat.', Icon: FiCpu, kw: ['ai', 'assistant', 'intelligent', 'smart', 'automation', 'bot', 'summar'] },
   { href: '/social-media-platform', label: 'Channels', blurb: 'Follow updates from the people and organizations you care about.', Icon: FiRadio, kw: ['channel', 'broadcast', 'follow', 'updates', 'creator', 'news', 'announcement'] },
   { href: '/video-calling-app', label: 'Voice & Video Calls', blurb: 'Crystal clear calls that live right inside your conversations.', Icon: FiPhone, kw: ['call', 'calling', 'voice', 'video', 'audio'] },
-  { href: '/messaging-app', label: 'Messaging', blurb: 'Fast, private messaging for everything you want to share.', Icon: FiMessageCircle, kw: ['message', 'messaging', 'chat', 'text', 'conversation'] },
+  { href: '/messaging', label: 'Messaging', blurb: 'Fast, private messaging for everything you want to share.', Icon: FiMessageCircle, kw: ['message', 'messaging', 'chat', 'text', 'conversation'] },
   { href: '/group-chat-app', label: 'Groups & Communities', blurb: 'Bring people together at any scale from close friends to communities.', Icon: FiUsers, kw: ['group', 'community', 'communities', 'team', 'event', 'poll'] },
   { href: '/social-feed-app', label: 'Status', blurb: 'Share moments with photos, videos and text that disappear in 24 hours.', Icon: FiCamera, kw: ['status', 'story', 'stories', 'moment'] },
   { href: '/secure-messaging-app', label: 'Security & Privacy', blurb: 'End to end encryption, on by default, for every conversation.', Icon: FiShield, kw: ['security', 'privacy', 'private', 'encryption', 'encrypted', 'safe', 'secure', 'authentication'] },

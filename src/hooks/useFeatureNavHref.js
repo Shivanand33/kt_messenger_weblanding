@@ -46,6 +46,11 @@ export function useFeatureNavMap() {
     (list) => Array.isArray(list) && list.length > 0,
   )
 
+  // Renamed URLs: the old address keeps working and lands on the new one, so
+  // bookmarks and external links never 404. ('/minis' also arrives here via
+  // the admin navigation row above — same target.)
+  const RENAMES = { '/messaging-app': '/messaging' }
+
   const byPath = {}
   for (const row of rows || []) {
     const label = String(row.label || '').toLowerCase()
@@ -54,7 +59,7 @@ export function useFeatureNavMap() {
       byPath[hit.path] = row.href
     }
   }
-  return byPath
+  return { ...RENAMES, ...byPath }
 }
 
 /**

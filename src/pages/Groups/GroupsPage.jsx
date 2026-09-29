@@ -34,6 +34,7 @@ import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
+import { JsonLd } from '../../components/common/JsonLd/JsonLd'
 
 const GROUPS_PAGE_SCHEMA = `{
   "@context": "https://schema.org",
@@ -264,7 +265,7 @@ export function GroupsPage() {
 
   return (
     <MainLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: GROUPS_PAGE_SCHEMA }} />
+      <JsonLd id="GROUPS_PAGE_SCHEMA" json={GROUPS_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
         <Container>

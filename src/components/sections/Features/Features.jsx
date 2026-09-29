@@ -12,7 +12,7 @@ const features = [
     icon: <FiMessageCircle />,
     title: 'Instant messaging',
     text: 'Texts, photos, voice notes, and files that arrive the moment you hit send.',
-    to: '/messaging-app',
+    to: '/messaging',
   },
   {
     icon: <FiPhone />,
@@ -36,7 +36,7 @@ const features = [
     icon: <FiBell />,
     title: 'Calm notifications',
     text: 'Meaningful alerts you can shape, so you stay present and in control.',
-    to: '/messaging-app',
+    to: '/messaging',
   },
   {
     icon: <FiZap />,

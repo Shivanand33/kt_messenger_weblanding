@@ -51,7 +51,7 @@ const PAGES = [
   { id: 'security', path: '/security', label: ['secur'], href: ['secur'], content: ['security'], changefreq: 'monthly', priority: 0.8, name: 'Security', group: 'trust', about: 'How KT Messenger keeps conversations secure with end-to-end encryption.' },
   { id: 'plus', path: '/plus', label: ['plus'], href: ['plus'], content: ['plus'], changefreq: 'monthly', priority: 0.8, name: 'KT Plus', group: 'features', about: 'KT Plus premium features.' },
   { id: 'notes', path: '/notes', label: ['note'], href: ['note'], content: ['notes'], changefreq: 'monthly', priority: 0.8, name: 'Notes', group: 'features', about: 'Save messages, ideas and tasks as notes in KT Messenger.' },
-  { id: 'minis', path: '/minis', label: ['mini'], href: ['mini'], content: ['minis'], changefreq: 'monthly', priority: 0.8, name: 'Minis', group: 'features', about: 'Watch, create and share short videos with KT Messenger Minis.' },
+  { id: 'minis', path: '/minis-short-video-app', label: ['mini'], href: ['mini'], content: ['minis'], changefreq: 'monthly', priority: 0.8, name: 'Minis', group: 'features', about: 'Watch, create and share short videos with KT Messenger Minis.' },
   { id: 'news', path: '/news', label: ['news'], href: ['news'], content: ['news'], listed: false, name: 'News', group: 'features' },
   { id: 'markets', path: '/markets', label: ['market'], href: ['market'], content: ['markets'], listed: false, name: 'Markets', group: 'features' },
   { id: 'wallet', path: '/wallet', label: ['wallet'], href: ['wallet'], content: ['wallet'], listed: false, name: 'Wallet', group: 'features' },

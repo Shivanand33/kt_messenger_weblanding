@@ -33,6 +33,7 @@ import { api } from '../../services/apiClient'
 import { useLanguage } from '../../context/LanguageContext'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useHreflang } from '../../hooks/useSeo'
+import { JsonLd } from '../../components/common/JsonLd/JsonLd'
 
 const TOPICS = [
   {
@@ -133,7 +134,7 @@ const RELATED = [
   { to: '/messaging-app-help', label: 'Help Center', desc: 'Hundreds of articles usually faster than writing in.', icon: <FiHelpCircle /> },
   { to: '/community', label: 'Community', desc: 'Forums, events and the ambassador programme.', icon: <FiUsers /> },
   { to: '/careers', label: 'Careers', desc: 'Open roles and how the hiring process works.', icon: <FiBriefcase /> },
-  { to: '/minis', label: 'KT Minis', desc: 'Watch, create and share short video clips.', icon: <FiVideo /> },
+  { to: '/minis-short-video-app', label: 'KT Minis', desc: 'Watch, create and share short video clips.', icon: <FiVideo /> },
 ]
 
 const CONTACT_PAGE_SCHEMA = `{
@@ -402,7 +403,7 @@ export function ContactPage() {
 
   return (
     <MainLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: CONTACT_PAGE_SCHEMA }} />
+      <JsonLd id="CONTACT_PAGE_SCHEMA" json={CONTACT_PAGE_SCHEMA} />
       <PageHero
         badge={
           <>

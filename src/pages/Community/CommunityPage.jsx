@@ -94,7 +94,7 @@ export function CommunityPage() {
                 <Button size="lg" onClick={() => navigate('/messaging-app-download')}>
                   {t('Join KT Community')} <FiChevronRight className="text-lg" />
                 </Button>
-                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging-app')}>
+                <Button variant="secondary" size="lg" onClick={() => navigate('/messaging')}>
                   {t('Explore Features')}
                 </Button>
               </div>
@@ -211,7 +211,7 @@ export function CommunityPage() {
                   </p>
                 </div>
                 <div className="mt-8 pt-6 border-t border-line">
-                  <Button variant="secondary" size="sm" onClick={() => navigate('/messaging-app')}>
+                  <Button variant="secondary" size="sm" onClick={() => navigate('/messaging')}>
                     {t('Learn About Private Messaging')} <FiChevronRight />
                   </Button>
                 </div>

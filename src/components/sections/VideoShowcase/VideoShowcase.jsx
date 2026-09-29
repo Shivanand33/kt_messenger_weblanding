@@ -47,7 +47,7 @@ export function VideoShowcase() {
   const featuresData = {
     chat: {
       id: 'chat',
-      route: '/messaging-app',
+      route: '/messaging',
       label: t('Messaging'),
       icon: <FiMessageSquare />,
       headline: t('Instant 4K Media & 2GB Files'),
@@ -113,7 +113,7 @@ export function VideoShowcase() {
 
     minis: {
       id: 'minis',
-      route: '/minis',
+      route: '/minis-short-video-app',
       label: t('Minis'),
       icon: <FiPlayCircle />,
       headline: t('Minis Short Video, Full Screen'),

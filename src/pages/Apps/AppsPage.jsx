@@ -59,7 +59,7 @@ const features = [
     title: 'Messaging',
     desc: 'Express yourself with instant voice notes, HD photos, 4K videos, and custom sticker packs.',
     image: privateImg,
-    to: '/messaging-app'
+    to: '/messaging'
   },
   {
     title: 'Voice & Video Calling',

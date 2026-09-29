@@ -14,6 +14,7 @@ import { VideoShowcase } from '../../components/sections/VideoShowcase/VideoShow
 import { DownloadCTA } from '../../components/sections/DownloadCTA/DownloadCTA'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
+import { JsonLd } from '../../components/common/JsonLd/JsonLd'
 
 const ORGANIZATION_SCHEMA = `{
   "@context": "https://schema.org",
@@ -78,9 +79,9 @@ export function Home() {
 
   return (
     <MainLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ORGANIZATION_SCHEMA }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: WEBSITE_SCHEMA }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: WEBPAGE_SCHEMA }} />
+      <JsonLd id="ORGANIZATION_SCHEMA" json={ORGANIZATION_SCHEMA} />
+      <JsonLd id="WEBSITE_SCHEMA" json={WEBSITE_SCHEMA} />
+      <JsonLd id="WEBPAGE_SCHEMA" json={WEBPAGE_SCHEMA} />
       <Hero />
       <VideoShowcase />
       <Statement />

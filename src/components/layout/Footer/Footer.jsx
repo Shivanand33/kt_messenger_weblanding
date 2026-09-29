@@ -191,14 +191,14 @@ const sitemap = [
   {
     group: 'Features',
     links: [
-      { label: 'Messaging', to: '/messaging-app' },
+      { label: 'Messaging', to: '/messaging' },
       { label: 'Calling', to: '/video-calling-app' },
       { label: 'Groups', to: '/group-chat-app' },
       { label: 'Channels', to: '/social-media-platform' },
       { label: 'Status', to: '/social-feed-app' },
       { label: 'KT AI', to: '/ai-assistant-app' },
       { label: 'KT Plus', to: '/premium-messaging-app' },
-      { label: 'KT Minis', to: '/minis' },
+      { label: 'KT Minis', to: '/minis-short-video-app' },
       { label: 'Notes', to: '/notes-app' },
     ],
   },

@@ -39,6 +39,7 @@ import { api } from '../../services/apiClient'
 import { useRemoteContent } from '../../hooks/useRemoteContent'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
+import { JsonLd } from '../../components/common/JsonLd/JsonLd'
 
 const CALLING_PAGE_SCHEMA = `{
   "@context": "https://schema.org",
@@ -316,7 +317,7 @@ export function CallingPage() {
 
   return (
     <MainLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: CALLING_PAGE_SCHEMA }} />
+      <JsonLd id="CALLING_PAGE_SCHEMA" json={CALLING_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
         <Container>

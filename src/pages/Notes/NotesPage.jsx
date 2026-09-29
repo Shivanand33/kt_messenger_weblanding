@@ -36,12 +36,13 @@ import { Reveal } from '../../components/common/Reveal/Reveal'
 import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
 import { notesFaqs as FALLBACK_NOTESFAQS } from './notesData'
+import { JsonLd } from '../../components/common/JsonLd/JsonLd'
 
 const RELATED = [
   { to: '/about', label: 'About', desc: 'Our mission, story and privacy charter.', icon: <FiCompass /> },
   { to: '/contact', label: 'Contact', desc: 'Reach out to our support or hiring team.', icon: <FiMessageSquare /> },
   { to: '/community', label: 'Community', desc: 'Join our user forums and discussion spaces.', icon: <FiUsers /> },
-  { to: '/minis', label: 'KT Minis', desc: 'Watch, create and share short video clips.', icon: <FiVideo /> },
+  { to: '/minis-short-video-app', label: 'KT Minis', desc: 'Watch, create and share short video clips.', icon: <FiVideo /> },
 ]
 
 const NOTES_PAGE_SCHEMA = `{
@@ -174,7 +175,7 @@ export function NotesPage() {
 
   return (
     <MainLayout>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: NOTES_PAGE_SCHEMA }} />
+      <JsonLd id="NOTES_PAGE_SCHEMA" json={NOTES_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
       <PageHero
         titleTag="h1"
