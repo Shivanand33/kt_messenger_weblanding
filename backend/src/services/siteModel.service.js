@@ -63,6 +63,7 @@ const PAGES = [
   { id: 'blog', path: '/blog', label: ['blog'], href: ['blog'], content: ['blog'], changefreq: 'daily', priority: 0.8, name: 'Blog', group: 'blog', about: 'News, guides and product updates from KT Messenger.' },
   { id: 'help', path: '/help', label: ['help'], href: ['help'], content: ['help'], changefreq: 'weekly', priority: 0.7, name: 'Help Center', group: 'help', about: 'Step-by-step guides and answers for using KT Messenger.' },
   { id: 'apps', path: '/apps', label: ['app'], href: ['app'], content: ['apps'], changefreq: 'monthly', priority: 0.9, name: 'Download KT Messenger', group: 'main', about: 'Download KT Messenger for Android, iPhone, Mac and Windows.' },
+  { id: 'products', path: '/products', label: ['product'], href: ['/products'], content: ['products'], changefreq: 'monthly', priority: 0.7, name: 'Our Products', group: 'main', about: 'Apps built by the KT Messenger team, with a store link and QR code for each one.' },
   { id: 'business', path: '/business', label: ['business'], href: ['business'], content: ['business'], changefreq: 'monthly', priority: 0.8, name: 'KT for Business', group: 'business', about: 'Tools for businesses to reach and support customers on KT Messenger.' },
 ]
 
