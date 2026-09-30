@@ -27,7 +27,7 @@ const KT_WEB_URL = 'https://web.ktmessenger.com/auth/qr'
 // KT Messenger's profile on each social platform, shown as a row of round
 // buttons in the bottom bar. Each icon is that platform's own mark, saved in
 // assets/images/social so nothing is fetched from their servers at runtime.
-const SOCIAL_LINKS = [
+export const SOCIAL_LINKS = [
   { name: 'Jaadoe', href: 'https://jaadoe.com/profile/ktmessenger', icon: jaadoeIcon },
   { name: 'Seezitt', href: 'https://seezitt.com/profile/ktmessenger', icon: seezittIcon },
   { name: 'WN Social', href: 'https://wnsocial.com/profile/d91d8611-eca9-4850-8273-5d232297a49c', icon: wnsocialIcon },

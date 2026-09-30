@@ -14,6 +14,24 @@ export function parseBody(body) {
       .replace(/<\s*(h[1-6])[^>]*>([\s\S]*?)<\s*\/\s*\1\s*>/gi, (_m, _tag, inner) => `\n## ${inner}\n`)
       .replace(/<\s*li[^>]*>([\s\S]*?)<\s*\/\s*li\s*>/gi, (_m, inner) => `\n- ${inner}\n`)
       .replace(/<\s*br\s*\/?\s*>/gi, '\n')
+      // Images: turn <img src="x" alt="y" data-align="left|right|center"> into a
+      // markdown image marker (with an #align suffix the renderer understands)
+      // BEFORE the generic tag strip below deletes the tag — that strip is why
+      // pasted/uploaded body images used to vanish on the public blog.
+      .replace(/<\s*img\s[^>]*>/gi, (tag) => {
+        const src = (tag.match(/src=["']([^"']+)["']/i) || [])[1]
+        if (!src) return ''
+        const alt = ((tag.match(/alt=["']([^"']*)["']/i) || [])[1] || '').trim()
+        let align = ((tag.match(/data-align=["']([^"']+)["']/i) || [])[1] || '').toLowerCase()
+        if (!align) {
+          const cls = ((tag.match(/class=["']([^"']+)["']/i) || [])[1] || '').toLowerCase()
+          const style = ((tag.match(/style=["']([^"']+)["']/i) || [])[1] || '').toLowerCase()
+          if (/float:\s*left/.test(style) || /\bleft\b/.test(cls)) align = 'left'
+          else if (/float:\s*right/.test(style) || /\bright\b/.test(cls)) align = 'right'
+          else if (/margin:\s*0\s+auto|display:\s*block/.test(style) || /\bcenter\b/.test(cls)) align = 'center'
+        }
+        return `\n\n![${alt}](${src.trim()}${['left', 'right', 'center'].includes(align) ? `#${align}` : ''})\n\n`
+      })
       // Keep links: turn <a href="x">y</a> into markdown [y](x) before the
       // generic tag strip below removes it, so renderText can make it clickable.
       .replace(/<a\s[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\s*\/\s*a\s*>/gi, (_m, href, inner) => `[${inner.replace(/<[^>]+>/g, '').trim()}](${href.trim()})`)
@@ -38,8 +56,8 @@ export function parseBody(body) {
     const h = line.match(/^#{1,6}\s+(.*)$/)
     if (h) { flushPara(); flushList(); blocks.push({ type: 'h', text: h[1].trim() }); continue }
     if (/^-{3,}$/.test(line)) { flushPara(); flushList(); blocks.push({ type: 'hr' }); continue }
-    const im = line.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/)
-    if (im) { flushPara(); flushList(); blocks.push({ type: 'img', alt: im[1].trim(), src: im[2].trim() }); continue }
+    const im = line.match(/^!\[([^\]]*)\]\(([^)\s]+?)(?:#(left|right|center))?\)$/)
+    if (im) { flushPara(); flushList(); blocks.push({ type: 'img', alt: im[1].trim(), src: im[2].trim(), align: im[3] || null }); continue }
     const q = line.match(/^>\s?(.*)$/)
     if (q) { flushPara(); flushList(); blocks.push({ type: 'quote', text: q[1].trim() }); continue }
     if (line.startsWith('|') && line.endsWith('|')) {

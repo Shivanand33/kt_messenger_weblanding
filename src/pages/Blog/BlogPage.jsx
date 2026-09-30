@@ -6,6 +6,7 @@ import {
   FiCpu, FiRadio, FiPhone, FiMessageCircle, FiUsers, FiCamera, FiShield, FiBriefcase, FiCreditCard, FiShoppingBag,
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
+import { SOCIAL_LINKS } from '../../components/layout/Footer/Footer'
 import { Container } from '../../components/common/Container/Container'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { useLanguage } from '../../context/LanguageContext'
@@ -218,8 +219,20 @@ function ArticleBody({ blocks }) {
           )
         }
         if (block.type === 'img') {
+          // align left/right floats the image with the article text flowing
+          // beside it ("one side image, one side content"); center caps the
+          // width; default stays a full-width figure.
+          const alignClass =
+            block.align === 'left'
+              ? 'float-left mr-6 w-1/2 max-w-sm'
+              : block.align === 'right'
+                ? 'float-right ml-6 w-1/2 max-w-sm'
+                : block.align === 'center'
+                  ? 'mx-auto max-w-2xl'
+                  : ''
+          const floated = block.align === 'left' || block.align === 'right'
           return (
-            <figure key={i} className="mt-6 overflow-hidden rounded-2xl border border-line bg-surface">
+            <figure key={i} className={`mt-6 overflow-hidden rounded-2xl border border-line bg-surface ${alignClass} ${floated ? 'my-2' : ''}`}>
               <img src={img(block.src)} alt={imgAlt(block.src, block.alt)} loading="lazy" className="w-full object-cover" />
               {block.alt ? (
                 <figcaption className="px-4 py-2 text-xs font-medium text-muted">{block.alt}</figcaption>
@@ -789,43 +802,84 @@ export function BlogPage() {
               </div>
             ) : null}
 
-            {/* article cards */}
-            <div className="mt-10 grid gap-6 sm:gap-7 sm:grid-cols-2 lg:grid-cols-3">
+            {/* article rows — editorial list layout: thumb beside the story,
+                divider-separated rows instead of the old vertical card grid */}
+            {!searching && category === 'All' ? (
+              <div className="mt-16 flex items-end justify-between border-b border-line pb-4">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-[0.14em] text-brand-ink">{t('The latest')}</span>
+                  <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{t('Latest articles')}</h2>
+                </div>
+                <span className="hidden text-sm font-semibold text-muted sm:block">
+                  {visible.length} {visible.length === 1 ? t('story') : t('stories')}
+                </span>
+              </div>
+            ) : null}
+            <div className="mt-8 overflow-hidden rounded-[26px] border border-line bg-cream-2 shadow-soft">
               {visible.map((post, index) => (
-                <Reveal key={post.slug} from="up" delay={(index % 3) * 0.05} className="h-full">
+                <Reveal key={post.slug} from="up" delay={Math.min(index, 5) * 0.04}>
                   <button
                     type="button"
                     onClick={() => openArticle(post.slug)}
-                    className="group flex h-full flex-col overflow-hidden rounded-[26px] border border-line bg-cream-2 text-left shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:border-brand/40 hover:shadow-float"
+                    className={`group flex w-full flex-col gap-5 p-5 text-left transition-colors duration-200 hover:bg-surface sm:flex-row sm:items-center sm:gap-7 sm:p-6 ${index > 0 ? 'border-t border-line' : ''}`}
                   >
-                    <div className="relative h-52 overflow-hidden">
+                    <div className="relative h-44 w-full shrink-0 overflow-hidden rounded-2xl border border-line bg-surface sm:h-28 sm:w-44">
                       <img
                         src={img(imageFor(post))}
                         alt={imgAlt(imageFor(post), post.title)}
                         loading="lazy"
-                        className="h-full w-full object-contain transition-transform duration-[600ms] ease-out group-hover:scale-110"
+                        className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-105"
                       />
-                      <span className="absolute left-4 top-4 rounded-full border border-line bg-surface/90 px-3 py-1 text-[11px] font-bold text-brand-ink shadow-sm backdrop-blur">
-                        {post.category}
-                      </span>
-                      <span className="absolute bottom-4 right-4 inline-flex items-center gap-1 rounded-full bg-slate-950/55 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur">
+                      <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-slate-950/55 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur">
                         <FiClock className="text-[11px]" /> {post.readMins} {t('min')}
                       </span>
                     </div>
-                    <div className="flex flex-1 flex-col p-6">
-                      <span className="text-[11px] font-semibold text-muted">{post.date}</span>
-                      <h3 className="mt-2 text-lg font-bold leading-snug text-ink transition-colors duration-300 group-hover:text-brand-ink">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <span className="rounded-full bg-brand-soft px-3 py-0.5 text-[11px] font-bold uppercase tracking-wide text-brand-ink">
+                          {post.category}
+                        </span>
+                        <span className="text-xs font-semibold text-muted">{post.date}</span>
+                      </div>
+                      <h3 className="mt-2.5 text-lg font-bold leading-snug text-ink transition-colors duration-300 group-hover:text-brand-ink sm:text-xl">
                         {post.title}
                       </h3>
-                      <p className="mt-2 flex-1 text-sm leading-6 text-body line-clamp-3">{post.description}</p>
-                      <div className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-brand-ink">
-                        {t('Read More')} <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1.5" />
-                      </div>
+                      <p className="mt-2 hidden text-sm leading-6 text-body line-clamp-2 sm:block">{post.description}</p>
                     </div>
+                    <span className="hidden h-11 w-11 shrink-0 place-items-center rounded-full border border-line bg-surface text-muted transition-all duration-300 group-hover:border-brand-strong group-hover:bg-brand-strong group-hover:text-white sm:grid">
+                      <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                    </span>
                   </button>
                 </Reveal>
               ))}
             </div>
+
+            {/* KT on every platform — the same official profile links as the footer */}
+            <Reveal from="up" className="mt-16 lg:mt-20">
+              <div className="rounded-[30px] border border-line bg-cream-2 px-6 py-10 text-center shadow-soft sm:px-12 sm:py-12">
+                <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+                  {t('KT on every platform')}
+                </h2>
+                <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-body">
+                  {t('Follow KT Messenger and our apps across every platform for updates, releases and behind-the-scenes news.')}
+                </p>
+                <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
+                  {SOCIAL_LINKS.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.name}
+                      title={social.name}
+                      className="grid h-12 w-12 place-items-center rounded-full border border-line bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-brand-strong hover:shadow-card"
+                    >
+                      <img src={social.icon} alt="" width="24" height="24" loading="lazy" className="h-6 w-6 object-contain" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           </>
         )}
       </Container>

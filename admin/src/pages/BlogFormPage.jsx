@@ -4,6 +4,7 @@ import api, { errorMessage } from '../api/client.js'
 import { useToast } from '../components/Toast.jsx'
 import { PageHeader, Loading } from '../components/ui.jsx'
 import { Input, Textarea, Select, Checkbox } from '../components/Field.jsx'
+import { RichEditor } from '../components/RichEditor.jsx'
 
 const EMPTY = { title: '', slug: '', excerpt: '', body: '', coverUrl: '', authorName: 'KT Messenger Team', categoryId: '', status: 'DRAFT', featured: false, seoTitle: '', seoDescription: '', ogImage: '' }
 
@@ -195,7 +196,7 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
             )}
           </div>
           <Textarea label="Excerpt" value={form.excerpt} onChange={(e) => set('excerpt', e.target.value)} placeholder="Short summary shown in the blog list" style={{ minHeight: 70 }} />
-          <Textarea label="Body (HTML/Markdown)" value={form.body} onChange={(e) => set('body', e.target.value)} placeholder="Full article content" style={{ minHeight: 260 }} />
+          <RichEditor key={id} label="Body" value={form.body} onChange={(html) => set('body', html)} />
           <hr style={{ border: 'none', borderTop: '1px solid var(--line)', margin: '10px 0 18px' }} />
           <h3 style={{ fontSize: 15, marginBottom: 12 }}>SEO</h3>
           <Input label="SEO title" value={form.seoTitle} onChange={(e) => set('seoTitle', e.target.value)} />

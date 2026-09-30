@@ -41,8 +41,10 @@ function schemaRuntimeValue(source, name) {
   const from = start + `const ${name} = `.length + 1
   const end = source.indexOf('`', from)
   if (end < 0) throw new Error(`constant ${name} template literal not terminated`)
-  // eslint-disable-next-line no-eval
-  return eval('`' + source.slice(from, end) + '`') // same evaluation the browser performs
+  // Indirect evaluation (new Function, not direct eval — Vite flags the
+  // latter when it loads vite.config.js): the same evaluation the browser
+  // performs, turning escapes like `\\n` into the runtime string.
+  return new Function(`return \`${source.slice(from, end)}\``)()
 }
 
 /** [{ id, json }] for the route, [] when the route has no schema. */
