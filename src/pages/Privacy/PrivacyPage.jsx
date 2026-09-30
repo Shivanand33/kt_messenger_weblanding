@@ -271,12 +271,12 @@ export function PrivacyPage() {
       <JsonLd id="PRIVACY_PAGE_SCHEMA" json={PRIVACY_PAGE_SCHEMA} />
 
       {/* 1. HERO SECTION: MESSAGE PRIVATELY */}
-      <section className="relative overflow-hidden bg-cream dark:bg-surface border-b border-line py-10 sm:py-14 lg:py-16">
+      <section className="relative overflow-hidden bg-cream dark:bg-surface border-b border-line pt-4 pb-10 sm:pt-5 sm:pb-14 lg:pt-6 lg:pb-16">
         <div aria-hidden className="pointer-events-none absolute -right-24 top-10 h-96 w-96 rounded-full bg-brand-strong/10 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl" />
 
         <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:items-start lg:gap-14">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
             <div>
               <Reveal from="up">
                 <span className="inline-flex items-center gap-2 rounded-full border border-brand-strong/20 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
@@ -310,7 +310,7 @@ export function PrivacyPage() {
 
             {/* SMARTPHONE MOCKUP WITH MATRIX CIPHER ENCRYPTION OVERLAY */}
             <Reveal from="scale" delay={0.1} className="relative">
-              <div className="mx-auto w-full max-w-[320px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
+              <div className="mx-auto w-full max-w-[290px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
                 {/* Status Bar */}
                 <div className="bg-slate-950 px-3.5 py-1.5 flex items-center justify-between text-[10px] font-bold text-slate-400 shrink-0 border-b border-slate-900 z-20">
                   <div className="flex items-center gap-1.5">
@@ -507,11 +507,11 @@ export function PrivacyPage() {
       </section>
 
       {/* 2. CHAT LOCK SECTION */}
-      <section className="py-20 lg:py-28 bg-surface border-b border-line">
+      <section className="py-8 lg:py-10 bg-surface border-b border-line">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
-              <div className="mx-auto w-full max-w-[320px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-slate-900 dark:text-white flex flex-col justify-between relative group">
+              <div className="mx-auto w-full max-w-[290px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-slate-900 dark:text-white flex flex-col justify-between relative group">
                 {/* Status Bar */}
                 <div className="bg-slate-950 px-3.5 py-1.5 flex items-center justify-between text-[10px] font-bold text-slate-400 shrink-0 border-b border-slate-900 z-20">
                   <div className="flex items-center gap-1.5">
@@ -610,7 +610,7 @@ export function PrivacyPage() {
       </section>
 
       {/* 3. DISAPPEARING MESSAGES SECTION */}
-      <section className="py-20 lg:py-28 bg-cream dark:bg-surface border-b border-line">
+      <section className="py-8 lg:py-10 bg-cream dark:bg-surface border-b border-line">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
@@ -636,7 +636,7 @@ export function PrivacyPage() {
 
             <Reveal from="right">
               {/* FULL ULTRA-REALISTIC TALL SMARTPHONE MOCKUP MATCHING USER UPLOADED SCREENSHOT EXACTLY */}
-              <div className="mx-auto w-full max-w-[320px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
+              <div className="mx-auto w-full max-w-[290px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
                 {/* Top Phone Speaker Notch & Status Bar */}
                 <div className="bg-slate-950 px-3.5 py-1.5 flex items-center justify-between text-[10px] font-bold text-slate-400 shrink-0 border-b border-slate-900 z-20">
                   <div className="flex items-center gap-1.5">
@@ -780,11 +780,11 @@ export function PrivacyPage() {
       </section>
 
       {/* 4. SILENCE UNKNOWN CALLERS SECTION */}
-      <section className="py-20 lg:py-28 bg-surface border-b border-line">
+      <section className="py-8 lg:py-10 bg-surface border-b border-line">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
-              <div className="mx-auto w-full max-w-[320px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
+              <div className="mx-auto w-full max-w-[290px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
                 {/* Dynamic Island Notch & Status Bar */}
                 <div className="bg-slate-950 px-3.5 py-1.5 flex items-center justify-between text-[10px] font-bold text-slate-400 shrink-0 border-b border-slate-900 z-20">
                   <div className="flex items-center gap-1.5">
@@ -902,11 +902,11 @@ export function PrivacyPage() {
       </section>
 
       {/* 5. LAST SEEN AND ONLINE SECTION */}
-      <section className="py-20 lg:py-28 bg-cream dark:bg-surface border-b border-line">
+      <section className="py-8 lg:py-10 bg-cream dark:bg-surface border-b border-line">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
-              <div className="mx-auto w-full max-w-[320px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
+              <div className="mx-auto w-full max-w-[290px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
                 {/* Status Bar */}
                 <div className="bg-slate-950 px-3.5 py-1.5 flex items-center justify-between text-[10px] font-bold text-slate-400 shrink-0 border-b border-slate-900 z-20">
                   <span>5:31 • ...</span>
@@ -1076,7 +1076,7 @@ export function PrivacyPage() {
       </section>
 
       {/* 6. END-TO-END ENCRYPTED BACKUPS SECTION */}
-      <section className="py-20 lg:py-28 bg-surface border-b border-line">
+      <section className="py-8 lg:py-10 bg-surface border-b border-line">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
@@ -1101,7 +1101,7 @@ export function PrivacyPage() {
             </Reveal>
 
             <Reveal from="right">
-              <div className="mx-auto w-full max-w-[320px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
+              <div className="mx-auto w-full max-w-[290px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
                 {/* Status Bar */}
                 <div className="bg-slate-950 px-3.5 py-1.5 flex items-center justify-between text-[10px] font-bold text-slate-400 shrink-0 border-b border-slate-900 z-20">
                   <span>5:33 • ...</span>
@@ -1213,11 +1213,11 @@ export function PrivacyPage() {
       </section>
 
       {/* 7. SECURITY AND SAFETY SECTION */}
-      <section className="py-20 lg:py-28 bg-cream dark:bg-surface border-b border-line">
+      <section className="py-8 lg:py-10 bg-cream dark:bg-surface border-b border-line">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="left">
-              <div className="mx-auto w-full max-w-[320px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
+              <div className="mx-auto w-full max-w-[290px] aspect-[9/19.5] rounded-[44px] border-[3px] border-slate-800 bg-slate-950 p-2 shadow-float dark:border-slate-700 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
                 {/* Status Bar */}
                 <div className="bg-slate-950 px-3.5 py-1.5 flex items-center justify-between text-[10px] font-bold text-slate-400 shrink-0 border-b border-slate-900 z-20">
                   <span>5:32 • ...</span>
@@ -1303,7 +1303,7 @@ export function PrivacyPage() {
       </section>
 
       {/* 8. EXPLORE MORE KT PRIVACY CONTROLS CAROUSEL (Screenshot 4 - Set B) */}
-      <section className="py-20 lg:py-28 bg-surface border-b border-line overflow-x-clip">
+      <section className="py-8 lg:py-10 bg-surface border-b border-line overflow-x-clip">
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-12 items-center">
             {/* Opaque, full-height heading on top (z-20): cards slide BEHIND it on
@@ -1363,7 +1363,7 @@ export function PrivacyPage() {
       </section>
 
       {/* 9. DISCOVER MORE FEATURES CAROUSEL */}
-      <section className="py-20 lg:py-28 bg-cream dark:bg-surface border-b border-line overflow-x-clip">
+      <section className="py-8 lg:py-10 bg-cream dark:bg-surface border-b border-line overflow-x-clip">
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.65fr_1.35fr] lg:gap-12 items-center">
             {/* Opaque, full-height heading on top (z-20): cards slide behind it left. */}

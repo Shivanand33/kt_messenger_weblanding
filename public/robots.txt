@@ -12,76 +12,25 @@
 # keeps the internal areas out.
 #
 # Welcome, and covered by that group:
-#   Googlebot, Bingbot, DuckDuckBot, Yandex, Baiduspider, Naver (Yeti)
-#   facebookexternalhit, Twitterbot, LinkedInBot, Slackbot, TelegramBot
-#   GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot
-#   PerplexityBot, Google-Extended, Applebot, Applebot-Extended, Amazonbot
+#   Search: Googlebot, Bingbot, Yahoo (Slurp), DuckDuckBot, Yandex,
+#           Baiduspider, Naver (Yeti), Seznam, Qwantify
+#   Social: facebookexternalhit, Twitterbot, LinkedInBot, Slackbot,
+#           TelegramBot, WhatsApp, Discordbot, Pinterestbot
+#   AI:     GPTBot, OAI-SearchBot, ChatGPT-User          (ChatGPT)
+#           Google-Extended, GoogleOther                 (Gemini)
+#           ClaudeBot, Claude-SearchBot, Claude-User     (Claude)
+#           PerplexityBot, Perplexity-User               (Perplexity)
+#           Applebot, Applebot-Extended                  (Apple Intelligence)
+#           meta-externalagent, meta-externalfetcher     (Meta AI)
+#           Amazonbot, CCBot, cohere-ai, MistralAI-User,
+#           DuckAssistBot, YouBot, Bytespider, PetalBot
 #
 # AI assistants can also read /llms.txt — a short, curated overview of the
 # site, listing the same canonical URLs as /sitemap.xml.
 
-# Bulk scrapers, content resellers and contact-data harvesters. They cost
-# bandwidth without sending a single visitor.
-
-User-agent: Bytespider
-Disallow: /
-
-User-agent: PetalBot
-Disallow: /
-
-User-agent: Scrapy
-Disallow: /
-
-User-agent: Brightbot
-Disallow: /
-
-User-agent: Diffbot
-Disallow: /
-
-User-agent: ImagesiftBot
-Disallow: /
-
-User-agent: Omgili
-Disallow: /
-
-User-agent: Omgilibot
-Disallow: /
-
-User-agent: Webzio-Extended
-Disallow: /
-
-User-agent: DataForSeoBot
-Disallow: /
-
-User-agent: ZoominfoBot
-Disallow: /
-
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: DotBot
-Disallow: /
-
-User-agent: BLEXBot
-Disallow: /
-
-User-agent: Barkrowler
-Disallow: /
-
-User-agent: SeekportBot
-Disallow: /
-
-User-agent: magpie-crawler
-Disallow: /
-
-User-agent: serpstatbot
-Disallow: /
-
-User-agent: YaK
-Disallow: /
-
-# The whole public site is open, in every language (/hi/, /es/, /ar/ …).
-# Only the areas that are never public pages are closed.
+# No crawler is blocked by name — every one of them matches the group
+# below. The whole public site is open, in every language (/hi/, /es/,
+# /ar/ …). Only the areas that are never public pages are closed.
 
 User-agent: *
 Allow: /

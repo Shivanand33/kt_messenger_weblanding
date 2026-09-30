@@ -896,7 +896,7 @@ export function ContactPage() {
         <Container maxW="max-w-3xl">
           <SectionHead eyebrow={t('FAQ')} title={t('Before you write to us')} />
           <div className="mt-12">
-            <FaqAccordion items={FAQS} placeholder={t('Search the FAQ…')} />
+            <FaqAccordion items={FAQS} placeholder={t('Search the FAQ…')} questionTag="h3" />
           </div>
         </Container>
       </Section>
@@ -904,6 +904,7 @@ export function ContactPage() {
       <CtaBand
         eyebrow={t('Still stuck')}
         title={t('The Help Center answers most of this faster than we can')}
+        titleTag="h4"
         description={t('Hundreds of articles covering setup, privacy, payments and account recovery searchable, and updated with every release.')}
         actions={
           <>
@@ -919,7 +920,7 @@ export function ContactPage() {
       />
 
       <Section className="bg-surface">
-        <SectionHead eyebrow={t('Keep exploring')} title={t('More about KT Messenger')} />
+        <SectionHead eyebrow={t('Keep exploring')} title={t('More about KT Messenger')} titleTag="h5" />
         <RelatedPages className="mt-12" items={RELATED} />
       </Section>
 

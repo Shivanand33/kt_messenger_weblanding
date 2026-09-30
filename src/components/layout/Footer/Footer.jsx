@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   FiCheck,
   FiChevronDown,
   FiGlobe,
+  FiSearch,
 } from 'react-icons/fi'
 import { Container } from '../../common/Container/Container'
 import { Logo } from '../../common/Logo/Logo'
@@ -104,6 +105,15 @@ const toLanguages = (rows) =>
   (rows || [])
     .filter((l) => l.enabled !== false && SUPPORTED_LANGS.includes(l.code))
     .map((l) => ({ code: l.code, label: l.label, native: l.nativeLabel || l.label }))
+
+// Case- and accent-insensitive key for matching: "Español" and "espanol"
+// reduce to the same string, so a reader finds a language whether or not
+// they can type its accents.
+const searchKey = (value) =>
+  (value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
 
 const toFooterColumns = (rows) =>
   rows
@@ -245,10 +255,32 @@ export function Footer() {
   const language = languages.find((option) => option.code === lang) || languages[0]
   const [sitemapOpen, setSitemapOpen] = useState(false)
   const langRef = useRef(null)
+  const langSearchRef = useRef(null)
+  const langListRef = useRef(null)
+  const [langQuery, setLangQuery] = useState('')
+
+  // Matches the language's own name, its English name or its code, so
+  // "Deutsch", "German" and "de" all find the same row.
+  const filteredLanguages = useMemo(() => {
+    const query = searchKey(langQuery).trim()
+    if (!query) return languages
+    return languages.filter(
+      (option) =>
+        searchKey(option.native).includes(query) ||
+        searchKey(option.label).includes(query) ||
+        option.code.toLowerCase().startsWith(query),
+    )
+  }, [languages, langQuery])
 
   // Close the language menu on an outside click or Escape.
   useEffect(() => {
-    if (!langOpen) return undefined
+    if (!langOpen) {
+      setLangQuery('')
+      return undefined
+    }
+
+    // Focus the box so the list can be filtered by typing straight away.
+    langSearchRef.current?.focus()
 
     const onPointerDown = (event) => {
       if (langRef.current && !langRef.current.contains(event.target)) setLangOpen(false)
@@ -319,6 +351,23 @@ export function Footer() {
     setLangOpen(false)
   }
 
+  /**
+   * Enter picks the top match, ArrowDown steps into the list. Escape is left
+   * alone: the menu's own document listener already closes on it.
+   */
+  const onLangSearchKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      const [first] = filteredLanguages
+      if (first) selectLanguage(first)
+      return
+    }
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      langListRef.current?.querySelector('button[role="option"]')?.focus()
+    }
+  }
+
   return (
     <footer id="footer" className="border-t border-line bg-cream-2 pt-16 pb-10 transition-colors duration-500 lg:pt-20">
       <Container>
@@ -372,34 +421,60 @@ export function Footer() {
               </button>
 
               {langOpen ? (
-                <ul
-                  role="listbox"
-                  aria-label="Select language"
-                  className="absolute bottom-full left-0 z-30 mb-2 max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2.5rem))] overflow-y-auto rounded-2xl border border-line bg-surface p-1.5 shadow-float"
-                >
-                  {languages.map((option) => {
-                    const active = option.code === lang
-                    return (
-                      <li key={option.code}>
-                        <button
-                          type="button"
-                          role="option"
-                          aria-selected={active}
-                          onClick={() => selectLanguage(option)}
-                          className={`flex w-full items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm transition-colors ${
-                            active ? 'bg-brand-soft font-bold text-brand-ink' : 'text-body hover:bg-surface-2 hover:text-ink'
-                          }`}
-                        >
-                          <span className="min-w-0">
-                            <span className="block truncate font-semibold">{option.native}</span>
-                            <span className="block truncate text-[11px] text-muted">{option.label}</span>
-                          </span>
-                          {active ? <FiCheck className="shrink-0" /> : null}
-                        </button>
-                      </li>
-                    )
-                  })}
-                </ul>
+                <div className="absolute bottom-full left-0 z-30 mb-2 w-[min(24rem,calc(100vw-2.5rem))] overflow-hidden rounded-2xl border border-line bg-surface shadow-float">
+                  <div className="border-b border-line p-2">
+                    <div className="relative">
+                      <FiSearch className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+                      <input
+                        ref={langSearchRef}
+                        type="text"
+                        value={langQuery}
+                        onChange={(event) => setLangQuery(event.target.value)}
+                        onKeyDown={onLangSearchKeyDown}
+                        placeholder={t('Search language')}
+                        aria-label={t('Search language')}
+                        aria-controls="footer-language-list"
+                        autoComplete="off"
+                        className="w-full rounded-xl border border-line bg-surface-2 py-2 pl-9 pr-3 text-sm text-ink outline-none transition-colors placeholder:text-muted focus:border-brand-strong"
+                      />
+                    </div>
+                  </div>
+
+                  <ul
+                    ref={langListRef}
+                    id="footer-language-list"
+                    role="listbox"
+                    aria-label="Select language"
+                    className="max-h-[min(24rem,55vh)] overflow-y-auto p-1.5"
+                  >
+                    {filteredLanguages.length === 0 ? (
+                      <li className="px-3.5 py-6 text-center text-sm text-muted">{t('No languages found')}</li>
+                    ) : null}
+
+                    {filteredLanguages.map((option) => {
+                      const active = option.code === lang
+                      return (
+                        <li key={option.code}>
+                          <button
+                            type="button"
+                            role="option"
+                            aria-selected={active}
+                            onClick={() => selectLanguage(option)}
+                            className={`flex w-full items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm transition-colors ${
+                              active ? 'bg-brand-soft font-bold text-brand-ink' : 'text-body hover:bg-surface-2 hover:text-ink'
+                            }`}
+                          >
+                            <span className="min-w-0">
+                              <span className="block truncate font-semibold">{option.native}</span>
+                              <span className="block truncate text-[11px] text-muted">{option.label}</span>
+                            </span>
+                            {active ? <FiCheck className="shrink-0" /> : null}
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
               ) : null}
             </div>
 

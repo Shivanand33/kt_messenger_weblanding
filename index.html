@@ -8,6 +8,12 @@
       name="description"
       content="KT Messenger — simple, secure messaging and calling for everyone. Private by default, delightfully fast, and in sync on every device."
     />
+    <!-- Every route this file serves is a public page: the admin panel is a
+         separate app with its own index.html, and the site has no sign-in
+         routes. Declared here rather than injected by JS so it is present in
+         the HTML a crawler receives, on every language prefix, and can never
+         be duplicated. -->
+    <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#fcf5eb" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b141a" media="(prefers-color-scheme: dark)" />
     <title>KT Messenger · messaging &amp; calling</title>

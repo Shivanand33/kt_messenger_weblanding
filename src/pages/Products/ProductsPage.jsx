@@ -164,7 +164,9 @@ function ProductDialog({ product, onClose, initialPlatform = 'android' }) {
 
 export function ProductsPage() {
   useSeo({
-    title: 'Products | KT Messenger.',
+    title: 'KT Messenger Products: Secure Messaging, Business, Social.',
+    description:
+      'Discover KT Messenger apps for private messaging, business communication, communities, social networking, entertainment, and productivity.',
     path: '/products',
   })
 
@@ -183,7 +185,7 @@ export function ProductsPage() {
               Our Products
             </h1>
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-body">
-              Apps built by the KT Messenger team — messaging, social, video, business tools and more.
+              Apps built by the KT Messenger team for messaging, social, video, business tools and more.
               Tap any product for its QR code and store link.
             </p>
           </Reveal>
@@ -233,7 +235,7 @@ export function ProductsPage() {
                 Get KT Messenger
               </h2>
               <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-body">
-                The flagship app that connects them all — free private messaging, HD calls and AI
+                The flagship app that connects them all, with free private messaging, HD calls and AI
                 features on Android, iOS, Mac, Windows and the web.
               </p>
               <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">

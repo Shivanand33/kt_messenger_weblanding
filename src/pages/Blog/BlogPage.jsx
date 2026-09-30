@@ -3,7 +3,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
   FiSearch, FiArrowLeft, FiClock, FiArrowRight, FiX,
-  FiCpu, FiRadio, FiPhone, FiMessageCircle, FiUsers, FiCamera, FiShield, FiBriefcase, FiCreditCard, FiShoppingBag,
+  FiChevronRight, FiMail, FiLink, FiCheck,
+  FiCpu, FiRadio, FiPhone, FiMessageCircle, FiUsers, FiCamera, FiShield,
+  FiBriefcase, FiCreditCard, FiShoppingBag,
 } from 'react-icons/fi'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { SOCIAL_LINKS } from '../../components/layout/Footer/Footer'
@@ -16,7 +18,6 @@ import { api } from '../../services/apiClient'
 import { trackBlogView } from '../../services/analytics'
 import { useSeo } from '../../hooks/useSeo'
 import { contentText } from '../../i18n/contentTranslations'
-import { fill } from '../../i18n/fill'
 import { DEFAULT_LANG, currentLanguage } from '../../i18n/languageUrls'
 import footerImg from '../../assets/images/social-networking-platform-footer.jpg'
 import multideviceImg from '../../assets/images/multidevice.jpg'
@@ -37,25 +38,14 @@ const IMAGE_MAP = {
   cyberpunk: cyberpunkImg,
   security: securityImg,
 }
-// Live posts carry a real coverUrl (from the DB / media library); hardcoded
-// fallback posts carry an imageKey into the bundled asset map. Fall back to a
-// bundled image so a missing cover never renders a broken <img>.
-// Old uploads were stored as absolute http://localhost:4000/... URLs (the old
-// backend default). Those only resolve on the backend PC itself, so rewrite
-// them same-origin — /uploads is proxied to the backend in dev and routed in
-// production — and images load on every device and environment.
+
 const sameOriginMedia = (u) =>
   typeof u === 'string' ? u.replace(/^https?:\/\/(localhost|127\.0\.0\.1):4000\//i, '/') : u
 
-const imageFor = (post) => sameOriginMedia(post.coverUrl) || IMAGE_MAP[post.imageKey] || footerImg
+const imageFor = (post) => sameOriginMedia(post?.coverUrl) || IMAGE_MAP[post?.imageKey] || footerImg
 
-// Bundled posts keyed by slug, so an opened article can render its full body
-// instantly — with no network round-trip, even when the API is unreachable on
-// deploy. This is what fixes "content shows on local but not on deploy".
 const FALLBACK_BY_SLUG = new Map(FALLBACK_POSTS.map((p) => [p.slug, p]))
 
-// Resolve `promise`, but give up after `ms` so a slow / hung request never
-// leaves the blog stuck on a loading spinner.
 const withTimeout = (promise, ms = 7000) => {
   let timer
   return Promise.race([
@@ -66,13 +56,6 @@ const withTimeout = (promise, ms = 7000) => {
   ])
 }
 
-/* ────────────────────────────────────────────────────────────
- * API → view-model adapters. The DB is the source of truth; these map the
- * public API payload into the exact shape the existing design already renders,
- * so nothing about the layout / styling changes.
- * ──────────────────────────────────────────────────────────── */
-// A post's text in the page's language: the backend sends its translation with
-// the post (src/i18n/contentTranslations.js). English pages get none.
 const localized = (s) => (typeof s === 'string' && contentText(s)) || s
 const localizedTag = (tag) => (tag && typeof tag === 'object' ? { ...tag, name: localized(tag.name) } : localized(tag))
 
@@ -80,7 +63,6 @@ const formatDate = (iso) => {
   if (!iso) return ''
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return ''
-  // Month names in the page's language.
   const { lang } = currentLanguage()
   return d.toLocaleDateString(lang === DEFAULT_LANG ? 'en-US' : lang, { year: 'numeric', month: 'long', day: 'numeric' })
 }
@@ -88,26 +70,23 @@ const formatDate = (iso) => {
 const wordCount = (text) => String(text || '').trim().split(/\s+/).filter(Boolean).length
 const readingTime = (text, floor = 2) => Math.max(floor, Math.round(wordCount(text) / 200))
 
-
 const normalizeCard = (p) => ({
   slug: p.slug,
   title: localized(p.title),
-  category: localized(p.category?.name) || 'Blog',
+  category: localized(p.category?.name) || 'Product',
   description: localized(p.excerpt || ''),
   date: formatDate(p.publishedAt),
   readMins: readingTime(p.excerpt),
   coverUrl: p.coverUrl || null,
   featured: !!p.featured,
   tags: (p.tags || []).map(localizedTag),
-  blocks: null, // filled in on demand when the article is opened
+  blocks: null,
   _remote: true,
 })
 
 function normalizeDetail(p) {
-  // The body is translated whole, then parsed, so its markdown survives.
   const body = sameOriginMedia(localized(p.body))
   let blocks = parseBody(body)
-  // Drop a leading heading that just repeats the title (many bodies start "# Title").
   const first = (body === p.body ? blocks : parseBody(p.body))[0]
   if (first?.type === 'h' && blocks[0]?.type === 'h' && first.text.trim().toLowerCase() === String(p.title).trim().toLowerCase()) {
     blocks = blocks.slice(1)
@@ -117,24 +96,15 @@ function normalizeDetail(p) {
     ...normalizeCard(p),
     readMins: readingTime(p.body || p.excerpt),
     blocks,
-    // Carried through for the canonical/social tags — normalizeCard covers
-    // only what the list view renders.
     seoTitle: localized(p.seoTitle) || null,
     seoDescription: localized(p.seoDescription) || null,
     ogImage: p.ogImage || null,
   }
 }
 
-// The `!` important flags override the global `a { color: inherit;
-// text-decoration: none }` reset in index.css (an unlayered rule that would
-// otherwise beat these Tailwind utilities), so blog links reliably show blue
-// with an underline. Scoped to blog links only — other links are untouched.
 const LINK_CLASS =
   'font-semibold !text-brand-strong !underline decoration-brand-strong/50 underline-offset-2 transition-colors hover:!text-brand-ink dark:!text-sky-300 dark:hover:!text-sky-200'
 
-// A link written in a blog body — [text](/calling) or [text](https://…).
-// Internal paths and same-site URLs use client-side routing (no full reload);
-// external links open in a new tab. mailto:/tel:/#anchors render as plain <a>.
 function BlogLink({ href, children }) {
   const url = String(href || '').trim()
   if (url.startsWith('/')) return <Link to={url} className={LINK_CLASS}>{children}</Link>
@@ -145,19 +115,15 @@ function BlogLink({ href, children }) {
         return <Link to={u.pathname + u.search + u.hash} className={LINK_CLASS}>{children}</Link>
       }
     } catch {
-      /* malformed URL — fall through to a plain external link */
+      /* ignore */
     }
     return <a href={url} target="_blank" rel="noopener noreferrer" className={LINK_CLASS}>{children}</a>
   }
   return <a href={url} className={LINK_CLASS}>{children}</a>
 }
 
-// Render inline **bold** highlights and [text](url) links inside a paragraph or
-// bullet. Bold is a soft brand "marker"; links are clickable and route in-app
-// for internal pages. box-decoration-clone keeps a highlight tidy across lines.
 function renderText(text) {
   const nodes = []
-  // Match either a markdown link [label](href) or a **bold** span.
   const re = /\[([^\]]+)\]\(([^)\s]+)\)|\*\*([^*]+)\*\*/g
   let last = 0
   let key = 0
@@ -185,33 +151,23 @@ function renderText(text) {
 function ArticleBody({ blocks }) {
   const firstPara = blocks.findIndex((b) => b.type === 'p')
   return (
-    <div>
+    <div className="prose-blog">
       {blocks.map((block, i) => {
         if (block.type === 'h') {
           return (
             <h2
               key={i}
-              className="mt-12 flex items-center gap-3.5 text-2xl font-extrabold tracking-tight text-ink sm:text-[1.8rem]"
+              className="mt-12 text-2xl sm:text-3xl font-normal sm:font-medium tracking-tight text-ink"
             >
-              <span
-                aria-hidden
-                className="h-7 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-brand-strong to-sky-400 shadow-[0_4px_12px_-2px_rgba(37,99,235,0.5)]"
-              />
               {block.text}
             </h2>
           )
         }
         if (block.type === 'ul') {
           return (
-            <ul key={i} className="mt-5 space-y-3">
+            <ul key={i} className="mt-5 space-y-3 pl-5 list-disc text-body text-[17px] leading-8">
               {block.items.map((item, j) => (
-                <li
-                  key={j}
-                  className="flex gap-3 rounded-2xl border border-transparent px-1 text-[17px] leading-8 text-body transition-colors"
-                >
-                  <span className="mt-[11px] grid h-4 w-4 shrink-0 place-items-center rounded-full bg-brand-soft text-brand-strong">
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand-strong" />
-                  </span>
+                <li key={j}>
                   <span>{renderText(item)}</span>
                 </li>
               ))}
@@ -219,9 +175,6 @@ function ArticleBody({ blocks }) {
           )
         }
         if (block.type === 'img') {
-          // align left/right floats the image with the article text flowing
-          // beside it ("one side image, one side content"); center caps the
-          // width; default stays a full-width figure.
           const alignClass =
             block.align === 'left'
               ? 'float-left mr-6 w-1/2 max-w-sm'
@@ -232,10 +185,10 @@ function ArticleBody({ blocks }) {
                   : ''
           const floated = block.align === 'left' || block.align === 'right'
           return (
-            <figure key={i} className={`mt-6 overflow-hidden rounded-2xl border border-line bg-surface ${alignClass} ${floated ? 'my-2' : ''}`}>
+            <figure key={i} className={`mt-7 overflow-hidden rounded-2xl border border-line bg-surface shadow-soft ${alignClass} ${floated ? 'my-3' : ''}`}>
               <img src={img(block.src)} alt={imgAlt(block.src, block.alt)} loading="lazy" className="w-full object-cover" />
               {block.alt ? (
-                <figcaption className="px-4 py-2 text-xs font-medium text-muted">{block.alt}</figcaption>
+                <figcaption className="px-4 py-2.5 text-xs font-medium text-muted">{block.alt}</figcaption>
               ) : null}
             </figure>
           )
@@ -244,24 +197,24 @@ function ArticleBody({ blocks }) {
           return (
             <blockquote
               key={i}
-              className="mt-6 rounded-2xl border-l-4 border-brand-strong bg-brand-soft/60 px-5 py-4 text-[17px] leading-8 text-ink italic"
+              className="mt-7 border-l-4 border-ink/40 pl-5 text-[17px] font-normal leading-8 text-ink italic"
             >
               {renderText(block.text)}
             </blockquote>
           )
         }
         if (block.type === 'hr') {
-          return <hr key={i} className="mt-8 border-line" />
+          return <hr key={i} className="my-10 border-line" />
         }
         if (block.type === 'table') {
           return (
-            <div key={i} className="mt-6 overflow-x-auto rounded-2xl border border-line">
+            <div key={i} className="mt-7 overflow-x-auto rounded-2xl border border-line shadow-soft">
               <table className="w-full text-left text-[15px]">
                 <tbody>
                   {block.rows.map((row, r) => (
-                    <tr key={r} className={r === 0 ? 'bg-brand-soft font-bold text-ink' : 'odd:bg-surface even:bg-cream dark:odd:bg-surface-2 dark:even:bg-surface'}>
+                    <tr key={r} className={r === 0 ? 'bg-cream-2 font-bold text-ink' : 'odd:bg-surface even:bg-cream dark:odd:bg-surface-2 dark:even:bg-surface'}>
                       {row.map((cell, c) => (
-                        <td key={c} className="border-b border-line px-4 py-2.5 align-top text-body">
+                        <td key={c} className="border-b border-line px-5 py-3 align-top text-body">
                           {renderText(cell)}
                         </td>
                       ))}
@@ -275,10 +228,8 @@ function ArticleBody({ blocks }) {
         return (
           <p
             key={i}
-            className={`mt-5 text-[17px] leading-8 text-body ${
-              i === firstPara
-                ? 'first-letter:float-left first-letter:mr-3 first-letter:mt-1.5 first-letter:text-[3.4rem] first-letter:font-extrabold first-letter:leading-[0.72] first-letter:text-brand-strong'
-                : ''
+            className={`mt-5 text-[17px] sm:text-[18px] leading-8 text-body font-normal ${
+              i === firstPara ? 'text-ink/90' : ''
             }`}
           >
             {renderText(block.text)}
@@ -289,9 +240,6 @@ function ArticleBody({ blocks }) {
   )
 }
 
-// Internal destinations a blog article can point readers to. Each entry lists
-// keywords used to pick the most relevant pages for a given post, so the links
-// are contextual and useful (and improve internal linking / discoverability).
 const EXPLORE_PAGES = [
   { href: '/ai-assistant-app', label: 'KT AI', blurb: 'Your intelligent assistant, built right into every chat.', Icon: FiCpu, kw: ['ai', 'assistant', 'intelligent', 'smart', 'automation', 'bot', 'summar'] },
   { href: '/social-media-platform', label: 'Channels', blurb: 'Follow updates from the people and organizations you care about.', Icon: FiRadio, kw: ['channel', 'broadcast', 'follow', 'updates', 'creator', 'news', 'announcement'] },
@@ -306,8 +254,6 @@ const EXPLORE_PAGES = [
 ]
 const DEFAULT_EXPLORE = ['/ai-assistant-app', '/social-media-platform', '/video-calling-app']
 
-// Pick up to 3 internal pages most relevant to a post (by category, tags, title
-// and description), falling back to core pages so the section is always useful.
 function relatedPages(post) {
   const hay = [post?.category, post?.title, post?.description, ...(post?.tags || []).map((t) => t?.name || t)]
     .filter(Boolean)
@@ -325,8 +271,30 @@ function relatedPages(post) {
   return picks.slice(0, 3)
 }
 
+/* KT Ecosystem Mini Platform Icons (Jaadoe, Seezitt, WN Social, Omre, Werfie, Vidmero) */
+function KtPlatformsRow() {
+  return (
+    <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+      {SOCIAL_LINKS.map((item) => (
+        <a
+          key={item.name}
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={item.name}
+          aria-label={item.name}
+          className="grid h-7 w-7 place-items-center rounded-full border border-gray-300 dark:border-gray-600 bg-white shadow-xs transition-all hover:scale-110 hover:border-ink hover:shadow-sm"
+        >
+          <img src={item.icon} alt={item.name} className="h-4 w-4 object-contain rounded-full" loading="lazy" />
+        </a>
+      ))}
+    </div>
+  )
+}
+
 function ArticleReader({ post, posts, onBack, onOpen }) {
   const { t } = useLanguage()
+
   const related = useMemo(() => {
     if (!posts.length) return []
     const start = posts.findIndex((p) => p.slug === post.slug)
@@ -340,142 +308,108 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
     return out
   }, [post.slug, posts])
 
-  // Show the intro paragraph above the hero image so readable content appears
-  // immediately; the rest of the article follows below the image. Only lift the
-  // lead out when there is more content after it — otherwise a short (single
-  // paragraph) article would render nothing below the image.
-  const hasLead = post.blocks.length > 1 && post.blocks[0]?.type === 'p'
-  const bodyBlocks = hasLead ? post.blocks.slice(1) : post.blocks
-
-  // Contextual internal links from this article to the most relevant KT pages.
+  const hasLead = post.blocks && post.blocks.length > 1 && post.blocks[0]?.type === 'p'
+  const bodyBlocks = hasLead ? post.blocks.slice(1) : (post.blocks || [])
   const explore = useMemo(() => relatedPages(post), [post])
 
-  const BackButton = (
-    <button
-      type="button"
-      onClick={onBack}
-      className="group inline-flex items-center gap-2.5 rounded-full border border-line bg-surface py-2 pl-2 pr-5 text-sm font-bold text-ink shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/40 hover:text-brand-strong hover:shadow-[0_14px_30px_-12px_rgba(37,99,235,0.5)]"
-    >
-      <span className="grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand-strong transition-all duration-300 group-hover:bg-brand-strong group-hover:text-white">
-        <FiArrowLeft className="transition-transform duration-300 group-hover:-translate-x-0.5" />
-      </span>
-      {t('Back to Blogs')}
-    </button>
-  )
-
   return (
-    <Container className="py-10 lg:py-16">
-      {BackButton}
+    <Container className="py-10 lg:py-16 max-w-4xl">
+      {/* Top Back navigation */}
+      <button
+        type="button"
+        onClick={onBack}
+        className="group inline-flex items-center gap-1.5 text-sm font-semibold text-body hover:text-ink transition-colors"
+      >
+        <FiArrowLeft className="text-base transition-transform group-hover:-translate-x-1" />
+        <span>{t('Back to Blog')}</span>
+      </button>
 
-      <Reveal from="up" className="mx-auto mt-8 max-w-3xl">
-        <span className="inline-flex items-center rounded-full bg-brand-strong px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-white shadow-[0_8px_20px_-8px_rgba(37,99,235,0.7)]">
-          {post.category}
-        </span>
-        <h1 className="mt-5 text-[2.1rem] font-bold leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-[3.2rem]">
+      {/* Article Header */}
+      <div className="mt-8">
+        {/* Date and Social Share Row */}
+        <div className="flex items-center justify-between gap-4">
+          <span className="text-sm text-body">{post.date}</span>
+          <KtPlatformsRow />
+        </div>
+
+        {/* Title */}
+        <h1 className="mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] font-normal sm:font-medium leading-[1.2] tracking-tight text-ink">
           {post.title}
         </h1>
-        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-medium text-muted">
-          <span>{post.date}</span>
-          <span className="h-1 w-1 rounded-full bg-muted/50" />
-          <span className="inline-flex items-center gap-1.5">
-            <FiClock /> {post.readMins} {t('min read')}
-          </span>
-        </div>
-      </Reveal>
+      </div>
 
+      {/* Cover Image Banner */}
+      <div className="mt-8 overflow-hidden rounded-[28px] sm:rounded-[36px]">
+        <img
+          src={img(imageFor(post))}
+          alt={imgAlt(imageFor(post), post.title)}
+          className="w-full max-h-[600px] object-cover"
+        />
+      </div>
+
+      {/* Lead Paragraph */}
       {hasLead ? (
-        <Reveal from="up" delay={0.03} className="mx-auto mt-7 max-w-3xl">
-          <p className="border-l-4 border-brand-strong/70 pl-5 text-lg font-medium leading-8 text-ink sm:text-xl sm:leading-9">
-            {renderText(post.blocks[0].text)}
-          </p>
-        </Reveal>
-      ) : null}
-
-      <Reveal from="up" delay={0.05} className="mx-auto mt-9 max-w-4xl">
-        <div className="group overflow-hidden rounded-[28px] border border-line shadow-[0_30px_70px_-24px_rgba(37,99,235,0.45)]">
-          {/* No fixed height: the hero takes its natural aspect ratio, so the
-              whole cover shows instead of being cropped to a band. max-h with
-              object-contain only kicks in for very tall images, which would
-              otherwise push the article off the screen. */}
-          <img
-            src={img(imageFor(post))}
-            alt={imgAlt(imageFor(post), post.title)}
-            className="max-h-[760px] w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-          />
+        <div className="mt-8 text-lg sm:text-xl font-normal leading-relaxed text-ink">
+          {renderText(post.blocks[0].text)}
         </div>
-      </Reveal>
-
-      {/* amount="some" so long articles reveal as soon as any part scrolls into
-          view — a tall body can never show 30% of itself at once, which would
-          otherwise leave it stuck hidden (opacity 0). */}
-      <Reveal from="up" delay={0.07} amount="some" className="mx-auto mt-10 max-w-3xl">
-        <ArticleBody blocks={bodyBlocks} />
-      </Reveal>
-
-      {/* tags (only when the post has them) */}
-      {post.tags?.length ? (
-        <Reveal from="up" delay={0.12} className="mx-auto mt-10 max-w-3xl">
-          <div className="flex flex-wrap items-center gap-2">
-            {post.tags.map((t) => (
-              <span
-                key={t.slug || t.name}
-                className="inline-flex items-center rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand-ink"
-              >
-                #{t.name}
-              </span>
-            ))}
-          </div>
-        </Reveal>
       ) : null}
 
-      {/* related */}
+      {/* Main Body */}
+      <div className="mt-8">
+        <ArticleBody blocks={bodyBlocks} />
+      </div>
+
+      {/* Related Stories */}
       {related.length ? (
-        <div className="mx-auto mt-16 max-w-4xl border-t border-line pt-12">
-          <h3 className="text-xl font-bold text-ink sm:text-2xl">{t('Related articles')}</h3>
-          <div className="mt-6 grid gap-6 sm:grid-cols-3">
+        <div className="mt-20 border-t border-line pt-12">
+          <h3 className="text-2xl font-normal text-ink">{t('More from KT Messenger')}</h3>
+          <div className="mt-8 space-y-12">
             {related.map((rel) => (
-              <button
+              <div
                 key={rel.slug}
-                type="button"
                 onClick={() => onOpen(rel.slug)}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-cream-2 text-left shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:border-brand/40 hover:shadow-[0_24px_50px_-20px_rgba(37,99,235,0.45)]"
+                className="group grid grid-cols-1 md:grid-cols-12 gap-6 cursor-pointer items-center"
               >
-                <div className="relative h-32 overflow-hidden">
+                <div className="md:col-span-4 aspect-[16/10] overflow-hidden rounded-2xl">
                   <img
                     src={img(imageFor(rel))}
                     alt={imgAlt(imageFor(rel), rel.title)}
                     loading="lazy"
-                    className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                <div className="flex flex-1 flex-col p-4">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-brand-ink">{rel.category}</span>
-                  <h4 className="mt-1.5 line-clamp-2 text-sm font-bold leading-snug text-ink">{rel.title}</h4>
+                <div className="md:col-span-8">
+                  <span className="text-xs text-body">{rel.date}</span>
+                  <h4 className="mt-1 text-lg sm:text-xl font-normal leading-snug text-ink group-hover:underline">
+                    {rel.title}
+                  </h4>
+                  <p className="mt-2 text-sm text-body line-clamp-2">{rel.description}</p>
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-ink group-hover:underline">
+                    {t('Learn more')} <FiChevronRight className="text-xs" />
+                  </span>
                 </div>
-              </button>
+              </div>
             ))}
           </div>
         </div>
       ) : null}
 
-      {/* Explore on KT — contextual internal links to related feature pages */}
+      {/* Explore Internal Links */}
       {explore.length ? (
-        <div className="mx-auto mt-14 max-w-4xl border-t border-line pt-12">
-          <h3 className="text-xl font-bold text-ink sm:text-2xl">{t('Explore on KT Messenger')}</h3>
-          <p className="mt-1.5 text-sm leading-6 text-body">{t('Go deeper into the features this article touches on.')}</p>
+        <div className="mt-16 border-t border-line pt-12">
+          <h3 className="text-xl font-normal text-ink">{t('Explore KT Features')}</h3>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             {explore.map(({ href, label, blurb, Icon }) => (
               <Link
                 key={href}
                 to={href}
-                className="group flex flex-col rounded-2xl border border-line bg-cream-2 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_20px_44px_-22px_rgba(37,99,235,0.5)]"
+                className="group flex flex-col rounded-2xl border border-line bg-surface p-5 transition-all hover:border-gray-400 hover:shadow-soft"
               >
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand-strong">
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-cream-2 text-ink">
                   <Icon className="text-lg" />
                 </span>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-ink transition-colors group-hover:text-brand-ink">
-                  {t(label)}
-                  <FiArrowRight className="text-xs transition-transform duration-300 group-hover:translate-x-0.5" />
+                <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-ink group-hover:underline">
+                  {t(label)} <FiChevronRight className="text-xs" />
                 </span>
                 <span className="mt-1 text-xs leading-5 text-body">{t(blurb)}</span>
               </Link>
@@ -484,64 +418,52 @@ function ArticleReader({ post, posts, onBack, onOpen }) {
         </div>
       ) : null}
 
-      <div className="mx-auto mt-12 max-w-4xl">{BackButton}</div>
+      {/* Bottom Back Button */}
+      <div className="mt-14 text-center">
+        <button
+          type="button"
+          onClick={onBack}
+          className="inline-flex items-center gap-2 rounded-full border border-gray-400 dark:border-gray-600 bg-surface px-6 py-2.5 text-sm font-medium text-ink hover:border-ink transition-colors"
+        >
+          <FiArrowLeft /> {t('Back to Blog')}
+        </button>
+      </div>
     </Container>
   )
 }
 
 export function BlogPage() {
-  // Start with the bundled posts already on screen so the blog renders instantly
-  // — no loading spinner while the network responds.
-  // The open article is driven by the URL (/blog/:slug) so it has a real,
-  // shareable address and the browser Back button returns to the exact article
-  // the reader came from (e.g. after tapping an in-article link to /ai).
   const navigate = useNavigate()
   const { lang, t } = useLanguage()
   const { slug: activeSlug = null } = useParams()
   const [posts, setPosts] = useState(FALLBACK_POSTS)
-  const [loading] = useState(false)
   const [activePost, setActivePost] = useState(null)
   const [articleLoading, setArticleLoading] = useState(false)
-  const [category, setCategory] = useState('All')
   const [search, setSearch] = useState('')
 
-  // Revalidate from the API (DB = source of truth) in the background. If it
-  // returns published posts, swap them in; if it's slow / unreachable (deploy
-  // with the DB down), the timeout fires and we simply keep the bundled posts,
-  // so the page is never blank and never hangs on a spinner.
+  // Revalidate from public API
   useEffect(() => {
     let alive = true
-    withTimeout(api.listBlog({ page: 1, pageSize: 30 }))
+    withTimeout(api.listBlog({ page: 1, pageSize: 50 }))
       .then(({ items }) => {
         if (!alive) return
         const mapped = (items || []).map(normalizeCard)
         if (mapped.length) setPosts(mapped)
       })
       .catch(() => {
-        /* keep the bundled posts already shown */
+        /* keep bundled posts */
       })
     return () => {
       alive = false
     }
   }, [])
 
-  const categories = useMemo(
-    () => ['All', ...Array.from(new Set(posts.map((p) => p.category).filter(Boolean)))],
-    [posts],
-  )
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [activeSlug])
 
-  // Guards against a slow background fetch (for a slug the reader has since
-  // navigated away from) overwriting the article now on screen.
   const openSlugRef = useRef(null)
 
-  // Load whenever the URL slug changes — on open, on a direct visit, and when
-  // the Back button lands on /blog/:slug. Bundled/known articles show instantly,
-  // then a background API fetch swaps in the latest DB version so admin edits
-  // (including in-article links) appear.
   useEffect(() => {
     if (!activeSlug) {
       setActivePost(null)
@@ -553,12 +475,10 @@ export function BlogPage() {
     let cancelled = false
     const isCurrent = () => !cancelled && openSlugRef.current === slug
     const card = posts.find((p) => p.slug === slug)
-    // Record the article read (once per slug — the guard above de-dupes).
     trackBlogView(slug, card?.title)
     const bundled = FALLBACK_BY_SLUG.get(slug)
-    // The bundled English copy shows instantly only on English pages; other
-    // languages wait for the translated post (and fall back to it on failure).
     const instant = card?.blocks?.length ? card : lang === DEFAULT_LANG && bundled?.blocks?.length ? bundled : null
+
     if (instant) {
       setActivePost(instant)
       setArticleLoading(false)
@@ -567,7 +487,7 @@ export function BlogPage() {
           const full = await withTimeout(api.getBlog(slug))
           if (isCurrent()) setActivePost(normalizeDetail(full))
         } catch {
-          /* keep the instant copy */
+          /* keep instant */
         }
       })()
     } else {
@@ -598,12 +518,8 @@ export function BlogPage() {
   const openArticle = (slug) => navigate(`/blog/${slug}`)
   const closeArticle = () => navigate('/messaging-social-media-blog')
 
-  // Canonical + social tags. The path is built from `activeSlug` — the slug in
-  // the URL, which is the admin-defined slug stored in the database — so the
-  // canonical link, the shared link and the stored slug are always one string.
   useSeo({
     enabled: !!activeSlug,
-    // hreflang once the article is on screen — not while it loads or for "Article not found".
     hreflang: Boolean(activePost),
     path: activeSlug ? `/blog/${activeSlug}` : '/messaging-social-media-blog',
     type: 'article',
@@ -612,12 +528,11 @@ export function BlogPage() {
     image: activePost?.ogImage || activePost?.coverUrl || undefined,
   })
 
-  // Index page tags, so /blog itself is also canonical.
   useSeo({
     enabled: !activeSlug,
     path: '/messaging-social-media-blog',
-    title: 'KT Messenger Blog | Messaging & Social Media Insights',
-    description: 'Explore messaging, social media, technology, and digital communication insights, tips, trends, and useful guides on the KT Messenger blog.',
+    title: 'KT Messenger Blog | News, Updates & Stories',
+    description: 'Explore the official KT Messenger blog for product updates, account security, new features, and communication tips.',
   })
 
   if (activeSlug) {
@@ -636,7 +551,7 @@ export function BlogPage() {
                   onClick={closeArticle}
                   className="mt-2 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-bold text-ink transition-colors hover:border-brand/40 hover:text-brand-ink"
                 >
-                  <FiArrowLeft /> {t('Back to Blogs')}
+                  <FiArrowLeft /> {t('Back to Blog')}
                 </button>
               ) : null}
             </div>
@@ -646,242 +561,204 @@ export function BlogPage() {
     )
   }
 
-  const featuredPost = posts.find((p) => p.featured) || posts[0]
   const query = search.trim().toLowerCase()
   const searching = query.length > 0
+
   const matchesQuery = (p) => {
     if (!query) return true
-    const hay = [p.title, p.description, p.category, ...(Array.isArray(p.tags) ? p.tags : [])]
+    const hay = [p.title, p.description, p.category, ...(Array.isArray(p.tags) ? p.tags.map((t) => t?.name || t) : [])]
       .filter(Boolean)
       .join(' ')
       .toLowerCase()
     return hay.includes(query)
   }
-  const inCategory = (p) => category === 'All' || p.category === category
-  // In the default view the featured post is shown separately, so drop it from
-  // the grid; when searching or filtering we want every match to appear.
-  const gridSource = !searching && category === 'All' ? posts.filter((p) => p !== featuredPost) : posts
-  const visible = gridSource.filter((p) => inCategory(p) && matchesQuery(p))
+
+  // Top featured post
+  const featuredPost = posts.find((p) => p.featured) || posts[0]
+
+  // In default view, the top post is rendered as the main featured story;
+  // subsequent posts appear below in the 2-column layout.
+  // In search view, all matching posts are displayed.
+  const visible = searching ? posts.filter(matchesQuery) : posts
+  const secondaryPosts = searching ? visible : visible.filter((p) => p !== featuredPost)
 
   return (
     <MainLayout>
-      <Container className="py-14 lg:py-20">
-        {/* search */}
-        <div className="mb-10 flex justify-center lg:mb-14 lg:justify-end">
-          <label className="group flex w-full max-w-md items-center gap-3 rounded-full border border-line bg-surface px-5 py-3 shadow-soft transition-all duration-200 focus-within:border-brand focus-within:shadow-card focus-within:ring-2 focus-within:ring-brand/15">
-            <FiSearch className="shrink-0 text-lg text-muted transition-colors group-focus-within:text-brand-strong" />
+      <Container className="py-8 sm:py-12 max-w-5xl">
+        {/* Top Minimalist Search Bar (WhatsApp style: Search blog: ______ Q) */}
+        <div className="flex justify-end">
+          <div className="flex items-center gap-2 border-b border-gray-400 dark:border-gray-600 pb-1.5 w-full max-w-[280px] focus-within:border-ink transition-colors">
+            <span className="text-sm text-body whitespace-nowrap">{t('Search blog:')}</span>
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder={t('Search the blog…')}
-              className="w-full bg-transparent text-sm font-medium text-ink outline-none placeholder:text-muted"
+              className="w-full bg-transparent text-sm text-ink outline-none px-1"
               aria-label={t('Search blog')}
             />
             {search ? (
               <button
                 type="button"
                 onClick={() => setSearch('')}
-                aria-label={t('Clear search')}
-                className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-ink"
+                className="text-muted hover:text-ink text-xs p-0.5"
               >
-                <FiX className="text-sm" />
+                <FiX />
               </button>
             ) : null}
-          </label>
+            <FiSearch className="text-base text-ink/70 shrink-0" />
+          </div>
         </div>
 
-        {/* title */}
-        <Reveal from="up">
-          <h1 className="text-center text-[2.6rem] font-bold tracking-tight text-ink sm:text-6xl lg:text-7xl">
+        {/* Big Centered Headline: WhatsApp Blog model */}
+        <div className="text-center my-10 sm:my-14">
+          <h1 className="text-4xl sm:text-6xl lg:text-[4.2rem] font-normal tracking-tight text-ink font-sans">
             {t('KT Messenger Blog')}
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-center text-lg leading-8 text-body">
-            {t('Everything KT can do, explained simply from messaging and calls to AI, payments, communities and business.')}
-          </p>
-        </Reveal>
+        </div>
 
-        {loading ? (
-          <div className="flex flex-col items-center justify-center gap-3 py-24 text-muted">
-            <span className="h-8 w-8 animate-spin rounded-full border-2 border-line border-t-brand-strong" />
-            <p className="text-sm font-medium">{t('Loading articles…')}</p>
+        {/* Searching feedback banner */}
+        {searching && (
+          <div className="mb-10 flex items-center justify-between border-b border-line pb-3">
+            <span className="text-sm text-body">
+              {visible.length} {visible.length === 1 ? t('story found') : t('stories found')} {t('for')} “{search.trim()}”
+            </span>
+            <button
+              type="button"
+              onClick={() => setSearch('')}
+              className="text-xs font-semibold text-brand-strong hover:underline"
+            >
+              {t('Clear search')}
+            </button>
           </div>
-        ) : posts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-2 py-24 text-center">
-            <p className="text-lg font-bold text-ink">{t('No articles published yet')}</p>
-            <p className="max-w-md text-sm leading-6 text-body">
-              {t('New stories from the KT Messenger team will appear here as soon as they go live.')}
-            </p>
+        )}
+
+        {/* No Search Results */}
+        {searching && visible.length === 0 && (
+          <div className="py-20 text-center">
+            <p className="text-lg font-normal text-ink">{t('No stories found')}</p>
+            <p className="text-sm text-body mt-1">{t('Try searching with a different term.')}</p>
+            <button
+              type="button"
+              onClick={() => setSearch('')}
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-ink hover:underline"
+            >
+              <FiX className="text-xs" /> {t('Clear search')}
+            </button>
           </div>
-        ) : (
-          <>
-            {/* featured (only on the unfiltered, non-search view) */}
-            {category === 'All' && !searching && featuredPost ? (
-              <Reveal from="up" delay={0.06} className="mt-14 lg:mt-20">
-                <button
-                  type="button"
-                  onClick={() => openArticle(featuredPost.slug)}
-                  className="group grid w-full overflow-hidden rounded-[30px] border border-line bg-cream-2 text-left shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-brand/40 hover:shadow-float lg:grid-cols-2"
-                >
-                  <div className="relative min-h-[260px] overflow-hidden lg:min-h-[360px]">
-                    <img
-                      src={img(imageFor(featuredPost))}
-                      alt={imgAlt(imageFor(featuredPost), featuredPost.title)}
-                      className="h-full w-full object-contain transition-transform duration-[600ms] ease-out group-hover:scale-105"
-                    />
-                    <span className="absolute left-5 top-5 inline-flex items-center gap-1.5 rounded-full bg-brand-strong px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-brand">
-                      {t('Featured')}
-                    </span>
-                  </div>
-                  <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12">
-                    <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.12em] text-brand-ink">
-                      <span>{featuredPost.category}</span>
-                      <span className="h-1 w-1 rounded-full bg-muted/50" />
-                      <span className="inline-flex items-center gap-1 text-muted">
-                        <FiClock /> {featuredPost.readMins} {t('min read')}
-                      </span>
-                    </div>
-                    <h2 className="mt-3.5 text-[1.7rem] font-bold leading-[1.15] text-ink lg:text-[2.1rem]">{featuredPost.title}</h2>
-                    <p className="mt-4 text-[15px] leading-7 text-body">{featuredPost.description}</p>
-                    <span className="mt-7 inline-flex w-fit items-center gap-2 rounded-full bg-brand-strong px-5 py-2.5 text-sm font-bold text-white shadow-brand transition-all duration-300 group-hover:-translate-y-0.5 group-hover:bg-brand-strong-hover">
-                      {t('Read More')} <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-                    </span>
-                  </div>
-                </button>
-              </Reveal>
-            ) : null}
+        )}
 
-            {/* category filter */}
-            <div className="mt-12 flex flex-wrap gap-2.5">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setCategory(cat)}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
-                    category === cat
-                      ? 'bg-brand-strong text-white shadow-brand'
-                      : 'border border-line bg-surface text-body hover:-translate-y-0.5 hover:border-brand/40 hover:text-ink'
-                  }`}
-                >
-                  {t(cat)}
-                </button>
-              ))}
-            </div>
-
-            {/* search results count */}
-            {searching ? (
-              <p className="mt-8 text-sm font-semibold text-body">
-                {visible.length} {visible.length === 1 ? t('result') : t('results')} {t('for')} “{search.trim()}”
-              </p>
-            ) : null}
-
-            {/* no results */}
-            {visible.length === 0 ? (
-              <div className="flex flex-col items-center justify-center gap-2 py-20 text-center">
-                <p className="text-lg font-bold text-ink">{t('No articles found')}</p>
-                <p className="max-w-md text-sm leading-6 text-body">
-                  {searching
-                    ? fill(
-                        category !== 'All'
-                          ? t('Nothing matched “{query}”. Try a different keyword or category.')
-                          : t('Nothing matched “{query}”. Try a different keyword.'),
-                        { query: search.trim() },
-                      )
-                    : t('No articles in this category yet.')}
-                </p>
-                {searching ? (
-                  <button
-                    type="button"
-                    onClick={() => setSearch('')}
-                    className="mt-2 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-bold text-ink transition-colors hover:border-brand/40 hover:text-brand-ink"
-                  >
-                    <FiX /> {t('Clear search')}
-                  </button>
-                ) : null}
+        {/* HERO ARTICLE (Screenshot 2 model) */}
+        {!searching && featuredPost && (
+          <Reveal from="up">
+            <article className="group cursor-pointer" onClick={() => openArticle(featuredPost.slug)}>
+              {/* Date & Social Share Row */}
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-sm text-body">{featuredPost.date}</span>
+                <KtPlatformsRow />
               </div>
-            ) : null}
 
-            {/* article rows — editorial list layout: thumb beside the story,
-                divider-separated rows instead of the old vertical card grid */}
-            {!searching && category === 'All' ? (
-              <div className="mt-16 flex items-end justify-between border-b border-line pb-4">
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-[0.14em] text-brand-ink">{t('The latest')}</span>
-                  <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{t('Latest articles')}</h2>
-                </div>
-                <span className="hidden text-sm font-semibold text-muted sm:block">
-                  {visible.length} {visible.length === 1 ? t('story') : t('stories')}
+              {/* Title */}
+              <h2 className="mt-3.5 text-2xl sm:text-4xl lg:text-[2.6rem] font-normal leading-[1.2] text-ink group-hover:underline">
+                {featuredPost.title}
+              </h2>
+
+              {/* Hero Image Banner */}
+              <div className="mt-6 overflow-hidden rounded-[28px] sm:rounded-[36px]">
+                <img
+                  src={img(imageFor(featuredPost))}
+                  alt={imgAlt(imageFor(featuredPost), featuredPost.title)}
+                  className="max-h-[520px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                />
+              </div>
+
+              {/* Excerpt */}
+              <p className="mt-6 text-base sm:text-lg leading-relaxed text-body max-w-4xl">
+                {featuredPost.description}
+              </p>
+
+              {/* Learn more > */}
+              <div className="mt-4">
+                <span className="inline-flex items-center gap-1 text-sm sm:text-base font-semibold text-ink group-hover:underline">
+                  {t('Learn more')} <FiChevronRight className="text-sm" />
                 </span>
               </div>
-            ) : null}
-            <div className="mt-8 overflow-hidden rounded-[26px] border border-line bg-cream-2 shadow-soft">
-              {visible.map((post, index) => (
-                <Reveal key={post.slug} from="up" delay={Math.min(index, 5) * 0.04}>
-                  <button
-                    type="button"
-                    onClick={() => openArticle(post.slug)}
-                    className={`group flex w-full flex-col gap-5 p-5 text-left transition-colors duration-200 hover:bg-surface sm:flex-row sm:items-center sm:gap-7 sm:p-6 ${index > 0 ? 'border-t border-line' : ''}`}
-                  >
-                    <div className="relative h-44 w-full shrink-0 overflow-hidden rounded-2xl border border-line bg-surface sm:h-28 sm:w-44">
-                      <img
-                        src={img(imageFor(post))}
-                        alt={imgAlt(imageFor(post), post.title)}
-                        loading="lazy"
-                        className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-105"
-                      />
-                      <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 rounded-full bg-slate-950/55 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur">
-                        <FiClock className="text-[11px]" /> {post.readMins} {t('min')}
-                      </span>
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                        <span className="rounded-full bg-brand-soft px-3 py-0.5 text-[11px] font-bold uppercase tracking-wide text-brand-ink">
-                          {post.category}
-                        </span>
-                        <span className="text-xs font-semibold text-muted">{post.date}</span>
-                      </div>
-                      <h3 className="mt-2.5 text-lg font-bold leading-snug text-ink transition-colors duration-300 group-hover:text-brand-ink sm:text-xl">
-                        {post.title}
-                      </h3>
-                      <p className="mt-2 hidden text-sm leading-6 text-body line-clamp-2 sm:block">{post.description}</p>
-                    </div>
-                    <span className="hidden h-11 w-11 shrink-0 place-items-center rounded-full border border-line bg-surface text-muted transition-all duration-300 group-hover:border-brand-strong group-hover:bg-brand-strong group-hover:text-white sm:grid">
-                      <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-0.5" />
+            </article>
+          </Reveal>
+        )}
+
+        {/* SUBSEQUENT ARTICLES (Screenshot 1 model: 2-column horizontal list) */}
+        <div className={`space-y-16 sm:space-y-24 ${!searching ? 'mt-16 sm:mt-24 pt-16 sm:pt-20 border-t border-line' : 'mt-8'}`}>
+          {secondaryPosts.map((post) => (
+            <Reveal key={post.slug} from="up">
+              <article
+                onClick={() => openArticle(post.slug)}
+                className="group grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center cursor-pointer"
+              >
+                {/* Left Column: Image in rounded container */}
+                <div className="md:col-span-5 lg:col-span-5">
+                  <div className="relative overflow-hidden rounded-[24px] sm:rounded-[32px] aspect-[16/10] sm:aspect-[4/3]">
+                    <img
+                      src={img(imageFor(post))}
+                      alt={imgAlt(imageFor(post), post.title)}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    />
+                  </div>
+                </div>
+
+                {/* Right Column: Date + Share Icons, Title, Excerpt, Learn more > */}
+                <div className="md:col-span-7 lg:col-span-7 flex flex-col justify-center">
+                  {/* Date & Share Row */}
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-sm text-body">{post.date}</span>
+                    <KtPlatformsRow />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="mt-3 text-2xl sm:text-3xl lg:text-[2rem] font-normal sm:font-medium leading-snug text-ink group-hover:underline">
+                    {post.title}
+                  </h3>
+
+                  {/* Excerpt */}
+                  <p className="mt-3.5 text-sm sm:text-base leading-relaxed text-body line-clamp-4">
+                    {post.description}
+                  </p>
+
+                  {/* Learn more > */}
+                  <div className="mt-4">
+                    <span className="inline-flex items-center gap-1 text-sm sm:text-base font-semibold text-ink group-hover:underline">
+                      {t('Learn more')} <FiChevronRight className="text-sm" />
                     </span>
-                  </button>
-                </Reveal>
+                  </div>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* KT on Every Platform */}
+        <Reveal from="up" className="mt-20 sm:mt-28 border-t border-line pt-12">
+          <div className="text-center">
+            <h2 className="text-xl sm:text-2xl font-normal text-ink">
+              {t('KT on every platform')}
+            </h2>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              {SOCIAL_LINKS.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                  title={social.name}
+                  className="grid h-10 w-10 place-items-center rounded-full border border-gray-400/80 dark:border-gray-600 bg-white shadow-sm transition-all hover:border-ink hover:scale-105"
+                >
+                  <img src={social.icon} alt="" width="20" height="20" loading="lazy" className="h-5 w-5 object-contain" />
+                </a>
               ))}
             </div>
-
-            {/* KT on every platform — the same official profile links as the footer */}
-            <Reveal from="up" className="mt-16 lg:mt-20">
-              <div className="rounded-[30px] border border-line bg-cream-2 px-6 py-10 text-center shadow-soft sm:px-12 sm:py-12">
-                <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
-                  {t('KT on every platform')}
-                </h2>
-                <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-body">
-                  {t('Follow KT Messenger and our apps across every platform for updates, releases and behind-the-scenes news.')}
-                </p>
-                <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
-                  {SOCIAL_LINKS.map((social) => (
-                    <a
-                      key={social.name}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.name}
-                      title={social.name}
-                      className="grid h-12 w-12 place-items-center rounded-full border border-line bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-brand-strong hover:shadow-card"
-                    >
-                      <img src={social.icon} alt="" width="24" height="24" loading="lazy" className="h-6 w-6 object-contain" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </>
-        )}
+          </div>
+        </Reveal>
       </Container>
     </MainLayout>
   )

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../services/apiClient'
-import { useSeo } from './useSeo'
+import { useCanonical, useSeo } from './useSeo'
 
 /**
  * Per-page SEO, editable from the admin Website Content module.
@@ -40,8 +40,15 @@ export function useAdminSeo(page, path, override) {
     }
   }, [page])
 
+  const hasCopy = Boolean(seo) || Boolean(override?.title || override?.description)
+
+  // The canonical describes the URL, not the copy, so the page needs one even
+  // with no `seo.<page>` block. useSeo() below writes it whenever it runs, so
+  // this only fills that gap — exactly one of the two is ever active.
+  useCanonical(path, { enabled: !hasCopy })
+
   useSeo({
-    enabled: Boolean(seo) || Boolean(override?.title || override?.description),
+    enabled: hasCopy,
     path,
     title: override?.title || seo?.title,
     description: override?.description || seo?.description,

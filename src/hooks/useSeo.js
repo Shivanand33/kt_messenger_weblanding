@@ -125,6 +125,36 @@ export function useHreflang(path, { enabled = true } = {}) {
 }
 
 /**
+ * Writes just `<link rel="canonical">` for a path.
+ *
+ * The canonical is a structural fact about the URL, not editable copy, so a
+ * page still needs one when it has no admin-authored title/description.
+ * useSeo() writes the canonical itself whenever it runs, so this only covers
+ * the case where it does not — keep the two mutually exclusive.
+ *
+ * @param {string}  path             Site-relative path, as given to useSeo().
+ * @param {object}  [options]
+ * @param {boolean} [options.enabled] False when useSeo() is writing it instead.
+ */
+export function useCanonical(path, { enabled = true } = {}) {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    if (!enabled || typeof document === 'undefined' || !path) return undefined
+
+    const resolved = canonicalPath(path, pathname)
+    const touched = upsertCanonical(resolved ? absoluteUrl(languagePath(resolved)) : undefined)
+    if (!touched) return undefined
+
+    return () => {
+      const { el, created, previous } = touched
+      if (created) el.remove()
+      else if (previous !== null) el.setAttribute('href', previous)
+    }
+  }, [path, pathname, enabled])
+}
+
+/**
  * @param {object}  seo
  * @param {string}  seo.title        Document title.
  * @param {string}  seo.description  Meta + og description.
