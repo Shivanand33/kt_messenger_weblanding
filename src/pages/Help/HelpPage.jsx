@@ -491,7 +491,7 @@ function ArticleBody({ title, tab, onOpenArticle }) {
 
         {guide.qr ? (
           <>
-            <p>Scan the QR code with your phone&apos;s camera and tap the link to be taken to the KT Messenger download page on the {guide.store}.</p>
+            <p>{t("Scan the QR code with your phone's camera and tap the link to be taken to the KT Messenger download page on the")} {guide.store}.</p>
             {/* Always black on white, so the code stays scannable in dark mode. */}
             <div className="my-4 inline-block rounded-2xl border border-line bg-white p-3">
               <img
@@ -504,16 +504,16 @@ function ArticleBody({ title, tab, onOpenArticle }) {
               />
             </div>
             <p>
-              Already on your {tab} device?{' '}
+              {t('Already on your')} {tab} {t('device?')}{' '}
               <a href={guide.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand-ink hover:underline">
-                Open KT Messenger on the {guide.store}
+                {t('Open KT Messenger on the')} {guide.store}
               </a>
               .
             </p>
           </>
         ) : (
           <>
-            <p>Download KT Messenger for your {tab} computer from the official download options.</p>
+            <p>{t('Download KT Messenger for your')} {tab} {t('computer from the official download options.')}</p>
             <div className="my-4">
               <Button variant="primary" size="lg" onClick={openDownloadModal}>
                 {t('Download for')} {tab} <FiChevronRight />
@@ -523,80 +523,80 @@ function ArticleBody({ title, tab, onOpenArticle }) {
         )}
 
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-          {guide.install.map((step) => <li key={step}>{step}</li>)}
-          <li>Open the app and review the Terms of Service, then {guide.qr ? 'tap' : 'click'} <strong>{t('Agree and continue')}</strong>.</li>
-          <li>{guide.qr ? t('Register your phone number to start chatting.') : 'Follow the on-screen steps to log in to your KT Messenger account.'}</li>
+          {guide.install.map((step) => <li key={step}>{t(step)}</li>)}
+          <li>{t('Open the app and review the Terms of Service, then')} {guide.qr ? t('tap') : t('click')} <strong>{t('Agree and continue')}</strong>.</li>
+          <li>{guide.qr ? t('Register your phone number to start chatting.') : t('Follow the on-screen steps to log in to your KT Messenger account.')}</li>
         </ol>
 
         <h3 className="text-xl font-bold text-ink">{t('Uninstall KT Messenger')}</h3>
-        <p>Uninstalling removes KT Messenger and its chats from this {tab} device. Back up your chats first if you want to keep them.</p>
+        <p>{t('Uninstalling removes KT Messenger and its chats from this')} {tab} {t('device. Back up your chats first if you want to keep them.')}</p>
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-          {guide.uninstall.map((step) => <li key={step}>{step}</li>)}
+          {guide.uninstall.map((step) => <li key={step}>{t(step)}</li>)}
         </ol>
-        <p>You can reinstall KT Messenger at any time by following the download steps above.</p>
+        <p>{t('You can reinstall KT Messenger at any time by following the download steps above.')}</p>
       </div>
     )
   }
   if (title === 'About supported operating systems') {
     return (
       <div className={proseClass}>
-        <p>Currently, KT Messenger supports the following operating systems:</p>
+        <p>{t('Currently, KT Messenger supports the following operating systems:')}</p>
         {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          {supportedSystems.map((system) => <li key={system}>{system}</li>)}
+          {supportedSystems.map((system) => <li key={system}>{t(system)}</li>)}
         </ul>
-        <p>Once you have a supported device, download KT Messenger from the appropriate app store and complete the registration process using your phone number.</p>
-        <p><strong>Note:</strong> An internet connection is required during registration and verification. We recommend keeping your device and KT Messenger updated to the latest available version.</p>
-        <h3 className="text-xl font-bold text-ink">How We Choose What to Support</h3>
-        <p>Devices and operating systems change over time, so we regularly review the versions supported by KT Messenger.</p>
-        <p>Older operating systems may not support the latest security updates, bug fixes, or features available in newer versions of KT Messenger.</p>
-        <h3 className="text-xl font-bold text-ink">What Happens If Your Operating System Is No Longer Supported</h3>
-        <p>If your operating system is no longer supported, you may not be able to install or update KT Messenger.</p>
-        <p>To continue using KT Messenger, update your device to a supported operating system version.</p>
-        <p>We update this article whenever our supported operating system requirements change.</p>
+        <p>{t('Once you have a supported device, download KT Messenger from the appropriate app store and complete the registration process using your phone number.')}</p>
+        <p><strong>{t('Note:')}</strong> {t('An internet connection is required during registration and verification. We recommend keeping your device and KT Messenger updated to the latest available version.')}</p>
+        <h3 className="text-xl font-bold text-ink">{t('How We Choose What to Support')}</h3>
+        <p>{t('Devices and operating systems change over time, so we regularly review the versions supported by KT Messenger.')}</p>
+        <p>{t('Older operating systems may not support the latest security updates, bug fixes, or features available in newer versions of KT Messenger.')}</p>
+        <h3 className="text-xl font-bold text-ink">{t('What Happens If Your Operating System Is No Longer Supported')}</h3>
+        <p>{t('If your operating system is no longer supported, you may not be able to install or update KT Messenger.')}</p>
+        <p>{t('To continue using KT Messenger, update your device to a supported operating system version.')}</p>
+        <p>{t('We update this article whenever our supported operating system requirements change.')}</p>
       </div>
     )
   }
   if (title === 'About supported devices') {
     return (
       <div className={proseClass}>
-        <p>KT Messenger works on supported Android and Apple devices.</p>
+        <p>{t('KT Messenger works on supported Android and Apple devices.')}</p>
         {tab === 'iOS' ? (
           <>
-            <h3 className="text-xl font-bold text-ink">Apple Devices</h3>
-            <p>Supported Apple devices include:</p>
+            <h3 className="text-xl font-bold text-ink">{t('Apple Devices')}</h3>
+            <p>{t('Supported Apple devices include:')}</p>
             {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
             <ul className="list-disc! space-y-2 pl-5! mb-5!">
-              <li>iPhones running iOS 16.6 and later.</li>
-              <li>iPads running iPadOS 16.6 and later.</li>
-              <li>Mac devices running macOS 13.5 and later with Apple Silicon (M1 or later).</li>
-              <li>Apple Vision devices running visionOS 1.0 and later.</li>
+              <li>{t('iPhones running iOS 16.6 and later.')}</li>
+              <li>{t('iPads running iPadOS 16.6 and later.')}</li>
+              <li>{t('Mac devices running macOS 13.5 and later with Apple Silicon (M1 or later).')}</li>
+              <li>{t('Apple Vision devices running visionOS 1.0 and later.')}</li>
             </ul>
           </>
         ) : (
           <>
             <h3 className="text-xl font-bold text-ink">Android</h3>
-            <p>Supported Android devices include:</p>
+            <p>{t('Supported Android devices include:')}</p>
             {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
             <ul className="list-disc! space-y-2 pl-5! mb-5!">
-              <li>Android phones running Android 10.0 and later.</li>
-              <li>Android devices with access to the Google Play Store.</li>
-              <li>Android devices with an active internet connection.</li>
+              <li>{t('Android phones running Android 10.0 and later.')}</li>
+              <li>{t('Android devices with access to the Google Play Store.')}</li>
+              <li>{t('Android devices with an active internet connection.')}</li>
             </ul>
           </>
         )}
-        <p>We regularly review the devices and operating systems supported by KT Messenger.</p>
-        <p>As technology evolves, older devices and operating systems may no longer support the latest KT Messenger features, security updates, and performance improvements.</p>
-        <p>If support for your device or operating system changes, we&apos;ll update this article with the latest requirements.</p>
+        <p>{t('We regularly review the devices and operating systems supported by KT Messenger.')}</p>
+        <p>{t('As technology evolves, older devices and operating systems may no longer support the latest KT Messenger features, security updates, and performance improvements.')}</p>
+        <p>{t("If support for your device or operating system changes, we'll update this article with the latest requirements.")}</p>
         <div className="rounded-2xl bg-surface-2 p-6">
-          <h2 className="text-xl font-bold text-ink">Related Resources</h2>
+          <h2 className="text-xl font-bold text-ink">{t('Related Resources')}</h2>
           <p className="mt-3">
             <button
               type="button"
               onClick={() => onOpenArticle?.('About supported operating systems')}
               className="text-left font-semibold text-brand-ink transition-colors hover:text-brand-strong hover:underline"
             >
-              About Supported Operating Systems
+              {t('About Supported Operating Systems')}
             </button>
           </p>
         </div>
@@ -606,16 +606,16 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === 'Ending support for legacy phones') {
     return (
       <div className={proseClass}>
-        <h2 className="text-xl font-bold text-ink">End of Support for Older Operating Systems</h2>
-        <p>KT Messenger may discontinue support for older operating system versions over time.</p>
-        <p>Our goal is to provide a secure, reliable, and high-quality messaging experience. As technology evolves, older operating systems may no longer support the latest security standards, performance improvements, and features required by KT Messenger.</p>
-        <p>When an operating system is no longer supported, users may be unable to install new versions of KT Messenger or receive future updates. To keep using KT Messenger, update your device to a supported operating system version.</p>
-        <p>If our support requirements change, the latest supported operating systems will be listed in About Supported Operating Systems.</p>
+        <h2 className="text-xl font-bold text-ink">{t('End of Support for Older Operating Systems')}</h2>
+        <p>{t('KT Messenger may discontinue support for older operating system versions over time.')}</p>
+        <p>{t('Our goal is to provide a secure, reliable, and high-quality messaging experience. As technology evolves, older operating systems may no longer support the latest security standards, performance improvements, and features required by KT Messenger.')}</p>
+        <p>{t('When an operating system is no longer supported, users may be unable to install new versions of KT Messenger or receive future updates. To keep using KT Messenger, update your device to a supported operating system version.')}</p>
+        <p>{t('If our support requirements change, the latest supported operating systems will be listed in About Supported Operating Systems.')}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['About Supported Operating Systems', 'About supported operating systems'],
-            ['About Supported Devices', 'About supported devices'],
+            [t('About Supported Operating Systems'), 'About supported operating systems'],
+            [t('About Supported Devices'), 'About supported devices'],
           ]}
         />
       </div>
@@ -624,17 +624,17 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === 'About rooted phones and custom ROMs') {
     return (
       <div className={proseClass}>
-        <h2 className="text-xl font-bold text-ink">About Rooted Android Devices and Custom ROMs</h2>
-        <p>Rooted Android devices and custom ROMs are not officially supported by KT Messenger.</p>
-        <p>Because device modifications vary significantly, we cannot guarantee that KT Messenger will function correctly on rooted devices or devices running modified operating systems.</p>
-        <p>Using a rooted device or custom ROM may affect app security, stability, performance, and compatibility with KT Messenger features.</p>
-        <p>For the best experience, we recommend using the official operating system provided by your device manufacturer and keeping your device updated to the latest available version.</p>
+        <h2 className="text-xl font-bold text-ink">{t('About Rooted Android Devices and Custom ROMs')}</h2>
+        <p>{t('Rooted Android devices and custom ROMs are not officially supported by KT Messenger.')}</p>
+        <p>{t('Because device modifications vary significantly, we cannot guarantee that KT Messenger will function correctly on rooted devices or devices running modified operating systems.')}</p>
+        <p>{t('Using a rooted device or custom ROM may affect app security, stability, performance, and compatibility with KT Messenger features.')}</p>
+        <p>{t('For the best experience, we recommend using the official operating system provided by your device manufacturer and keeping your device updated to the latest available version.')}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['About Supported Devices', 'About supported devices'],
-            ['About Supported Operating Systems', 'About supported operating systems'],
-            ['How to Download or Uninstall KT Messenger', 'How to download or uninstall KT Messenger'],
+            [t('About Supported Devices'), 'About supported devices'],
+            [t('About Supported Operating Systems'), 'About supported operating systems'],
+            [t('How to Download or Uninstall KT Messenger'), 'How to download or uninstall KT Messenger'],
           ]}
         />
       </div>
@@ -652,49 +652,49 @@ function ArticleBody({ title, tab, onOpenArticle }) {
     )
     return (
       <div className={proseClass}>
-        <h2 className="text-xl font-bold text-ink">How to Register Your Account</h2>
-        <p>To use KT Messenger, you must register with a valid phone number and email address.</p>
-        <p>During registration, a verification code will be sent to your email address to verify your account. The verification code is unique and changes each time you register a new account or sign in on a new device.</p>
-        <h3 className="text-xl font-bold text-ink">Registration Requirements</h3>
-        <p>Before registering your account, make sure that:</p>
+        <h2 className="text-xl font-bold text-ink">{t('How to Register Your Account')}</h2>
+        <p>{t('To use KT Messenger, you must register with a valid phone number and email address.')}</p>
+        <p>{t('During registration, a verification code will be sent to your email address to verify your account. The verification code is unique and changes each time you register a new account or sign in on a new device.')}</p>
+        <h3 className="text-xl font-bold text-ink">{t('Registration Requirements')}</h3>
+        <p>{t('Before registering your account, make sure that:')}</p>
         {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          <li>You are using the {articleLink('latest version', 'How to download or uninstall KT Messenger')} of KT Messenger.</li>
-          <li>You have a {articleLink('supported device', 'About supported devices')} and {articleLink('operating system', 'About supported operating systems')}.</li>
-          <li>You have a valid phone number.</li>
-          <li>You have access to a valid email address.</li>
-          <li>Your device has an active internet connection.</li>
+          <li>{t('You are using the')} {articleLink(t('latest version'), 'How to download or uninstall KT Messenger')} {t('of KT Messenger.')}</li>
+          <li>{t('You have a')} {articleLink(t('supported device'), 'About supported devices')} {t('and')} {articleLink(t('operating system'), 'About supported operating systems')}.</li>
+          <li>{t('You have a valid phone number.')}</li>
+          <li>{t('You have access to a valid email address.')}</li>
+          <li>{t('Your device has an active internet connection.')}</li>
         </ul>
-        <h3 className="text-xl font-bold text-ink">Register Your Account</h3>
+        <h3 className="text-xl font-bold text-ink">{t('Register Your Account')}</h3>
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-          <li>Open KT Messenger.</li>
-          <li>Select your country or region.</li>
-          <li>Enter your phone number.</li>
-          <li>Enter your email address.</li>
-          <li>Tap <strong>Continue</strong>.</li>
-          <li>Check your email inbox for the verification code.</li>
-          <li>Enter the verification code in KT Messenger.</li>
-          <li>Complete your profile setup.</li>
+          <li>{t('Open KT Messenger.')}</li>
+          <li>{t('Select your country or region.')}</li>
+          <li>{t('Enter your phone number.')}</li>
+          <li>{t('Enter your email address.')}</li>
+          <li>{t('Tap')} <strong>{t('Continue')}</strong>.</li>
+          <li>{t('Check your email inbox for the verification code.')}</li>
+          <li>{t('Enter the verification code in KT Messenger.')}</li>
+          <li>{t('Complete your profile setup.')}</li>
         </ol>
-        <p>Once registration is complete, you can start using KT Messenger.</p>
-        <h3 className="text-xl font-bold text-ink">Didn&apos;t Receive the Verification Code?</h3>
-        <p>If you don&apos;t receive the verification code:</p>
+        <p>{t('Once registration is complete, you can start using KT Messenger.')}</p>
+        <h3 className="text-xl font-bold text-ink">{t("Didn't Receive the Verification Code?")}</h3>
+        <p>{t("If you don't receive the verification code:")}</p>
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          <li>Verify that your email address was entered correctly.</li>
-          <li>Check your Spam or Junk folder.</li>
-          <li>Wait a few minutes and request a new code.</li>
-          <li>Make sure your device has an active internet connection.</li>
+          <li>{t('Verify that your email address was entered correctly.')}</li>
+          <li>{t('Check your Spam or Junk folder.')}</li>
+          <li>{t('Wait a few minutes and request a new code.')}</li>
+          <li>{t('Make sure your device has an active internet connection.')}</li>
         </ul>
-        <p>If you&apos;re still unable to receive the verification code, contact KT Messenger Support for assistance.</p>
-        <h3 className="text-xl font-bold text-ink">Keep Your Account Secure</h3>
-        <p>Never share your verification code with anyone.</p>
-        <p><strong>Note:</strong> KT Messenger Support will never ask for your verification code.</p>
+        <p>{t("If you're still unable to receive the verification code, contact KT Messenger Support for assistance.")}</p>
+        <h3 className="text-xl font-bold text-ink">{t('Keep Your Account Secure')}</h3>
+        <p>{t('Never share your verification code with anyone.')}</p>
+        <p><strong>{t('Note:')}</strong> {t('KT Messenger Support will never ask for your verification code.')}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['About Supported Devices', 'About supported devices'],
-            ['About Supported Operating Systems', 'About supported operating systems'],
-            ['How to Update KT Messenger', 'How to download or uninstall KT Messenger'],
+            [t('About Supported Devices'), 'About supported devices'],
+            [t('About Supported Operating Systems'), 'About supported operating systems'],
+            [t('How to Update KT Messenger'), 'How to download or uninstall KT Messenger'],
           ]}
         />
       </div>
@@ -703,45 +703,45 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === 'About registration and two step verification') {
     return (
       <div className={proseClass}>
-        <p>When you create a KT Messenger account, you&apos;ll go through two different security steps: account registration and two-step verification.</p>
-        <h2 className="text-xl font-bold text-ink">Registration</h2>
-        <p>Registration is required to create a new KT Messenger account or sign in on a new device.</p>
-        <p>To register your account, you&apos;ll need to provide your phone number and email address. A verification code will be sent to your email address to confirm your identity.</p>
-        <p>The verification code is unique and changes each time you register a new account or sign in on a new device.</p>
-        <p>Verifying your account is the only way to activate KT Messenger and access your messages and contacts.</p>
+        <p>{t("When you create a KT Messenger account, you'll go through two different security steps: account registration and two-step verification.")}</p>
+        <h2 className="text-xl font-bold text-ink">{t('Registration')}</h2>
+        <p>{t('Registration is required to create a new KT Messenger account or sign in on a new device.')}</p>
+        <p>{t("To register your account, you'll need to provide your phone number and email address. A verification code will be sent to your email address to confirm your identity.")}</p>
+        <p>{t('The verification code is unique and changes each time you register a new account or sign in on a new device.')}</p>
+        <p>{t('Verifying your account is the only way to activate KT Messenger and access your messages and contacts.')}</p>
         <p>
-          Learn more in{' '}
+          {t('Learn more in')}{' '}
           <button
             type="button"
             onClick={() => onOpenArticle?.('How to register your phone number')}
             className="font-semibold text-brand-ink transition-colors hover:text-brand-strong hover:underline"
           >
-            How to Register Your Account
+            {t('How to Register Your Account')}
           </button>
           .
         </p>
-        <h2 className="text-xl font-bold text-ink">Two-Step Verification</h2>
-        <p>Two-step verification is an optional security feature that helps protect your KT Messenger account from unauthorized access.</p>
-        <p>When enabled, you&apos;ll be asked to enter an additional verification code or security credential when signing in to your account on a new device.</p>
-        <p>This extra layer of security helps keep your account protected even if someone gains access to your email address or device.</p>
-        <h2 className="text-xl font-bold text-ink">Keep Your Account Secure</h2>
-        <p>To help keep your account safe:</p>
+        <h2 className="text-xl font-bold text-ink">{t('Two-Step Verification')}</h2>
+        <p>{t('Two-step verification is an optional security feature that helps protect your KT Messenger account from unauthorized access.')}</p>
+        <p>{t("When enabled, you'll be asked to enter an additional verification code or security credential when signing in to your account on a new device.")}</p>
+        <p>{t('This extra layer of security helps keep your account protected even if someone gains access to your email address or device.')}</p>
+        <h2 className="text-xl font-bold text-ink">{t('Keep Your Account Secure')}</h2>
+        <p>{t('To help keep your account safe:')}</p>
         {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          <li>Never share your verification code with anyone.</li>
-          <li>Do not share your password or security credentials.</li>
-          <li>Use a secure email address that only you can access.</li>
-          <li>Keep KT Messenger updated to the latest version.</li>
+          <li>{t('Never share your verification code with anyone.')}</li>
+          <li>{t('Do not share your password or security credentials.')}</li>
+          <li>{t('Use a secure email address that only you can access.')}</li>
+          <li>{t('Keep KT Messenger updated to the latest version.')}</li>
         </ul>
-        <p><strong>Note:</strong> KT Messenger Support will never ask for your verification code, password, or security credentials.</p>
-        <h2 className="text-xl font-bold text-ink">Forgot Your Verification Information?</h2>
-        <p>If you&apos;re unable to complete verification or access your account, contact KT Messenger Support for assistance.</p>
+        <p><strong>{t('Note:')}</strong> {t('KT Messenger Support will never ask for your verification code, password, or security credentials.')}</p>
+        <h2 className="text-xl font-bold text-ink">{t('Forgot Your Verification Information?')}</h2>
+        <p>{t("If you're unable to complete verification or access your account, contact KT Messenger Support for assistance.")}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['How to Register Your Account', 'How to register your phone number'],
-            ['How to Enable Two-Step Verification', 'Turning it on'],
-            ['How to Protect Your Account', 'Avoiding scams'],
+            [t('How to Register Your Account'), 'How to register your phone number'],
+            [t('How to Enable Two-Step Verification'), 'Turning it on'],
+            [t('How to Protect Your Account'), 'Avoiding scams'],
           ]}
         />
       </div>
@@ -750,26 +750,26 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === 'About usernames') {
     return (
       <div className={proseClass}>
-        <p>A username helps people find and connect with you on KT Messenger without sharing your phone number.</p>
-        <p>Your username is unique to your account and can be shared with others so they can easily find you on KT Messenger.</p>
-        <h2 className="text-xl font-bold text-ink">Username Requirements</h2>
-        <p>When creating a username:</p>
+        <p>{t('A username helps people find and connect with you on KT Messenger without sharing your phone number.')}</p>
+        <p>{t('Your username is unique to your account and can be shared with others so they can easily find you on KT Messenger.')}</p>
+        <h2 className="text-xl font-bold text-ink">{t('Username Requirements')}</h2>
+        <p>{t('When creating a username:')}</p>
         {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          <li>Usernames must be unique.</li>
-          <li>Usernames can contain letters, numbers, underscores (_), and periods (.).</li>
-          <li>Usernames cannot contain spaces.</li>
-          <li>Usernames cannot impersonate another person, business, or organization.</li>
+          <li>{t('Usernames must be unique.')}</li>
+          <li>{t('Usernames can contain letters, numbers, underscores (_), and periods (.).')}</li>
+          <li>{t('Usernames cannot contain spaces.')}</li>
+          <li>{t('Usernames cannot impersonate another person, business, or organization.')}</li>
         </ul>
-        <h2 className="text-xl font-bold text-ink">Changing Your Username</h2>
-        <p>You can update your username from your account settings if username changes are available for your account.</p>
-        <p>If you change your username, people may need to use your new username to find you on KT Messenger.</p>
+        <h2 className="text-xl font-bold text-ink">{t('Changing Your Username')}</h2>
+        <p>{t('You can update your username from your account settings if username changes are available for your account.')}</p>
+        <p>{t('If you change your username, people may need to use your new username to find you on KT Messenger.')}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['How to Create a KT Messenger Account', 'How to register your phone number'],
-            ['About Privacy Settings', 'Managing your privacy'],
-            ['Managing Your Profile Information', 'Updating your profile'],
+            [t('How to Create a KT Messenger Account'), 'How to register your phone number'],
+            [t('About Privacy Settings'), 'Managing your privacy'],
+            [t('Managing Your Profile Information'), 'Updating your profile'],
           ]}
         />
       </div>
@@ -778,30 +778,30 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === 'App keeps crashing') {
     return (
       <div className={proseClass}>
-        <p>If KT Messenger closes unexpectedly or keeps stopping, work through the steps below. Most crashing problems are fixed by the first two.</p>
-        <h2>Update KT Messenger</h2>
-        <p>An outdated version is the most common cause of crashes. Open your app store, search for KT Messenger, and tap <strong>Update</strong> if one is available.</p>
-        <h2>Restart Your Device</h2>
-        <p>Turn your device off and on again. This clears the temporary memory the app runs in and closes background processes that can conflict with KT Messenger.</p>
-        <h2>Check Your Device Storage</h2>
-        <p>KT Messenger needs free space to run and to receive media. If your device is almost full:</p>
+        <p>{t('If KT Messenger closes unexpectedly or keeps stopping, work through the steps below. Most crashing problems are fixed by the first two.')}</p>
+        <h2>{t('Update KT Messenger')}</h2>
+        <p>{t('An outdated version is the most common cause of crashes. Open your app store, search for KT Messenger, and tap')} <strong>{t('Update')}</strong> {t('if one is available.')}</p>
+        <h2>{t('Restart Your Device')}</h2>
+        <p>{t('Turn your device off and on again. This clears the temporary memory the app runs in and closes background processes that can conflict with KT Messenger.')}</p>
+        <h2>{t('Check Your Device Storage')}</h2>
+        <p>{t('KT Messenger needs free space to run and to receive media. If your device is almost full:')}</p>
         {/* `!` because the unlayered global `ul` reset outranks Tailwind utilities. */}
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          <li>Delete photos, videos and apps you no longer use.</li>
-          <li>Move large files to cloud storage or a computer.</li>
-          <li>Try to keep at least a few hundred megabytes free.</li>
+          <li>{t('Delete photos, videos and apps you no longer use.')}</li>
+          <li>{t('Move large files to cloud storage or a computer.')}</li>
+          <li>{t('Try to keep at least a few hundred megabytes free.')}</li>
         </ul>
-        <h2>Check That Your Operating System Is Supported</h2>
-        <p>Older operating systems may no longer support the latest version of KT Messenger. Check whether your device is still supported, and update it if it is not.</p>
-        <h2>Reinstall KT Messenger</h2>
-        <p>If the app still crashes, uninstall and reinstall it. Your account and cloud chat history stay safe when you sign back in with the same phone number — chats saved in local backup can be restored during registration.</p>
-        <p><strong>Note:</strong> Crashes are more likely on rooted devices or devices running custom ROMs, which are not officially supported.</p>
+        <h2>{t('Check That Your Operating System Is Supported')}</h2>
+        <p>{t('Older operating systems may no longer support the latest version of KT Messenger. Check whether your device is still supported, and update it if it is not.')}</p>
+        <h2>{t('Reinstall KT Messenger')}</h2>
+        <p>{t('If the app still crashes, uninstall and reinstall it. Your account and cloud chat history stay safe when you sign back in with the same phone number — chats saved in local backup can be restored during registration.')}</p>
+        <p><strong>{t('Note:')}</strong> {t('Crashes are more likely on rooted devices or devices running custom ROMs, which are not officially supported.')}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['About Supported Operating Systems', 'About supported operating systems'],
-            ['How to Download or Uninstall KT Messenger', 'How to download or uninstall KT Messenger'],
-            ['About Rooted Phones and Custom ROMs', 'About rooted phones and custom ROMs'],
+            [t('About Supported Operating Systems'), 'About supported operating systems'],
+            [t('How to Download or Uninstall KT Messenger'), 'How to download or uninstall KT Messenger'],
+            [t('About Rooted Phones and Custom ROMs'), 'About rooted phones and custom ROMs'],
           ]}
         />
       </div>
@@ -810,33 +810,33 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === 'Notifications are not working') {
     return (
       <div className={proseClass}>
-        <p>If KT Messenger messages arrive without a sound or banner, or only appear when you open the app, check the settings below in order.</p>
-        <h2>Allow Notifications on Your Device</h2>
-        <p>Your device's system settings decide whether KT Messenger can alert you at all:</p>
+        <p>{t('If KT Messenger messages arrive without a sound or banner, or only appear when you open the app, check the settings below in order.')}</p>
+        <h2>{t('Allow Notifications on Your Device')}</h2>
+        <p>{t("Your device's system settings decide whether KT Messenger can alert you at all:")}</p>
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-          <li>Open your device <strong>Settings</strong>.</li>
-          <li>Go to <strong>Apps</strong> (or <strong>Notifications</strong>) and select <strong>KT Messenger</strong>.</li>
-          <li>Turn <strong>Allow notifications</strong> on, and enable banners, sounds and lock screen alerts for the alert style you want.</li>
+          <li>{t('Open your device')} <strong>{t('Settings')}</strong>.</li>
+          <li>{t('Go to')} <strong>{t('Apps')}</strong> {t('(or')} <strong>{t('Notifications')}</strong>{t(') and select')} <strong>KT Messenger</strong>.</li>
+          <li>{t('Turn')} <strong>{t('Allow notifications')}</strong> {t('on, and enable banners, sounds and lock screen alerts for the alert style you want.')}</li>
         </ol>
-        <h2>Check Do Not Disturb and Focus Modes</h2>
-        <p>Do Not Disturb, Sleep and Focus modes silence app alerts even when notifications are allowed. Turn the mode off, or add KT Messenger as an allowed app inside it.</p>
-        <h2>Check Notification Settings Inside KT Messenger</h2>
-        <p>Open KT Messenger and go to <strong>Settings → Notifications</strong>. Make sure message notifications and their preview are turned on, and pick a sound you can hear.</p>
-        <h2>Battery and Background Restrictions</h2>
-        <p>Some devices limit apps running in the background to save battery, which delays notifications:</p>
+        <h2>{t('Check Do Not Disturb and Focus Modes')}</h2>
+        <p>{t('Do Not Disturb, Sleep and Focus modes silence app alerts even when notifications are allowed. Turn the mode off, or add KT Messenger as an allowed app inside it.')}</p>
+        <h2>{t('Check Notification Settings Inside KT Messenger')}</h2>
+        <p>{t('Open KT Messenger and go to')} <strong>{t('Settings → Notifications')}</strong>. {t('Make sure message notifications and their preview are turned on, and pick a sound you can hear.')}</p>
+        <h2>{t('Battery and Background Restrictions')}</h2>
+        <p>{t('Some devices limit apps running in the background to save battery, which delays notifications:')}</p>
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          <li>Set KT Messenger to <strong>Unrestricted</strong> (or remove it from battery optimization) in your device settings.</li>
-          <li>On some devices, lock the app in the recent apps list so it is never put to sleep.</li>
+          <li>{t('Set KT Messenger to')} <strong>{t('Unrestricted')}</strong> {t('(or remove it from battery optimization) in your device settings.')}</li>
+          <li>{t('On some devices, lock the app in the recent apps list so it is never put to sleep.')}</li>
         </ul>
-        <h2>Restart and Update</h2>
-        <p>Restart your device, then update KT Messenger to the latest version from your app store. Updates regularly include fixes for delayed notifications.</p>
-        <p><strong>Note:</strong> If you use linked devices, notification behavior can differ per device — see the linked devices articles below.</p>
+        <h2>{t('Restart and Update')}</h2>
+        <p>{t('Restart your device, then update KT Messenger to the latest version from your app store. Updates regularly include fixes for delayed notifications.')}</p>
+        <p><strong>{t('Note:')}</strong> {t('If you use linked devices, notification behavior can differ per device — see the linked devices articles below.')}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['About Linked Devices', 'About linked devices'],
-            ['How to Link a Device', 'How to link a device'],
-            ['About Supported Devices', 'About supported devices'],
+            [t('About Linked Devices'), 'About linked devices'],
+            [t('How to Link a Device'), 'How to link a device'],
+            [t('About Supported Devices'), 'About supported devices'],
           ]}
         />
       </div>
@@ -845,32 +845,32 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === "Can't send messages") {
     return (
       <div className={proseClass}>
-        <p>If a message stays with one check mark or fails to send, the checks below resolve almost all sending problems.</p>
-        <h2>Check Your Internet Connection</h2>
-        <p>KT Messenger needs an active internet connection to send messages:</p>
+        <p>{t('If a message stays with one check mark or fails to send, the checks below resolve almost all sending problems.')}</p>
+        <h2>{t('Check Your Internet Connection')}</h2>
+        <p>{t('KT Messenger needs an active internet connection to send messages:')}</p>
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          <li>Switch between Wi-Fi and mobile data to test both.</li>
-          <li>Open a website in your browser to confirm the connection works.</li>
-          <li>If you are on Wi-Fi, try moving closer to the router or restarting it.</li>
+          <li>{t('Switch between Wi-Fi and mobile data to test both.')}</li>
+          <li>{t('Open a website in your browser to confirm the connection works.')}</li>
+          <li>{t('If you are on Wi-Fi, try moving closer to the router or restarting it.')}</li>
         </ul>
-        <h2>Check the Recipient</h2>
-        <p>A message will not be delivered if the person you are messaging no longer has an active KT Messenger account, or if there is a problem on their side. Try sending a message to a different contact — if that one delivers, the issue is specific to the first conversation.</p>
-        <h2>Restart and Update</h2>
+        <h2>{t('Check the Recipient')}</h2>
+        <p>{t('A message will not be delivered if the person you are messaging no longer has an active KT Messenger account, or if there is a problem on their side. Try sending a message to a different contact — if that one delivers, the issue is specific to the first conversation.')}</p>
+        <h2>{t('Restart and Update')}</h2>
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-          <li>Restart your device.</li>
-          <li>Update KT Messenger to the latest version from your app store.</li>
-          <li>Open KT Messenger again and retry sending.</li>
+          <li>{t('Restart your device.')}</li>
+          <li>{t('Update KT Messenger to the latest version from your app store.')}</li>
+          <li>{t('Open KT Messenger again and retry sending.')}</li>
         </ol>
-        <h2>Check Your Device's Date and Time</h2>
-        <p>Incorrect date or time settings can stop messages from sending. Set your device to update date and time automatically in your device settings.</p>
-        <h2>Reinstall KT Messenger</h2>
-        <p>If messages still will not send, uninstall and reinstall KT Messenger, then sign in with the same phone number. Your cloud chat history is safe and can be restored from backup during registration.</p>
+        <h2>{t("Check Your Device's Date and Time")}</h2>
+        <p>{t('Incorrect date or time settings can stop messages from sending. Set your device to update date and time automatically in your device settings.')}</p>
+        <h2>{t('Reinstall KT Messenger')}</h2>
+        <p>{t('If messages still will not send, uninstall and reinstall KT Messenger, then sign in with the same phone number. Your cloud chat history is safe and can be restored from backup during registration.')}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['How to Download or Uninstall KT Messenger', 'How to download or uninstall KT Messenger'],
-            ['How to Restore Your Chat History', 'How to restore a backup'],
-            ['About Supported Devices', 'About supported devices'],
+            [t('How to Download or Uninstall KT Messenger'), 'How to download or uninstall KT Messenger'],
+            [t('How to Restore Your Chat History'), 'How to restore a backup'],
+            [t('About Supported Devices'), 'About supported devices'],
           ]}
         />
       </div>
@@ -879,25 +879,25 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === 'About linked devices') {
     return (
       <div className={proseClass}>
-        <p>Linked devices let you use your KT Messenger account on more than one device at the same time. Start a conversation on your phone and continue it on your computer or tablet without losing your place.</p>
-        <h2>Where You Can Use Linked Devices</h2>
-        <p>You can link companion devices such as:</p>
+        <p>{t('Linked devices let you use your KT Messenger account on more than one device at the same time. Start a conversation on your phone and continue it on your computer or tablet without losing your place.')}</p>
+        <h2>{t('Where You Can Use Linked Devices')}</h2>
+        <p>{t('You can link companion devices such as:')}</p>
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          <li>A computer using the KT Web app or the desktop app.</li>
-          <li>A tablet with KT Messenger installed.</li>
+          <li>{t('A computer using the KT Web app or the desktop app.')}</li>
+          <li>{t('A tablet with KT Messenger installed.')}</li>
         </ul>
-        <h2>What Stays in Sync</h2>
-        <p>Your personal messages, group chats and media stay synced across linked devices, so a conversation read on one device is marked read on the others.</p>
-        <h2>How Many Devices You Can Link</h2>
-        <p>You can link up to four companion devices to your account. If you reach the limit, log out of one you no longer use before linking another.</p>
-        <h2>Security</h2>
-        <p>Your messages remain protected with end-to-end encryption across linked devices. Review your linked device list regularly and log out of any device you do not recognize.</p>
+        <h2>{t('What Stays in Sync')}</h2>
+        <p>{t('Your personal messages, group chats and media stay synced across linked devices, so a conversation read on one device is marked read on the others.')}</p>
+        <h2>{t('How Many Devices You Can Link')}</h2>
+        <p>{t('You can link up to four companion devices to your account. If you reach the limit, log out of one you no longer use before linking another.')}</p>
+        <h2>{t('Security')}</h2>
+        <p>{t('Your messages remain protected with end-to-end encryption across linked devices. Review your linked device list regularly and log out of any device you do not recognize.')}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['How to Link a Device', 'How to link a device'],
-            ['Log Out of a Linked Device', 'Log out of a linked device'],
-            ['About Supported Devices', 'About supported devices'],
+            [t('How to Link a Device'), 'How to link a device'],
+            [t('Log Out of a Linked Device'), 'Log out of a linked device'],
+            [t('About Supported Devices'), 'About supported devices'],
           ]}
         />
       </div>
@@ -906,34 +906,34 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === 'How to link a device') {
     return (
       <div className={proseClass}>
-        <p>You can link a computer, tablet or browser to your KT Messenger account using your phone. Linking takes less than a minute.</p>
-        <h2>Before You Start</h2>
+        <p>{t('You can link a computer, tablet or browser to your KT Messenger account using your phone. Linking takes less than a minute.')}</p>
+        <h2>{t('Before You Start')}</h2>
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          <li>Update KT Messenger on your phone to the latest version.</li>
-          <li>Make sure both your phone and the device you want to link are connected to the internet.</li>
+          <li>{t('Update KT Messenger on your phone to the latest version.')}</li>
+          <li>{t('Make sure both your phone and the device you want to link are connected to the internet.')}</li>
         </ul>
-        <h2>Link a Device with a QR Code</h2>
+        <h2>{t('Link a Device with a QR Code')}</h2>
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-          <li>On the device you want to link, open the KT Web app or install KT Messenger on the tablet.</li>
-          <li>On your phone, open KT Messenger and go to <strong>Settings → Linked Devices</strong>.</li>
-          <li>Tap <strong>Link a Device</strong> and unlock your phone if asked.</li>
-          <li>Point your phone's camera at the QR code shown on the other device.</li>
-          <li>Wait a moment while your chats sync — then you are ready to use KT Messenger on the linked device.</li>
+          <li>{t('On the device you want to link, open the KT Web app or install KT Messenger on the tablet.')}</li>
+          <li>{t('On your phone, open KT Messenger and go to')} <strong>{t('Settings → Linked Devices')}</strong>.</li>
+          <li>{t('Tap')} <strong>{t('Link a Device')}</strong> {t('and unlock your phone if asked.')}</li>
+          <li>{t("Point your phone's camera at the QR code shown on the other device.")}</li>
+          <li>{t('Wait a moment while your chats sync — then you are ready to use KT Messenger on the linked device.')}</li>
         </ol>
-        <h2>Troubleshooting the QR Code</h2>
-        <p>If the code does not scan, check the following:</p>
+        <h2>{t('Troubleshooting the QR Code')}</h2>
+        <p>{t('If the code does not scan, check the following:')}</p>
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
-          <li>Clean your phone's camera lens and brighten the other device's screen.</li>
-          <li>Reload the QR code on the device you are linking and try again.</li>
-          <li>Restart both devices if the problem continues.</li>
+          <li>{t("Clean your phone's camera lens and brighten the other device's screen.")}</li>
+          <li>{t('Reload the QR code on the device you are linking and try again.')}</li>
+          <li>{t('Restart both devices if the problem continues.')}</li>
         </ul>
-        <p><strong>Note:</strong> Linked devices work with the same end-to-end encryption as your phone — your messages stay private.</p>
+        <p><strong>{t('Note:')}</strong> {t('Linked devices work with the same end-to-end encryption as your phone — your messages stay private.')}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['About Linked Devices', 'About linked devices'],
-            ['Log Out of a Linked Device', 'Log out of a linked device'],
-            ['How to Download or Uninstall KT Messenger', 'How to download or uninstall KT Messenger'],
+            [t('About Linked Devices'), 'About linked devices'],
+            [t('Log Out of a Linked Device'), 'Log out of a linked device'],
+            [t('How to Download or Uninstall KT Messenger'), 'How to download or uninstall KT Messenger'],
           ]}
         />
       </div>
@@ -942,29 +942,29 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === 'Log out of a linked device') {
     return (
       <div className={proseClass}>
-        <p>You can log out of a linked device at any time — for example, a computer you no longer use, or a device you do not recognize.</p>
-        <h2>Log Out from Your Phone</h2>
+        <p>{t('You can log out of a linked device at any time — for example, a computer you no longer use, or a device you do not recognize.')}</p>
+        <h2>{t('Log Out from Your Phone')}</h2>
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-          <li>Open KT Messenger on your phone and go to <strong>Settings → Linked Devices</strong>.</li>
-          <li>Tap the linked device you want to remove.</li>
-          <li>Tap <strong>Log Out</strong> and confirm.</li>
+          <li>{t('Open KT Messenger on your phone and go to')} <strong>{t('Settings → Linked Devices')}</strong>.</li>
+          <li>{t('Tap the linked device you want to remove.')}</li>
+          <li>{t('Tap')} <strong>{t('Log Out')}</strong> {t('and confirm.')}</li>
         </ol>
-        <p>The logged-out device immediately loses access to your account and its local copy of your chats.</p>
-        <h2>Log Out from the Linked Device Itself</h2>
+        <p>{t('The logged-out device immediately loses access to your account and its local copy of your chats.')}</p>
+        <h2>{t('Log Out from the Linked Device Itself')}</h2>
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
-          <li>Open KT Messenger or the KT Web app on the linked device.</li>
-          <li>Go to <strong>Settings</strong> and tap <strong>Log Out</strong>.</li>
-          <li>Confirm — the device returns to the login screen.</li>
+          <li>{t('Open KT Messenger or the KT Web app on the linked device.')}</li>
+          <li>{t('Go to')} <strong>{t('Settings')}</strong> {t('and tap')} <strong>{t('Log Out')}</strong>.</li>
+          <li>{t('Confirm — the device returns to the login screen.')}</li>
         </ol>
-        <h2>Log Out of Everything</h2>
-        <p>If your phone is lost or stolen, log out of all linked devices from your replacement phone once you sign back in, and review the linked device list for anything unfamiliar.</p>
-        <p><strong>Note:</strong> Logging out of a linked device never deletes your account or your cloud chat history — it only ends that device's access.</p>
+        <h2>{t('Log Out of Everything')}</h2>
+        <p>{t('If your phone is lost or stolen, log out of all linked devices from your replacement phone once you sign back in, and review the linked device list for anything unfamiliar.')}</p>
+        <p><strong>{t('Note:')}</strong> {t("Logging out of a linked device never deletes your account or your cloud chat history — it only ends that device's access.")}</p>
         <RelatedResources
           onOpenArticle={onOpenArticle}
           links={[
-            ['About Linked Devices', 'About linked devices'],
-            ['How to Link a Device', 'How to link a device'],
-            ['How to Register Your Phone Number', 'How to register your phone number'],
+            [t('About Linked Devices'), 'About linked devices'],
+            [t('How to Link a Device'), 'How to link a device'],
+            [t('How to Register Your Phone Number'), 'How to register your phone number'],
           ]}
         />
       </div>
@@ -982,7 +982,7 @@ function ArticleBody({ title, tab, onOpenArticle }) {
             <li>{t('Follow our blog and Help Center for updates on when it reaches you.')}</li>
           </ul>
         </div>
-        <p>{t('When it becomes available, you can turn it on during registration or from')} <strong>Settings → Account</strong>.</p>
+        <p>{t('When it becomes available, you can turn it on during registration or from')} <strong>{t('Settings → Account')}</strong>.</p>
       </div>
     )
   }

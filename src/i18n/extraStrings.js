@@ -60,4 +60,40 @@ export default [
   // Site-wide title and description from index.html (translated in main.jsx)
   'KT Messenger · messaging & calling',
   'KT Messenger — simple, secure messaging and calling for everyone. Private by default, delightfully fast, and in sync on every device.',
+
+  // Help page: downloadGuides install/uninstall steps, rendered via t(step)
+  'Scan the QR code above, or open the Google Play Store and search for KT Messenger.',
+  'Tap Install and wait for the download to finish.',
+  'Touch and hold the KT Messenger icon on your home screen or in your app drawer.',
+  'Tap Uninstall (or drag the icon to Uninstall).',
+  'Tap OK to confirm.',
+  'Scan the QR code above, or open the App Store and search for KT Messenger.',
+  'Tap Get, then confirm with Face ID, Touch ID or your Apple ID password.',
+  'Touch and hold the KT Messenger icon on your home screen.',
+  'Tap Remove App.',
+  'Tap Delete App, then tap Delete to confirm.',
+  'Click Download for Mac above to see the official download options.',
+  'Open the downloaded file and move KT Messenger to your Applications folder.',
+  'Quit KT Messenger.',
+  'Open Finder and go to Applications.',
+  'Drag KT Messenger to the Bin, or right-click it and choose Move to Bin.',
+  'Click Download for Windows above to download the KT Messenger installer.',
+  'Open the downloaded file and follow the on-screen steps to install.',
+  'Open Start, then go to Settings > Apps > Installed apps.',
+  'Find KT Messenger in the list and click the ... (more) button next to it.',
+  'Click Uninstall, then click Uninstall again to confirm.',
+
+  // Help page: supportedSystems list, rendered via t(system)
+  'Android 10.0 and later',
+  'iOS 16.6 and later',
+  'iPadOS 16.6 and later',
+  'macOS 13.5 and later (Mac devices with Apple Silicon)',
+  'visionOS 1.0 and later',
+
+  // Products page: product.category values, rendered via t(product.category)
+  'Communication',
+  'Business',
+  'Entertainment',
+  'Social',
+  'Education',
 ]

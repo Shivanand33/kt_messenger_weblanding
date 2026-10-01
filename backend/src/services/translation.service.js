@@ -12,10 +12,11 @@ import { LANGUAGES, DEFAULT_LANG } from './hreflang.service.js'
  * it contains (middleware/translate.js); the content itself stays English, so
  * the website's lookups by title and slug keep working.
  *
- * Each text is translated once per language with the Google Cloud Translation
- * API and stored in the `translations` table, keyed by a hash of the English
- * source: edited content is translated again, everything else is read back.
- * Without GOOGLE_TRANSLATE_API_KEY nothing is translated and pages stay English.
+ * Each text is translated once per language and stored in the `translations`
+ * table, keyed by a hash of the English source: edited content is translated
+ * again, everything else is read back. With GOOGLE_TRANSLATE_API_KEY the Google
+ * Cloud Translation API is used; without a key the keyless endpoint Chrome uses
+ * for in-browser translation is used instead, so content still translates.
  */
 
 const TARGETS = new Set(LANGUAGES.map((l) => l.lang).filter((l) => l !== DEFAULT_LANG))
@@ -157,15 +158,78 @@ async function googleTranslate(segments, lang) {
   return out
 }
 
+/* ── Free Chrome endpoint (fallback when no API key is configured) ────── */
+// The endpoint Chrome itself uses for in-browser translation: plain text, no
+// key. HTML tags would be mangled in plain mode, so each segment is split into
+// tag parts (sent nowhere) and text parts (translated), then reassembled.
+// Kept names/{placeholders}/{{tokens}} are masked as ZXQ<i>QZX — a token shape
+// the translator preserves verbatim — and restored afterwards.
+
+const CHROME_ENDPOINT = 'https://clients5.google.com/translate_a/t'
+const CHROME_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+const TOKEN = /ZXQ(\d+)QZX/g
+
+function maskKeep(text) {
+  const tokens = []
+  const masked = text.replace(KEEP, (m) => {
+    tokens.push(m)
+    return `ZXQ${tokens.length - 1}QZX`
+  })
+  return { masked, tokens }
+}
+
+const unmaskKeep = (text, tokens) => text.replace(TOKEN, (_m, i) => tokens[Number(i)] ?? '')
+
+async function chromeTranslateRaw(texts, lang) {
+  const params = new URLSearchParams({ client: 'dict-chrome-ex', sl: 'en', tl: GOOGLE_CODE[lang] || lang })
+  for (const t of texts) params.append('q', t)
+  const res = await fetch(`${CHROME_ENDPOINT}?${params}`, {
+    headers: { 'User-Agent': CHROME_UA },
+    signal: AbortSignal.timeout(env.translate.timeoutMs),
+  })
+  if (!res.ok) throw new Error(`Chrome Translate ${res.status}`)
+  const json = await res.json()
+  if (!Array.isArray(json) || json.length !== texts.length) throw new Error('Chrome Translate: unexpected response')
+  return json.map((t) => (typeof t === 'string' ? t : ''))
+}
+
+/** Same contract as googleTranslate: HTML segments in, translated HTML out. */
+async function chromeTranslate(segments, lang) {
+  const parts = [] // every text part across all segments, in order
+  const skeletons = segments.map((segment) => {
+    const { masked, tokens } = maskKeep(segment)
+    return masked.split(/(<[^>]+>)/g).map((part) => {
+      if (part.startsWith('<') || !/\p{L}/u.test(part)) return { fixed: part } // tag or punctuation/whitespace
+      const ref = { text: part, tokens, out: undefined }
+      parts.push(ref)
+      return ref
+    })
+  })
+  if (!parts.length) return segments
+  const translated = await chromeTranslateRaw(parts.map((p) => p.text), lang)
+  parts.forEach((p, i) => { p.out = translated[i] })
+  return skeletons.map((skeleton) =>
+    skeleton.map((p) => {
+      if (p.fixed !== undefined) return p.fixed
+      // If the translator dropped a masked token, keep the English part rather
+      // than returning text with a leaked token or a lost placeholder.
+      const ok = p.out && (p.text.match(TOKEN) || []).every((tok) => p.out.includes(tok))
+      return ok ? unmaskKeep(p.out, p.tokens) : unmaskKeep(p.text, p.tokens)
+    }).join(''),
+  )
+}
+
 /** Translate source texts (all new to the cache) with as few API calls as possible. */
 async function machineTranslate(sources, lang) {
+  const useGoogle = Boolean(env.translate.googleKey)
   const prepared = sources.map((source) => ({ source, ...prepare(source) }))
   const results = new Map()
   let batch = []
   let chars = 0
   const flush = async () => {
     if (!batch.length) return
-    const translated = await googleTranslate(batch.flatMap((p) => p.segments), lang)
+    const segments = batch.flatMap((p) => p.segments)
+    const translated = useGoogle ? await googleTranslate(segments, lang) : await chromeTranslate(segments, lang)
     let i = 0
     for (const p of batch) {
       results.set(p.source, p.rebuild(translated.slice(i, i + p.segments.length)))
@@ -238,7 +302,7 @@ export async function translateTexts(texts, lang) {
         if (text !== undefined) found.set(item.source, text)
         else missing.push(item)
       }
-      if (missing.length && env.translate.googleKey) {
+      if (missing.length) {
         try {
           const translated = await machineTranslate(missing.map((i) => i.source), lang)
           const data = []

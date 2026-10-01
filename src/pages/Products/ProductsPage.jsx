@@ -8,6 +8,7 @@ import { Button } from '../../components/common/Button/Button'
 import { Modal } from '../../components/feature/Modal'
 import { useSeo } from '../../hooks/useSeo'
 import { useModal } from '../../context/ModalContext'
+import { useLanguage } from '../../context/LanguageContext'
 import jaadoeIcon from '../../assets/images/social/jaadoe.png'
 import seezittIcon from '../../assets/images/social/seezitt.svg'
 import werfieIcon from '../../assets/images/social/werfie.png'
@@ -82,7 +83,7 @@ function ProductCard({ product, index, onSelect }) {
         )}
         <span className="mt-4 text-lg font-bold text-ink">{product.name}</span>
         <span className="mt-2 rounded-full bg-brand-soft px-3 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-brand-ink">
-          {product.category}
+          {t(product.category)}
         </span>
       </button>
     </Reveal>
@@ -92,6 +93,7 @@ function ProductCard({ product, index, onSelect }) {
 /** QR + copy + download dialog for the selected app and store. `initialPlatform`
     is the section the card was clicked from, so the popup opens on that store. */
 function ProductDialog({ product, onClose, initialPlatform = 'android' }) {
+  const { t } = useLanguage()
   const [platform, setPlatform] = useState(initialPlatform)
   const [copied, setCopied] = useState(false)
   if (!product) return null
@@ -113,7 +115,7 @@ function ProductDialog({ product, onClose, initialPlatform = 'android' }) {
   }
 
   return (
-    <Modal open={Boolean(product)} onClose={onClose} title={product.name} eyebrow={product.category} size="sm">
+    <Modal open={Boolean(product)} onClose={onClose} title={product.name} eyebrow={t(product.category)} size="sm">
       <div className="flex flex-col items-center">
         {hasAndroid && hasIos ? (
           <div className="flex rounded-full border border-line bg-surface-2 p-1">
@@ -146,15 +148,15 @@ function ProductDialog({ product, onClose, initialPlatform = 'android' }) {
           />
         </div>
         <p className="mt-3 text-sm font-semibold text-muted">
-          Scan with your phone to open the {active === 'ios' ? 'App Store' : 'Google Play'} page
+          {t('Scan with your phone to open the')} {active === 'ios' ? 'App Store' : 'Google Play'} {t('page')}
         </p>
 
         <div className="mt-5 flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center">
           <Button variant="secondary" onClick={copyLink}>
-            {copied ? <FiCheck /> : <FiCopy />} {copied ? 'Copied!' : 'Copy Link'}
+            {copied ? <FiCheck /> : <FiCopy />} {copied ? t('Copied!') : t('Copy Link')}
           </Button>
           <Button onClick={() => window.open(url, '_blank', 'noopener,noreferrer')}>
-            Download <FiDownload />
+            {t('Download')} <FiDownload />
           </Button>
         </div>
       </div>
@@ -171,6 +173,7 @@ export function ProductsPage() {
   })
 
   const { openDownloadModal } = useModal()
+  const { t } = useLanguage()
   const [selected, setSelected] = useState(null)
   const [tab, setTab] = useState('android')
   const androidProducts = PRODUCTS
@@ -182,11 +185,10 @@ export function ProductsPage() {
         <Container>
           <Reveal from="up">
             <h1 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-              Our Products
+              {t('Our Products')}
             </h1>
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-body">
-              Apps built by the KT Messenger team for messaging, social, video, business tools and more.
-              Tap any product for its QR code and store link.
+              {t('Apps built by the KT Messenger team for messaging, social, video, business tools and more. Tap any product for its QR code and store link.')}
             </p>
           </Reveal>
 
@@ -232,18 +234,17 @@ export function ProductsPage() {
           <Reveal from="up" className="mt-16">
             <div className="rounded-3xl border border-line bg-surface-2 px-6 py-10 text-center sm:px-12 sm:py-14">
               <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
-                Get KT Messenger
+                {t('Get KT Messenger')}
               </h2>
               <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-body">
-                The flagship app that connects them all, with free private messaging, HD calls and AI
-                features on Android, iOS, Mac, Windows and the web.
+                {t('The flagship app that connects them all, with free private messaging, HD calls and AI features on Android, iOS, Mac, Windows and the web.')}
               </p>
               <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button size="lg" onClick={openDownloadModal}>
-                  Download Free <FiDownload />
+                  {t('Download Free')} <FiDownload />
                 </Button>
                 <Button size="lg" variant="secondary" href="https://play.google.com/store/apps/details?id=com.ogoul.kalamtime" target="_blank" rel="noopener noreferrer">
-                  View on Google Play
+                  {t('View on Google Play')}
                 </Button>
               </div>
             </div>

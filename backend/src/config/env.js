@@ -39,7 +39,8 @@ export const env = {
   },
 
   // Machine translation of admin content for the website's other languages
-  // (services/translation.service.js). Without a key, pages stay in English.
+  // (services/translation.service.js). With a key the Google Cloud Translation
+  // API is used; without one a keyless fallback endpoint keeps translating.
   translate: {
     googleKey: process.env.GOOGLE_TRANSLATE_API_KEY || '',
     endpoint: process.env.GOOGLE_TRANSLATE_ENDPOINT || 'https://translation.googleapis.com/language/translate/v2',

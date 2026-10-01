@@ -421,10 +421,10 @@ export function Footer() {
               </button>
 
               {langOpen ? (
-                <div className="absolute bottom-full left-0 z-30 mb-2 w-[min(24rem,calc(100vw-2.5rem))] overflow-hidden rounded-2xl border border-line bg-surface shadow-float">
+                <div className="absolute bottom-full start-0 z-30 mb-2 w-[min(24rem,calc(100vw-2.5rem))] overflow-hidden rounded-2xl border border-line bg-surface shadow-float">
                   <div className="border-b border-line p-2">
                     <div className="relative">
-                      <FiSearch className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+                      <FiSearch className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                       <input
                         ref={langSearchRef}
                         type="text"
@@ -435,7 +435,7 @@ export function Footer() {
                         aria-label={t('Search language')}
                         aria-controls="footer-language-list"
                         autoComplete="off"
-                        className="w-full rounded-xl border border-line bg-surface-2 py-2 pl-9 pr-3 text-sm text-ink outline-none transition-colors placeholder:text-muted focus:border-brand-strong"
+                        className="w-full rounded-xl border border-line bg-surface-2 py-2 ps-9 pe-3 text-sm text-ink outline-none transition-colors placeholder:text-muted focus:border-brand-strong"
                       />
                     </div>
                   </div>
@@ -460,7 +460,7 @@ export function Footer() {
                             role="option"
                             aria-selected={active}
                             onClick={() => selectLanguage(option)}
-                            className={`flex w-full items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm transition-colors ${
+                            className={`flex w-full items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-start text-sm transition-colors ${
                               active ? 'bg-brand-soft font-bold text-brand-ink' : 'text-body hover:bg-surface-2 hover:text-ink'
                             }`}
                           >

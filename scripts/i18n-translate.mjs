@@ -49,6 +49,8 @@ const opt = (name, def = '') => {
   return hit ? hit.split('=').slice(1).join('=') : def
 }
 const DRY_RUN = flag('dry-run')
+// Print the missing strings of one language as JSON { bucket: [strings] }, no API calls.
+const DUMP_MISSING = opt('dump-missing')
 // Rewrite every language's files into their current common/page split, translating nothing.
 const REBUILD = flag('rebuild')
 const LIMIT = Number(opt('limit', '0')) || 0
@@ -273,6 +275,20 @@ const KEEP_NAMES = [
   'Android', 'Windows',
 ]
 const KEEP = new RegExp(`\\{[^{}]+\\}|\\b(?:${KEEP_NAMES.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\b`, 'g')
+
+// Mask {placeholders} and brand names with tokens that survive translation
+// untouched (ZXQ0QZX, ZXQ1QZX, …), restore them afterwards.
+function protectTokens(text) {
+  const tokens = []
+  const masked = text.replace(KEEP, (m) => {
+    tokens.push(m)
+    return `ZXQ${tokens.length - 1}QZX`
+  })
+  return { masked, tokens }
+}
+function restoreTokens(text, tokens) {
+  return text.replace(/ZXQ\s*(\d+)\s*QZX/g, (_m, i) => tokens[Number(i)] ?? '')
+}
 const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' }
 const toGoogleHtml = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(KEEP, (m) => `<span translate="no">${m}</span>`)
@@ -332,6 +348,22 @@ async function translateBatchLibre(strings, lang, key, endpoint) {
 
 const apiKey = () => process.env.I18N_MT_API_KEY || process.env.GOOGLE_TRANSLATE_API_KEY || ''
 
+// Free endpoint Chrome uses for in-browser translation. No key; be polite with
+// a delay between batches. {placeholders} and brand names are token-masked
+// (protectTokens) and restored afterwards.
+async function translateBatchChrome(strings, lang) {
+  const target = GOOGLE_CODE[lang] || lang
+  const params = new URLSearchParams({ client: 'dict-chrome-ex', sl: 'en', tl: target })
+  for (const s of strings) params.append('q', s)
+  const res = await fetch(`https://clients5.google.com/translate_a/t?${params}`, {
+    headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
+  })
+  if (!res.ok) throw new Error(`Chrome translate ${res.status}`)
+  const json = await res.json()
+  if (!Array.isArray(json) || json.length !== strings.length) throw new Error('Chrome translate: unexpected response shape')
+  return json
+}
+
 function getTranslator() {
   const provider = (process.env.I18N_MT_PROVIDER || 'google').toLowerCase()
   const key = apiKey()
@@ -340,20 +372,47 @@ function getTranslator() {
   if (provider === 'google') return Object.assign((s, l) => translateBatchGoogle(s, l, key), { keepsPlaceholders: true })
   if (provider === 'deepl') return (s, l) => translateBatchDeepl(s, l, key)
   if (provider === 'libre') return (s, l) => translateBatchLibre(s, l, key, endpoint)
-  throw new Error(`Unknown I18N_MT_PROVIDER "${provider}" (use google | deepl | libre)`)
+  if (provider === 'chrome')
+    return Object.assign((s, l) => translateBatchChrome(s, l), {
+      protect: protectTokens,
+      restore: restoreTokens,
+      delayMs: 150,
+      validatePlaceholders: true,
+      noKey: true,
+    })
+  throw new Error(`Unknown I18N_MT_PROVIDER "${provider}" (use google | deepl | libre | chrome)`)
 }
 
 // Translate a list with placeholder protection and small batches.
 async function translateAll(strings, lang, translate) {
+  const protectFn = translate.protect || protect
+  const restoreFn = translate.restore || restore
   const result = {}
   const BATCH = 40
   for (let i = 0; i < strings.length; i += BATCH) {
     const slice = strings.slice(i, i + BATCH)
-    const protectedList = slice.map((s) => (translate.keepsPlaceholders ? { masked: s, tokens: [] } : protect(s)))
-    const translated = await translate(protectedList.map((p) => p.masked), lang)
+    const protectedList = slice.map((s) => (translate.keepsPlaceholders ? { masked: s, tokens: [] } : protectFn(s)))
+    let translated
+    for (let attempt = 0; ; attempt++) {
+      try {
+        translated = await translate(protectedList.map((p) => p.masked), lang)
+        break
+      } catch (err) {
+        if (attempt >= 3) throw err
+        await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)))
+      }
+    }
     translated.forEach((tr, j) => {
-      result[slice[j]] = restore(tr, protectedList[j].tokens)
+      const out = restoreFn(tr, protectedList[j].tokens)
+      if (translate.validatePlaceholders) {
+        const need = (slice[j].match(/\{[^{}]+\}/g) || []).sort().join('')
+        const got = (out.match(/\{[^{}]+\}/g) || []).sort().join('')
+        result[slice[j]] = need === got ? out : slice[j] // placeholder lost: keep English
+      } else {
+        result[slice[j]] = out
+      }
     })
+    if (translate.delayMs) await new Promise((r) => setTimeout(r, translate.delayMs))
     process.stdout.write(`   …${Math.min(i + BATCH, strings.length)}/${strings.length}\r`)
   }
   return result
@@ -448,25 +507,47 @@ async function main() {
     return
   }
 
+  if (DUMP_MISSING) {
+    const p = plan.find((x) => x.lang === DUMP_MISSING)
+    if (!p) throw new Error(`--dump-missing: language "${DUMP_MISSING}" not in targets`)
+    const byBucket = {}
+    for (const s of p.missing) {
+      const b = buckets.get(s) || 'common'
+      ;(byBucket[b] = byBucket[b] || []).push(s)
+    }
+    console.log(JSON.stringify(byBucket, null, 2))
+    return
+  }
+
+  const provider = (process.env.I18N_MT_PROVIDER || 'google').toLowerCase()
   const key = apiKey()
-  if (!key) {
-    console.error('\nMissing I18N_MT_API_KEY (or GOOGLE_TRANSLATE_API_KEY). Example:\n  I18N_MT_PROVIDER=google I18N_MT_API_KEY=xxxx npm run i18n:translate\nOr use --dry-run to preview.')
+  if (!key && provider !== 'chrome') {
+    console.error('\nMissing I18N_MT_API_KEY (or GOOGLE_TRANSLATE_API_KEY). Example:\n  I18N_MT_PROVIDER=google I18N_MT_API_KEY=xxxx npm run i18n:translate\nOr use --dry-run to preview. I18N_MT_PROVIDER=chrome needs no key.')
     process.exit(1)
   }
   const translate = getTranslator()
 
-  for (const { lang, missing } of plan) {
-    if (!missing.length) continue
-    console.log(`\n${lang}: translating ${missing.length} strings…`)
-    try {
-      const translated = await translateAll(missing, lang, translate)
-      dict[lang] = { ...(dict[lang] || {}), ...translated }
-      writeLocale(lang, dict[lang], buckets) // write after each language so progress is never lost
-      console.log(`\n   ✓ ${lang} done (${Object.keys(dict[lang]).length} total keys).`)
-    } catch (err) {
-      console.error(`\n   ✗ ${lang} failed: ${err.message}`)
-    }
-  }
+  // The free Chrome endpoint is per-request limited but keyless: run a few
+  // languages in parallel; keyed providers stay sequential.
+  const CONCURRENCY = provider === 'chrome' ? 4 : 1
+  const queue = plan.filter(({ missing }) => missing.length)
+  await Promise.all(
+    Array.from({ length: CONCURRENCY }, async () => {
+      let job
+      while ((job = queue.shift())) {
+        const { lang, missing } = job
+        console.log(`\n${lang}: translating ${missing.length} strings…`)
+        try {
+          const translated = await translateAll(missing, lang, translate)
+          dict[lang] = { ...(dict[lang] || {}), ...translated }
+          writeLocale(lang, dict[lang], buckets) // write after each language so progress is never lost
+          console.log(`\n   ✓ ${lang} done (${Object.keys(dict[lang]).length} total keys).`)
+        } catch (err) {
+          console.error(`\n   ✗ ${lang} failed: ${err.message}`)
+        }
+      }
+    }),
+  )
   console.log('\nDone. Review the diff in src/i18n/locales/ before committing.')
 }
 

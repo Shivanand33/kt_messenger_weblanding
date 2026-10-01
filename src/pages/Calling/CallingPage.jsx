@@ -319,7 +319,7 @@ export function CallingPage() {
     <MainLayout>
       <JsonLd id="CALLING_PAGE_SCHEMA" json={CALLING_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
+      <section className="relative overflow-hidden bg-cream pb-16 pt-6 lg:pb-24 lg:pt-10">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
