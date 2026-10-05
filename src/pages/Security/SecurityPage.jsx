@@ -237,9 +237,9 @@ export function SecurityPage() {
     <MainLayout>
       <JsonLd id="SECURITY_PAGE_SCHEMA" json={SECURITY_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-cream py-16 lg:py-24 dark:bg-surface">
+      <section className="relative overflow-hidden bg-cream pb-12 pt-4 lg:pb-16 lg:pt-6 dark:bg-surface">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink border border-brand-strong/20 mb-4">
                 <FiShield className="text-brand-strong" /> {t('Security & Authentication API')}
@@ -266,7 +266,7 @@ export function SecurityPage() {
 
             {/* FULL WIDTH VIDEO & MOCKUP */}
             <Reveal from="scale" delay={0.1}>
-              <div className="w-full">
+              <div className="mx-auto w-full max-w-[250px] sm:max-w-[290px]">
                 <SecurityLoopVideo />
               </div>
             </Reveal>

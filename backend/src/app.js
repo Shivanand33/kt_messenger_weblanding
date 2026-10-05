@@ -24,6 +24,9 @@ export function createApp() {
     cors({
       origin(origin, cb) {
         if (!origin || env.corsOrigins.includes(origin)) return cb(null, true)
+        // The public site answers on both the apex and the www host; accept
+        // either even when CORS_ORIGINS names only one of them.
+        if (/^https:\/\/(www\.)?ktmessenger\.com$/i.test(origin)) return cb(null, true)
         // In development, accept any localhost / 127.0.0.1 origin so the site
         // works no matter which port Vite picks (5173, 5174, 5175, …).
         if (!env.isProd && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return cb(null, true)

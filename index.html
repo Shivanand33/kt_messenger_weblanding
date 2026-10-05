@@ -4,6 +4,22 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Set <html lang/dir> from the URL's language prefix while the document
+      // parses, so the page's language is correct before the app boots (and in
+      // every tool that reads the live DOM). LanguageContext reapplies the
+      // same values after load. Keep in sync with SUPPORTED_LANGS and
+      // RTL_LANGS in src/i18n/translations.js.
+      (function () {
+        var seg = location.pathname.split('/')[1].toLowerCase()
+        var PREFIXES = 'es pt fr de it nl pl ru uk tr ar he fa hi bn gu mr pa ur ta te kn ml si ne th vi id ms tl zh-hans zh-hant ja ko sw af zu ha yo am sq az be bg ca hr cs da et fi ka el hu is ga kk lv lt mk no ro sr sk'.split(' ')
+        if (PREFIXES.indexOf(seg) === -1) return
+        var LANG = { tl: 'fil', 'zh-hans': 'zh-Hans', 'zh-hant': 'zh-Hant' }
+        var root = document.documentElement
+        root.lang = LANG[seg] || seg
+        if (seg === 'ar' || seg === 'he' || seg === 'fa' || seg === 'ur') root.dir = 'rtl'
+      })()
+    </script>
     <meta
       name="description"
       content="KT Messenger — simple, secure messaging and calling for everyone. Private by default, delightfully fast, and in sync on every device."
@@ -14,6 +30,22 @@
          the HTML a crawler receives, on every language prefix, and can never
          be duplicated. -->
     <meta name="robots" content="index, follow" />
+    <!-- Social share cards (Open Graph / X). Static so link scrapers — which
+         do not run JavaScript — see them on the very first HTML. useSeo()
+         overrides them per page (blog articles get their own cover) and
+         restores these defaults everywhere else. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="KT Messenger" />
+    <meta property="og:title" content="KTMessenger | Secure Messaging App For Private Messaging." />
+    <meta property="og:description" content="KT Messenger is a secure messaging app for private chats, calls, AI features, and communities. Connect safely and privately across all your devices." />
+    <meta property="og:url" content="https://ktmessenger.com/" />
+    <meta property="og:image" content="https://ktmessenger.com/og-image.jpg" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="467" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="KTMessenger | Secure Messaging App For Private Messaging." />
+    <meta name="twitter:description" content="KT Messenger is a secure messaging app for private chats, calls, AI features, and communities. Connect safely and privately across all your devices." />
+    <meta name="twitter:image" content="https://ktmessenger.com/og-image.jpg" />
     <meta name="theme-color" content="#fcf5eb" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b141a" media="(prefers-color-scheme: dark)" />
     <title>KT Messenger · messaging &amp; calling</title>
@@ -22,7 +54,9 @@
          of only after it (same stylesheet, same font files). -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" /></noscript>
     <!-- LCP: start the hero image download with the HTML instead of after the
          app script runs — it is the largest element on every viewport, so it
          starts alongside the bundle rather than ~2.5 s later. Only browsers
@@ -31,7 +65,18 @@
     <!-- Google tag (gtag.js). It is the largest script the page downloads, and
          nothing on screen waits for it, so it yields bandwidth to the app
          bundle and the hero image. It still loads on every page view. -->
-    <script async fetchpriority="low" src="https://www.googletagmanager.com/gtag/js?id=G-820D237JNX"></script>
+    <script>
+      // The gtag.js file itself downloads only after the page has loaded, so it
+      // no longer competes with the app bundle and hero image. The stub below
+      // queues events in dataLayer from the start, and gtag flushes them when
+      // it arrives — every page view is still recorded, nothing on screen waits.
+      window.addEventListener('load', function () {
+        var s = document.createElement('script')
+        s.async = true
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-820D237JNX'
+        document.head.appendChild(s)
+      })
+    </script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}

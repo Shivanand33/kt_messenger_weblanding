@@ -32,7 +32,7 @@ import { Toast } from '../../components/feature/Toast'
 import { api } from '../../services/apiClient'
 import { useLanguage } from '../../context/LanguageContext'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
-import { useHreflang } from '../../hooks/useSeo'
+import { useSeo } from '../../hooks/useSeo'
 import { JsonLd } from '../../components/common/JsonLd/JsonLd'
 
 const TOPICS = [
@@ -230,8 +230,12 @@ const CONTACT_PAGE_SCHEMA = `{
 export function ContactPage() {
   // Per-page SEO from admin (Website Content -> seo.contact).
   // No block configured = unchanged behaviour.
+  useSeo({
+    title: 'Contact KT Messenger | Support, Feedback & Business.',
+    description: 'Get in touch with the KT Messenger team — product support, feedback, business inquiries and press contacts.',
+    path: '/contact',
+  })
   useAdminSeo('contact', '/contact')
-  useHreflang('/contact')
 
   const navigate = useNavigate()
   const { t } = useLanguage()

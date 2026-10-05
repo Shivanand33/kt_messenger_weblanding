@@ -179,7 +179,10 @@ export function useSeo({ title: titleText, description: descriptionText, path, i
     const resolved = canonicalPath(path, pathname)
     // In the language the page is shown in: /hi/calling for the Hindi page.
     const url = resolved ? absoluteUrl(languagePath(resolved)) : undefined
-    const img = image ? absoluteUrl(image) : undefined
+    // Every page shares the site's default card image (public/og-image.jpg,
+    // also linked statically in index.html) unless the view names its own —
+    // so no page ever renders without og:image / twitter:image.
+    const img = absoluteUrl(image || '/og-image.jpg')
     const prevTitle = document.title
     if (title) document.title = title
 
@@ -191,7 +194,7 @@ export function useSeo({ title: titleText, description: descriptionText, path, i
       upsertMeta('property', 'og:url', url),
       upsertMeta('property', 'og:type', type),
       upsertMeta('property', 'og:image', img),
-      upsertMeta('name', 'twitter:card', img ? 'summary_large_image' : 'summary'),
+      upsertMeta('name', 'twitter:card', 'summary_large_image'),
       upsertMeta('name', 'twitter:title', title),
       upsertMeta('name', 'twitter:description', description),
       upsertMeta('name', 'twitter:image', img),

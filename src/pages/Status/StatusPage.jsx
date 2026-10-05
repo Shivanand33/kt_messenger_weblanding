@@ -255,9 +255,9 @@ export function StatusPage() {
     <MainLayout>
       <JsonLd id="STATUS_PAGE_SCHEMA" json={STATUS_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
+      <section className="relative overflow-hidden bg-cream pb-16 pt-6 lg:pb-24 lg:pt-10">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiClock className="text-brand-strong" /> {t('24-Hour Disappearing Stories')}
@@ -292,7 +292,7 @@ export function StatusPage() {
 
             {/* INTERACTIVE STATUS STORY MOCKUP */}
             <Reveal from="scale" delay={0.15} className="flex justify-center">
-              <div className="relative w-full max-w-[360px] rounded-[40px] bg-slate-950 p-3 shadow-float border-4 border-slate-800">
+              <div className="relative w-full max-w-[260px] sm:max-w-[360px] rounded-[40px] bg-slate-950 p-3 shadow-float border-4 border-slate-800">
                 <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[30px] bg-black">
                   {/* Status Progress Rings Header */}
                   <div className="absolute top-3 inset-x-3 z-30 flex items-center gap-1.5">

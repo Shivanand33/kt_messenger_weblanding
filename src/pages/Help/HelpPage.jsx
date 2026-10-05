@@ -1066,7 +1066,7 @@ function HelpFooter({ onNav }) {
 export function HelpPage() {
   // Canonical for this page (follows the URL it is opened at). Its hreflang
   // links are set below, once it is known whether the URL names an article.
-  useSeo({ path: '/messaging-app-help', hreflang: false })
+  useSeo({ path: '/messaging-app-help', hreflang: false, title: 'KT Messenger Help Center | Guides, FAQs & Support.', description: 'Step-by-step guides, FAQs and troubleshooting for KT Messenger — messaging, calling, privacy, accounts and more.' })
 
   const navigate = useNavigate()
   const { pathname, state: navState } = useLocation()

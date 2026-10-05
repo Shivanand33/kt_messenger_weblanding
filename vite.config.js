@@ -2,6 +2,18 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { schemaTagsFor } from './scripts/schema-blocks.mjs'
+import { routeSeoMap, applyRouteSeo } from './scripts/route-seo.mjs'
+import { SUPPORTED_LANGS, RTL_LANGS } from './src/i18n/translations.js'
+
+// URL prefix for each language (mirrors src/i18n/languageUrls.js: Filipino
+// uses Tagalog's "tl", everything else is its own lowercase code).
+const HREFLANG_CODE = { fil: 'tl' }
+const LANG_PREFIXES = new Map(
+  SUPPORTED_LANGS.filter((l) => l !== 'en').map((l) => {
+    const code = HREFLANG_CODE[l] || l
+    return [code.toLowerCase(), { lang: l, rtl: RTL_LANGS.includes(l) }]
+  }),
+)
 
 // Dev server: serve each schema route its index.html with the page's JSON-LD
 // already in <head> — the same output the build prerender produces — so SEO
@@ -10,6 +22,7 @@ import { schemaTagsFor } from './scripts/schema-blocks.mjs'
 // carries duplicates. Dev-only (apply: 'serve'); the production build is
 // handled by scripts/prerender-schema.mjs.
 function devSchemaPrerender() {
+  const routeSeo = routeSeoMap()
   return {
     name: 'dev-schema-prerender',
     apply: 'serve',
@@ -20,9 +33,20 @@ function devSchemaPrerender() {
         // route the browser asked for is in originalUrl.
         const asked = ctx.originalUrl || ctx.path || ''
         const route = asked.split('?')[0].replace(/\/+$/, '') || '/'
+        // Serve the document language the URL names, so view-source and
+        // no-JS tools see <html lang="fr"> on /fr, dir="rtl" on /ar, etc.
+        const seg = route.split('/')[1]?.toLowerCase()
+        const langInfo = LANG_PREFIXES.get(seg)
+        if (langInfo) {
+          html = html.replace('<html lang="en">', `<html lang="${langInfo.lang}"${langInfo.rtl ? ' dir="rtl"' : ''}>`)
+        }
+        // The route's own title/description in the served HTML too, so dev
+        // matches what the build prerenders (scripts/route-seo.mjs).
+        const bareRoute = langInfo ? route.slice(seg.length + 1) || '/' : route
+        html = applyRouteSeo(html, bareRoute, routeSeo.get(bareRoute))
         const tags = schemaTagsFor(route)
-        if (!tags) return html
-        return html.replace('</head>', `${tags}\n  </head>`)
+        if (tags) return html.replace('</head>', `${tags}\n  </head>`)
+        return html
       },
     },
   }

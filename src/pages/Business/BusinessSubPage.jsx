@@ -164,8 +164,8 @@ export function BusinessSubPage() {
 
       {/* Hero */}
       <section className="bg-brand-soft/60 dark:bg-cream-2">
-        <Container className="py-16 lg:py-24">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+        <Container className="pb-16 pt-6 lg:pb-24 lg:pt-10">
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
             <Reveal from="up">
               <span className="inline-flex items-center rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold uppercase tracking-[0.12em] text-brand-ink">
                 {data.eyebrow}

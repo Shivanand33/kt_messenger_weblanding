@@ -276,9 +276,9 @@ export function ChannelsPage() {
     <MainLayout>
       <JsonLd id="CHANNELS_PAGE_SCHEMA" json={CHANNELS_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
+      <section className="relative overflow-hidden bg-cream pb-16 pt-6 lg:pb-24 lg:pt-10">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiRadio className="text-brand-strong" /> {t('Private Broadcast Channels')}
@@ -313,8 +313,8 @@ export function ChannelsPage() {
             </Reveal>
 
             {/* INTERACTIVE CHANNEL BROADCAST MOCKUP */}
-            <Reveal from="scale" delay={0.15} className="flex justify-center">
-              <div className="relative w-full max-w-[420px] rounded-[36px] border border-line bg-surface p-6 shadow-float">
+            <Reveal from="scale" delay={0.15} className="flex justify-center self-center">
+              <div className="relative w-full max-w-[300px] sm:max-w-[420px] rounded-[36px] border border-line bg-surface p-6 shadow-float">
                 <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
                   <div className="flex items-center gap-3">
                     <img src={img(techImg)} alt={imgAlt(techImg, t('Channel'))} className="h-12 w-12 rounded-full object-cover border-2 border-brand-strong" />

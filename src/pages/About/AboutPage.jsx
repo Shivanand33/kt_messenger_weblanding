@@ -64,7 +64,7 @@ export function AboutPage() {
   return (
     <MainLayout>
       {/* HERO SECTION WITH H1 */}
-      <section className="relative overflow-hidden bg-cream dark:bg-surface border-b border-line py-14 sm:py-20">
+      <section className="relative overflow-hidden bg-cream dark:bg-surface border-b border-line pb-14 pt-6 sm:pb-20 sm:pt-10">
         <div aria-hidden className="pointer-events-none absolute -right-24 top-10 h-96 w-96 rounded-full bg-brand-strong/10 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl" />
 

@@ -73,9 +73,9 @@ export function CommunityPage() {
   return (
     <MainLayout>
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
+      <section className="relative overflow-hidden bg-cream pb-16 pt-6 lg:pb-24 lg:pt-10">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiUsers className="text-brand-strong" /> {t('Social & Messaging Ecosystem')}
@@ -111,7 +111,7 @@ export function CommunityPage() {
 
             {/* HERO ASIDE GRAPHIC */}
             <Reveal from="scale" delay={0.15} className="flex justify-center">
-              <div className="w-full max-w-[440px] rounded-[32px] border border-line bg-surface p-6 shadow-float sm:p-8">
+              <div className="w-full max-w-[320px] sm:max-w-[440px] rounded-[32px] border border-line bg-surface p-6 shadow-float sm:p-8">
                 <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1 text-xs font-bold text-brand-ink border border-brand-strong/20">
                   <FiGlobe /> {t('Global Ecosystem')}
                 </span>

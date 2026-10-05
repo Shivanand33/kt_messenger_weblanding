@@ -273,9 +273,9 @@ export function KtAIPage() {
     <MainLayout>
       <JsonLd id="KTAI_PAGE_SCHEMA" json={KTAI_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
+      <section className="relative overflow-hidden bg-cream pb-16 pt-6 lg:pb-24 lg:pt-10">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="relative inline-flex items-center gap-3 rounded-full border border-sky-400/40 dark:border-sky-400/30 bg-gradient-to-r from-sky-500/10 via-indigo-500/15 to-purple-500/10 px-5 py-2.5 text-xs font-extrabold text-sky-600 dark:text-sky-300 shadow-[0_0_25px_rgba(56,189,248,0.25)] backdrop-blur-xl group overflow-hidden">
                 {/* Animated Shimmer Ray */}
@@ -329,7 +329,7 @@ export function KtAIPage() {
 
             {/* INTERACTIVE AI GENERATOR MOCKUP */}
             <Reveal from="scale" delay={0.15} className="flex justify-center">
-              <div className="relative w-full max-w-[420px] rounded-[36px] border border-line bg-surface p-6 shadow-float">
+              <div className="relative w-full max-w-[300px] sm:max-w-[420px] rounded-[36px] border border-line bg-surface p-6 shadow-float">
                 <div className="flex items-center gap-3 border-b border-line pb-4 mb-4">
                   <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-tr from-sky-500 via-indigo-600 to-purple-600 text-white font-black text-sm shadow-md shadow-sky-500/30 shrink-0">
                     <span className="absolute -inset-0.5 rounded-2xl bg-sky-400/40 blur-sm animate-pulse" />

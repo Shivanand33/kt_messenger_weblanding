@@ -267,9 +267,9 @@ export function GroupsPage() {
     <MainLayout>
       <JsonLd id="GROUPS_PAGE_SCHEMA" json={GROUPS_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
+      <section className="relative overflow-hidden bg-cream pb-16 pt-6 lg:pb-24 lg:pt-10">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiUsers className="text-brand-strong" /> {t('Community & Group Collaboration')}
@@ -304,7 +304,7 @@ export function GroupsPage() {
 
             {/* MOBILE SMARTPHONE MOCKUP MATCHING USER APP SCREENSHOT EXACTLY */}
             <Reveal from="scale" delay={0.15} className="flex justify-center">
-              <div className="mx-auto w-full max-w-[320px] aspect-[9/19.5] rounded-[48px] border-[8px] border-slate-900 bg-slate-950 p-2 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)] dark:border-slate-800 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
+              <div className="mx-auto w-full max-w-[250px] sm:max-w-[320px] aspect-[9/19.5] rounded-[48px] border-[8px] border-slate-900 bg-slate-950 p-2 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)] dark:border-slate-800 font-sans select-none overflow-hidden text-white flex flex-col justify-between relative group">
                 {/* Smartphone Status Bar */}
                 <div className="bg-slate-950 px-3.5 py-1.5 flex items-center justify-between text-[10px] font-bold text-slate-400 shrink-0 border-b border-slate-900 z-20">
                   <div className="flex items-center gap-1.5">

@@ -51,6 +51,29 @@ export function useFeatureNavMap() {
   // the admin navigation row above — same target.)
   const RENAMES = { '/messaging-app': '/messaging' }
 
+  // Canonical feature URLs, mirroring the admin Navigation rows. These only
+  // apply while the Navigation lists have not loaded (or cannot be reached) —
+  // once the admin data arrives it overrides every entry below, so the admin
+  // panel stays the single place to change a URL. Without this fallback a
+  // visitor opening a short route while the API is unreachable would never be
+  // redirected to the keyword-rich URL.
+  const CANONICAL_FALLBACK = {
+    '/calling': '/video-calling-app',
+    '/groups': '/group-chat-app',
+    '/channels': '/social-media-platform',
+    '/ai': '/ai-assistant-app',
+    '/status': '/social-feed-app',
+    '/security': '/secure-messaging-app',
+    '/plus': '/premium-messaging-app',
+    '/notes': '/notes-app',
+    '/minis': '/minis-short-video-app',
+    '/privacy': '/private-messaging-app',
+    '/blog': '/messaging-social-media-blog',
+    '/apps': '/messaging-app-download',
+    '/help': '/messaging-app-help',
+    '/business': '/business-messaging-app',
+  }
+
   const byPath = {}
   for (const row of rows || []) {
     const label = String(row.label || '').toLowerCase()
@@ -59,7 +82,7 @@ export function useFeatureNavMap() {
       byPath[hit.path] = row.href
     }
   }
-  return { ...RENAMES, ...byPath }
+  return { ...CANONICAL_FALLBACK, ...RENAMES, ...byPath }
 }
 
 /**

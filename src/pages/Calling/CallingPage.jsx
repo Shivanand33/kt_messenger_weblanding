@@ -321,7 +321,7 @@ export function CallingPage() {
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-cream pb-16 pt-6 lg:pb-24 lg:pt-10">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiPhone className="text-brand-strong" /> {t('Next Gen HD Calling Suite')}
@@ -356,7 +356,7 @@ export function CallingPage() {
 
             {/* INTERACTIVE CALL MOCKUP */}
             <Reveal from="scale" delay={0.15} className="flex justify-center">
-              <div className="relative w-full max-w-[420px] rounded-[46px] border-[3px] border-slate-800 bg-slate-950 p-2.5 shadow-float">
+              <div className="relative w-full max-w-[300px] sm:max-w-[420px] rounded-[46px] border-[3px] border-slate-800 bg-slate-950 p-2.5 shadow-float">
                 {/* Left Side Buttons (Volume keys mockup) */}
                 <div className="absolute -left-[7px] top-20 h-9 w-[4px] rounded-l-md bg-slate-700" />
                 <div className="absolute -left-[7px] top-32 h-9 w-[4px] rounded-l-md bg-slate-700" />

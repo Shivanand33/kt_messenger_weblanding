@@ -32,16 +32,9 @@ export const LANGUAGES = SUPPORTED_LANGS.map((lang) => {
 const byLang = new Map(LANGUAGES.map((l) => [l.lang, l]))
 const byPrefix = new Map(LANGUAGES.filter((l) => l.prefix).map((l) => [l.prefix.slice(1), l]))
 
-// The visitor's language choice.
+// The visitor's language choice, remembered so the language switcher can
+// highlight it; the URL alone decides the language of a page load.
 export const LANGUAGE_STORAGE_KEY = 'lang'
-
-function savedLanguage() {
-  try {
-    return window.localStorage.getItem(LANGUAGE_STORAGE_KEY)
-  } catch {
-    return null
-  }
-}
 
 export function saveLanguage(lang) {
   try {
@@ -73,9 +66,12 @@ let current = null
  * The language of this page load, from its URL: { lang, hreflang, prefix,
  * basename }. main.jsx reads it before the router mounts.
  *
- * A language URL is also the visitor's choice from then on. An English URL
- * opened by a visitor who chose another language is switched, in place, to
- * that language's URL — the site has always shown the saved language.
+ * The URL decides the language, always: a prefixed URL (/hi/calling) opens in
+ * that language, and an unprefixed URL (ktmessenger.com/calling) always opens
+ * in English — even for a visitor who picked another language before, so a
+ * shared or searched link never surprises anyone with the wrong language.
+ * Picking a language moves the visitor to that language's URL, which is what
+ * keeps them in it from then on.
  */
 export function currentLanguage() {
   if (current) return current
@@ -89,10 +85,6 @@ export function currentLanguage() {
       saveLanguage(fromUrl.lang)
       // /HI/calling -> /hi/calling
       if (segment !== fromUrl.prefix.slice(1)) replaceUrl(`${fromUrl.prefix}${pathname.slice(segment.length + 1)}${search}${hash}`)
-    } else {
-      const saved = byLang.get(savedLanguage())
-      const localized = saved?.prefix ? languagePath(pathname, saved.lang) : pathname
-      if (localized !== pathname && replaceUrl(`${localized}${search}${hash}`)) language = saved
     }
   }
   current = { ...language, basename: language.prefix || '/' }

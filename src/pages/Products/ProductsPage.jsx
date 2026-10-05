@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FiCopy, FiCheck, FiDownload } from 'react-icons/fi'
+import { FiCopy, FiCheck, FiDownload, FiPackage } from 'react-icons/fi'
 import { FaAndroid, FaApple } from 'react-icons/fa'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
 import { Container } from '../../components/common/Container/Container'
@@ -54,29 +54,35 @@ const PRODUCTS = [
 const qrFor = (url) => `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&data=${encodeURIComponent(url)}`
 
 function ProductCard({ product, index, onSelect }) {
+  const { t } = useLanguage()
   const icon = iconFor(product.key, product.icon)
   return (
     <Reveal from="up" delay={Math.min(index, 7) * 0.04} className="h-full">
       <button
         type="button"
         onClick={() => onSelect(product)}
-        className="group flex h-full w-full flex-col items-center rounded-3xl border border-transparent bg-surface-2 p-6 text-center transition duration-300 hover:-translate-y-1 hover:border-brand/20 hover:shadow-card"
+        className="group relative flex h-full w-full flex-col items-center overflow-hidden rounded-3xl border border-line bg-surface px-6 pb-6 pt-8 text-center transition duration-300 hover:-translate-y-1.5 hover:border-brand/25 hover:shadow-float"
       >
+        {/* Soft brand glow that fades in behind the icon on hover. */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-x-6 top-0 h-24 rounded-full bg-brand/10 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
+        />
         {icon ? (
           <img
             src={icon}
             alt={`${product.name} app icon`}
-            width="80"
-            height="80"
+            width="96"
+            height="96"
             loading="lazy"
-            className="h-20 w-20 rounded-[22px] object-cover shadow-[0_10px_24px_-12px_rgba(17,27,33,0.45)] transition-transform duration-300 group-hover:scale-105"
+            className="h-24 w-24 rounded-[26px] object-cover shadow-[0_14px_30px_-12px_rgba(17,27,33,0.4)] ring-1 ring-black/5 transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           // Placeholder tile — replaced automatically once the app's icon
           // file exists under src/assets/images/products/ (see note above).
           <span
             aria-hidden
-            className="grid h-20 w-20 place-items-center rounded-[22px] bg-brand-soft text-2xl font-extrabold text-brand-ink"
+            className="grid h-24 w-24 place-items-center rounded-[26px] bg-brand-soft text-3xl font-extrabold text-brand-ink ring-1 ring-black/5"
           >
             {product.name.charAt(0)}
           </span>
@@ -84,6 +90,9 @@ function ProductCard({ product, index, onSelect }) {
         <span className="mt-4 text-lg font-bold text-ink">{product.name}</span>
         <span className="mt-2 rounded-full bg-brand-soft px-3 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-brand-ink">
           {t(product.category)}
+        </span>
+        <span className="mt-4 inline-flex w-full items-center justify-center gap-1.5 border-t border-line pt-4 text-xs font-bold text-muted transition-colors duration-300 group-hover:text-brand-strong">
+          {t('Download')} <FiDownload />
         </span>
       </button>
     </Reveal>
@@ -181,10 +190,17 @@ export function ProductsPage() {
 
   return (
     <MainLayout>
-      <section className="py-16 lg:py-24">
-        <Container>
+      <section className="relative overflow-hidden border-b border-line bg-cream pb-16 pt-6 dark:bg-surface lg:pb-24 lg:pt-10">
+        {/* Ambient glows — same treatment as the About hero. */}
+        <div aria-hidden className="pointer-events-none absolute -right-24 top-10 h-96 w-96 rounded-full bg-brand-strong/10 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-sky-500/10 blur-3xl" />
+
+        <Container className="relative z-10">
           <Reveal from="up">
-            <h1 className="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-strong/20 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
+              <FiPackage className="text-brand-strong" /> {t('Products')}
+            </span>
+            <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
               {t('Our Products')}
             </h1>
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-body">
@@ -192,10 +208,10 @@ export function ProductsPage() {
             </p>
           </Reveal>
 
-          {/* Platform tabs — Android | iOS, like the store switcher in the
-              download dialog. The grid re-animates on every switch (key). */}
-          <Reveal from="up" className="mt-12">
-            <div className="flex gap-7 border-b border-line" role="tablist" aria-label="Choose a platform">
+          {/* Platform switcher — segmented pill control. The grid re-animates
+              on every switch (key). */}
+          <Reveal from="up" className="mt-10">
+            <div className="inline-flex rounded-full border border-line bg-surface p-1.5 shadow-sm" role="tablist" aria-label="Choose a platform">
               {[
                 { id: 'android', label: 'Android', Icon: FaAndroid },
                 { id: 'ios', label: 'iOS', Icon: FaApple },
@@ -208,42 +224,38 @@ export function ProductsPage() {
                     role="tab"
                     aria-selected={activeTab}
                     onClick={() => setTab(id)}
-                    className={`relative flex items-center gap-2 pb-3 text-lg font-bold transition-colors ${
-                      activeTab ? 'text-brand-ink' : 'text-body hover:text-ink'
+                    className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-300 ${
+                      activeTab ? 'bg-brand text-white shadow-sm' : 'text-body hover:text-ink'
                     }`}
                   >
-                    <Icon className="text-xl" /> {label}
-                    <span
-                      aria-hidden
-                      className={`absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-brand transition-opacity ${
-                        activeTab ? 'opacity-100' : 'opacity-0'
-                      }`}
-                    />
+                    <Icon className="text-base" /> {label}
                   </button>
                 )
               })}
             </div>
           </Reveal>
 
-          <div key={tab} className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+          <div key={tab} className="mt-8 grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-4">
             {(tab === 'android' ? androidProducts : iosProducts).map((product, index) => (
               <ProductCard key={product.key} product={product} index={index} onSelect={setSelected} />
             ))}
           </div>
 
           <Reveal from="up" className="mt-16">
-            <div className="rounded-3xl border border-line bg-surface-2 px-6 py-10 text-center sm:px-12 sm:py-14">
-              <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-strong to-brand-ink px-6 py-10 text-center text-white shadow-float sm:px-12 sm:py-14">
+              <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-2xl" />
+              <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-sky-300/20 blur-3xl" />
+              <h2 className="relative text-2xl font-extrabold tracking-tight sm:text-3xl">
                 {t('Get KT Messenger')}
               </h2>
-              <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-body">
+              <p className="relative mx-auto mt-3 max-w-xl text-base leading-relaxed text-white/85">
                 {t('The flagship app that connects them all, with free private messaging, HD calls and AI features on Android, iOS, Mac, Windows and the web.')}
               </p>
-              <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Button size="lg" onClick={openDownloadModal}>
+              <div className="relative mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Button size="lg" variant="white" onClick={openDownloadModal}>
                   {t('Download Free')} <FiDownload />
                 </Button>
-                <Button size="lg" variant="secondary" href="https://play.google.com/store/apps/details?id=com.ogoul.kalamtime" target="_blank" rel="noopener noreferrer">
+                <Button size="lg" variant="onDark" href="https://play.google.com/store/apps/details?id=com.ogoul.kalamtime" target="_blank" rel="noopener noreferrer">
                   {t('View on Google Play')}
                 </Button>
               </div>

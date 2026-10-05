@@ -169,9 +169,9 @@ export function MinisPage() {
     <MainLayout>
       <JsonLd id="MINIS_PAGE_SCHEMA" json={MINIS_PAGE_SCHEMA} />
       {/* 1. HERO SECTION (H1) */}
-      <section className="relative overflow-hidden bg-cream py-14 lg:py-20 border-b border-line dark:bg-surface">
+      <section className="relative overflow-hidden bg-cream pb-14 pt-6 lg:pb-20 lg:pt-10 border-b border-line dark:bg-surface">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+          <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-8">
             {/* Left Column */}
             <Reveal from="left" className="lg:col-span-6">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
@@ -220,7 +220,7 @@ export function MinisPage() {
             {/* Right Column: Phone Mockup */}
             <Reveal from="right" className="lg:col-span-6 flex justify-center relative">
               <div className="absolute inset-0 -z-0 bg-gradient-to-tr from-brand-strong/20 via-sky-400/10 to-purple-600/10 blur-3xl rounded-full" />
-              <div className="relative z-10">
+              <div className="relative z-10 w-full max-w-[250px] sm:max-w-[280px]">
                 <KtMinisScreen />
               </div>
             </Reveal>

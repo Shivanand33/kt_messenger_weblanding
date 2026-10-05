@@ -51,7 +51,11 @@ export function BusinessPage() {
   // Per-page SEO from admin (Website Content -> seo.business).
   // No block configured = unchanged behaviour.
   // Canonical for this page (follows the URL it is opened at).
-  useSeo({ path: '/business-messaging-app' })
+  useSeo({
+    title: 'KT Messenger for Business | Secure Team Messaging & Tools.',
+    description: 'Run customer conversations, catalogs and automation with KT Messenger Business — secure messaging tools for teams and small businesses.',
+    path: '/business-messaging-app',
+  })
   useAdminSeo('business', '/business-messaging-app')
 
   const navigate = useNavigate()
@@ -710,8 +714,8 @@ export function BusinessPage() {
       </AnimatePresence>
 
       {/* HERO SECTION */}
-      <section style={{ backgroundColor: DARK }} className="text-white py-12 lg:py-20">
-        <div className="mx-auto grid max-w-[1320px] items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
+      <section style={{ backgroundColor: DARK }} className="text-white pb-12 pt-6 lg:pb-20 lg:pt-10">
+        <div className="mx-auto grid max-w-[1320px] items-start gap-8 px-5 lg:grid-cols-2 lg:gap-12 lg:px-8">
           <div>
             <Reveal from="up">
               <h1 className="text-[3rem] font-extrabold leading-[1.02] tracking-tight text-[#38bdf8] sm:text-6xl lg:text-[4.7rem]">
@@ -737,7 +741,7 @@ export function BusinessPage() {
 
           <Reveal from="scale" delay={0.1} className="relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
-              <img src={img(heroImg)} alt={imgAlt(heroImg, tr('A small business owner helping a customer'))} className="h-[420px] w-full rounded-[28px] object-cover sm:h-[520px] shadow-2xl border border-slate-700" />
+              <img src={img(heroImg)} alt={imgAlt(heroImg, tr('A small business owner helping a customer'))} className="h-[300px] w-full rounded-[28px] object-cover sm:h-[520px] shadow-2xl border border-slate-700" />
 
               <Sparkle className="absolute -right-2 -top-5 h-14 w-14 text-sky-400" />
               <Sparkle className="absolute right-10 top-6 h-7 w-7 text-sky-400/70" />

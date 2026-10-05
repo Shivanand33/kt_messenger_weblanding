@@ -276,9 +276,9 @@ export function MessagingPage() {
     <MainLayout>
       <JsonLd id="MESSAGING_PAGE_SCHEMA" json={MESSAGING_PAGE_SCHEMA} />
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-cream py-16 lg:py-24">
+      <section className="relative overflow-hidden bg-cream pb-16 pt-6 lg:pb-24 lg:pt-10">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
             <Reveal from="up">
               <div className="inline-flex items-center gap-2 rounded-full border border-brand-strong/30 bg-brand-soft px-4 py-1.5 text-xs font-bold text-brand-ink">
                 <FiMessageSquare className="text-brand-strong" /> {t('Modern Messaging Platform')}
@@ -314,7 +314,7 @@ export function MessagingPage() {
             {/* INTERACTIVE CHAT MOCKUP MATCHING SCREENSHOT 1 */}
             <Reveal from="scale" delay={0.15} className="flex justify-center">
               <KtChatScreen
-                className="w-full max-w-[320px]"
+                className="w-full max-w-[250px] sm:max-w-[320px]"
                 showControls={false}
                 showProgress={false}
                 showPhoto={false}

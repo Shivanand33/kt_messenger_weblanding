@@ -178,7 +178,11 @@ export function AppsPage() {
   // Per-page SEO from admin (Website Content -> seo.apps).
   // No block configured = unchanged behaviour.
   // Canonical for this page (follows the URL it is opened at).
-  useSeo({ path: '/messaging-app-download' })
+  useSeo({
+    title: 'Download KT Messenger App for Android, iOS, Mac & PC.',
+    description: 'Get KT Messenger on every device — Android, iOS, Mac, Windows and the web. Free, fast and secure messaging and calling.',
+    path: '/messaging-app-download',
+  })
   useAdminSeo('apps', '/messaging-app-download')
 
   const navigate = useNavigate()
@@ -222,7 +226,7 @@ export function AppsPage() {
     <MainLayout>
       {/* hero */}
       <section id="apps-hero" className="bg-[#eaf2ff] dark:bg-cream-2">
-        <Container className="grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
+        <Container className="grid items-start gap-8 pb-16 pt-6 lg:grid-cols-2 lg:gap-12 lg:pb-24 lg:pt-10">
           <div>
             <Reveal from="up">
               <h1 className="text-[3rem] font-bold leading-[0.98] tracking-tight text-ink sm:text-6xl lg:text-7xl">

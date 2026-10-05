@@ -23,7 +23,7 @@ export function PageHero({
   return (
     <section
       id={id}
-      className="relative isolate overflow-hidden bg-cream dark:bg-[#070e1b] border-b border-line py-16 text-ink dark:text-white select-none lg:py-24 transition-colors"
+      className="relative isolate overflow-hidden bg-cream dark:bg-[#070e1b] border-b border-line pb-16 pt-6 text-ink dark:text-white select-none lg:pb-24 lg:pt-10 transition-colors"
     >
       <div className="kt-hero-glow absolute inset-0 -z-10 opacity-30 dark:opacity-100" aria-hidden="true" />
       <div className="kt-hero-grid absolute inset-0 -z-10 opacity-15 dark:opacity-60" aria-hidden="true" />
@@ -33,7 +33,7 @@ export function PageHero({
       />
 
       <Container>
-        <div className={`grid items-center gap-12 [&>*]:min-w-0 ${aside ? 'lg:grid-cols-[1.05fr_0.95fr]' : ''}`}>
+        <div className={`grid items-start gap-8 lg:gap-12 [&>*]:min-w-0 ${aside ? 'lg:grid-cols-[1.05fr_0.95fr]' : ''}`}>
           <div className={aside ? '' : 'max-w-3xl'}>
             <Reveal from="up">
               {badge ? (
