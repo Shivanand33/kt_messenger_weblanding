@@ -14,7 +14,15 @@
 import { DEFAULT_LANG, currentLanguage } from '../i18n/languageUrls'
 import { addContentTranslations } from '../i18n/contentTranslations'
 
-const BASE = import.meta.env.VITE_API_URL || `${window.location.origin}/api`
+let BASE = import.meta.env.VITE_API_URL || `${window.location.origin}/api`
+
+// A page served over HTTPS can never call an HTTP API — browsers block it as
+// mixed content before it leaves the tab, which blanks every API-driven page.
+// If the build was pointed at an http:// backend URL by mistake, upgrade the
+// scheme at runtime; the host is the same one the site already calls.
+if (typeof window !== 'undefined' && window.location.protocol === 'https:' && BASE.startsWith('http://')) {
+  BASE = `https://${BASE.slice('http://'.length)}`
+}
 
 // Two components asking for the same URL at the same moment share one request
 // (the header and the route table both read the features menu). The entry is
