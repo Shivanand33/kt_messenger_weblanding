@@ -51,6 +51,21 @@ function canonicalPath(declared, served) {
   return samePath(declared, served) ? declared : stripSlash(served)
 }
 
+/**
+ * The canonical has to name the URL the page is actually served at. The static
+ * host serves every prerendered route from its own folder and redirects
+ * /messaging to /messaging/, while the dev server and the SPA fallback answer
+ * the same route without the slash. Following whichever form is live keeps the
+ * canonical from disagreeing with the address bar in either place.
+ */
+function liveSlashForm(path) {
+  if (typeof window === 'undefined' || !path || path === '/') return path
+  const live = window.location.pathname
+  const bare = path.endsWith('/') ? path.slice(0, -1) : path
+  if (!bare) return '/'
+  return live.length > 1 && live.endsWith('/') ? `${bare}/` : bare
+}
+
 function upsertMeta(attr, key, content) {
   if (!content) return null
   let el = document.head.querySelector(`meta[${attr}="${key}"]`)
@@ -143,7 +158,7 @@ export function useCanonical(path, { enabled = true } = {}) {
     if (!enabled || typeof document === 'undefined' || !path) return undefined
 
     const resolved = canonicalPath(path, pathname)
-    const touched = upsertCanonical(resolved ? absoluteUrl(languagePath(resolved)) : undefined)
+    const touched = upsertCanonical(resolved ? absoluteUrl(liveSlashForm(languagePath(resolved))) : undefined)
     if (!touched) return undefined
 
     return () => {
@@ -178,7 +193,7 @@ export function useSeo({ title: titleText, description: descriptionText, path, i
 
     const resolved = canonicalPath(path, pathname)
     // In the language the page is shown in: /hi/calling for the Hindi page.
-    const url = resolved ? absoluteUrl(languagePath(resolved)) : undefined
+    const url = resolved ? absoluteUrl(liveSlashForm(languagePath(resolved))) : undefined
     // Every page shares the site's default card image (public/og-image.jpg,
     // also linked statically in index.html) unless the view names its own —
     // so no page ever renders without og:image / twitter:image.

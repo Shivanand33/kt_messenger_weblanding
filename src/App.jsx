@@ -146,7 +146,12 @@ function HelpDeepLink() {
   const { pathname } = useLocation()
   const last = pathname.split('/').filter(Boolean).pop()
   if (last && /^[a-z0-9-]+$/i.test(last)) {
-    return <Navigate replace to={`/messaging-app-help/${encodeURIComponent(last)}`} />
+    const target = `/messaging-app-help/${encodeURIComponent(last)}`
+    // Never bounce to the path we are already on. /messaging-app-help ends in
+    // its own last segment, so redirecting it here sent the browser to the
+    // same URL over and over and left a blank page.
+    if (target !== pathname) return <Navigate replace to={target} />
+    return <HelpPage />
   }
   return <NotFoundPage />
 }
@@ -253,6 +258,18 @@ function App() {
 
         {/* LEGACY HELP CENTER DEEP LINKS — stacked-slug URLs from older
             builds normalize to the article named by their last segment */}
+        {/* The canonical Help Center URL, pinned here as well as built from
+            admin Navigation: when that API returns no items the dynamic
+            ":slug?" route is never registered, and without this the splat
+            route below would be the only match. */}
+        {/* The old self-redirect loop left /messaging-app-help doubled on
+            itself in bookmarks, history and search results. Send those URLs
+            back to the clean one instead of serving the Help Center — and its
+            canonical tag — from a path that should never have existed. */}
+        <Route path="/messaging-app-help/messaging-app-help" element={<Navigate replace to="/messaging-app-help" />} />
+
+        <Route path="/messaging-app-help/:slug?" element={<HelpPage />} />
+
         <Route path="/help/*" element={<HelpDeepLink />} />
         <Route path="/messaging-app-help/*" element={<HelpDeepLink />} />
 
