@@ -14,3 +14,12 @@ export const updateProfileSchema = z.object({
   name: z.string().trim().min(1).max(120).optional(),
   email: z.string().trim().toLowerCase().email().optional(),
 })
+
+export const forgotPasswordSchema = z.object({
+  email: z.string().trim().toLowerCase().email(),
+})
+
+export const resetPasswordSchema = z.object({
+  token: z.string().trim().min(1, 'Reset token is required'),
+  newPassword: z.string().min(8, 'New password must be at least 8 characters'),
+})

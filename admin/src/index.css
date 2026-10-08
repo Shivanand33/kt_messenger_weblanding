@@ -407,6 +407,27 @@ table.table { width: 100%; border-collapse: collapse; background: var(--surface)
 }
 .err-box::before { content: '⚠'; font-size: 14px; line-height: 1.25; }
 
+.ok-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  background: rgba(22, 163, 74, 0.08);
+  border: 1px solid rgba(22, 163, 74, 0.28);
+  color: #15803d;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  margin-bottom: 18px;
+  animation: login-rise .25s ease;
+}
+.ok-box::before { content: '✓'; font-size: 14px; line-height: 1.25; }
+
+.login-foot { font-size: 13px; }
+.login-foot a { color: var(--accent, #2563eb); font-weight: 600; text-decoration: none; }
+.login-foot a:hover { text-decoration: underline; }
+
 @media (max-width: 480px) {
   .login-card { padding: 30px 24px 28px; border-radius: var(--radius); }
   .login-card h1 { font-size: 24px; }

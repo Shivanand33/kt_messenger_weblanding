@@ -32,6 +32,27 @@ for (const p of Object.keys(ORIGINALS)) {
 
 let supported = false
 
+// AVIF support does not change between visits for a given browser, so the
+// probe result is stored: repeat visits skip the decode and the first render
+// is no longer gated on it. A stored "no" is re-probed occasionally by simply
+// expiring the entry — browsers do gain AVIF support over time.
+const CACHE_KEY = 'avif-support'
+const cachedSupport = (() => {
+  try {
+    const raw = window.localStorage.getItem(CACHE_KEY)
+    if (raw === '1') return true
+    if (raw && raw.startsWith('0:')) {
+      // Stored "no": trusted for 30 days, then probed again.
+      const stamp = Number(raw.slice(2))
+      if (Number.isFinite(stamp) && Date.now() - stamp < 30 * 24 * 60 * 60 * 1000) return false
+    }
+  } catch {
+    /* storage unavailable — fall through to the probe */
+  }
+  return null
+})()
+if (cachedSupport !== null) supported = cachedSupport
+
 // A 1x1 AVIF. Decoding it is the reliable way to ask the browser whether it
 // supports the format; there is no synchronous API for that.
 const PROBE =
@@ -40,13 +61,20 @@ const PROBE =
 /**
  * Resolve once, before the app renders, so the very first <img> already gets
  * the right format. Any failure or a slow decode falls back to the originals.
+ * A cached answer resolves immediately, so repeat visits render at once.
  */
 export function detectAvifSupport(timeoutMs = 500) {
+  if (cachedSupport !== null) return Promise.resolve(cachedSupport)
   return new Promise((resolve) => {
     if (typeof Image === 'undefined') return resolve(false)
     const probe = new Image()
     const finish = (ok) => {
       supported = ok
+      try {
+        window.localStorage.setItem(CACHE_KEY, ok ? '1' : `0:${Date.now()}`)
+      } catch {
+        /* storage unavailable — only this visit pays for the probe */
+      }
       resolve(ok)
     }
     const timer = setTimeout(() => finish(false), timeoutMs)

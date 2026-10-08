@@ -17,6 +17,7 @@ export function CallLoopVideo({ className = '' }) {
     if (!isPlaying) return
 
     const interval = setInterval(() => {
+      if (document.hidden) return // a backgrounded tab holds its place in the loop
       setProgress((prev) => {
         if (prev >= 100) {
           setPhase(0)
@@ -50,7 +51,7 @@ export function CallLoopVideo({ className = '' }) {
       {/* Mobile Screen Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-2">
         <div className="flex items-center gap-2">
-          <img src={img(avatarFemale)} alt={imgAlt(avatarFemale, "Emiko")} className="h-7 w-7 rounded-full object-cover border border-brand-strong" />
+          <img loading="lazy" src={img(avatarFemale)} alt={imgAlt(avatarFemale, "Emiko")} className="h-7 w-7 rounded-full object-cover border border-brand-strong" />
           <div>
             <p className="text-xs font-bold text-white">Emiko Takahashi</p>
             <p className="text-[9px] text-emerald-400 font-semibold">{t('1080p HD • KT Encrypted')}</p>
@@ -70,7 +71,7 @@ export function CallLoopVideo({ className = '' }) {
               transition={{ repeat: Infinity, duration: 1.2 }}
               className="mx-auto h-20 w-20 rounded-full border-4 border-brand-strong p-1 shadow-brand"
             >
-              <img src={img(avatarFemale)} alt={imgAlt(avatarFemale, t('Calling'))} className="h-full w-full rounded-full object-cover" />
+              <img loading="lazy" src={img(avatarFemale)} alt={imgAlt(avatarFemale, t('Calling'))} className="h-full w-full rounded-full object-cover" />
             </motion.div>
             <div>
               <p className="font-bold text-sm text-white">Emiko Takahashi</p>
@@ -89,11 +90,11 @@ export function CallLoopVideo({ className = '' }) {
 
         {phase === 1 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative h-full w-full overflow-hidden rounded-xl bg-slate-950 border border-slate-800">
-            <img src={img(avatarFemale)} alt={imgAlt(avatarFemale, t('Video Stream'))} className="h-full w-full object-cover" />
+            <img loading="lazy" src={img(avatarFemale)} alt={imgAlt(avatarFemale, t('Video Stream'))} className="h-full w-full object-cover" />
             
             {/* Self PIP */}
             <div className="absolute top-2 right-2 h-16 w-12 overflow-hidden rounded-lg border-2 border-white/40 bg-slate-900 shadow-md">
-              <img src={img(avatarMale)} alt={imgAlt(avatarMale, t('You'))} className="h-full w-full object-cover" />
+              <img loading="lazy" src={img(avatarMale)} alt={imgAlt(avatarMale, t('You'))} className="h-full w-full object-cover" />
             </div>
 
             {/* Spatial Audio Spectrum */}

@@ -17,6 +17,7 @@ export function GroupsLoopVideo({ className = '' }) {
     if (!isPlaying) return
 
     const interval = setInterval(() => {
+      if (document.hidden) return // a backgrounded tab holds its place in the loop
       setProgress((prev) => {
         if (prev >= 100) {
           setPhase(0)
@@ -53,7 +54,7 @@ export function GroupsLoopVideo({ className = '' }) {
       {/* Mobile Group Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-2">
         <div className="flex items-center gap-2">
-          <img src={img(groupImg)} alt={imgAlt(groupImg, t('Group'))} className="h-7 w-7 rounded-full object-cover border border-brand-strong" />
+          <img loading="lazy" src={img(groupImg)} alt={imgAlt(groupImg, t('Group'))} className="h-7 w-7 rounded-full object-cover border border-brand-strong" />
           <div>
             <p className="text-xs font-bold text-white">{t('Weekend Trip 🌄')}</p>
             <p className="text-[9px] text-slate-400">{t('18 members • Encrypted')}</p>

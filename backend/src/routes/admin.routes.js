@@ -25,7 +25,7 @@ import { ok, created } from '../utils/apiResponse.js'
 import { writeAudit } from '../utils/audit.js'
 
 // validators
-import { loginSchema, changePasswordSchema, updateProfileSchema } from '../validators/auth.validator.js'
+import { loginSchema, changePasswordSchema, updateProfileSchema, forgotPasswordSchema, resetPasswordSchema } from '../validators/auth.validator.js'
 import {
   blogCreateSchema, blogUpdateSchema, blogCategorySchema, blogTagSchema,
   helpCategorySchema, helpSubcategorySchema, helpArticleCreateSchema, helpArticleUpdateSchema,
@@ -48,6 +48,8 @@ const P = requirePermission
 /* ── Public auth endpoints (no token yet) ─────────────── */
 r.post('/auth/login', loginLimiter, validate(loginSchema), auth.login)
 r.post('/auth/logout', auth.logout)
+r.post('/auth/forgot-password', loginLimiter, validate(forgotPasswordSchema), auth.forgotPassword)
+r.post('/auth/reset-password', loginLimiter, validate(resetPasswordSchema), auth.resetPassword)
 
 /* ── Everything below requires a valid admin token ────── */
 r.use(requireAuth)

@@ -17,6 +17,7 @@ export function MessagingLoopVideo({ className = '' }) {
   // No playback controls on this demo — the loop simply runs, forever.
   useEffect(() => {
     const interval = setInterval(() => {
+      if (document.hidden) return // a backgrounded tab holds its place in the loop
       setProgress((prev) => (prev >= 100 ? 0 : prev + 1.5))
     }, 100)
 

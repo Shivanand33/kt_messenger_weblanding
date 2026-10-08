@@ -92,6 +92,16 @@ const toFooterLink = (row) => {
   if (/^https?:\/\//i.test(row.href)) return { label: row.label, href: row.href }
   return { label: row.label, to: row.href }
 }
+
+// The footer renders from its hardcoded fallbacks at once, so its two API
+// reads are not part of the page's critical path. Deferring them to idle time
+// keeps them from competing with the LCP image and the app bundle.
+const afterIdle = (work) =>
+  new Promise((resolve) => {
+    const start = () => resolve(work())
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 2500 })
+    else window.setTimeout(start, 1200)
+  })
 // A bare "#" means the admin row exists but has no destination yet. Rendering
 // it would put a dead link in the footer, so unconfigured rows are skipped
 // (the row itself is left alone in the database) — and an empty section is
@@ -240,12 +250,12 @@ export function Footer() {
   // API returns sections that actually contain links.
   // Admin-managed language list (Admin -> Locales).
   const [languages] = useRemoteContent(
-    () => api.listLocales().then(toLanguages),
+    () => afterIdle(() => api.listLocales().then(toLanguages)),
     FALLBACK_LANGUAGES,
   )
 
   const [columns] = useRemoteContent(
-    () => api.getFooter().then(toFooterColumns),
+    () => afterIdle(() => api.getFooter().then(toFooterColumns)),
     FALLBACK_COLUMNS,
     (data) => Array.isArray(data) && data.length > 0 && data.some((c) => c.links.length > 0),
   )

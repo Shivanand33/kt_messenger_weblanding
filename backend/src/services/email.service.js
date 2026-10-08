@@ -14,7 +14,7 @@ function reloadEnv() {
       const eq = line.indexOf('=')
       if (eq < 1) continue
       const key = line.slice(0, eq).trim()
-      if (!key.startsWith('SMTP_') && !key.startsWith('EMAIL_')) continue
+      if (!key.startsWith('SMTP_') && !key.startsWith('EMAIL_') && !key.startsWith('SENDGRID_')) continue
       let val = line.slice(eq + 1).trim()
       const q = val[0]
       if ((q === '"' || q === "'") && val[val.length - 1] === q) val = val.slice(1, -1)
@@ -38,7 +38,10 @@ function credName(host = '') {
  * Send an email using the configured provider.
  *
  * - "log" (default): prints the email to the server console. Nothing is actually
- *   delivered — used in development / when no SMTP is configured.
+ *   delivered — used in development / when no provider is configured.
+ * - "sendgrid": delivers via the SendGrid Web API v3 (HTTPS, no SMTP ports or
+ *   relay needed). Set EMAIL_PROVIDER=sendgrid and SENDGRID_API_KEY (a key with
+ *   "Mail Send" permission). EMAIL_FROM must be a verified sender identity.
  * - "smtp": delivers via nodemailer. Install it (`npm i nodemailer`) and set
  *   SMTP_HOST / SMTP_PORT / SMTP_USER / SMTP_PASS (and EMAIL_PROVIDER=smtp) to
  *   send real email. nodemailer is imported lazily so "log" mode needs no dep.
@@ -46,9 +49,57 @@ function credName(host = '') {
  * Returns { delivered, provider } so callers can tell the user the truth
  * (never claim an email was sent when it was only logged).
  */
+
+// "KT Messenger <no-reply@ktmessenger.com>" -> { name, email } for the SendGrid API.
+function parseFrom(from) {
+  const m = String(from || '').match(/^\s*(.*?)\s*<([^>]+)>\s*$/)
+  return m ? { name: m[1], email: m[2] } : { email: String(from || '') }
+}
+
 export async function sendMail({ to, subject, text, html }) {
   reloadEnv()
-  const provider = env.email.provider
+  // Read provider/from live so .env edits (and admin Email Settings writes)
+  // apply without a restart — env.js only snapshots them once at startup.
+  const provider = process.env.EMAIL_PROVIDER || env.email.provider
+  const from = process.env.EMAIL_FROM || env.email.from
+
+  if (provider === 'sendgrid') {
+    const apiKey = process.env.SENDGRID_API_KEY
+
+    if (!apiKey) throw new Error('Email not sent: SENDGRID_API_KEY is not set in backend/.env')
+    if (isPlaceholder(apiKey)) {
+      throw new Error(`Email not sent: SENDGRID_API_KEY in backend/.env is still a placeholder ("${apiKey}"). Paste the real API key from sendgrid.com > Settings > API Keys.`)
+    }
+
+    const content = []
+    if (text) content.push({ type: 'text/plain', value: text })
+    if (html) content.push({ type: 'text/html', value: html })
+
+    const res = await fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: to }] }],
+        from: parseFrom(from),
+        subject,
+        content,
+      }),
+    })
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => null)
+      const sgMsg = body?.errors?.[0]?.message
+      if (res.status === 401 || res.status === 403) {
+        throw new Error(
+          `Email not sent: SendGrid rejected the request (${res.status}). ${sgMsg || ''} ` +
+          'Check that SENDGRID_API_KEY is a valid key with "Mail Send" permission, and that EMAIL_FROM is a verified sender ' +
+          '(sendgrid.com > Settings > Sender Authentication).',
+        )
+      }
+      throw new Error(`Email not sent: SendGrid error ${res.status}${sgMsg ? ` — ${sgMsg}` : ''}`)
+    }
+    return { delivered: true, provider }
+  }
 
   if (provider === 'smtp') {
     const host = process.env.SMTP_HOST
@@ -79,7 +130,7 @@ export async function sendMail({ to, subject, text, html }) {
     })
 
     try {
-      await transport.sendMail({ from: env.email.from, to, subject, text, html })
+      await transport.sendMail({ from, to, subject, text, html })
     } catch (err) {
       // Translate the most common provider rejections into plain guidance.
       const code = err?.responseCode || err?.code
@@ -117,7 +168,7 @@ export async function sendMail({ to, subject, text, html }) {
   console.log(
     [
       '\n──────── EMAIL (log provider — not actually delivered) ────────',
-      `From:    ${env.email.from}`,
+      `From:    ${from}`,
       `To:      ${to}`,
       `Subject: ${subject}`,
       'Message:',

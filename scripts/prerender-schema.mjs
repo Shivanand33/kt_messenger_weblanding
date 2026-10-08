@@ -71,4 +71,32 @@ for (const { lang, prefix, rtl } of LANGS) {
     langWrote += 1
   }
 }
+
+// Older builds briefly produced a self-redirect loop that left bookmarks and
+// search results pointing at /messaging-app-help/messaging-app-help. Serve a
+// tiny static redirect so static hosts (and crawlers) send that traffic to the
+// canonical URL even before the SPA boots.
+const HELP_PATH = '/messaging-app-help'
+const DOUBLED_HELP = `${HELP_PATH}${HELP_PATH}`
+function helpRedirectHtml(targetPath, lang = 'en', rtl = false) {
+  const target = targetPath.replace(/"/g, '&quot;')
+  return `<!doctype html>
+<html lang="${lang}"${rtl ? ' dir="rtl"' : ''}>
+  <head>
+    <meta charset="UTF-8" />
+    <title>KT Messenger Help Center | Guides, FAQs &amp; Support.</title>
+    <meta http-equiv="refresh" content="0; url=${target}" />
+    <link rel="canonical" href="https://ktmessenger.com${targetPath}" />
+  </head>
+  <body></body>
+</html>
+`
+}
+write(path.join(dist, ...DOUBLED_HELP.split('/').filter(Boolean)), helpRedirectHtml(HELP_PATH))
+wrote += 1
+for (const { lang, prefix, rtl } of LANGS) {
+  write(path.join(dist, prefix, ...DOUBLED_HELP.split('/').filter(Boolean)), helpRedirectHtml(`/${prefix}${HELP_PATH}`, lang, rtl))
+  langWrote += 1
+}
+
 console.log(`prerender-schema: injected schemas + route SEO into ${wrote} route HTML file(s), ${langWrote} language file(s)`)

@@ -67,6 +67,10 @@ model Admin {
   passwordHash String
   status       AdminStatus @default(ACTIVE)
   lastLoginAt  DateTime?
+  // Password reset: only the sha256 hash of the emailed token is stored,
+  // never the token itself. Null when no reset is in flight.
+  resetTokenHash String?
+  resetTokenExp  DateTime?
   roleId       String
   role         Role        @relation(fields: [roleId], references: [id])
   blogPosts    BlogPost[]  @relation("BlogAuthorAdmin")

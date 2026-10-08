@@ -31,6 +31,7 @@ import { useLanguage } from '../../../context/LanguageContext'
 import { api } from '../../../services/apiClient'
 import { useRemoteContent } from '../../../hooks/useRemoteContent'
 import { languagePath } from '../../../i18n/languageUrls'
+import { useAppInstalled } from '../../../utils/openAppOrDownload'
 
 const FALLBACK_FEATURE_ITEMS = [
   { label: 'Calling', to: '/video-calling-app', icon: <FiPhone /> },
@@ -102,6 +103,9 @@ const LOGIN_URL = 'https://web.ktmessenger.com/auth/qr'
 export function Navbar() {
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
+  // Chrome-on-Android tells us when the app is already installed — then the
+  // button says what the tap will do.
+  const appInstalled = useAppInstalled()
   const [open, setOpen] = useState(false)
   const [featuresOpen, setFeaturesOpen] = useState(false)
   const [mobileFeatures, setMobileFeatures] = useState(false)
@@ -315,7 +319,7 @@ export function Navbar() {
             {t('Log In')} <FiChevronRight className="text-xs" />
           </Button>
           <Button onClick={openDownloadModal}>
-            {t('Download')} <FiDownload />
+            {appInstalled ? t('Open App') : t('Download')} <FiDownload />
           </Button>
         </div>
 
@@ -383,7 +387,7 @@ export function Navbar() {
                   {t('Log In')}
                 </Button>
                 <Button onClick={openDownloadModal} className="w-full justify-center">
-                  {t('Download')} <FiDownload />
+                  {appInstalled ? t('Open App') : t('Download')} <FiDownload />
                 </Button>
               </div>
           </Container>

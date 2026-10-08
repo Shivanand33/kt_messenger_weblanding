@@ -10,6 +10,7 @@ import { useModal } from '../../../context/ModalContext'
 import { useLanguage } from '../../../context/LanguageContext'
 import { api } from '../../../services/apiClient'
 import { languagePath } from '../../../i18n/languageUrls'
+import { useAppInstalled } from '../../../utils/openAppOrDownload'
 import heroImage from '../../../assets/images/ai-assistant-app-hero.jpg'
 
 // Turn a stored image reference into a usable URL. Uploaded media on R2 come
@@ -33,6 +34,10 @@ const floatMotion = (offset) => ({
 export function Hero() {
   const { openDownloadModal } = useModal()
   const { t } = useLanguage()
+  // When the browser can confirm the app is installed, the primary button
+  // says what the tap will do ("Open App"); the tap itself is smart on mobile
+  // either way (see openDownloadModal).
+  const appInstalled = useAppInstalled()
   // Background image is admin-editable via the "home.hero" content block. The
   // bundled image is shown instantly and only replaced if the admin has set one
   // — so the hero always renders even when the API is unreachable.
@@ -90,7 +95,7 @@ export function Hero() {
             <Reveal from="up" delay={0.16}>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" onClick={openDownloadModal}>
-                  {t('Download KT Messenger')} <FiDownload />
+                  {appInstalled ? t('Open App') : t('Download KT Messenger')} <FiDownload />
                 </Button>
                 <Button variant="onDark" size="lg" onClick={() => window.location.href = languagePath('/messaging')}>
                   {t('Explore Features')}

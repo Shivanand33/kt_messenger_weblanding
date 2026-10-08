@@ -200,7 +200,7 @@ export function KtCallScreen({ className = '' }) {
               <FiRefreshCw />
             </span>
             <div className="h-20 w-14 overflow-hidden rounded-xl border border-white/40 bg-slate-800 shadow-lg">
-              <img src={img(selfAvatar)} alt={imgAltOnly(selfAvatar)} className="h-full w-full object-cover" />
+              <img loading="lazy" src={img(selfAvatar)} alt={imgAltOnly(selfAvatar)} className="h-full w-full object-cover" />
             </div>
           </div>
 

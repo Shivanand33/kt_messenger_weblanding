@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { ProtectedRoute } from './components/ProtectedRoute.jsx'
 import { AdminLayout } from './layouts/AdminLayout.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage.jsx'
+import { ResetPasswordPage } from './pages/ResetPasswordPage.jsx'
 import { DashboardPage } from './pages/DashboardPage.jsx'
 import { BlogListPage } from './pages/BlogListPage.jsx'
 import { BlogFormPage } from './pages/BlogFormPage.jsx'
@@ -28,6 +30,8 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
         <Route index element={<DashboardPage />} />
         <Route path="blogs" element={<BlogListPage />} />

@@ -54,6 +54,10 @@
          of only after it (same stylesheet, same font files). -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- The production API lives on its own origin: starting the handshake with
+         the HTML removes DNS+TLS from the first content requests' critical path.
+         Unused when the API is same-origin (local dev) — harmless there. -->
+    <link rel="preconnect" href="https://landing-api.ktmessenger.com" crossorigin />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" /></noscript>

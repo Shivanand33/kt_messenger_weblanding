@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { AuthModal } from '../components/common/Modals/AuthModal'
 import { DownloadModal } from '../components/common/Modals/DownloadModal'
+import { isMobileStorePlatform, openAppOrStore } from '../utils/openAppOrDownload'
 
 const ModalContext = createContext()
 
@@ -11,7 +12,16 @@ export function ModalProvider({ children }) {
   const openAuthModal = () => setAuthOpen(true)
   const closeAuthModal = () => setAuthOpen(false)
 
-  const openDownloadModal = () => setDownloadOpen(true)
+  // On a phone there is no point showing the QR-code modal: open the app when
+  // it is installed ("Open App"), otherwise send the visitor to their store.
+  // Desktop keeps the modal exactly as before.
+  const openDownloadModal = () => {
+    if (isMobileStorePlatform()) {
+      openAppOrStore()
+      return
+    }
+    setDownloadOpen(true)
+  }
   const closeDownloadModal = () => setDownloadOpen(false)
 
   return (

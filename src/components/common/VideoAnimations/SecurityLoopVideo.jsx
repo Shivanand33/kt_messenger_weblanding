@@ -14,6 +14,7 @@ export function SecurityLoopVideo({ className = '' }) {
     if (!isPlaying) return
 
     const interval = setInterval(() => {
+      if (document.hidden) return // a backgrounded tab holds its place in the loop
       setProgress((prev) => {
         if (prev >= 100) {
           setPhase(0)

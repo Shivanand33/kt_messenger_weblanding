@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext.jsx'
 import { errorMessage } from '../api/client.js'
 
@@ -49,6 +49,9 @@ export function LoginPage() {
           <div className="field">
             <label>Password</label>
             <input className="input" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
+          </div>
+          <div className="login-foot" style={{ marginTop: -8, marginBottom: 12, textAlign: 'right' }}>
+            <Link to="/forgot-password">Forgot password?</Link>
           </div>
           <button className="btn primary" style={{ width: '100%', justifyContent: 'center', marginTop: 6 }} disabled={busy}>
             {busy ? 'Signing in…' : 'Sign in'}

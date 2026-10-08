@@ -26,6 +26,7 @@ export function useLoopClock({ durationMs = 12000, phaseStops = [] } = {}) {
 
     const step = (100 / durationMs) * 100 // percent gained per 100ms tick
     const timer = setInterval(() => {
+      if (document.hidden) return // a backgrounded tab holds its place in the loop
       setProgress((current) => (current + step >= 100 ? 0 : current + step))
     }, 100)
 
