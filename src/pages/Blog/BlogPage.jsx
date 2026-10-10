@@ -17,6 +17,7 @@ import { parseBody } from '../../utils/parseBody'
 import { api } from '../../services/apiClient'
 import { trackBlogView } from '../../services/analytics'
 import { useSeo } from '../../hooks/useSeo'
+import { JsonLd } from '../../components/common/JsonLd/JsonLd'
 import { contentText } from '../../i18n/contentTranslations'
 import { DEFAULT_LANG, currentLanguage } from '../../i18n/languageUrls'
 import footerImg from '../../assets/images/social-networking-platform-footer.jpg'
@@ -97,7 +98,50 @@ function normalizeDetail(p) {
     seoTitle: localized(p.seoTitle) || null,
     seoDescription: localized(p.seoDescription) || null,
     ogImage: mediaUrl(p.ogImage) || null,
+    schemaJson: typeof p.schemaJson === 'string' && p.schemaJson.trim() ? p.schemaJson.trim() : null,
+    publishedAt: p.publishedAt || null,
+    updatedAt: p.updatedAt || null,
   }
+}
+
+const SITE = 'https://ktmessenger.com'
+
+/**
+ * The Article schema for a post: whatever the admin wrote for it, or one built
+ * from the post's own fields so that every article carries structured data.
+ *
+ * A custom block is re-serialised rather than passed through, which keeps a
+ * stray trailing comma or a comment out of the document — and returns null if
+ * it will not parse, because no schema beats a broken one.
+ */
+function articleSchema(post, path) {
+  if (post.schemaJson) {
+    try {
+      return JSON.stringify(JSON.parse(post.schemaJson))
+    } catch {
+      return null
+    }
+  }
+
+  const url = `${SITE}${path}`
+  const org = { '@type': 'Organization', name: 'KT Messenger' }
+  // Schema.org wants absolute URLs; a bundled fallback cover is site-relative.
+  const image = post.ogImage || mediaUrl(post.coverUrl) || null
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    // The post's own title, not the SEO title: that field often holds a longer
+    // search-result sentence, and a headline is meant to be the headline.
+    headline: post.title,
+    description: post.seoDescription || post.description || undefined,
+    url,
+    image: image ? (image.startsWith('/') ? `${SITE}${image}` : image) : undefined,
+    datePublished: post.publishedAt || undefined,
+    dateModified: post.updatedAt || post.publishedAt || undefined,
+    author: org,
+    publisher: org,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  })
 }
 
 const LINK_CLASS =
@@ -513,6 +557,10 @@ export function BlogPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSlug])
 
+  // Structured data for the open article — the admin's own block when they
+  // wrote one, otherwise generated from the post.
+  const articleJsonLd = activePost && activeSlug ? articleSchema(activePost, `/blog/${activeSlug}`) : null
+
   const openArticle = (slug) => navigate(`/blog/${slug}`)
   const closeArticle = () => navigate('/messaging-social-media-blog')
 
@@ -537,7 +585,10 @@ export function BlogPage() {
     return (
       <MainLayout>
         {activePost ? (
-          <ArticleReader post={activePost} posts={posts} onBack={closeArticle} onOpen={openArticle} />
+          <>
+            {articleJsonLd ? <JsonLd id={`blog-${activeSlug}`} json={articleJsonLd} /> : null}
+            <ArticleReader post={activePost} posts={posts} onBack={closeArticle} onOpen={openArticle} />
+          </>
         ) : (
           <Container className="py-24">
             <div className="flex flex-col items-center justify-center gap-3 text-muted">

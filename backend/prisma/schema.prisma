@@ -147,6 +147,10 @@ model BlogPost {
   seoTitle       String?
   seoDescription String?
   ogImage        String?
+  // Optional JSON-LD for this post, written in admin. Empty means the site
+  // generates an Article schema from the post's own fields, so every post
+  // carries structured data whether or not anyone edits this.
+  schemaJson     String?
   categoryId     String?
   category       BlogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   tags           BlogTag[]     @relation("BlogPostTags")

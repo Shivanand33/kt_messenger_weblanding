@@ -65,7 +65,7 @@ export const getBlogBySlug = asyncHandler(async (req, res) => {
     include: { category: true, tags: true },
   })
   if (!post) throw ApiError.notFound('Article not found')
-  return ok(res, { ...blogCard(post), body: post.body, seoTitle: post.seoTitle, seoDescription: post.seoDescription, ogImage: post.ogImage })
+  return ok(res, { ...blogCard(post), body: post.body, seoTitle: post.seoTitle, seoDescription: post.seoDescription, ogImage: post.ogImage, schemaJson: post.schemaJson, updatedAt: post.updatedAt })
 })
 
 /* ── Help Center ────────────────────────────────────────── */

@@ -4,6 +4,31 @@ import { contentStatus, platformEnum, localeStr, optionalUrl } from './common.va
 const str = (max) => z.string().trim().max(max)
 const optStr = (max) => str(max).optional().or(z.literal('')).transform((v) => v || undefined)
 
+/**
+ * Optional JSON-LD, kept as the exact text the admin wrote so their formatting
+ * survives a round trip. It has to parse, though: a malformed block makes a
+ * crawler discard the page's structured data altogether, which is worse than
+ * shipping no custom schema and letting the site generate one.
+ */
+const jsonLd = z
+  .string()
+  .max(20000)
+  .optional()
+  .or(z.literal(''))
+  .transform((v) => (v && v.trim() ? v.trim() : undefined))
+  .refine((v) => {
+    if (v === undefined) return true
+    const isNode = (x) => x !== null && typeof x === 'object' && !Array.isArray(x)
+    try {
+      const parsed = JSON.parse(v)
+      // JSON-LD is a node, or a top-level list of nodes — but a list of
+      // numbers or strings parses as JSON and is not schema markup.
+      return isNode(parsed) || (Array.isArray(parsed) && parsed.length > 0 && parsed.every(isNode))
+    } catch {
+      return false
+    }
+  }, 'Schema must be a JSON object, or a list of JSON objects')
+
 /* ── Blog ───────────────────────────────────────────────── */
 export const blogCreateSchema = z.object({
   title: str(200).min(1),
@@ -20,6 +45,7 @@ export const blogCreateSchema = z.object({
   seoTitle: optStr(200),
   seoDescription: optStr(400),
   ogImage: optionalUrl,
+  schemaJson: jsonLd,
   categoryId: z.string().optional().nullable(),
   tagIds: z.array(z.string()).optional(),
 })

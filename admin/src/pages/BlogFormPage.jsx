@@ -6,7 +6,7 @@ import { PageHeader, Loading } from '../components/ui.jsx'
 import { Input, Textarea, Select, Checkbox } from '../components/Field.jsx'
 import { RichEditor } from '../components/RichEditor.jsx'
 
-const EMPTY = { title: '', slug: '', excerpt: '', body: '', coverUrl: '', authorName: 'KT Messenger Team', categoryId: '', status: 'DRAFT', featured: false, seoTitle: '', seoDescription: '', ogImage: '' }
+const EMPTY = { title: '', slug: '', excerpt: '', body: '', coverUrl: '', authorName: 'KT Messenger Team', categoryId: '', status: 'DRAFT', featured: false, seoTitle: '', seoDescription: '', ogImage: '', schemaJson: '' }
 
 // Where the public blog lives, for the URL preview. Set VITE_SITE_URL per
 // environment; the default matches production.
@@ -85,6 +85,96 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
     return /^https?:\/\//i.test(u) ? u : `${apiOrigin}${u.startsWith('/') ? '' : '/'}${u}`
   }
 
+  /**
+   * Escape real control characters that are sitting inside a quoted value.
+   *
+   * Text pasted out of a document or a chat keeps its line breaks, and JSON
+   * does not allow a raw newline inside a string — that is the "Bad control
+   * character in string literal" the parser reports. Only characters inside
+   * string literals are touched, so the structure itself is never rewritten.
+   */
+  const escapeControlChars = (src) => {
+    let out = ''
+    let inString = false
+    let escaped = false
+    for (const ch of src) {
+      if (escaped) {
+        out += ch
+        escaped = false
+      } else if (ch === '\\') {
+        out += ch
+        escaped = true
+      } else if (ch === '"') {
+        inString = !inString
+        out += ch
+      } else if (inString && ch < ' ') {
+        out += ch === '\n' ? '\\n' : ch === '\r' ? '\\r' : ch === '\t' ? '\\t' : ' '
+      } else {
+        out += ch
+      }
+    }
+    return out
+  }
+
+  /** Repair the usual paste damage, then re-indent. Leaves the text alone if it still will not parse. */
+  const tidySchema = () => {
+    const raw = (form.schemaJson || '').trim()
+    if (!raw) return
+    let text = raw
+    try {
+      JSON.parse(text)
+    } catch {
+      text = escapeControlChars(text)
+    }
+    try {
+      set('schemaJson', JSON.stringify(JSON.parse(text), null, 2))
+      toast.success('Formatted')
+    } catch (err) {
+      toast.error(`Still not valid JSON — ${err.message}`)
+    }
+  }
+
+  // Live JSON check for the structured-data box. The backend rejects invalid
+  // JSON too; this just says so before the save round trip.
+  const schemaError = (() => {
+    const raw = (form.schemaJson || '').trim()
+    if (!raw) return null
+    try {
+      const parsed = JSON.parse(raw)
+      return parsed && typeof parsed === 'object' ? null : 'Must be a JSON object'
+    } catch (err) {
+      return err.message
+    }
+  })()
+
+  // Fills the box with the same Article schema the site generates, as a
+  // starting point to edit rather than something to write from scratch.
+  const generateSchema = () => {
+    // Same slug the URL preview above shows, so the schema names the real page.
+    const slug = (form.slug || effectiveSlug || 'your-post-slug').trim()
+    const url = `${SITE_URL}/blog/${slug}`
+    const org = { '@type': 'Organization', name: 'KT Messenger' }
+    const image = form.ogImage ? resolveMediaUrl(form.ogImage) : form.coverUrl ? resolveMediaUrl(form.coverUrl) : undefined
+    set(
+      'schemaJson',
+      JSON.stringify(
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: form.seoTitle || form.title || '',
+          description: form.seoDescription || form.excerpt || undefined,
+          url,
+          image,
+          author: org,
+          publisher: org,
+          mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        },
+        null,
+        2,
+      ),
+    )
+  }
+
   const uploadImage = async (fieldKey, e) => {
     const file = e.target.files?.[0]
     e.target.value = '' // allow re-selecting the same file
@@ -113,7 +203,7 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
     if (!isNew) {
       api.get(`/admin/blogs/${id}`).then((res) => {
         const b = res.data.data
-        setForm({ title: b.title, slug: b.slug, excerpt: b.excerpt || '', body: b.body || '', coverUrl: b.coverUrl || '', authorName: b.authorName || '', categoryId: b.categoryId || '', status: b.status, featured: b.featured, seoTitle: b.seoTitle || '', seoDescription: b.seoDescription || '', ogImage: b.ogImage || '' })
+        setForm({ title: b.title, slug: b.slug, excerpt: b.excerpt || '', body: b.body || '', coverUrl: b.coverUrl || '', authorName: b.authorName || '', categoryId: b.categoryId || '', status: b.status, featured: b.featured, seoTitle: b.seoTitle || '', seoDescription: b.seoDescription || '', ogImage: b.ogImage || '', schemaJson: b.schemaJson || '' })
         setTagIds((b.tags || []).map((t) => t.id))
       }).catch((e) => toast.error(errorMessage(e))).finally(() => setLoading(false))
     }
@@ -138,7 +228,7 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
         status: publishNow ? 'PUBLISHED' : form.status,
       }
       // strip empty optional strings
-      for (const k of ['coverUrl', 'ogImage', 'seoTitle', 'seoDescription', 'excerpt', 'slug']) if (payload[k] === '') delete payload[k]
+      for (const k of ['coverUrl', 'ogImage', 'seoTitle', 'seoDescription', 'excerpt', 'slug', 'schemaJson']) if (payload[k] === '') delete payload[k]
       if (isNew) await api.post('/admin/blogs', payload)
       else await api.put(`/admin/blogs/${id}`, payload)
       toast.success(isNew ? 'Blog created' : 'Blog saved')
@@ -242,6 +332,53 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
               {uploadingField === 'ogImage' ? 'Uploading…' : form.ogImage ? 'Replace image' : '⬆ Upload image from computer'}
             </button>
             <div className="hint">Upload an image from your computer.</div>
+          </div>
+
+          <div className="field">
+            <label>Structured data (JSON-LD)</label>
+            <textarea
+              value={form.schemaJson}
+              onChange={(e) => set('schemaJson', e.target.value)}
+              placeholder={'Leave blank to use the generated Article schema'}
+              spellCheck={false}
+              style={{
+                minHeight: 180,
+                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+                fontSize: 12.5,
+                lineHeight: 1.5,
+                borderColor: schemaError ? 'var(--danger)' : undefined,
+              }}
+            />
+            {schemaError ? (
+              <div style={{ color: 'var(--danger)', marginTop: 6 }}>
+                <div style={{ fontWeight: 600 }}>✕ {schemaError}</div>
+                <div style={{ fontWeight: 400, marginTop: 3 }}>
+                  Pasted from a document or a chat? Press <strong>Fix formatting</strong> — a line break inside a
+                  quoted value has to be escaped before JSON will accept it.
+                </div>
+              </div>
+            ) : form.schemaJson.trim() ? (
+              <div style={{ color: 'var(--success)', marginTop: 6 }}>✓ Valid JSON — this replaces the generated schema</div>
+            ) : null}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8 }}>
+              <button type="button" className="btn" onClick={generateSchema} style={{ flex: '1 1 160px' }}>
+                Generate from this post
+              </button>
+              {form.schemaJson ? (
+                <button type="button" className="btn" onClick={tidySchema} style={{ flex: '1 1 120px' }}>
+                  Fix formatting
+                </button>
+              ) : null}
+              {form.schemaJson ? (
+                <button type="button" className="btn" onClick={() => set('schemaJson', '')} style={{ flex: '1 1 90px' }}>
+                  Clear
+                </button>
+              ) : null}
+            </div>
+            <div className="hint">
+              Added to the article page as JSON-LD. Leave this blank and the site builds an Article schema from the
+              post&apos;s own title, description, image and dates — so every post has structured data either way.
+            </div>
           </div>
         </div>
 
