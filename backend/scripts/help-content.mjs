@@ -79,26 +79,38 @@ ${related([
 
   'how-to-link-a-device': {
     body: `
-<p>You can link a computer, tablet or browser to your KT Messenger account using your phone.</p>
+<p>You can use the same KT Messenger account on up to four linked devices at once, using your primary phone to link each one. Your phone stays the home of the account — everything else is linked from it.</p>
+<h2>Before You Start</h2>
+<ul>
+  <li>Update KT Messenger on your phone to the latest version.</li>
+  <li>Make sure your phone and the device you are linking are both online.</li>
+</ul>
 <h2>Link a Device with a QR Code</h2>
 <ol>
   <li>On the device you want to link, open the KT Messenger desktop app or go to <a href="https://web.ktmessenger.com/auth/qr">KT Web</a>. A QR code appears on the screen.</li>
-  <li>Open KT Messenger on your phone.</li>
-  <li>Go to <strong>Settings &gt; Linked Devices</strong>.</li>
-  <li>Point your phone's camera at the QR code on the screen.</li>
+  <li>Open KT Messenger on your primary phone.</li>
+  <li>Go to <strong>Settings &gt; Linked Devices</strong>, then tap <strong>Link a device</strong>.</li>
+  <li>Verify it is you if you are asked. Use your fingerprint or face if your phone has biometric unlock, otherwise enter the PIN you use to unlock the phone.</li>
+  <li>Point your phone at the other device's screen and scan the QR code.</li>
 </ol>
 <p>Your chats will appear on the linked device in a few moments.</p>
 <h2>Link with Your Phone Number Instead</h2>
 <p>If you can't scan the QR code, choose <strong>Link with phone number instead</strong> on the device you're linking, then enter the code it shows in KT Messenger on your phone.</p>
+<h2>If the Device Isn't Recognised</h2>
+<p>When KT Messenger does not recognise the device being linked, it asks you to confirm first. Tap <strong>Link device</strong> if you started the request. Tap <strong>Don't link</strong> if you did not — if the request isn't yours, someone else may be trying to reach your account.</p>
+<h2>Keeping Linked Devices Connected</h2>
+<p>Open KT Messenger on your primary phone at least once every 14 days. If the phone stays offline for longer, your linked devices are signed out and you will need to link them again.</p>
 <h2>If Linking Doesn't Work</h2>
 <ul>
   <li>Make sure both devices have an active internet connection.</li>
   <li>Update KT Messenger on your phone to the latest version.</li>
   <li>Refresh the QR code and scan it again.</li>
 </ul>
+<p><strong>Note:</strong> While you are on a call you can move it to another of your devices with a call link — see <a href="/help/about-call-links">About Call Links</a>.</p>
 ${related([
   ['About Linked Devices', 'about-linked-devices'],
   ['Log Out of a Linked Device', 'log-out-of-a-linked-device'],
+  ['About Call Links', 'about-call-links'],
   ['How to Download KT Messenger', 'how-to-download-or-uninstall-kt-messenger'],
 ])}`,
   },
@@ -894,7 +906,45 @@ ${related([
 <p>Members of the community can then find and join the group.</p>
 ${related([
   ['How to Create a Community', 'how-to-create-a-community'],
+  ['How to Choose Who Can Add Groups to a Community', 'how-to-choose-who-can-add-groups-to-a-community'],
   ['Adding Members', 'adding-members'],
+])}`,
+  },
+
+  'how-to-choose-who-can-add-groups-to-a-community': {
+    body: `
+<p>By default, every member and admin of a community can create a new group in it, and can suggest an existing group. Community admins can change this so that only admins add groups, while members put groups forward for approval.</p>
+<h2>Choose Who Can Add Groups</h2>
+<ol>
+  <li>Open the KT Messenger community.</li>
+  <li>Tap <strong>More options</strong> &gt; <strong>Community settings</strong>.</li>
+  <li>Tap <strong>Who can add new groups</strong>.</li>
+  <li>Choose <strong>Everyone</strong> so any member can add a new group, or <strong>Only community admins</strong> so members can only suggest groups for an admin to approve.</li>
+  <li>Tap <strong>Confirm</strong>.</li>
+</ol>
+<p>A new group added this way can have up to 1,024 members — 1,025 counting the person who created it.</p>
+<h2>Approve or Reject Suggested Groups</h2>
+<p>When only admins can add groups, anything a member suggests waits for review. A group you approve joins the community straight away.</p>
+<ol>
+  <li>Tap the <strong>Communities</strong> tab.</li>
+  <li>Tap the community.</li>
+  <li>Tap <strong>Pending groups</strong>.</li>
+  <li>Review each suggestion, then approve or reject it.</li>
+</ol>
+<p><strong>Note:</strong> Once a group is added, the group and its members join the community and its announcement channel, and those members can then join or request to join the community's other groups. Community admins are not added automatically to groups that members create. An admin can add, join, manage or remove a group at any time.</p>
+<h2>Join a Group a Member Added</h2>
+<p>Anyone in the community can join a group a member added, unless that group's admins ask to approve new members first. A group keeps its own settings when it joins a community, until an admin changes them.</p>
+<ol>
+  <li>Open the KT Messenger community.</li>
+  <li>Tap the group under <strong>Groups you can join</strong>.</li>
+  <li>Tap <strong>Request to join</strong> or <strong>Join group</strong>.</li>
+</ol>
+<p>You either join straight away or once your request is approved. Groups still waiting on your request sit at the bottom of the community's group list — tap <strong>Cancel request</strong> to withdraw one.</p>
+${related([
+  ['Adding Groups', 'adding-groups'],
+  ['How to Create a Community', 'how-to-create-a-community'],
+  ['Adding Members', 'adding-members'],
+  ['Community Guidelines', 'community-guidelines'],
 ])}`,
   },
 

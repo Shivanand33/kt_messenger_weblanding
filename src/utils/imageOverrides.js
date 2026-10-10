@@ -1,5 +1,6 @@
 import { makeImageResolver } from './imageKey'
 import { avif } from './avif'
+import { mediaUrl } from './mediaUrl'
 
 /**
  * Admin image replacements, resolved at render time.
@@ -19,7 +20,7 @@ export function img(src) {
   const resolved = resolver.resolveUrl(src)
   // An admin replacement always wins; otherwise serve the AVIF version of the
   // bundled file where the browser supports it (the original everywhere else).
-  return resolved === src ? avif(src) : resolved
+  return resolved === src ? avif(src) : mediaUrl(resolved)
 }
 
 // ALT text in the page's language — set by LanguageProvider (unchanged on

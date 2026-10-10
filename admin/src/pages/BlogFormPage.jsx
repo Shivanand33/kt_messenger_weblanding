@@ -73,8 +73,17 @@ export function BlogFormPage({ basePath = '/blogs', returnTo } = {}) {
   const ogFileRef = useRef(null)
   const [uploadingField, setUploadingField] = useState(null)
   const apiOrigin = (import.meta.env.VITE_API_URL || 'http://localhost:4000/api').replace(/\/api\/?$/, '')
-  const resolveMediaUrl = (u) =>
-    !u ? '' : /^https?:\/\//i.test(u) ? u : `${apiOrigin}${u.startsWith('/') ? '' : '/'}${u}`
+  // /uploads/ is served by the API and nothing else. A stored URL can still
+  // name the website's host — that happens when MEDIA_PUBLIC_URL points at the
+  // site instead of the API — and the site answers /uploads/* with index.html,
+  // so the preview shows alt text instead of the picture. Re-point anything
+  // under /uploads/ at the API; R2/CDN links are left as they are.
+  const resolveMediaUrl = (u) => {
+    if (!u) return ''
+    const uploads = String(u).match(/^(?:https?:\/\/[^/]+)?(\/uploads\/[^\s"']*)$/i)
+    if (uploads) return `${apiOrigin}${uploads[1]}`
+    return /^https?:\/\//i.test(u) ? u : `${apiOrigin}${u.startsWith('/') ? '' : '/'}${u}`
+  }
 
   const uploadImage = async (fieldKey, e) => {
     const file = e.target.files?.[0]

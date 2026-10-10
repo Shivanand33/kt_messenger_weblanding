@@ -2,16 +2,18 @@ import { img, imgAlt, imgAltOnly } from '../../../utils/imageOverrides'
 import { mobileLazy } from '../../../utils/mobileImage'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { FiDownload, FiVideo, FiCalendar, FiCheck } from 'react-icons/fi'
+import { FiDownload, FiVideo, FiCalendar, FiCheck, FiSmartphone } from 'react-icons/fi'
 import { Container } from '../../common/Container/Container'
 import { Button } from '../../common/Button/Button'
 import { Reveal } from '../../common/Reveal/Reveal'
+import { MobilePreviewModal } from '../../common/MobilePreview/MobilePreviewModal'
 import { useModal } from '../../../context/ModalContext'
 import { useLanguage } from '../../../context/LanguageContext'
 import { api } from '../../../services/apiClient'
 import { languagePath } from '../../../i18n/languageUrls'
 import { useAppInstalled } from '../../../utils/openAppOrDownload'
 import heroImage from '../../../assets/images/ai-assistant-app-hero.jpg'
+import { mediaUrl } from '../../../utils/mediaUrl'
 
 // Turn a stored image reference into a usable URL. Uploaded media on R2 come
 // back as absolute https URLs; a locally-served path (starts with "/") is
@@ -43,13 +45,15 @@ export function Hero() {
   // — so the hero always renders even when the API is unreachable.
   const [bgUrl, setBgUrl] = useState(heroImage)
   const [bgAlt, setBgAlt] = useState('')
+  // Interactive prototype of the app, opened over the page from the hero.
+  const [previewOpen, setPreviewOpen] = useState(false)
 
   useEffect(() => {
     let alive = true
     api
       .getContentBlock('home.hero')
       .then((data) => {
-        const url = resolveUrl(data?.backgroundUrl)
+        const url = mediaUrl(resolveUrl(data?.backgroundUrl))
         if (alive && url) setBgUrl(url)
         if (alive && data?.backgroundAlt) setBgAlt(data.backgroundAlt)
       })
@@ -101,6 +105,22 @@ export function Hero() {
                   {t('Explore Features')}
                 </Button>
               </div>
+
+              {/* Opens the in-page app prototype. Kept out of the button row so
+                  the two primary calls to action stay on one line. */}
+              <button
+                type="button"
+                onClick={() => setPreviewOpen(true)}
+                className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-5 py-2.5 text-sm font-bold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                </span>
+                <FiSmartphone className="text-base" />
+                {t('Mobile Preview')}
+              </button>
+
               <p className="mt-4 text-sm text-white/70">{t('*Standard data rates may apply.')}</p>
             </Reveal>
           </div>
@@ -166,6 +186,8 @@ export function Hero() {
           </div>
         </Container>
       </div>
+
+      <MobilePreviewModal isOpen={previewOpen} onClose={() => setPreviewOpen(false)} />
     </section>
   )
 }

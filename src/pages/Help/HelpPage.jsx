@@ -148,7 +148,7 @@ const helpTree = [
   {
     label: 'Communities', icon: <MdGroups />, subs: [
       { label: 'About Communities', icon: D, articles: ['What is a community', 'Community guidelines'] },
-      { label: 'Creating a Community', icon: D, articles: ['How to create a community', 'Adding groups'] },
+      { label: 'Creating a Community', icon: D, articles: ['How to create a community', 'Adding groups', 'How to choose who can add groups to a community'] },
       { label: 'Managing Members', icon: D, articles: ['Adding members', 'Removing members'] },
     ],
   },
@@ -906,7 +906,7 @@ function ArticleBody({ title, tab, onOpenArticle }) {
   if (title === 'How to link a device') {
     return (
       <div className={proseClass}>
-        <p>{t('You can link a computer, tablet or browser to your KT Messenger account using your phone. Linking takes less than a minute.')}</p>
+        <p>{t('You can use the same KT Messenger account on up to four linked devices at once, using your primary phone to link each one. Linking takes less than a minute.')}</p>
         <h2>{t('Before You Start')}</h2>
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
           <li>{t('Update KT Messenger on your phone to the latest version.')}</li>
@@ -915,11 +915,16 @@ function ArticleBody({ title, tab, onOpenArticle }) {
         <h2>{t('Link a Device with a QR Code')}</h2>
         <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-brand-ink">
           <li>{t('On the device you want to link, open the KT Web app or install KT Messenger on the tablet.')}</li>
-          <li>{t('On your phone, open KT Messenger and go to')} <strong>{t('Settings → Linked Devices')}</strong>.</li>
-          <li>{t('Tap')} <strong>{t('Link a Device')}</strong> {t('and unlock your phone if asked.')}</li>
+          <li>{t('On your primary phone, open KT Messenger and go to')} <strong>{t('Settings → Linked Devices')}</strong>.</li>
+          <li>{t('Tap')} <strong>{t('Link a Device')}</strong>.</li>
+          <li>{t('Verify it is you if you are asked — use your fingerprint or face if your phone has biometric unlock, otherwise enter the PIN you use to unlock the phone.')}</li>
           <li>{t("Point your phone's camera at the QR code shown on the other device.")}</li>
           <li>{t('Wait a moment while your chats sync — then you are ready to use KT Messenger on the linked device.')}</li>
         </ol>
+        <h2>{t("If the Device Isn't Recognised")}</h2>
+        <p>{t('When KT Messenger does not recognise the device being linked, it asks you to confirm first. Tap')} <strong>{t('Link device')}</strong> {t('if you started the request, or')} <strong>{t("Don't link")}</strong> {t('if you did not — a request you did not start may be someone else trying to reach your account.')}</p>
+        <h2>{t('Keeping Linked Devices Connected')}</h2>
+        <p>{t('Open KT Messenger on your primary phone at least once every 14 days. If the phone stays offline for longer, your linked devices are signed out and you will need to link them again.')}</p>
         <h2>{t('Troubleshooting the QR Code')}</h2>
         <p>{t('If the code does not scan, check the following:')}</p>
         <ul className="list-disc! space-y-2 pl-5! mb-5!">
@@ -933,6 +938,7 @@ function ArticleBody({ title, tab, onOpenArticle }) {
           links={[
             [t('About Linked Devices'), 'About linked devices'],
             [t('Log Out of a Linked Device'), 'Log out of a linked device'],
+            [t('About Call Links'), 'About call links'],
             [t('How to Download or Uninstall KT Messenger'), 'How to download or uninstall KT Messenger'],
           ]}
         />

@@ -27,6 +27,7 @@ import heroImg from '../../assets/images/ai-assistant-app-hero.jpg'
 import businessImg from '../../assets/images/online-marketplace-app-business.jpg'
 import cyberpunkImg from '../../assets/images/cyberpunk_neon_city.png'
 import securityImg from '../../assets/images/security.jpg'
+import { mediaUrl, mediaUrlsInHtml } from '../../utils/mediaUrl'
 
 const IMAGE_MAP = {
   footer: footerImg,
@@ -39,10 +40,7 @@ const IMAGE_MAP = {
   security: securityImg,
 }
 
-const sameOriginMedia = (u) =>
-  typeof u === 'string' ? u.replace(/^https?:\/\/(localhost|127\.0\.0\.1):4000\//i, '/') : u
-
-const imageFor = (post) => sameOriginMedia(post?.coverUrl) || IMAGE_MAP[post?.imageKey] || footerImg
+const imageFor = (post) => mediaUrl(post?.coverUrl) || IMAGE_MAP[post?.imageKey] || footerImg
 
 const FALLBACK_BY_SLUG = new Map(FALLBACK_POSTS.map((p) => [p.slug, p]))
 
@@ -85,7 +83,7 @@ const normalizeCard = (p) => ({
 })
 
 function normalizeDetail(p) {
-  const body = sameOriginMedia(localized(p.body))
+  const body = mediaUrlsInHtml(localized(p.body))
   let blocks = parseBody(body)
   const first = (body === p.body ? blocks : parseBody(p.body))[0]
   if (first?.type === 'h' && blocks[0]?.type === 'h' && first.text.trim().toLowerCase() === String(p.title).trim().toLowerCase()) {
@@ -98,7 +96,7 @@ function normalizeDetail(p) {
     blocks,
     seoTitle: localized(p.seoTitle) || null,
     seoDescription: localized(p.seoDescription) || null,
-    ogImage: p.ogImage || null,
+    ogImage: mediaUrl(p.ogImage) || null,
   }
 }
 

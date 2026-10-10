@@ -39,6 +39,8 @@ instant messaging platform for building connections and communities.
 Messenger apps for Android, iPhone, Mac, and PC, plus the KT Web version.
 - [Privacy](https://ktmessenger.com/private-messaging-app): how KT Messenger
 protects conversations with encryption, privacy controls, and safe settings.
+- [Privacy Policy](https://ktmessenger.com/privacy-policy): the legal policy on
+how KT Messenger collects, uses, stores, and protects personal information.
 - [Blog](https://ktmessenger.com/messaging-social-media-blog): product updates,
 feature announcements, and engineering write-ups.
 - [Help Center](https://ktmessenger.com/messaging-app-help): guides, FAQs, and

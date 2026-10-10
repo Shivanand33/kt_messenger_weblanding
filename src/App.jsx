@@ -22,6 +22,7 @@ const page = (load, name, dictionary = name.replace(/Page$/, '')) => {
 }
 
 const PrivacyPage = page(() => import('./pages/Privacy/PrivacyPage'), 'PrivacyPage')
+const PrivacyPolicyPage = page(() => import('./pages/Legal/PrivacyPolicyPage'), 'PrivacyPolicyPage')
 const BlogPage = page(() => import('./pages/Blog/BlogPage'), 'BlogPage')
 const ProductsPage = page(() => import('./pages/Products/ProductsPage'), 'ProductsPage')
 const AppsPage = page(() => import('./pages/Apps/AppsPage'), 'AppsPage')
@@ -221,6 +222,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        {/* The legal policy. Kept distinct from /privacy, which is the
+            marketing page about KT Messenger's privacy features. */}
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogPage />} />
         <Route path="/products" element={<ProductsPage />} />

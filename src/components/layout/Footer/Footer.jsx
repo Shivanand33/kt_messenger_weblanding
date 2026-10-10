@@ -488,8 +488,11 @@ export function Footer() {
               ) : null}
             </div>
 
-            <button type="button" onClick={() => go({ to: '/private-messaging-app' })} className="transition-colors hover:text-ink">
-              {t('Terms & Privacy Policy')}
+            {/* The legal policy, not the privacy *features* page the product
+                column links to. The old label promised Terms as well; there is
+                no Terms page yet, so it names only what it opens. */}
+            <button type="button" onClick={() => go({ to: '/privacy-policy' })} className="transition-colors hover:text-ink">
+              {t('Privacy Policy')}
             </button>
 
             <button type="button" onClick={() => setSitemapOpen(true)} className="transition-colors hover:text-ink">
