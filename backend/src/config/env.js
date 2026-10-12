@@ -38,6 +38,22 @@ export const env = {
       : 600,
   },
 
+  // Live headlines shown on the website's News page (services/liveNews.service.js).
+  // Without NEWS_API_KEY the feature simply stays off: the endpoint reports
+  // that it is unconfigured and the page keeps its own content.
+  news: {
+    baseUrl: (process.env.NEWS_API_URL || 'https://omre-news.ogoul.cloud').replace(/\/+$/, ''),
+    apiKey: process.env.NEWS_API_KEY || '',
+    // The upstream requires a caller id alongside the key. It is an
+    // identifier, not a secret, so it has a sensible default.
+    clientId: process.env.NEWS_CLIENT_ID || 'kt-messenger-landing',
+    // How long headlines are reused before the upstream is asked again.
+    cacheSeconds: Number.isFinite(Number(process.env.NEWS_CACHE_SECONDS)) && process.env.NEWS_CACHE_SECONDS !== ''
+      ? Math.max(0, Number(process.env.NEWS_CACHE_SECONDS))
+      : 300,
+    timeoutMs: 8000,
+  },
+
   // Machine translation of admin content for the website's other languages
   // (services/translation.service.js). With a key the Google Cloud Translation
   // API is used; without one a keyless fallback endpoint keeps translating.

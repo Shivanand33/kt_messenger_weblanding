@@ -32,6 +32,8 @@ inside the app.
 to watch, create, and share clips with the community.
 - [Community](https://ktmessenger.com/community): the social networking and
 instant messaging platform for building connections and communities.
+- [News](https://ktmessenger.com/news): live world headlines from newsrooms
+everywhere, refreshed continuously; each story opens at its publisher.
 
 ## Pages
 

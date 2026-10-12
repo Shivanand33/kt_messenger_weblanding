@@ -96,4 +96,11 @@ export default [
   'Entertainment',
   'Social',
   'Education',
+
+  // News page: the useSeo() title and description. Every other page's SEO copy
+  // is picked up because its file also calls useLanguage(), which is what makes
+  // the scanner read that file's plain string literals. NewsPage.jsx is a thin
+  // wrapper with no copy of its own, so its two SEO strings are listed here.
+  'KT News | Live World Headlines & Breaking Stories',
+  'Read live headlines from newsrooms around the world on KT News. Every story opens at the publisher that wrote it, inside KT Messenger.',
 ]

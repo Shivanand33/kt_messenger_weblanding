@@ -26,6 +26,8 @@ r.get('/downloads', content.getDownloads)
 
 /* Phase 8: structured CMS entities */
 r.get('/news', content.listNews)
+// Live headlines from the KT news service, separate from the admin's own articles.
+r.get('/news/live', content.listLiveNews)
 r.get('/marketplace-products', content.listMarketplaceProducts)
 r.get('/business-products', content.listBusinessProducts)
 r.get('/jobs', content.listJobs)

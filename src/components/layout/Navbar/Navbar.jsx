@@ -16,8 +16,6 @@ import {
   FiRadio,
   FiShield,
   FiStar,
-  // Icons for the four Features entries commented out below — uncomment
-  // these together with those entries.
   FiGlobe,
   FiEdit3,
   FiPlayCircle,
@@ -42,11 +40,11 @@ const FALLBACK_FEATURE_ITEMS = [
   { label: 'Status', to: '/social-feed-app', icon: <FiRadio /> },
   { label: 'Security', to: '/secure-messaging-app', icon: <FiShield /> },
   { label: 'KT Plus', to: '/premium-messaging-app', icon: <FiStar /> },
-  // Hidden from the Features menu. The pages and their routes are untouched,
-  // so /news, /markets, /wallet and /marketplace still work if visited
-  // directly. To restore, uncomment these four lines and the matching icon
-  // imports at the top of this file.
-  // { label: 'News', to: '/news', icon: <FiGlobe /> },
+  { label: 'News', to: '/news', icon: <FiGlobe /> },
+  // Still hidden from the Features menu. The pages and their routes are
+  // untouched, so /markets, /wallet and /marketplace still work if visited
+  // directly. To restore, uncomment these three lines and add the matching
+  // icon imports at the top of this file.
   // { label: 'Markets', to: '/markets', icon: <FiTrendingUp /> },
   // { label: 'Wallet', to: '/wallet', icon: <FiCreditCard /> },
   // { label: 'Marketplace', to: '/marketplace', icon: <FiShoppingBag /> },

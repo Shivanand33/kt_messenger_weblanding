@@ -81,6 +81,13 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- Live headlines, so it changes far more often than the feature pages. -->
+  <url>
+    <loc>https://ktmessenger.com/news</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
 
   <!-- Header pages (admin Navigation -> header) -->
   <url>

@@ -32,10 +32,12 @@ const CACHE_MS = env.sitemap.cacheSeconds * 1000
  * seo.<name>, <name>.hero, <name>.content); their newest update is the page's
  * lastmod, and seo.<id> supplies its description when the admin has set one.
  *
- * `listed: false` keeps a page out: News, Markets, Wallet and Marketplace are
+ * `listed: false` keeps a page out: Markets, Wallet and Marketplace are
  * hidden from the site navigation (src/components/layout/Navbar/Navbar.jsx)
  * and their data files describe illustrative sample data. Such a page is
- * listed again as soon as the admin adds it to a menu.
+ * listed again as soon as the admin adds it to a menu. News used to be one of
+ * them; it is now in the Features menu and prints real headlines, so it is
+ * listed like any other page.
  *
  * `name`, `group` and `about` are used by llms.txt only.
  */
@@ -52,7 +54,7 @@ const PAGES = [
   { id: 'plus', path: '/plus', label: ['plus'], href: ['plus'], content: ['plus'], changefreq: 'monthly', priority: 0.8, name: 'KT Plus', group: 'features', about: 'KT Plus premium features.' },
   { id: 'notes', path: '/notes', label: ['note'], href: ['note'], content: ['notes'], changefreq: 'monthly', priority: 0.8, name: 'Notes', group: 'features', about: 'Save messages, ideas and tasks as notes in KT Messenger.' },
   { id: 'minis', path: '/minis-short-video-app', label: ['mini'], href: ['mini'], content: ['minis'], changefreq: 'monthly', priority: 0.8, name: 'Minis', group: 'features', about: 'Watch, create and share short videos with KT Messenger Minis.' },
-  { id: 'news', path: '/news', label: ['news'], href: ['news'], content: ['news'], listed: false, name: 'News', group: 'features' },
+  { id: 'news', path: '/news', label: ['news'], href: ['news'], content: ['news'], changefreq: 'daily', priority: 0.8, name: 'News', group: 'features', about: 'Live world headlines from newsrooms everywhere, refreshed continuously.' },
   { id: 'markets', path: '/markets', label: ['market'], href: ['market'], content: ['markets'], listed: false, name: 'Markets', group: 'features' },
   { id: 'wallet', path: '/wallet', label: ['wallet'], href: ['wallet'], content: ['wallet'], listed: false, name: 'Wallet', group: 'features' },
   { id: 'privacy', path: '/privacy', label: ['privac'], href: ['privac'], content: ['privacy'], changefreq: 'monthly', priority: 0.8, name: 'Privacy', group: 'trust', about: 'Privacy controls and how KT Messenger protects your information.' },

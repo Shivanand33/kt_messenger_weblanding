@@ -2,6 +2,7 @@ import { prisma } from '../../config/db.js'
 import { asyncHandler } from '../../utils/asyncHandler.js'
 import { ok, ApiError } from '../../utils/apiResponse.js'
 import { parsePagination, pageMeta } from '../../utils/pagination.js'
+import { getLiveNews, liveNewsConfigured, tallySources } from '../../services/liveNews.service.js'
 
 // Content is publicly visible when PUBLISHED, or SCHEDULED with a past date.
 function publishedWhere(extra = {}) {
@@ -210,6 +211,41 @@ export const listNews = asyncHandler(async (req, res) => {
     body: n.body || [], author: n.author, source: n.source, readMins: n.readMins,
     reads: n.reads, tags: n.tags, image: n.imageUrl, hot: n.hot,
   })))
+})
+
+/** Publishers returned with the live feed, for the newsroom's filter row. */
+const SOURCE_COUNT = 16
+
+/**
+ * GET /api/news/live — current headlines from the KT news service.
+ *
+ * Separate from /api/news, which serves the articles an admin writes. This one
+ * never touches the database and never fails the page: when the feature is not
+ * configured, or the upstream is down with nothing cached, it answers with an
+ * empty list and `live: false` so the website can simply leave the section out.
+ */
+export const listLiveNews = asyncHandler(async (req, res) => {
+  const limit = Math.min(Math.max(Number(req.query.limit) || 24, 1), 100)
+  const empty = { live: false, articles: [], sources: [] }
+  if (!liveNewsConfigured()) return ok(res, empty)
+
+  let feed
+  try {
+    feed = await getLiveNews()
+  } catch {
+    return ok(res, empty)
+  }
+  const articles = feed.articles.slice(0, limit)
+  // Headlines go stale quickly, and the upstream is already cached in-process.
+  res.set('Cache-Control', 'public, max-age=120')
+  return ok(res, {
+    live: articles.length > 0,
+    articles,
+    // Counted over exactly the articles above, because the website turns these
+    // into filter chips: a count taken over a wider set would promise stories
+    // that filtering could not then show.
+    sources: tallySources(articles).slice(0, SOURCE_COUNT),
+  })
 })
 
 // GET /api/marketplace-products

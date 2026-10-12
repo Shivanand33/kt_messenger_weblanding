@@ -1,0 +1,27 @@
+name = "kt-blog-meta"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+# Only article URLs and the two crawler files reach the Worker. Every other
+# request — the homepage, the blog index, assets, the API — is served exactly
+# as it is today, because the Worker is never invoked for it.
+#
+# The /*/blog/* patterns cover the 64 language prefixes (/hi/blog/…, /es/blog/…).
+# sitemap-* covers both /sitemap-index.xml and the numbered parts the index
+# points at; without them the index would lead to pages that do not exist.
+# Set zone_name to the zone that serves the site.
+routes = [
+  { pattern = "ktmessenger.com/blog/*", zone_name = "ktmessenger.com" },
+  { pattern = "ktmessenger.com/*/blog/*", zone_name = "ktmessenger.com" },
+  { pattern = "ktmessenger.com/sitemap.xml", zone_name = "ktmessenger.com" },
+  { pattern = "ktmessenger.com/sitemap-*.xml", zone_name = "ktmessenger.com" },
+  { pattern = "ktmessenger.com/llms.txt", zone_name = "ktmessenger.com" },
+  { pattern = "www.ktmessenger.com/blog/*", zone_name = "ktmessenger.com" },
+  { pattern = "www.ktmessenger.com/*/blog/*", zone_name = "ktmessenger.com" },
+  { pattern = "www.ktmessenger.com/sitemap.xml", zone_name = "ktmessenger.com" },
+  { pattern = "www.ktmessenger.com/sitemap-*.xml", zone_name = "ktmessenger.com" },
+  { pattern = "www.ktmessenger.com/llms.txt", zone_name = "ktmessenger.com" },
+]
+
+# Nothing to configure: no KV, no secrets, no bindings. The API and site
+# origins are constants at the top of src/worker.js.
