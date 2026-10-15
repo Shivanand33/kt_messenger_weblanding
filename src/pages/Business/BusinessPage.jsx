@@ -18,18 +18,19 @@ import {
   FiLayers,
   FiLink,
   FiMenu,
-  FiCheckCircle,
   FiFilePlus,
   FiUserCheck,
   FiZap,
-  FiSmartphone,
-  FiCheck
+  FiCheck,
+  FiTag,
+  FiLock,
+  FiBarChart2,
+  FiTarget
 } from 'react-icons/fi'
 import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Logo } from '../../components/common/Logo/Logo'
 import { ThemeToggle } from '../../components/common/ThemeToggle/ThemeToggle'
 import { Footer } from '../../components/layout/Footer/Footer'
-import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
 
 import heroImg from '../../assets/images/online-marketplace-app-business.jpg'
@@ -59,7 +60,6 @@ export function BusinessPage() {
   useAdminSeo('business', '/business-messaging-app')
 
   const navigate = useNavigate()
-  const { openDownloadModal } = useModal()
   // The page follows the site language; its region chip switches English <-> Hindi.
   const { lang, setLang, t: tr } = useLanguage()
   const [topBannerClosed, setTopBannerClosed] = useState(false)
@@ -70,9 +70,9 @@ export function BusinessPage() {
 
   // GET STARTED ONBOARDING WIZARD MODAL STATE (BUSINESS WORKFLOW)
   const [getStartedOpen, setGetStartedOpen] = useState(false)
-  const [wizardStep, setWizardStep] = useState(1)
-  const [selectedSolution, setSelectedSolution] = useState('app') // 'app' or 'api'
-  const [bizForm, setBizForm] = useState({ name: '', category: 'Retail', phone: '', country: 'Global' })
+  const [leadForm, setLeadForm] = useState({ firstName: '', lastName: '', email: '', jobRole: '', company: '', employees: '', headquarters: '', infoType: '', consent: false })
+  const [leadErrors, setLeadErrors] = useState({})
+  const [leadSubmitted, setLeadSubmitted] = useState(false)
 
   const menuRef = useRef(null)
   const closeTimer = useRef(null)
@@ -106,9 +106,33 @@ export function BusinessPage() {
   }
 
   const openGetStarted = () => {
-    setWizardStep(1)
+    setLeadSubmitted(false)
+    setLeadErrors({})
     setGetStartedOpen(true)
   }
+
+  const setLead = (key, value) => {
+    setLeadForm((f) => ({ ...f, [key]: value }))
+    setLeadErrors((e) => ({ ...e, [key]: undefined }))
+  }
+
+  const submitLead = () => {
+    const errors = {}
+    if (!leadForm.firstName.trim()) errors.firstName = true
+    if (!leadForm.lastName.trim()) errors.lastName = true
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(leadForm.email.trim())) errors.email = true
+    if (!leadForm.jobRole) errors.jobRole = true
+    if (!leadForm.company.trim()) errors.company = true
+    if (!leadForm.employees) errors.employees = true
+    if (!leadForm.headquarters) errors.headquarters = true
+    if (!leadForm.infoType) errors.infoType = true
+    if (!leadForm.consent) errors.consent = true
+    setLeadErrors(errors)
+    if (Object.keys(errors).length === 0) setLeadSubmitted(true)
+  }
+
+  const leadInputClass = (hasError) =>
+    `w-full rounded-xl border p-3 text-sm font-semibold outline-none focus:ring-2 ${hasError ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-slate-300 focus:border-brand-strong focus:ring-sky-200'}`
 
   // Translation Dictionary
   const t = {
@@ -173,7 +197,7 @@ export function BusinessPage() {
       title: tr('KT Business App'),
       desc: tr('For small business owners who manage customer conversations on their phone. Share a catalog, automate quick replies, and organize your chats.'),
       cta: tr('Learn about the app'),
-      to: '/messaging-app-download'
+      to: '/business/app-download'
     },
     {
       icon: '⚡',
@@ -182,6 +206,49 @@ export function BusinessPage() {
       cta: tr('Explore Platform API'),
       to: '/secure-messaging-app'
     }
+  ]
+
+  const features = [
+    {
+      icon: FiUserCheck,
+      title: tr('Business profile'),
+      desc: tr('Show your hours, address, website and catalog on a verified business profile customers can trust.'),
+    },
+    {
+      icon: FiShoppingBag,
+      title: tr('Product catalog'),
+      desc: tr('Showcase your products and services right inside the chat, so customers can browse without leaving the conversation.'),
+    },
+    {
+      icon: FiZap,
+      title: tr('Quick replies & automation'),
+      desc: tr('Answer common questions instantly with saved replies, greeting messages and away messages.'),
+    },
+    {
+      icon: FiTag,
+      title: tr('Labels & organization'),
+      desc: tr('Organize chats and orders with color-coded labels, so follow-ups never slip through the cracks.'),
+    },
+    {
+      icon: FiSend,
+      title: tr('Broadcast messages'),
+      desc: tr('Announce offers, restocks and updates to many customers at once — personally delivered to each chat.'),
+    },
+    {
+      icon: FiLock,
+      title: tr('Private by default'),
+      desc: tr('Business and customer conversations stay protected with the KT Encryption Protocol, end to end.'),
+    },
+    {
+      icon: FiBarChart2,
+      title: tr('Business analytics'),
+      desc: tr('See how your messages perform — sent, delivered, read and replied — so you know exactly what your customers respond to and can grow what works.'),
+    },
+    {
+      icon: FiTarget,
+      title: tr('Advertising that clicks to chat'),
+      desc: tr('Run ads that open a KT conversation the moment a customer taps, turning ad spend into real chats, orders and repeat buyers.'),
+    },
   ]
 
   const whyItems = [
@@ -301,7 +368,7 @@ export function BusinessPage() {
                               <span>{t.bizApp}</span>
                             </div>
                             <div className="space-y-2 text-sm font-semibold text-slate-700">
-                              <button onClick={() => go('/messaging-app-download')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.overview}</button>
+                              <button onClick={() => go('/business/app-download')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.overview}</button>
                               <button onClick={() => go('/business/app-features')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.features}</button>
                               <button onClick={() => go('/business/get-started')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.howToStart}</button>
                               <button onClick={() => go('/business/agent')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.bizAgent}</button>
@@ -411,7 +478,10 @@ export function BusinessPage() {
                       <div className="relative rounded-[24px] bg-white text-slate-900 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.35)] p-6 border border-slate-100">
                         <div className="absolute -top-3 left-20 w-0 h-0 border-x-8 border-x-transparent border-b-8 border-b-white" />
                         
-                        <h3 className="text-lg font-extrabold text-slate-900 border-b pb-2 mb-4">{t.navDevelopers}</h3>
+                        <h3 className="text-lg font-extrabold text-slate-900 border-b pb-2 mb-4 flex items-center gap-2">
+                          {t.navDevelopers}
+                          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-amber-700">{tr('Coming soon')}</span>
+                        </h3>
                         
                         <div className="grid grid-cols-2 gap-6">
                           <div className="space-y-3">
@@ -520,7 +590,7 @@ export function BusinessPage() {
               {t.btnGetStarted}
             </button>
 
-            <button onClick={openDownloadModal} className="hidden rounded-full bg-white px-6 py-2.5 text-sm font-extrabold transition-all hover:scale-105 sm:block" style={{ color: DARK }}>
+            <button onClick={() => go('/business/app-download')} className="hidden rounded-full bg-white px-6 py-2.5 text-sm font-extrabold transition-all hover:scale-105 sm:block" style={{ color: DARK }}>
               {t.btnDownloadApp}
             </button>
 
@@ -547,7 +617,7 @@ export function BusinessPage() {
         </div>
       </div>
 
-      {/* 5. BUSINESS "GET STARTED" ONBOARDING WIZARD MODAL (100% WORKING!) */}
+      {/* 5. BUSINESS "GET STARTED" CONTACT FORM MODAL */}
       <AnimatePresence>
         {getStartedOpen && (
           <motion.div
@@ -565,8 +635,7 @@ export function BusinessPage() {
               {/* MODAL HEADER */}
               <div className="flex items-center justify-between bg-slate-900 px-6 py-4 text-white">
                 <div className="flex items-center gap-2 font-bold text-lg">
-                  <span className="grid h-7 w-7 place-items-center rounded-xl bg-brand-strong text-white font-black text-xs">KT</span>
-                  <span>KT Business {tr('Setup')} • {tr('Step')} {wizardStep} {tr('of 3')}</span>
+                  <span>KT Business • {tr('Get started')}</span>
                 </div>
                 <button onClick={() => setGetStartedOpen(false)} className="rounded-full p-1 hover:bg-white/20 transition-colors">
                   <FiX className="text-xl" />
@@ -574,139 +643,154 @@ export function BusinessPage() {
               </div>
 
               {/* MODAL BODY */}
-              <div className="p-6 sm:p-8 space-y-6">
-
-                {/* STEP 1: SELECT SOLUTION */}
-                {wizardStep === 1 && (
-                  <div className="space-y-5">
-                    <h3 className="text-xl font-extrabold text-slate-900">{tr('Choose your Business Solution')}</h3>
-                    <p className="text-sm text-slate-600">{tr('Select how you want to connect with your customers on KT Business.')}</p>
-
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <div
-                        onClick={() => setSelectedSolution('app')}
-                        className={`cursor-pointer rounded-2xl p-5 border-2 transition-all ${
-                          selectedSolution === 'app' ? 'border-brand-strong bg-sky-50 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300'
-                        }`}
-                      >
-                        <FiSmartphone className="text-3xl text-brand-strong mb-3" />
-                        <h4 className="font-extrabold text-slate-900 text-base">KT Business App</h4>
-                        <p className="text-xs text-slate-600 mt-1">{tr('Best for small shops, freelancers, & local store owners.')}</p>
-                      </div>
-
-                      <div
-                        onClick={() => setSelectedSolution('api')}
-                        className={`cursor-pointer rounded-2xl p-5 border-2 transition-all ${
-                          selectedSolution === 'api' ? 'border-brand-strong bg-sky-50 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300'
-                        }`}
-                      >
-                        <FiZap className="text-3xl text-brand-strong mb-3" />
-                        <h4 className="font-extrabold text-slate-900 text-base">Platform API & AI</h4>
-                        <p className="text-xs text-slate-600 mt-1">{tr('Best for enterprise brands, multi agent teams, & AI bots.')}</p>
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => setWizardStep(2)}
-                      className="w-full rounded-2xl bg-brand-strong hover:bg-brand-strong-hover py-3.5 text-base font-bold text-white shadow-brand transition-all flex items-center justify-center gap-2"
-                    >
-                      <span>{tr('Continue to Profile Setup')}</span>
-                      <FiArrowRight />
-                    </button>
-                  </div>
-                )}
-
-                {/* STEP 2: BUSINESS DETAILS FORM */}
-                {wizardStep === 2 && (
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-extrabold text-slate-900">{tr('Enter Business Details')}</h3>
-
-                    <div className="space-y-3">
-                      <div>
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">{tr('Business Name')}</label>
-                        <input
-                          type="text"
-                          value={bizForm.name}
-                          onChange={(e) => setBizForm({ ...bizForm, name: e.target.value })}
-                          placeholder={tr('e.g. Acme Organic Store')}
-                          className="w-full rounded-xl border border-slate-300 p-3 text-sm font-semibold outline-none focus:border-brand-strong focus:ring-2 focus:ring-sky-200"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">{tr('Business Category')}</label>
-                        <select
-                          value={bizForm.category}
-                          onChange={(e) => setBizForm({ ...bizForm, category: e.target.value })}
-                          className="w-full rounded-xl border border-slate-300 p-3 text-sm font-semibold outline-none focus:border-brand-strong focus:ring-2 focus:ring-sky-200"
-                        >
-                          <option>{tr('Retail & E commerce')}</option>
-                          <option>{tr('Services & Consulting')}</option>
-                          <option>{tr('Healthcare & Pharma')}</option>
-                          <option>{tr('Financial & Banking')}</option>
-                          <option>{tr('Education & Training')}</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-1">{tr('Mobile / KT Number')}</label>
-                        <input
-                          type="text"
-                          value={bizForm.phone}
-                          onChange={(e) => setBizForm({ ...bizForm, phone: e.target.value })}
-                          placeholder="000 000 0000"
-                          className="w-full rounded-xl border border-slate-300 p-3 text-sm font-semibold outline-none focus:border-brand-strong focus:ring-2 focus:ring-sky-200"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex gap-3 pt-2">
-                      <button
-                        onClick={() => setWizardStep(1)}
-                        className="rounded-2xl border border-slate-300 px-5 py-3 text-sm font-bold text-slate-700 hover:bg-slate-100"
-                      >
-                        {tr('Back')}
-                      </button>
-                      <button
-                        onClick={() => setWizardStep(3)}
-                        className="flex-1 rounded-2xl bg-brand-strong hover:bg-brand-strong-hover py-3 text-sm font-bold text-white shadow-brand transition-all flex items-center justify-center gap-2"
-                      >
-                        <span>{tr('Activate Business Account')}</span>
-                        <FiCheckCircle />
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* STEP 3: INSTANT SETUP COMPLETE */}
-                {wizardStep === 3 && (
+              <div className="max-h-[75vh] overflow-y-auto p-6 sm:p-8">
+                {leadSubmitted ? (
                   <div className="text-center space-y-4 py-4">
                     <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-sky-100 text-brand-strong text-3xl font-black">
                       <FiCheck />
                     </div>
-
-                    <h3 className="text-2xl font-extrabold text-slate-900">{tr('Account Activated Successfully!')}</h3>
+                    <h3 className="text-2xl font-extrabold text-slate-900">{tr('Thank you')}, {leadForm.firstName}!</h3>
                     <p className="text-sm text-slate-600 max-w-sm mx-auto">
-                      {tr('Welcome')} <strong>{bizForm.name || tr('Your Business')}</strong>! {tr('Your KT Business profile is live with AI Chatbot support.')}
+                      {tr('Your details have been received. Our KT Business team will reach out to you shortly at')} <strong>{leadForm.email}</strong>.
                     </p>
-
                     <div className="pt-4 flex flex-col gap-3">
                       <button
-                        onClick={() => { setGetStartedOpen(false); navigate('/messaging-app-download') }}
+                        onClick={() => { setGetStartedOpen(false); navigate('/business/app-download') }}
                         className="w-full rounded-2xl bg-brand-strong hover:bg-brand-strong-hover py-3.5 text-base font-bold text-white shadow-brand transition-all"
                       >
-                        {tr('Launch KT Business Dashboard')}
+                        {tr('Download KT Business App')}
                       </button>
                       <button
                         onClick={() => setGetStartedOpen(false)}
                         className="text-xs font-bold text-slate-500 hover:text-slate-800"
                       >
-                        {tr('Close Wizard')}
+                        {tr('Close')}
                       </button>
                     </div>
                   </div>
-                )}
+                ) : (
+                  <div className="space-y-4">
+                    <p className="text-sm text-slate-600">{tr('For businesses who want to get started, please fill out the form below.')}</p>
 
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="text-xs font-bold text-slate-700 block mb-1">{tr('First Name')}*</label>
+                        <input type="text" value={leadForm.firstName} onChange={(e) => setLead('firstName', e.target.value)} className={leadInputClass(leadErrors.firstName)} />
+                        {leadErrors.firstName && <p className="mt-1 text-xs font-bold text-red-500">{tr('This field is required')}</p>}
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-700 block mb-1">{tr('Last Name')}*</label>
+                        <input type="text" value={leadForm.lastName} onChange={(e) => setLead('lastName', e.target.value)} className={leadInputClass(leadErrors.lastName)} />
+                        {leadErrors.lastName && <p className="mt-1 text-xs font-bold text-red-500">{tr('This field is required')}</p>}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-slate-700 block mb-1">{tr('Work Email')}*</label>
+                      <input type="email" value={leadForm.email} onChange={(e) => setLead('email', e.target.value)} placeholder="name@company.com" className={leadInputClass(leadErrors.email)} />
+                      {leadErrors.email && <p className="mt-1 text-xs font-bold text-red-500">{tr('Enter a valid work email')}</p>}
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-slate-700 block mb-1">{tr('Job Role')}*</label>
+                      <select value={leadForm.jobRole} onChange={(e) => setLead('jobRole', e.target.value)} className={leadInputClass(leadErrors.jobRole)}>
+                        <option value="" disabled>{tr('Select One')}</option>
+                        <option>{tr('Business Owner / Founder')}</option>
+                        <option>{tr('C-Level Executive')}</option>
+                        <option>{tr('Manager')}</option>
+                        <option>{tr('Marketing')}</option>
+                        <option>{tr('Sales')}</option>
+                        <option>{tr('Customer Support')}</option>
+                        <option>{tr('Developer / IT')}</option>
+                        <option>{tr('Other')}</option>
+                      </select>
+                      {leadErrors.jobRole && <p className="mt-1 text-xs font-bold text-red-500">{tr('This field is required')}</p>}
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-slate-700 block mb-1">{tr('Company Name')}*</label>
+                      <input type="text" value={leadForm.company} onChange={(e) => setLead('company', e.target.value)} className={leadInputClass(leadErrors.company)} />
+                      {leadErrors.company && <p className="mt-1 text-xs font-bold text-red-500">{tr('This field is required')}</p>}
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-slate-700 block mb-1">{tr('How many employees does your business have?')}*</label>
+                      <select value={leadForm.employees} onChange={(e) => setLead('employees', e.target.value)} className={leadInputClass(leadErrors.employees)}>
+                        <option value="" disabled>{tr('Select One')}</option>
+                        <option>1–10</option>
+                        <option>11–50</option>
+                        <option>51–200</option>
+                        <option>201–1,000</option>
+                        <option>1,001+</option>
+                      </select>
+                      {leadErrors.employees && <p className="mt-1 text-xs font-bold text-red-500">{tr('This field is required')}</p>}
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-slate-700 block mb-1">{tr('Where is your business headquartered?')}*</label>
+                      <select value={leadForm.headquarters} onChange={(e) => setLead('headquarters', e.target.value)} className={leadInputClass(leadErrors.headquarters)}>
+                        <option value="" disabled>{tr('Select One')}</option>
+                        <option>{tr('India')}</option>
+                        <option>{tr('United States')}</option>
+                        <option>{tr('United Kingdom')}</option>
+                        <option>{tr('United Arab Emirates')}</option>
+                        <option>{tr('Singapore')}</option>
+                        <option>{tr('Canada')}</option>
+                        <option>{tr('Australia')}</option>
+                        <option>{tr('Germany')}</option>
+                        <option>{tr('Other')}</option>
+                      </select>
+                      {leadErrors.headquarters && <p className="mt-1 text-xs font-bold text-red-500">{tr('This field is required')}</p>}
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold text-slate-700 block mb-1">{tr('What type of information are you looking for?')}*</label>
+                      <select value={leadForm.infoType} onChange={(e) => setLead('infoType', e.target.value)} className={leadInputClass(leadErrors.infoType)}>
+                        <option value="" disabled>{tr('Select One')}</option>
+                        <option>{tr('KT Business App')}</option>
+                        <option>{tr('KT Business Platform (API)')}</option>
+                        <option>{tr('Ads that click to chat')}</option>
+                        <option>{tr('Pricing & plans')}</option>
+                        <option>{tr('Partnerships')}</option>
+                        <option>{tr('Something else')}</option>
+                      </select>
+                      {leadErrors.infoType && <p className="mt-1 text-xs font-bold text-red-500">{tr('This field is required')}</p>}
+                    </div>
+
+                    <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                      <label className="flex items-start gap-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={leadForm.consent}
+                          onChange={(e) => setLead('consent', e.target.checked)}
+                          className="mt-1 h-4 w-4 shrink-0 accent-blue-600"
+                        />
+                        <span className="text-xs leading-5 text-slate-600">
+                          <span className="font-bold text-slate-800">{tr('I agree')}* — </span>
+                          {tr('By ticking this box, you agree to receive marketing related electronic communications from KT Messenger, including news, events, updates, and promotional emails. You may withdraw your consent and unsubscribe from these at any time, for example by clicking the unsubscribe link included in our emails.')}
+                        </span>
+                      </label>
+                      {leadErrors.consent && <p className="mt-1 text-xs font-bold text-red-500">{tr('This field is required')}</p>}
+                      <p className="mt-3 text-xs leading-5 text-slate-500">
+                        {tr('For more information about how KT Messenger handles your data please read our')}{' '}
+                        <button
+                          onClick={() => { setGetStartedOpen(false); go('/private-messaging-app') }}
+                          className="font-semibold text-brand-strong hover:underline"
+                        >
+                          {tr('Privacy Policy')}
+                        </button>.
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={submitLead}
+                      className="w-full rounded-2xl bg-brand-strong hover:bg-brand-strong-hover py-3.5 text-base font-bold text-white shadow-brand transition-all flex items-center justify-center gap-2"
+                    >
+                      <span>{tr('Submit')}</span>
+                      <FiArrowRight />
+                    </button>
+                  </div>
+                )}
               </div>
             </motion.div>
           </motion.div>
@@ -732,7 +816,7 @@ export function BusinessPage() {
                 <button onClick={openGetStarted} className="rounded-full bg-brand-strong hover:bg-brand-strong-hover px-8 py-3.5 font-bold text-white shadow-brand transition-all hover:scale-105">
                   {t.btnGetStarted}
                 </button>
-                <button onClick={openDownloadModal} className="rounded-full bg-white text-slate-950 hover:bg-slate-100 px-8 py-3.5 font-extrabold shadow-lg transition-all hover:scale-105">
+                <button onClick={() => go('/business/app-download')} className="rounded-full bg-white text-slate-950 hover:bg-slate-100 px-8 py-3.5 font-extrabold shadow-lg transition-all hover:scale-105">
                   {t.btnDownloadApp}
                 </button>
               </div>
@@ -805,6 +889,35 @@ export function BusinessPage() {
                       {product.cta}
                     </button>
                   </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURES SECTION */}
+      <section id="biz-features" className="bg-cream py-20 lg:py-28 dark:bg-surface border-b border-line">
+        <div className="mx-auto max-w-[1200px] px-5 lg:px-8">
+          <Reveal from="up" className="text-center">
+            <p className="text-sm font-bold text-brand-strong uppercase tracking-wider">{tr('Built for small business')}</p>
+            <h2 className="mx-auto mt-4 max-w-3xl text-[1.9rem] font-bold leading-[1.15] tracking-tight text-ink sm:text-4xl lg:text-5xl">
+              {tr('Everything your small business needs, in one app')}
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-7 text-body">
+              {tr('Tools built for owners who run their business from their phone — simple to start, powerful as you grow.')}
+            </p>
+          </Reveal>
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {features.map((feature, index) => (
+              <Reveal key={feature.title} from="up" delay={0.05 * (index % 4)}>
+                <div className="group flex h-full flex-col rounded-[28px] border border-line bg-cream-2 p-7 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-brand hover:shadow-brand">
+                  <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-brand-strong transition-colors duration-300 group-hover:bg-brand-strong group-hover:text-white">
+                    <feature.icon className="text-xl" />
+                  </div>
+                  <h3 className="mt-5 text-lg font-bold text-ink">{feature.title}</h3>
+                  <p className="mt-2.5 flex-1 text-sm leading-6 text-body">{feature.desc}</p>
                 </div>
               </Reveal>
             ))}

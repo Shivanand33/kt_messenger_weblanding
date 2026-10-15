@@ -37,7 +37,6 @@ import { Reveal } from '../../components/common/Reveal/Reveal'
 import { Logo } from '../../components/common/Logo/Logo'
 import { ThemeToggle } from '../../components/common/ThemeToggle/ThemeToggle'
 import { Footer } from '../../components/layout/Footer/Footer'
-import { useModal } from '../../context/ModalContext'
 import { useLanguage } from '../../context/LanguageContext'
 import { businessProducts as FALLBACK_BUSINESS } from './businessProducts'
 import imgBusiness from '../../assets/images/online-marketplace-app-business.jpg'
@@ -107,7 +106,6 @@ function HeroVisual({ data }) {
 export function BusinessSubPage() {
   const { slug } = useParams()
   const navigate = useNavigate()
-  const { openDownloadModal } = useModal()
   const { t } = useLanguage()
   // Admin-managed business sub-pages (Admin -> Business Products). Falls back
   // to the bundled map until the API returns pages, so an unreachable API
@@ -154,7 +152,7 @@ export function BusinessSubPage() {
             </nav>
           </div>
           <button
-            onClick={openDownloadModal}
+            onClick={() => navigate('/business/app-download')}
             className="rounded-full bg-brand-strong px-5 py-2.5 text-sm font-bold text-white shadow-brand transition-transform hover:-translate-y-0.5"
           >
             {t('Get started')}
@@ -176,7 +174,7 @@ export function BusinessSubPage() {
               <p className="mt-6 max-w-2xl text-lg leading-8 text-body">{data.subtitle}</p>
               <div className="mt-8">
                 <button
-                  onClick={openDownloadModal}
+                  onClick={() => navigate('/business/app-download')}
                   className="group inline-flex items-center gap-2 rounded-full bg-brand-strong px-6 py-3 text-sm font-bold text-white shadow-brand transition-all hover:-translate-y-0.5 hover:bg-brand-strong-hover"
                 >
                   {data.cta?.button || t('Get started')}
@@ -295,7 +293,7 @@ export function BusinessSubPage() {
                 <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{data.cta.title}</h2>
                 {data.cta.desc ? <p className="mx-auto mt-3 max-w-xl text-lg leading-8 text-body">{data.cta.desc}</p> : null}
                 <button
-                  onClick={openDownloadModal}
+                  onClick={() => navigate('/business/app-download')}
                   className="group mt-7 inline-flex items-center gap-2 rounded-full bg-brand-strong px-7 py-3.5 text-sm font-bold text-white shadow-brand transition-all hover:-translate-y-0.5 hover:bg-brand-strong-hover"
                 >
                   {t('Get started')}

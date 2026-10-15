@@ -28,6 +28,7 @@ const ProductsPage = page(() => import('./pages/Products/ProductsPage'), 'Produc
 const AppsPage = page(() => import('./pages/Apps/AppsPage'), 'AppsPage')
 const HelpPage = page(() => import('./pages/Help/HelpPage'), 'HelpPage')
 const BusinessPage = page(() => import('./pages/Business/BusinessPage'), 'BusinessPage')
+const BusinessAppDownloadPage = page(() => import('./pages/Business/BusinessAppDownloadPage'), 'BusinessAppDownloadPage', 'Business')
 const BusinessSubPage = page(() => import('./pages/Business/BusinessSubPage'), 'BusinessSubPage', 'Business')
 const CallingPage = page(() => import('./pages/Calling/CallingPage'), 'CallingPage')
 const MessagingPage = page(() => import('./pages/Messaging/MessagingPage'), 'MessagingPage')
@@ -231,6 +232,7 @@ function App() {
         <Route path="/apps" element={<AppsPage />} />
         <Route path="/help/:slug?" element={<HelpPage />} />
         <Route path="/business" element={<BusinessPage />} />
+        <Route path="/business/app-download" element={<BusinessAppDownloadPage />} />
         <Route path="/business/:slug" element={<BusinessSubPage />} />
         <Route path="/calling" element={<CallingPage />} />
         <Route path="/messaging" element={<MessagingPage />} />

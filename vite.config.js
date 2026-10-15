@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { createLogger, defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { schemaTagsFor } from './scripts/schema-blocks.mjs'
@@ -52,7 +52,82 @@ function devSchemaPrerender() {
   }
 }
 
+const BACKEND = 'http://localhost:4000'
+
+/** Shared by both proxies: they point at one backend, so it is up or it isn't. */
+const backend = { down: false }
+
+/**
+ * Forwards /api and /uploads to the backend, and keeps the terminal readable
+ * when the backend is not there.
+ *
+ * The dev server almost always starts before the backend does, and every
+ * request the page makes in that window hits a port with nothing behind it.
+ * Vite's default reaction is a raw Node stack trace per request — a single
+ * page load prints a dozen ECONNREFUSED/ECONNRESET traces, which buries the
+ * errors that actually matter.
+ *
+ * So the outage is announced once, with the command that fixes it, and once
+ * when it clears. The browser gets a real 503 instead of a socket dying
+ * mid-request, which is what the site already expects: a failed content
+ * request means "keep the built-in fallback", so nothing on screen breaks.
+ */
+function backendProxy() {
+  return {
+    target: BACKEND,
+    changeOrigin: true,
+    configure(proxy) {
+      proxy.on('error', (err, _req, res) => {
+        if (!backend.down) {
+          backend.down = true
+          console.warn(
+            `\n[api] ${BACKEND} is not answering (${err.code || err.message}).` +
+              '\n[api] Start it with:  cd backend && npm run dev' +
+              '\n[api] The site keeps its built-in content until then.\n',
+          )
+        }
+        // A websocket upgrade hands us a raw socket, which cannot be replied
+        // to — only closed.
+        if (res && typeof res.writeHead === 'function') {
+          if (!res.headersSent) {
+            res.writeHead(503, { 'content-type': 'application/json' })
+            res.end(JSON.stringify({ error: 'backend-unavailable' }))
+          }
+        } else if (res && typeof res.destroy === 'function') {
+          res.destroy()
+        }
+      })
+
+      proxy.on('proxyRes', () => {
+        if (backend.down) {
+          backend.down = false
+          console.log(`\n[api] ${BACKEND} is answering again.\n`)
+        }
+      })
+    },
+  }
+}
+
+/**
+ * Vite reports every failed proxy request with a Node stack trace, and it does
+ * that from inside the proxy call rather than through a listener we could
+ * replace. The traces are always the same two frames and say nothing the one
+ * line above does not, so they are filtered here — but only for /api and
+ * /uploads, so a proxy error from anywhere else still shows in full.
+ */
+const logger = createLogger()
+const logError = logger.error.bind(logger)
+logger.error = (msg, options) => {
+  const isOurProxy =
+    typeof msg === 'string' &&
+    msg.includes('http proxy error') &&
+    /http proxy error:\s*\/(api|uploads)\b/.test(msg)
+  if (isOurProxy) return
+  logError(msg, options)
+}
+
 export default defineConfig({
+  customLogger: logger,
   plugins: [react(), tailwindcss(), devSchemaPrerender()],
   server: {
     port: 5174,
@@ -64,8 +139,8 @@ export default defineConfig({
     // host served the page, and the dev server forwards them to the backend.
     // A built bundle with VITE_API_URL set still uses that absolute URL.
     proxy: {
-      '/api': { target: 'http://localhost:4000', changeOrigin: true },
-      '/uploads': { target: 'http://localhost:4000', changeOrigin: true },
+      '/api': backendProxy(),
+      '/uploads': backendProxy(),
     },
   },
   build: {
