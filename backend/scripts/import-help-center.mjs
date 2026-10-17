@@ -16,12 +16,28 @@
  * writing the generated sentence into 87 rows would fabricate content that
  * merely looks authored.
  *
- * Non-destructive: matches on slug, updates in place, inserts what is missing.
- * Database articles that the live site does not list are set to DRAFT so they
- * stop competing with the live tree, and are never deleted.
+ * ADDITIVE ONLY
+ * -------------
+ * This script inserts what is missing and touches nothing that already exists.
+ * Once a category, subcategory or article is in the database it belongs to
+ * whoever edits it in admin: their title, icon, ordering, body and publication
+ * status are left exactly as found, even where they disagree with the tree in
+ * code. Nothing is ever deleted.
  *
- *   node scripts/import-help-center.mjs            # dry run
- *   node scripts/import-help-center.mjs --apply
+ * Articles in the database that the live tree does not list are left alone and
+ * merely listed in the report. Setting them to DRAFT would take an admin's own
+ * article off the site for no reason other than that this file never heard of
+ * it, so it happens only when asked for with --archive-missing.
+ *
+ * A category is matched by slug first. A slug that does not match falls back
+ * to an exact title match, but only when exactly one category carries that
+ * title — "calls" and "voice-and-video-calls" are the same category under two
+ * slugs, while two genuinely different rows sharing a name is a situation to
+ * report rather than guess at.
+ *
+ *   node scripts/import-help-center.mjs                      # dry run, writes nothing
+ *   node scripts/import-help-center.mjs --apply              # insert what is missing
+ *   node scripts/import-help-center.mjs --apply --archive-missing
  */
 import fs from 'fs'
 import path from 'path'
@@ -29,6 +45,8 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 const APPLY = process.argv.includes('--apply')
+/** Off by default: taking someone's article off the site is not an import's job. */
+const ARCHIVE_MISSING = process.argv.includes('--archive-missing')
 const HELP = path.resolve(process.cwd(), '..', 'src', 'pages', 'Help', 'HelpPage.jsx')
 
 const slugify = (s) =>
@@ -86,34 +104,91 @@ function parseTree(src) {
 const src = fs.readFileSync(HELP, 'utf8')
 const tree = parseTree(src)
 
-const stats = { cats: 0, subs: 0, articles: 0, created: 0, updated: 0, archived: 0 }
+const stats = { cats: 0, subs: 0, articles: 0, created: 0, kept: 0, archived: 0, ambiguous: 0 }
 const liveSlugs = new Set()
+const plan = { categories: [], subcategories: [], articles: [] }
+
+/**
+ * The category this tree entry refers to, or null when it has to be created.
+ *
+ * Slug first. A slug miss falls back to the title, but only when exactly one
+ * row carries it — two rows with the same name is a conflict to report, not
+ * one to resolve by picking whichever the database returns first.
+ */
+async function findCategory(title, slug) {
+  const bySlug = await prisma.helpCategory.findUnique({ where: { slug } })
+  if (bySlug) return bySlug
+
+  const byTitle = await prisma.helpCategory.findMany({ where: { title } })
+  if (byTitle.length === 1) return byTitle[0]
+  if (byTitle.length > 1) {
+    stats.ambiguous += 1
+    console.log(
+      `  AMBIGUOUS  ${byTitle.length} categories are titled "${title}" ` +
+        `(${byTitle.map((c) => c.slug).join(', ')}) — skipped, merge them first.`,
+    )
+    return 'ambiguous'
+  }
+  return null
+}
+
+/**
+ * The subcategory inside this category, or null when it has to be created.
+ *
+ * Same rule as categories, and needed for the same reason: rows predating this
+ * script carry slugs it would never derive — "blocking" for "Blocking
+ * Contacts", "download-installation" for "Download and Installation". Matching
+ * on slug alone would quietly add a second copy of each.
+ */
+async function findSubcategory(categoryId, title, slug) {
+  const bySlug = await prisma.helpSubcategory.findFirst({ where: { categoryId, slug } })
+  if (bySlug) return bySlug
+
+  const byTitle = await prisma.helpSubcategory.findMany({ where: { categoryId, title } })
+  if (byTitle.length === 1) return byTitle[0]
+  if (byTitle.length > 1) {
+    stats.ambiguous += 1
+    console.log(
+      `  AMBIGUOUS  ${byTitle.length} subcategories are titled "${title}" ` +
+        `(${byTitle.map((s) => s.slug).join(', ')}) — skipped, merge them first.`,
+    )
+    return 'ambiguous'
+  }
+  return null
+}
 
 try {
   for (const [ci, cat] of tree.entries()) {
     const catSlug = slugify(cat.title)
-    let category = await prisma.helpCategory.findUnique({ where: { slug: catSlug } })
+    let category = await findCategory(cat.title, catSlug)
+    if (category === 'ambiguous') continue
+
     if (!category) {
       stats.created += 1
+      plan.categories.push(cat.title)
       if (APPLY) category = await prisma.helpCategory.create({ data: { slug: catSlug, title: cat.title, order: ci } })
-    } else if (APPLY) {
-      await prisma.helpCategory.update({ where: { id: category.id }, data: { title: cat.title, order: ci } })
+    } else {
+      // Exists already, so it is the admin's. Title, icon and order stay as
+      // they are; only the children below are topped up.
+      stats.kept += 1
     }
     stats.cats += 1
     if (!category) continue // dry run, nothing to attach to
 
     for (const [si, sub] of cat.subs.entries()) {
       const subSlug = slugify(sub.title)
-      let subcategory = await prisma.helpSubcategory.findFirst({ where: { categoryId: category.id, slug: subSlug } })
+      let subcategory = await findSubcategory(category.id, sub.title, subSlug)
+      if (subcategory === 'ambiguous') continue
       if (!subcategory) {
         stats.created += 1
+        plan.subcategories.push(`${cat.title} / ${sub.title}`)
         if (APPLY) {
           subcategory = await prisma.helpSubcategory.create({
             data: { categoryId: category.id, slug: subSlug, title: sub.title, order: si },
           })
         }
-      } else if (APPLY) {
-        await prisma.helpSubcategory.update({ where: { id: subcategory.id }, data: { title: sub.title, order: si } })
+      } else {
+        stats.kept += 1
       }
       stats.subs += 1
       if (!subcategory) continue
@@ -125,6 +200,7 @@ try {
         const found = await prisma.helpArticle.findUnique({ where: { slug } })
         if (!found) {
           stats.created += 1
+          plan.articles.push(`${sub.title} / ${title}`)
           if (APPLY) {
             await prisma.helpArticle.create({
               // body intentionally left empty: the website generates it. An
@@ -134,30 +210,52 @@ try {
             })
           }
         } else {
-          stats.updated += 1
-          if (APPLY) {
-            await prisma.helpArticle.update({
-              where: { id: found.id },
-              data: { subcategoryId: subcategory.id, title, order: ai, status: 'PUBLISHED' },
-            })
-          }
+          // Left exactly as found. Re-pointing it at this subcategory, or
+          // forcing it back to PUBLISHED, would silently undo a deliberate
+          // move or an article someone took down on purpose.
+          stats.kept += 1
         }
       }
     }
   }
 
-  // Articles in the database that the live site does not list.
+  // Published articles the tree in code does not list. They are somebody's
+  // work — written in admin, or left over from an older tree — so they are
+  // reported and left published unless --archive-missing says otherwise.
   const all = await prisma.helpArticle.findMany({ select: { id: true, slug: true, title: true, status: true } })
-  for (const a of all) {
-    if (liveSlugs.has(a.slug) || a.status === 'DRAFT') continue
-    stats.archived += 1
-    console.log(`  ARCHIVE  not on live site -> DRAFT: ${a.title}`)
-    if (APPLY) await prisma.helpArticle.update({ where: { id: a.id }, data: { status: 'DRAFT' } })
+  const strays = all.filter((a) => !liveSlugs.has(a.slug) && a.status !== 'DRAFT')
+  for (const a of strays) {
+    if (ARCHIVE_MISSING) {
+      stats.archived += 1
+      console.log(`  ARCHIVE  -> DRAFT: ${a.title}`)
+      if (APPLY) await prisma.helpArticle.update({ where: { id: a.id }, data: { status: 'DRAFT' } })
+    } else {
+      console.log(`  LEFT AS IS  published but not in the code tree: ${a.title}`)
+    }
   }
 
-  console.log(APPLY ? '\n=== HELP CENTER IMPORT APPLIED ===' : '\n=== HELP CENTER DRY RUN ===')
-  console.log(`  categories: ${stats.cats}   subcategories: ${stats.subs}   article titles: ${stats.articles}`)
-  console.log(`  created: ${stats.created}   updated: ${stats.updated}   archived: ${stats.archived}`)
+  console.log(APPLY ? '\n=== HELP CENTER IMPORT APPLIED ===' : '\n=== HELP CENTER DRY RUN (nothing written) ===')
+  console.log(`  in the code tree: ${stats.cats} categories, ${stats.subs} subcategories, ${stats.articles} article titles`)
+  console.log(`  to create: ${stats.created}   already there, untouched: ${stats.kept}`)
+
+  if (plan.categories.length) console.log(`\n  new categories (${plan.categories.length}):`)
+  plan.categories.forEach((t) => console.log(`    + ${t}`))
+  if (plan.subcategories.length) console.log(`\n  new subcategories (${plan.subcategories.length}):`)
+  plan.subcategories.forEach((t) => console.log(`    + ${t}`))
+  if (plan.articles.length) console.log(`\n  new articles (${plan.articles.length}):`)
+  plan.articles.slice(0, 20).forEach((t) => console.log(`    + ${t}`))
+  if (plan.articles.length > 20) console.log(`    … and ${plan.articles.length - 20} more`)
+
+  console.log('\n  DATA LOSS CHECK')
+  console.log('    nothing is deleted, and existing titles, icons, ordering,')
+  console.log('    bodies and publication status are not modified.')
+  console.log(
+    strays.length
+      ? `    ${strays.length} published article(s) are not in the code tree — ` +
+          (ARCHIVE_MISSING ? `${stats.archived} set to DRAFT (you asked for it).` : 'left published.')
+      : '    every published article is in the code tree.',
+  )
+  if (stats.ambiguous) console.log(`    ${stats.ambiguous} category title(s) were ambiguous and skipped — see above.`)
   console.log('\n  NOTE: article bodies are NOT imported — the website generates 87 of')
   console.log('        89 of them from the title, and the two real ones are JSX with')
   console.log('        per-platform logic. Bodies stay in code; titles/tree are now admin-managed.')

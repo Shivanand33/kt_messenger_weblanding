@@ -1,0 +1,1584 @@
+{
+  "exportedAt": "2026-10-17T06:34:19.250Z",
+  "categories": [
+    {
+      "slug": "get-started",
+      "title": "Get Started",
+      "icon": "flag",
+      "order": 0,
+      "locale": "en-US",
+      "subcategories": [
+        {
+          "slug": "download-and-installation",
+          "title": "Download and Installation",
+          "icon": null,
+          "order": 0,
+          "articles": [
+            {
+              "slug": "how-to-download-or-uninstall-kt-messenger",
+              "title": "How to download or uninstall KT Messenger",
+              "body": "<h2>Download KT Messenger</h2>\n<section data-tab=\"Android\">\n  <p>Scan the QR code with your phone's camera and tap the link to be taken to the KT Messenger download page on the Google Play Store.</p>\n  {{qr}}\n  <p>Already on your Android device? <a href=\"https://play.google.com/store/apps/details?id=com.ogoul.kalamtime\">Open KT Messenger on the Google Play Store</a>.</p>\n  <ol>\n    <li>Scan the QR code above, or open the Google Play Store and search for KT Messenger.</li>\n    <li>Tap Install and wait for the download to finish.</li>\n    <li>Open the app and review the Terms of Service, then tap <strong>Agree and continue</strong>.</li>\n    <li>Register your phone number to start chatting.</li>\n  </ol>\n  <h2>Uninstall KT Messenger</h2>\n  <p>Uninstalling removes KT Messenger and its chats from this Android device. Back up your chats first if you want to keep them.</p>\n  <ol>\n    <li>Touch and hold the KT Messenger icon on your home screen or in your app drawer.</li>\n    <li>Tap Uninstall (or drag the icon to Uninstall).</li>\n    <li>Tap OK to confirm.</li>\n  </ol>\n</section>\n<section data-tab=\"iOS\">\n  <p>Scan the QR code with your phone's camera and tap the link to be taken to the KT Messenger download page on the App Store.</p>\n  {{qr}}\n  <p>Already on your iOS device? <a href=\"https://apps.apple.com/in/app/kt-messenger/id6478195913\">Open KT Messenger on the App Store</a>.</p>\n  <ol>\n    <li>Scan the QR code above, or open the App Store and search for KT Messenger.</li>\n    <li>Tap Get, then confirm with Face ID, Touch ID or your Apple ID password.</li>\n    <li>Open the app and review the Terms of Service, then tap <strong>Agree and continue</strong>.</li>\n    <li>Register your phone number to start chatting.</li>\n  </ol>\n  <h2>Uninstall KT Messenger</h2>\n  <p>Uninstalling removes KT Messenger and its chats from this iOS device. Back up your chats first if you want to keep them.</p>\n  <ol>\n    <li>Touch and hold the KT Messenger icon on your home screen.</li>\n    <li>Tap Remove App.</li>\n    <li>Tap Delete App, then tap Delete to confirm.</li>\n  </ol>\n</section>\n<section data-tab=\"Mac\">\n  <p>Download KT Messenger for your Mac computer from the official download options.</p>\n  {{download}}\n  <ol>\n    <li>Click Download for Mac above to see the official download options.</li>\n    <li>Open the downloaded file and move KT Messenger to your Applications folder.</li>\n    <li>Open the app and review the Terms of Service, then click <strong>Agree and continue</strong>.</li>\n    <li>Follow the on-screen steps to log in to your KT Messenger account.</li>\n  </ol>\n  <h2>Uninstall KT Messenger</h2>\n  <p>Uninstalling removes KT Messenger and its chats from this Mac device. Back up your chats first if you want to keep them.</p>\n  <ol>\n    <li>Quit KT Messenger.</li>\n    <li>Open Finder and go to Applications.</li>\n    <li>Drag KT Messenger to the Bin, or right-click it and choose Move to Bin.</li>\n  </ol>\n</section>\n<section data-tab=\"Windows\">\n  <p>Download KT Messenger for your Windows computer from the official download options.</p>\n  {{download}}\n  <ol>\n    <li>Click Download for Windows above to download the KT Messenger installer.</li>\n    <li>Open the downloaded file and follow the on-screen steps to install.</li>\n    <li>Open the app and review the Terms of Service, then click <strong>Agree and continue</strong>.</li>\n    <li>Follow the on-screen steps to log in to your KT Messenger account.</li>\n  </ol>\n  <h2>Uninstall KT Messenger</h2>\n  <p>Uninstalling removes KT Messenger and its chats from this Windows device. Back up your chats first if you want to keep them.</p>\n  <ol>\n    <li>Open Start, then go to Settings &gt; Apps &gt; Installed apps.</li>\n    <li>Find KT Messenger in the list and click the ... (more) button next to it.</li>\n    <li>Click Uninstall, then click Uninstall again to confirm.</li>\n  </ol>\n</section>\n<p>You can reinstall KT Messenger at any time by following the download steps above.</p>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": true,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "about-supported-operating-systems",
+              "title": "About supported operating systems",
+              "body": "<p>Currently, KT Messenger supports the following operating systems:</p>\n<ul>\n  <li>Android 10.0 and later</li>\n  <li>iOS 16.6 and later</li>\n  <li>iPadOS 16.6 and later</li>\n  <li>macOS 13.5 and later (Mac devices with Apple Silicon)</li>\n  <li>visionOS 1.0 and later</li>\n</ul>\n<p>Once you have a supported device, download KT Messenger from the appropriate app store and complete the registration process using your phone number.</p>\n<p><strong>Note:</strong> An internet connection is required during registration and verification. We recommend keeping your device and KT Messenger updated to the latest available version.</p>\n<h2>How We Choose What to Support</h2>\n<p>Devices and operating systems change over time, so we regularly review the versions supported by KT Messenger.</p>\n<p>Older operating systems may not support the latest security updates, bug fixes, or features available in newer versions of KT Messenger.</p>\n<h2>What Happens If Your Operating System Is No Longer Supported</h2>\n<p>If your operating system is no longer supported, you may not be able to install or update KT Messenger.</p>\n<p>To continue using KT Messenger, update your device to a supported operating system version.</p>\n<p>We update this article whenever our supported operating system requirements change.</p>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "about-supported-devices",
+              "title": "About supported devices",
+              "body": "<p>KT Messenger works on supported Android and Apple devices.</p>\n<section data-tab=\"Android\">\n  <h2>Android</h2>\n  <p>Supported Android devices include:</p>\n  <ul>\n    <li>Android phones running Android 10.0 and later.</li>\n    <li>Android devices with access to the Google Play Store.</li>\n    <li>Android devices with an active internet connection.</li>\n  </ul>\n</section>\n<section data-tab=\"iOS\">\n  <h2>Apple Devices</h2>\n  <p>Supported Apple devices include:</p>\n  <ul>\n    <li>iPhones running iOS 16.6 and later.</li>\n    <li>iPads running iPadOS 16.6 and later.</li>\n    <li>Mac devices running macOS 13.5 and later with Apple Silicon (M1 or later).</li>\n    <li>Apple Vision devices running visionOS 1.0 and later.</li>\n  </ul>\n</section>\n<p>We regularly review the devices and operating systems supported by KT Messenger.</p>\n<p>As technology evolves, older devices and operating systems may no longer support the latest KT Messenger features, security updates, and performance improvements.</p>\n<p>If support for your device or operating system changes, we'll update this article with the latest requirements.</p>\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <p><a href=\"/help/about-supported-operating-systems\">About Supported Operating Systems</a></p>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS"
+              ],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 2,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "about-rooted-phones-and-custom-roms",
+              "title": "About rooted phones and custom ROMs",
+              "body": "",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 3,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "ending-support-for-legacy-phones",
+              "title": "Ending support for legacy phones",
+              "body": "",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 4,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "registration",
+          "title": "Registration",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "parent-managed-accounts",
+              "title": "Parent Managed Accounts",
+              "body": "",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-register-your-phone-number",
+              "title": "How to register your phone number",
+              "body": "<h2>How to Register Your Account</h2>\n<p>To use KT Messenger, you must register with a valid phone number and email address.</p>\n<p>During registration, a verification code will be sent to your email address to verify your account. The verification code is unique and changes each time you register a new account or sign in on a new device.</p>\n<h2>Registration Requirements</h2>\n<p>Before registering your account, make sure that:</p>\n<ul>\n  <li>You are using the <a href=\"/help/how-to-download-or-uninstall-kt-messenger\">latest version</a> of KT Messenger.</li>\n  <li>You have a <a href=\"/help/about-supported-devices\">supported device</a> and <a href=\"/help/about-supported-operating-systems\">operating system</a>.</li>\n  <li>You have a valid phone number.</li>\n  <li>You have access to a valid email address.</li>\n  <li>Your device has an active internet connection.</li>\n</ul>\n<h2>Register Your Account</h2>\n<ol>\n  <li>Open KT Messenger.</li>\n  <li>Select your country or region.</li>\n  <li>Enter your phone number.</li>\n  <li>Enter your email address.</li>\n  <li>Tap <strong>Continue</strong>.</li>\n  <li>Check your email inbox for the verification code.</li>\n  <li>Enter the verification code in KT Messenger.</li>\n  <li>Complete your profile setup.</li>\n</ol>\n<p>Once registration is complete, you can start using KT Messenger.</p>\n<h2>Didn't Receive the Verification Code?</h2>\n<p>If you don't receive the verification code:</p>\n<ul>\n  <li>Verify that your email address was entered correctly.</li>\n  <li>Check your Spam or Junk folder.</li>\n  <li>Wait a few minutes and request a new code.</li>\n  <li>Make sure your device has an active internet connection.</li>\n</ul>\n<p>If you're still unable to receive the verification code, contact KT Messenger Support for assistance.</p>\n<h2>Keep Your Account Secure</h2>\n<p>Never share your verification code with anyone.</p>\n<p><strong>Note:</strong> KT Messenger Support will never ask for your verification code.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-supported-devices\">About Supported Devices</a></li>\n    <li><a href=\"/help/about-supported-operating-systems\">About Supported Operating Systems</a></li>\n    <li><a href=\"/help/how-to-download-or-uninstall-kt-messenger\">How to Update KT Messenger</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": true,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "about-registration-and-two-step-verification",
+              "title": "About registration and two step verification",
+              "body": "<p>When you create a KT Messenger account, you'll go through two different security steps: account registration and two-step verification.</p>\n<h2>Registration</h2>\n<p>Registration is required to create a new KT Messenger account or sign in on a new device.</p>\n<p>To register your account, you'll need to provide your phone number and email address. A verification code will be sent to your email address to confirm your identity.</p>\n<p>The verification code is unique and changes each time you register a new account or sign in on a new device.</p>\n<p>Verifying your account is the only way to activate KT Messenger and access your messages and contacts.</p>\n<p>Learn more in <a href=\"/help/how-to-register-your-phone-number\">How to Register Your Account</a>.</p>\n<h2>Two-Step Verification</h2>\n<p>Two-step verification is an optional security feature that helps protect your KT Messenger account from unauthorized access.</p>\n<p>When enabled, you'll be asked to enter an additional verification code or security credential when signing in to your account on a new device.</p>\n<p>This extra layer of security helps keep your account protected even if someone gains access to your email address or device.</p>\n<h2>Keep Your Account Secure</h2>\n<p>To help keep your account safe:</p>\n<ul>\n  <li>Never share your verification code with anyone.</li>\n  <li>Do not share your password or security credentials.</li>\n  <li>Use a secure email address that only you can access.</li>\n  <li>Keep KT Messenger updated to the latest version.</li>\n</ul>\n<p><strong>Note:</strong> KT Messenger Support will never ask for your verification code, password, or security credentials.</p>\n<h2>Forgot Your Verification Information?</h2>\n<p>If you're unable to complete verification or access your account, contact KT Messenger Support for assistance.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-register-your-phone-number\">How to Register Your Account</a></li>\n    <li><a href=\"/help/turning-it-on\">How to Enable Two-Step Verification</a></li>\n    <li><a href=\"/help/avoiding-scams\">How to Protect Your Account</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 2,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-register-with-a-phone-call",
+              "title": "How to register with a phone call",
+              "body": "",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 3,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "about-automatic-phone-number-verification",
+              "title": "About automatic phone number verification",
+              "body": "",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 4,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "can-t-complete-registration",
+              "title": "Can't complete registration",
+              "body": "",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 5,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "linked-devices",
+          "title": "Linked Devices",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "about-linked-devices",
+              "title": "About linked devices",
+              "body": "<p>Linked devices let you use the same KT Messenger account on more than one device. Start a conversation on one device and continue it on another without losing your place.</p>\n<h2>Where You Can Use KT Messenger</h2>\n<ul>\n  <li>Your phone (Android or iPhone), where your account is registered.</li>\n  <li>Tablets.</li>\n  <li>The KT Messenger desktop apps for Mac and Windows.</li>\n  <li>KT Web, in your browser at <a href=\"https://web.ktmessenger.com/auth/qr\">web.ktmessenger.com</a>.</li>\n</ul>\n<h2>How Linking Works</h2>\n<p>You link a device by scanning a QR code with KT Messenger on your phone. Once linked, your chats stay in sync across all of your devices.</p>\n<p>You can see and manage every linked device from <strong>Settings &gt; Linked Devices</strong> on your phone.</p>\n<p><strong>Note:</strong> Only link devices that you own and trust. If you see a device you don't recognize, log it out right away.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-link-a-device\">How to Link a Device</a></li>\n    <li><a href=\"/help/log-out-of-a-linked-device\">Log Out of a Linked Device</a></li>\n    <li><a href=\"/help/about-supported-devices\">About Supported Devices</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": true,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-link-a-device",
+              "title": "How to link a device",
+              "body": "<p>You can link a computer, tablet or browser to your KT Messenger account using your phone.</p>\n<h2>Link a Device with a QR Code</h2>\n<ol>\n  <li>On the device you want to link, open the KT Messenger desktop app or go to <a href=\"https://web.ktmessenger.com/auth/qr\">KT Web</a>. A QR code appears on the screen.</li>\n  <li>Open KT Messenger on your phone.</li>\n  <li>Go to <strong>Settings &gt; Linked Devices</strong>.</li>\n  <li>Point your phone's camera at the QR code on the screen.</li>\n</ol>\n<p>Your chats will appear on the linked device in a few moments.</p>\n<h2>Link with Your Phone Number Instead</h2>\n<p>If you can't scan the QR code, choose <strong>Link with phone number instead</strong> on the device you're linking, then enter the code it shows in KT Messenger on your phone.</p>\n<h2>If Linking Doesn't Work</h2>\n<ul>\n  <li>Make sure both devices have an active internet connection.</li>\n  <li>Update KT Messenger on your phone to the latest version.</li>\n  <li>Refresh the QR code and scan it again.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-linked-devices\">About Linked Devices</a></li>\n    <li><a href=\"/help/log-out-of-a-linked-device\">Log Out of a Linked Device</a></li>\n    <li><a href=\"/help/how-to-download-or-uninstall-kt-messenger\">How to Download KT Messenger</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "log-out-of-a-linked-device",
+              "title": "Log out of a linked device",
+              "body": "<p>You can log out of a linked device at any time — for example, a computer you no longer use or a device you don't recognize.</p>\n<h2>Log Out from Your Phone</h2>\n<ol>\n  <li>Open KT Messenger on your phone.</li>\n  <li>Go to <strong>Settings &gt; Linked Devices</strong>.</li>\n  <li>Tap the device you want to remove.</li>\n  <li>Tap <strong>Log out</strong> to confirm.</li>\n</ol>\n<h2>Log Out on the Linked Device</h2>\n<p>You can also log out directly in the KT Messenger desktop app or on KT Web from the app's menu.</p>\n<p><strong>Note:</strong> We recommend regularly signing out of devices you no longer use to keep your account secure.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-linked-devices\">About Linked Devices</a></li>\n    <li><a href=\"/help/how-to-link-a-device\">How to Link a Device</a></li>\n    <li><a href=\"/help/about-two-step-verification\">About Two-Step Verification</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 2,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "usernames",
+          "title": "Usernames",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "about-usernames",
+              "title": "About usernames",
+              "body": "<p>A username helps people find and connect with you on KT Messenger without sharing your phone number.</p>\n<p>Your username is unique to your account and can be shared with others so they can easily find you on KT Messenger.</p>\n<h2>Username Requirements</h2>\n<p>When creating a username:</p>\n<ul>\n  <li>Usernames must be unique.</li>\n  <li>Usernames can contain letters, numbers, underscores (_), and periods (.).</li>\n  <li>Usernames cannot contain spaces.</li>\n  <li>Usernames cannot impersonate another person, business, or organization.</li>\n</ul>\n<h2>Changing Your Username</h2>\n<p>You can update your username from your account settings if username changes are available for your account.</p>\n<p>If you change your username, people may need to use your new username to find you on KT Messenger.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-register-your-phone-number\">How to Create a KT Messenger Account</a></li>\n    <li><a href=\"/help/managing-your-privacy\">About Privacy Settings</a></li>\n    <li><a href=\"/help/updating-your-profile\">Managing Your Profile Information</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-set-a-username",
+              "title": "How to set a username",
+              "body": "",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "username-privacy",
+              "title": "Username privacy",
+              "body": "",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 2,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "troubleshooting",
+          "title": "Troubleshooting",
+          "icon": null,
+          "order": 4,
+          "articles": [
+            {
+              "slug": "app-keeps-crashing",
+              "title": "App keeps crashing",
+              "body": "<p>If KT Messenger closes unexpectedly or keeps crashing, these steps usually fix the problem.</p>\n<h2>Try These Steps</h2>\n<ol>\n  <li>Update KT Messenger to the latest version from your app store.</li>\n  <li>Restart your device.</li>\n  <li>Make sure your device has enough free storage space.</li>\n  <li>Check that your device runs a <a href=\"/help/about-supported-operating-systems\">supported operating system</a> and install any available system updates.</li>\n  <li>Close other apps that are running in the background.</li>\n</ol>\n<h2>Still Crashing?</h2>\n<p>Reinstalling KT Messenger can fix problems caused by a damaged installation. <a href=\"/help/how-to-back-up-your-chats\">Back up your chats</a> first, then uninstall and install the app again.</p>\n<p>If the problem continues, contact KT Messenger Support and include your device model, operating system version, KT Messenger version, and what you were doing when the app closed.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-download-or-uninstall-kt-messenger\">How to Download or Uninstall KT Messenger</a></li>\n    <li><a href=\"/help/about-supported-devices\">About Supported Devices</a></li>\n    <li><a href=\"/help/how-to-back-up-your-chats\">How to Back Up Your Chats</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "notifications-are-not-working",
+              "title": "Notifications are not working",
+              "body": "<p>If you aren't receiving KT Messenger notifications, check the settings below on your device and in the app.</p>\n<h2>Check Your Device Settings</h2>\n<ul>\n  <li>Make sure notifications are allowed for KT Messenger in your device's settings.</li>\n  <li>Turn off Do Not Disturb or Focus modes, or allow KT Messenger in them.</li>\n  <li>On Android, allow KT Messenger to run in the background and remove it from battery optimization.</li>\n  <li>Make sure your device has an active internet connection.</li>\n</ul>\n<h2>Check KT Messenger</h2>\n<ul>\n  <li>Open <strong>Settings &gt; Notifications</strong> in KT Messenger and make sure message, group and call notifications are turned on.</li>\n  <li>Check whether the chat, group or channel is muted, and unmute it if needed.</li>\n  <li>Update KT Messenger to the latest version.</li>\n</ul>\n<p>If notifications still don't arrive, restart your device and open KT Messenger once so it can reconnect.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/app-keeps-crashing\">App Keeps Crashing</a></li>\n    <li><a href=\"/help/can-t-send-messages\">Can't Send Messages</a></li>\n    <li><a href=\"/help/muting-a-channel\">Muting a Channel</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "can-t-send-messages",
+              "title": "Can't send messages",
+              "body": "<p>If your messages aren't sending, work through these checks.</p>\n<h2>Common Causes</h2>\n<ul>\n  <li><strong>No internet connection:</strong> switch between Wi-Fi and mobile data, or turn Airplane mode on and off.</li>\n  <li><strong>Outdated app:</strong> update KT Messenger to the latest version.</li>\n  <li><strong>Unfinished registration:</strong> make sure you've <a href=\"/help/how-to-register-your-phone-number\">verified your account</a>.</li>\n  <li><strong>Group settings:</strong> in some groups, only admins can send messages.</li>\n  <li><strong>Blocked contact:</strong> you can't message a contact you've blocked. Unblock them first.</li>\n</ul>\n<h2>Still Not Sending?</h2>\n<ol>\n  <li>Restart KT Messenger.</li>\n  <li>Restart your device.</li>\n  <li>Make sure your device's date and time are set automatically.</li>\n</ol>\n<p>If messages still won't send, contact KT Messenger Support.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-send-a-message\">How to Send a Message</a></li>\n    <li><a href=\"/help/how-to-unblock-a-contact\">How to Unblock a Contact</a></li>\n    <li><a href=\"/help/notifications-are-not-working\">Notifications Are Not Working</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 2,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "contacts",
+          "title": "Contacts",
+          "icon": null,
+          "order": 5,
+          "articles": [
+            {
+              "slug": "how-to-add-a-contact",
+              "title": "How to add a contact",
+              "body": "<p>You can chat with anyone who uses KT Messenger. Here's how to add people so you can find them easily.</p>\n<h2>Add a Contact by Phone Number</h2>\n<ol>\n  <li>Save the person's phone number in your phone's contacts, including the country code.</li>\n  <li>Open KT Messenger and allow access to your contacts when asked.</li>\n  <li>Start a new chat. Contacts who use KT Messenger appear in your list.</li>\n</ol>\n<h2>Find Someone by Username</h2>\n<p>If someone has shared their <a href=\"/help/about-usernames\">username</a> with you, you can search for it to start a chat without needing their phone number.</p>\n<p><strong>Note:</strong> A contact only appears in KT Messenger after they have registered an account.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/a-contact-is-not-showing\">A Contact Is Not Showing</a></li>\n    <li><a href=\"/help/about-usernames\">About Usernames</a></li>\n    <li><a href=\"/help/how-to-send-a-message\">How to Send a Message</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "a-contact-is-not-showing",
+              "title": "A contact is not showing",
+              "body": "<p>If someone you know isn't showing up in KT Messenger, check the following.</p>\n<ul>\n  <li>Make sure the person uses KT Messenger and has completed registration.</li>\n  <li>Check that their number is saved correctly in your phone's contacts, with the full country code.</li>\n  <li>Make sure KT Messenger is allowed to access your contacts in your device's settings.</li>\n  <li>Refresh your contact list, or close and reopen KT Messenger.</li>\n  <li>Ask whether they have changed their phone number recently.</li>\n</ul>\n<p>You can also ask them for their <a href=\"/help/about-usernames\">username</a> and search for it instead.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-add-a-contact\">How to Add a Contact</a></li>\n    <li><a href=\"/help/about-usernames\">About Usernames</a></li>\n    <li><a href=\"/help/changing-your-number\">Changing Your Number</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "blocking-a-contact",
+              "title": "Blocking a contact",
+              "body": "<p>If you don't want to hear from someone, you can block them. Blocked contacts can't call you or send you messages.</p>\n<h2>What Blocking Does</h2>\n<ul>\n  <li>The person can no longer message or call you on KT Messenger.</li>\n  <li>Blocking doesn't remove the person from your phone's contacts.</li>\n  <li>You can unblock the person at any time.</li>\n</ul>\n<p>If someone is sending you spam or anything that makes you feel unsafe, you can report and block them in one step.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-block-a-contact\">How to Block a Contact</a></li>\n    <li><a href=\"/help/how-to-unblock-a-contact\">How to Unblock a Contact</a></li>\n    <li><a href=\"/help/reporting-a-problem\">Reporting a Problem</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 2,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "status",
+          "title": "Status",
+          "icon": null,
+          "order": 6,
+          "articles": [
+            {
+              "slug": "about-status",
+              "title": "About Status",
+              "body": "<p>Status lets you share text, photos, videos and voice updates with your contacts. You'll find status updates in the <strong>Updates</strong> tab.</p>\n<h2>How Status Works</h2>\n<ul>\n  <li>Status updates automatically disappear after 24 hours.</li>\n  <li>You can share photos, videos of up to 60 seconds per upload, text, and voice updates of up to 30 seconds.</li>\n  <li>Status updates are end-to-end encrypted.</li>\n  <li>Your contacts can reply to your status privately, and replies arrive in your one-on-one chat.</li>\n</ul>\n<h2>Who Viewed Your Status</h2>\n<p>Tap the eye icon on your status to see who has viewed it. Viewers are shown only when read receipts are turned on.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-post-a-status\">How to Post a Status</a></li>\n    <li><a href=\"/help/status-privacy\">Status Privacy</a></li>\n    <li><a href=\"/help/managing-your-privacy\">Managing Your Privacy</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-post-a-status",
+              "title": "How to post a Status",
+              "body": "<p>You can post a photo, video, text or voice status from the <strong>Updates</strong> tab.</p>\n<h2>Post a Photo or Video</h2>\n<ol>\n  <li>Open KT Messenger and go to the <strong>Updates</strong> tab.</li>\n  <li>Tap the camera to take a new photo or video, or choose one from your gallery.</li>\n  <li>Add a caption if you like.</li>\n  <li>Tap <strong>Send</strong> to post it.</li>\n</ol>\n<p>Each video can be up to 60 seconds long.</p>\n<h2>Post a Voice Status</h2>\n<ol>\n  <li>In the <strong>Updates</strong> tab, tap the microphone icon.</li>\n  <li>Press and hold to record for up to 30 seconds.</li>\n  <li>Pick a background color.</li>\n  <li>Post your voice status.</li>\n</ol>\n<p>Your status is visible for 24 hours to the people allowed by your <a href=\"/help/status-privacy\">status privacy</a> settings.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-status\">About Status</a></li>\n    <li><a href=\"/help/status-privacy\">Status Privacy</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "status-privacy",
+              "title": "Status privacy",
+              "body": "<p>You choose who can see your status updates.</p>\n<h2>Status Privacy Options</h2>\n<ul>\n  <li><strong>My Contacts:</strong> all of your contacts can see your status. This is the default.</li>\n  <li><strong>My Contacts Except...:</strong> all of your contacts except the people you select.</li>\n  <li><strong>Only Share With...:</strong> only the contacts you select.</li>\n</ul>\n<h2>Change Who Can See Your Status</h2>\n<ol>\n  <li>Open the <strong>Updates</strong> tab.</li>\n  <li>Open status <strong>Privacy Settings</strong>.</li>\n  <li>Choose an option and select contacts if needed.</li>\n</ol>\n<p>KT Messenger remembers your choice for your next status updates.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-status\">About Status</a></li>\n    <li><a href=\"/help/how-to-post-a-status\">How to Post a Status</a></li>\n    <li><a href=\"/help/managing-your-privacy\">Managing Your Privacy</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 2,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "chats",
+      "title": "Chats",
+      "icon": "chat",
+      "order": 1,
+      "locale": "en-US",
+      "subcategories": [
+        {
+          "slug": "sending-messages",
+          "title": "Sending Messages",
+          "icon": null,
+          "order": 0,
+          "articles": [
+            {
+              "slug": "how-to-send-a-message",
+              "title": "How to send a message",
+              "body": "<p>You can send messages to anyone who uses KT Messenger. Messages in your personal chats are end-to-end encrypted by default.</p>\n<h2>Send a Message</h2>\n<ol>\n  <li>Open KT Messenger.</li>\n  <li>Tap the new chat button and choose a contact, or open an existing chat.</li>\n  <li>Type your message in the text field.</li>\n  <li>Tap <strong>Send</strong>.</li>\n</ol>\n<h2>Reply and Forward</h2>\n<ul>\n  <li><strong>Reply:</strong> attaches your message to the exact message you are responding to.</li>\n  <li><strong>Forward:</strong> sends a message to another chat in a tap.</li>\n</ul>\n<h2>Keep Important Chats Close</h2>\n<p>You can pin up to 10 important chats to the top of your chat list and star messages to find them later.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/formatting-your-messages\">Formatting Your Messages</a></li>\n    <li><a href=\"/help/message-reactions\">Message Reactions</a></li>\n    <li><a href=\"/help/can-t-send-messages\">Can't Send Messages</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": true,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "formatting-your-messages",
+              "title": "Formatting your messages",
+              "body": "<p>KT Messenger supports text formatting so you can highlight what matters in your messages.</p>\n<h2>Available Formats</h2>\n<ul>\n  <li>Bold</li>\n  <li>Italics</li>\n  <li>Strikethrough</li>\n  <li>Monospace</li>\n  <li>Inline code</li>\n  <li>Quotes</li>\n  <li>Bullet lists</li>\n</ul>\n<h2>How to Format Text</h2>\n<p>KT Messenger supports markdown syntax. Type the standard markdown symbols around your text before you send it — for example, add two asterisks before and after a word to make it bold.</p>\n<p>The formatting appears once the message is sent.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-send-a-message\">How to Send a Message</a></li>\n    <li><a href=\"/help/message-reactions\">Message Reactions</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "message-reactions",
+              "title": "Message reactions",
+              "body": "<p>Reactions let you respond to a message quickly without sending a reply. You can react to any message with any emoji from your keyboard.</p>\n<h2>React to a Message</h2>\n<ol>\n  <li>Touch and hold the message.</li>\n  <li>Choose an emoji, or open the full emoji keyboard to pick any emoji.</li>\n</ol>\n<h2>Change or Remove a Reaction</h2>\n<p>Touch and hold the message again and choose a different emoji, or tap your current reaction to remove it.</p>\n<p>In groups, everyone in the group can see the reactions on a message.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-send-a-message\">How to Send a Message</a></li>\n    <li><a href=\"/help/formatting-your-messages\">Formatting Your Messages</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 2,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "chat-backup",
+          "title": "Chat Backup",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "how-to-back-up-your-chats",
+              "title": "How to back up your chats",
+              "body": "<p>Back up your chats so you can restore them if you change or reinstall your phone.</p>\n<h2>Where Backups Are Stored</h2>\n<ul>\n  <li><strong>Android:</strong> your Google Drive.</li>\n  <li><strong>iPhone:</strong> your iCloud.</li>\n</ul>\n<h2>Set Up Chat Backup</h2>\n<ol>\n  <li>Open KT Messenger and go to <strong>Settings &gt; Chat backup</strong>.</li>\n  <li>On Android, tap <strong>Connect Google Drive</strong> and choose your Google account.</li>\n  <li>Choose your <strong>Backup frequency</strong>.</li>\n  <li>Choose whether to <strong>Back up over Wi-Fi only</strong> and whether to <strong>Include Photos &amp; Videos</strong>.</li>\n</ol>\n<h2>Encrypted Backups</h2>\n<p>Backups are end-to-end encrypted and stored privately in your cloud storage. You can protect them with a custom password or a 64-digit encryption key.</p>\n<p><strong>Note:</strong> Keep your backup password or key safe. KT Messenger can't recover it for you, and you'll need it to restore your backup.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-restore-a-backup\">How to Restore a Backup</a></li>\n    <li><a href=\"/help/how-to-download-or-uninstall-kt-messenger\">How to Download or Uninstall KT Messenger</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": true,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-restore-a-backup",
+              "title": "How to restore a backup",
+              "body": "<p>You can restore your chats from a backup when you set up KT Messenger on a new or reinstalled phone.</p>\n<h2>Before You Start</h2>\n<ul>\n  <li>Use the same phone number that was used to create the backup.</li>\n  <li>Sign in to the same Google account (Android) or Apple ID (iPhone) that holds the backup.</li>\n  <li>Have your backup password or 64-digit key ready if your backup is encrypted.</li>\n  <li>Connect to Wi-Fi and keep your phone charged.</li>\n</ul>\n<h2>Restore Your Chats</h2>\n<ol>\n  <li>Install KT Messenger and open it.</li>\n  <li>Register with your phone number.</li>\n  <li>When KT Messenger finds your backup, tap <strong>Restore</strong>.</li>\n  <li>Enter your backup password or key if asked.</li>\n  <li>Wait for the restore to finish, then continue setting up your profile.</li>\n</ol>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-back-up-your-chats\">How to Back Up Your Chats</a></li>\n    <li><a href=\"/help/how-to-register-your-phone-number\">How to Register Your Account</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "photos-videos-files",
+          "title": "Photos, Videos & Files",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "sending-photos-and-videos",
+              "title": "Sending photos and videos",
+              "body": "<p>Share photos and videos in any chat, in high quality.</p>\n<h2>Send Photos or Videos</h2>\n<ol>\n  <li>Open a chat.</li>\n  <li>Tap the attachment icon.</li>\n  <li>Choose photos or videos from your gallery, or use the camera to take new ones.</li>\n  <li>Add a caption if you like.</li>\n  <li>Tap <strong>Send</strong>.</li>\n</ol>\n<h2>Good to Know</h2>\n<ul>\n  <li>You can send up to 100 full-resolution photos at once.</li>\n  <li>Photos and videos can be sent in HD quality.</li>\n  <li>Each attachment can be up to 2 GB.</li>\n  <li>With view once, a photo or video disappears after the recipient opens it once.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/sending-documents\">Sending Documents</a></li>\n    <li><a href=\"/help/how-to-back-up-your-chats\">How to Back Up Your Chats</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "sending-documents",
+              "title": "Sending documents",
+              "body": "<p>You can share documents and files — such as PDFs, ZIP files, presentations and code files — in any chat.</p>\n<h2>Send a Document</h2>\n<ol>\n  <li>Open a chat.</li>\n  <li>Tap the attachment icon.</li>\n  <li>Choose <strong>Document</strong>.</li>\n  <li>Select the file you want to send.</li>\n  <li>Tap <strong>Send</strong>.</li>\n</ol>\n<h2>File Size</h2>\n<p>Each file can be up to 2 GB. KT Plus subscribers can send attachments of up to 10 GB.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/sending-photos-and-videos\">Sending Photos and Videos</a></li>\n    <li><a href=\"/help/can-t-send-messages\">Can't Send Messages</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "voice-messages",
+          "title": "Voice Messages",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "how-to-send-a-voice-message",
+              "title": "How to send a voice message",
+              "body": "<p>Voice messages are a quick way to say more than text.</p>\n<h2>Record and Send a Voice Message</h2>\n<ol>\n  <li>Open a chat.</li>\n  <li>Press and hold the microphone button and start speaking.</li>\n  <li>Release the button to send your voice message.</li>\n</ol>\n<h2>Listening to Voice Messages</h2>\n<ul>\n  <li>Voice messages can be played hands free, which is useful while driving, travelling or multitasking.</li>\n  <li>You can speed up playback to listen faster.</li>\n  <li>KT AI can convert long voice notes into written transcripts.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/playback-speed\">Playback Speed</a></li>\n    <li><a href=\"/help/how-to-send-a-message\">How to Send a Message</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "playback-speed",
+              "title": "Playback speed",
+              "body": "<p>You can listen to voice messages faster by changing the playback speed.</p>\n<h2>Change the Playback Speed</h2>\n<ol>\n  <li>Play a voice message.</li>\n  <li>Tap the speed button next to the message to switch between 1x, 1.5x and 2x.</li>\n</ol>\n<p>You can also drag along the waveform to jump to any part of the message.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-send-a-voice-message\">How to Send a Voice Message</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "disappearing-messages",
+          "title": "Disappearing Messages",
+          "icon": null,
+          "order": 3,
+          "articles": [
+            {
+              "slug": "about-disappearing-messages",
+              "title": "About disappearing messages",
+              "body": "<p>Disappearing messages are automatically deleted from the chat after the time you choose, for both the sender and the receiver.</p>\n<h2>Timer Options</h2>\n<ul>\n  <li>24 hours</li>\n  <li>7 days</li>\n  <li>90 days</li>\n</ul>\n<p>You can also set a default timer so that all of your new chats start with disappearing messages turned on.</p>\n<h2>Good to Know</h2>\n<ul>\n  <li>Messages sent before you turn on disappearing messages are not affected.</li>\n  <li>People you chat with can still take screenshots or save media before messages disappear, so only share with people you trust.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/turning-it-on-or-off\">Turning It On or Off</a></li>\n    <li><a href=\"/help/managing-your-privacy\">Managing Your Privacy</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "turning-it-on-or-off",
+              "title": "Turning it on or off",
+              "body": "<p>You can turn disappearing messages on or off for a single chat, or set a default timer for all new chats.</p>\n<h2>For One Chat</h2>\n<ol>\n  <li>Open the chat.</li>\n  <li>Tap the contact or group name to open chat info.</li>\n  <li>Tap <strong>Disappearing messages</strong>.</li>\n  <li>Choose 24 hours, 7 days or 90 days — or choose <strong>Off</strong> to turn it off.</li>\n</ol>\n<h2>For All New Chats</h2>\n<ol>\n  <li>Go to <strong>Settings &gt; Privacy &gt; Disappearing Messages</strong>.</li>\n  <li>Tap <strong>Default message timer</strong>.</li>\n  <li>Choose a timer, or choose <strong>Off</strong>.</li>\n</ol>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-disappearing-messages\">About Disappearing Messages</a></li>\n    <li><a href=\"/help/managing-your-privacy\">Managing Your Privacy</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "connect-with-businesses",
+      "title": "Connect with Businesses",
+      "icon": null,
+      "order": 2,
+      "locale": "en-US",
+      "subcategories": [
+        {
+          "slug": "messaging-a-business",
+          "title": "Messaging a Business",
+          "icon": null,
+          "order": 0,
+          "articles": [
+            {
+              "slug": "about-business-messaging",
+              "title": "About business messaging",
+              "body": "<p>Businesses use KT Messenger to talk with their customers — answering questions, sharing products, and sending updates about your orders and bookings.</p>\n<h2>What Businesses Can Do</h2>\n<ul>\n  <li>Show a business profile with their address, hours and website.</li>\n  <li>Share a product catalog with photos, prices and descriptions.</li>\n  <li>Send greeting and away messages, and use quick replies.</li>\n  <li>Send updates such as order confirmations, shipping alerts and appointment reminders.</li>\n</ul>\n<h2>Your Chats Stay Protected</h2>\n<p>Conversations are protected end to end with the KT Encryption Protocol by default.</p>\n<p>You're always in control: you can mute, block or report any business.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-business-messaging-works\">How Business Messaging Works</a></li>\n    <li><a href=\"/help/muting-a-business\">Muting a Business</a></li>\n    <li><a href=\"/help/reporting-a-business\">Reporting a Business</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-business-messaging-works",
+              "title": "How business messaging works",
+              "body": "<p>You can chat with a business the same way you chat with friends.</p>\n<h2>Starting a Chat with a Business</h2>\n<ul>\n  <li>Tap a business's KT link, or scan its QR code.</li>\n  <li>Tap an ad that opens a chat with the business.</li>\n  <li>Message a business saved in your contacts.</li>\n</ul>\n<h2>Who You're Talking To</h2>\n<p>Small businesses often reply personally using the KT Business app. Larger businesses may use the KT Business Platform, where a team of agents or an automated assistant can answer your messages.</p>\n<p>Some replies — such as greeting and away messages — are sent automatically.</p>\n<h2>Check the Business Profile</h2>\n<p>Open the business profile to see its details. A verified badge shows that the business identity has been verified.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-business-messaging\">About Business Messaging</a></li>\n    <li><a href=\"/help/about-verification\">About Verification</a></li>\n    <li><a href=\"/help/paying-a-business\">Paying a Business</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "business-payments",
+          "title": "Business Payments",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "paying-a-business",
+              "title": "Paying a business",
+              "body": "<p>Some businesses let you pay for products and services directly in the chat with KT Pay.</p>\n<p><strong>Note:</strong> KT Pay may not be available in every country or for every account. If you don't see the payment option in a chat, payments aren't available to you yet.</p>\n<h2>Pay a Business</h2>\n<ol>\n  <li>Open the chat with the business.</li>\n  <li>Review the order or request and check the amount.</li>\n  <li>Tap the payment option and confirm the payment with your passkey.</li>\n</ol>\n<p>Both you and the business receive a receipt in the chat.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/payment-safety\">Payment Safety</a></li>\n    <li><a href=\"/help/payment-receipts\">Payment Receipts</a></li>\n    <li><a href=\"/help/how-to-send-a-payment\">How to Send a Payment</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "payment-safety",
+              "title": "Payment safety",
+              "body": "<p>Follow these tips to pay businesses safely on KT Messenger.</p>\n<ul>\n  <li>Only pay businesses you know and trust. Check the business profile and look for a verified badge.</li>\n  <li>Check the amount and details carefully before you confirm a payment.</li>\n  <li>Never share your passkey, PIN or verification codes with anyone — not even someone who says they're from KT Messenger.</li>\n  <li>Be cautious of messages that pressure you to pay quickly or offer deals that seem too good to be true.</li>\n  <li>Keep your receipts. You'll need them if something goes wrong.</li>\n</ul>\n<p>If a business asks you to pay in a way that feels suspicious, don't pay — report the business instead.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/paying-a-business\">Paying a Business</a></li>\n    <li><a href=\"/help/reporting-a-business\">Reporting a Business</a></li>\n    <li><a href=\"/help/avoiding-scams\">Avoiding Scams</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "managing-business-chats",
+          "title": "Managing Business Chats",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "muting-a-business",
+              "title": "Muting a business",
+              "body": "<p>If a business sends more notifications than you'd like, you can mute its chat. You'll still receive messages, just without notifications.</p>\n<h2>Mute a Business Chat</h2>\n<ol>\n  <li>Open the chat with the business.</li>\n  <li>Tap the business name.</li>\n  <li>Tap <strong>Mute notifications</strong> and choose how long.</li>\n</ol>\n<p>To unmute, follow the same steps and turn notifications back on.</p>\n<p>If you no longer want messages from the business at all, you can block it.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/reporting-a-business\">Reporting a Business</a></li>\n    <li><a href=\"/help/how-to-block-a-contact\">How to Block a Contact</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "reporting-a-business",
+              "title": "Reporting a business",
+              "body": "<p>Report a business if it sends spam, tries to scam you, or behaves in a way that breaks our rules.</p>\n<h2>Report a Business</h2>\n<ol>\n  <li>Open the chat with the business.</li>\n  <li>Tap the business name.</li>\n  <li>Tap <strong>Report</strong>. You can also block the business at the same time.</li>\n</ol>\n<p>Reports help KT Messenger review accounts that misuse the platform.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/muting-a-business\">Muting a Business</a></li>\n    <li><a href=\"/help/payment-safety\">Payment Safety</a></li>\n    <li><a href=\"/help/reporting-a-problem\">Reporting a Problem</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "calls",
+      "title": "Voice and Video Calls",
+      "icon": "call",
+      "order": 2,
+      "locale": "en-US",
+      "subcategories": [
+        {
+          "slug": "making-a-call",
+          "title": "Making a Call",
+          "icon": null,
+          "order": 0,
+          "articles": [
+            {
+              "slug": "how-to-make-a-voice-call",
+              "title": "How to make a voice call",
+              "body": "<p>You can make free voice calls to anyone who uses KT Messenger. Calls are end-to-end encrypted and have no time limit.</p>\n<h2>Make a Voice Call</h2>\n<ol>\n  <li>Open the chat with the person you want to call.</li>\n  <li>Tap the phone icon.</li>\n</ol>\n<h2>Answer or Decline a Call</h2>\n<ul>\n  <li>Swipe right to answer.</li>\n  <li>Swipe left to decline.</li>\n  <li>Tap <strong>Reply</strong> to decline with a message.</li>\n</ul>\n<h2>Clear Sound</h2>\n<p>AI noise suppression reduces background sounds such as keyboard clicks and street traffic, and echo cancellation keeps the conversation clear.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-make-a-video-call\">How to Make a Video Call</a></li>\n    <li><a href=\"/help/starting-a-group-call\">Starting a Group Call</a></li>\n    <li><a href=\"/help/can-t-make-calls\">Can't Make Calls</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": true,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-make-a-video-call",
+              "title": "How to make a video call",
+              "body": "<p>Video calls on KT Messenger support up to 1080p at 60fps and adjust automatically to your connection, even on slower networks.</p>\n<h2>Make a Video Call</h2>\n<ol>\n  <li>Open the chat with the person you want to call.</li>\n  <li>Tap the video camera icon.</li>\n</ol>\n<h2>During a Video Call</h2>\n<ul>\n  <li>Mute your microphone or turn your camera off at any time.</li>\n  <li>Share your screen in high quality.</li>\n  <li>Move the call to your Mac, Windows PC or iPad.</li>\n</ul>\n<p>Video calls are end-to-end encrypted and have no time limit.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-make-a-voice-call\">How to Make a Voice Call</a></li>\n    <li><a href=\"/help/call-quality-issues\">Call Quality Issues</a></li>\n    <li><a href=\"/help/starting-a-group-call\">Starting a Group Call</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "group-calls",
+          "title": "Group Calls",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "starting-a-group-call",
+              "title": "Starting a group call",
+              "body": "<p>Group voice and video calls let up to 32 people talk together, with no time limit.</p>\n<h2>Start a Call from a Group</h2>\n<ol>\n  <li>Open the group chat.</li>\n  <li>Tap the voice or video call button.</li>\n</ol>\n<p>Group members receive the call and can join.</p>\n<h2>Start a Call with Selected People</h2>\n<ol>\n  <li>Start a call with one person.</li>\n  <li>Add more participants during the call.</li>\n</ol>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/adding-people-to-a-call\">Adding People to a Call</a></li>\n    <li><a href=\"/help/about-call-links\">About Call Links</a></li>\n    <li><a href=\"/help/how-to-make-a-video-call\">How to Make a Video Call</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": true,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "adding-people-to-a-call",
+              "title": "Adding people to a call",
+              "body": "<p>You can add people to a call that's already in progress, up to 32 participants in total.</p>\n<h2>Add Someone to a Call</h2>\n<ol>\n  <li>During the call, tap the add participant button.</li>\n  <li>Choose the contacts you want to add.</li>\n  <li>Confirm to call them.</li>\n</ol>\n<p>You can also invite people by sharing a call link.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/starting-a-group-call\">Starting a Group Call</a></li>\n    <li><a href=\"/help/about-call-links\">About Call Links</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "call-links",
+          "title": "Call Links",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "about-call-links",
+              "title": "About call links",
+              "body": "<p>A call link lets people join a voice or video call just by tapping the link.</p>\n<h2>How Call Links Work</h2>\n<ul>\n  <li>Anyone with the link can ask to join the call, so only share it with people you trust.</li>\n  <li>People can join from the KT Messenger app, or from a browser on KT Web — nothing to install.</li>\n  <li>Group calls can include up to 32 participants.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/creating-a-call-link\">Creating a Call Link</a></li>\n    <li><a href=\"/help/starting-a-group-call\">Starting a Group Call</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "creating-a-call-link",
+              "title": "Creating a call link",
+              "body": "<p>Create a call link to invite people to a call without adding them one by one.</p>\n<h2>Create and Share a Call Link</h2>\n<ol>\n  <li>Open the <strong>Calls</strong> tab.</li>\n  <li>Tap <strong>Create call link</strong>.</li>\n  <li>Choose a voice or video call.</li>\n  <li>Share the link in a chat, or copy it to send another way.</li>\n</ol>\n<p><strong>Note:</strong> Anyone with the link can ask to join, so only share it with the people you want on the call.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-call-links\">About Call Links</a></li>\n    <li><a href=\"/help/adding-people-to-a-call\">Adding People to a Call</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "troubleshooting-calls",
+          "title": "Troubleshooting Calls",
+          "icon": null,
+          "order": 3,
+          "articles": [
+            {
+              "slug": "call-quality-issues",
+              "title": "Call quality issues",
+              "body": "<p>KT Messenger adapts call quality to your connection, but a weak network can still cause dropped audio or blurry video. Try these steps.</p>\n<ul>\n  <li>Move closer to your Wi-Fi router, or switch between Wi-Fi and mobile data.</li>\n  <li>Close apps that are using the internet in the background, such as downloads or streaming.</li>\n  <li>Update KT Messenger to the latest version.</li>\n  <li>Use headphones to reduce echo.</li>\n  <li>Make sure nothing is covering your microphone, speaker or camera.</li>\n  <li>Restart your device and try the call again.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/can-t-make-calls\">Can't Make Calls</a></li>\n    <li><a href=\"/help/how-to-make-a-video-call\">How to Make a Video Call</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "can-t-make-calls",
+              "title": "Can't make calls",
+              "body": "<p>If you can't make or receive calls on KT Messenger, check the following.</p>\n<ul>\n  <li><strong>Permissions:</strong> allow KT Messenger to use your microphone (and camera for video calls) in your device's settings.</li>\n  <li><strong>Connection:</strong> make sure you have an active internet connection.</li>\n  <li><strong>App version:</strong> update KT Messenger to the latest version.</li>\n  <li><strong>Blocked contacts:</strong> you can't call a contact you've blocked.</li>\n  <li><strong>Group size:</strong> a group call can include up to 32 participants.</li>\n</ul>\n<p>If calls still don't work, restart your device and try again.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/call-quality-issues\">Call Quality Issues</a></li>\n    <li><a href=\"/help/how-to-make-a-voice-call\">How to Make a Voice Call</a></li>\n    <li><a href=\"/help/how-to-unblock-a-contact\">How to Unblock a Contact</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "communities",
+      "title": "Communities",
+      "icon": null,
+      "order": 4,
+      "locale": "en-US",
+      "subcategories": [
+        {
+          "slug": "about-communities",
+          "title": "About Communities",
+          "icon": null,
+          "order": 0,
+          "articles": [
+            {
+              "slug": "what-is-a-community",
+              "title": "What is a community",
+              "body": "<p>A community brings related groups together in one place — for example, a school, a neighborhood or a club — with an announcement channel to reach everyone at once.</p>\n<h2>How Communities Work</h2>\n<ul>\n  <li>A community can include up to 50 groups.</li>\n  <li>Each group can have up to 1,024 members.</li>\n  <li>Community admins manage the community and send announcements to all members.</li>\n  <li>Members only see the groups they have joined.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-create-a-community\">How to Create a Community</a></li>\n    <li><a href=\"/help/community-guidelines\">Community Guidelines</a></li>\n    <li><a href=\"/help/adding-groups\">Adding Groups</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "community-guidelines",
+              "title": "Community guidelines",
+              "body": "<p>Communities work best when everyone feels safe and respected. Follow these guidelines when you create or take part in a community.</p>\n<h2>Be Respectful</h2>\n<ul>\n  <li>Treat other members with respect. Don't harass, bully or threaten anyone.</li>\n  <li>Don't share hateful, violent or sexually explicit content.</li>\n</ul>\n<h2>Keep It Safe</h2>\n<ul>\n  <li>Don't send spam, scams or misleading links.</li>\n  <li>Don't impersonate another person, business or organization.</li>\n  <li>Don't share other people's private information without their permission.</li>\n</ul>\n<h2>For Admins</h2>\n<p>Admins are responsible for keeping their community on topic and removing members who break the rules.</p>\n<p>You can report members or content that break these guidelines. Accounts that break KT Messenger's rules may be banned.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/what-is-a-community\">What Is a Community</a></li>\n    <li><a href=\"/help/removing-members\">Removing Members</a></li>\n    <li><a href=\"/help/reporting-a-problem\">Reporting a Problem</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "creating-a-community",
+          "title": "Creating a Community",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "how-to-create-a-community",
+              "title": "How to create a community",
+              "body": "<p>Create a community to bring your groups together and reach all of your members with announcements.</p>\n<h2>Create a Community</h2>\n<ol>\n  <li>Open KT Messenger and go to <strong>Communities</strong>.</li>\n  <li>Tap <strong>New community</strong>.</li>\n  <li>Add a community name, a description and a photo.</li>\n  <li>Add existing groups or create new ones.</li>\n  <li>Tap <strong>Create</strong>.</li>\n</ol>\n<p>An announcement channel is created automatically so you can message all members at once. You become the community admin.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/what-is-a-community\">What Is a Community</a></li>\n    <li><a href=\"/help/adding-groups\">Adding Groups</a></li>\n    <li><a href=\"/help/adding-members\">Adding Members</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "adding-groups",
+              "title": "Adding groups",
+              "body": "<p>Community admins can add groups to a community — up to 50 groups in total.</p>\n<h2>Add a Group</h2>\n<ol>\n  <li>Open the community.</li>\n  <li>Tap <strong>Add group</strong>.</li>\n  <li>Choose an existing group you manage, or create a new group.</li>\n</ol>\n<p>Members of the community can then find and join the group.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-create-a-community\">How to Create a Community</a></li>\n    <li><a href=\"/help/adding-members\">Adding Members</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-choose-who-can-add-groups-to-a-community",
+              "title": "How to choose who can add groups to a community",
+              "body": "",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 2,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "managing-members",
+          "title": "Managing Members",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "adding-members",
+              "title": "Adding members",
+              "body": "<p>Group and community admins can add members directly or invite them with a link.</p>\n<h2>Add Members</h2>\n<ol>\n  <li>Open the group and tap the group name.</li>\n  <li>Tap <strong>Add members</strong>.</li>\n  <li>Select contacts and confirm.</li>\n</ol>\n<h2>Invite with a Link</h2>\n<p>Share the group's invite link so people can join on their own. Admins can manage invite links and turn on member approval to review requests before people join.</p>\n<p><strong>Note:</strong> People choose who can add them to groups in their privacy settings. If you can't add someone, send them an invite link instead.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/removing-members\">Removing Members</a></li>\n    <li><a href=\"/help/adding-groups\">Adding Groups</a></li>\n    <li><a href=\"/help/managing-your-privacy\">Managing Your Privacy</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "removing-members",
+              "title": "Removing members",
+              "body": "<p>Group and community admins can remove members who no longer belong or who break the rules.</p>\n<h2>Remove a Member</h2>\n<ol>\n  <li>Open the group and tap the group name.</li>\n  <li>Tap the member you want to remove.</li>\n  <li>Tap <strong>Remove</strong> and confirm.</li>\n</ol>\n<p>Removed members can no longer send or see new messages in the group.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/adding-members\">Adding Members</a></li>\n    <li><a href=\"/help/community-guidelines\">Community Guidelines</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "channels",
+      "title": "Channels",
+      "icon": null,
+      "order": 5,
+      "locale": "en-US",
+      "subcategories": [
+        {
+          "slug": "about-channels",
+          "title": "About Channels",
+          "icon": null,
+          "order": 0,
+          "articles": [
+            {
+              "slug": "what-are-channels",
+              "title": "What are channels",
+              "body": "<p>Channels are a one-way broadcast tool: admins share updates with an unlimited audience of followers.</p>\n<h2>How Channels Work</h2>\n<ul>\n  <li>Only channel admins can post. Followers receive the updates.</li>\n  <li>You'll find channels in the <strong>Updates</strong> tab.</li>\n  <li>Anyone can create a channel for free.</li>\n  <li>Organizations can apply for a verified badge.</li>\n</ul>\n<p><strong>Note:</strong> Channel updates are encrypted in transit. Unlike your personal chats, they are not end-to-end encrypted, because channels are designed to reach a large audience.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-follow-a-channel\">How to Follow a Channel</a></li>\n    <li><a href=\"/help/channel-privacy\">Channel Privacy</a></li>\n    <li><a href=\"/help/how-to-create-a-channel\">How to Create a Channel</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "channel-privacy",
+              "title": "Channel privacy",
+              "body": "<p>Following a channel keeps your personal information private.</p>\n<h2>As a Follower</h2>\n<ul>\n  <li>Channel admins can't see your phone number, profile photo or name.</li>\n  <li>Other followers can't see that you follow the channel.</li>\n</ul>\n<h2>As an Admin</h2>\n<p>Channel admins can turn on automatic clearing so that channel updates are removed after 30 days.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/what-are-channels\">What Are Channels</a></li>\n    <li><a href=\"/help/how-to-follow-a-channel\">How to Follow a Channel</a></li>\n    <li><a href=\"/help/managing-your-privacy\">Managing Your Privacy</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "following-channels",
+          "title": "Following Channels",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "how-to-follow-a-channel",
+              "title": "How to follow a channel",
+              "body": "<p>Follow channels to get updates from the people and organizations you care about.</p>\n<h2>Follow a Channel</h2>\n<ol>\n  <li>Open the <strong>Updates</strong> tab.</li>\n  <li>Browse or search for a channel.</li>\n  <li>Tap <strong>Follow</strong>.</li>\n</ol>\n<p>You can also follow a channel by tapping its invite link.</p>\n<h2>Unfollow a Channel</h2>\n<p>Open the channel, tap the channel name, then tap <strong>Unfollow</strong>.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/muting-a-channel\">Muting a Channel</a></li>\n    <li><a href=\"/help/what-are-channels\">What Are Channels</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "muting-a-channel",
+              "title": "Muting a channel",
+              "body": "<p>Mute a channel to keep following it without getting notifications for every update.</p>\n<h2>Mute a Channel</h2>\n<ol>\n  <li>Open the channel.</li>\n  <li>Tap the channel name.</li>\n  <li>Tap <strong>Mute notifications</strong>.</li>\n</ol>\n<p>Updates still appear in the channel. To unmute, follow the same steps and turn notifications back on.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-follow-a-channel\">How to Follow a Channel</a></li>\n    <li><a href=\"/help/notifications-are-not-working\">Notifications Are Not Working</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "creating-a-channel",
+          "title": "Creating a Channel",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "how-to-create-a-channel",
+              "title": "How to create a channel",
+              "body": "<p>Anyone can create a channel on KT Messenger for free.</p>\n<h2>Create a Channel</h2>\n<ol>\n  <li>Open the <strong>Updates</strong> tab.</li>\n  <li>Tap the add button and choose <strong>New channel</strong>.</li>\n  <li>Add a channel name, a description and a photo.</li>\n  <li>Tap <strong>Create</strong>.</li>\n</ol>\n<h2>Manage Your Channel</h2>\n<ul>\n  <li>Add co-admins to help you post.</li>\n  <li>Schedule posts in advance.</li>\n  <li>See detailed reach analytics for your updates.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/posting-updates\">Posting Updates</a></li>\n    <li><a href=\"/help/what-are-channels\">What Are Channels</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "posting-updates",
+              "title": "Posting updates",
+              "body": "<p>Channel admins can share text, photos, videos, links and more with all followers.</p>\n<h2>Post an Update</h2>\n<ol>\n  <li>Open your channel.</li>\n  <li>Type your message or attach a photo, video or file.</li>\n  <li>Tap <strong>Send</strong> to post it, or schedule it for later.</li>\n</ol>\n<h2>Tips</h2>\n<ul>\n  <li>Use post scheduling to share updates at the best time for your audience.</li>\n  <li>Check reach analytics to see how your updates perform.</li>\n  <li>Keep your updates relevant, and follow the community guidelines.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-create-a-channel\">How to Create a Channel</a></li>\n    <li><a href=\"/help/community-guidelines\">Community Guidelines</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "privacy-safety-and-security",
+      "title": "Privacy, Safety, and Security",
+      "icon": null,
+      "order": 6,
+      "locale": "en-US",
+      "subcategories": [
+        {
+          "slug": "privacy-settings",
+          "title": "Privacy Settings",
+          "icon": null,
+          "order": 0,
+          "articles": [
+            {
+              "slug": "managing-your-privacy",
+              "title": "Managing your privacy",
+              "body": "<p>KT Messenger gives you control over who can see your information and who can contact you. You'll find these options in <strong>Settings &gt; Privacy</strong>.</p>\n<h2>Who Can See My Personal Info</h2>\n<ul>\n  <li><strong>Last seen and Online</strong></li>\n  <li><strong>Profile photo</strong></li>\n</ul>\n<p>For each one, choose <strong>Everyone</strong>, <strong>My contacts</strong>, <strong>My contacts except...</strong> or <strong>Nobody</strong>.</p>\n<h2>More Privacy Controls</h2>\n<ul>\n  <li><strong>Groups:</strong> choose who can add you to groups — Everyone, My Contacts, or My Contacts Except.</li>\n  <li><strong>Status:</strong> choose who can see your status updates.</li>\n  <li><strong>Read receipts:</strong> decide whether others see when you've read their messages.</li>\n  <li><strong>Disappearing messages:</strong> set a default timer for new chats.</li>\n  <li><strong>Chat lock:</strong> hide private chats in a Locked Chats folder that opens with Face ID, your fingerprint or a secret passcode.</li>\n  <li><strong>Silence unknown callers:</strong> calls from unknown numbers appear in your call log without ringing.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/last-seen-and-online\">Last Seen and Online</a></li>\n    <li><a href=\"/help/status-privacy\">Status Privacy</a></li>\n    <li><a href=\"/help/how-to-block-a-contact\">How to Block a Contact</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": true,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "last-seen-and-online",
+              "title": "Last seen and online",
+              "body": "<p>You choose who can see when you're online and when you last used KT Messenger.</p>\n<h2>Change Your Last Seen and Online Settings</h2>\n<ol>\n  <li>Go to <strong>Settings &gt; Privacy</strong>.</li>\n  <li>Tap <strong>Last seen and online</strong>.</li>\n  <li>Choose who can see your last seen: <strong>Everyone</strong>, <strong>My contacts</strong>, <strong>My contacts except...</strong> or <strong>Nobody</strong>.</li>\n  <li>Choose who can see when you're online.</li>\n</ol>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/managing-your-privacy\">Managing Your Privacy</a></li>\n    <li><a href=\"/help/status-privacy\">Status Privacy</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-use-app-lock",
+              "title": "How to use app lock",
+              "body": "<p>As an additional security measure, you can turn on app lock on KT Messenger Web. When app lock is turned on, you'll need to enter your password to unlock KT Messenger Web. Your message contents will be secure when the app is locked. Notifications will not appear when your app is locked.</p>\n<h2>Turn app lock on</h2>\n<ol>\n  <li>Click <strong>Settings &gt; Privacy &gt; App lock</strong>.</li>\n  <li>Select <strong>App lock</strong>.</li>\n  <li>Enter a strong password of your choice.\n    <ul>\n      <li>Your password must be between 6-128 characters, and may only contain letters, numbers, and common punctuation.</li>\n      <li>You should use a combination of letters, numbers, and special characters to set a strong password.</li>\n    </ul>\n  </li>\n  <li>Click <strong>OK</strong>.</li>\n</ol>\n<p>You can set your app to lock <strong>After 1 minute</strong>, <strong>After 15 minutes</strong>, <strong>After 1 hour</strong>, or <strong>After 8 hours</strong>.</p>\n<h2>Turn app lock off</h2>\n<ol>\n  <li>Click <strong>Settings &gt; Privacy &gt; App lock</strong>.</li>\n  <li>Deselect <strong>App lock</strong>.</li>\n  <li>Enter your password.</li>\n  <li>Click <strong>OK</strong>.</li>\n</ol>\n<h2>Manually lock your app</h2>\n<p>When app lock is enabled on KT Messenger Web, you can manually lock your app.</p>\n<ol>\n  <li>Click <strong>More Options</strong> (three vertical dots).</li>\n  <li>Click <strong>Lock app</strong>.</li>\n</ol>\n<p>Alternatively, you can use a keyboard shortcut.</p>\n<ul>\n  <li><strong>Mac:</strong> Cmd + Ctrl + L</li>\n  <li><strong>Windows:</strong> Ctrl + Alt + L</li>\n</ul>\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-two-step-verification\">About two step verification</a></li>\n    <li><a href=\"/help/managing-your-privacy\">Managing your privacy</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 2,
+              "locale": "en-US",
+              "seoTitle": "How to use app lock | KT Messenger Help Center",
+              "seoDescription": "Learn how to turn app lock on or off on KT Messenger Web, set a lock timer, and manually lock your app with a keyboard shortcut."
+            }
+          ]
+        },
+        {
+          "slug": "blocking-contacts",
+          "title": "Blocking Contacts",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "how-to-block-a-contact",
+              "title": "How to block a contact",
+              "body": "<p>Block a contact to stop them from calling you or sending you messages.</p>\n<h2>Block a Contact</h2>\n<ol>\n  <li>Open the chat with the contact.</li>\n  <li>Tap the contact's name.</li>\n  <li>Tap <strong>Block</strong> and confirm.</li>\n</ol>\n<p>If the contact is sending spam or making you feel unsafe, tap <strong>Report &amp; Block</strong> to report them at the same time.</p>\n<p>Blocking doesn't remove the person from your phone's contacts.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-unblock-a-contact\">How to Unblock a Contact</a></li>\n    <li><a href=\"/help/blocking-a-contact\">Blocking a Contact</a></li>\n    <li><a href=\"/help/reporting-a-problem\">Reporting a Problem</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": true,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-unblock-a-contact",
+              "title": "How to unblock a contact",
+              "body": "<p>You can unblock a contact at any time.</p>\n<h2>Unblock a Contact</h2>\n<ol>\n  <li>Open the chat with the blocked contact.</li>\n  <li>Tap the contact's name.</li>\n  <li>Tap <strong>Unblock</strong>.</li>\n</ol>\n<p>After you unblock someone, they can call you and send you messages again.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-block-a-contact\">How to Block a Contact</a></li>\n    <li><a href=\"/help/blocking-a-contact\">Blocking a Contact</a></li>\n  </ul>\n</div>",
+              "platforms": [
+                "Android",
+                "iOS",
+                "Mac",
+                "Windows"
+              ],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "two-step-verification",
+          "title": "Two Step Verification",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "about-two-step-verification",
+              "title": "About two step verification",
+              "body": "<p>Two-step verification is an optional security feature that adds an extra layer of protection to your account.</p>\n<h2>How It Works</h2>\n<p>When two-step verification is on, you'll need your 6-digit PIN — or your passkey with biometrics — in addition to your verification code when you sign in to your account on a new device.</p>\n<p>This keeps your account protected even if someone gains access to your verification code.</p>\n<h2>Keep Your PIN Safe</h2>\n<ul>\n  <li>Choose a PIN that's hard to guess.</li>\n  <li>Never share your PIN with anyone.</li>\n</ul>\n<p><strong>Note:</strong> KT Messenger Support will never ask for your PIN or verification code.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/turning-it-on\">Turning It On</a></li>\n    <li><a href=\"/help/about-registration-and-two-step-verification\">About Registration and Two-Step Verification</a></li>\n    <li><a href=\"/help/avoiding-scams\">Avoiding Scams</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "turning-it-on",
+              "title": "Turning it on",
+              "body": "<p>Turn on two-step verification to add a PIN to your account.</p>\n<h2>Turn On Two-Step Verification</h2>\n<ol>\n  <li>Open KT Messenger and go to <strong>Settings &gt; Account</strong>.</li>\n  <li>Tap <strong>Two-step verification</strong>.</li>\n  <li>Tap <strong>Turn on</strong>.</li>\n  <li>Enter a 6-digit PIN, then enter it again to confirm.</li>\n</ol>\n<p>You'll be asked for this PIN when you sign in to your account on a new device. You can change your PIN or turn two-step verification off from the same screen.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-two-step-verification\">About Two-Step Verification</a></li>\n    <li><a href=\"/help/about-registration-and-two-step-verification\">About Registration and Two-Step Verification</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "staying-safe",
+          "title": "Staying Safe",
+          "icon": null,
+          "order": 3,
+          "articles": [
+            {
+              "slug": "avoiding-scams",
+              "title": "Avoiding scams",
+              "body": "<p>Scammers may try to trick you into sharing your codes, sending money or clicking harmful links. Here's how to stay safe.</p>\n<h2>Warning Signs</h2>\n<ul>\n  <li>Messages that pressure you to act quickly.</li>\n  <li>Requests for your verification code, PIN or passkey.</li>\n  <li>A friend asking for money from a new number.</li>\n  <li>Offers, prizes or deals that seem too good to be true.</li>\n</ul>\n<h2>Protect Yourself</h2>\n<ul>\n  <li>Never share your verification code, PIN or passkey. KT Messenger Support will never ask for them.</li>\n  <li>Be cautious with links, especially from people you don't know.</li>\n  <li>Check with friends or family in another way before sending money.</li>\n  <li>Turn on <a href=\"/help/turning-it-on\">two-step verification</a>.</li>\n  <li>Silence unknown callers in your privacy settings.</li>\n</ul>\n<p>If something feels wrong, block and report the account.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/reporting-a-problem\">Reporting a Problem</a></li>\n    <li><a href=\"/help/how-to-block-a-contact\">How to Block a Contact</a></li>\n    <li><a href=\"/help/about-two-step-verification\">About Two-Step Verification</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "reporting-a-problem",
+              "title": "Reporting a problem",
+              "body": "<p>Let us know when something goes wrong, so we can help and keep KT Messenger safe.</p>\n<h2>Report an Account</h2>\n<ol>\n  <li>Open the chat with the account.</li>\n  <li>Tap the contact, group or business name.</li>\n  <li>Tap <strong>Report</strong>. You can block the account at the same time.</li>\n</ol>\n<h2>Report a Problem with the App</h2>\n<p>Contact KT Messenger Support and describe the problem. Include your device model, operating system version, KT Messenger version, and the steps that lead to the problem.</p>\n<h2>Report a Security Issue</h2>\n<p>If you've found a security vulnerability, contact KT Messenger Support with a security disclosure. Security reports are reviewed within one business day.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/avoiding-scams\">Avoiding Scams</a></li>\n    <li><a href=\"/help/how-to-block-a-contact\">How to Block a Contact</a></li>\n    <li><a href=\"/help/reporting-a-business\">Reporting a Business</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "accounts-and-account-bans",
+      "title": "Accounts and Account Bans",
+      "icon": null,
+      "order": 7,
+      "locale": "en-US",
+      "subcategories": [
+        {
+          "slug": "managing-your-account",
+          "title": "Managing Your Account",
+          "icon": null,
+          "order": 0,
+          "articles": [
+            {
+              "slug": "changing-your-number",
+              "title": "Changing your number",
+              "body": "<p>If you get a new phone number, you can move your KT Messenger account to it.</p>\n<h2>Before You Start</h2>\n<ul>\n  <li>Make sure your new phone number can receive calls or messages.</li>\n  <li>Make sure you still have access to the email address on your account, as a verification code will be sent to it.</li>\n</ul>\n<h2>Change Your Number</h2>\n<ol>\n  <li>Go to <strong>Settings &gt; Account</strong>.</li>\n  <li>Tap <strong>Change number</strong>.</li>\n  <li>Enter your old number and your new number.</li>\n  <li>Follow the on-screen steps to verify your new number.</li>\n</ol>\n<p>Your chats, groups and settings stay with your account.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-register-your-phone-number\">How to Register Your Account</a></li>\n    <li><a href=\"/help/updating-your-profile\">Updating Your Profile</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "updating-your-profile",
+              "title": "Updating your profile",
+              "body": "<p>Your profile helps people recognize you on KT Messenger.</p>\n<h2>Update Your Profile</h2>\n<ol>\n  <li>Go to <strong>Settings</strong>.</li>\n  <li>Tap your name or profile photo.</li>\n  <li>Change your name, profile photo, about, or <a href=\"/help/about-usernames\">username</a>.</li>\n</ol>\n<p>You can choose who can see your profile photo in your <a href=\"/help/managing-your-privacy\">privacy settings</a>.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-usernames\">About Usernames</a></li>\n    <li><a href=\"/help/managing-your-privacy\">Managing Your Privacy</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "deleting-your-account",
+          "title": "Deleting Your Account",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "how-to-delete-your-account",
+              "title": "How to delete your account",
+              "body": "<p>Deleting your account is permanent and cannot be undone.</p>\n<h2>Before You Delete</h2>\n<ul>\n  <li>If you only want to stop using KT Messenger on one device, <a href=\"/help/how-to-download-or-uninstall-kt-messenger\">uninstall the app</a> instead.</li>\n  <li>If you want to keep your chats, <a href=\"/help/how-to-back-up-your-chats\">back them up</a> first.</li>\n</ul>\n<h2>Delete Your Account</h2>\n<ol>\n  <li>Go to <strong>Settings &gt; Account</strong>.</li>\n  <li>Tap <strong>Delete account</strong>.</li>\n  <li>Enter your phone number to confirm.</li>\n  <li>Tap <strong>Delete account</strong>.</li>\n</ol>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/what-happens-when-you-delete\">What Happens When You Delete</a></li>\n    <li><a href=\"/help/how-to-back-up-your-chats\">How to Back Up Your Chats</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "what-happens-when-you-delete",
+              "title": "What happens when you delete",
+              "body": "<p>When you delete your KT Messenger account:</p>\n<ul>\n  <li>Your account is deleted and can't be restored.</li>\n  <li>Your message history is deleted from your device.</li>\n  <li>You're removed from all of your groups and communities.</li>\n  <li>Your profile, username and settings are removed.</li>\n</ul>\n<p>If you want to use KT Messenger again later, you'll need to register a new account.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-delete-your-account\">How to Delete Your Account</a></li>\n    <li><a href=\"/help/how-to-register-your-phone-number\">How to Register Your Account</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "banned-accounts",
+          "title": "Banned Accounts",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "about-banned-accounts",
+              "title": "About banned accounts",
+              "body": "<p>KT Messenger may ban accounts that break our Terms of Service, to keep the platform safe for everyone.</p>\n<h2>Common Reasons for a Ban</h2>\n<ul>\n  <li>Sending spam or unwanted bulk messages.</li>\n  <li>Scams, fraud or phishing.</li>\n  <li>Impersonating another person, business or organization.</li>\n  <li>Harassment, threats or sharing harmful content.</li>\n</ul>\n<p>If you believe your account was banned by mistake, you can request a review.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/requesting-a-review\">Requesting a Review</a></li>\n    <li><a href=\"/help/community-guidelines\">Community Guidelines</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "requesting-a-review",
+              "title": "Requesting a review",
+              "body": "<p>If you think your account was banned or locked by mistake, you can ask us to review it.</p>\n<h2>Request a Review</h2>\n<ol>\n  <li>Contact KT Messenger Support and choose account support.</li>\n  <li>Include the phone number linked to your account.</li>\n  <li>Briefly explain why you believe the ban is a mistake.</li>\n</ol>\n<p>Our account support team usually replies within 24 hours. Please send one request only — sending several doesn't speed up the review.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-banned-accounts\">About Banned Accounts</a></li>\n    <li><a href=\"/help/reporting-a-problem\">Reporting a Problem</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "payments",
+      "title": "Payments",
+      "icon": null,
+      "order": 8,
+      "locale": "en-US",
+      "subcategories": [
+        {
+          "slug": "sending-payments",
+          "title": "Sending Payments",
+          "icon": null,
+          "order": 0,
+          "articles": [
+            {
+              "slug": "how-to-send-a-payment",
+              "title": "How to send a payment",
+              "body": "<p>With KT Pay you can send money to your contacts right from a chat.</p>\n<p><strong>Note:</strong> KT Pay may not be available in every country or for every account. If you don't see the payment option in KT Messenger, payments aren't available to you yet.</p>\n<h2>Send a Payment</h2>\n<ol>\n  <li>Open the chat with a contact who uses KT Pay.</li>\n  <li>Tap the payment icon.</li>\n  <li>Enter the amount.</li>\n  <li>Check the details, then confirm with your passkey.</li>\n</ol>\n<p>Both you and the recipient receive a receipt in the chat.</p>\n<p><strong>Note:</strong> A payment can't be cancelled once it has been completed, so always check the recipient and the amount before you confirm.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/adding-a-payment-method\">Adding a Payment Method</a></li>\n    <li><a href=\"/help/payment-receipts\">Payment Receipts</a></li>\n    <li><a href=\"/help/keeping-payments-secure\">Keeping Payments Secure</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "adding-a-payment-method",
+              "title": "Adding a payment method",
+              "body": "<p>Before you can send payments, add a payment method to KT Pay.</p>\n<p><strong>Note:</strong> KT Pay may not be available in every country or for every account. If you don't see the payment option in KT Messenger, payments aren't available to you yet.</p>\n<h2>Add a Payment Method</h2>\n<ol>\n  <li>Open KT Pay in KT Messenger.</li>\n  <li>Tap <strong>Add payment method</strong>.</li>\n  <li>Choose a supported method, such as a bank account or card.</li>\n  <li>Follow the on-screen steps to verify it.</li>\n</ol>\n<p>Only add payment methods that belong to you.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-send-a-payment\">How to Send a Payment</a></li>\n    <li><a href=\"/help/keeping-payments-secure\">Keeping Payments Secure</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "payment-history",
+          "title": "Payment History",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "viewing-your-history",
+              "title": "Viewing your history",
+              "body": "<p>You can see every payment you've sent and received in KT Pay.</p>\n<p><strong>Note:</strong> KT Pay may not be available in every country or for every account. If you don't see the payment option in KT Messenger, payments aren't available to you yet.</p>\n<h2>View Your Payment History</h2>\n<ol>\n  <li>Open KT Pay in KT Messenger.</li>\n  <li>Go to your activity.</li>\n  <li>Tap a payment to see its details and receipt.</li>\n</ol>\n<p>Where available, you can export your history as a CSV or PDF file for your records.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/payment-receipts\">Payment Receipts</a></li>\n    <li><a href=\"/help/reporting-an-issue\">Reporting an Issue</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "payment-receipts",
+              "title": "Payment receipts",
+              "body": "<p>Every completed KT Pay payment comes with a receipt.</p>\n<p><strong>Note:</strong> KT Pay may not be available in every country or for every account. If you don't see the payment option in KT Messenger, payments aren't available to you yet.</p>\n<h2>Where to Find Receipts</h2>\n<ul>\n  <li>A copy of the receipt is delivered into the chat where the payment was made.</li>\n  <li>You can also open any payment from your KT Pay activity to see its receipt.</li>\n</ul>\n<p>Receipts show the amount, the date and the status of the payment. Keep your receipts — you'll need them if you have to report an issue.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/viewing-your-history\">Viewing Your History</a></li>\n    <li><a href=\"/help/reporting-an-issue\">Reporting an Issue</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "payment-security",
+          "title": "Payment Security",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "keeping-payments-secure",
+              "title": "Keeping payments secure",
+              "body": "<p>KT Pay is designed to keep your money safe. Every payment must be approved with your passkey.</p>\n<h2>Tips to Stay Secure</h2>\n<ul>\n  <li>Never share your passkey, PIN or verification codes with anyone.</li>\n  <li>Only send money to people and businesses you know and trust.</li>\n  <li>Check the recipient and the amount before you confirm.</li>\n  <li>Pay attention to scam warnings shown in the app.</li>\n  <li>Be cautious of messages that pressure you to pay quickly.</li>\n</ul>\n<p>If you think someone has accessed your account or payment, report it right away.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/reporting-an-issue\">Reporting an Issue</a></li>\n    <li><a href=\"/help/avoiding-scams\">Avoiding Scams</a></li>\n    <li><a href=\"/help/payment-safety\">Payment Safety</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "reporting-an-issue",
+              "title": "Reporting an issue",
+              "body": "<p>If a payment went wrong — for example, it was sent to the wrong person or for the wrong amount — here's what to do.</p>\n<h2>Raise a Dispute</h2>\n<ol>\n  <li>Open the payment's receipt.</li>\n  <li>Choose the option to raise a dispute.</li>\n  <li>Describe what happened.</li>\n</ol>\n<p>A completed payment can't be reversed by one side alone, so raise a dispute as soon as possible.</p>\n<h2>Contact Support</h2>\n<p>You can also contact KT Messenger Support about a payment that went wrong. Our account support team usually replies within 24 hours. Include the payment details from your receipt.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/payment-receipts\">Payment Receipts</a></li>\n    <li><a href=\"/help/keeping-payments-secure\">Keeping Payments Secure</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "kt-for-business",
+      "title": "KT for Business",
+      "icon": null,
+      "order": 9,
+      "locale": "en-US",
+      "subcategories": [
+        {
+          "slug": "business-app",
+          "title": "Business App",
+          "icon": null,
+          "order": 0,
+          "articles": [
+            {
+              "slug": "about-the-business-app",
+              "title": "About the Business app",
+              "body": "<p>The KT Business app is a free app for small business owners who manage customer conversations on their phone.</p>\n<h2>Features</h2>\n<ul>\n  <li><strong>Product catalog:</strong> show your products and services with images, prices and descriptions.</li>\n  <li><strong>Business profile:</strong> add your address, hours, website and a verified business identity.</li>\n  <li><strong>Away and greeting messages:</strong> reply automatically when you're busy, or welcome new customers instantly.</li>\n  <li><strong>Quick replies and labels:</strong> answer common questions in a tap and organize your chats.</li>\n</ul>\n<h2>Free to Start</h2>\n<p>The Business app is free and runs on the phone you already use, with 1,000 service conversations every month.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/setting-up-your-catalog\">Setting Up Your Catalog</a></li>\n    <li><a href=\"/help/about-the-business-platform\">About the Business Platform</a></li>\n    <li><a href=\"/help/about-verification\">About Verification</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "setting-up-your-catalog",
+              "title": "Setting up your catalog",
+              "body": "<p>A catalog lets customers browse your products and services right inside KT Messenger.</p>\n<h2>Set Up Your Catalog</h2>\n<ol>\n  <li>Open the KT Business app.</li>\n  <li>Go to your business tools and open <strong>Catalog</strong>.</li>\n  <li>Add a product or service with a photo, name, price and description.</li>\n  <li>Save it, then repeat for your other products.</li>\n</ol>\n<h2>Tips</h2>\n<ul>\n  <li>Use clear photos and short, accurate descriptions.</li>\n  <li>Keep prices and availability up to date.</li>\n  <li>Share your catalog, your KT link or your QR code with customers.</li>\n</ul>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-the-business-app\">About the Business App</a></li>\n    <li><a href=\"/help/about-business-messaging\">About Business Messaging</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "business-platform",
+          "title": "Business Platform",
+          "icon": null,
+          "order": 1,
+          "articles": [
+            {
+              "slug": "about-the-business-platform",
+              "title": "About the Business Platform",
+              "body": "<p>The KT Business Platform is a programmable messaging platform for medium and large businesses — to send notifications, run customer support and automate conversations at scale.</p>\n<h2>What's Included</h2>\n<ul>\n  <li>A REST and webhook API, with SDKs for Node.js, Python, PHP, Java and Go.</li>\n  <li>Message templates that are approved once and reused across campaigns.</li>\n  <li>Automation and chatbots connected to your own systems and CRM.</li>\n  <li>A shared team inbox with assignments, labels and internal notes.</li>\n  <li>Delivery and engagement analytics.</li>\n  <li>End-to-end encryption with the KT Encryption Protocol by default.</li>\n</ul>\n<h2>Pricing</h2>\n<p>The first 1,000 service conversations every month are free. A conversation is a 24-hour message thread, and pricing is billed separately per region.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/getting-started\">Getting Started</a></li>\n    <li><a href=\"/help/about-the-business-app\">About the Business App</a></li>\n    <li><a href=\"/help/about-verification\">About Verification</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "getting-started",
+              "title": "Getting started",
+              "body": "<p>Send your first message over the KT Business Platform in a few steps.</p>\n<ol>\n  <li><strong>Create a developer account:</strong> sign up for KT Business and open the developer console.</li>\n  <li><strong>Generate an API key:</strong> create a scoped API key and connect a sandbox number to test with.</li>\n  <li><strong>Send your first message:</strong> use a code sample or SDK to send a test message and confirm delivery.</li>\n  <li><strong>Set up webhooks:</strong> point a webhook URL at your server to receive incoming messages and status events.</li>\n  <li><strong>Go live:</strong> register your production number, submit your message templates for approval, and switch to your production keys.</li>\n</ol>\n<p>The sandbox lets you send a test message right away, and you can rotate your API keys at any time.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-the-business-platform\">About the Business Platform</a></li>\n    <li><a href=\"/help/how-to-get-verified\">How to Get Verified</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        },
+        {
+          "slug": "get-verified",
+          "title": "Get Verified",
+          "icon": null,
+          "order": 2,
+          "articles": [
+            {
+              "slug": "about-verification",
+              "title": "About verification",
+              "body": "<p>A verified badge shows customers that a business's identity has been verified by KT Messenger.</p>\n<h2>Why Verification Matters</h2>\n<ul>\n  <li>Customers can trust that they're talking to the real business.</li>\n  <li>It helps protect your customers from people who impersonate your brand.</li>\n</ul>\n<p>Not every business qualifies for verification.</p>\n<p><strong>Note:</strong> Impersonating another business is not allowed on KT Messenger. If you see a fake business account, report it.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/how-to-get-verified\">How to Get Verified</a></li>\n    <li><a href=\"/help/reporting-a-business\">Reporting a Business</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 0,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            },
+            {
+              "slug": "how-to-get-verified",
+              "title": "How to get verified",
+              "body": "<p>Businesses and organizations can apply for a verified badge.</p>\n<h2>Before You Apply</h2>\n<ul>\n  <li>Register your business with your business phone number.</li>\n  <li>Complete your business profile: name, logo, category, address, hours and website.</li>\n  <li>Make sure the details match your official business information.</li>\n</ul>\n<h2>Apply for Verification</h2>\n<p>Submit a verification request for your business account. KT Messenger reviews each request, and the badge appears on your profile if it's approved.</p>\n<p><strong>Note:</strong> Not every business qualifies, and a verified badge can be removed if a business breaks KT Messenger's rules.</p>\n\n<div class=\"note\">\n  <h2>Related Resources</h2>\n  <ul>\n    <li><a href=\"/help/about-verification\">About Verification</a></li>\n    <li><a href=\"/help/about-the-business-app\">About the Business App</a></li>\n  </ul>\n</div>",
+              "platforms": [],
+              "popular": false,
+              "status": "PUBLISHED",
+              "order": 1,
+              "locale": "en-US",
+              "seoTitle": null,
+              "seoDescription": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

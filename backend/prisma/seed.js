@@ -104,15 +104,22 @@ async function main() {
       ],
     },
   ]
+  // Create-only, the same way the articles below already behave.
+  //
+  // The Help Center is admin-managed once it exists: titles get reworded, the
+  // order gets rearranged, and scripts/import-help-center.mjs adds categories
+  // this list has never heard of. An `update` branch here would undo that
+  // every single time the seed runs — and a seed tends to get re-run long
+  // after the first install, on a database that is no longer empty.
   let catOrder = 0
   for (const cat of helpTree) {
-    const category = await prisma.helpCategory.upsert({ where: { slug: cat.slug }, update: { title: cat.title, icon: cat.icon, order: catOrder }, create: { slug: cat.slug, title: cat.title, icon: cat.icon, order: catOrder } })
+    const category = await prisma.helpCategory.upsert({ where: { slug: cat.slug }, update: {}, create: { slug: cat.slug, title: cat.title, icon: cat.icon, order: catOrder } })
     catOrder++
     let subOrder = 0
     for (const sub of cat.subs) {
       const subcategory = await prisma.helpSubcategory.upsert({
         where: { categoryId_slug: { categoryId: category.id, slug: sub.slug } },
-        update: { title: sub.title, order: subOrder },
+        update: {},
         create: { categoryId: category.id, slug: sub.slug, title: sub.title, order: subOrder },
       })
       subOrder++
