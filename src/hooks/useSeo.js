@@ -57,13 +57,19 @@ function canonicalPath(declared, served) {
  * /messaging to /messaging/, while the dev server and the SPA fallback answer
  * the same route without the slash. Following whichever form is live keeps the
  * canonical from disagreeing with the address bar in either place.
+ *
+ * At the site root both forms are "/", so the live URL says nothing about
+ * which the host uses; the path is then left exactly as the caller built it.
+ * That only arises for hreflang, whose alternates on the English home page
+ * are other pages — /es/ and the rest — and already carry the right form.
  */
 function liveSlashForm(path) {
   if (typeof window === 'undefined' || !path || path === '/') return path
   const live = window.location.pathname
+  if (live.length <= 1) return path
   const bare = path.endsWith('/') ? path.slice(0, -1) : path
   if (!bare) return '/'
-  return live.length > 1 && live.endsWith('/') ? `${bare}/` : bare
+  return live.endsWith('/') ? `${bare}/` : bare
 }
 
 function upsertMeta(attr, key, content) {
@@ -128,7 +134,14 @@ export function useHreflang(path, { enabled = true } = {}) {
     if (!enabled || typeof document === 'undefined') return undefined
 
     const resolved = canonicalPath(path, pathname)
-    const touched = hreflangPaths(resolved).map((a) => upsertAlternate(a.hreflang, absoluteUrl(a.path)))
+    // Through liveSlashForm, exactly like the canonical: an alternate has to
+    // name the URL that page is served at, and the build gives every route a
+    // folder, so the static host answers /es/news/ and redirects /es/news to
+    // it. An hreflang pointing at the redirect disagrees with the canonical it
+    // is meant to pair with — which is what made every alternate fail
+    // validation — while the dev server, which has no folders, keeps the bare
+    // path both here and in the canonical.
+    const touched = hreflangPaths(resolved).map((a) => upsertAlternate(a.hreflang, absoluteUrl(liveSlashForm(a.path))))
 
     return () => {
       for (const { el, created, previous } of touched) {

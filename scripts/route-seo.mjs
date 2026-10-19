@@ -57,17 +57,35 @@ function replaceMeta(html, attr, key, value) {
   return html.replace(re, `$1${esc(value)}$2`)
 }
 
+export const ORIGIN = 'https://ktmessenger.com'
+
+/**
+ * The URL a prerendered route is actually served at.
+ *
+ * The build writes each route to its own folder, so the static host answers
+ * `/news/` and redirects `/news` to it. A canonical or hreflang naming the
+ * bare path therefore points at a redirect rather than at the page, which is
+ * what made every language alternate fail validation. The dev server has no
+ * folders and answers the bare path, so it keeps passing the route unchanged.
+ */
+export const servedPath = (route) => (route === '/' ? '/' : `${route.replace(/\/+$/, '')}/`)
+
 /**
  * Rewrite an HTML document's title and meta description (plus the matching
  * Open Graph / X tags) for one route. Tags that are not present are left
  * alone, so this is safe on any template.
+ *
+ * `urlPath` is the path the canonical and og:url name, for callers that serve
+ * the route at a different URL than the route string (the build, which serves
+ * it from a folder). It defaults to the route, which is what the dev server
+ * answers.
  */
-export function applyRouteSeo(html, route, seo) {
+export function applyRouteSeo(html, route, seo, urlPath = route) {
   // Canonical for the served route, present in the raw HTML too. useSeo()
   // finds this tag at runtime (upsertCanonical matches link[rel=canonical])
   // and reuses it, so the rendered DOM never carries a duplicate.
   if (!/<link\s+rel="canonical"/.test(html)) {
-    html = html.replace('</head>', `    <link rel="canonical" href="https://ktmessenger.com${route}" />\n  </head>`)
+    html = html.replace('</head>', `    <link rel="canonical" href="${ORIGIN}${urlPath}" />\n  </head>`)
   }
   if (!seo) return html
   if (seo.title) {
@@ -80,5 +98,5 @@ export function applyRouteSeo(html, route, seo) {
     html = replaceMeta(html, 'property', 'og:description', seo.description)
     html = replaceMeta(html, 'name', 'twitter:description', seo.description)
   }
-  return replaceMeta(html, 'property', 'og:url', `https://ktmessenger.com${route}`)
+  return replaceMeta(html, 'property', 'og:url', `${ORIGIN}${urlPath}`)
 }

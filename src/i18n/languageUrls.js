@@ -112,8 +112,16 @@ const NO_HREFLANG = /^\/(admin|dashboard|api|auth|login|logout|signin|signup)(\/
  */
 export function hreflangPaths(path) {
   if (typeof path !== 'string' || !path.startsWith('/') || NO_HREFLANG.test(path)) return []
+  // The home page of a language is its prefix as a folder — /es/, not /es,
+  // which is the URL the static host serves and the canonical names. Every
+  // other path already puts the prefix in front of a real path, and the
+  // caller decides their trailing slash from the URL being served.
+  const forLang = (lang) => {
+    const translated = languagePath(path, lang)
+    return path === '/' && translated !== path ? `${translated}/` : translated
+  }
   return [
-    ...LANGUAGES.map((l) => ({ hreflang: l.hreflang, path: languagePath(path, l.lang) })),
+    ...LANGUAGES.map((l) => ({ hreflang: l.hreflang, path: forLang(l.lang) })),
     { hreflang: 'x-default', path },
   ]
 }

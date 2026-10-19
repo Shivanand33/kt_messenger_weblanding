@@ -217,11 +217,16 @@ function ArticleBody({ blocks }) {
           )
         }
         if (block.type === 'img') {
+          // A side image takes three fifths of the reading column from lg up,
+          // where there is room for it, and max-w-2xl stops it growing further
+          // on very wide screens. Below lg it stays at half the column: a
+          // phone only has ~335px of column, so a larger share would squeeze
+          // the text wrapping beside it down to a few words per line.
           const alignClass =
             block.align === 'left'
-              ? 'float-left mr-6 w-1/2 max-w-sm'
+              ? 'float-left mr-6 w-1/2 lg:w-3/5 max-w-2xl'
               : block.align === 'right'
-                ? 'float-right ml-6 w-1/2 max-w-sm'
+                ? 'float-right ml-6 w-1/2 lg:w-3/5 max-w-2xl'
                 : block.align === 'center'
                   ? 'mx-auto max-w-2xl'
                   : ''

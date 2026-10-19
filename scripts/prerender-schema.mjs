@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SCHEMA_ROUTES, schemaTagsFor } from './schema-blocks.mjs'
-import { routeSeoMap, applyRouteSeo } from './route-seo.mjs'
+import { routeSeoMap, applyRouteSeo, servedPath, ORIGIN } from './route-seo.mjs'
 import { SUPPORTED_LANGS, RTL_LANGS } from '../src/i18n/translations.js'
 
 // Injects every page's JSON-LD schema into the static HTML served for its
@@ -34,14 +34,45 @@ const routes = new Set([...SCHEMA_ROUTES.map(([route]) => route), ...seoMap.keys
 const HREFLANG_CODE = { fil: 'tl' }
 const LANGS = SUPPORTED_LANGS.filter((l) => l !== 'en').map((l) => {
   const code = HREFLANG_CODE[l] || l
-  return { lang: l, prefix: code.toLowerCase(), rtl: RTL_LANGS.includes(l) }
+  return { lang: l, code, prefix: code.toLowerCase(), rtl: RTL_LANGS.includes(l) }
 })
+
+// Never annotated with hreflang (mirrors src/i18n/languageUrls.js).
+const NO_HREFLANG = /^\/(admin|dashboard|api|auth|login|logout|signin|signup)(\/|$)/i
+
+/**
+ * `<link rel="alternate" hreflang>` for a route in every language, plus
+ * x-default — the same set src/hooks/useSeo.js writes at runtime, but in the
+ * raw HTML, where crawlers and SEO checkers that do not run JavaScript can
+ * read it. Without these the page carried no hreflang at all until the SPA
+ * booted, so every alternate failed validation.
+ *
+ * Each page lists the whole set, its own language included, which is what
+ * hreflang requires — so all 65 files of a route carry the identical block.
+ *
+ * The hrefs name servedPath() URLs, the ones the static host answers, so they
+ * agree with the canonical written beside them.
+ */
+function hreflangTags(route) {
+  if (NO_HREFLANG.test(route)) return ''
+  const served = servedPath(route)
+  const links = [
+    ['en', `${ORIGIN}${served}`],
+    ...LANGS.map((l) => [l.code, `${ORIGIN}/${l.prefix}${served}`]),
+    ['x-default', `${ORIGIN}${served}`],
+  ]
+  return links.map(([code, href]) => `    <link rel="alternate" hreflang="${code}" href="${href}" />`).join('\n')
+}
 
 function render(route) {
   let html = template
   const tags = schemaTagsFor(route)
   if (tags) html = html.replace('</head>', `${tags}\n  </head>`)
-  return applyRouteSeo(html, route, seoMap.get(route))
+  const alternates = hreflangTags(route)
+  if (alternates) html = html.replace('</head>', `${alternates}\n  </head>`)
+  // The build serves a route from its own folder, so the canonical and og:url
+  // name that URL rather than the bare path the dev server answers.
+  return applyRouteSeo(html, route, seoMap.get(route), servedPath(route))
 }
 
 function write(outDir, html) {
@@ -63,8 +94,9 @@ for (const { lang, prefix, rtl } of LANGS) {
     let html = render(route)
     if (html === template) continue
     html = html.replace('<html lang="en">', `<html lang="${lang}"${rtl ? ' dir="rtl"' : ''}>`)
-    // The canonical and share URL of a language page name that language.
-    const langUrl = `https://ktmessenger.com/${prefix}${route}`
+    // The canonical and share URL of a language page name that language, at
+    // the folder URL the static host serves it from.
+    const langUrl = `${ORIGIN}/${prefix}${servedPath(route)}`
     html = html.replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${langUrl}$2`)
     html = html.replace(/(<meta\s+property="og:url"\s+content=")[^"]*(")/, `$1${langUrl}$2`)
     write(path.join(dist, prefix, ...route.split('/').filter(Boolean)), html)
