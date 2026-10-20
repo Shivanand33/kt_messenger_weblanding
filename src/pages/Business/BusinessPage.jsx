@@ -208,46 +208,90 @@ export function BusinessPage() {
     }
   ]
 
+  // `desc` says what the feature is; `steps` say how it is actually used, in
+  // the order an owner would do it. Both are kept to a similar length across
+  // the eight, because the cards sit in a fixed four-up grid where one long
+  // entry leaves its neighbours with a band of empty space.
   const features = [
     {
       icon: FiUserCheck,
       title: tr('Business profile'),
-      desc: tr('Show your hours, address, website and catalog on a verified business profile customers can trust.'),
+      desc: tr('Publish your hours, address, website and catalog on one verified profile, so customers know who they are buying from.'),
+      steps: [
+        tr('Add your hours, address and links'),
+        tr('Verify your business phone number'),
+        tr('Customers see it before they message'),
+      ],
     },
     {
       icon: FiShoppingBag,
       title: tr('Product catalog'),
-      desc: tr('Showcase your products and services right inside the chat, so customers can browse without leaving the conversation.'),
+      desc: tr('Show your products and services inside the chat itself, so customers can browse, ask and order without leaving it.'),
+      steps: [
+        tr('Add each item with a photo and price'),
+        tr('Share the catalog link in a chat'),
+        tr('Customers browse and order from there'),
+      ],
     },
     {
       icon: FiZap,
       title: tr('Quick replies & automation'),
-      desc: tr('Answer common questions instantly with saved replies, greeting messages and away messages.'),
+      desc: tr('Save your common answers once and send them in a tap, with greetings for new chats and away notes after hours.'),
+      steps: [
+        tr('Save the answers you type most often'),
+        tr('Set a greeting and an away message'),
+        tr('Send a saved reply with one tap'),
+      ],
     },
     {
       icon: FiTag,
       title: tr('Labels & organization'),
-      desc: tr('Organize chats and orders with color-coded labels, so follow-ups never slip through the cracks.'),
+      desc: tr('Tag each chat by stage — new, paid, shipped — with color-coded labels, so no order is forgotten halfway through.'),
+      steps: [
+        tr('Create labels: new, paid and shipped'),
+        tr('Tag each chat as the order moves on'),
+        tr('Filter by label to see what is pending'),
+      ],
     },
     {
       icon: FiSend,
       title: tr('Broadcast messages'),
-      desc: tr('Announce offers, restocks and updates to many customers at once — personally delivered to each chat.'),
+      desc: tr('Send an offer or a restock notice to many customers at once, and it arrives in each chat as a personal message.'),
+      steps: [
+        tr('Pick the customers you want to reach'),
+        tr('Write the offer or update once'),
+        tr('Each one receives it as a private chat'),
+      ],
     },
     {
       icon: FiLock,
       title: tr('Private by default'),
-      desc: tr('Business and customer conversations stay protected with the KT Encryption Protocol, end to end.'),
+      desc: tr('Every message is encrypted end to end by the KT Encryption Protocol, so only you and your customer can read it.'),
+      steps: [
+        tr('Encryption turns itself on, always'),
+        tr('The keys stay on the two devices'),
+        tr('Nobody in between can read the chat'),
+      ],
     },
     {
       icon: FiBarChart2,
       title: tr('Business analytics'),
-      desc: tr('See how your messages perform — sent, delivered, read and replied — so you know exactly what your customers respond to and can grow what works.'),
+      desc: tr('See what was sent, delivered, read and replied to, so you learn which messages bring customers back and which to drop.'),
+      steps: [
+        tr('Open the stats in your business tools'),
+        tr('Read sent, delivered, read and replied'),
+        tr('Repeat what worked, drop what did not'),
+      ],
     },
     {
       icon: FiTarget,
       title: tr('Advertising that clicks to chat'),
-      desc: tr('Run ads that open a KT conversation the moment a customer taps, turning ad spend into real chats, orders and repeat buyers.'),
+      desc: tr('Run ads that open a chat the moment someone taps, so your ad spend starts a conversation instead of a page visit.'),
+      steps: [
+        tr('Create an ad with a chat button'),
+        tr('One tap opens a chat with your shop'),
+        tr('Reply and turn the click into an order'),
+      ],
     },
   ]
 
@@ -909,15 +953,50 @@ export function BusinessPage() {
             </p>
           </Reveal>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {/* auto-rows-fr so both rows are the same height. Without it each row
+              sizes to its own longest card and the two rows end up 24px apart,
+              which reads as a mistake rather than a design. */}
+          <div className="mt-14 grid auto-rows-fr gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature, index) => (
-              <Reveal key={feature.title} from="up" delay={0.05 * (index % 4)}>
+              <Reveal key={feature.title} from="up" delay={0.05 * (index % 4)} className="h-full">
                 <div className="group flex h-full flex-col rounded-[28px] border border-line bg-cream-2 p-7 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-brand hover:shadow-brand">
                   <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-brand-strong transition-colors duration-300 group-hover:bg-brand-strong group-hover:text-white">
                     <feature.icon className="text-xl" />
                   </div>
-                  <h3 className="mt-5 text-lg font-bold text-ink">{feature.title}</h3>
-                  <p className="mt-2.5 flex-1 text-sm leading-6 text-body">{feature.desc}</p>
+                  {/* Two lines of room whether the title needs them or not, so
+                      every description in a row starts on the same line. The
+                      one-line titles sit centred in that space, which splits
+                      the spare 28px above and below instead of leaving it all
+                      as a gap over the description. */}
+                  <h3 className="mt-5 text-lg font-bold leading-7 text-ink lg:flex lg:min-h-14 lg:items-center">{feature.title}</h3>
+                  <p className="mt-2.5 text-sm leading-6 text-body">{feature.desc}</p>
+                  {/* How the feature is actually used, under its own heading so
+                      the rule reads as a divider between "what it is" and "how
+                      you use it" rather than a stray line.
+
+                      This was a filled, recessed footer panel for a while,
+                      which looked better but could not be kept honest: its
+                      height follows the steps, the steps wrap differently at
+                      every card width and in all 63 languages, and a filled
+                      block that starts 20px lower on one card makes the row
+                      look broken. A hairline that shifts by the same 20px
+                      barely registers, so the rule stays a rule. */}
+                  <div className="mt-auto border-t border-line pt-5">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-brand-strong">{tr('How it works')}</p>
+                    <ol className="mt-3 space-y-2.5">
+                      {feature.steps.map((step, stepIndex) => (
+                        <li key={step} className="flex items-start gap-2.5 text-[13px] leading-5 text-body">
+                          <span
+                            aria-hidden="true"
+                            className="mt-px grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-soft text-[11px] font-bold text-brand-strong transition-colors duration-300 group-hover:bg-brand-strong group-hover:text-white"
+                          >
+                            {stepIndex + 1}
+                          </span>
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
                 </div>
               </Reveal>
             ))}

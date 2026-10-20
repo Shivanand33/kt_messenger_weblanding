@@ -85,8 +85,15 @@ export function Home() {
       <JsonLd id="WEBPAGE_SCHEMA" json={WEBPAGE_SCHEMA} />
       <Hero />
       {/* Below-the-fold sections load as their own chunks right after the first
-          paint: the hero no longer waits for the whole page's code. */}
-      <Suspense fallback={null}>
+          paint: the hero no longer waits for the whole page's code.
+
+          The fallback holds a screen of height rather than collapsing to
+          nothing. With nothing there the footer came to rest just under the
+          hero, inside the viewport, and was then thrown ~14,000px down the
+          moment the chunks arrived — one shift worth 0.186 of the 0.188 this
+          page scored for CLS. Reserving a screen leaves the footer below the
+          fold, so the same growth happens off-screen and costs nothing. */}
+      <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
       <VideoShowcase />
       <Statement />
       <LoopWeb />

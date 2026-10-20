@@ -683,46 +683,146 @@ ${related([
 const CALLS = {
   'how-to-make-a-voice-call': {
     body: `
-<p>You can make free voice calls to anyone who uses KT Messenger. Calls are end-to-end encrypted and have no time limit.</p>
+<p>Voice calls on KT Messenger go over your internet connection rather than your phone plan's minutes, so calling someone in another country costs no more than calling someone next door. Every call is protected by the KT Encryption Protocol end to end, and there is no limit on how long you talk.</p>
+
+<div class="note">
+  <h2>Before You Start</h2>
+  <ul>
+    <li>Both of you need KT Messenger and a working internet connection — mobile data or Wi-Fi.</li>
+    <li>The first time you call, allow KT Messenger to use your microphone.</li>
+  </ul>
+</div>
+
 <h2>Make a Voice Call</h2>
-<ol>
-  <li>Open the chat with the person you want to call.</li>
-  <li>Tap the phone icon.</li>
-</ol>
+<section data-tab="Android">
+  <ol>
+    <li>Open KT Messenger and go to the <strong>Chats</strong> tab.</li>
+    <li>Open the chat with the person you want to call.</li>
+    <li>Tap the phone icon at the top of the chat.</li>
+  </ol>
+  <p>You can also open the <strong>Calls</strong> tab, tap the new call button and choose a contact from the list.</p>
+</section>
+<section data-tab="iOS">
+  <ol>
+    <li>Open KT Messenger and go to the <strong>Chats</strong> tab.</li>
+    <li>Open the chat with the person you want to call.</li>
+    <li>Tap the phone icon at the top of the chat.</li>
+  </ol>
+  <p>You can also open the <strong>Calls</strong> tab, tap the new call button and choose a contact from the list.</p>
+</section>
+<section data-tab="Mac">
+  <ol>
+    <li>Open KT Messenger on your Mac.</li>
+    <li>Select the conversation in the chat list.</li>
+    <li>Click the phone icon in the chat header.</li>
+  </ol>
+  <p>Your call history stays in sync, so a call you start here appears on your phone too.</p>
+</section>
+<section data-tab="Windows">
+  <ol>
+    <li>Open KT Messenger on your Windows PC.</li>
+    <li>Select the conversation in the chat list.</li>
+    <li>Click the phone icon in the chat header.</li>
+  </ol>
+  <p>Your call history stays in sync, so a call you start here appears on your phone too.</p>
+</section>
+
 <h2>Answer or Decline a Call</h2>
 <ul>
-  <li>Swipe right to answer.</li>
-  <li>Swipe left to decline.</li>
-  <li>Tap <strong>Reply</strong> to decline with a message.</li>
+  <li>Swipe right, or tap <strong>Accept</strong>, to answer.</li>
+  <li>Swipe left, or tap <strong>Decline</strong>, to turn the call down.</li>
+  <li>Tap <strong>Reply</strong> to decline and send a message in the same action, for when you cannot talk but do not want to leave the caller waiting.</li>
 </ul>
+
+<h2>During a Call</h2>
+<ul>
+  <li><strong>Mute</strong> switches your microphone off; the other person stays audible to you.</li>
+  <li><strong>Speaker</strong> moves the sound between the earpiece, the loudspeaker and a connected headset.</li>
+  <li><strong>Video</strong> turns the voice call into a video call once the other person accepts.</li>
+  <li><strong>Add</strong> brings more people in and the call becomes a group call, which holds up to 32 people.</li>
+</ul>
+
 <h2>Clear Sound</h2>
-<p>AI noise suppression reduces background sounds such as keyboard clicks and street traffic, and echo cancellation keeps the conversation clear.</p>
+<p>A deep neural network filter separates your voice from what is going on around you, so keyboard clicks, traffic and room noise are held back while you keep talking normally. Acoustic echo cancellation stops your own voice coming back at you when you use the loudspeaker.</p>
+<p>Call quality follows your connection rather than fighting it: when the network weakens KT Messenger lowers the audio quality a step at a time so the call carries on instead of cutting out, and raises it again once the signal recovers.</p>
+
+<h2>Move a Call Between Your Devices</h2>
+<p>A call that started on your phone can be continued on your desktop or tablet without hanging up and dialling again, and the call history is the same list on every device you have signed in to.</p>
 ${related([
   ['How to Make a Video Call', 'how-to-make-a-video-call'],
   ['Starting a Group Call', 'starting-a-group-call'],
+  ['Call Quality Issues', 'call-quality-issues'],
   ["Can't Make Calls", 'can-t-make-calls'],
 ])}`,
   },
 
   'how-to-make-a-video-call': {
     body: `
-<p>Video calls on KT Messenger support up to 1080p at 60fps and adjust automatically to your connection, even on slower networks.</p>
+<p>Video calls run at up to 1080p and follow your connection, dropping and raising the picture quality as the network allows so the call stays up on a weaker signal. Like voice calls they are encrypted end to end by the KT Encryption Protocol and have no duration cap.</p>
+
+<div class="note">
+  <h2>Before You Start</h2>
+  <ul>
+    <li>Both of you need KT Messenger and an internet connection.</li>
+    <li>The first time you call, allow KT Messenger to use your camera and microphone.</li>
+  </ul>
+</div>
+
 <h2>Make a Video Call</h2>
-<ol>
-  <li>Open the chat with the person you want to call.</li>
-  <li>Tap the video camera icon.</li>
-</ol>
+<section data-tab="Android">
+  <ol>
+    <li>Open KT Messenger and go to the <strong>Chats</strong> tab.</li>
+    <li>Open the chat with the person you want to call.</li>
+    <li>Tap the video camera icon at the top of the chat.</li>
+  </ol>
+  <p>To turn a voice call you are already on into a video call, tap <strong>Video</strong> and wait for the other person to accept.</p>
+</section>
+<section data-tab="iOS">
+  <ol>
+    <li>Open KT Messenger and go to the <strong>Chats</strong> tab.</li>
+    <li>Open the chat with the person you want to call.</li>
+    <li>Tap the video camera icon at the top of the chat.</li>
+  </ol>
+  <p>To turn a voice call you are already on into a video call, tap <strong>Video</strong> and wait for the other person to accept.</p>
+</section>
+<section data-tab="Mac">
+  <ol>
+    <li>Open KT Messenger on your Mac.</li>
+    <li>Select the conversation in the chat list.</li>
+    <li>Click the video camera icon in the chat header.</li>
+  </ol>
+  <p>The larger screen is where screen sharing is most useful — see below.</p>
+</section>
+<section data-tab="Windows">
+  <ol>
+    <li>Open KT Messenger on your Windows PC.</li>
+    <li>Select the conversation in the chat list.</li>
+    <li>Click the video camera icon in the chat header.</li>
+  </ol>
+  <p>The larger screen is where screen sharing is most useful — see below.</p>
+</section>
+
 <h2>During a Video Call</h2>
 <ul>
-  <li>Mute your microphone or turn your camera off at any time.</li>
-  <li>Share your screen in high quality.</li>
-  <li>Move the call to your Mac, Windows PC or iPad.</li>
+  <li>Turn your camera off to carry on as a voice call, and back on when you are ready.</li>
+  <li>Mute your microphone without leaving the call.</li>
+  <li>Switch between the front and rear camera on a phone.</li>
+  <li>Add a face filter when the call is a social one.</li>
 </ul>
-<p>Video calls are end-to-end encrypted and have no time limit.</p>
+
+<h2>Share Your Screen</h2>
+<p>Screen sharing puts what is on your screen into the call, which is how slides, documents and a walkthrough of an app are shown. You can share the whole desktop or a single application window, so only the thing you mean to show is visible and the rest of your screen stays private.</p>
+
+<h2>Group Video Calls</h2>
+<p>A video call holds up to 32 people with no time limit. Switch between grid view, which gives everyone an equal tile, and speaker view, which follows whoever is talking — useful once the call is large enough that the grid gets small.</p>
+
+<h2>Move a Call Between Your Devices</h2>
+<p>A video call can be handed from your phone to your desktop or tablet while it is running, without hanging up and calling again.</p>
 ${related([
   ['How to Make a Voice Call', 'how-to-make-a-voice-call'],
-  ['Call Quality Issues', 'call-quality-issues'],
   ['Starting a Group Call', 'starting-a-group-call'],
+  ['Call Quality Issues', 'call-quality-issues'],
+  ["Can't Make Calls", 'can-t-make-calls'],
 ])}`,
   },
 

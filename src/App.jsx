@@ -219,7 +219,11 @@ function App() {
     <>
       <AnalyticsTracker />
       <FeatureCanonicalRedirect />
-      <Suspense fallback={null}>
+      {/* A screen of reserved height, for the same reason as the one around
+          the home page's sections: a route that collapses to nothing while
+          its chunk loads lets the footer settle inside the viewport, and
+          every lazy route below then pays for moving it back down. */}
+      <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/privacy" element={<PrivacyPage />} />
