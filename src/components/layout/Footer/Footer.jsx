@@ -244,7 +244,7 @@ export function Footer() {
   const navigate = useNavigate()
   const location = useLocation()
   const featureNavHref = useFeatureNavHref()
-  const { openDownloadModal } = useModal()
+  const { openDownloadModal, downloadLink } = useModal()
 
   // Admin-managed footer, falling back to the hardcoded columns until the
   // API returns sections that actually contain links.
@@ -399,17 +399,25 @@ export function Footer() {
                   outline. The <nav> above already carries the same label. */}
               <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-ink">{t(column.title)}</p>
               <ul className="space-y-3 text-[15px] text-body">
-                {column.links.map((link) => (
-                  <li key={link.label}>
-                    <button
-                      type="button"
-                      onClick={() => go(link)}
-                      className="text-left transition-colors hover:text-brand-ink"
-                    >
-                      {t(link.label)}
-                    </button>
-                  </li>
-                ))}
+                {column.links.map((link) => {
+                  // The download entries are the only ones that leave the
+                  // site, and on iOS they have to be real anchors or Safari
+                  // stops to ask before handing over to the App Store (see
+                  // downloadLink). Their colour is inherited from this list
+                  // either way, so nothing else changes.
+                  const asLink = link.action === 'download' && downloadLink.href
+                  const Tag = asLink ? 'a' : 'button'
+                  return (
+                    <li key={link.label}>
+                      <Tag
+                        {...(asLink ? downloadLink : { type: 'button', onClick: () => go(link) })}
+                        className="text-left transition-colors hover:text-brand-ink"
+                      >
+                        {t(link.label)}
+                      </Tag>
+                    </li>
+                  )
+                })}
               </ul>
             </nav>
           ))}

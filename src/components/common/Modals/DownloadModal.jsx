@@ -1,17 +1,11 @@
+import { useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX, FiDownload, FiExternalLink } from 'react-icons/fi'
 import { FaAndroid, FaWindows, FaApple } from 'react-icons/fa'
 import { useLanguage } from '../../../context/LanguageContext'
-import { api } from '../../../services/apiClient'
-import { useRemoteContent } from '../../../hooks/useRemoteContent'
 import { trackDownload } from '../../../services/analytics'
-
-// Mobile builds live on the app stores, so those rows link out rather than
-// serving a file. These are the links the site shipped before the admin became
-// the source of truth, and they remain the fallback if the API is unreachable.
-const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.ogoul.kalamtime'
-const APP_STORE_URL = 'https://apps.apple.com/in/app/kt-messenger/id6478195913'
-const WINDOWS_EXE_URL = 'https://cdn1.ktmessenger.com/KT%20MESSENGER%20INSTALL.EXE'
+import { TRACK_KEY, useDownloads } from '../../../services/downloads'
+import { detectPlatform } from '../../../utils/openAppOrDownload'
 
 // One class string for all call-to-actions so they stay identical in height and
 // never wrap. `text-white!` is forced because the global `a { color: inherit }`
@@ -65,52 +59,20 @@ const PLATFORM_UI = {
   },
 }
 
-// Analytics platform key expected by trackDownload().
-const TRACK_KEY = { ANDROID: 'android', IOS: 'ios', WINDOWS: 'desktop', MAC: 'desktop' }
-
-// The exact rows the modal shipped with, used until the API answers.
-const FALLBACK_PLATFORMS = [
-  { platform: 'ANDROID', url: PLAY_STORE_URL },
-  { platform: 'IOS', url: APP_STORE_URL },
-  { platform: 'WINDOWS', url: WINDOWS_EXE_URL },
-]
-
 /**
- * Turn /api/downloads rows into renderable entries.
+ * The same rows with this device's platform moved to the top.
  *
- * A platform is only shown when it has a link we can actually send someone to.
- * A store *homepage* (no path) is treated as a placeholder, not a real link —
- * otherwise an unfinished admin row would ship a download button that drops
- * users on apple.com instead of KT Messenger.
+ * Only the order changes: every platform stays listed, because the guess can
+ * be wrong and because people download for a device they are not holding —
+ * someone reading this on a phone may well want the Windows installer. A
+ * platform we cannot detect, or one the admin has not published a link for,
+ * leaves the list exactly as it was.
  */
-const isUsableUrl = (url) => {
-  if (!url || !/^https?:\/\//i.test(url)) return false
-  try {
-    return new URL(url).pathname.replace(/\/+$/, '').length > 0
-  } catch {
-    return false
-  }
-}
-
-function toPlatforms(rows) {
-  const list = (rows || [])
-    .map((r) => {
-      const platform = String(r.platform || '').toUpperCase()
-      // A direct installer wins over a store page when both are present.
-      const url = [r.downloadUrl, r.storeUrl].find(isUsableUrl)
-      return PLATFORM_UI[platform] && url ? { platform, url, version: r.version } : null
-    })
-    .filter(Boolean)
-
-  const merged = [...list]
-  for (const fb of FALLBACK_PLATFORMS) {
-    if (!merged.some((m) => m.platform === fb.platform)) {
-      merged.push(fb)
-    }
-  }
-
-  const order = ['ANDROID', 'IOS', 'WINDOWS', 'MAC']
-  return merged.sort((a, b) => order.indexOf(a.platform) - order.indexOf(b.platform))
+function withDeviceFirst(list, platform) {
+  if (!platform) return list
+  const i = list.findIndex((p) => p.platform === platform)
+  if (i <= 0) return list
+  return [list[i], ...list.slice(0, i), ...list.slice(i + 1)]
 }
 
 export function DownloadModal({ isOpen, onClose }) {
@@ -118,7 +80,20 @@ export function DownloadModal({ isOpen, onClose }) {
 
   // Admin App Releases are the source of truth. If the API is unreachable or
   // returns nothing usable, the fallback rows stay on screen.
-  const [platforms] = useRemoteContent(() => api.getDownloads().then(toPlatforms), FALLBACK_PLATFORMS)
+  const rows = useDownloads()
+
+  // ModalContext keeps this mounted for the whole session and toggles isOpen,
+  // so this runs once at start-up rather than on every open — the answer
+  // cannot change while the tab is alive. Reading it here rather than at
+  // module load keeps the import side-effect free.
+  //
+  // Download buttons rarely reach this on a phone — Android goes to its
+  // store and iOS carries the store link in the markup. What still arrives
+  // here from any device is showDownloadOptions(), used when the platform a
+  // visitor asked for has no published link; ordering the rows by device
+  // keeps that list useful rather than arbitrary.
+  const device = useMemo(() => detectPlatform(), [])
+  const platforms = useMemo(() => withDeviceFirst(rows, device), [rows, device])
 
   if (!isOpen) return null
 
@@ -164,17 +139,32 @@ export function DownloadModal({ isOpen, onClose }) {
           <div className="mt-6 space-y-3">
             {platforms.map(({ platform, url }) => {
               const ui = PLATFORM_UI[platform]
+              const isThisDevice = platform === device
               return (
                 <div
                   key={platform}
-                  className="flex items-center justify-between rounded-2xl border border-stone-200 p-3.5 hover:border-brand-strong transition-all bg-stone-50/50"
+                  className={`flex items-center justify-between rounded-2xl border p-3.5 transition-all ${
+                    isThisDevice
+                      ? 'border-brand-strong bg-brand-soft/40'
+                      : 'border-stone-200 bg-stone-50/50 hover:border-brand-strong'
+                  }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${ui.iconWrap}`}>
                       {ui.icon}
                     </div>
                     <div className="text-left">
-                      <p className="text-sm font-bold text-stone-900">{ui.name}</p>
+                      <p className="text-sm font-bold text-stone-900">
+                        {ui.name}
+                        {/* Says why this row is first, so the highlight reads
+                            as a suggestion the visitor can ignore rather than
+                            as the only option. */}
+                        {isThisDevice ? (
+                          <span className="ml-2 rounded-full bg-brand-strong px-1.5 py-0.5 align-middle text-[10px] font-bold text-white">
+                            {t('Your device')}
+                          </span>
+                        ) : null}
+                      </p>
                       <p className="text-[11px] text-stone-500">{ui.source}</p>
                     </div>
                   </div>

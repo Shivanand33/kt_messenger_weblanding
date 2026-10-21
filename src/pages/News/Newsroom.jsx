@@ -265,7 +265,7 @@ export function Newsroom() {
   const { t, lang } = useLanguage()
   const { articles, sources, status, refreshing, updatedAt, refresh } = useLiveNews()
 
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const today = useMemo(() => dateline(lang), [lang])
   // Counted from the stories actually held, not from the chips: the API sends
   // only the busiest mastheads, so the chips are a shortlist, not the total.
@@ -501,7 +501,7 @@ export function Newsroom() {
             description={t('This page prints the front page. KT Messenger carries the whole wire as it breaks, ranked for you, inside the chats you already use.')}
             actions={
               <div className="flex flex-col items-center gap-3">
-                <Button size="lg" variant="primary" onClick={openDownloadModal}>
+                <Button size="lg" variant="primary" {...downloadLink}>
                   {t('Download KT Messenger')} <FiDownload />
                 </Button>
                 {remaining > 0 ? (

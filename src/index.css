@@ -166,14 +166,21 @@ img {
   max-width: 100%;
 }
 
+/* Selected text keeps its own colour; only the highlight is ours.
+ *
+ * This used to repaint it — var(--ink) in light, #ffffff under .dark — which
+ * works only while every surface matches the theme. The modals do not: the
+ * download, sign-in and Get-started cards stay white in both themes, so in
+ * dark mode selecting their text painted it white on a white card and the
+ * words disappeared the moment you dragged over them. No single colour can be
+ * right on both a dark page and a light card, so there is no colour to pick
+ * here — leaving it out means selected text can never vanish, on any surface
+ * a page grows later.
+ *
+ * The tint comes from --brand, which each theme redefines, so the highlight
+ * stays visible against dark sections and light cards alike. */
 ::selection {
   background: color-mix(in srgb, var(--brand) 28%, transparent);
-  color: var(--ink);
-}
-
-.dark ::selection {
-  background: rgba(255, 255, 255, 0.16);
-  color: #ffffff;
 }
 
 /* ------------------------------------------------------------------ *

@@ -1,5 +1,5 @@
 import { img, imgAlt } from '../../utils/imageOverrides'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiChevronLeft, FiChevronRight, FiArrowRight, FiSend, FiCheck } from 'react-icons/fi'
@@ -16,13 +16,26 @@ import businessImg from '../../assets/images/online-marketplace-app-business.jpg
 import { useLanguage } from '../../context/LanguageContext'
 import { useModal } from '../../context/ModalContext'
 import { trackDownload } from '../../services/analytics'
+import { urlFor, useDownloads } from '../../services/downloads'
+import { detectPlatform, isIPad } from '../../utils/openAppOrDownload'
 import { useAdminSeo } from '../../hooks/useAdminSeo'
 import { useSeo } from '../../hooks/useSeo'
 import { useFeatureNavHref } from '../../hooks/useFeatureNavHref'
 
 const appStore = { icon: <FaApple />, top: 'Download on the', bottom: 'App Store' }
 
+/**
+ * Every platform the app ships on, in one list. The hero shows whichever one
+ * the visitor is on and the rail below shows the rest, so a card is described
+ * once and cannot drift between the two places.
+ */
 const platforms = [
+  {
+    type: 'Desktop',
+    name: 'Windows',
+    desc: 'Get calling, screen sharing, and a faster experience with the Windows app. Requires Windows 10 or newer.',
+    badge: { icon: <FaWindows />, top: 'Get it from', bottom: 'Microsoft Store' },
+  },
   {
     type: 'Tablet',
     name: 'iPadOS',
@@ -111,6 +124,25 @@ const features = [
   }
 ]
 
+/**
+ * The card for the device this visitor is on, and the rest for the rail.
+ *
+ * Windows is the fallback when the platform cannot be read — Linux, a
+ * crawler, a browser that hides everything — because it is what the page
+ * showed before and it is the largest desktop audience. The hero is only a
+ * shortcut: every platform still has a card under "Other download options",
+ * so a wrong guess costs a scroll, not the download.
+ */
+function splitByDevice(all, detected) {
+  const wanted =
+    detected === 'ANDROID' ? 'Android'
+    : detected === 'IOS' ? (isIPad() ? 'iPadOS' : 'iOS')
+    : detected === 'MAC' ? 'Mac'
+    : 'Windows'
+  const hero = all.find((p) => p.name === wanted) || all[0]
+  return { hero, others: all.filter((p) => p !== hero) }
+}
+
 // Which analytics bucket a store badge belongs to. Desktop covers both the
 // Mac and Windows stores.
 const STORE_PLATFORM = {
@@ -120,23 +152,47 @@ const STORE_PLATFORM = {
   'Microsoft Store': 'desktop',
 }
 
+// The badge names the store it belongs to, which is also the platform whose
+// download it should fetch. Without this a badge would fall through to the
+// generic Download behaviour and hand a Windows visitor the Windows file
+// even when they clicked "Google Play".
+const BADGE_PLATFORM = {
+  'Google Play': 'ANDROID',
+  'App Store': 'IOS',
+  'Mac App Store': 'MAC',
+  'Microsoft Store': 'WINDOWS',
+}
+
 function StoreBadge({ icon, top, bottom, onClick, href }) {
   const { t } = useLanguage()
-  const { openDownloadModal } = useModal()
+  const { showDownloadOptions } = useModal()
+  const downloads = useDownloads()
+  const target = href || urlFor(downloads, BADGE_PLATFORM[bottom])
 
   const handleClick = (e) => {
-    e.preventDefault()
-    if (onClick) {
-      onClick(e)
-    } else {
-      openDownloadModal()
-    }
+    // The hero badge sits inside a card that is itself a download button;
+    // without this the one click fires both.
+    e.stopPropagation()
     trackDownload(STORE_PLATFORM[bottom] || 'desktop', bottom)
+    if (onClick) {
+      e.preventDefault()
+      onClick(e)
+      return
+    }
+    // This platform has no published link yet. Show the list rather than
+    // following an empty href — and rather than the local download, which
+    // is not what a visitor clicking another platform's badge asked for.
+    if (!target) {
+      e.preventDefault()
+      showDownloadOptions()
+    }
   }
 
   return (
     <a
-      href={href || '#'}
+      href={target || '#'}
+      target={target ? '_blank' : undefined}
+      rel={target ? 'noopener noreferrer' : undefined}
       onClick={handleClick}
       className="inline-flex w-fit items-center gap-2.5 rounded-xl bg-[#111827] px-4 py-2.5 text-white transition-transform hover:-translate-y-0.5 cursor-pointer"
     >
@@ -187,7 +243,12 @@ export function AppsPage() {
 
   const navigate = useNavigate()
   const { t } = useLanguage()
-  const { openDownloadModal } = useModal()
+
+  // Resolved once: the device cannot change while the tab is open. The
+  // prerendered HTML carries the Windows card, which is also the fallback,
+  // so the page is complete before this runs and only the hero swaps.
+  const { hero, others } = useMemo(() => splitByDevice(platforms, detectPlatform()), [])
+  const { downloadLink } = useModal()
   const optionsRail = useRef(null)
   const featuresRail = useRef(null)
   const featureNavHref = useFeatureNavHref()
@@ -255,17 +316,25 @@ export function AppsPage() {
             </Reveal>
 
             <Reveal from="up" delay={0.16}>
+              {/* The whole card is a tap target for the badge it contains.
+                  Not on iOS: a <div> can only navigate by script, and that
+                  is exactly what makes Safari stop and ask (see
+                  downloadLink). The badge inside is already a real link, so
+                  there the card is just the frame around it. */}
               <div
-                onClick={openDownloadModal}
-                className="mt-8 max-w-md rounded-[28px] border border-line bg-surface p-7 shadow-card cursor-pointer transition-all hover:border-brand/40 hover:shadow-lg"
+                onClick={downloadLink.href ? undefined : downloadLink.onClick}
+                className={`mt-8 max-w-md rounded-[28px] border border-line bg-surface p-7 shadow-card transition-all hover:border-brand/40 hover:shadow-lg ${
+                  downloadLink.href ? '' : 'cursor-pointer'
+                }`}
               >
-                <p className="text-sm text-muted">{t('Desktop')}</p>
-                <h3 className="mt-1 text-2xl font-bold text-ink">Windows</h3>
-                <p className="mt-3 text-[15px] leading-7 text-body">
-                  {t('Get calling, screen sharing, and a faster experience with the Windows app. Requires Windows 10 or newer.')}
-                </p>
+                <p className="text-sm text-muted">{t(hero.type)}</p>
+                <h3 className="mt-1 text-2xl font-bold text-ink">{hero.name}</h3>
+                <p className="mt-3 text-[15px] leading-7 text-body">{t(hero.desc)}</p>
+                {hero.req ? <p className="mt-3 text-xs text-muted">{t(hero.req)}</p> : null}
                 <div className="mt-5">
-                  <StoreBadge onClick={openDownloadModal} icon={<FaWindows />} top="Get it from" bottom="Microsoft Store" />
+                  {/* No onClick: the badge already links at this platform's
+                      own file, which is the same thing the card does. */}
+                  <StoreBadge {...hero.badge} />
                 </div>
               </div>
             </Reveal>
@@ -315,7 +384,7 @@ export function AppsPage() {
               ref={optionsRail}
               className={`${railClass} lg:ml-[calc(var(--apps-occlusion)*-1)] lg:pl-[var(--apps-occlusion)] lg:pr-8 lg:mr-[min(-2rem,calc((1200px_-_100vw)_/_2_-_2rem))]`}
             >
-              {platforms.map((platform) => (
+              {others.map((platform) => (
                 <div
                   key={platform.name}
                   className="flex w-[290px] shrink-0 flex-col rounded-[28px] border border-line bg-surface p-7"

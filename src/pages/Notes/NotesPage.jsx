@@ -166,7 +166,7 @@ export function NotesPage() {
     () => api.listFaqs('notes').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
     FALLBACK_NOTESFAQS,
   )
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
 
   useEffect(() => {
@@ -189,10 +189,10 @@ export function NotesPage() {
         description={t('KT Messenger Notes helps you save the things that matter to you. Whether it is an important message, business idea, meeting detail, reminder, personal thought, useful information, or something you do not want to forget, you can keep it organized in one place.')}
         actions={
           <>
-            <Button size="lg" variant="white" onClick={openDownloadModal}>
+            <Button size="lg" variant="white" {...downloadLink}>
               {t('Create a note')} <FiPlus />
             </Button>
-            <Button size="lg" variant="primary" onClick={openDownloadModal}>
+            <Button size="lg" variant="primary" {...downloadLink}>
               {t('Get the app')} <FiZap />
             </Button>
           </>
@@ -382,10 +382,10 @@ export function NotesPage() {
         description={t('Notes, checklists and voice memos sealed on your device, synced across everything you own, and readable with no signal at all.')}
         actions={
           <>
-            <Button size="lg" variant="white" onClick={openDownloadModal}>
+            <Button size="lg" variant="white" {...downloadLink}>
               {t('Download KT Messenger')}
             </Button>
-            <Button size="lg" variant="onDark" onClick={openDownloadModal}>
+            <Button size="lg" variant="onDark" {...downloadLink}>
               {t('Try the editor')}
             </Button>
           </>

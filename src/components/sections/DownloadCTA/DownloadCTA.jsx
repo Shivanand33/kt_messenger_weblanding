@@ -9,7 +9,7 @@ const points = ['No ads', 'No subscription', 'Encrypted by default']
 const LOGIN_URL = 'https://web.ktmessenger.com/auth/qr'
 
 export function DownloadCTA() {
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
 
   return (
@@ -28,7 +28,7 @@ export function DownloadCTA() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
-              <Button variant="white" size="lg" onClick={openDownloadModal}>
+              <Button variant="white" size="lg" {...downloadLink}>
                 <FiDownload /> {t('Download KT Messenger')}
               </Button>
               <Button variant="onDark" size="lg" href={LOGIN_URL}>

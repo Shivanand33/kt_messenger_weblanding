@@ -172,7 +172,7 @@ const trust = [
 ]
 
 export function Insights() {
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
 
   return (
@@ -418,7 +418,7 @@ export function Insights() {
               {t('KT Messenger brings communication, AI, content discovery, communities, news, minis, calls, and engagement together in one seamless experience.')}
             </p>
             <div className="mt-8 flex justify-center">
-              <Button variant="white" size="lg" onClick={openDownloadModal}>
+              <Button variant="white" size="lg" {...downloadLink}>
                 {t('Get Started')} <FiArrowRight />
               </Button>
             </div>

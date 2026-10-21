@@ -34,11 +34,12 @@ const floatMotion = (offset) => ({
 })
 
 export function Hero() {
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
   // When the browser can confirm the app is installed, the primary button
-  // says what the tap will do ("Open App"); the tap itself is smart on mobile
-  // either way (see openDownloadModal).
+  // says what the tap will do ("Open App"); on Android the tap itself is
+  // smart either way (see downloadLink). Only Chrome-on-Android can confirm
+  // this, so iOS never reaches the "Open App" wording.
   const appInstalled = useAppInstalled()
   // Background image is admin-editable via the "home.hero" content block. The
   // bundled image is shown instantly and only replaced if the admin has set one
@@ -98,7 +99,7 @@ export function Hero() {
             </Reveal>
             <Reveal from="up" delay={0.16}>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="lg" onClick={openDownloadModal}>
+                <Button size="lg" {...downloadLink}>
                   {appInstalled ? t('Open App') : t('Download KT Messenger')} <FiDownload />
                 </Button>
                 <Button variant="onDark" size="lg" onClick={() => window.location.href = languagePath('/messaging')}>

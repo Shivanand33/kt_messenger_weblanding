@@ -135,7 +135,7 @@ export function WalletPage() {
     () => api.listFaqs('wallet').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
     FALLBACK_WALLETFAQS,
   )
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
 
   // Marketing copy from the data file, routed through the admin content
@@ -303,7 +303,7 @@ export function WalletPage() {
             <Button size="lg" variant="white" onClick={() => document.getElementById('send')?.scrollIntoView({ behavior: 'smooth' })}>
               {t('Try a live transfer')} <FiSend />
             </Button>
-            <Button size="lg" variant="onDark" onClick={openDownloadModal}>
+            <Button size="lg" variant="onDark" {...downloadLink}>
               {t('Get the app')} <FiZap />
             </Button>
           </>
@@ -1248,7 +1248,7 @@ export function WalletPage() {
         description={t('Zero fee transfers, passkey approval and encrypted notes set up in under two minutes.')}
         actions={
           <>
-            <Button size="lg" variant="white" onClick={openDownloadModal}>
+            <Button size="lg" variant="white" {...downloadLink}>
               {t('Download KT Messenger')}
             </Button>
             <Button size="lg" variant="onDark" onClick={() => document.getElementById('send')?.scrollIntoView({ behavior: 'smooth' })}>

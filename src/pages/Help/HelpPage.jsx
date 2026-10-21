@@ -425,7 +425,7 @@ function HelpBlocks({ blocks, ctx, inNote = false }) {
     if (b.type === 'download') {
       return (
         <div key={i} className="my-4">
-          <Button variant="primary" size="lg" onClick={ctx.openDownloadModal}>
+          <Button variant="primary" size="lg" {...ctx.downloadLink}>
             {b.label || (ctx.tab ? `${ctx.t('Download for')} ${ctx.tab}` : ctx.t('Download KT Messenger'))} <FiChevronRight />
           </Button>
         </div>
@@ -443,10 +443,10 @@ function HelpBlocks({ blocks, ctx, inNote = false }) {
  * of the Android / iOS tab, unless the body places it with {{qr}}.
  */
 function AdminArticleBody({ parsed, tab, isDownload, onLink }) {
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
   if (!parsed.blocks.length) return null
-  const ctx = { tab, isDownload, onLink, openDownloadModal, t }
+  const ctx = { tab, isDownload, onLink, downloadLink, t }
 
   return (
     <div className={proseClass}>
@@ -481,7 +481,7 @@ function RelatedResources({ links, onOpenArticle }) {
 }
 
 function ArticleBody({ title, tab, onOpenArticle }) {
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
   if (title === 'How to download or uninstall KT Messenger') {
     const guide = downloadGuides[tab] || downloadGuides.Android
@@ -515,7 +515,7 @@ function ArticleBody({ title, tab, onOpenArticle }) {
           <>
             <p>{t('Download KT Messenger for your')} {tab} {t('computer from the official download options.')}</p>
             <div className="my-4">
-              <Button variant="primary" size="lg" onClick={openDownloadModal}>
+              <Button variant="primary" size="lg" {...downloadLink}>
                 {t('Download for')} {tab} <FiChevronRight />
               </Button>
             </div>

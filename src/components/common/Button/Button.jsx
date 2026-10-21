@@ -17,11 +17,25 @@ const variants = {
   onDark: 'border-2 border-white/80 bg-white/10 text-white font-extrabold backdrop-blur-md hover:bg-white hover:text-slate-950 hover:-translate-y-0.5',
 }
 
+// `a { color: inherit }` in index.css is unlayered, and unlayered CSS outranks
+// Tailwind's layered utilities — so the same classes that paint a <button>
+// white leave an <a> in whatever colour it inherits. Every variant's own text
+// colour is restated here with `!` for the link form, hover and dark included,
+// or a link-shaped button would read dark-on-blue.
+const linkColors = {
+  primary: 'text-white!',
+  secondary: 'text-ink!',
+  ghost: 'text-ink!',
+  dark: 'text-white! dark:text-slate-900!',
+  white: 'text-slate-950! hover:text-slate-900!',
+  onDark: 'text-white! hover:text-slate-950!',
+}
+
 export function Button({ children, variant = 'primary', size = 'md', className = '', href, ...props }) {
   const classes = `${base} ${sizes[size]} ${variants[variant]} ${className}`
   if (href) {
     return (
-      <a href={href} className={classes} {...props}>
+      <a href={href} className={`${classes} ${linkColors[variant]}`} {...props}>
         {children}
       </a>
     )

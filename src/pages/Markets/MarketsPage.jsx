@@ -165,7 +165,7 @@ export function MarketsPage() {
     () => api.listFaqs('markets').then((rows) => rows.map((r) => ({ q: r.question, a: r.answer }))),
     FALLBACK_MARKETFAQS,
   )
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
 
   // Marketing copy from the data file, routed through the admin content
@@ -337,7 +337,7 @@ export function MarketsPage() {
             >
               {t('Open the watchlist')} <FiChevronRight />
             </Button>
-            <Button size="lg" variant="primary" onClick={openDownloadModal}>
+            <Button size="lg" variant="primary" {...downloadLink}>
               {t('Get the app')} <FiZap />
             </Button>
           </>
@@ -1273,7 +1273,7 @@ export function MarketsPage() {
         description={t('Star a few instruments, set one alert, and let the moves come to you as ordinary encrypted messages.')}
         actions={
           <>
-            <Button size="lg" variant="white" onClick={openDownloadModal}>
+            <Button size="lg" variant="white" {...downloadLink}>
               {t('Download KT Messenger')}
             </Button>
             <Button

@@ -181,7 +181,7 @@ export function ProductsPage() {
     path: '/products',
   })
 
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
   const [selected, setSelected] = useState(null)
   const [tab, setTab] = useState('android')
@@ -252,7 +252,7 @@ export function ProductsPage() {
                 {t('The flagship app that connects them all, with free private messaging, HD calls and AI features on Android, iOS, Mac, Windows and the web.')}
               </p>
               <div className="relative mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Button size="lg" variant="white" onClick={openDownloadModal}>
+                <Button size="lg" variant="white" {...downloadLink}>
                   {t('Download Free')} <FiDownload />
                 </Button>
                 <Button size="lg" variant="onDark" href="https://play.google.com/store/apps/details?id=com.ogoul.kalamtime" target="_blank" rel="noopener noreferrer">

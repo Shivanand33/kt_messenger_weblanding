@@ -99,7 +99,7 @@ const SECTION_IDS = ['hero', 'web', 'devices', 'calls', 'privacy', 'groups', 'ex
 const LOGIN_URL = 'https://web.ktmessenger.com/auth/qr'
 
 export function Navbar() {
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
   // Chrome-on-Android tells us when the app is already installed — then the
   // button says what the tap will do.
@@ -316,7 +316,7 @@ export function Navbar() {
           <Button variant="ghost" href={LOGIN_URL}>
             {t('Log In')} <FiChevronRight className="text-xs" />
           </Button>
-          <Button onClick={openDownloadModal}>
+          <Button {...downloadLink}>
             {appInstalled ? t('Open App') : t('Download')} <FiDownload />
           </Button>
         </div>
@@ -384,7 +384,7 @@ export function Navbar() {
                 <Button variant="ghost" href={LOGIN_URL} onClick={() => setOpen(false)} className="w-full justify-center">
                   {t('Log In')}
                 </Button>
-                <Button onClick={openDownloadModal} className="w-full justify-center">
+                <Button {...downloadLink} className="w-full justify-center">
                   {appInstalled ? t('Open App') : t('Download')} <FiDownload />
                 </Button>
               </div>

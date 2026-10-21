@@ -163,7 +163,7 @@ export function MarketplacePage() {
   )
   // Admin-managed marketplace products (Admin -> Marketplace Products).
   const [products] = useRemoteContent(() => api.listMarketplaceProducts(), FALLBACK_PRODUCTS)
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
 
   // Marketing copy from the data file, routed through the admin content
@@ -298,7 +298,7 @@ export function MarketplacePage() {
             <Button size="lg" variant="white" onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}>
               {t('Start shopping')} <FiChevronRight />
             </Button>
-            <Button size="lg" variant="dark" onClick={openDownloadModal}>
+            <Button size="lg" variant="dark" {...downloadLink}>
               {t('Get the app')} <FiZap />
             </Button>
           </>
@@ -934,7 +934,7 @@ export function MarketplacePage() {
             description={t('Upload a catalogue, verify your business and start taking orders in the chats you already answer. Flat 2% on settled orders, nothing else.')}
           >
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button size="lg" onClick={openDownloadModal}>
+              <Button size="lg" {...downloadLink}>
                 {t('Start selling')} <FiChevronRight />
               </Button>
               <Button size="lg" variant="secondary" onClick={() => setToast(t('Seller guide sent to your chat.'))}>
@@ -991,7 +991,7 @@ export function MarketplacePage() {
         description={t('Verified sellers, escrow on every order and returns that take two taps with no hidden fee at checkout.')}
         actions={
           <>
-            <Button size="lg" variant="white" onClick={openDownloadModal}>
+            <Button size="lg" variant="white" {...downloadLink}>
               {t('Download KT Messenger')}
             </Button>
             <Button size="lg" variant="onDark" onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}>

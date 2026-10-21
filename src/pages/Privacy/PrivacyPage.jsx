@@ -210,7 +210,7 @@ export function PrivacyPage() {
 
   const navigate = useNavigate()
   const featureNavHref = useFeatureNavHref()
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
   const [activeFaq, setActiveFaq] = useState(0)
   const [activePrivacyModal, setActivePrivacyModal] = useState('lastSeen')
@@ -298,7 +298,7 @@ export function PrivacyPage() {
 
               <Reveal from="up" delay={0.12}>
                 <div className="mt-7 flex flex-wrap gap-4">
-                  <Button size="lg" onClick={openDownloadModal}>
+                  <Button size="lg" {...downloadLink}>
                     {t('Download App')} <FiDownload />
                   </Button>
                   <Button variant="secondary" size="lg" onClick={() => navigate('/secure-messaging-app')}>

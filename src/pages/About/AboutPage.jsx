@@ -53,7 +53,7 @@ export function AboutPage() {
 
   const content = { ...FALLBACK_ABOUT, ...aboutData }
 
-  const { openDownloadModal } = useModal()
+  const { downloadLink } = useModal()
   const { t } = useLanguage()
   const navigate = useNavigate()
 
@@ -90,7 +90,7 @@ export function AboutPage() {
 
             <Reveal from="up" delay={0.1}>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-                <Button size="lg" onClick={openDownloadModal}>
+                <Button size="lg" {...downloadLink}>
                   {t('Get KT Messenger')}
                 </Button>
                 <Button variant="secondary" size="lg" onClick={() => navigate('/private-messaging-app')}>
