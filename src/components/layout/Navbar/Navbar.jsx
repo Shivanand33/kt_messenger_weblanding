@@ -6,8 +6,8 @@ import {
   FiX,
   FiChevronDown,
   FiChevronRight,
-  FiArrowUpRight,
   FiDownload,
+  FiArrowUpRight,
   FiPhone,
   FiMessageSquare,
   FiUsers,
@@ -312,8 +312,16 @@ export function Navbar() {
           })}
         </nav>
 
+        {/* Log In is the quieter of the two: an outline that only takes the
+            brand colour once you reach it, so Download keeps the eye. The
+            `!` on the hover colour is needed because a ghost Button rendered
+            as a link already forces `text-ink` — see linkColors in Button. */}
         <div className="hidden items-center gap-2.5 sm:flex">
-          <Button variant="ghost" href={LOGIN_URL}>
+          <Button
+            variant="ghost"
+            href={LOGIN_URL}
+            className="btn-reveal border border-line hover:border-brand hover:text-brand-ink! [&_svg]:transition-transform hover:[&_svg]:translate-x-1"
+          >
             {t('Log In')} <FiChevronRight className="text-xs" />
           </Button>
           <Button {...downloadLink}>
@@ -381,7 +389,12 @@ export function Navbar() {
               </div>
 
               <div className="flex flex-col gap-2 pt-2 border-t border-line">
-                <Button variant="ghost" href={LOGIN_URL} onClick={() => setOpen(false)} className="w-full justify-center">
+                <Button
+                  variant="ghost"
+                  href={LOGIN_URL}
+                  onClick={() => setOpen(false)}
+                  className="btn-reveal w-full justify-center border border-line hover:border-brand hover:text-brand-ink!"
+                >
                   {t('Log In')}
                 </Button>
                 <Button {...downloadLink} className="w-full justify-center">

@@ -75,6 +75,20 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!--
+    Wallet carries the trailing slash the other entries lack, because that is
+    the URL it declares as canonical: the build writes dist/wallet/index.html
+    and prerenders <link rel="canonical" href="https://ktmessenger.com/wallet/">.
+    Every other page here does the same and is listed without the slash, so
+    those 25 lines disagree with their own canonical — worth fixing in one
+    pass rather than copying the error into a new line.
+  -->
+  <url>
+    <loc>https://ktmessenger.com/wallet/</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://ktmessenger.com/community</loc>
     <lastmod>2026-09-25</lastmod>

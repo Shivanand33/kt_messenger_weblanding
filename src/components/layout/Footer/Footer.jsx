@@ -79,6 +79,7 @@ const FALLBACK_COLUMNS = [
       { label: 'Help Center', to: '/messaging-app-help' },
       { label: 'Contact Us', to: '/contact' },
       { label: 'Community', to: '/community' },
+      { label: 'Wallet', to: '/wallet' },
     ],
   },
 ]
@@ -220,6 +221,7 @@ const sitemap = [
       { label: 'KT Plus', to: '/premium-messaging-app' },
       { label: 'KT Minis', to: '/minis-short-video-app' },
       { label: 'Notes', to: '/notes-app' },
+      { label: 'Wallet', to: '/wallet' },
     ],
   },
   {

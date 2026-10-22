@@ -23,7 +23,12 @@ const SRC = path.resolve(process.cwd(), '..', 'src', 'pages')
 const COPY_FIELDS = ['title','subtitle','desc','description','summary','text','label','name','quote','role','q','a','action','limit','fee','notes','note','hint','level','event','impact','expires','blurb','caption']
 
 const SOURCES = {
-  wallet: { file: 'Wallet/walletData.js', arrays: ['rewards','limitsTable','securityFeatures','walletFeatures','walletSteps','walletTestimonials'] },
+  // 'rewards', 'limitsTable' and 'walletTestimonials' were dropped here as the
+  // wallet page lost its interactive demo and then its customer quotes: the
+  // arrays no longer exist, and the sections that rendered them are gone, so
+  // there is nothing left for an admin to edit. Rows already imported from
+  // them stay in website_content untouched — this importer never removes a key.
+  wallet: { file: 'Wallet/walletData.js', arrays: ['securityFeatures','walletFeatures','walletSteps'] },
   notes: { file: 'Notes/notesData.js', arrays: ['notesTips','notesFeatures','notesSteps','notesTestimonials'] },
   markets: { file: 'Markets/marketsData.js', arrays: ['marketTools','marketSteps','marketLearn','marketTestimonials'] },
   news: { file: 'News/newsData.js', arrays: ['newsSources','digestSchedule','factChecks','newsFeatures','newsSteps','newsTestimonials'] },

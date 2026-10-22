@@ -26,12 +26,36 @@
  */
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 const APPLY = process.argv.includes('--apply')
-const ROOT = path.resolve(process.cwd(), '..')
-const SRC = path.join(ROOT, 'src')
+const MANIFEST_ONLY = process.argv.includes('--manifest-only')
+
+/**
+ * The frontend source tree, when it is reachable.
+ *
+ * Locally the backend sits beside it (`<repo>/backend` -> `<repo>/src`). The
+ * production image is built from `backend/` alone with WORKDIR /app, so `..`
+ * resolves to `/` and `/src` is either absent or the *backend's* own source.
+ * Both candidates are therefore accepted only when they contain `pages` and
+ * `components`, which is what tells the frontend tree from the backend one.
+ *
+ * Without this check the scan silently finds nothing and the run reports
+ * "no text" for all 24 pages while still printing APPLIED — which is exactly
+ * what happened the first time this was run in production.
+ */
+const FRONTEND_SRC = [
+  path.resolve(process.cwd(), '..', 'src'),
+  path.resolve(process.cwd(), 'src'),
+].find((dir) => fs.existsSync(path.join(dir, 'pages')) && fs.existsSync(path.join(dir, 'components'))) || null
+
+// Derived list, committed next to this script so it ships inside the image
+// (the Dockerfile's `COPY . .` picks it up) and the import can run in
+// production, where the frontend source does not exist. Mirrors the registry
+// that scripts/import-site-images.mjs keeps for the same reason.
+const MANIFEST = path.join(path.dirname(fileURLToPath(import.meta.url)), 'page-text.manifest.json')
 
 /** page key -> source files whose visible text belongs to that page */
 const PAGES = {
@@ -98,9 +122,8 @@ function extractStrings(file) {
   return found
 }
 
-const report = []
-
-try {
+/** { page: [string, …] } read from the source tree. */
+function scan(src) {
   // Files already claimed by a more specific page, so `shell` does not swallow
   // section copy that belongs to the homepage.
   const claimed = new Set()
@@ -108,20 +131,73 @@ try {
 
   for (const [page, dirs] of Object.entries(PAGES)) {
     if (page === 'shell') continue
-    const files = dirs.flatMap((d) => walk(path.join(SRC, d)))
+    const files = dirs.flatMap((d) => walk(path.join(src, d)))
     files.forEach((f) => claimed.add(f))
     pageFiles[page] = files
   }
-  pageFiles.shell = PAGES.shell.flatMap((d) => walk(path.join(SRC, d))).filter((f) => !claimed.has(f))
+  pageFiles.shell = PAGES.shell.flatMap((d) => walk(path.join(src, d))).filter((f) => !claimed.has(f))
 
+  const out = {}
+  for (const [page, files] of Object.entries(pageFiles)) {
+    const strings = new Set()
+    for (const f of files) for (const s of extractStrings(f)) strings.add(s)
+    out[page] = { files: files.length, strings: [...strings].sort() }
+  }
+  return out
+}
+
+/* ── where the strings come from ──────────────────────────────────────── */
+
+let pageStrings
+let source
+
+if (FRONTEND_SRC) {
+  pageStrings = scan(FRONTEND_SRC)
+  source = FRONTEND_SRC
+  // Keep the shipped manifest in step with the code on every local run.
+  fs.writeFileSync(MANIFEST, `${JSON.stringify(pageStrings, null, 2)}\n`)
+} else if (fs.existsSync(MANIFEST)) {
+  pageStrings = JSON.parse(fs.readFileSync(MANIFEST, 'utf8'))
+  source = `${path.basename(MANIFEST)} (frontend source not present)`
+} else {
+  console.error('Cannot determine the string list: no frontend source tree and no manifest.')
+  console.error(`Expected the manifest at ${MANIFEST}.`)
+  console.error('Run this script once from the backend/ directory of a full checkout, then commit')
+  console.error('scripts/page-text.manifest.json so it ships with the image.')
+  await prisma.$disconnect()
+  process.exit(1)
+}
+
+// Never write an empty import: that is what made the first production run look
+// successful while leaving admin with nothing and no hint as to why.
+const grandTotal = Object.values(pageStrings).reduce((n, p) => n + (p.strings?.length || 0), 0)
+if (!grandTotal) {
+  console.error(`Refusing to continue: no translated strings were found (source: ${source}).`)
+  console.error('A run from the production image needs scripts/page-text.manifest.json to be present.')
+  await prisma.$disconnect()
+  process.exit(1)
+}
+
+if (MANIFEST_ONLY) {
+  // Say which of the two things just happened. "Wrote …" on a run that only
+  // read the manifest is the kind of line that hides a problem for a week.
+  console.log(FRONTEND_SRC ? `Wrote ${path.basename(MANIFEST)}` : `Read ${path.basename(MANIFEST)} (frontend source not present)`)
+  console.log(`  ${Object.keys(pageStrings).length} pages, ${grandTotal} strings.`)
+  await prisma.$disconnect()
+  process.exit(0)
+}
+
+const report = []
+
+try {
   let totalStrings = 0
   let totalNew = 0
   let totalKept = 0
 
-  for (const [page, files] of Object.entries(pageFiles)) {
-    const strings = new Set()
-    for (const f of files) for (const s of extractStrings(f)) strings.add(s)
-    if (!strings.size) { report.push({ page, files: files.length, strings: 0, added: 0, kept: 0, status: 'no text' }); continue }
+  for (const [page, entry] of Object.entries(pageStrings)) {
+    const files = entry.files ?? 0
+    const strings = new Set(entry.strings || [])
+    if (!strings.size) { report.push({ page, files, strings: 0, added: 0, kept: 0, status: 'no text' }); continue }
 
     const key = `text.${page}`
     const existing = await prisma.websiteContent.findFirst({ where: { key, locale: 'en-US' } })
@@ -142,7 +218,7 @@ try {
 
     report.push({
       page,
-      files: files.length,
+      files,
       strings: strings.size,
       added,
       kept,
@@ -161,6 +237,8 @@ try {
   }
 
   console.log(APPLY ? '=== PAGE TEXT IMPORT APPLIED ===' : '=== PAGE TEXT DRY RUN (no writes) ===')
+  console.log('')
+  console.log('  string list source :', source)
   console.log('')
   console.log('  PAGE'.padEnd(16), 'FILES'.padStart(6), 'STRINGS'.padStart(9), 'NEW'.padStart(7), 'KEPT'.padStart(6), '  STATUS')
   for (const r of report.sort((a, b) => b.strings - a.strings)) {

@@ -30,6 +30,23 @@
          the HTML a crawler receives, on every language prefix, and can never
          be duplicated. -->
     <meta name="robots" content="index, follow" />
+    <!-- Do not offer to machine-translate these pages.
+
+         A result for an English page shown to, say, a Dutch searcher comes
+         with Google's "Translate this page" link beside it, and Chrome offers
+         the same thing on arrival. Taking either one replaces our page with a
+         machine translation of it — which is what makes a link look like it
+         "opened in another language".
+
+         We do not need it: every page already ships a real, reviewed
+         translation at its own URL, and all 65 of them are declared in the
+         hreflang block below. Someone who wants Dutch should get /nl/, not a
+         machine pass over /en/. Anyone whose language we do not cover still
+         lands on the English page, because x-default points at it.
+
+         This changes nothing about indexing or ranking — it only withdraws
+         the translation offer. -->
+    <meta name="google" content="notranslate" />
     <!-- Social share cards (Open Graph / X). Static so link scrapers — which
          do not run JavaScript — see them on the very first HTML. useSeo()
          overrides them per page (blog articles get their own cover) and

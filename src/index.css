@@ -155,6 +155,26 @@ button {
   font: inherit;
 }
 
+/* A hand on anything that can be clicked.
+ *
+ * Tailwind v4 stopped forcing `cursor: pointer` on buttons and left them with
+ * the browser's own `default`, so every <button> on the site — the nav
+ * triggers, the tab chips, the Download buttons — showed an arrow while links
+ * right beside them showed a hand. Nothing said "this does something".
+ *
+ * In `base`, so a `cursor-*` utility still wins where a component means
+ * something else: the Wallet page's disabled button keeps
+ * `disabled:cursor-not-allowed`, and the draggable chips keep `cursor-grab`.
+ * A disabled button is excluded here too, so it never invites a click. */
+@layer base {
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  summary,
+  label[for] {
+    cursor: pointer;
+  }
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -181,6 +201,48 @@ img {
  * stays visible against dark sections and light cards alike. */
 ::selection {
   background: color-mix(in srgb, var(--brand) 28%, transparent);
+}
+
+/* ------------------------------------------------------------------ *
+ * The navbar Log In button opens from its middle.
+ *
+ * Its partner is a solid button that fills; this one is an outline that gets
+ * filled *for* it, from the centre out, so the two hovers read as the same
+ * idea at two weights. The easing overshoots a little, which is what makes it
+ * land like a switch rather than fade in.
+ *
+ * The fill is a pseudo-element rather than a background so it can scale: a
+ * background cannot be animated across the pill, and `inset: 0` keeps it
+ * exactly on the border radius it inherits.
+ * ------------------------------------------------------------------ */
+.btn-reveal {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.btn-reveal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--brand-soft);
+  scale: 0 1;
+  transition: scale 0.42s cubic-bezier(0.34, 1.32, 0.64, 1);
+}
+
+.btn-reveal:hover::before,
+.btn-reveal:focus-visible::before {
+  scale: 1 1;
+}
+
+/* With motion turned down the states still change, they just stop travelling:
+   the water is simply there on hover and gone when the pointer leaves. */
+@media (prefers-reduced-motion: reduce) {
+  .btn-reveal::before {
+    transition: none;
+  }
 }
 
 /* ------------------------------------------------------------------ *

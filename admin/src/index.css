@@ -45,6 +45,28 @@ body { background: var(--bg); color: var(--body); font-size: 14px; -webkit-font-
 a { color: var(--brand); text-decoration: none; }
 h1, h2, h3, h4 { color: var(--ink); margin: 0; letter-spacing: -0.02em; font-weight: 700; }
 
+/* A hand on anything that can be clicked.
+ *
+ * A browser gives <button> the plain arrow, so until now a button only had a
+ * hand where some class below happened to set one. Most do — `.btn`,
+ * `.icon-btn`, `.pill-btn` and the rest all say `cursor: pointer` themselves —
+ * which is why only a handful read as unclickable: the buttons carrying no
+ * class at all, and the few whose class had simply been written without it.
+ * This makes it the default instead of something each new class must remember.
+ *
+ * The exclusions are wrapped in `:where()` on purpose. `:not(:disabled)` would
+ * otherwise count as a class and let this rule outrank `.some-button { cursor:
+ * … }`; inside `:where()` it adds nothing, so this stays an element-level rule
+ * and any class that wants `not-allowed`, `grab` or anything else keeps it,
+ * wherever it sits in this file. A disabled button is left with the arrow, so
+ * it never invites a click. */
+button:where(:not(:disabled)),
+[role='button']:where(:not([aria-disabled='true'])),
+summary,
+label[for] {
+  cursor: pointer;
+}
+
 /* Scrollbars */
 * { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
 ::-webkit-scrollbar { width: 6px; height: 6px; }
