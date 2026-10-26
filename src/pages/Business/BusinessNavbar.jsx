@@ -37,9 +37,15 @@ const popAnim = {
   transition: { duration: 0.16 },
 }
 
-function MenuButton({ onClick, className = '', children }) {
+function MenuButton({ onClick, className = '', disabled = false, children }) {
   return (
-    <button onClick={onClick} className={`block w-full text-left text-slate-700 hover:text-brand-strong transition-colors ${className}`}>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`block w-full text-left transition-colors ${
+        disabled ? 'cursor-not-allowed text-slate-400' : 'text-slate-700 hover:text-brand-strong'
+      } ${className}`}
+    >
       {children}
     </button>
   )
@@ -125,7 +131,8 @@ export function BusinessNavbar() {
     { label: t.pricing, to: '/business/pricing' },
     { label: t.resourceLib, to: '/messaging-app-help' },
     { label: t.blog, to: '/messaging-social-media-blog' },
-    { label: t.devHub, to: '/business/developer-hub' },
+    // Disabled for the same reason as the desktop Developers menu below.
+    { label: t.devHub, to: '/business/developer-hub', disabled: true },
     { label: t.becomePartner, to: '/business/become-partner' },
   ]
 
@@ -261,8 +268,12 @@ export function BusinessNavbar() {
                             <span>{t.platform}</span>
                           </div>
                           <div className="space-y-2 text-xs font-semibold">
-                            <MenuButton onClick={() => go('/business/developer-hub')} className="text-xs">{t.devHub}</MenuButton>
-                            <MenuButton onClick={() => go('/business/developer-quickstart')} className="text-xs">{t.howToStart}</MenuButton>
+                            {/* Developer tooling is not public yet (see the "coming soon"
+                                badge above), so every destination here is shown but
+                                disabled: the menu keeps telling visitors what is coming
+                                without sending them to a page that is not ready. */}
+                            <MenuButton onClick={() => go('/business/developer-hub')} className="text-xs" disabled>{t.devHub}</MenuButton>
+                            <MenuButton onClick={() => go('/business/developer-quickstart')} className="text-xs" disabled>{t.howToStart}</MenuButton>
                           </div>
                         </div>
                         <div className="space-y-3">
@@ -271,9 +282,9 @@ export function BusinessNavbar() {
                             <span>{t.devLinks}</span>
                           </div>
                           <div className="space-y-2 text-xs font-semibold">
-                            <MenuButton onClick={() => go('/business/community')} className="text-xs">{t.community}</MenuButton>
-                            <MenuButton onClick={() => go('/business/developer-support')} className="text-xs">{t.devSupport}</MenuButton>
-                            <MenuButton onClick={() => go('/business/api-status')} className="text-xs">{t.apiStatus}</MenuButton>
+                            <MenuButton onClick={() => go('/business/community')} className="text-xs" disabled>{t.community}</MenuButton>
+                            <MenuButton onClick={() => go('/business/developer-support')} className="text-xs" disabled>{t.devSupport}</MenuButton>
+                            <MenuButton onClick={() => go('/business/api-status')} className="text-xs" disabled>{t.apiStatus}</MenuButton>
                           </div>
                         </div>
                       </div>
@@ -352,7 +363,10 @@ export function BusinessNavbar() {
                 <button
                   key={l.to + l.label}
                   onClick={() => go(l.to)}
-                  className="block w-full rounded-xl px-3 py-2.5 text-left text-[15px] font-semibold text-white/90 hover:bg-white/10 hover:text-white transition-colors"
+                  disabled={l.disabled}
+                  className={`block w-full rounded-xl px-3 py-2.5 text-left text-[15px] font-semibold transition-colors ${
+                    l.disabled ? 'cursor-not-allowed text-white/40' : 'text-white/90 hover:bg-white/10 hover:text-white'
+                  }`}
                 >
                   {l.label}
                 </button>

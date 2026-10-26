@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import { requireAuth } from '../middleware/auth.js'
+import { requireAuth, requireMfaChallenge } from '../middleware/auth.js'
 import { requirePermission, requireSuperAdmin } from '../middleware/rbac.js'
 import { validate } from '../middleware/validate.js'
-import { loginLimiter } from '../middleware/rateLimit.js'
+import { loginLimiter, mfaLimiter } from '../middleware/rateLimit.js'
 import { handleUpload } from '../middleware/upload.js'
 import { crudFactory } from '../utils/crudFactory.js'
 import { idParam } from '../validators/common.validator.js'
@@ -25,7 +25,11 @@ import { ok, created } from '../utils/apiResponse.js'
 import { writeAudit } from '../utils/audit.js'
 
 // validators
-import { loginSchema, changePasswordSchema, updateProfileSchema, forgotPasswordSchema, resetPasswordSchema } from '../validators/auth.validator.js'
+import {
+  loginSchema, changePasswordSchema, updateProfileSchema, forgotPasswordSchema, resetPasswordSchema,
+  twoFactorVerifySchema, twoFactorResendSchema, twoFactorRecoverySchema,
+  twoFactorTestSchema, twoFactorEnableSchema, twoFactorDisableSchema,
+} from '../validators/auth.validator.js'
 import {
   blogCreateSchema, blogUpdateSchema, blogCategorySchema, blogTagSchema,
   helpCategorySchema, helpSubcategorySchema, helpArticleCreateSchema, helpArticleUpdateSchema,
@@ -51,12 +55,28 @@ r.post('/auth/logout', auth.logout)
 r.post('/auth/forgot-password', loginLimiter, validate(forgotPasswordSchema), auth.forgotPassword)
 r.post('/auth/reset-password', loginLimiter, validate(resetPasswordSchema), auth.resetPassword)
 
+/* ── Second step of a 2FA sign-in ──────────────────────
+ * Not signed in yet: these carry the short-lived challenge token from
+ * /auth/login, which requireMfaChallenge checks. mfaLimiter runs after it
+ * because it charges the account the token names, not the address it came
+ * from — the address is free to change, the account is what is under attack.
+ */
+r.post('/auth/2fa/verify', validate(twoFactorVerifySchema), requireMfaChallenge, mfaLimiter, auth.verifyTwoFactor)
+r.post('/auth/2fa/resend', validate(twoFactorResendSchema), requireMfaChallenge, mfaLimiter, auth.resendTwoFactor)
+r.post('/auth/2fa/recovery', validate(twoFactorRecoverySchema), requireMfaChallenge, mfaLimiter, auth.recoveryTwoFactor)
+
 /* ── Everything below requires a valid admin token ────── */
 r.use(requireAuth)
 
 r.get('/auth/me', auth.me)
 r.patch('/auth/profile', validate(updateProfileSchema), auth.updateProfile)
 r.post('/auth/change-password', validate(changePasswordSchema), auth.changePassword)
+
+/* ── Two-factor setup, by the admin for their own account ── */
+r.post('/auth/2fa/send-test', validate(twoFactorTestSchema), auth.sendTwoFactorTest)
+r.post('/auth/2fa/enable', validate(twoFactorEnableSchema), auth.enableTwoFactor)
+r.post('/auth/2fa/send-code', auth.sendTwoFactorCode)
+r.post('/auth/2fa/disable', validate(twoFactorDisableSchema), auth.disableTwoFactor)
 r.get('/dashboard', P('dashboard:read'), dashboard)
 
 // Helper: wire standard CRUD for a resource with RBAC + validation.
@@ -175,6 +195,8 @@ r.get('/admins', P('admin_user:read'), admins.list)
 r.post('/admins', P('admin_user:write'), validate(adminCreateSchema), admins.create)
 r.put('/admins/:id', P('admin_user:write'), validate(idParam, 'params'), validate(adminUpdateSchema), admins.update)
 r.delete('/admins/:id', P('admin_user:delete'), validate(idParam, 'params'), admins.remove)
+// Lowers another account's protection, so it is the super admin's call alone.
+r.post('/admins/:id/2fa/reset', requireSuperAdmin, validate(idParam, 'params'), admins.resetTwoFactor)
 
 r.get('/roles', P('role:read'), roles.listRoles)
 r.get('/permissions', P('role:read'), roles.listPermissions)

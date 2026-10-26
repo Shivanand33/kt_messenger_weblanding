@@ -32,13 +32,37 @@ export function AuthProvider({ children }) {
       .finally(() => setLoading(false))
   }, [])
 
-  const login = async (email, password) => {
-    const res = await api.post('/admin/auth/login', { email, password })
-    const { token, admin: user } = res.data.data
+  // Turns a finished sign-in into a session. Shared by the password-only path
+  // and by both ways of answering a 2FA challenge.
+  const startSession = ({ token, admin: user }) => {
     localStorage.setItem('kt_admin_token', token)
     setAdmin(user)
     return user
   }
+
+  /**
+   * Returns the signed-in admin, or `{ mfaRequired: true, challengeToken, ... }`
+   * when a second factor is needed.
+   *
+   * In that case nothing is stored: the challenge token can only finish this
+   * sign-in, and treating it as a session would be the whole point of 2FA
+   * thrown away. The caller shows the code step and calls verifyMfa.
+   */
+  const login = async (email, password) => {
+    const res = await api.post('/admin/auth/login', { email, password })
+    const data = res.data.data
+    if (data.mfaRequired) return data
+    return startSession(data)
+  }
+
+  const verifyMfa = async (challengeToken, code) =>
+    startSession((await api.post('/admin/auth/2fa/verify', { challengeToken, code })).data.data)
+
+  const recoverMfa = async (challengeToken, recoveryCode) =>
+    startSession((await api.post('/admin/auth/2fa/recovery', { challengeToken, recoveryCode })).data.data)
+
+  const resendMfa = async (challengeToken) =>
+    (await api.post('/admin/auth/2fa/resend', { challengeToken })).data.data
 
   const logout = useCallback(async () => {
     try {
@@ -58,7 +82,7 @@ export function AuthProvider({ children }) {
   )
 
   return (
-    <AuthContext.Provider value={{ admin, loading, login, logout, can, setAdmin }}>
+    <AuthContext.Provider value={{ admin, loading, login, verifyMfa, recoverMfa, resendMfa, logout, can, setAdmin }}>
       {children}
     </AuthContext.Provider>
   )

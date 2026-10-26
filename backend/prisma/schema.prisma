@@ -71,6 +71,27 @@ model Admin {
   // never the token itself. Null when no reset is in flight.
   resetTokenHash String?
   resetTokenExp  DateTime?
+
+  // Two-factor authentication by emailed code. Every field is optional, so an
+  // admin who has never touched 2FA signs in exactly as before.
+  //
+  // twoFactorEnabledAt doubles as the on/off switch: null means off. The code
+  // itself is never stored — only its hash — so a leaked database dump cannot
+  // be used to sign in during the ten minutes a code is alive.
+  twoFactorEnabledAt DateTime?
+  // Where codes are sent. Null means the account's own email; a separate
+  // address lets the login mailbox and the second factor be different places.
+  twoFactorEmail     String?
+  mfaCodeHash        String?
+  mfaCodeExp         DateTime?
+  // Wrong guesses against the current code. A six-digit code is only a
+  // million combinations, so the challenge is destroyed well before that.
+  mfaAttempts        Int       @default(0)
+  // When the current code was emailed — the resend cooldown reads this.
+  mfaSentAt          DateTime?
+  // [{ hash, usedAt }] — bcrypt hashes, each code good once. The way back in
+  // when the mailbox itself is unreachable.
+  recoveryCodes      Json?
   roleId       String
   role         Role        @relation(fields: [roleId], references: [id])
   blogPosts    BlogPost[]  @relation("BlogAuthorAdmin")

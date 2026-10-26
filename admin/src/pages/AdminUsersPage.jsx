@@ -20,8 +20,10 @@ export function AdminUsersPage() {
   const [form, setForm] = useState({})
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(null)
+  const [resetting, setResetting] = useState(null)
 
   const canWrite = can('admin_user:write')
+  const isSuperAdmin = me?.role === 'super_admin'
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -75,10 +77,25 @@ export function AdminUsersPage() {
     }
   }
 
+  const doResetTwoFactor = async () => {
+    setSaving(true)
+    try {
+      await api.post(`/admin/admins/${resetting.id}/2fa/reset`)
+      toast.success(`Two-factor authentication is off for ${resetting.name}`)
+      setResetting(null)
+      load()
+    } catch (e) {
+      toast.error(errorMessage(e))
+    } finally {
+      setSaving(false)
+    }
+  }
+
   const columns = [
     { key: 'name', header: 'Name', render: (r) => <div><div className="t-title">{r.name} {r.id === me?.id ? <Badge tone="blue">you</Badge> : null}</div><div style={{ fontSize: 12, color: 'var(--muted)' }}>{r.email}</div></div> },
     { key: 'role', header: 'Role', render: (r) => <Badge tone="gray">{r.role?.name}</Badge> },
     { key: 'status', header: 'Status', render: (r) => <StatusBadge status={r.status} /> },
+    { key: 'twoFactor', header: '2FA', render: (r) => <Badge tone={r.twoFactorEnabledAt ? 'green' : 'gray'}>{r.twoFactorEnabledAt ? 'on' : 'off'}</Badge> },
     { key: 'lastLoginAt', header: 'Last login', render: (r) => fmtDate(r.lastLoginAt) },
   ]
 
@@ -95,6 +112,12 @@ export function AdminUsersPage() {
           <DataTable columns={columns} rows={rows} actions={(r) => (
             <>
               {canWrite ? <button className="icon-btn" onClick={() => openEdit(r)}>✏️</button> : null}
+              {/* The way back in for an admin whose mailbox is gone and whose
+                  recovery codes went with it. Super admin only, and never for
+                  your own account — that one costs a password and a code. */}
+              {isSuperAdmin && r.twoFactorEnabledAt && r.id !== me?.id
+                ? <button className="icon-btn" title="Turn off two-factor authentication" onClick={() => setResetting(r)}>🔑</button>
+                : null}
               {can('admin_user:delete') && r.id !== me?.id ? <button className="icon-btn danger" onClick={() => setDeleting(r)}>🗑️</button> : null}
             </>
           )} />
@@ -115,6 +138,18 @@ export function AdminUsersPage() {
       ) : null}
 
       {deleting ? <ConfirmDialog title="Delete admin?" message={`${deleting.name} will lose access.`} confirmLabel="Delete" danger busy={saving} onConfirm={doDelete} onClose={() => setDeleting(null)} /> : null}
+
+      {resetting ? (
+        <ConfirmDialog
+          title="Turn off two-factor authentication?"
+          message={`${resetting.name} will sign in with their password alone, and their recovery codes will stop working. They will be emailed about this. Only do it if they cannot reach their codes or their mailbox.`}
+          confirmLabel="Turn it off"
+          danger
+          busy={saving}
+          onConfirm={doResetTwoFactor}
+          onClose={() => setResetting(null)}
+        />
+      ) : null}
     </div>
   )
 }

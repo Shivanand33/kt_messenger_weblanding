@@ -4,10 +4,14 @@ import { ok, created, ApiError } from '../../utils/apiResponse.js'
 import { parsePagination, pageMeta } from '../../utils/pagination.js'
 import { hashPassword } from '../../utils/password.js'
 import { writeAudit } from '../../utils/audit.js'
+import { notify } from '../../services/twofactor.service.js'
 
 // Never expose passwordHash.
 const select = {
   id: true, name: true, email: true, status: true, lastLoginAt: true, createdAt: true,
+  // Only the timestamp, never the code or the recovery hashes: the list is
+  // for seeing who is protected, not for reading anybody's secrets.
+  twoFactorEnabledAt: true,
   role: { select: { id: true, name: true } },
 }
 
@@ -46,6 +50,55 @@ export const update = asyncHandler(async (req, res) => {
   const admin = await prisma.admin.update({ where: { id: req.params.id }, data, select })
   await writeAudit({ req, action: 'admin_user.update', entity: 'Admin', entityId: admin.id })
   return ok(res, admin)
+})
+
+/**
+ * POST /api/admin/admins/:id/2fa/reset   (super admin only)
+ *
+ * Turns another admin's 2FA off when their mailbox is gone and their recovery
+ * codes with it. Without a path like this, one unreachable inbox locks that
+ * account out of the panel for good.
+ *
+ * It lowers that account's protection back to its password, so it is super
+ * admin only, it is audited, and the account is told it happened.
+ */
+export const resetTwoFactor = asyncHandler(async (req, res) => {
+  // Not for yourself. Turning your own off through Profile → Security costs a
+  // password and a fresh code; allowing it here would let anyone holding a
+  // super admin's session strip that account's second factor with one click.
+  if (req.params.id === req.admin.id) {
+    throw ApiError.badRequest('Use Profile → Security to turn off your own two-factor authentication')
+  }
+
+  const target = await prisma.admin.findUnique({ where: { id: req.params.id } })
+  if (!target) throw ApiError.notFound('Admin not found')
+  if (!target.twoFactorEnabledAt) throw ApiError.badRequest('That admin does not have two-factor authentication on')
+
+  await prisma.admin.update({
+    where: { id: target.id },
+    data: {
+      twoFactorEnabledAt: null,
+      twoFactorEmail: null,
+      recoveryCodes: null,
+      mfaCodeHash: null,
+      mfaCodeExp: null,
+      mfaAttempts: 0,
+      mfaSentAt: null,
+    },
+  })
+
+  await writeAudit({
+    req, action: 'admin_user.2fa_reset', entity: 'Admin', entityId: target.id, meta: { email: target.email },
+  })
+  await notify({
+    admin: target,
+    subject: 'Two-factor authentication was turned off for your KT Messenger Admin account',
+    lines: [
+      `${req.admin.name} turned off two-factor authentication on your account.`,
+      'Your account is now protected by its password alone. Turn 2FA back on from Profile → Security.',
+    ],
+  })
+  return ok(res, { id: target.id, twoFactorEnabled: false })
 })
 
 // DELETE /api/admin/admins/:id

@@ -192,10 +192,36 @@ export const getContentBlock = asyncHandler(async (req, res) => {
   return ok(res, block.data)
 })
 
+/**
+ * An override map with the entries that override nothing taken out.
+ *
+ * The page-text and site-image imports store an identity map — "End": "End",
+ * "hero.jpg": "hero.jpg" — so the admin table has a row to edit for every
+ * string and every image. The website gains nothing from those rows: `t()`
+ * already treats an override equal to its key as no override at all, and an
+ * image mapped to its own filename is the bundled one.
+ *
+ * Sending them anyway cost every visitor 202 KB (46 KB gzipped) of JSON to
+ * download and parse on each page load, all of it no-ops. Only entries that
+ * actually differ are sent now.
+ *
+ * Anything that is not a plain string stays untouched: an image row can be
+ * `{ url, alt }`, and a hero block's values are real copy, never its keys.
+ */
+const withoutIdentityEntries = (data) => {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return data
+  const out = {}
+  for (const [key, value] of Object.entries(data)) {
+    if (typeof value === 'string' && value === key) continue
+    out[key] = value
+  }
+  return out
+}
+
 export const getPageContent = asyncHandler(async (req, res) => {
   const blocks = await prisma.websiteContent.findMany({ where: { page: req.params.page, locale: req.query.locale || 'en-US' } })
   const map = {}
-  for (const b of blocks) map[b.key] = b.data
+  for (const b of blocks) map[b.key] = withoutIdentityEntries(b.data)
   return ok(res, map)
 })
 

@@ -533,9 +533,11 @@ export function BusinessPage() {
                               <FiLayers className="text-brand-strong text-lg" />
                               <span>{t.platform}</span>
                             </div>
+                            {/* Disabled while the developer tooling is unreleased — see the
+                                "coming soon" badge above. */}
                             <div className="space-y-2 text-xs font-semibold text-slate-700">
-                              <button onClick={() => go('/business/developer-hub')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.devHub}</button>
-                              <button onClick={() => go('/business/developer-quickstart')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.howToStart}</button>
+                              <button onClick={() => go('/business/developer-hub')} disabled className="block w-full text-left text-slate-400 cursor-not-allowed transition-colors">{t.devHub}</button>
+                              <button onClick={() => go('/business/developer-quickstart')} disabled className="block w-full text-left text-slate-400 cursor-not-allowed transition-colors">{t.howToStart}</button>
                             </div>
                           </div>
 
@@ -545,9 +547,9 @@ export function BusinessPage() {
                               <span>{t.devLinks}</span>
                             </div>
                             <div className="space-y-2 text-xs font-semibold text-slate-700">
-                              <button onClick={() => go('/business/community')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.community}</button>
-                              <button onClick={() => go('/business/developer-support')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.devSupport}</button>
-                              <button onClick={() => go('/business/api-status')} className="block w-full text-left hover:text-brand-strong transition-colors">{t.apiStatus}</button>
+                              <button onClick={() => go('/business/community')} disabled className="block w-full text-left text-slate-400 cursor-not-allowed transition-colors">{t.community}</button>
+                              <button onClick={() => go('/business/developer-support')} disabled className="block w-full text-left text-slate-400 cursor-not-allowed transition-colors">{t.devSupport}</button>
+                              <button onClick={() => go('/business/api-status')} disabled className="block w-full text-left text-slate-400 cursor-not-allowed transition-colors">{t.apiStatus}</button>
                             </div>
                           </div>
                         </div>

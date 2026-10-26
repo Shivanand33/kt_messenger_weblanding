@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  KT Messenger sitemap.
-  These are the canonical URLs of the site — the keyword-rich paths the admin
-  Navigation panel maps each page to (e.g. Calling -> /video-calling-app).
-  Keep this list in sync with the admin Navigation lists (features_menu,
-  header): when a URL is changed there, change it here too.
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ktmessenger.com/</loc>
@@ -14,7 +7,6 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Features (admin Navigation -> features_menu) -->
   <url>
     <loc>https://ktmessenger.com/video-calling-app</loc>
     <lastmod>2026-09-25</lastmod>
@@ -75,14 +67,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!--
-    Wallet carries the trailing slash the other entries lack, because that is
-    the URL it declares as canonical: the build writes dist/wallet/index.html
-    and prerenders <link rel="canonical" href="https://ktmessenger.com/wallet/">.
-    Every other page here does the same and is listed without the slash, so
-    those 25 lines disagree with their own canonical — worth fixing in one
-    pass rather than copying the error into a new line.
-  -->
+  
   <url>
     <loc>https://ktmessenger.com/wallet/</loc>
     <lastmod>2026-10-22</lastmod>
@@ -95,7 +80,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- Live headlines, so it changes far more often than the feature pages. -->
+  
   <url>
     <loc>https://ktmessenger.com/news</loc>
     <lastmod>2026-10-12</lastmod>
@@ -103,7 +88,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Header pages (admin Navigation -> header) -->
   <url>
     <loc>https://ktmessenger.com/messaging-app-download</loc>
     <lastmod>2026-09-25</lastmod>
@@ -123,7 +107,6 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Blog posts -->
   <url>
     <loc>https://ktmessenger.com/blog/best-social-media-sites</loc>
     <lastmod>2026-10-13</lastmod>
@@ -154,6 +137,97 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <url>
+    <loc>https://ktmessenger.com/business/features</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/pricing</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/flows</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/msg-marketing</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/msg-authentication</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/msg-utility</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/msg-service</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/app-download/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/app-features</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/get-started</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/agent</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/ads</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/ads-create</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/become-partner</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ktmessenger.com/business/find-partner</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
   <url>
     <loc>https://ktmessenger.com/products</loc>
     <lastmod>2026-09-30</lastmod>
@@ -161,7 +235,6 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Company pages -->
   <url>
     <loc>https://ktmessenger.com/about</loc>
     <lastmod>2026-09-25</lastmod>

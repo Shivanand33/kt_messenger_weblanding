@@ -1,5 +1,5 @@
 import { img, imgAlt, imgAltOnly } from '../../../utils/imageOverrides'
-import { mobileLazy } from '../../../utils/mobileImage'
+import { mobileLazy, imgSmall } from '../../../utils/mobileImage'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiDownload, FiVideo, FiCalendar, FiCheck, FiSmartphone } from 'react-icons/fi'
@@ -72,9 +72,17 @@ export function Hero() {
           space below it. Desktop and tablet keep the full-bleed cover image. */}
       <div className="relative overflow-hidden rounded-[22px] lg:rounded-[30px] max-md:bg-[#0b141a]" title={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}>
         {/* The LCP element on every viewport, and preloaded in index.html, so
-            it is fetched ahead of the images further down the page. */}
+            it is fetched ahead of the images further down the page.
+
+            `imgSmall` rather than `img`: a phone was downloading the 59 KB
+            desktop AVIF for a slot a few hundred pixels wide, when the 17 KB
+            variant in assets/images/sm is already built. On anything wider it
+            returns exactly what `img` returns, so the desktop download is
+            unchanged — and an admin replacement is passed through untouched
+            either way. The preload in index.html is split by the same
+            breakpoint so the right one is the one fetched early. */}
         <img
-          src={img(bgUrl)}
+          src={imgSmall(bgUrl)}
           alt={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}
           title={imgAlt(bgUrl, bgAlt || "secure instant messaging app")}
           className="absolute inset-0 h-full w-full object-cover object-center max-md:object-contain max-md:object-top"
