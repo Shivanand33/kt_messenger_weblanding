@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import { prisma } from '../config/db.js'
 import { env } from '../config/env.js'
 import { sendMail } from './email.service.js'
+import * as templates from './emailTemplate.service.js'
 import { clientIp } from '../utils/audit.js'
 
 /**
@@ -207,6 +208,26 @@ const when = () =>
   new Date().toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' })
 
 /**
+ * Everything a code email's `{{placeholders}}` can refer to.
+ *
+ * Built here rather than in the template service so the editor's preview and a
+ * real sign-in fill exactly the same set of names.
+ */
+function codeVars({ admin, code, req, to, purpose = 'sign-in' }) {
+  return {
+    code,
+    name: admin?.name || 'there',
+    email: to || targetEmail(admin),
+    minutes: String(Math.round(CODE_TTL_MS / 60000)),
+    purpose,
+    time: when(),
+    ip: req ? clientIp(req) || 'unknown' : 'unknown',
+    browser: req?.headers?.['user-agent'] || 'unknown device',
+    resetUrl: `${env.adminUrl}/forgot-password`,
+  }
+}
+
+/**
  * Email one code.
  *
  * Throws when delivery fails, and the caller turns that into a visible error:
@@ -216,32 +237,17 @@ const when = () =>
  * Here the password has already been accepted, so there is nothing left to
  * give away.)
  */
-export async function sendCodeEmail({ admin, code, req, subjectPrefix = 'sign-in' }) {
+export async function sendCodeEmail({ admin, code, req, subjectPrefix = 'sign-in', override = null }) {
   const to = targetEmail(admin)
-  const agent = req?.headers?.['user-agent'] || 'unknown device'
-  const lines = [
-    `Hi ${admin.name},`,
-    '',
-    `Your KT Messenger Admin ${subjectPrefix} code is:`,
-    '',
-    `    ${code}`,
-    '',
-    `It expires in ${Math.round(CODE_TTL_MS / 60000)} minutes and can be used once.`,
-    '',
-    'Attempt details:',
-    `  Time:    ${when()} UTC`,
-    `  IP:      ${req ? clientIp(req) || 'unknown' : 'unknown'}`,
-    `  Browser: ${agent}`,
-    '',
-    "If this wasn't you, someone knows your password. Change it now:",
-    `${env.adminUrl}/forgot-password`,
-  ]
-
-  const { delivered, provider } = await sendMail({
-    to,
-    subject: `Your KT Messenger Admin code: ${code}`,
-    text: lines.join('\n'),
+  const { subject, html, text } = await templates.render({
+    key: templates.TWO_FACTOR_CODE,
+    // Only the editor's preview/test passes an override — a real sign-in reads
+    // the saved template.
+    override,
+    vars: codeVars({ admin, code, req, to, purpose: subjectPrefix }),
   })
+
+  const { delivered, provider } = await sendMail({ to, subject, text, html })
 
   // The "log" provider prints the mail and reports success at the transport
   // level while delivering nothing. Treated as a failure here, because an
@@ -262,11 +268,12 @@ export async function sendCodeEmail({ admin, code, req, subjectPrefix = 'sign-in
  */
 export async function notify({ admin, subject, lines }) {
   try {
-    await sendMail({
-      to: targetEmail(admin),
-      subject,
-      text: [`Hi ${admin.name},`, '', ...lines, '', `Time: ${when()} UTC`].join('\n'),
+    const { html, text } = await templates.renderNotice({
+      heading: `Hi ${admin.name},`,
+      lines,
+      footerLine: `Time: ${when()} UTC`,
     })
+    await sendMail({ to: targetEmail(admin), subject, text, html })
   } catch {
     /* best effort */
   }

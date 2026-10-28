@@ -54,6 +54,9 @@ const NAV = [
       { to: '/roles', label: 'Roles & Permissions', icon: 'roles', perm: 'role:read' },
       { to: '/audit', label: 'Audit Log', icon: 'audit', perm: 'audit_log:read' },
       { to: '/email-settings', label: 'Email Settings', icon: 'emailSettings', perm: null },
+      // Hidden rather than shown-and-refused: its API is super admin only, and
+      // a menu entry that always 403s is worse than no entry.
+      { to: '/email-template', label: '2FA Email Design', icon: 'emailTemplate', perm: null, superAdmin: true },
       { to: '/profile', label: 'My Profile', icon: 'profile', perm: null },
     ],
   },
@@ -404,11 +407,15 @@ export function AdminLayout() {
     .join('')
     .toUpperCase()
 
-  // Flattened, permission-filtered page list for the palette.
-  const navItems = useMemo(
-    () => NAV.flatMap((s) => s.items).filter((i) => !i.perm || can(i.perm)),
-    [can],
+  // One rule for the sidebar and the command palette, so a page can never be
+  // reachable from one and missing from the other.
+  const visible = useCallback(
+    (i) => (!i.perm || can(i.perm)) && (!i.superAdmin || admin?.role === 'super_admin'),
+    [can, admin],
   )
+
+  // Flattened, permission-filtered page list for the palette.
+  const navItems = useMemo(() => NAV.flatMap((s) => s.items).filter(visible), [visible])
 
   const openNotifications = () => {
     setMenuOpen(false)
@@ -431,7 +438,7 @@ export function AdminLayout() {
         </div>
 
         {NAV.map((section) => {
-          const items = section.items.filter((i) => !i.perm || can(i.perm))
+          const items = section.items.filter(visible)
           if (!items.length) return null
           return (
             <div key={section.group}>

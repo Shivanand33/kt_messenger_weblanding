@@ -3,6 +3,7 @@ import api, { errorMessage } from '../api/client.js'
 import { useToast } from '../components/Toast.jsx'
 import { PageHeader, Loading } from '../components/ui.jsx'
 import { Icon } from '../components/Icon.jsx'
+import { mediaUrl } from '../utils/mediaUrl.js'
 
 const SITE_URL = (import.meta.env.VITE_SITE_URL || 'http://localhost:5174').replace(/\/+$/, '')
 
@@ -47,6 +48,9 @@ export function SiteImagesPage() {
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  // Where the website serves each bundled image from, so the "before" preview
+  // works off a real built URL instead of a dev-server source path.
+  const [manifest, setManifest] = useState({ siteUrl: '', images: {} })
 
   useEffect(() => {
     api
@@ -69,8 +73,44 @@ export function SiteImagesPage() {
       })
       .catch((e) => toast.error(errorMessage(e)))
       .finally(() => setLoading(false))
+
+    // Best effort: without it the previews fall back to the dev-server paths,
+    // which is what they used before this existed. Never surfaced as an error.
+    api
+      .get('/admin/site-images/manifest')
+      .then((res) => setManifest(res.data.data || { siteUrl: '', images: {} }))
+      .catch(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  /**
+   * The image a row shows today.
+   *
+   * Replaced → the override, re-pointed at the API because `/uploads/` is
+   * served there and nowhere else. Unchanged → the file the website actually
+   * ships, from the build manifest; and when there is no manifest (dev, or a
+   * site deployed before it existed) the Vite source path, which the dev
+   * server does serve.
+   */
+  const previewFor = (row) => {
+    const replaced = row.value && row.value !== row.file
+    if (replaced) return mediaUrl(resolveFullUrl(row.value, row.value))
+    const built = manifest.images?.[row.file]
+    if (built && manifest.siteUrl) return `${manifest.siteUrl}${built}`
+    return `${SITE_URL}/src/assets/images/${row.file}`
+  }
+
+  // Only trustworthy once the manifest has actually arrived; an empty one
+  // means the website has not published it yet, not that nothing is used.
+  const manifestLoaded = Object.keys(manifest.images || {}).length > 0
+  /**
+   * A registry row whose file the website no longer ships.
+   *
+   * Replacing one of these changes nothing, because no component imports it
+   * any more — worth saying out loud, since an override that silently does
+   * nothing is exactly what looks like a bug.
+   */
+  const unusedOnSite = (file) => manifestLoaded && !manifest.images[file]
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -218,7 +258,7 @@ export function SiteImagesPage() {
           <tbody>
             {filtered.map((r) => {
               const replaced = r.value && r.value !== r.file
-              const previewSrc = replaced ? resolveFullUrl(r.value, r.value) : `${SITE_URL}/src/assets/images/${r.file}`
+              const previewSrc = previewFor(r)
               return (
                 <tr key={r.file}>
                   <td>
@@ -235,6 +275,11 @@ export function SiteImagesPage() {
                       }}
                     >
                       <img
+                        // Remount on a new source: onError hides this node, and
+                        // without a fresh element a later URL — one the admin
+                        // just pasted, or the manifest arriving — would load
+                        // into a box that is still display:none.
+                        key={previewSrc}
                         src={previewSrc}
                         alt=""
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -248,6 +293,14 @@ export function SiteImagesPage() {
                     {r.file}
                     {replaced && (
                       <div style={{ fontSize: 11, color: 'var(--brand)', fontWeight: 600, marginTop: 2 }}>replaced</div>
+                    )}
+                    {unusedOnSite(r.file) && (
+                      <div
+                        title="The website no longer ships this file, so a replacement here has nothing to replace."
+                        style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 500, marginTop: 2 }}
+                      >
+                        not used on the site
+                      </div>
                     )}
                   </td>
                   <td>

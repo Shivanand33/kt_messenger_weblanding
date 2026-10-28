@@ -15,6 +15,7 @@ import { AdminUsersPage } from './pages/AdminUsersPage.jsx'
 import { RolesPage } from './pages/RolesPage.jsx'
 import { ProfilePage } from './pages/ProfilePage.jsx'
 import { EmailSettingsPage } from './pages/EmailSettingsPage.jsx'
+import { EmailTemplatePage } from './pages/EmailTemplatePage.jsx'
 import { HeroSettingsPage } from './pages/HeroSettingsPage.jsx'
 import { PageTextPage } from './pages/PageTextPage.jsx'
 import { ContactMessagesPage } from './pages/ContactMessagesPage.jsx'
@@ -61,6 +62,7 @@ export default function App() {
         <Route path="roles" element={<RolesPage />} />
         <Route path="audit" element={<AuditLogPage />} />
         <Route path="email-settings" element={<EmailSettingsPage />} />
+        <Route path="email-template" element={<EmailTemplatePage />} />
         <Route path="profile" element={<ProfilePage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

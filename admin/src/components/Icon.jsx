@@ -14,6 +14,7 @@ import {
   Globe,
   Image,
   Mail,
+  MailOpen,
   Inbox,
   ThumbsUp,
   LineChart,
@@ -65,6 +66,7 @@ const ICON_MAP = {
   roles: ShieldCheck,
   audit: History,
   emailSettings: Settings,
+  emailTemplate: MailOpen,
   profile: User,
   
   // Quick UI Icons

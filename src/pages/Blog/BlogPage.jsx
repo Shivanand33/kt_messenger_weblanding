@@ -332,7 +332,7 @@ function KtPlatformsRow() {
           aria-label={item.name}
           className="grid h-7 w-7 place-items-center rounded-full border border-gray-300 dark:border-gray-600 bg-white shadow-xs transition-all hover:scale-110 hover:border-ink hover:shadow-sm"
         >
-          <img src={item.icon} alt={item.name} className="h-4 w-4 object-contain rounded-full" loading="lazy" />
+          <img src={img(item.icon)} alt={item.name} className="h-4 w-4 object-contain rounded-full" loading="lazy" />
         </a>
       ))}
     </div>
@@ -807,7 +807,7 @@ export function BlogPage() {
                   title={social.name}
                   className="grid h-10 w-10 place-items-center rounded-full border border-gray-400/80 dark:border-gray-600 bg-white shadow-sm transition-all hover:border-ink hover:scale-105"
                 >
-                  <img src={social.icon} alt="" width="20" height="20" loading="lazy" className="h-5 w-5 object-contain" />
+                  <img src={img(social.icon)} alt="" width="20" height="20" loading="lazy" className="h-5 w-5 object-contain" />
                 </a>
               ))}
             </div>

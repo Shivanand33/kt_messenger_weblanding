@@ -19,6 +19,8 @@ import * as admins from '../controllers/admin/adminUser.controller.js'
 import * as contact from '../controllers/admin/contact.controller.js'
 import * as roles from '../controllers/admin/role.controller.js'
 import * as settings from '../controllers/admin/settings.controller.js'
+import * as emailTemplates from '../controllers/admin/emailTemplate.controller.js'
+import * as siteImages from '../controllers/admin/siteImages.controller.js'
 import { prisma } from '../config/db.js'
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ok, created } from '../utils/apiResponse.js'
@@ -45,6 +47,7 @@ import {
  jobOpeningSchema, jobOpeningUpdateSchema,
 } from '../validators/content.validator.js'
 import { contactUpdateSchema, contactReplySchema, subscriberUpdateSchema } from '../validators/forms.validator.js'
+import { emailTemplateUpdateSchema, emailTemplateDraftSchema } from '../validators/emailTemplate.validator.js'
 
 const r = Router()
 const P = requirePermission
@@ -204,10 +207,26 @@ r.post('/roles', P('role:write'), validate(roleCreateSchema), roles.createRole)
 r.put('/roles/:id', P('role:write'), validate(idParam, 'params'), validate(roleUpdateSchema), roles.updateRole)
 r.delete('/roles/:id', P('role:delete'), validate(idParam, 'params'), roles.deleteRole)
 
+/* ── Site Images helper ────────────────────────────────
+ * Where the website serves each bundled image from. Same permission as the
+ * Site Images page itself; read-only and never required for it to work.
+ */
+r.get('/site-images/manifest', P('website_content:read'), siteImages.getImageManifest)
+
 /* ── Email settings (super admin only) ────────────────── */
 r.get('/settings/email', requireSuperAdmin, settings.getEmailSettings)
 r.put('/settings/email', requireSuperAdmin, settings.updateEmailSettings)
 r.post('/settings/email/test', requireSuperAdmin, settings.testEmailSettings)
+
+/* ── Transactional email templates (super admin only) ──
+ * Same gate as Email Settings: this decides what every admin's sign-in code
+ * looks like, and the custom-HTML field is a wide enough door on its own.
+ */
+r.get('/email-templates/2fa', requireSuperAdmin, emailTemplates.getTwoFactorTemplate)
+r.put('/email-templates/2fa', requireSuperAdmin, validate(emailTemplateUpdateSchema), emailTemplates.updateTwoFactorTemplate)
+r.post('/email-templates/2fa/preview', requireSuperAdmin, validate(emailTemplateDraftSchema), emailTemplates.previewTwoFactorTemplate)
+r.post('/email-templates/2fa/test', requireSuperAdmin, validate(emailTemplateDraftSchema), emailTemplates.testTwoFactorTemplate)
+r.post('/email-templates/2fa/reset', requireSuperAdmin, emailTemplates.resetTwoFactorTemplate)
 
 /* ── Audit log (read-only) ────────────────────────────── */
 r.get('/audit-logs', P('audit_log:read'), crudFactory({ model: 'auditLog', entityName: 'audit_log', searchable: ['action', 'entity'], include: { admin: { select: { name: true, email: true } } } }).list)

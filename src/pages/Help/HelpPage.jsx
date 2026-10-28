@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
+import { img } from '../../utils/imageOverrides'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FiChevronDown, FiSearch, FiLink, FiX, FiFlag, FiShield, FiCloud, FiMessageCircle, FiUsers, FiBriefcase, FiChevronRight } from 'react-icons/fi'
@@ -337,7 +338,7 @@ function StoreQr({ tab }) {
     // Always black on white, so the code stays scannable in dark mode.
     <div className="my-4 inline-block rounded-2xl border border-line bg-white p-3">
       <img
-        src={guide.qr}
+        src={img(guide.qr)}
         alt={fill(t('QR code to download KT Messenger from the {store}'), { store: guide.store })}
         width="200"
         height="200"
@@ -495,7 +496,7 @@ function ArticleBody({ title, tab, onOpenArticle }) {
             {/* Always black on white, so the code stays scannable in dark mode. */}
             <div className="my-4 inline-block rounded-2xl border border-line bg-white p-3">
               <img
-                src={guide.qr}
+                src={img(guide.qr)}
                 alt={fill(t('QR code to download KT Messenger from the {store}'), { store: guide.store })}
                 width="200"
                 height="200"

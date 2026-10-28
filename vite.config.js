@@ -126,9 +126,48 @@ logger.error = (msg, options) => {
   logError(msg, options)
 }
 
+/**
+ * Publish `image-manifest.json`: original filename -> built URL.
+ *
+ * Vite appends a content hash to every asset, so `multidevice.jpg` ships as
+ * `/assets/multidevice-B7lZI_Gc.jpg` and nothing outside the bundle can guess
+ * that name. The admin's Site Images page needs it to show what an image
+ * currently looks like, and used to point at `/src/assets/images/<file>` —
+ * a path that only exists under the dev server, which is why those previews
+ * were blank in production.
+ *
+ * The keys mirror backend/scripts/import-site-images.mjs, which registers
+ * `src/assets/images/<file>` and the handful of assets that sit directly in
+ * `src/assets/` (the brand logo). Nested folders are deliberately left out:
+ * the pre-sized `sm/` variants reuse their originals' filenames and would
+ * otherwise win the key at random.
+ *
+ * Build-only: in dev the files are served from their source paths and the
+ * admin falls back to those.
+ */
+function siteImageManifest() {
+  return {
+    name: 'kt-site-image-manifest',
+    apply: 'build',
+    generateBundle(_options, bundle) {
+      const map = {}
+      for (const [fileName, item] of Object.entries(bundle)) {
+        if (item.type !== 'asset') continue
+        const sources = item.originalFileNames || (item.originalFileName ? [item.originalFileName] : [])
+        for (const source of sources) {
+          // The trailing [^/]+ is what excludes sm/ and any other subfolder.
+          const match = String(source).replace(/\\/g, '/').match(/(?:^|\/)src\/assets\/(?:images\/)?([^/]+)$/)
+          if (match) map[match[1]] = `/${fileName}`
+        }
+      }
+      this.emitFile({ type: 'asset', fileName: 'image-manifest.json', source: JSON.stringify(map) })
+    },
+  }
+}
+
 export default defineConfig({
   customLogger: logger,
-  plugins: [react(), tailwindcss(), devSchemaPrerender()],
+  plugins: [react(), tailwindcss(), devSchemaPrerender(), siteImageManifest()],
   server: {
     port: 5174,
     host: true,

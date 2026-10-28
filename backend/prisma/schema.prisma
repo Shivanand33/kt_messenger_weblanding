@@ -623,3 +623,30 @@ model JobOpening {
   @@index([department])
   @@map("job_openings")
 }
+
+// ─────────────────────────────────────────────────────────────
+// Transactional email templates
+// ─────────────────────────────────────────────────────────────
+
+/// An editable transactional email, looked up by `key` (e.g. "admin.2fa_code").
+///
+/// A row is an *override*: the code ships a complete default for every key, so
+/// a missing row — or a database this migration has not reached yet — still
+/// sends a correct email. Nothing here is ever required for mail to go out.
+model EmailTemplate {
+  id            String   @id @default(cuid())
+  key           String   @unique
+  subject       String
+  /// The editable content fields (heading, intro, colours, …). Shape is owned
+  /// by services/emailTemplate.service.js, which fills in anything absent.
+  data          Json
+  /// Raw HTML, used only when useCustomHtml is on. Kept even while it is off
+  /// so switching back and forth does not lose the admin's work.
+  customHtml    String?
+  useCustomHtml Boolean  @default(false)
+  updatedById   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("email_templates")
+}

@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { img } from '../../utils/imageOverrides'
 import { FaGooglePlay, FaApple } from 'react-icons/fa'
 import {
   FiShoppingBag,
@@ -150,7 +151,7 @@ export function BusinessAppDownloadPage() {
         <Reveal from="scale" delay={0.1} className="relative">
           <div className="overflow-hidden rounded-[2rem] shadow-2xl ring-1 ring-white/10">
             <img
-              src={heroImg}
+              src={img(heroImg)}
               alt={tr('KT Business app for small business owners')}
               className="h-full w-full object-cover"
               loading="lazy"

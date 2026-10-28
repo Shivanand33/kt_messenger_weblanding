@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { img } from '../../utils/imageOverrides'
 import { FiCopy, FiCheck, FiDownload, FiPackage } from 'react-icons/fi'
 import { FaAndroid, FaApple } from 'react-icons/fa'
 import { MainLayout } from '../../components/layout/MainLayout/MainLayout'
@@ -70,7 +71,7 @@ function ProductCard({ product, index, onSelect }) {
         />
         {icon ? (
           <img
-            src={icon}
+            src={img(icon)}
             alt={`${product.name} app icon`}
             width="96"
             height="96"

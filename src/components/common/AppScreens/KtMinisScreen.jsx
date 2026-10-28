@@ -1,5 +1,4 @@
-import { imgAltOnly } from '../../../utils/imageOverrides'
-import { avif } from '../../../utils/avif'
+import { img, imgAltOnly } from '../../../utils/imageOverrides'
 import { motion } from 'framer-motion'
 import { FiArrowLeft, FiBookmark, FiHeart, FiMessageCircle, FiMoreVertical, FiSend, FiVolume2 } from 'react-icons/fi'
 import { AppPhoneFrame } from './AppPhoneFrame'
@@ -30,7 +29,7 @@ export function KtMinisScreen({ className = '' }) {
       <div className="relative h-full w-full overflow-hidden bg-black">
         {/* Clip frame with a slow push-in so it reads as playing video */}
         <motion.img
-          src={avif(clipFrame)}
+          src={img(clipFrame)}
           alt={imgAltOnly(clipFrame)}
           animate={{ scale: [1.06, 1.16, 1.06] }}
           transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { img } from '../../../utils/imageOverrides'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   FiCheck,
@@ -524,7 +525,7 @@ export function Footer() {
                   className="grid h-11 w-11 place-items-center rounded-full border border-line bg-white transition-colors hover:border-brand-strong"
                 >
                   {/* The link already carries the platform name, so the icon is decorative. */}
-                  <img src={social.icon} alt="" width="24" height="24" loading="lazy" className="h-6 w-6 object-contain" />
+                  <img src={img(social.icon)} alt="" width="24" height="24" loading="lazy" className="h-6 w-6 object-contain" />
                 </a>
               ))}
             </div>
