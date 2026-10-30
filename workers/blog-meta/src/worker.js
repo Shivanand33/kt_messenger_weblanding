@@ -278,6 +278,15 @@ async function crawlerFile(pathname) {
 
 export default {
   async fetch(request) {
+    // Match the edge request URL, never caller-supplied forwarded-host headers.
+    // Keep API traffic on its existing host: a 301 can turn POST into GET and
+    // break authentication/forms. The dedicated API domain is also untouched.
+    const incoming = new URL(request.url)
+    const isApi = incoming.pathname === '/api' || incoming.pathname.startsWith('/api/')
+    if (incoming.hostname === 'www.ktmessenger.com' && !isApi) {
+      return Response.redirect(`${SITE}${incoming.pathname}${incoming.search}`, 301)
+    }
+
     // Our own origin fetch coming back round: serve it and stop.
     if (request.headers.get(LOOP_HEADER)) return fetch(request)
 

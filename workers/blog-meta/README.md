@@ -1,7 +1,11 @@
 # blog-meta — what crawlers get, fixed at the edge
 
-One Cloudflare Worker with two jobs, both about what a crawler sees before any
-JavaScript runs:
+One Cloudflare Worker handles the canonical WWW redirect and two crawler jobs
+before any browser JavaScript runs:
+
+0. **Canonical domain.** All non-API WWW URLs return HTTP 301 to the equivalent
+   `https://ktmessenger.com` path and query. `/api` and `/api/*` retain their
+   existing behavior. See [redirect deployment and verification](REDIRECT.md).
 
 1. **Blog articles.** Fills in each post's `<title>`, meta description, social
    card tags, canonical link and Article schema **before the HTML leaves
@@ -52,14 +56,13 @@ emits the API's own host, which returns the actual image. (Same rule as
 
 ## What it deliberately does not touch
 
-- **Only `GET` on `/blog/<slug>`, `/<lang>/blog/<slug>`, `/sitemap*.xml` and
-  `/llms.txt`.** The routes in `wrangler.toml` mean the Worker is never even
-  invoked for the homepage, the blog index, feature pages, help articles,
-  assets or the API.
+- **On the apex domain, only the existing article/crawler routes reach the
+  Worker.** On WWW, all paths reach it: non-API requests redirect, while
+  `/api` and `/api/*` pass through. Metadata rewriting still only applies to GET.
 - **`/robots.txt` is left alone.** It is deliberately static, and the line it
   already carries — `Sitemap: https://ktmessenger.com/sitemap.xml` — becomes
   correct by itself once that URL serves the live file.
-- **Every failure path returns the origin response unchanged** — a non-HTML
+- **For the metadata/crawler jobs, every failure path returns the origin response unchanged** — a non-HTML
   response, a non-200, an unknown slug, a slow or broken API, a malformed
   custom schema block. If the API cannot be reached for a sitemap, the static
   copy the host was already serving is returned. The Worker can only add

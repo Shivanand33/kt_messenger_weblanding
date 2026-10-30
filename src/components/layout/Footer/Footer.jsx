@@ -541,31 +541,51 @@ export function Footer() {
         onClose={() => setSitemapOpen(false)}
         eyebrow="Sitemap"
         title="Every page on this site"
-        size="lg"
+        size="xl"
       >
-        <div className="grid gap-8 sm:grid-cols-2">
-          {sitemap.map((group) => (
-            <div key={group.group}>
-              <p className="text-[11px] font-black uppercase tracking-[0.16em] text-muted">{group.group}</p>
-              <ul className="mt-3 space-y-1.5">
-                {group.links.map((link) => (
-                  <li key={link.to}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSitemapOpen(false)
-                        go(link)
-                      }}
-                      className="w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-body transition-colors hover:bg-surface-2 hover:text-brand-ink"
-                    >
-                      {link.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+        {(() => {
+          // Four hand-balanced columns: Main alone, Features split into two
+          // halves (each keeps the FEATURES header), and Company + Trust
+          // stacked. Column heights stay within a row of each other, so the
+          // panel carries no empty space and no group splits mid-list.
+          const [main, features, company, trust] = sitemap
+          const mid = Math.ceil(features.links.length / 2)
+          const columns = [
+            [main],
+            [{ ...features, links: features.links.slice(0, mid) }],
+            [{ ...features, links: features.links.slice(mid) }],
+            [company, trust],
+          ]
+          return (
+            <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2 xl:grid-cols-4">
+              {columns.map((groups, colIndex) => (
+                <div key={colIndex}>
+                  {groups.map((group, groupIndex) => (
+                    <div key={`${group.group}-${groupIndex}`} className={groupIndex > 0 ? 'mt-7' : ''}>
+                      <p className="text-[11px] font-black uppercase tracking-[0.16em] text-muted">{group.group}</p>
+                      <ul className="mt-3 space-y-1.5">
+                        {group.links.map((link) => (
+                          <li key={link.to}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSitemapOpen(false)
+                                go(link)
+                              }}
+                              className="w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-body transition-colors hover:bg-surface-2 hover:text-brand-ink"
+                            >
+                              {link.label}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )
+        })()}
       </Modal>
     </footer>
   )
